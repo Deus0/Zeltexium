@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1499184250687264}
+  m_IsPrefabParent: 1
+--- !u!1 &1499184250687264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4342382625667354}
+  - component: {fileID: 114154383365114650}
+  - component: {fileID: 114559346386414078}
+  - component: {fileID: 114315226826594072}
+  m_Layer: 0
+  m_Name: GuiPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4342382625667354
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1499184250687264}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114154383365114650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1499184250687264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f22e5caf6e1c8745a9253347351a73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxPools: 0a0000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  PoolPrefabs:
+  - {fileID: 1066057203497478, guid: 35eb9d3508ab8d44f880e1323f9293b9, type: 2}
+  - {fileID: 141550, guid: 8f9a9bd22df75d5489bb6b0e098d62cd, type: 2}
+  - {fileID: 140300, guid: 61e39bd440fc69b44b1a811ee7227772, type: 2}
+  - {fileID: 135522, guid: e4560851bd13da94a91c9d404cc352aa, type: 2}
+  - {fileID: 145462, guid: fa8e5e217024d8d44bfc1bcc6d0feba8, type: 2}
+  - {fileID: 115582, guid: e085285ae1d394b4aa1b7c573fb88f07, type: 2}
+  - {fileID: 171446, guid: 3054d17cbfc71df4d9be62662d6d4a62, type: 2}
+  - {fileID: 158736, guid: 878474c0f1b9f474eb88533e50fea5dd, type: 2}
+  - {fileID: 122924, guid: 91e02a2ecb9663440b3dbd8526640373, type: 2}
+  - {fileID: 1624514630778754, guid: 395f4253e2f7fe445ae2f6d7251b83a7, type: 2}
+  - {fileID: 108872, guid: 63eadcb34f6a87843a322d3231bc6013, type: 2}
+  - {fileID: 137460, guid: a9b9c990403765946a1400d68a7dc131, type: 2}
+  DebugChildCount: 0
+  MyPools: []
+--- !u!114 &114315226826594072
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1499184250687264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 75
+    i1: 81
+    i2: 255
+    i3: 167
+    i4: 234
+    i5: 200
+    i6: 26
+    i7: 148
+    i8: 89
+    i9: 152
+    i10: 252
+    i11: 242
+    i12: 97
+    i13: 34
+    i14: 72
+    i15: 236
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &114559346386414078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1499184250687264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f202f031929730b45af37f4685f7f2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

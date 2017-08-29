@@ -1,0 +1,1707 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &157778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 443082}
+  - component: {fileID: 11427242}
+  - component: {fileID: 11477066}
+  - component: {fileID: 11421540}
+  - component: {fileID: 11481550}
+  - component: {fileID: 11473904}
+  - component: {fileID: 11443782}
+  - component: {fileID: 11468982}
+  - component: {fileID: 11425300}
+  m_Layer: 15
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &443082
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000016292068}
+  m_LocalPosition: {x: -5.013, y: 1.627, z: 0}
+  m_LocalScale: {x: 0.35000008, y: 0.35000005, z: 0.35}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11421540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba36a7b27a4e6e4c87b9bc5ba6069ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyBodyParts: []
+  MyMaterial: {fileID: 0}
+  IsSingleColor: 1
+  MyColor:
+    serializedVersion: 2
+    rgba: 3236281898
+  IsRainbowColours: 1
+  IsDarkColours: 0
+  IsRandomSizes: 0
+  MinSizeVariation: 1
+  MaxSizeVariation: 1
+  BodyPartMinSizeVariation: 1
+  BodyPartMaxSizeVariation: 1
+  DebugMode: 0
+  IsDebugSizes: 0
+  MyChildren: []
+--- !u!114 &11425300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fd092b5f0ab824482d3d3ae6e744c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VoxelType: 1
+  IsCreateNoiseSphere: 1
+  SphereRadius: 8
+  SphereOffset: {x: 8, y: 8, z: 8}
+  SphereNoiseCutoff: 0.5
+  SphereMultiplier: 8
+  MyWorld: {fileID: 0}
+--- !u!114 &11427242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33544f6f2f7f59469870af943d6dedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebugMode: 0
+  BeginAnimationKey: 111
+  PauseAnimationKey: 112
+  MyAnimation: {fileID: 7400000, guid: 9e2ce8432e836a547a6a03072d516ff9, type: 3}
+  RootBone: {fileID: 157778}
+  MyBones:
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e542e78
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e542e79
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 1.6583427
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 1.6583427
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e542e7a
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e512e78
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.5000001
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.5000001
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e512e79
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.50000006
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.50000006
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e512e7a
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.4999999
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.4999999
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4d6f74696f6e512e77
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.49999994
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.49999994
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 
+    PropertyName: 4375727665
+    MyBindedObject: {fileID: 157778}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1.4177779
+        value: -0.039374996
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2231758
+        value: 0.033835355
+        inSlope: 0.0388806
+        outSlope: 0.0388806
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.029703956
+        inSlope: 0.00033712012
+        outSlope: 0.00033712012
+        tangentMode: 0
+      - time: 1.0666667
+        value: -0.026557917
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2
+        value: -0.026727965
+        inSlope: -0.002411839
+        outSlope: -0.002411839
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.02963744
+        inSlope: -0.0016017138
+        outSlope: -0.0016017138
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0028506704
+        inSlope: -0.0045493403
+        outSlope: -0.0045493403
+        tangentMode: 0
+      - time: 1.0666667
+        value: -0.040640466
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2
+        value: -0.038231045
+        inSlope: 0.03411723
+        outSlope: 0.03411723
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.0019429522
+        inSlope: 0.02191313
+        outSlope: 0.02191313
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.9969959
+        inSlope: 0.000016093254
+        outSlope: 0.000016093254
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.99617136
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2
+        value: 0.9962679
+        inSlope: 0.0013205422
+        outSlope: 0.0013205422
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.99698925
+        inSlope: 0.00021342184
+        outSlope: 0.00021342184
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.07147519
+        inSlope: 0.00010594725
+        outSlope: 0.00010594725
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.07270289
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2
+        value: 0.07262447
+        inSlope: -0.0011025007
+        outSlope: -0.0011025007
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.07149869
+        inSlope: -0.00057741057
+        outSlope: -0.00057741057
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.074206
+        inSlope: -0.0001269579
+        outSlope: -0.0001269579
+        tangentMode: 0
+      - time: 0.90000004
+        value: 0.07341981
+        inSlope: 0.0011335684
+        outSlope: 0.0011335684
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.07439269
+        inSlope: -0.00067144696
+        outSlope: -0.00067144696
+        tangentMode: 0
+      - time: 2.3000002
+        value: 0.07349256
+        inSlope: 0.00078030006
+        outSlope: 0.00078030006
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.07418628
+        inSlope: 0.00047090327
+        outSlope: 0.00047090327
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0006498923
+        inSlope: 0.000025648622
+        outSlope: 0.000025648622
+        tangentMode: 0
+      - time: 0.90000004
+        value: 0.00085291406
+        inSlope: -0.00056968385
+        outSlope: -0.00056968385
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.00045911333
+        inSlope: 0.0002362743
+        outSlope: 0.0002362743
+        tangentMode: 0
+      - time: 2.3000002
+        value: 0.0008549275
+        inSlope: -0.00027379164
+        outSlope: -0.00027379164
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.00065493846
+        inSlope: -0.0001232414
+        outSlope: -0.0001232414
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.71399754
+        inSlope: -0.0042825937
+        outSlope: -0.0042825937
+        tangentMode: 0
+      - time: 0.90000004
+        value: -0.7423625
+        inSlope: 0.040884905
+        outSlope: 0.040884905
+        tangentMode: 0
+      - time: 1.4333334
+        value: -0.7100472
+        inSlope: -0.020221192
+        outSlope: -0.020221192
+        tangentMode: 0
+      - time: 2.3000002
+        value: -0.7387891
+        inSlope: 0.028853444
+        outSlope: 0.028853444
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.7146617
+        inSlope: 0.015946839
+        outSlope: 0.015946839
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.69620436
+        inSlope: -0.004377365
+        outSlope: -0.004377365
+        tangentMode: 0
+      - time: 0.90000004
+        value: 0.6659631
+        inSlope: 0.045410685
+        outSlope: 0.045410685
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.7002132
+        inSlope: -0.02044471
+        outSlope: -0.02044471
+        tangentMode: 0
+      - time: 2.3000002
+        value: 0.669917
+        inSlope: 0.031726092
+        outSlope: 0.031726092
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.69551414
+        inSlope: 0.016634634
+        outSlope: 0.016634634
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0714752
+        inSlope: 0.00008918344
+        outSlope: 0.00008918344
+        tangentMode: 0
+      - time: 1.1666667
+        value: 0.07258628
+        inSlope: -0.0022276884
+        outSlope: -0.0022276884
+        tangentMode: 0
+      - time: 2.1000001
+        value: 0.0694047
+        inSlope: 0.0000033527613
+        outSlope: 0.0000033527613
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.07142567
+        inSlope: 0.0011623132
+        outSlope: 0.0011623132
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.9969959
+        inSlope: 0.0000125169745
+        outSlope: 0.0000125169745
+        tangentMode: 0
+      - time: 1.1666667
+        value: 0.9962849
+        inSlope: 0.002091231
+        outSlope: 0.002091231
+        tangentMode: 0
+      - time: 2.1000001
+        value: 0.9948545
+        inSlope: -0.00007420787
+        outSlope: -0.00007420787
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.9969612
+        inSlope: 0.001000497
+        outSlope: 0.001000497
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0028507623
+        inSlope: -0.0037488828
+        outSlope: -0.0037488828
+        tangentMode: 0
+      - time: 1.1666667
+        value: -0.037848957
+        inSlope: 0.053690724
+        outSlope: 0.053690724
+        tangentMode: 0
+      - time: 2.1000001
+        value: 0.06545644
+        inSlope: 0.0010883075
+        outSlope: 0.0010883075
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.004266955
+        inSlope: -0.03420731
+        outSlope: -0.03420731
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 5468696768
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.029703949
+        inSlope: 0.00027721748
+        outSlope: 0.00027721748
+        tangentMode: 0
+      - time: 1.1666667
+        value: -0.02674218
+        inSlope: -0.0035520024
+        outSlope: -0.0035520024
+        tangentMode: 0
+      - time: 2.1000001
+        value: -0.03410166
+        inSlope: -0.000091977505
+        outSlope: -0.000091977505
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.029802108
+        inSlope: 0.0023873923
+        outSlope: 0.0023873923
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.07420596
+        inSlope: 0.0001426041
+        outSlope: 0.0001426041
+        tangentMode: 0
+      - time: 0.86666673
+        value: -0.07328
+        inSlope: -0.0005813691
+        outSlope: -0.0005813691
+        tangentMode: 0
+      - time: 1.6000001
+        value: -0.07487553
+        inSlope: 0.0023183213
+        outSlope: 0.0023183213
+        tangentMode: 0
+      - time: 2.2
+        value: -0.07327375
+        inSlope: -0.00023022316
+        outSlope: -0.00023022316
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.07418079
+        inSlope: -0.0005987006
+        outSlope: -0.0005987006
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0006498093
+        inSlope: 0.000048085927
+        outSlope: 0.000048085927
+        tangentMode: 0
+      - time: 0.86666673
+        value: 0.0010298734
+        inSlope: -0.00038437155
+        outSlope: -0.00038437155
+        tangentMode: 0
+      - time: 1.6000001
+        value: 0.00029986794
+        inSlope: 0.00072548783
+        outSlope: 0.00072548783
+        tangentMode: 0
+      - time: 2.2
+        value: 0.001034495
+        inSlope: -0.0001154521
+        outSlope: -0.0001154521
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.0006594924
+        inSlope: -0.00023671638
+        outSlope: -0.00023671638
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.71399784
+        inSlope: 0.0042790174
+        outSlope: 0.0042790174
+        tangentMode: 0
+      - time: 0.86666673
+        value: 0.7433867
+        inSlope: -0.024479639
+        outSlope: -0.024479639
+        tangentMode: 0
+      - time: 1.6000001
+        value: 0.686689
+        inSlope: 0.07223721
+        outSlope: 0.07223721
+        tangentMode: 0
+      - time: 2.2
+        value: 0.7436728
+        inSlope: -0.007942028
+        outSlope: -0.007942028
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.71478075
+        inSlope: -0.018782463
+        outSlope: -0.018782463
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f6f74
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.6962042
+        inSlope: -0.004373789
+        outSlope: -0.004373789
+        tangentMode: 0
+      - time: 0.86666673
+        value: 0.66483474
+        inSlope: 0.027277185
+        outSlope: 0.027277185
+        tangentMode: 0
+      - time: 1.6000001
+        value: 0.7230849
+        inSlope: -0.0684258
+        outSlope: -0.0684258
+        tangentMode: 0
+      - time: 2.2
+        value: 0.6645154
+        inSlope: 0.008859345
+        outSlope: 0.008859345
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.69538075
+        inSlope: 0.01987006
+        outSlope: 0.01987006
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 436f7265
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.99993384
+        inSlope: -0.000017881392
+        outSlope: -0.000017881392
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.99964166
+        inSlope: 0.0003817681
+        outSlope: 0.0003817681
+        tangentMode: 0
+      - time: 2.1666667
+        value: 0.99985605
+        inSlope: -0.00062584935
+        outSlope: -0.00062584935
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.99993056
+        inSlope: 0.000114333605
+        outSlope: 0.000114333605
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 436f7265
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.005113415
+        inSlope: 0.003307429
+        outSlope: 0.003307429
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.024706887
+        inSlope: -0.015470102
+        outSlope: -0.015470102
+        tangentMode: 0
+      - time: 2.1666667
+        value: -0.013482021
+        inSlope: -0.04685367
+        outSlope: -0.04685367
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.004299168
+        inSlope: 0.0195038
+        outSlope: 0.0195038
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 436f7265
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.001886179
+        inSlope: 0.00003351015
+        outSlope: 0.00003351015
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.0020843493
+        inSlope: -0.00015618643
+        outSlope: -0.00015618643
+        tangentMode: 0
+      - time: 2.1666667
+        value: 0.0016974517
+        inSlope: -0.0004763143
+        outSlope: -0.0004763143
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.0018779152
+        inSlope: 0.00019800747
+        outSlope: 0.00019800747
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 436f7265
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.010131396
+        inSlope: -0.0000062305476
+        outSlope: -0.0000062305476
+        tangentMode: 0
+      - time: 1.0666667
+        value: 0.010092491
+        inSlope: 0.000032256386
+        outSlope: 0.000032256386
+        tangentMode: 0
+      - time: 2.1666667
+        value: 0.010164721
+        inSlope: 0.00007958624
+        outSlope: 0.00007958624
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.010132858
+        inSlope: -0.000034627872
+        outSlope: -0.000034627872
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4368657374
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.99993396
+        inSlope: -0.000050067898
+        outSlope: -0.000050067898
+        tangentMode: 0
+      - time: 0.8000001
+        value: 0.9989183
+        inSlope: 0.0020948055
+        outSlope: 0.0020948055
+        tangentMode: 0
+      - time: 1.6333334
+        value: 0.99983424
+        inSlope: -0.0010380158
+        outSlope: -0.0010380158
+        tangentMode: 0
+      - time: 2.5333335
+        value: 0.999733
+        inSlope: 0.0015941277
+        outSlope: 0.0015941277
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.9999373
+        inSlope: -0.00005645411
+        outSlope: -0.00005645411
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4368657374
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0051136576
+        inSlope: 0.009488844
+        outSlope: 0.009488844
+        tangentMode: 0
+      - time: 0.8000001
+        value: 0.04541566
+        inSlope: -0.04630382
+        outSlope: -0.04630382
+        tangentMode: 0
+      - time: 1.6333334
+        value: -0.014917506
+        inSlope: -0.069286376
+        outSlope: -0.069286376
+        tangentMode: 0
+      - time: 2.5333335
+        value: -0.020596923
+        inSlope: 0.07717709
+        outSlope: 0.07717709
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.0040201875
+        inSlope: 0.02614469
+        outSlope: 0.02614469
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4368657374
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.0018860911
+        inSlope: -0.0002875202
+        outSlope: -0.0002875202
+        tangentMode: 0
+      - time: 0.8000001
+        value: 0.00067836687
+        inSlope: 0.0013774664
+        outSlope: 0.0013774664
+        tangentMode: 0
+      - time: 1.6333334
+        value: 0.0024963017
+        inSlope: 0.002115769
+        outSlope: 0.002115769
+        tangentMode: 0
+      - time: 2.5333335
+        value: 0.0026709703
+        inSlope: -0.0023566687
+        outSlope: -0.0023566687
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.0019192251
+        inSlope: -0.0007955708
+        outSlope: -0.0007955708
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4368657374
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.010118908
+        inSlope: 0.00003109686
+        outSlope: 0.00003109686
+        tangentMode: 0
+      - time: 0.8000001
+        value: -0.009960116
+        inSlope: -0.0002337294
+        outSlope: -0.0002337294
+        tangentMode: 0
+      - time: 1.6333334
+        value: -0.010139035
+        inSlope: -0.000013606636
+        outSlope: -0.000013606636
+        tangentMode: 0
+      - time: 2.5333335
+        value: -0.010132923
+        inSlope: -0.0000069290463
+        outSlope: -0.0000069290463
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.010119988
+        inSlope: 0.000026083682
+        outSlope: 0.000026083682
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 48656164
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.999588
+        inSlope: 0.0004738569
+        outSlope: 0.0004738569
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.99996006
+        inSlope: 0.0007277727
+        outSlope: 0.0007277727
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.9975728
+        inSlope: 0.0034529003
+        outSlope: 0.0034529003
+        tangentMode: 0
+      - time: 2.0666668
+        value: 0.999588
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.999588
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 48656164
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.02870261
+        inSlope: -0.016678758
+        outSlope: -0.016678758
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.008937441
+        inSlope: 0.0841239
+        outSlope: 0.0841239
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.06963177
+        inSlope: -0.0496322
+        outSlope: -0.0496322
+        tangentMode: 0
+      - time: 2.0666668
+        value: 0.02870261
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.02870261
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 48656164
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.000007002434
+        inSlope: -0.0000011947076
+        outSlope: -0.0000011947076
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.000009692276
+        inSlope: 0.0000059975637
+        outSlope: 0.0000059975637
+        tangentMode: 0
+      - time: 1.4333334
+        value: -0.000004062961
+        inSlope: -0.0000035736493
+        outSlope: -0.0000035736493
+        tangentMode: 0
+      - time: 2.0666668
+        value: -0.000007002434
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.000007002434
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 48656164
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.00007160321
+        inSlope: -0.00000011721567
+        outSlope: -0.00000011721567
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.00007128894
+        inSlope: 0.0000008136341
+        outSlope: 0.0000008136341
+        tangentMode: 0
+      - time: 1.4333334
+        value: 0.00007182998
+        inSlope: -0.00000020299942
+        outSlope: -0.00000020299942
+        tangentMode: 0
+      - time: 2.0666668
+        value: 0.00007160321
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.00007160321
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.13096575
+        inSlope: 0.00093922013
+        outSlope: 0.00093922013
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.1321891
+        inSlope: 0.020965042
+        outSlope: 0.020965042
+        tangentMode: 0
+      - time: 1.3000001
+        value: 0.13409671
+        inSlope: -0.011888456
+        outSlope: -0.011888456
+        tangentMode: 0
+      - time: 2.0333335
+        value: 0.13063082
+        inSlope: 0.0072538042
+        outSlope: 0.0072538042
+        tangentMode: 0
+      - time: 2.6666667
+        value: 0.13484089
+        inSlope: -0.0011242937
+        outSlope: -0.0011242937
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.13161786
+        inSlope: -0.012803697
+        outSlope: -0.012803697
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.5893286
+        inSlope: 0.013073086
+        outSlope: 0.013073086
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.56147915
+        inSlope: -0.10617347
+        outSlope: -0.10617347
+        tangentMode: 0
+      - time: 1.3000001
+        value: -0.6142864
+        inSlope: 0.11774283
+        outSlope: 0.11774283
+        tangentMode: 0
+      - time: 2.0333335
+        value: -0.55426675
+        inSlope: -0.031447083
+        outSlope: -0.031447083
+        tangentMode: 0
+      - time: 2.6666667
+        value: -0.62336856
+        inSlope: 0.0067341393
+        outSlope: 0.0067341393
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.5940729
+        inSlope: 0.105719216
+        outSlope: 0.105719216
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.09318403
+        inSlope: -0.001996681
+        outSlope: -0.001996681
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.09568379
+        inSlope: -0.0005447112
+        outSlope: -0.0005447112
+        tangentMode: 0
+      - time: 1.3000001
+        value: -0.08826466
+        inSlope: -0.032196485
+        outSlope: -0.032196485
+        tangentMode: 0
+      - time: 2.0333335
+        value: -0.09550333
+        inSlope: -0.0012775124
+        outSlope: -0.0012775124
+        tangentMode: 0
+      - time: 2.6666667
+        value: -0.08547232
+        inSlope: -0.00219349
+        outSlope: -0.00219349
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.09225281
+        inSlope: -0.022740025
+        outSlope: -0.022740025
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.7917428
+        inSlope: 0.009332298
+        outSlope: 0.009332298
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.8112409
+        inSlope: -0.077032164
+        outSlope: -0.077032164
+        tangentMode: 0
+      - time: 1.3000001
+        value: 0.77257985
+        inSlope: 0.0919337
+        outSlope: 0.0919337
+        tangentMode: 0
+      - time: 2.0333335
+        value: 0.8164576
+        inSlope: -0.022688787
+        outSlope: -0.022688787
+        tangentMode: 0
+      - time: 2.6666667
+        value: 0.76545686
+        inSlope: 0.0054270085
+        outSlope: 0.0054270085
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.7880905
+        inSlope: 0.08150729
+        outSlope: 0.08150729
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.033793315
+        inSlope: -0.00032946464
+        outSlope: -0.00032946464
+        tangentMode: 0
+      - time: 1.3333334
+        value: -0.03995075
+        inSlope: -0.00035159325
+        outSlope: -0.00035159325
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.028648667
+        inSlope: 0.00023357569
+        outSlope: 0.00023357569
+        tangentMode: 0
+      - time: 1.3333334
+        value: -0.0247133
+        inSlope: 0.00020172466
+        outSlope: 0.00020172466
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.31594253
+        inSlope: 0.0022548435
+        outSlope: 0.0022548435
+        tangentMode: 0
+      - time: 1.3333334
+        value: 0.35640472
+        inSlope: 0.0022226593
+        outSlope: 0.0022226593
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.9477434
+        inSlope: -0.0007563829
+        outSlope: -0.0007563829
+        tangentMode: 0
+      - time: 1.3333334
+        value: 0.93315
+        inSlope: -0.0008583077
+        outSlope: -0.0008583077
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.13096374
+        inSlope: -0.00094458455
+        outSlope: -0.00094458455
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.13218625
+        inSlope: -0.020971747
+        outSlope: -0.020971747
+        tangentMode: 0
+      - time: 1.2333333
+        value: -0.13474742
+        inSlope: 0.0026462195
+        outSlope: 0.0026462195
+        tangentMode: 0
+      - time: 2.1333334
+        value: -0.13050823
+        inSlope: 0.0004642461
+        outSlope: 0.0004642461
+        tangentMode: 0
+      - time: 2.6333334
+        value: -0.13493954
+        inSlope: 0.005506133
+        outSlope: 0.005506133
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.13152881
+        inSlope: 0.010498447
+        outSlope: 0.010498447
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.5893286
+        inSlope: 0.0130695095
+        outSlope: 0.0130695095
+        tangentMode: 0
+      - time: 0.6333334
+        value: -0.56147933
+        inSlope: -0.10617347
+        outSlope: -0.10617347
+        tangentMode: 0
+      - time: 1.2333333
+        value: -0.62228346
+        inSlope: 0.031166336
+        outSlope: 0.031166336
+        tangentMode: 0
+      - time: 2.1333334
+        value: -0.554038
+        inSlope: 0.018203277
+        outSlope: 0.018203277
+        tangentMode: 0
+      - time: 2.6333334
+        value: -0.6225687
+        inSlope: -0.045985624
+        outSlope: -0.045985624
+        tangentMode: 0
+      - time: 2.9333334
+        value: -0.5940162
+        inSlope: 0.104198255
+        outSlope: 0.104198255
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.09318215
+        inSlope: 0.0019890815
+        outSlope: 0.0019890815
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.09568125
+        inSlope: 0.0005357705
+        outSlope: 0.0005357705
+        tangentMode: 0
+      - time: 1.2333333
+        value: 0.085833035
+        inSlope: 0.010260666
+        outSlope: 0.010260666
+        tangentMode: 0
+      - time: 2.1333334
+        value: 0.09547884
+        inSlope: -0.00009924183
+        outSlope: -0.00009924183
+        tangentMode: 0
+      - time: 2.6333334
+        value: 0.08575529
+        inSlope: -0.016030125
+        outSlope: -0.016030125
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.092216186
+        inSlope: 0.023649212
+        outSlope: 0.023649212
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 4269636570286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.7917433
+        inSlope: 0.009334086
+        outSlope: 0.009334086
+        tangentMode: 0
+      - time: 0.6333334
+        value: 0.8112416
+        inSlope: -0.077030376
+        outSlope: -0.077030376
+        tangentMode: 0
+      - time: 1.2333333
+        value: 0.7663153
+        inSlope: 0.024609238
+        outSlope: 0.024609238
+        tangentMode: 0
+      - time: 2.1333334
+        value: 0.81663543
+        inSlope: 0.012446355
+        outSlope: 0.012446355
+        tangentMode: 0
+      - time: 2.6333334
+        value: 0.76605844
+        inSlope: -0.034533475
+        outSlope: -0.034533475
+        tangentMode: 0
+      - time: 2.9333334
+        value: 0.7881411
+        inSlope: 0.08016649
+        outSlope: 0.08016649
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e78
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.033792924
+        inSlope: -0.00035494563
+        outSlope: -0.00035494563
+        tangentMode: 0
+      - time: 1.3333334
+        value: 0.02757123
+        inSlope: -0.0003335442
+        outSlope: -0.0003335442
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e79
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.0286488
+        inSlope: -0.00019825994
+        outSlope: -0.00019825994
+        tangentMode: 0
+      - time: 1.3333334
+        value: -0.032529686
+        inSlope: -0.00023089371
+        outSlope: -0.00023089371
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e7a
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: -0.31594276
+        inSlope: 0.0022593138
+        outSlope: 0.0022593138
+        tangentMode: 0
+      - time: 1.3333334
+        value: -0.2748792
+        inSlope: 0.0022861382
+        outSlope: 0.0022861382
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  - ObjectPath: 466f726561726d286d6972726f72656429
+    PropertyName: 6d5f4c6f63616c526f746174696f6e2e77
+    MyBindedObject: {fileID: 0}
+    MyCurve:
+      m_Curve:
+      - time: 0
+        value: 0.9477434
+        inSlope: 0.000758171
+        outSlope: 0.000758171
+        tangentMode: 0
+      - time: 1.3333334
+        value: 0.9605327
+        inSlope: 0.0006562478
+        outSlope: 0.0006562478
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+      m_RotationOrder: 4
+  BoneNames:
+  - 
+  - 5468696768286d6972726f72656429
+  - 466f6f74286d6972726f72656429
+  - 5468696768
+  - 466f6f74
+  - 436f7265
+  - 4368657374
+  - 48656164
+  - 4269636570
+  - 466f726561726d
+  - 4269636570286d6972726f72656429
+  - 466f726561726d286d6972726f72656429
+  BoneReferences:
+  - {fileID: 157778}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  RandomNoiseAmplitude: 4
+  IsMasking: 0
+  MyMasking:
+  - 4269636570286d6972726f72656429
+  - 466f726561726d286d6972726f72656429
+  IsImport: 0
+  AnimationTimeBegin: 0
+  IsAnimating: 1
+--- !u!114 &11443782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293a0438fbbb5cd428ce1139e5dd9f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsCollectOnUpdate: 0
+  MyChunks: []
+  IsUpdating: 0
+  IsUpdatingMesh: 0
+--- !u!114 &11468982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d4632a8aeab0947aee0510c2be710e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyWorld: {fileID: 0}
+  OnLoadEmptyTerrain:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: 566f78656c456e67696e652e4d794368756e6b4576656e742c20417373656d626c792d4353686172702c2056657273696f6e3d302e302e302e302c2043756c747572653d6e65757472616c2c205075626c69634b6579546f6b656e3d6e756c6c
+  IsRefresh: 0
+  MyLoadPosition: {fileID: 0}
+  LoadDistance: {x: 1, y: 1, z: 1}
+  IsAutoUpdate: 0
+  IsThreading: 0
+  OnLoadWorld:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: 437573746f6d4576656e74732e4d794576656e74566563746f72332c20417373656d626c792d4353686172702c2056657273696f6e3d302e302e302e302c2043756c747572653d6e65757472616c2c205075626c69634b6579546f6b656e3d6e756c6c
+--- !u!114 &11473904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d0409da9f8a4f448ef3118318f062d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebugGui: 0
+  MyTileMap: {fileID: 2800000, guid: ba9fa84e1f8c12145867909089bcf725, type: 3}
+  NormalMap: {fileID: 0}
+  IndexMap: {fileID: 0}
+  DiffuseTextures: []
+  NormalTextures: []
+  MyDataManager: {fileID: 0}
+  MyMaterials: []
+  MainTextureName: _MainTex
+  NormalTextureName: NormalTex
+--- !u!114 &11477066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3a9a6f740d664689aa648d05850f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBodyPartsItems: 0
+  IsApplyJoints: 1
+--- !u!114 &11481550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8900306347b354090e605434198f3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebugMode: 0
+  ShiftItemRight: 103
+  ShiftItemLeft: 102
+  MyBodyParts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  LeftItemIndex: -1
+  MyLeftHandBone: {fileID: 0}
+  RightItemIndex: 0
+  MyRightHandBone: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 157778}
+  m_IsPrefabParent: 1

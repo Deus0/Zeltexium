@@ -1,0 +1,3 @@
+	This one's very simple. Drop the Slash Kit (a prefab) into the set, and then hide it or set up some layers so other cameras don't see its work and vice versa. (Unfortuantely layers can't be exported.)
+	Depending on how Unity deals with layers while importing assets, it may be necessary to create the slashEffect layer and configure the kit; it must be both a member the layer and only render the layer. Its depth must also be greater than all other cameras.
+	It should have no human-observable performance impact.

@@ -1,0 +1,26 @@
+﻿<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="Data/style.css">
+    <link rel="shortcut icon" href="Data/zeltex.ico" />
+    <script type="text/javascript" src="https://code.createjs.com/tweenjs-0.6.1.min.js"></script>
+    <script type="text/javascript" src="Data/CSSPlugin.js"></script>
+    <script src="Data/UnityProgress.js"></script>
+    <title> Zeltex </title>
+</head>
+<body class="template">
+    <div class="template-wrap clear">
+        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="100%" width="100%"></canvas>
+    </div>
+    <div id="loadingBox">
+        <div id="bgBar"></div>
+        <div id="progressBar"></div>
+        <img id="spinner" src="Data/spinner.gif" style="display: none; margin: 0 auto" />
+        <p id="loadingInfo">Loading...</p>
+    </div>
+    %UNITY_WEBGL_LOADER_GLUE%
+    <script type="text/javascript" src="FileLoader.js"></script>
+</body>
+</html>

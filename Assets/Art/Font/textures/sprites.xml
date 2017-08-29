@@ -1,0 +1,28 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="A.png" x="27" y="14" width="10" height="12"/>
+	<SubTexture name="B.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="C.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="D.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="E.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="F.png" x="28" y="0" width="10" height="12"/>
+	<SubTexture name="G.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="H.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="I.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="J.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="K.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="L.png" x="39" y="14" width="9" height="12"/>
+	<SubTexture name="M.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="N.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="O.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="P.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="Q.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="R.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="S.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="T.png" x="0" y="14" width="12" height="12"/>
+	<SubTexture name="U.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="V.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="W.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="X.png" x="0" y="0" width="12" height="12"/>
+	<SubTexture name="Y.png" x="14" y="14" width="11" height="12"/>
+	<SubTexture name="Z.png" x="14" y="0" width="12" height="12"/>
+</TextureAtlas>

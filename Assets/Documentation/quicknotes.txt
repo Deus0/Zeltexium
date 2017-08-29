@@ -1,0 +1,181 @@
+Before First build:
+File system that opens/closes all files - seperate from the makers
+Play through 3 levels
+Portal that teleports player through levels
+Enemy spawning
+An npc in a house, talk to npc to get a quest
+Place houses down using cut/paste voxel tools
+Dialogue for first character
+Chain quest to go to second level
+
+To Fix:
+Pool Chunks
+Selection mesh -> Optmize this
+Doesn't save models that arn't 1x1x1 chunk size
+Make animations store the 9 transform values seperately instead of just the entire thing
+Animator to only show selected transform
+When saving model - then closing/opening game - doesnt load (just for big model)
+Add Zoom in on model - in model viewer - or press f
+Fixing GuiLines - LineRenderer in Guis
+Save/Load Texture Blueprints
+Fix Bug where play mode in level maker - doesnt hide guis
+
+Improvements:
+Streamline process of creating new tools
+-> default brush icon - option for custom one
+-> Add in tool functionality easier -> centralize to one place
+
+Fixed:
+Saving models in model maker
+Replace Colour - with primary colour
+
+Current:
+Fix lighting in model maker - only one light source - custom layer for models
+Fix Flipping
+Fix build - doesnt work at first
+A link function for voxelPainter - and show the bounding box of a world mesh (with some lines around the box)
+a grid to paint on - when first creating a model
+Can drag paint - using a xz plane for placement - either build, paint or erase modes
+Selection to create a seperate model - when deselecting - place it
+Selection to spawn a gizmo in the middle of the box - and can move it but it grid snaps
+Orbiting camera mode
+Moving blocks - erases colour values
+A spread to same colours - with selection - a magic wand selection tool
+when pressing selection actions - if it touches the voxel through gui it will not work - make sure raycast checking properly
+New Voxel Actions:
+Replace Voxel - with selected voxel
+
+Line tool - click first point then second point - while highlighting second point will show preview of voxel lines
+	- can alter xyz thickness (z is depth), - can alter maximum and minimum
+
+After Editing Resources
+Handle Resources properly - know when files are edited - what needs saving
+And then quiting - You have x unsaved files, do you wish to save them?
+
+Put in music:
+Main Game Screen + Save Game
+Resources Pack
+Levels
+
+Bugs:
+Save game doesn't save stats
+Save game doesn't save block changes
+Save game doesn't save other character changes
+
+Gui New Features:
+While saving - show fade overlay screen
+
+ToDO:
+Make custom maps - 100x4x100 - well unlimited size -> and just save changes to map
+Make custom maps use voxelRoam functionality
+	-VoxelRoam to be part of World -> World tracks just one transform and uses it for loading
+Fix SoundMaker & Nodes -> LineRenders not showing on top of Guis
+
+Fix Dialogue - Begin talking
+Fix Quests -> A dialogue section with quests to click on (similar to wow, you walk over to a character, it has a ! on its head. You click on the quests. This is used for simpler quests in the beginner town. Later on you will need to talk to npcs to unlock quests)
+
+
+Custom text for Zeltex - ZeltexText to be a custom data format (off element)
+TextureNodes to be its own data format - based off element - contain series of nodes/positions etc
+File opener to be inside resources - will browse folders to open them - remove file lists and index thing off the makers
+Can open up the indexController from a maker still - opens a little toolbar can drag around
+
+LevelMaker:
+	Edit Character Items from level - can open up a list of all the items in the dataManager -> then drag and drop them into the character inventory
+	Edit textures in the map
+	Same with Dialogue, Quests, Stats
+	Move CharacterStats into character Component
+	Edit Chest Items like this too
+	Billboards to look at camera of levelmaker
+	Zoom in on character button
+	Follow Character button - locks camera
+ToolManager - All the painters use this - setting one tool at a time - setting to tool None will restore default mouse button
+	- Use animations for mouse clicks
+
+Voxel/Art Data:
+	An animation for chests to open - using skeleton system for bones
+	Place Skeleton meshes into the voxel mesh -> Animations can be played - breaks it from the voxel mesh, then rebakes it after
+	-> uses smart system to approximate when it should be rebaked -for now just wait an estimated time (30 secondsish)
+
+Game Loop:
+Main Menu - Resources
+Then - select - go back to main menu
+Zeltex Background Stays in main menu - while resouces comes out - but it gets grayed out
+--------
+Main Menu - have Zeltex Fade in and out
+Use LevelViewer for this -> LevelMaker type implementation on viewing a voxelLevel
+Have a bot fly around map
+on press start - blurr out the camera of the bot
+if bot dies - the camera eventually moves to a new bot
+	but after 30 seconds of being on the old bot
+
+At start - load selected Resources
+Have option to change it in the main menu
+
+-- Combat --
+Cooldown indication for spells
+Property system for spells - SpellProperty
+Contains a name
+and a list of bools - key + name
+Show them in a list - the properties
+Click on them to open up their bools in list
+--
+Big characters get stuck - they need greater block radius to walk in
+Characters can't avoid other characters well - need to mark them as obstacles
+
+Head rotates (too fast) Have it maxed angle.
+
+Wander doesn't go up and down places - just in a random direction
+
+They try to shoot through walls
+Scaled up - the selection box wrong
+Scaled up - the bounds off - doesn't jump over stuff properly
+Add in commands in the level maker
+Summoned beings cant be selected
+
+
+
+Billboards to look at closest camera instead of just the main camera - Make a camera Manager for this
+
+Only spawn character guis when needing them - instead of 10 per
+
+Edit Character gui- from character placer:
+	- Inventory gui - can drag and drop items in
+	- AllItems Inventory - with scroll bar - when pick up from here, item stays in it
+	- Trash Item, if drag item in here, it will disintegrate - placed on top of the AllItems Inventory Gui
+
+Edit BotsData, save/load it in characters
+
+Edit character quests can give - same as items
+
+Edit character dialogues - same as items
+
+Save files to save map changes
+----
+If deleted characters in level -> add those to a list of actions done
+When saving level -> go through those flags -> and delete them from the level files
+Can Revert these changes too -> will clear the world and reload the data
+----
+Polygon Painter
+	-> Decouple the functions out of the viewer
+	-> The polygon editor will attach itself onto a gameObject with a mesh renderer -> and Create the Vertex Handlers on this
+	-> These handlers can be raycasted, whether inside a viewer or in the level editor (going to place and edit rocks in the level, as ItemObjects)
+
+----
+Done:
+Level Editor: Large
+Character Placer: Character list
+Cannot place more bots atm and save -> fix positioning bug
+Make Bullets not hit capsule colliders - only skeletons
+Make map export when i build Zeltex - Make it check various folders for resouces, including the zeltex folder
+
+Fixed:
+WOrld not set to worlds layer - same which its chunks
+Turn off capsule when selected
+Can't reopen model viewer (only toggles off)
+When going from big to small, deletes the voxel model?
+-------
+
+notes:
+
+use perlin noise and position of block to randomize the type of block placed down

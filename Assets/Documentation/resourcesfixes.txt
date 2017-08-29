@@ -1,0 +1,47 @@
+Upload resources pack with game upload
+
+minimize button for resources
+	-> gui fades awaya
+	-> and buttons appear at the sides
+	-> close button to restore the window
+	-> play button on bottom right
+
+Level Editor:
+	Bigger maps support - unlimited
+	Place a portal to the next level
+	If character is within 1 chunk of it, it will load the other level (100 units above)
+	Go through portal to get to next level
+	Fix Fullscreen
+	
+	If updated voxels, have it refresh the chunks with that voxel updated
+	Just a refresh button for now
+Character Painter:
+	List of characters
+	Select a character
+	Zoom in on one
+	pause all characters
+	let them roam
+	follow function on characters
+	Delete character
+	Reposition them using transform input fields
+
+
+Action bar:
+	Multiple levels of them - shift scroll to go up and down
+	Bag item will open up a bag window - the gui connects to the item
+	Item to hold an inventory
+	Inventory to be its own class
+
+
+
+
+---------
+Done:
+edit tab for resources
+play button from there -> doesn't reload them
+
+Minimap
+Scan button -> updates textures
+Load 3x3 textures - each of them are depdendent on the voxels
+
+Fix Animations Editing in skeletons!

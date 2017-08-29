@@ -1,0 +1,54 @@
+current:
+if loading a new resouces - with window open - reload the files list - event for this - similar to statistics event
+
+File Manager:
+	green icon for added and not saved
+	red icon for dirty
+	Add New, delete selected, open selected
+	can filter by saved/unsaved
+	Make names only save with save button
+	When cancel/confirm editing - close all the guis
+	No Icon for saved
+	Gray icon if unloaded (some files to only load when needed, can set this option on for the entire folder)
+
+Network:
+	yellow icon for saved local but not uploaded to server
+	Blue icon for checked out by other player
+
+Done:
+make file manager seperate from makers
+
+New Tool: Cut + Paste Voxels
+Cut tool - like voxels but completely removed
+Cut + paste tool for voxels
+Paste as new model
+Cut to new model
+
+In Game:
+Level select screen in menu window
+Tabs - Guis - Characters - Levels (switch between characters)
+	-Disable some of these options depending on game rules
+
+Bugs:
+Can't change texture map in voxel meta
+Can't add stats onto voxel meta
+Polygon model editing is bugged
+Normals don't work - cannot open them
+Stat textures file opening
+Voxel Meta doesn't open right file - Select
+GUI Lines - not working on blueprints
+Skeletons doesn't load other skeletons
+
+Things to add:
+Resizeable windows
+maximize for all guis
+Generate guis - or use custom data:
+	Use generator for Lore Element
+Gui Editor
+a toolbar with minimized guis
+a minimize function and animation for windows
+
+Things to do:
+Push textures into a Element - store either blueprints or texture
+	-Same with audioclip
+Push skeletons into a skeletonData element class - instead of a string - skeletons will use this data

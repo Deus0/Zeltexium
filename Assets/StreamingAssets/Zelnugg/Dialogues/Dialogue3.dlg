@@ -1,0 +1,21 @@
+/Dialogue
+/id Beginning
+/Character Hello There Pal.
+/Player ....So?
+/Character DIEEE MORTAL!
+/default Line 1
+/id Line 1
+/Character So How many People have you exploded in your life?
+/Player [1] Ummm... 	[2] ALOT, DIE VERMINS!
+/default Line 2
+/options Line 2,Line 3
+/id Line 2
+/Character Well now, thats just rude..
+/default Exit
+/id Line 3
+/Character Quite an impressive feat!
+/default Exit
+/id Exit
+/Character Now now, shoe away sonny jimmy ma boi.
+/default End
+/EndDialogue

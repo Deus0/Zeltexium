@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 99085effc9f3fc24aa1ebef1d8a539df
+labels:
+- Coroutine
+- EditorCoroutine
+- PlayCoroutine
+- EditMode
+- PlayMode
+timeCreated: 1469365155
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

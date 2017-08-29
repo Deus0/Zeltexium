@@ -1,0 +1,18 @@
+/Class Zetex
+/GiveStat Level
+/GiveStat Speed
+/GiveStat Experience
+/GiveStat Health
+/GiveStat Mana
+/GiveStat Energy
+/GiveStat HealthRegen
+/GiveStat ManaRegen
+/GiveStat EnergyRegen
+/GiveStat Strength
+
+/SkillBar
+/GiveItem Fayfay
+/GiveItem Color
+/GiveItem Shizepie Dirt
+/GiveItem Fayzagzi Bricks
+/EndSkillBar

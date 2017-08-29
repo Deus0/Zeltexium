@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &165594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 423562}
+  - component: {fileID: 11420666}
+  - component: {fileID: 11487848}
+  - component: {fileID: 114000010301214292}
+  - component: {fileID: 11404022}
+  m_Layer: 15
+  m_Name: SkeletonViewerPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &423562
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000016292068}
+  m_LocalPosition: {x: -5.087, y: 2.225, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &11404022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3a9a6f740d664689aa648d05850f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBodyPartsItems: 0
+  IsApplyJoints: 1
+--- !u!114 &11420666
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832ce6f5dd9c43543b64544c7ec4d288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkeletonName: Skeleton_0
+  MyCameraBone: {fileID: 0}
+  MyBoneHead: {fileID: 0}
+  MyBones: []
+  MyBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  BoneMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
+  BoneSize: 0.1
+  BoneColor:
+    serializedVersion: 2
+    rgba: 1481855797
+  IsShowJoints: 1
+  IsShowBones: 1
+  IsShowMeshes: 1
+  IsAnimating: 1
+  IsJointsColliders: 0
+  IsMeshColliders: 1
+  IsConvexMeshes: 0
+  OnLoadSkeleton:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  JointMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
+  JointColor:
+    serializedVersion: 2
+    rgba: 4282079792
+  JointSize: 0.08
+  IsReCalculateBounds: 0
+  DefaultBody: {fileID: 0}
+--- !u!114 &11487848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe42b738627f7d54ebcf066a73405b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedIndex: 0
+  IsPlayOnStart: 0
+  BeginAnimationName: Idle
+  CurrentTime: 0
+  TotalTime: 3
+  IsAnimating: 0
+  OnUpdateFrames:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnUpdatedTimeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  IsForceLoad: 0
+  IsAnimationLoop: 0
+  MyAnimations: []
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 165594}
+  m_IsPrefabParent: 1
+--- !u!114 &114000010301214292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae87f460ec6ca1249b1fc1c77286a0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsGridShown: 0
+  DoGenerateLines: 0
+  IsClear: 0
+  MainMaterial: {fileID: 2100000, guid: 9d2c5faf23819e2408adefb3281ee702, type: 2}
+  SubMaterial: {fileID: 2100000, guid: 1b6e1cebd8870ce4e9db9965893c6f4e, type: 2}
+  MainColor:
+    serializedVersion: 2
+    rgba: 587267840
+  SubColor:
+    serializedVersion: 2
+    rgba: 587235072
+  IsCentred: 1
+  GridSizeMin:
+    x: 0
+    y: 0
+    z: 0
+  GridSizeMax:
+    x: 64
+    y: 16
+    z: 64
+  Thickness: 0.01
+  LargeStep: 1
+  SmallStep: 1
+  IsScaleSize: 1
+  IsJustFloor: 0
+  IsForce: 0
+  IsCentredXZ: 1

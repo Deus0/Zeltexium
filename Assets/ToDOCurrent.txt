@@ -1,0 +1,3 @@
+add limits to total characters
+profile characters - reduce lag up to 20 characters
+ToDO: Make camera manager and link to billboards

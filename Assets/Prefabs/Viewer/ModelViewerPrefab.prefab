@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &132532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 432838}
+  - component: {fileID: 11413896}
+  - component: {fileID: 114000013356146192}
+  m_Layer: 15
+  m_Name: ModelViewerPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &432838
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132532}
+  m_LocalRotation: {x: 0.000015825031, y: -0.00008340179, z: -0.00000028312203, w: -1}
+  m_LocalPosition: {x: -1.1244061, y: 0.97780406, z: 0.015186423}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0018, y: 0.0095999995, z: 0}
+--- !u!114 &11413896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630fd58a9e59ad44ab2cc0dde993649a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebug: 0
+  MyUpdater: {fileID: 0}
+  MyDataBase: {fileID: 0}
+  MyVoxelDestroyParticles: {fileID: 142932, guid: 6dbad46039a03b94d9c855179b2ab4ba,
+    type: 2}
+  MyMaterials:
+  - {fileID: 2100000, guid: d9b2aeec7b4501f438b9c37e65cb7149, type: 2}
+  IsGameWorld: 0
+  IsDropItems: 0
+  IsDropParticles: 0
+  IsColliders: 1
+  IsConvex: 0
+  IsLighting: 0
+  CentreOffset: {x: 0, y: 0, z: 0}
+  MyLossyScale: {x: 0, y: 0, z: 0}
+  PropogationDecreaseRate: 0.78
+  SunBrightness: 255
+  DefaultBrightness: 0
+  MyVoxelTerrain: {fileID: 0}
+  IsHeight: 0
+  IsUseUpdater: 1
+  IsPaintOver: 0
+  IsMeshVisible: 1
+  IsCentreWorld: 1
+  VoxelScale: {x: 1, y: 1, z: 1}
+  WorldSize:
+    x: 0
+    y: 0
+    z: 0
+  PositionOffset:
+    x: 0
+    y: 0
+    z: 0
+  IsChunksCentred: 0
+  ChunkPool: []
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 132532}
+  m_IsPrefabParent: 1
+--- !u!114 &114000013356146192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae87f460ec6ca1249b1fc1c77286a0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsGridShown: 0
+  DoGenerateLines: 0
+  IsClear: 0
+  MainMaterial: {fileID: 2100000, guid: 9d2c5faf23819e2408adefb3281ee702, type: 2}
+  SubMaterial: {fileID: 2100000, guid: 1b6e1cebd8870ce4e9db9965893c6f4e, type: 2}
+  MainColor:
+    serializedVersion: 2
+    rgba: 4293590784
+  SubColor:
+    serializedVersion: 2
+    rgba: 4291414272
+  IsCentred: 1
+  GridSizeMin:
+    x: 0
+    y: 0
+    z: 0
+  GridSizeMax:
+    x: 64
+    y: 16
+    z: 64
+  Thickness: 0.03
+  LargeStep: 16
+  SmallStep: 1
+  IsScaleSize: 0
+  IsJustFloor: 0
+  IsForce: 0
+  IsCentredXZ: 0

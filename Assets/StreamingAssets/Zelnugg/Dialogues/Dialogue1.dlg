@@ -1,0 +1,24 @@
+
+/Dialogue
+/id Beginning
+/Character Goood Evening Sir.
+/Player Greetings.
+/Character I feel a dark and mysterious force coming from you.
+/default Line 1
+/id Line 1
+/Character But enough of that son. I have other matters to attend to. What is your favourite colour?
+/Player [1] Red
+[2] Blue
+/default Line 2
+/options Line 2,Line 3
+/id Line 2
+/Character Well, I don't think we can get along now.
+/default Exit
+/id Line 3
+/Character Me too!! I will give you this torch. Be wary of the darkness.
+/Character Alot of town folk being dissapearing, ya hear?
+/default Exit
+/id Exit
+/Character You should head further north to the town of Gales. You will find what you seek there.
+/default End
+/EndDialogue
