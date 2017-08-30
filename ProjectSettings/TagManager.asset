@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Character
+  - Bullet
+  - Sheild
+  - Item
+  - Bone
+  - SkeletonViewer
+  - BonePart
+  - CharacterGui
+  - World
+  - ButtonText
+  - Button
+  - Label
+  - LabelText
+  - List
+  - Scrollbar
+  - Header
+  - HeaderText
+  - Dropdown
+  - Toggle
+  - Background
+  - Viewer
+  - GuiBackground
+  - Input
+  - InputText
+  - Ground
+  - TextureEditor
+  - PhysicsPassthroughDuplicate
+  - projectile
+  - FxTemporaire
+  - Grabbable
+  - Hideable
+  - Bot
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Worlds
+  - Bullets
+  - Character
+  - Skeleton
+  - Guis
+  - Items
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - ViewerIgnoreRaycast
+  - ViewerBullets
+  - ViewerWorlds
+  - Viewer
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 1513278293
+    locked: 0
