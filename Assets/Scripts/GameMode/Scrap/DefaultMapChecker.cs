@@ -145,7 +145,7 @@ namespace Zeltex.Guis.Maker
         {
             //UploadState = "Beginning Upload";
             //yield return new WaitForSeconds(1f);
-            string MyFolderPath = FileUtil.GetFolderPath(MyFolderPaths[i]);
+            string MyFolderPath = DataManager.GetFolderPath(MyFolderPaths[i]);
             List<string> MyFiles = FileUtil.GetFilesOfType(MyFolderPath, MyFileExtensions[i]);  //.Substring(1)
             Debug.LogError("UPloading from " + MyFolderPath + ":" + MyFiles.Count + ":" + MyFileExtensions[i]);
             for (int j = 0; j < MyFiles.Count; j++) //
@@ -193,7 +193,7 @@ namespace Zeltex.Guis.Maker
         {
            // UploadState = "Beginning Upload";
             //yield return new WaitForSeconds(1f);
-            string MyFolderPath = FileUtil.GetFolderPath(MyFolderPaths[i]);
+            string MyFolderPath = DataManager.GetFolderPath(MyFolderPaths[i]);
             List<string> MyFiles = FileUtil.GetFilesOfType(MyFolderPath, MyFileExtensions[i]);//.Substring(1));
             //Debug.LogError("Uploading from " + MyFolderPath + ":" + MyFiles.Count + ":" + MyFileExtensions[i]);
             for (int j = 0; j < MyFiles.Count; j++) //
@@ -238,7 +238,7 @@ namespace Zeltex.Guis.Maker
         private IEnumerator LoadMap()
         {
             yield return null;
-            string MapPath = FileUtil.GetFolderPath("");
+            string MapPath = DataManager.GetFolderPath("");
             Debug.Log("Checking Directory " + MapPath);
             OnBegin();
             if (Directory.Exists(MapPath) == false)

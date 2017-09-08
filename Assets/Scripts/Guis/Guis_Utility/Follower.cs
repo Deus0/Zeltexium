@@ -19,7 +19,7 @@ namespace Zeltex.Guis
         [SerializeField]
         private Transform TargetObject;
         [SerializeField]
-        private Skeleton TargetSkeleton;
+        private SkeletonHandler TargetSkeleton;
         [SerializeField]
         private Character TargetCharacter;
 
@@ -70,9 +70,9 @@ namespace Zeltex.Guis
         {
             if (TargetSkeleton)
             {
-                AboveHeadHeight = TargetSkeleton.GetBounds().extents.y * TargetSkeleton.transform.parent.localScale.y;
+                AboveHeadHeight = TargetSkeleton.GetSkeleton().GetBounds().extents.y * TargetSkeleton.transform.parent.localScale.y;
                 AboveHeadHeight += transform.lossyScale.y * MyRect.GetHeight() * 0.6f;
-                return TargetSkeleton.GetBounds().center + new Vector3(0, AboveHeadHeight, 0);
+                return TargetSkeleton.GetSkeleton().GetBounds().center + new Vector3(0, AboveHeadHeight, 0);
             }
             else
             {

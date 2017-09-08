@@ -22,11 +22,6 @@ namespace Zeltex
         // Use this for initialization
         void Start()
         {
-            DataManager.Get().MapName = PlayerPrefs.GetString(DataManager.Get().ResourcesName, "");
-            if (DataManager.Get().MapName != "")
-            {
-                DataManager.Get().LoadAll();
-            }
             /*GameObject MainMenu = GuiSpawner.Get().SpawnGui("MainMenu");
             if (MainMenu)
             {

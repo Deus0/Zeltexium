@@ -26,7 +26,7 @@ namespace Zeltex
         private int OpenedFileIndex = -1;
         private Element OpenedElement;
         private bool IsDrawAllFields;
-        private bool IsDrawStatistics;
+        //private bool IsDrawStatistics;
 
         void OnGUI()
         {
@@ -67,7 +67,7 @@ namespace Zeltex
         {
             if (GUILayout.Button("Open Folder"))
             {
-                FileUtil.OpenPathInWindows(FileUtil.GetResourcesPath());
+                FileUtil.OpenPathInWindows(GetResourcesPath());
             }
             GUILayout.Label("MapName:");
             if (MapName == null)
@@ -174,7 +174,7 @@ namespace Zeltex
 
                 if (GUILayout.Button("Open Folder"))
                 {
-                    FileUtil.OpenPathInWindows(FileUtil.GetMapPath());
+                    FileUtil.OpenPathInWindows(GetMapPath());
                 }
                 if (GUILayout.Button("Save"))
                 {
@@ -194,7 +194,7 @@ namespace Zeltex
                 }
 
                 DrawFolders();
-                IsDrawStatistics = GUILayout.Toggle(IsDrawStatistics, "Statistics");
+                /*IsDrawStatistics = GUILayout.Toggle(IsDrawStatistics, "Statistics");
                 if (IsDrawStatistics)
                 {
                     List<string> MyStatistics = GetStatisticsList();
@@ -206,7 +206,7 @@ namespace Zeltex
                     {
                         GUILayout.Label("Error, no stats.");
                     }
-                }
+                }*/
             }
         }
 
@@ -217,10 +217,10 @@ namespace Zeltex
         private void DrawSelectedFolder()
         {
             GUILayout.Space(30);
-            GUILayout.Label("Opened Folder [" + OpenedFolderName + "]");
+            GUILayout.Label("Opened Folder [" + OpenedFolderName + "] " + DataFolderNames.GetDataType(OpenedFolderName).ToString());
             if (GUILayout.Button("Open " + OpenedFolderName))
             {
-                string FolderPath = FileUtil.GetMapPath() + OpenedFolderName + "/";
+                string FolderPath = GetMapPath() + OpenedFolderName + "/";
                 if (System.IO.Directory.Exists(FolderPath) == false)
                 {
                     System.IO.Directory.CreateDirectory(FolderPath);
@@ -266,7 +266,7 @@ namespace Zeltex
                     }
                     else
                     {
-                        DataFolder<Texture2D> MyFolder = GetTextureFolder(OpenedFolderName);
+                        /*DataFolder<Texture2D> MyFolder = GetTextureFolder(OpenedFolderName);
                         if (MyFolder != null)
                         {
                             Texture2D NewTexture = new Texture2D(
@@ -277,7 +277,7 @@ namespace Zeltex
                             NewTexture.wrapMode = TextureWrapMode.Clamp;
                             NewTexture.name = NameGenerator.GenerateVoxelName();
                             MyFolder.Add(NewTexture.name, NewTexture);
-                        }
+                        }*/
                     }
                 }
                 if (!IsOpenedElementFolder)
@@ -333,8 +333,8 @@ namespace Zeltex
             {
                 MyFolder.Revert();
             }
-            DataFolder<Texture2D> MyFolder2 = GetTextureFolder(FolderName);
-            if (MyFolder2 != null)
+            //DataFolder<Texture2D> MyFolder2 = GetTextureFolder(FolderName);
+            //if (MyFolder2 != null)
             {
                 //MyFolder2.Revert(IsJSONFormat);
             }
@@ -345,20 +345,27 @@ namespace Zeltex
             if (IsOpenedElementFolder)
             {
                 int ElementCount = 0;
-                foreach (KeyValuePair<string, Element> MyKeyValuePair in ElementFolders[OpenedFolderIndex].Data)
+                try
                 {
-                    if (GUILayout.Button(MyKeyValuePair.Key))
+                    foreach (KeyValuePair<string, Element> MyKeyValuePair in ElementFolders[OpenedFolderIndex].Data)
                     {
-                        // open file
-                        OpenedElement = MyKeyValuePair.Value;
-                        OpenedFileName = MyKeyValuePair.Key;
-                        OpenedFileIndex = ElementCount;
-                        if (HasOpenedZexels())
+                        if (GUILayout.Button(MyKeyValuePair.Key))
                         {
-                            OpenedTexture = MyKeyValuePair.Value as Zexel;
+                            // open file
+                            OpenedElement = MyKeyValuePair.Value;
+                            OpenedFileName = MyKeyValuePair.Key;
+                            OpenedFileIndex = ElementCount;
+                            if (HasOpenedZexels())
+                            {
+                                OpenedTexture = MyKeyValuePair.Value as Zexel;
+                            }
                         }
+                        ElementCount++;
                     }
-                    ElementCount++;
+                }
+                catch (System.ObjectDisposedException e)
+                {
+
                 }
             }
         }
@@ -370,14 +377,14 @@ namespace Zeltex
             GUILayout.Label("Folders: " + ElementFolders.Count);
             for (int i = 0; i < ElementFolders.Count; i++)
             {
-                if (GUILayout.Button(ElementFolders[i].FolderName))
+                if (GUILayout.Button(ElementFolders[i].FolderName + " [" + GetSize(ElementFolders[i].FolderName) + "]"))
                 {
                     OpenedFolderName = ElementFolders[i].FolderName;
                     OpenedFolderIndex = i;
                     IsOpenedElementFolder = true;
                 }
             }
-            for (int i = 0; i < TextureFolders.Count; i++)
+            /*for (int i = 0; i < TextureFolders.Count; i++)
             {
                 if (GUILayout.Button(TextureFolders[i].FolderName))
                 {
@@ -385,22 +392,24 @@ namespace Zeltex
                     OpenedFolderIndex = i;
                     IsOpenedElementFolder = false;
                 }
-            }
+            }*/
         }
 
         private List<string> GetStatisticsList()
         {
             List<string> MyStatistics = new List<string>();
-            int TotalCount = StringFolders.Count + TextureFolders.Count + AudioFolders.Count + ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count + 
+            int TotalCount = StringFolders.Count +ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count +  TextureFolders.Count + AudioFolders.Count + 
             MyStatistics.Add("DataManager -:- Folders: " + TotalCount);
             for (int i = 0; i < StringFolders.Count; i++)
             {
                 MyStatistics.Add("String[" + i + "]: " + StringFolders[i].FolderName + ":" + StringFolders[i].Data.Count);
             }
-            for (int i = 0; i < AudioFolders.Count; i++)
+            /*for (int i = 0; i < AudioFolders.Count; i++)
             {
                 MyStatistics.Add("Audio[" + i + "]: " + AudioFolders[i].FolderName + ":" + AudioFolders[i].Data.Count);
             }
+            
+             */
             for (int i = 0; i < ElementFolders.Count; i++)
             {
                 MyStatistics.Add("Elements[" + i + "]: " + ElementFolders[i].FolderName + ":" + ElementFolders[i].Data.Count);
@@ -413,8 +422,8 @@ namespace Zeltex
 
         private void RenameResourcesFolder(string NewName)
         {
-            string OldFolderPath = FileUtil.GetResourcesPath() + MapName + "/";
-            string NewFolderPath = FileUtil.GetResourcesPath() + NewName + "/";
+            string OldFolderPath = GetResourcesPath() + MapName + "/";
+            string NewFolderPath = GetResourcesPath() + NewName + "/";
             if (System.IO.Directory.Exists(NewFolderPath) == false)
             {
                 System.IO.Directory.Move(OldFolderPath, NewFolderPath);

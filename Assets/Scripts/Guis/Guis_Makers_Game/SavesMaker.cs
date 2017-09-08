@@ -40,7 +40,7 @@ namespace Zeltex.Guis.Maker
 
         public override void OnBegin()
         {
-            string MyFolderPath = FileUtil.GetFolderPath(DataFolderNames.Saves + "/");    // get folder path
+            string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/");    // get folder path
             string[] MyDirectories = Directory.GetDirectories(MyFolderPath);
             GuiList SavesList = GetListHandler("SavesList");
             Debug.Log("Saves folder path is:" + MyFolderPath + " with " + MyDirectories.Length + " Saves!");
@@ -160,7 +160,7 @@ namespace Zeltex.Guis.Maker
             GetButton("PlayGameButton").interactable = true;
             GuiList SavesList = GetListHandler("SavesList");
             string SaveGameName = GetInput("NameInput").text;
-            string MyDirectory = FileUtil.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
+            string MyDirectory = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
             if (Directory.Exists(MyDirectory) == false)
             {
                 Directory.CreateDirectory(MyDirectory);
@@ -204,7 +204,7 @@ namespace Zeltex.Guis.Maker
             if (MyList.GetSelected() >= 0 && MyList.GetSize() > 0)
             {
                 string SaveGameName = MyList.GetSelectedName();
-                string SaveGamePath = FileUtil.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + DefaultLevelName;
+                string SaveGamePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + DefaultLevelName;
                 string SaveGameScript = FileUtil.Load(SaveGamePath);
                 // remove first line
                 List<string> CharacterScript = FileUtil.ConvertToList(SaveGameScript);
@@ -248,7 +248,7 @@ namespace Zeltex.Guis.Maker
             if (MyList.GetSelected() >= 0 && MyList.GetSize() > 0)
             {
                 string SaveGameName = MyList.GetSelectedName();
-                string LevelPath = FileUtil.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
+                string LevelPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
                 if (Directory.Exists(LevelPath))
                 {
                     Directory.Delete(LevelPath, true);

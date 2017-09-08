@@ -129,7 +129,7 @@ namespace Zeltex.Generators
                     MyMeta.Name += " Leaves";
                 }
                 MyMeta.OnModified();
-                DataManager.Get().AddTexture(DataFolderNames.VoxelDiffuseTextures, NewTexture);
+                //DataManager.Get().AddTexture(DataFolderNames.VoxelDiffuseTextures, NewTexture);
                 DataManager.Get().AddElement(DataFolderNames.VoxelMeta, MyMeta);
 				yield return new WaitForSeconds(LoadingDelay);
             }

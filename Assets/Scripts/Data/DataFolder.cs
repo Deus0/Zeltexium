@@ -91,7 +91,7 @@ namespace Zeltex
 		public string GetFolderPath()
 		{
             // Creates the folder path if doesn't exist!
-			return FileUtil.GetFolderPath(FolderName + "/");
+			return DataManager.GetFolderPath(FolderName + "/");
 		}
 
         private void LoadAllNames()

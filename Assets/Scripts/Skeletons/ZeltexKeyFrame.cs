@@ -23,6 +23,7 @@ namespace Zeltex.Skeletons
         public AnimationCurve AnimationCurveScaleX;
         public AnimationCurve AnimationCurveScaleY;
         public AnimationCurve AnimationCurveScaleZ;
+
         public ZeltexKeyFrame(Transform MyTransform)
         {
             AnimationCurvePositionX = new AnimationCurve();

@@ -77,6 +77,15 @@ namespace Zeltex
         private Dictionary<string, Logbook> LogBooks = new Dictionary<string, Logbook>();
         [SerializeField]
         private List<LogDraw> LogDraws = new List<LogDraw>();
+
+        public new static LogManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.FindObjectOfType<LogManager>();
+            }
+            return MyManager;
+        }
     
         public void Log(string NewLine, string Channel = "Default")
         {
@@ -86,6 +95,7 @@ namespace Zeltex
             }
             Logbook MyBook = LogBooks[Channel];
             MyBook.Log(NewLine);
+            Debug.Log(NewLine);
         }
 
         private void OnGUI()

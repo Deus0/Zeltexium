@@ -223,8 +223,8 @@ namespace Zeltex.Guis.Maker
             {
                 if (MyDropdown.value > 0)
                 {
-					GetSelectedStat().SetTexture(DataManager.Get().GetTexture("StatTextures", MyDropdown.value - 1));
-                    GetImage("TextureImage").texture = GetSelectedStat().GetTexture();
+					//GetSelectedStat().SetTexture(DataManager.Get().GetTexture("StatTextures", MyDropdown.value - 1));
+                   // GetImage("TextureImage").texture = GetSelectedStat().GetTexture();
                 }
             }
 			// change the type of stat

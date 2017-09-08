@@ -113,6 +113,9 @@ namespace Zeltex.Networking
         
         public void HostGame()
         {
+//#if UNITY_WEBGL
+           // useWebSockets = true;
+//#endif
             //Debug.LogError("Hosting from " + name);
             IsHost = true;
             StartHost();
@@ -132,6 +135,9 @@ namespace Zeltex.Networking
 
         public void JoinGame()
         {
+/*#if UNITY_WEBGL
+            useWebSockets = true;
+#endif*/
             StartClient();
         }
 

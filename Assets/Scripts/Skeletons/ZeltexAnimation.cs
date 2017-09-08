@@ -7,14 +7,13 @@ namespace Zeltex.Skeletons
 {
 
     /// <summary>
-    /// Each ZeltexAnimation contains a bunch of keyframes, connected to transforms
+    /// Each Zanimation contains a bunch of keyframes, connected to transforms
     /// Uses transform names for bone positions
     /// </summary>
     [System.Serializable]
-    public class ZeltexAnimation
+    public class Zanimation : Element
     {
         #region Variables
-        public string Name = "";
         public List<ZeltexKeyFrame> MyKeyFrames = new List<ZeltexKeyFrame>();
         string LineType = "";   // used for reading script
         #endregion
@@ -33,6 +32,28 @@ namespace Zeltex.Skeletons
             // Clear curves
             MyKeyFrames.Clear();
         }
+
+        /// <summary>
+        /// Add a keyframe to the animation
+        /// </summary>
+        public void AddKeyFrame(Transform MyObject, ZeltexKeyFrame MyFrames)
+        {
+            if (MyObject == null)
+            {
+                Debug.LogError("Trying to add null MyObject");
+                return;
+            }
+            for (int i = 0; i < MyKeyFrames.Count; i++)
+            {
+                if (MyKeyFrames[i].MyObject == MyObject)
+                {
+                    MyKeyFrames[i] = MyFrames;
+                    return;
+                }
+            }
+            MyKeyFrames.Add(MyFrames);
+        }
+
         /// <summary>
         /// Add a keyframe to the animation
         /// </summary>

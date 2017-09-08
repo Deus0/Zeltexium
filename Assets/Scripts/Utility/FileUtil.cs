@@ -62,78 +62,6 @@ namespace Zeltex.Util
                 return false;
             }*/
         }
-
-        /// <summary>
-        /// The main function for the files folder path
-        /// </summary>
-        public static string GetFolderPath(string SubFolderName)//, string FileExtension)
-        {
-            string FolderPath = "";// = FileUtil.GetSaveFolderPath(, MyWorld);
-            FolderPath = GetMapPath() + SubFolderName;// + "/";
-            //Debug.Log("Returning new FolderPath: " + FolderPath);
-            return FolderPath;
-        }
-
-        /// <summary>
-        /// Folder path of current map
-        /// </summary>
-        public static string GetMapPath()
-        {
-            string CurrentMapPath = GetResourcesPath();
-            if (DataManager.Get().MapName != "")
-            {
-                CurrentMapPath += DataManager.Get().MapName + "/";
-            }
-            return CurrentMapPath;
-        }
-        public static string GetMapPath(string NewMapName)
-        {
-            if (NewMapName != "")
-            {
-                return GetResourcesPath() + NewMapName + "/";
-            }
-            else return GetResourcesPath();
-        }
-
-        /// <summary>
-        /// Folder Path of maps
-        /// </summary>
-        public static string GetResourcesPath()
-        {
-            if (DataManager.Get().MyFilePathType == FilePathType.PersistentPath)
-            {
-                // "C:/Users/Marz/AppData/LocalLow/Zeltex/Zeltex/";//  + " / ";// + "/Resources/";
-                DataManager.Get().MapFolderPath = Application.persistentDataPath + "/";
-            }
-            else if (DataManager.Get().MyFilePathType == FilePathType.StreamingPath)
-            {
-                // mac or OS
-#if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-                DataManager.Get().MapFolderPath = Application.dataPath + "/StreamingAssets/";
-
-#elif UNITY_ANDROID
-                //On Android, use:
-                MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
-#elif UNITY_IOS
-                //On iOS, use:
-                MapFolderPath = Application.dataPath + "/Raw";
-#endif
-            }
-            else
-            {
-                DataManager.Get().MapFolderPath = Application.dataPath + "/";
-                DataManager.Get().MapFolderPath += "Resources/";
-#if UNITY_EDITOR
-                DataManager.Get().MapFolderPath += "ResourcePacks/";
-#endif
-            }
-            if (!Directory.Exists(DataManager.Get().MapFolderPath))
-            {
-                Directory.CreateDirectory(DataManager.Get().MapFolderPath);
-                Debug.Log("Created Resouces FolderPath [" + DataManager.Get().MapFolderPath + "]");
-            }
-            return DataManager.Get().MapFolderPath;
-        }
 #endregion
 
 #region FileUtil
@@ -480,8 +408,7 @@ namespace Zeltex.Util
             Debug.Log("Importing file: " + ObjectName + ":" + FunctionName + " - " + FileType);
 #if UNITY_WEBGL
             Application.ExternalCall("Import", ObjectName, FunctionName, FileType);
-#else
-
+#elif UNITY_EDITOR
             System.Windows.Forms.OpenFileDialog MyOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             MyOpenFileDialog.Filter = "*." + FileType + "| *." + FileType;
             MyOpenFileDialog.Multiselect = true;
@@ -506,7 +433,7 @@ namespace Zeltex.Util
             Debug.Log("Exporting file: " + Name);
 #if UNITY_WEBGL
             Application.ExternalCall("Export", Name + "." + FileExtension, Data);
-#else
+#elif UNITY_EDITOR
 
             /*if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
             {
@@ -535,7 +462,7 @@ namespace Zeltex.Util
             Debug.Log("Exporting file: " + Name);
 #if UNITY_WEBGL
             Application.ExternalCall("ExportImage", Name + "." + FileExtension, Data);
-#else
+#elif UNITY_EDITOR
             System.Windows.Forms.SaveFileDialog MySaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             MySaveFileDialog.Filter = "*." + FileExtension + "| *." + FileExtension;
             //OpenFileDialog open = new OpenFileDialog();

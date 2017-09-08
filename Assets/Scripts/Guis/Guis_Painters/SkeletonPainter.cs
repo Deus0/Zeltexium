@@ -62,7 +62,7 @@ namespace Zeltex.Guis.Maker
         public SkeletonPaintType PaintType;         // interaction state
         // selected things
         [SerializeField]
-        private Skeleton MySkeleton;                 // skeleton that we are editing
+        private SkeletonHandler MySkeleton;                 // skeleton that we are editing
         [SerializeField]
         private Bone SelectedBone;
         [Header("Options")]
@@ -135,7 +135,7 @@ namespace Zeltex.Guis.Maker
                         {
                             BoneTransform = SelectedBone.MyTransform;
                         }
-                        Bone MyBone = MySkeleton.CreateBone(BoneTransform);
+                        Bone MyBone = MySkeleton.GetSkeleton().CreateBone(BoneTransform);
                         if (MyBone != null)
                         {
                             SelectedTransform = BoneTransform;
@@ -330,7 +330,7 @@ namespace Zeltex.Guis.Maker
             {
                 return null;
             }
-            if (MyObject.gameObject.GetComponent<Skeleton>())
+            if (MyObject.gameObject.GetComponent<SkeletonHandler>())
             {
                 return MyObject.gameObject;
             }
@@ -390,7 +390,7 @@ namespace Zeltex.Guis.Maker
                         if (MySkeleton)
                         {
                             //SelectedTransform = HitChunk.GetWorld().transform;
-                            SelectSkeleton(MySkeleton.GetComponent<Skeleton>());
+                            SelectSkeleton(MySkeleton.GetComponent<SkeletonHandler>());
                         }
                         else
                         {
@@ -546,7 +546,7 @@ namespace Zeltex.Guis.Maker
         /// Update the bones list
         /// Update statistics (bones, meshes, IKs)
         /// </summary>
-        private void SelectSkeleton(Skeleton NewSkeleton, bool IsForceSelect = false)
+        private void SelectSkeleton(SkeletonHandler NewSkeleton, bool IsForceSelect = false)
         {
             if (MySkeleton != NewSkeleton || IsForceSelect)
             {
@@ -581,13 +581,13 @@ namespace Zeltex.Guis.Maker
                 // for example, hide bones! hide grid!
                 // Restore bot movement!
                 MySkeleton.GetComponent<GridOverlay>().SetState(false);
-                MySkeleton.SetXRay(false);
-                MySkeleton.SetMeshVisibility(true);
-                MySkeleton.SetBoneVisibility(false);
-                MySkeleton.SetJointColliders(false);
-                MySkeleton.SetCapsuleCollider(false);
-                MySkeleton.SetMeshColliders(true);
-                MySkeleton.SetConvex(true);
+                MySkeleton.GetSkeleton().SetXRay(false);
+                MySkeleton.GetSkeleton().SetMeshVisibility(true);
+                MySkeleton.GetSkeleton().SetBoneVisibility(false);
+                MySkeleton.GetSkeleton().SetJointColliders(false);
+                MySkeleton.GetSkeleton().SetCapsuleCollider(false);
+                MySkeleton.GetSkeleton().SetMeshColliders(true);
+                MySkeleton.GetSkeleton().SetConvex(true);
                 if (MySkeleton.transform.parent != null)
                 {
                     CapsuleCollider MyCapsule = MySkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
@@ -622,17 +622,17 @@ namespace Zeltex.Guis.Maker
             {
                 MySkeleton.GetComponent<GridOverlay>().SetState(GetToggle("GridLinesToggle").isOn);
             }
-            MySkeleton.ShowJoints();
-            MySkeleton.SetXRay(GetToggle("XRayToggle").isOn);
-            MySkeleton.SetMeshVisibility(GetToggle("MeshVisibilityToggle").isOn);
-            MySkeleton.SetBoneVisibility(GetToggle("BoneVisibilityToggle").isOn);
+            MySkeleton.GetSkeleton().ShowJoints();
+            MySkeleton.GetSkeleton().SetXRay(GetToggle("XRayToggle").isOn);
+            MySkeleton.GetSkeleton().SetMeshVisibility(GetToggle("MeshVisibilityToggle").isOn);
+            MySkeleton.GetSkeleton().SetBoneVisibility(GetToggle("BoneVisibilityToggle").isOn);
             
             //Debug.LogError(MySkeleton.name + " is getting colliders set: " + SelectionType.ToString());
             int CollisionLayer = GetDropdown("SelectionDropdown").value;
-            MySkeleton.SetConvex(false);
-            MySkeleton.SetJointColliders(CollisionLayer == 0);    // value is 0
-            MySkeleton.SetMeshColliders(CollisionLayer == 1);        // value is 1
-            MySkeleton.SetCapsuleCollider(CollisionLayer == 2);
+            MySkeleton.GetSkeleton().SetConvex(false);
+            MySkeleton.GetSkeleton().SetJointColliders(CollisionLayer == 0);    // value is 0
+            MySkeleton.GetSkeleton().SetMeshColliders(CollisionLayer == 1);        // value is 1
+            MySkeleton.GetSkeleton().SetCapsuleCollider(CollisionLayer == 2);
             if (MySkeleton.transform.parent != null)
             {
                 CapsuleCollider MyCapsule = MySkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
@@ -678,7 +678,7 @@ namespace Zeltex.Guis.Maker
             if (MySkeleton)
             {
                 MyStatistics.Add(MySkeleton.name);
-                MyStatistics.Add("Bones Count [" + MySkeleton.MyBones.Count + "]");
+                MyStatistics.Add("Bones Count [" + MySkeleton.GetBones().Count + "]");
             }
             else
             {
@@ -701,11 +701,11 @@ namespace Zeltex.Guis.Maker
                 // make sure use parent bone for this, instead of the helper mesh [Joint X]
                 MyObject = MyObject.transform.parent.gameObject;
                 Debug.Log("Selected new joint: " + MyObject.name);
-                for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+                for (int i = 0; i < MySkeleton.GetBones().Count; i++)
                 {
-                    if (MyObject.transform == MySkeleton.MyBones[i].MyTransform)   // Selecting Bone
+                    if (MyObject.transform == MySkeleton.GetBones()[i].MyTransform)   // Selecting Bone
                     {
-                        SelectBone(MySkeleton.MyBones[i]);
+                        SelectBone(MySkeleton.GetBones()[i]);
                         WasFound = true;
                         break;
                     }
@@ -741,11 +741,11 @@ namespace Zeltex.Guis.Maker
         {
             if (MySkeleton)
             {
-                for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+                for (int i = 0; i < MySkeleton.GetBones().Count; i++)
                 {
-                    if (MySkeleton.MyBones[i].Name == MyName)
+                    if (MySkeleton.GetBones()[i].Name == MyName)
                     {
-                        SelectBone(MySkeleton.MyBones[i]);
+                        SelectBone(MySkeleton.GetBones()[i]);
                         break;
                     }
                 }
@@ -779,7 +779,7 @@ namespace Zeltex.Guis.Maker
             {
                 if (MySkeleton && SelectedBone.MyJointCube)
                 {
-                    MySkeleton.RestoreBoneColor(SelectedBone);
+                    MySkeleton.GetSkeleton().RestoreBoneColor(SelectedBone);
                 }
                 SelectedBone = null;
             }
@@ -806,10 +806,10 @@ namespace Zeltex.Guis.Maker
         private TransformHandler MyTransformHandler;
         private void SelectCapsule(GameObject MyObject)
         {
-            if (MyObject == MySkeleton.GetCapsule() && MySkeleton.GetCapsuleRenderer())
+            if (MyObject == MySkeleton.GetSkeleton().GetCapsule() && MySkeleton.GetSkeleton().GetCapsuleRenderer())
             {
                 //MySkeleton.GetCapsuleRenderer().enabled = true;
-                MySkeleton.GetCapsuleRenderer().material.color = SelectedJointColor;
+                MySkeleton.GetSkeleton().GetCapsuleRenderer().material.color = SelectedJointColor;
                 //MyTransformHandler.Set(MyObject.transform);
             }
             //MyObject.GetComponent<MeshRenderer>().material.color = MySkeleton.BoneColor;
@@ -826,7 +826,7 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// Returns a skeleton if one is selected
         /// </summary>
-        public Skeleton GetSelectedSkeleton()
+        public SkeletonHandler GetSelectedSkeleton()
         {
             return MySkeleton;
         }
@@ -850,11 +850,11 @@ namespace Zeltex.Guis.Maker
                 //MyWorld.Tint(SelectedMeshColor);
             }
             bool WasFound = false;
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+            for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
-                if (MyObject.transform == MySkeleton.MyBones[i].VoxelMesh) // Selecting mesh
+                if (MyObject.transform == MySkeleton.GetBones()[i].VoxelMesh) // Selecting mesh
                 {
-                    SelectBone(MySkeleton.MyBones[i]);
+                    SelectBone(MySkeleton.GetBones()[i]);
                     WasFound = true;
                     break;
                 }
@@ -886,7 +886,8 @@ namespace Zeltex.Guis.Maker
             if (SelectedBone != null)
             {
                 string MySphereData = VoxelModelGenerator.Get().GetSphere();
-                MySkeleton.CreateMesh(SelectedBone, MySphereData);
+                SelectedBone.CreateMesh(MySphereData);
+                //MySkeleton.GetSkeleton().CreateMesh(SelectedBone, MySphereData);
                 GetButton("DeleteSelectedMeshButton").interactable = true;
             }
         }
@@ -896,7 +897,8 @@ namespace Zeltex.Guis.Maker
             if (SelectedBone != null)
             {
                 string VoxelData = DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("VoxelModelDropdown").value);
-                MySkeleton.CreateMesh(SelectedBone, VoxelData);
+                //MySkeleton.GetSkeleton().CreateMesh(SelectedBone, VoxelData);
+                SelectedBone.CreateMesh(VoxelData);
                 GetButton("DeleteSelectedMeshButton").interactable = true;
             }
         }
@@ -1137,31 +1139,31 @@ namespace Zeltex.Guis.Maker
                 {
                     float NewInput = float.Parse(MyInputField.text);
                     MyInputField.text = NewInput.ToString();
-                    MySkeleton.SetCapsuleCenter(new Vector3(NewInput, MySkeleton.GetCapsuleCenter().y, MySkeleton.GetCapsuleCenter().z));
+                    MySkeleton.GetSkeleton().SetCapsuleCenter(new Vector3(NewInput, MySkeleton.GetSkeleton().GetCapsuleCenter().y, MySkeleton.GetSkeleton().GetCapsuleCenter().z));
                 }
                 else if (MyInputField.name == "CapsuleInputY")
                 {
                     float NewInput = float.Parse(MyInputField.text);
                     MyInputField.text = NewInput.ToString();
-                    MySkeleton.SetCapsuleCenter(new Vector3(MySkeleton.GetCapsuleCenter().x, NewInput, MySkeleton.GetCapsuleCenter().z));
+                    MySkeleton.GetSkeleton().SetCapsuleCenter(new Vector3(MySkeleton.GetSkeleton().GetCapsuleCenter().x, NewInput, MySkeleton.GetSkeleton().GetCapsuleCenter().z));
                 }
                 else if (MyInputField.name == "CapsuleInputZ")
                 {
                     float NewInput = float.Parse(MyInputField.text);
                     MyInputField.text = NewInput.ToString();
-                    MySkeleton.SetCapsuleCenter(new Vector3(MySkeleton.GetCapsuleCenter().x, MySkeleton.GetCapsuleCenter().y, NewInput));
+                    MySkeleton.GetSkeleton().SetCapsuleCenter(new Vector3(MySkeleton.GetSkeleton().GetCapsuleCenter().x, MySkeleton.GetSkeleton().GetCapsuleCenter().y, NewInput));
                 }
                 else if (MyInputField.name == "CapsuleHeightInput")
                 {
                     float NewInput = float.Parse(MyInputField.text);
                     MyInputField.text = NewInput.ToString();
-                    MySkeleton.SetCapsuleHeight(NewInput);
+                    MySkeleton.GetSkeleton().SetCapsuleHeight(NewInput);
                 }
                 else if (MyInputField.name == "CapsuleRadiusInput")
                 {
                     float NewInput = float.Parse(MyInputField.text);
                     MyInputField.text = NewInput.ToString();
-                    MySkeleton.SetCapsuleRadius(NewInput);
+                    MySkeleton.GetSkeleton().SetCapsuleRadius(NewInput);
                 }
             }
         }
@@ -1170,11 +1172,11 @@ namespace Zeltex.Guis.Maker
         {
             if (MySkeleton)
             {
-                GetInput("CapsuleInputX").text = MySkeleton.GetCapsuleCenter().x + "";
-                GetInput("CapsuleInputY").text = MySkeleton.GetCapsuleCenter().y + "";
-                GetInput("CapsuleInputZ").text = MySkeleton.GetCapsuleCenter().z + "";
-                GetInput("CapsuleHeightInput").text = MySkeleton.GetCapsuleHeight() + "";
-                GetInput("CapsuleRadiusInput").text = MySkeleton.GetCapsuleRadius() + "";
+                GetInput("CapsuleInputX").text = MySkeleton.GetSkeleton().GetCapsuleCenter().x + "";
+                GetInput("CapsuleInputY").text = MySkeleton.GetSkeleton().GetCapsuleCenter().y + "";
+                GetInput("CapsuleInputZ").text = MySkeleton.GetSkeleton().GetCapsuleCenter().z + "";
+                GetInput("CapsuleHeightInput").text = MySkeleton.GetSkeleton().GetCapsuleHeight() + "";
+                GetInput("CapsuleRadiusInput").text = MySkeleton.GetSkeleton().GetCapsuleRadius() + "";
             }
             else
             {
@@ -1207,22 +1209,22 @@ namespace Zeltex.Guis.Maker
                     }*/
                     if (MyDropdown.value == 0)
                     {
-                        MySkeleton.SetMeshColliders(false);
-                        MySkeleton.SetJointColliders(true);
-                        MySkeleton.SetCapsuleCollider(false);
+                        MySkeleton.GetSkeleton().SetMeshColliders(false);
+                        MySkeleton.GetSkeleton().SetJointColliders(true);
+                        MySkeleton.GetSkeleton().SetCapsuleCollider(false);
                     }
                     else if (MyDropdown.value == 1)
                     {
-                        MySkeleton.SetMeshColliders(true);
-                        MySkeleton.SetJointColliders(false);
-                        MySkeleton.SetCapsuleCollider(false);
+                        MySkeleton.GetSkeleton().SetMeshColliders(true);
+                        MySkeleton.GetSkeleton().SetJointColliders(false);
+                        MySkeleton.GetSkeleton().SetCapsuleCollider(false);
                     }
                     // Collider
                     else if (MyDropdown.value == 2)
                     {
-                        MySkeleton.SetMeshColliders(false);
-                        MySkeleton.SetJointColliders(false);
-                        MySkeleton.SetCapsuleCollider(true);
+                        MySkeleton.GetSkeleton().SetMeshColliders(false);
+                        MySkeleton.GetSkeleton().SetJointColliders(false);
+                        MySkeleton.GetSkeleton().SetCapsuleCollider(true);
                     }
                 }
             }
@@ -1248,7 +1250,7 @@ namespace Zeltex.Guis.Maker
                     else if (MyToggle.name == "XRayToggle")
                     {
                         // for bones, set all the shaders differently
-                        MySkeleton.SetXRay(MyToggle.isOn);
+                        MySkeleton.GetSkeleton().SetXRay(MyToggle.isOn);
                     }
                     if (MyToggle.name == "MeshVisibilityToggle")
                     {
@@ -1256,7 +1258,7 @@ namespace Zeltex.Guis.Maker
                     }
                     else if (MyToggle.name == "BoneVisibilityToggle")
                     {
-                        MySkeleton.SetBoneVisibility(MyToggle.isOn);
+                        MySkeleton.GetSkeleton().SetBoneVisibility(MyToggle.isOn);
                     }
                     else if (MyToggle.name == "IndependentModeToggle")
                     {
@@ -1321,7 +1323,7 @@ namespace Zeltex.Guis.Maker
                         if (MySkeleton != null && SelectedBone != null)
                         {
                             int MeshIndex = GetDropdown("VoxelModelDropdown").value;
-                            MySkeleton.CreateMesh(SelectedBone, DataManager.Get().Get(DataFolderNames.VoxelModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
+                            SelectedBone.CreateMesh(DataManager.Get().Get(DataFolderNames.VoxelModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
                         }
                     }
                     else if (MyButton.name == "ExplodeButton")
@@ -1348,11 +1350,11 @@ namespace Zeltex.Guis.Maker
                     }
                     else if (MyButton.name == "RestoreDefaultPose")
                     {
-                        MySkeleton.RestoreDefaultPose();
+                        MySkeleton.GetSkeleton().RestoreDefaultPose();
                     }
                     else if (MyButton.name == "SetDefaultPose")
                     {
-                        MySkeleton.SetDefaultPose();
+                        MySkeleton.GetSkeleton().SetDefaultPose();
                     }
                     else if (MyButton.name == "CopyButton")
                     {
@@ -1384,21 +1386,21 @@ namespace Zeltex.Guis.Maker
 
         public void Copy()
         {
-            if (MySkeleton)
+            //if (MySkeleton)
             {
-                MyCopyData = MySkeleton.GetComponent<Skeleton>().GetScriptList();
+                //MyCopyData = MySkeleton.GetComponent<Skeleton>().GetScriptList();
                 GetButton("PasteButton").interactable = true;
             }
         }
 
         public void Paste()
         {
-            if (MySkeleton)
+            //if (MySkeleton)
             {
                 if (MyCopyData.Count > 0)
                 {
                     Debug.Log("Pasting copied Voxels: " + MyCopyData.Count);
-                    MySkeleton.GetComponent<Skeleton>().RunScript(MyCopyData);
+                    //MySkeleton.RunScript(MyCopyData);
                     MyCopyData.Clear();
                     GetButton("PasteButton").interactable = false;
                 }
@@ -1433,9 +1435,9 @@ namespace Zeltex.Guis.Maker
                 MyList.Clear();
                 if (MySkeleton)
                 {
-                    for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+                    for (int i = 0; i < MySkeleton.GetBones().Count; i++)
                     {
-                        MyList.Add(MySkeleton.MyBones[i].Name);
+                        MyList.Add(MySkeleton.GetBones()[i].Name);
                     }
                 }
             }

@@ -32,7 +32,7 @@ namespace Zeltex.Guis.Maker
 
         public override int GetSize()
         {
-            return DataManager.Get().GetSizeAudio(DataManagerFolder);
+            return DataManager.Get().GetSizeElements(DataManagerFolder);
         }
         #endregion
 
@@ -55,19 +55,21 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public AudioClip GetSelectedAudio()
         {
-            return DataManager.Get().GetSound(DataManagerFolder, GetSelectedIndex());
+            return null;
+            //return DataManager.Get().GetSound(DataManagerFolder, GetSelectedIndex());
         }
 
         public AudioClip GetAudio(string Name)
         {
-            return DataManager.Get().GetSound(DataManagerFolder, Name);
+            return null;
+            //return DataManager.Get().GetSound(DataManagerFolder, Name);
         }
 
 
         public void SetSelected(AudioClip MyAudioClip)
         {
-            DataManager.Get().SetSound(DataManagerFolder, GetSelectedIndex(), MyAudioClip);
-            OnUpdatedAudioClip();
+            //DataManager.Get().SetSound(DataManagerFolder, GetSelectedIndex(), MyAudioClip);
+            //OnUpdatedAudioClip();
         }
 
         #endregion
@@ -106,7 +108,7 @@ namespace Zeltex.Guis.Maker
         protected override void AddData()
         {
 			AudioClip MyClip = AudioClip.Create(Zeltex.NameGenerator.GenerateVoxelName(), 256, 1, 440, false);
-			DataManager.Get().AddSound(DataManagerFolder, MyClip);
+			//DataManager.Get().AddElement(DataManagerFolder, MyClip);
 		}
 
 		/// <summary>
@@ -114,7 +116,7 @@ namespace Zeltex.Guis.Maker
 		/// </summary>
 		protected override void RemovedData(int Index)
 		{
-            DataManager.Get().RemoveSound(DataManagerFolder, Index);
+            //DataManager.Get().RemoveSound(DataManagerFolder, Index);
         }
 
         #endregion

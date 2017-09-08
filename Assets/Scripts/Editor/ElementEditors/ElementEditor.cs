@@ -25,8 +25,16 @@ namespace Zeltex
             if (GUIButton("PushAsNew"))
             {
                 T NewData = Data.Clone<T>();
-                DataManager.Get().AddElement(GetDataFolderName(), NewData);
-                NewData.OnModified();
+                if (NewData != null)
+                {
+                    DataManager.Get().AddElement(GetDataFolderName(), NewData);
+                    Debug.Log("Pushing " + NewData.Name + " To DataManager Folder " + GetDataFolderName());
+                    NewData.OnModified();
+                }
+                else
+                {
+
+                }
             }
             if (GUIButton("Save [" + Data.Name + "] To DataManager"))
             {

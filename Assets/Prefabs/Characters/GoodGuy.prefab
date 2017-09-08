@@ -1125,7 +1125,7 @@ MonoBehaviour:
         Value:
         - 1
         - 1
-        - 325.98483
+        - 0
         Modifiers:
         - Mana
       OnNewStats:
@@ -1451,6 +1451,7 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
     CanRespawn: 1
+  IsInvinsible: 1
   MyGuis:
     ActionSpawnGui:
       IsTrigger: 0
@@ -1487,7 +1488,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Zeltex.Util.EventObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  IsInvinsible: 1
   MyChunk: {fileID: 0}
   InWorld: {fileID: 0}
 --- !u!114 &11414918
@@ -2656,7 +2656,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173486058074566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490346}
@@ -2733,7 +2733,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.15
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 90
   orthographic: 0
@@ -3014,92 +3014,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 108802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832ce6f5dd9c43543b64544c7ec4d288, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f98d9c8b76c6714c900fff4042d3381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionLoad:
-    IsTrigger: 0
-  ActionClear:
-    IsTrigger: 0
-  ActionExportAsFBX:
-    IsTrigger: 0
-  ActionRestoreDefaultPose:
-    IsTrigger: 0
-  ActionSetDefaultPose:
-    IsTrigger: 0
-  SkeletonName: S6674
-  MyCameraBone: {fileID: 490346}
-  MyBoneHead: {fileID: 4361933045008154}
-  MyBones:
-  - Name: 
-    Tag: 
-    MyTransform: {fileID: 4504835212432184}
-    ParentTransform: {fileID: 444750}
-    MyJointCube: {fileID: 0}
-    BodyCube: {fileID: 0}
-    VoxelMesh: {fileID: 4361933045008154}
-    BoneLength: 0
-    DefaultPosition: {x: 0, y: 0.5, z: 0}
-    DefaultScale: {x: 1, y: 1, z: 1}
-    DefaultRotation: {x: -0, y: 0, z: 0}
-    MeshDefaultPosition: {x: -0.0000003799796, y: -0.00000017881393, z: -0.0000003799796}
-    MeshDefaultScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
-    MeshDefaultRotation: {x: -0, y: 0, z: 0}
-  - Name: 
-    Tag: 
-    MyTransform: {fileID: 4038126165839042}
-    ParentTransform: {fileID: 4504835212432184}
-    MyJointCube: {fileID: 0}
-    BodyCube: {fileID: 0}
-    VoxelMesh: {fileID: 4120354130330312}
-    BoneLength: 0
-    DefaultPosition: {x: 0, y: -0.3333333, z: 0}
-    DefaultScale: {x: 1, y: 1, z: 1}
-    DefaultRotation: {x: -0, y: 0, z: 0}
-    MeshDefaultPosition: {x: -0.0000003799796, y: 0.00000011920929, z: -0.0000003799796}
-    MeshDefaultScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
-    MeshDefaultRotation: {x: -0, y: 0, z: 0}
-  - Name: 
-    Tag: 
-    MyTransform: {fileID: 4938696433490228}
-    ParentTransform: {fileID: 4038126165839042}
-    MyJointCube: {fileID: 0}
-    BodyCube: {fileID: 0}
-    VoxelMesh: {fileID: 4616091810830158}
-    BoneLength: 0
-    DefaultPosition: {x: 0, y: -0.3333333, z: 0}
-    DefaultScale: {x: 1, y: 1, z: 1}
-    DefaultRotation: {x: -0, y: 0, z: 0}
-    MeshDefaultPosition: {x: -0.0000003799796, y: -0.000000059604645, z: -0.0000003799796}
-    MeshDefaultScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
-    MeshDefaultRotation: {x: -0, y: 0, z: 0}
-  MyBounds:
-    m_Center: {x: 0.009, y: 0.174, z: 0.009}
-    m_Extent: {x: 0.13, y: 0.455, z: 0.13}
-  BoneMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
-  BoneSize: 0.025
-  BoneColor:
-    serializedVersion: 2
-    rgba: 1346265649
-  IsShowJoints: 0
-  IsShowBones: 0
-  IsShowMeshes: 1
-  IsAnimating: 1
-  IsJointsColliders: 0
-  IsMeshColliders: 1
-  IsConvexMeshes: 1
-  OnLoadSkeleton:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  JointMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
-  JointColor:
-    serializedVersion: 2
-    rgba: 2352698907
-  JointSize: 0.1
-  IsReCalculateBounds: 0
-  DefaultBody: {fileID: 0}
 --- !u!114 &114045539341171450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3192,12 +3109,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDebug: 0
-  ApplyActionCube:
-    IsTrigger: 0
+  Actions:
+    ApplyActionCube:
+      IsTrigger: 0
+    WorldActionExpandForward:
+      IsTrigger: 0
+    WorldActionExpandBack:
+      IsTrigger: 0
+    WorldActionExpandLeft:
+      IsTrigger: 0
+    WorldActionExpandRight:
+      IsTrigger: 0
+    WorldActionExpandUp:
+      IsTrigger: 0
+    WorldActionExpandDown:
+      IsTrigger: 0
   ActionGatherChunks:
     IsTrigger: 0
   VoxelActionName: Color
-  ActionCube: {fileID: 0}
+  ActionGrayBoxes: []
   ActionLoadModel:
     IsTrigger: 0
   LoadModelName: Head
@@ -3206,6 +3136,19 @@ MonoBehaviour:
   MyVoxelDestroyParticles: {fileID: 0}
   MyMaterials:
   - {fileID: 2100000, guid: d9b2aeec7b4501f438b9c37e65cb7149, type: 2}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyChunkData:
     _keys: []
     _values: []
@@ -3217,6 +3160,7 @@ MonoBehaviour:
   IsLighting: 0
   CentreOffset: {x: 0, y: 0, z: 0}
   MyLossyScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
+  IsReBuildAllMeshes: 0
   PropogationDecreaseRate: 0.78
   SunBrightness: 255
   DefaultBrightness: 0
@@ -3277,6 +3221,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  IsKeepCamera: 0
 --- !u!114 &114239675359307236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3322,7 +3267,7 @@ MonoBehaviour:
     StrafeSpeed: 1.8
     RunMultiplier: 1.4
     RunKey: 304
-    JumpForce: 5
+    JumpForce: 10
     SlopeCurveModifier:
       serializedVersion: 2
       m_Curve:
@@ -3362,7 +3307,7 @@ MonoBehaviour:
     stickToGroundHelperDistance: 0.1
     slowDownRate: 20
     airControl: 0
-    shellOffset: 0
+    shellOffset: 0.01
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -3825,12 +3770,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDebug: 0
-  ApplyActionCube:
-    IsTrigger: 0
+  Actions:
+    ApplyActionCube:
+      IsTrigger: 0
+    WorldActionExpandForward:
+      IsTrigger: 0
+    WorldActionExpandBack:
+      IsTrigger: 0
+    WorldActionExpandLeft:
+      IsTrigger: 0
+    WorldActionExpandRight:
+      IsTrigger: 0
+    WorldActionExpandUp:
+      IsTrigger: 0
+    WorldActionExpandDown:
+      IsTrigger: 0
   ActionGatherChunks:
     IsTrigger: 0
   VoxelActionName: Color
-  ActionCube: {fileID: 0}
+  ActionGrayBoxes: []
   ActionLoadModel:
     IsTrigger: 0
   LoadModelName: Head
@@ -3839,6 +3797,19 @@ MonoBehaviour:
   MyVoxelDestroyParticles: {fileID: 0}
   MyMaterials:
   - {fileID: 2100000, guid: d9b2aeec7b4501f438b9c37e65cb7149, type: 2}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyChunkData:
     _keys: []
     _values: []
@@ -3850,6 +3821,7 @@ MonoBehaviour:
   IsLighting: 0
   CentreOffset: {x: 0, y: 0, z: 0}
   MyLossyScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
+  IsReBuildAllMeshes: 0
   PropogationDecreaseRate: 0.78
   SunBrightness: 255
   DefaultBrightness: 0
@@ -3908,12 +3880,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDebug: 0
-  ApplyActionCube:
-    IsTrigger: 0
+  Actions:
+    ApplyActionCube:
+      IsTrigger: 0
+    WorldActionExpandForward:
+      IsTrigger: 0
+    WorldActionExpandBack:
+      IsTrigger: 0
+    WorldActionExpandLeft:
+      IsTrigger: 0
+    WorldActionExpandRight:
+      IsTrigger: 0
+    WorldActionExpandUp:
+      IsTrigger: 0
+    WorldActionExpandDown:
+      IsTrigger: 0
   ActionGatherChunks:
     IsTrigger: 0
   VoxelActionName: Color
-  ActionCube: {fileID: 0}
+  ActionGrayBoxes: []
   ActionLoadModel:
     IsTrigger: 0
   LoadModelName: Head
@@ -3922,6 +3907,19 @@ MonoBehaviour:
   MyVoxelDestroyParticles: {fileID: 0}
   MyMaterials:
   - {fileID: 2100000, guid: d9b2aeec7b4501f438b9c37e65cb7149, type: 2}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyChunkData:
     _keys: []
     _values: []
@@ -3933,6 +3931,7 @@ MonoBehaviour:
   IsLighting: 0
   CentreOffset: {x: 0, y: 0, z: 0}
   MyLossyScale: {x: 0.3333333, y: 0.3333333, z: 0.3333333}
+  IsReBuildAllMeshes: 0
   PropogationDecreaseRate: 0.78
   SunBrightness: 255
   DefaultBrightness: 0
@@ -4386,7 +4385,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ffe2fb1af85af4397d547b09931587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Actions:
+    RefreshMesh:
+      IsTrigger: 0
   MyWorld: {fileID: 0}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyVoxels:
     Data:
     - Data:
@@ -37983,7 +37998,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ffe2fb1af85af4397d547b09931587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Actions:
+    RefreshMesh:
+      IsTrigger: 0
   MyWorld: {fileID: 0}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyVoxels:
     Data:
     - Data:
@@ -71064,6 +71095,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  IsKeepCamera: 0
 --- !u!114 &114973349957873974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71075,7 +71107,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ffe2fb1af85af4397d547b09931587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Actions:
+    RefreshMesh:
+      IsTrigger: 0
   MyWorld: {fileID: 0}
+  MyLookupTable:
+    MyLookupTable:
+      _keys:
+      - Air
+      _values: 00000000
+    VoxelCount:
+      _keys:
+      - Air
+      _values: 00000000
+    MyReverseLookupTable:
+      _keys: 00000000
+      _values:
+      - Air
   MyVoxels:
     Data:
     - Data:
@@ -104200,7 +104248,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189778}
-  m_Material: {fileID: 13400000, guid: 3aeb7dadc0c69d54d9e5777e9d5631f1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
@@ -104447,7 +104495,7 @@ RectTransform:
   m_GameObject: {fileID: 1051701682420042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.00041}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 224625567387240856}
   m_RootOrder: 0
@@ -104455,7 +104503,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 12, y: 12}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224581938413376470
 RectTransform:

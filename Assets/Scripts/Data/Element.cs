@@ -142,7 +142,7 @@ namespace Zeltex
 
         private string GetFullFilePath()
         {
-            return Util.FileUtil.GetFolderPath(GetFolder() + "/") +
+            return DataManager.GetFolderPath(GetFolder() + "/") +
                        Name + "." + GetFileExtention();
         }
 

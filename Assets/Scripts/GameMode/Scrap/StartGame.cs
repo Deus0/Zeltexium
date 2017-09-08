@@ -55,7 +55,8 @@ namespace GuiSystem
       private float TimeWaited = 0;
       private string MyStatus = "";
       private float LoadingDelay = 0.075f;
-      public static bool IsFreeRoam = false;
+      public static bool IsFree
+      = false;
       public SpawnPositionFinder MySpawnPoint;
       [Header("RenderDistance")]
       public float RenderDistance = 3;

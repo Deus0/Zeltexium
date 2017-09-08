@@ -55,7 +55,7 @@ namespace Zeltex.Guis.Players
 		}
         public static string GetFolderPath()
         {
-            return FileUtil.GetFolderPath("Characters");
+            return DataManager.GetFolderPath("Characters");
         }
         public static List<string> GetCharactersList(string MyVoxels)
 		{

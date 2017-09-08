@@ -75,6 +75,11 @@ namespace Zeltex.Combat
         {
             //GameObject MyCharacter = NetworkServer.FindLocalObject(CharacterID);
             GameObject MyCharacter = CharacterID.gameObject;
+            Initialize(MyCharacter, RandomForce);
+        }
+
+        public void Initialize(GameObject MyCharacter, Vector3 RandomForce)
+        {
             if (MyCharacter)
             {
                 LogManager.Get().Log("Initializing bullet at " + Time.time, "Bullets");

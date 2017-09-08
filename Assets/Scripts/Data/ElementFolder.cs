@@ -61,13 +61,20 @@ namespace Zeltex
 
         public void AddNewElement()
         {
-            Element NewElement = new Element();
-            NewElement.MyFolder = this as ElementFolder;
-            Debug.LogError("Adding new type: " + NewElement.GetDataType().ToString());
+            //Element NewElement = new Element();
+            //NewElement.MyFolder = this as ElementFolder;
+            //Debug.LogError("Adding new type: " + NewElement.GetDataType().ToString());
 #if NET_4_6
             System.Reflection.ConstructorInfo MyConstructor = NewElement.GetDataType().GetConstructor(System.Type.EmptyTypes);
             dynamic NewElement2 = MyConstructor.Invoke(null);
             NewElement = NewElement2 as Element;
+            NewElement.Name = "Element" + Random.Range(1, 10000);
+            NewElement.MyFolder = this as ElementFolder;
+            NewElement.MyFolder.Data.Add(NewElement.Name, NewElement);
+#else
+            System.Type type = DataFolderNames.GetDataType(FolderName);// System.Type.GetType("Foo.MyClass");
+            object ElementObject = System.Activator.CreateInstance(type);
+            Element NewElement = ElementObject as Element;
             NewElement.Name = "Element" + Random.Range(1, 10000);
             NewElement.MyFolder = this as ElementFolder;
             NewElement.MyFolder.Data.Add(NewElement.Name, NewElement);
@@ -93,25 +100,88 @@ namespace Zeltex
                 MyElement.RunScript(Script);
             }*/
         }
-
-        public void LoadAllElements()
+        
+        public System.Collections.IEnumerator LoadAllElements()
         {
-            List<Element> MyData = RetrieveElements();
-            for (int j = 0; j < MyData.Count; j++)
+            Clear();
+            List<string> FileNames;
+            string ElementFolderPath = GetFolderPath();
+            if (ElementFolderPath.Contains("://") || ElementFolderPath.Contains(":///"))
             {
-                (this as ElementFolder).Set(j, MyData[j]);
-                MyData[j].MyFolder = (this as ElementFolder);
+                FileNames = new List<string>();
+                if (ElementFolderPath != null)
+                {
+                    string[] FoundFiles = FileManagement.ListFiles(DataManager.Get().MapName + "/" + FolderName, new string[] { "." + FileExtension });//, true, true); // + "/"
+                    if (FoundFiles != null)
+                    {
+                        for (int i = 0; i < FoundFiles.Length; i++)
+                        {
+                            string FileName = System.IO.Path.GetFileNameWithoutExtension(FoundFiles[i]) + "." + FileExtension;
+                            FileNames.Add(ElementFolderPath + FileName);
+                        }
+                        //FileNames.AddRange(FoundFiles);
+                    }
+                    else
+                    {
+                        LogManager.Get().Log(ElementFolderPath + " has no files found.");
+                    }
+                }
+                else
+                {
+                    LogManager.Get().Log("Folder is null");
+                }
+                //FileNames = FileManagement.ListFiles();//FileUtil.GetFilesOfType(ElementFolderPath, FileExtension);
+            }
+            else
+            {
+                FileNames = FileUtil.GetFilesOfType(ElementFolderPath, FileExtension);
+            }
+            LogManager.Get().Log("[" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension, "DataManager");
+            FileNames = FileUtil.SortAlphabetically(FileNames);
+            //List<string> MyNames = new List<string>();
+            //for (int i = 0; i < FileNames.Count; i++)
+            {
+                //MyNames.Add(Path.GetFileNameWithoutExtension(MyFiles[i]));
+                //Data.Add(Path.GetFileNameWithoutExtension(FileNames[i]), default(T));
+            }
+            // RetrieveElements();
+            // Load folder files
+            //List<string> FileNames = new List<string>();
+            List<string> Scripts = new List<string>();
+            for (int i = 0; i < FileNames.Count; i++)
+            {
+                LogManager.Get().Log("Loading Element file in : " + FolderName + " of - " + FileNames[i], "DataManagerFiles");
+                if (FileNames[i].Contains("://") || FileNames[i].Contains(":///"))
+                {
+                    WWW UrlRequest = new WWW(FileNames[i]);
+                    yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
+                    Scripts.Add(UrlRequest.text);
+                }
+                else
+                {
+                    Scripts.Add(File.ReadAllText(FileNames[i]));
+                }
+            }
+            for (int i = 0; i < FileNames.Count; i++)
+            {
+                FileNames[i] = Path.GetFileNameWithoutExtension(FileNames[i]);
+            }
+            List<Element> ElementData = RetrieveElements(FileNames, Scripts);
+            for (int i = 0; i < ElementData.Count; i++)
+            {
+                Data.Add(ElementData[i].Name, ElementData[i]);
+                ElementData[i].MyFolder = (this as ElementFolder);
             }
         }
 
-        public List<Element> RetrieveElements()
+        public List<Element> RetrieveElements(List<string> Names, List<string> Scripts)
         {
-            List<string> MyScripts = LoadAllStrings();
+            //List<string> MyScripts = LoadAllStrings();
             //Debug.LogError("Retrieved " + MyScripts.Count + " element files.");
             List<Element> MyElements = new List<Element>();
-            for (int i = 0; i < MyScripts.Count; i++)
+            for (int i = 0; i < Scripts.Count; i++)
             {
-                Element NewElement = Element.Load(GetName(i), this as ElementFolder, MyScripts[i]);
+                Element NewElement = Element.Load(Names[i], this as ElementFolder, Scripts[i]);
                 if (FolderName == DataFolderNames.PolygonModels)
                 {
                     if (VoxelManager.Get())

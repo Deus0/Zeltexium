@@ -39,7 +39,7 @@ namespace Zeltex.Combat
         public float AnimationTimeStage2 = 1.8f;
 
         private bool HasLoaded = false;
-        private Skeleton MySkeleton;
+        private SkeletonHandler MySkeleton;
         // portal animation
         private float PortalDelayTime = 0.8f;
         private float PortalBottomEmissionRate = 100;
@@ -68,8 +68,8 @@ namespace Zeltex.Combat
         {
             // Debug.LogError("Thing: " + (Mathf.Sin(-Mathf.PI/2f)).ToString());
             //if (MySummonedObject.GetComponent<CharacterController>() != null)
-            Skeleton MySkeleton = MySummonedObject.transform.Find("Body").GetComponent<Skeleton>();
-            if (MySkeleton)
+            //Skeleton MySkeleton = MySummonedObject.transform.Find("Body").GetComponent<Skeleton>();
+            /*if (MySkeleton)
             {
                 Bounds MyBounds = MySkeleton.GetBounds();
                 PortalScaleBegin = MyPortal.transform.localScale;
@@ -87,7 +87,7 @@ namespace Zeltex.Combat
                 PositionEnd = MyDepthMask.transform.position + new Vector3(0, MyHeight, 0);
                 //PositionBegin = MySummonedObject.transform.position;
                 // PositionEnd = PositionBegin + new Vector3(0, MovementY, 0);
-            }
+            }*/
         }
 
         /// <summary>
@@ -167,10 +167,10 @@ namespace Zeltex.Combat
 					HasLoaded = false;
                     MySkeleton = SummonedCharacter.GetSkeleton();
                     SummonedCharacter.SetRace(MyRaceName);
-                    yield return MySkeleton.RunScriptRoutine(MySkeletonScript);
+                    //yield return MySkeleton.RunScriptRoutine(MySkeletonScript);
                     SummonedCharacter.SetClassName(MyClassName);
                     yield return SummonedCharacter.RunScriptRoutine(MyClassScript);
-					SetRenderQue(MySummonedObject, true);
+					//SetRenderQue(MySummonedObject, true);
 					Initiate();
 					if (TimeBeginStage1 != -1)
 					{
@@ -229,14 +229,14 @@ namespace Zeltex.Combat
                      Destroy(MyMesh.GetComponent<SetRenderQueue>());
                  }
              }*/
-            SetRenderQue(MySummonedObject, false);
+            //SetRenderQue(MySummonedObject, false);
             //MySummonedObject.GetComponent<Bot>().WasSummoned(MySummonerCharacter);
             StartCoroutine(NetworkDestroy(2f));
         }
         /// <summary>
         /// Render que sets the shader properties
         /// </summary>
-        private void SetRenderQue(GameObject MyCharacter, bool IsRenderQue)
+        /*private void SetRenderQue(GameObject MyCharacter, bool IsRenderQue)
         {
             for (int i = 0; i < MySkeleton.MyBones.Count; i++)
             {    // add this to it's mesh objects?
@@ -277,7 +277,8 @@ namespace Zeltex.Combat
                     }
                 }
             }
-        }
+        }*/
+
         IEnumerator NetworkDestroy(float TimeDelay)
         {
             yield return new WaitForSeconds(TimeDelay);

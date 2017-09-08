@@ -219,15 +219,15 @@ namespace Zeltex.Guis.Maker
             {
                 if (MyButton.name == "PlaySpawnSound")
                 {
-                    GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().SpawnSoundName));
+                    //GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().SpawnSoundName));
                 }
                 else if (MyButton.name == "PlayImplodeSound")
                 {
-                    GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().ImplodeSoundName));
+                   // GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().ImplodeSoundName));
                 }
                 else if (MyButton.name == "PlayExplodeSound")
                 {
-                    GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().ExplodeSoundName));
+                    //GetComponent<AudioSource>().PlayOneShot(DataManager.Get().GetSound(DataFolderNames.Sounds, GetSelectedSpell().ExplodeSoundName));
                 }
             }
             else

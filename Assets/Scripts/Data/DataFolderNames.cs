@@ -13,6 +13,7 @@ namespace Zeltex
         public static string PolygonModels = "PolygonModels";
         public static string VoxelModels = "VoxelModels";
         public static string Skeletons = "Skeletons";
+        public static string Zanimations = "Zanimations";
 
         public static string Voxels = "VoxelMeta";
 
@@ -97,6 +98,10 @@ namespace Zeltex
             {
                 return "SkeletonMaker";
             }
+            else if (FolderName == Zanimations)
+            {
+                return "";
+            }
             else if (FolderName == PolygonModels)
             {
                 return "PolygonMaker";
@@ -115,7 +120,6 @@ namespace Zeltex
         public static System.Type GetDataType(string FolderName)
         {
             System.Type DataType;
-            //string FolderName = GetFolder();
             if (FolderName == DataFolderNames.Recipes)
             {
                 DataType = typeof(Items.Recipe);
@@ -145,6 +149,14 @@ namespace Zeltex
             else if (FolderName == DataFolderNames.VoxelModels)
             {
                 DataType = typeof(Voxels.WorldModel);
+            }
+            else if (FolderName == DataFolderNames.Skeletons)
+            {
+                DataType = typeof(Skeletons.Skeleton);
+            }
+            else if (FolderName == DataFolderNames.Zanimations)
+            {
+                DataType = typeof(Skeletons.Zanimation);
             }
 
             else if (FolderName == DataFolderNames.Characters)
@@ -250,6 +262,14 @@ namespace Zeltex
             else if (DataType == typeof(Voxels.WorldModel))
             {
                 return DataFolderNames.VoxelModels;
+            }
+            else if (DataType == typeof(Skeletons.Skeleton))
+            {
+                return DataFolderNames.Skeletons;
+            }
+            else if (DataType == typeof(Skeletons.Zanimation))
+            {
+                return DataFolderNames.Zanimations;
             }
 
             else if (DataType == typeof(CharacterData))

@@ -9,7 +9,8 @@ namespace Zeltex.Voxels
     [System.Serializable]
     public class VoxelColor : Voxel
     {
-        Color MyColor;
+        [SerializeField, HideInInspector]
+        private Color MyColor;
 
         public VoxelColor(Voxel MyVoxel)
         {

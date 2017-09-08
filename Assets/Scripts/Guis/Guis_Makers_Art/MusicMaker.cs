@@ -76,7 +76,7 @@ namespace Zeltex.Guis.Maker
 		protected override void AddData()
 		{
             AudioClip MyClip = new AudioClip();
-			DataManager.Get().AddSound(DataManagerFolder, MyClip);
+			//DataManager.Get().AddSound(DataManagerFolder, MyClip);
             //Data.Add(MyClip);
             //MyNames.Add("Sound " + MyNames.Count);
             //base.OnAdd(NewIndex);
@@ -88,7 +88,7 @@ namespace Zeltex.Guis.Maker
 		/// <param name="NewIndex"></param>
 		protected override void RemovedData(int Index)
 		{
-			DataManager.Get().RemoveSound(DataManagerFolder, Index);
+			//DataManager.Get().RemoveSound(DataManagerFolder, Index);
         }
 
         #endregion

@@ -28,7 +28,7 @@ namespace Zeltex
                 //Debug.LogError("Getting name: " + Index + " Inside " + FolderName);
                 return MyFolder.GetName(Index);
             }
-            DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
+            /*DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
             if (TextureFolder != null)
             {
                 return TextureFolder.GetName(Index);
@@ -37,7 +37,7 @@ namespace Zeltex
             if (AudioFolder != null)
             {
                 return AudioFolder.GetName(Index);
-            }
+            }*/
             ElementFolder ElementFolder = GetElementFolder(FolderName);
             if (ElementFolder != null)
             {
@@ -61,7 +61,7 @@ namespace Zeltex
             {
                 return ElementFolder.Data.Count;
             }
-            DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
+            /*DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
             if (TextureFolder != null)
             {
                 return TextureFolder.Data.Count;
@@ -70,7 +70,7 @@ namespace Zeltex
             if (SoundFolder != null)
             {
                 return SoundFolder.Data.Count;
-            }
+            }*/
             return 0;
         }
         #endregion
@@ -107,16 +107,17 @@ namespace Zeltex
             {
                 return false;
             }
+            /*
             DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
             if (TextureFolder != null)
             {
                 return false;
             }
-            DataFolder<AudioClip> SoundFolder = GetAudioFolder(FolderName);
+             * DataFolder<AudioClip> SoundFolder = GetAudioFolder(FolderName);
             if (SoundFolder != null)
             {
                 return false;
-            }
+            }*/
             return false;
         }
 
@@ -172,12 +173,12 @@ namespace Zeltex
         /// <summary>
         /// Loads all the data!
         /// </summary>
-        private void LoadAllElements()
+        private System.Collections.IEnumerator LoadAllElements()
         {
             Debug.Log("Loading all elements for [" + MapName + "]");
             for (int i = 0; i < ElementFolders.Count; i++)
             {
-                ElementFolders[i].LoadAllElements();
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ElementFolders[i].LoadAllElements());
             }
             OnUpdatedResources.Invoke();
         }
@@ -493,7 +494,7 @@ namespace Zeltex
         #endregion
 
         #region Textures
-
+        /*
         /// <summary>
         /// Save all the elements in a folder, the ui implementation
         /// </summary>
@@ -763,7 +764,7 @@ namespace Zeltex
             {
                 return 0;
             }
-        }
+        }*/
         #endregion
     }
 }

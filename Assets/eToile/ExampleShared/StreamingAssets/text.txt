@@ -1,0 +1,2 @@
+This text file is into the StreamingAssets folder as a "Default" content example.
+There is also an image file as "Default" that can be overriden by a screen capture.

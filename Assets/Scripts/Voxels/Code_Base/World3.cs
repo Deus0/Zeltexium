@@ -41,8 +41,8 @@ namespace Zeltex.Voxels
         public void UpdateBlockTypeMassArea(string VoxelName, Int3 Position, Vector3 VoxelSize, Color VoxelColor)
         {
             List<Int3> Positions = new List<Int3>();
-            Debug.LogError (gameObject.name + " Updating block at: " + Position.GetVector().ToString() + 
-                ": with size: " + VoxelSize + " with colour: " + VoxelColor.ToString() + ":" + VoxelName);
+            //Debug.LogError (gameObject.name + " Updating block at: " + Position.GetVector().ToString() + 
+            //    ": with size: " + VoxelSize + " with colour: " + VoxelColor.ToString() + ":" + VoxelName);
             if (VoxelSize.x == 0 && VoxelSize.y == 0 && VoxelSize.z == 0)
             {
                 Positions.Add(Position);
@@ -94,7 +94,7 @@ namespace Zeltex.Voxels
             MassUpdateChunk = GetChunkWorldPosition(WorldPosition);;
             if (MassUpdateChunk != null)
             {
-                Debug.LogError("Updating: MassUpdateChunk" + MassUpdateChunk.name);
+                //Debug.LogError("Updating: MassUpdateChunk" + MassUpdateChunk.name);
                 MyVoxel = GetVoxel(WorldPosition);
                 if (MyVoxel != null)
                 {
@@ -102,7 +102,7 @@ namespace Zeltex.Voxels
                     PreviousColor = MyVoxel.GetColor();
                     VoxelIndex = MyLookupTable.GetIndex(VoxelName);
                     DidUpdate = MassUpdateChunk.UpdateBlockTypeMass(WorldPosition, VoxelIndex, NewColor);
-                    Debug.LogError("DidUpdate" + DidUpdate);
+                   // Debug.LogError("DidUpdate" + DidUpdate);
                     if (!IsTerrainGeneration && (DidUpdate && PreviousType != 0 && VoxelIndex == 0)) // because air does not drop things! And cannot drop things if not air!
                     {
                         if (IsDropItems || IsDropParticles)
@@ -125,7 +125,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnMassUpdate()
         {
-            Debug.LogError("Creating " + VoxelPositionsMass.Count + " Voxels in world!");
+            //Debug.LogError("Creating " + VoxelPositionsMass.Count + " Voxels in world!");
             if (VoxelPositionsMass.Count > 0)
             {
                 //Debug.Log("Creating " + VoxelPositionsMass.Count + " Voxels in world!");

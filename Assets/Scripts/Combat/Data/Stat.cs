@@ -681,11 +681,15 @@ namespace Zeltex.Combat
         /// </summary>
         public void ResetTimer()
         {
-            if (MyType == StatType.TemporaryModifier)
+            if (MyType == StatType.Regen)
+            {
+                Value[2] = Time.time;
+            }
+            else if (MyType == StatType.TemporaryModifier)
             {
                 SetPreviousTick(Time.time);
             }
-            if (MyType == StatType.TemporaryRegen)
+            else if(MyType == StatType.TemporaryRegen)
             {
                 Value[2] = Time.time;
                 Value[4] = Time.time;
@@ -798,7 +802,7 @@ namespace Zeltex.Combat
         public void LoadTexture(string MyTextureName)
         {
             //MyTexture = TextureMaker.Get().GetStatTexture(MyTextureName);
-            MyTexture = Zeltex.DataManager.Get().GetTexture("StatTextures", MyTextureName);
+            MyTexture = (Zeltex.DataManager.Get().GetElement(DataFolderNames.StatTextures, MyTextureName) as Zexel).GetTexture();
             //Debug.LogError("Loaded Texture: " + MyTexture.name);
         }
 

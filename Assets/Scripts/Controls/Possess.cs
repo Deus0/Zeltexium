@@ -58,7 +58,7 @@ namespace Zeltex
         [SerializeField, HideInInspector]
         protected Skillbar MySkillbar;
         [SerializeField, HideInInspector]
-        protected Skeleton MySkeleton;
+        protected SkeletonHandler MySkeleton;
         [SerializeField, HideInInspector]
         protected ZelGui MyCrosshair;
         // States
@@ -181,9 +181,10 @@ namespace Zeltex
         {
             if (NewState || (NewState == false && IsHideHeadMesh))
             {
-                if (MyCharacter && MyCharacter.GetSkeleton() && MyCharacter.GetSkeleton().MyBoneHead && MyCharacter.GetSkeleton().MyBoneHead.GetComponent<MeshRenderer>())
+                if (MyCharacter && MyCharacter.GetSkeleton() && MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead &&
+                    MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.GetComponent<MeshRenderer>())
                 {
-                    MyCharacter.GetSkeleton().MyBoneHead.GetComponent<MeshRenderer>().enabled = NewState;
+                    MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.GetComponent<MeshRenderer>().enabled = NewState;
                 }
             }
         }
@@ -260,7 +261,7 @@ namespace Zeltex
             }
         }
 
-        private void SetGuiTargets(Transform NewCameraBone, Skeleton NewSkeleton)
+        private void SetGuiTargets(Transform NewCameraBone, SkeletonHandler NewSkeleton)
         {
             bool NewState = (MySkeleton == null);   // if no skeleton (possession by human camera), turn them on
             if (!NewState && MyGuiManager != null)
@@ -325,7 +326,7 @@ namespace Zeltex
                 MySkeleton = MyCharacter.GetSkeleton();
                 if (MySkeleton)
                 {
-                    CameraBone = MySkeleton.GetCameraBone();
+                    CameraBone = MySkeleton.GetSkeleton().GetCameraBone();
                     if (CameraBone)
                     {
                         transform.position = CameraBone.transform.position;  // MyPlayerSpawn.transform.position + MyPlayerSpawn.transform.TransformDirection (CameraOffset);

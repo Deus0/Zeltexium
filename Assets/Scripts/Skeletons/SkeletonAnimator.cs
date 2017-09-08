@@ -10,6 +10,7 @@ namespace Zeltex.Skeletons
     /// <summary>
     /// Animates the skeleton class
     /// </summary>
+    [ExecuteInEditMode]
     public class SkeletonAnimator : MonoBehaviour
     {
         #region Variables
@@ -19,24 +20,33 @@ namespace Zeltex.Skeletons
         public float CurrentTime;
         public float TotalTime = 3;
         public bool IsAnimating;
-        public UnityEvent OnUpdateFrames = new UnityEvent();
-        public UnityEvent OnUpdatedTimeEvent = new UnityEvent();
         public bool IsForceLoad;
         public bool IsAnimationLoop = true;
-        float AnimationSpeed = 2;
-        public List<ZeltexAnimation> MyAnimations = new List<ZeltexAnimation>();
+        private float AnimationSpeed = 2;
+
+        private Characters.Character MyCharacter;
+        private SkeletonHandler MySkeleton;
+        //public List<Zanimation> MyAnimations = new List<Zanimation>();
         public static float TicksPerSecond = 30;
         public static float TickSkipper = 2.5f;    // for drawing the time line
-        private Skeleton MySkeleton;
+        public UnityEvent OnUpdateFrames = new UnityEvent();
+        public UnityEvent OnUpdatedTimeEvent = new UnityEvent();
+
+        public EditorAction PlayPause = new EditorAction();
+        public EditorAction GenerateAnimation = new EditorAction();
         #endregion
 
         #region Mono
         void Start()
         {
             // load in 1 second
-            MySkeleton = GetComponent<Skeleton>();
-            MySkeleton.OnLoadSkeleton.AddEvent(LoadAnimation);
+            MySkeleton = GetComponent<SkeletonHandler>();
+            MySkeleton.GetSkeleton().OnLoadSkeleton.AddEvent(LoadAnimation);
+            MyCharacter = transform.parent.GetComponent<Characters.Character>();
         }
+
+        [SerializeField]
+        private float AnimationRandomness = 0.05f;
         
         void Update()
         {
@@ -49,11 +59,69 @@ namespace Zeltex.Skeletons
             {
                 UpdateRestoringPose();
             }
-            if (IsForceLoad)
+            if (GenerateAnimation.IsTriggered())
+            {
+                Zanimation NewAnimation = new Zanimation();
+                NewAnimation.SetName(NameGenerator.GenerateVoxelName());
+                for (int i = 0; i < MyCharacter.GetData().MySkeleton.MyBones.Count; i++)
+                {
+                    ZeltexKeyFrame BoneFrames = new ZeltexKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform);
+                    BoneFrames.AnimationCurvePositionY = new AnimationCurve();
+                    float AnimationLength = 3f;
+                    for (float TimeIndex = 0; TimeIndex <= AnimationLength; TimeIndex += 0.2f)
+                    {
+                        if (TimeIndex == 0 || TimeIndex == AnimationLength)
+                        {
+                            BoneFrames.AnimationCurvePositionY.AddKey(
+                                new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
+                        }
+                        else
+                        {
+                            BoneFrames.AnimationCurvePositionY.AddKey(
+                                new Keyframe(TimeIndex,
+                                MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y +
+                                    //Mathf.Sin(TimeIndex) +
+                                    Random.Range(-AnimationRandomness, AnimationRandomness)));
+                        }
+                    }
+                    BoneFrames.AnimationCurvePositionY.AddKey(
+                        new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
+                    NewAnimation.AddKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform, BoneFrames);
+                }
+                MyCharacter.GetData().MyAnimations.Clear();
+                MyCharacter.GetData().MyAnimations.Add(NewAnimation);
+            }
+            if (PlayPause.IsTriggered())
+            {
+                UniversalCoroutine.CoroutineManager.StartCoroutine(PlayOnce());
+            }
+            /*if (IsForceLoad)
             {
                 IsForceLoad = false;
                 LoadAnimation();
+            }*/
+        }
+
+        private IEnumerator PlayOnce()
+        {
+            float TimeStarted = Time.realtimeSinceStartup;
+            float TimeSince = (Time.realtimeSinceStartup - TimeStarted) * AnimationSpeed;
+            while (TimeSince <= 3f)//GetAnimations()[0])
+            {
+                TimeSince = (Time.realtimeSinceStartup - TimeStarted) * AnimationSpeed;
+                CurrentTime = TimeSince;
+                OnUpdateTime();
+                yield return null;
             }
+            if (IsAnimationLoop)
+            {
+                UniversalCoroutine.CoroutineManager.StartCoroutine(PlayOnce());
+            }
+        }
+
+        public List<Zanimation> GetAnimations()
+        {
+            return MyCharacter.GetData().MyAnimations;
         }
         #endregion
 
@@ -73,7 +141,7 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void Clear()
         {
-            MyAnimations[SelectedIndex].Clear();
+            GetAnimations()[SelectedIndex].Clear();
         }
 
         /// <summary>
@@ -87,11 +155,11 @@ namespace Zeltex.Skeletons
                 return;
             }
             ZeltexKeyFrame MyFrame = null;
-            for (int i = 0; i < MyAnimations[SelectedIndex].MyKeyFrames.Count; i++)
+            for (int i = 0; i < GetAnimations()[SelectedIndex].MyKeyFrames.Count; i++)
             {
-                if (MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject == MyObject)
+                if (GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject == MyObject)
                 {
-                    MyFrame = MyAnimations[SelectedIndex].MyKeyFrames[i];
+                    MyFrame = GetAnimations()[SelectedIndex].MyKeyFrames[i];
                     MyFrame.RemoveKeys(MyTime);
                     break;
                 }
@@ -99,7 +167,7 @@ namespace Zeltex.Skeletons
             if (MyFrame == null)
             {
                 MyFrame = new ZeltexKeyFrame(MyObject);
-                MyAnimations[SelectedIndex].MyKeyFrames.Add(MyFrame);
+                GetAnimations()[SelectedIndex].MyKeyFrames.Add(MyFrame);
             }
             MyFrame.AnimationCurvePositionX.AddKey(new Keyframe(MyTime, MyInput.x));
             MyFrame.AnimationCurvePositionY.AddKey(new Keyframe(MyTime, MyInput.y));
@@ -137,7 +205,7 @@ namespace Zeltex.Skeletons
         }
         public void DeleteAllKeysFromAllAnimations(Transform MyBone)
         {
-            for (int i = 0; i <  MyAnimations.Count; i++)
+            for (int i = 0; i < GetAnimations().Count; i++)
             {
                 DeleteAllKeys(MyBone, i);
             }
@@ -151,11 +219,11 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void DeleteAllKeys(Transform MySelectedTransform, int MyIndex)
         {
-            for (int i = 0; i < MyAnimations[MyIndex].MyKeyFrames.Count; i++)
+            for (int i = 0; i < GetAnimations()[MyIndex].MyKeyFrames.Count; i++)
             {
-                if (MyAnimations[MyIndex].MyKeyFrames[i].MyObject == MySelectedTransform)
+                if (GetAnimations()[MyIndex].MyKeyFrames[i].MyObject == MySelectedTransform)
                 {
-                    MyAnimations[MyIndex].MyKeyFrames.RemoveAt(i);
+                    GetAnimations()[MyIndex].MyKeyFrames.RemoveAt(i);
                     if (MyIndex == SelectedIndex)
                     {
                         OnUpdateFrames.Invoke();
@@ -170,11 +238,11 @@ namespace Zeltex.Skeletons
         public void DeleteKeyFrame(Transform MySelectedTransform)
         {
             ZeltexKeyFrame MyFrame = null;
-            for (int i = 0; i < MyAnimations[SelectedIndex].MyKeyFrames.Count; i++)
+            for (int i = 0; i < GetAnimations()[SelectedIndex].MyKeyFrames.Count; i++)
             {
-                if (MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject == MySelectedTransform)
+                if (GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject == MySelectedTransform)
                 {
-                    MyFrame = MyAnimations[SelectedIndex].MyKeyFrames[i];
+                    MyFrame = GetAnimations()[SelectedIndex].MyKeyFrames[i];
                     MyFrame.RemoveKeys(CurrentTime);
                     break;
                 }
@@ -241,7 +309,7 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void Reset()
         {
-            MySkeleton.RestoreDefaultPose();
+            MySkeleton.GetSkeleton().RestoreDefaultPose();
             CurrentTime = 0;
             OnUpdateTime();
             IsAnimating = false;
@@ -268,7 +336,7 @@ namespace Zeltex.Skeletons
                 BeginBlending();
                 // Switch Animation
                 SelectedIndex = NewIndex;
-                MySkeleton.RestoreDefaultPose();
+                MySkeleton.GetSkeleton().RestoreDefaultPose();
             }
         }
         /// <summary>
@@ -276,30 +344,30 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void OnUpdateTime()
         {
-            if (SelectedIndex < 0 || SelectedIndex >= MyAnimations.Count) 
+            if (SelectedIndex < 0 || SelectedIndex >= GetAnimations().Count) 
             {
                 return;
             }
-            for (int i = MyAnimations[SelectedIndex].MyKeyFrames.Count-1; i >= 0; i--)
+            for (int i = GetAnimations()[SelectedIndex].MyKeyFrames.Count-1; i >= 0; i--)
             {
-                if (MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject == null)
+                if (GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject == null)
                 {
-                    MyAnimations[SelectedIndex].MyKeyFrames.RemoveAt(i);
+                    GetAnimations()[SelectedIndex].MyKeyFrames.RemoveAt(i);
                 }
                 else
                 {
-                    float ValueX = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionX.Evaluate(CurrentTime);
-                    float ValueY = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionY.Evaluate(CurrentTime);
-                    float ValueZ = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionZ.Evaluate(CurrentTime);
-                    MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject.localPosition = new Vector3(ValueX, ValueY, ValueZ);
-                    float RotateX = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationX.Evaluate(CurrentTime);
-                    float RotateY = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationY.Evaluate(CurrentTime);
-                    float RotateZ = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationZ.Evaluate(CurrentTime);
-                    MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject.localEulerAngles = new Vector3(RotateX, RotateY, RotateZ);
-                    float ScaleX = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleX.Evaluate(CurrentTime);
-                    float ScaleY = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleY.Evaluate(CurrentTime);
-                    float ScaleZ = MyAnimations[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleZ.Evaluate(CurrentTime);
-                    MyAnimations[SelectedIndex].MyKeyFrames[i].MyObject.localScale = new Vector3(ScaleX, ScaleY, ScaleZ);
+                    float ValueX = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionX.Evaluate(CurrentTime);
+                    float ValueY = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionY.Evaluate(CurrentTime);
+                    float ValueZ = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurvePositionZ.Evaluate(CurrentTime);
+                    GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject.localPosition = new Vector3(ValueX, ValueY, ValueZ);
+                    float RotateX = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationX.Evaluate(CurrentTime);
+                    float RotateY = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationY.Evaluate(CurrentTime);
+                    float RotateZ = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveRotationZ.Evaluate(CurrentTime);
+                    GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject.localEulerAngles = new Vector3(RotateX, RotateY, RotateZ);
+                    float ScaleX = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleX.Evaluate(CurrentTime);
+                    float ScaleY = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleY.Evaluate(CurrentTime);
+                    float ScaleZ = GetAnimations()[SelectedIndex].MyKeyFrames[i].AnimationCurveScaleZ.Evaluate(CurrentTime);
+                    GetAnimations()[SelectedIndex].MyKeyFrames[i].MyObject.localScale = new Vector3(ScaleX, ScaleY, ScaleZ);
                 }
             }
             if (CurrentTime >= TotalTime)
@@ -341,11 +409,7 @@ namespace Zeltex.Skeletons
         {
             IsRestoringPose = true;
             TimeBeginRestoring = Time.time;
-            if (MySkeleton == null)
-            {
-                MySkeleton = GetComponent<Skeleton>();
-            }
-            MySkeleton.RestoreDefaultPose();    // for now
+            MySkeleton.GetSkeleton().RestoreDefaultPose();    // for now
         }
         /// <summary>
         /// Over time, restore the default pose
@@ -365,9 +429,9 @@ namespace Zeltex.Skeletons
             if (IsPlayOnStart)
             {
                 // look for 'Idle'
-                for (int i = 0; i < MyAnimations.Count; i++)
+                for (int i = 0; i < GetAnimations().Count; i++)
                 {
-                    if (MyAnimations[i].Name == BeginAnimationName)
+                    if (GetAnimations()[i].Name == BeginAnimationName)
                     {
                         SelectedIndex = i;
                         break;
@@ -385,10 +449,10 @@ namespace Zeltex.Skeletons
         {
             List<string> Data = new List<string>();
             Data.Add("/BeginSkeletonAnimator");
-            for (int i = 0; i < MyAnimations.Count; i++)
+            for (int i = 0; i < GetAnimations().Count; i++)
             {
-                Data.Add("/BeginAnimation " + MyAnimations[i].Name);
-                Data.AddRange(MyAnimations[i].GetScript());
+                Data.Add("/BeginAnimation " + GetAnimations()[i].Name);
+                Data.AddRange(GetAnimations()[i].GetScript());
                 Data.Add("/EndAnimation");
             }
             Data.Add("/EndSkeletonAnimator");
@@ -399,13 +463,13 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void RunScript(List<string> Data)
         {
-            MyAnimations.Clear();
+            GetAnimations().Clear();
             //Debug.LogError("Loading Animation for " + MySkeleton.SkeletonName + "\n" + FileUtil.ConvertToSingle(Data));
             for (int i = 0; i < Data.Count; i++)
             {
                 if (Data[i].Contains("/BeginAnimation"))
                 {
-                    ZeltexAnimation MyAnimation = new ZeltexAnimation();
+                    Zanimation MyAnimation = new Zanimation();
                     string MyAnimationName = Data[i].Split(' ')[1];
                     MyAnimation.Name = MyAnimationName;
                     for (int j = i; j < Data.Count; j++)
@@ -417,7 +481,7 @@ namespace Zeltex.Skeletons
                             int ElementCount = (Index2 - Index1) + 1;
                             List<string> MyAnimationScript = Data.GetRange(Index1, ElementCount);
                             MyAnimation.RunScript(transform, MyAnimationScript);
-                            MyAnimations.Add(MyAnimation);
+                            GetAnimations().Add(MyAnimation);
                             i = j;
                             break;
                         }
@@ -444,7 +508,7 @@ if (MyAnimations.Count == 0)
     {
         for (int i = 0; i < MyAnimationData.MyData.Count; i++)
         {
-            MyAnimations.Add(new ZeltexAnimation());
+            MyAnimations.Add(new Zanimation());
             MyAnimations[MyAnimations.Count - 1].Name = MyAnimationData.MyNames[i];
             MyAnimations[MyAnimations.Count - 1].RunScript(transform, FileUtil.ConvertToList(MyAnimationData.MyData[i]));
         }

@@ -283,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1115227127235120
 GameObject:
   m_ObjectHideFlags: 1
@@ -1168,7 +1168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1574819949755682
 GameObject:
   m_ObjectHideFlags: 1
@@ -3049,6 +3049,16 @@ MonoBehaviour:
             _values: []
         IsDrawGui: 0
         Data: []
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}
@@ -4953,6 +4963,16 @@ MonoBehaviour:
             _values: []
         IsDrawGui: 0
         Data: []
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}
@@ -5237,6 +5257,9 @@ MonoBehaviour:
   IsSelectable: 1
   MaxCells: 0
   IsStretchHorizontal: 1
+  ScrollBeginPositions: []
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls:
@@ -7262,6 +7285,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  IsKeepCamera: 0
 --- !u!114 &114799633449638288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7758,6 +7782,9 @@ MonoBehaviour:
   IsSelectable: 1
   MaxCells: 0
   IsStretchHorizontal: 1
+  ScrollBeginPositions: []
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []

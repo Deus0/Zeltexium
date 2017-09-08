@@ -22,7 +22,7 @@ namespace Zeltex.AI
         // references
         private Rigidbody MyRigidbody;
         private SkeletonAnimator MyAnimator;
-        private Skeleton MySkeleton;
+        private SkeletonHandler MySkeleton;
         private Bounds MyBounds;
         [Header("Options")]
         [SerializeField]
@@ -96,7 +96,7 @@ namespace Zeltex.AI
                 MySkeleton = MyCharacter.GetSkeleton();
                 if (MySkeleton)
                 {
-                    MySkeleton.OnLoadSkeleton.AddEvent(RefreshCapsuleBounds);
+                    MySkeleton.GetSkeleton().OnLoadSkeleton.AddEvent(RefreshCapsuleBounds);
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace Zeltex.AI
             {
                 //Feed moveDirection with input.
                 MoveForce = new Vector3(MovementX, MovementY, MovementZ);
-                MoveForce = MySkeleton.GetCameraBone().TransformDirection(MoveForce);//  transform.TransformDirection(MoveForce);
+                MoveForce = MySkeleton.GetSkeleton().GetCameraBone().TransformDirection(MoveForce);//  transform.TransformDirection(MoveForce);
                 //Multiply it by speed.
                 MoveForce *= MovementSpeed;
                 if (IsRunning)

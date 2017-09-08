@@ -128,7 +128,7 @@ namespace Zeltex.Guis.Maker
             MyTexture.wrapMode = TextureWrapMode.Clamp;
             MyTexture.name = "T " + Mathf.RoundToInt(Random.Range(1, 10000));
             Debug.Log("Adding new texture: " + MyTexture.name);
-            DataManager.Get().AddTexture(DataManagerFolder, MyTexture);
+           // DataManager.Get().AddTexture(DataManagerFolder, MyTexture);
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public override void SaveAll()
         {
-            DataManager.Get().SaveTextures(DataManagerFolder);
+           // DataManager.Get().SaveTextures(DataManagerFolder);
         }
 
         public override void Delete()
         {
-            DataManager.Get().RemoveTexture(DataManagerFolder, GetSelectedIndex());
+           // DataManager.Get().RemoveTexture(DataManagerFolder, GetSelectedIndex());
         }
         #endregion
 
@@ -209,7 +209,7 @@ namespace Zeltex.Guis.Maker
             //MyViewer.ClearMesh();
             //MyDataBase.MyModels.RemoveAt(NewIndex);
             Debug.Log("Deletng texture: " + GetSelectedName());
-			DataManager.Get().RemoveTexture(DataManagerFolder, Index);
+			//DataManager.Get().RemoveTexture(DataManagerFolder, Index);
         }
         #endregion
 

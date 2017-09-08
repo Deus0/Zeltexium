@@ -36,7 +36,7 @@ namespace Zeltex.MakerGuiSystem
 			//MyZound.DebugData();
 			NewSound = MyZound.GenerateAudioClip();
             NewSound.name = NewAudioName;
-            DataManager.Get().AddSound("Sounds", NewSound);
+           // DataManager.Get().AddSound("Sounds", NewSound);
 
 		}
 	}

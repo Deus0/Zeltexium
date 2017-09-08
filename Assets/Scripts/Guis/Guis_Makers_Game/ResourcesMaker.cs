@@ -92,13 +92,13 @@ namespace Zeltex.Guis.Maker
             {
                 MyList.Select(0);
             }
-            GetLabel("ResourcesDirectory").text = FileUtil.GetResourcesPath();
+            GetLabel("ResourcesDirectory").text = DataManager.GetResourcesPath();
         }
 
         public static List<string> GetResourceNames()
         {
             List<string> MyNames = new List<string>();
-            string MyFolderPath = FileUtil.GetResourcesPath();    // get folder path
+            string MyFolderPath = DataManager.GetResourcesPath();    // get folder path
             string[] MyDirectories = Directory.GetDirectories(MyFolderPath);
             for (int i = 0; i < MyDirectories.Length; i++)
             {
@@ -162,8 +162,8 @@ namespace Zeltex.Guis.Maker
         {
             string Name1 = GetList("MyList").GetSelectedName();
             string Name2 = NameGenerator.GenerateVoxelName();
-            string Path1 = FileUtil.GetResourcesPath() + Name1 + "/";
-            string Path2 = FileUtil.GetResourcesPath() + Name2 + "/";
+            string Path1 = DataManager.GetResourcesPath() + Name1 + "/";
+            string Path2 = DataManager.GetResourcesPath() + Name2 + "/";
             if (Directory.Exists(Path1) && !Directory.Exists(Path2))
             {
                 DirectoryCopy(Path1, Path2);
@@ -176,9 +176,9 @@ namespace Zeltex.Guis.Maker
             {
                 string Name1 = GetList("MyList").GetSelectedName();
                 string Name2 = NameGenerator.GenerateVoxelName();
-                string Path1 = FileUtil.GetResourcesPath() + Name1 + "/";
+                string Path1 = DataManager.GetResourcesPath() + Name1 + "/";
                 FileUtil.SetPersistentPath(FilePathType.PersistentPath);
-                string Path2 = FileUtil.GetResourcesPath() + Name2 + "/";
+                string Path2 = DataManager.GetResourcesPath() + Name2 + "/";
                 if (Directory.Exists(Path1) && !Directory.Exists(Path2))
                 {
                     DirectoryCopy(Path1, Path2);

@@ -8,20 +8,33 @@ using Zeltex.Util;
 
 namespace Zeltex.Voxels
 {
+    [System.Serializable]
+    public class ChunkEditorActionBlock
+    {
+        public EditorAction RefreshMesh = new EditorAction();
+
+
+        public void Update(Chunk MyChunk)
+        {
+
+        }
+    }
     /// <summary>
     /// Chunks Hold 16x16x16 Voxels
     /// They also handle the updates of the mesh
     /// </summary>
+    [ExecuteInEditMode]
     public partial class Chunk : MonoBehaviour
     {
         #region Variables
         //public Thread MyThread;
         public static int ChunkSize = 16;   // size for our chunks
+        public ChunkEditorActionBlock Actions = new ChunkEditorActionBlock();
         // references
         [SerializeField, HideInInspector]
         private World MyWorld;
         // Data
-        [SerializeField, HideInInspector]
+        [SerializeField]//, HideInInspector]
         public VoxelLookupTable MyLookupTable = new VoxelLookupTable(); // lookup table used for voxel indexes
         [SerializeField, HideInInspector]
         private VoxelData MyVoxels = new VoxelData(); // main voxel data - split up in chunks!
@@ -53,6 +66,17 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Utility
+#if UNITY_EDITOR
+        private void Update()
+        {
+            if (Actions.RefreshMesh.IsTriggered())
+            {
+               // WasMassUpdated = true;
+                RefreshAll();
+                //OnMassUpdate();
+            }
+        }
+#endif
         /// <summary>
         /// Refresh all the component links
         /// </summary>
@@ -484,7 +508,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnMassUpdate()
         {
-            Debug.LogError(name + " - MassUpdated: " + WasMassUpdated);
+           // Debug.LogError(name + " - MassUpdated: " + WasMassUpdated);
             if (WasMassUpdated)
             {
                 //Debug.LogError(name + " was mass updated: " + Time.realtimeSinceStartup);
@@ -625,13 +649,17 @@ namespace Zeltex.Voxels
         /// </summary>
         public void RefreshAll()
         {
-            for (int i = 0; i < ChunkSize; i++)
+            Int3 RefreshAllPosition = Int3.Zero();
+            Voxel MyVoxel;
+            for (RefreshAllPosition.x = 0; RefreshAllPosition.x < ChunkSize; RefreshAllPosition.x++)
             {
-                for (int j = 0; j < ChunkSize; j++)
-                {
-                    for (int k = 0; k < ChunkSize; k++)
+                for (RefreshAllPosition.y = 0; RefreshAllPosition.y < ChunkSize; RefreshAllPosition.y++)
+                {   
+                    for (RefreshAllPosition.z = 0; RefreshAllPosition.z < ChunkSize; RefreshAllPosition.z++)
                     {
-                        GetVoxel(new Int3(i, j, k)).OnUpdated();
+                        MyVoxel = GetVoxel(RefreshAllPosition);
+                        MyVoxel.OnUpdated();
+                        MyVoxel.MyMeshData.Clear();
                     }
                 }
             }

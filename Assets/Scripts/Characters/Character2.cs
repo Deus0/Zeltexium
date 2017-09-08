@@ -180,14 +180,14 @@ namespace Zeltex.Characters
         /// <summary>
         /// Gets a characters skeleton
         /// </summary>
-        public Skeleton GetSkeleton()
+        public SkeletonHandler GetSkeleton()
         {
             if (MySkeleton == null)
             {
                 Transform Body = transform.Find("Body");
                 if (Body)
                 {
-                    MySkeleton = Body.GetComponent<Skeleton>();
+                    MySkeleton = Body.GetComponent<SkeletonHandler>();
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Zeltex.Characters
         {
             if (MySkeleton)
             {
-                return MySkeleton.GetCameraBone();
+                return Data.MySkeleton.GetCameraBone();
             }
             else
             {
@@ -217,7 +217,7 @@ namespace Zeltex.Characters
                 "   Inventory Items: " + GetInventory().GetSize() + "\n" +
                 "   Quests: " + Data.MyQuestLog.GetSize() + "\n" +
                 "   Dialogue: " + MyDialogueHandler.MyTree.GetSize() + "\n" +
-                "   Skeleton: " + MySkeleton.MyBones.Count + "\n");
+                "   Skeleton: " + Data.MySkeleton.MyBones.Count + "\n");
 
 			MyData.Add("   Equipment: " + Data.Equipment.GetSize() + "\n");
             return MyData;
@@ -241,7 +241,7 @@ namespace Zeltex.Characters
                 Transform BodyTransform = transform.Find("Body");
                 if (BodyTransform)
                 {
-                    MySkeleton = transform.Find("Body").GetComponent<Skeleton>();
+                    MySkeleton = transform.Find("Body").GetComponent<SkeletonHandler>();
                 }
             }
             if (MyCollider == null)
@@ -329,7 +329,7 @@ namespace Zeltex.Characters
             if (MySkeleton)
             {
                 List<string> SkeletonScriptList = FileUtil.ConvertToList(SkeletonScript);
-                yield return CoroutineManager.StartCoroutine(MySkeleton.RunScriptRoutine(SkeletonScriptList));
+                yield return CoroutineManager.StartCoroutine(Data.MySkeleton.RunScriptRoutine(SkeletonScriptList));
             }
             //Debug.Break();
             yield return null;

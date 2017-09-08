@@ -65,7 +65,7 @@ namespace MusicMaker
         void Start ()
         {
             // Get Sound from datamanager
-            PianoSound = Zeltex.DataManager.Get().GetSound("Sounds", 0);
+            //PianoSound = Zeltex.DataManager.Get().GetSound("Sounds", 0);
             GeneratePiano();
         }
 	

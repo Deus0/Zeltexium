@@ -162,7 +162,7 @@ namespace Zeltex.Voxels
                     ChunkMeshes.Add(new MeshData());    // create a place where we can store our voxel mesh
                 }
             }
-            Debug.LogError("Updated Mesh:[" + name + "] BuildChunkMesh Function " + MyWorld.MyMaterials.Count);
+            //Debug.LogError("Updated Mesh:[" + name + "] BuildChunkMesh Function " + MyWorld.MyMaterials.Count);
             for (i = 0; i < MyWorld.MyMaterials.Count; i++)     // for each material, build the mesh of each chunk
             {
                 MeshingMaterialIndex = i;
@@ -221,8 +221,23 @@ namespace Zeltex.Voxels
         /// </summary>
         private void BuildMeshVoxel()//, ref MeshData ChunkMeshData)
         {
+            if (MyWorld.MyLookupTable.ContainsMeshIndex(MeshingType) == false)
+            {
+                Debug.LogError("Lookup table does not have type: " + MeshingType
+                    + " - Attempting to auto generate it");
+                string DataManagerVoxelName = "";
+                for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+                {
+                    DataManagerVoxelName = DataManager.Get().GetName(DataFolderNames.VoxelMeta, i);
+                    if (MyWorld.MyLookupTable.ContainsVoxel(DataManagerVoxelName) == false)
+                    {
+                        MyWorld.MyLookupTable.AddName(DataManagerVoxelName, MeshingType);
+                        break;
+                    }
+                }
+            }
             // Check if can place type
-            if (MyWorld.MyLookupTable.MyLookupTable.ContainsValue(MeshingType) == true)
+            if (MyWorld.MyLookupTable.ContainsMeshIndex(MeshingType) == true)
             {
 				if (MeshingVoxel.GetVoxelType() != 0)
 				{
@@ -235,7 +250,7 @@ namespace Zeltex.Voxels
             }
             else
             {
-                Debug.LogError("Lookup table does not have type: " + MeshingType);
+                //Debug.LogError("Lookup table does not have type: " + MeshingType);
             }
             //Debug.Log("Finished building mesh data for voxel [" + VoxelIndex + "]: " + i + ":" + j + ":" + k + " with " + ThisVoxel.MyMeshData.Verticies.Count + " verticies");
         }
@@ -465,10 +480,9 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator UpdateChunk()
         {
-            Debug.LogError("Updating chunk " + name);
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
-                UpdateMesh());       // updates the mesh
-            Debug.LogError("Updating chunk " + name + " finish UpdateMesh");
+           // Debug.LogError("Updating chunk " + name);
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(UpdateMesh());       // updates the mesh
+           // Debug.LogError("Updating chunk " + name + " finish UpdateMesh");
             //MyMeshes.Clear();
             // Spawn stuff now!
             SpawnCharactersOnChunk();   // sets characters spawned to active
@@ -555,8 +569,8 @@ namespace Zeltex.Voxels
             }
             //Debug.Log(MyWorld.name + "'s chunk has vertex count of: " + ChunkMeshes[0].Verticies.Count + ":" + MyWorld.WorldSize.ToString());
             MyMeshFilter.mesh.Clear();
-            Debug.LogError("Updated Mesh: ChunkMeshes: " + ChunkMeshes.Count +
-                " - Materials: " + GetWorld().MyMaterials.Count);
+            //Debug.LogError("Updated Mesh: ChunkMeshes: " + ChunkMeshes.Count +
+            //    " - Materials: " + GetWorld().MyMaterials.Count);
             if (ChunkMeshes.Count > 0)
             {
                 VertCount = 0;
@@ -575,9 +589,9 @@ namespace Zeltex.Voxels
                     CombiningMeshList[MaterialIndex].mesh.colors32 = ChunkMeshes[MaterialIndex].GetColors().ToArray();
                     VertCount += ChunkMeshes[MaterialIndex].Verticies.Count;
                 }
-                Debug.LogError("Before CombineMeshes.");
+                //Debug.LogError("Before CombineMeshes.");
                 MyMeshFilter.sharedMesh.CombineMeshes(CombiningMeshList.ToArray(), false, false);
-                Debug.LogError("After CombineMeshes.");
+                //Debug.LogError("After CombineMeshes.");
                 //Debug.LogError("Updated Mesh:[" + name + "] Vertexes: " + MyMeshFilter.sharedMesh.vertexCount);
                 MyMeshFilter.sharedMesh.subMeshCount = CombiningMeshList.Count;
                 MyMeshFilter.sharedMesh.name = name + " Mesh";
@@ -589,9 +603,9 @@ namespace Zeltex.Voxels
                     MonoBehaviourExtension.Kill(CombiningMeshList[MaterialIndex].mesh);
                 }
                 CombiningMeshList.Clear();
-                Debug.LogError("Before UploadMeshData.");
+                //Debug.LogError("Before UploadMeshData.");
                 MyMeshFilter.sharedMesh.UploadMeshData(false);
-                Debug.LogError("Finished UploadMeshData.");
+                //Debug.LogError("Finished UploadMeshData.");
             }
             else
             {

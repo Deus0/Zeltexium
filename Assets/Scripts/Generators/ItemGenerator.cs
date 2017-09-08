@@ -53,7 +53,7 @@ namespace Zeltex.Generators
 				//MyTexGen.Noise(MyTextureManager.ItemTextures[TextureIndex]);
 				MyTextureGenerator.Circle(NewTexture);
                 MyItem.SetTexture(NewTexture);
-				DataManager.Get().AddTexture("ItemTextures", NewTexture);
+				//DataManager.Get().AddTexture("ItemTextures", NewTexture);
 				DataManager.Get().AddElement("ItemMeta", MyItem);
 				// Set mesh to spell mesh -> used to 'hold a spell' - like a talisman
 				//MyItem.MyMesh = MyVoxelMeta.GetSingleVoxelMesh(i);

@@ -57,7 +57,7 @@ namespace Zeltex.Guis.Maker
 
         public static List<string> GetNames()
         {
-            string MyFolderPath = FileUtil.GetFolderPath(DataFolderNames.Levels + "/");
+            string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/");
             string[] MyInfo = Directory.GetDirectories(MyFolderPath);
             List<string> MyNames = new List<string>();
             MyNames.AddRange(MyInfo);
@@ -66,7 +66,7 @@ namespace Zeltex.Guis.Maker
 
         public void RefreshList()
         {
-            string MyFolderPath = FileUtil.GetFolderPath(DataFolderNames.Levels + "/");    // get folder path
+            string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/");    // get folder path
             string[] MyInfo = Directory.GetDirectories(MyFolderPath);
             Debug.Log("Levels folder path is:" + MyFolderPath + " with " + MyInfo.Length + " Levels!");
             GuiList MyList = GetListHandler("LevelsList");
@@ -86,13 +86,13 @@ namespace Zeltex.Guis.Maker
         public string GetLoadedPath()
         {
             string MyLevel = LoadedLevelName;// MyLoadedLevel.text;// MyGuiList.GetSelectedGuiName();
-            return FileUtil.GetFolderPath(DataFolderNames.Levels + "/") + MyLevel + "/";
+            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + MyLevel + "/";
         }
 
         public string GetSelectedPath()
         {
             string MyLevel = GetListHandler("LevelsList").GetSelectedName();
-            return FileUtil.GetFolderPath(DataFolderNames.Levels + "/") + MyLevel + "/";
+            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + MyLevel + "/";
         }
 
         public string GetFilePath(Chunk MyChunk)
@@ -176,7 +176,7 @@ namespace Zeltex.Guis.Maker
         {
             string NewLevelName = "Level" + Mathf.RoundToInt(Random.Range(1, 10000));
 			SetLoadedLevelName(NewLevelName);
-            string MyFolderPath = FileUtil.GetFolderPath(DataFolderNames.Levels + "/");
+            string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/");
             MyFolderPath += NewLevelName + "/";
             Directory.CreateDirectory(MyFolderPath);
             GetListHandler("LevelsList").Add(NewLevelName);
@@ -431,9 +431,9 @@ namespace Zeltex.Guis.Maker
 
 				if (NewLevelName != "" && NewLevelName != OldLevelName)
                 {
-                    string MyFolderPath = FileUtil.GetFolderPath(DataFolderNames.Levels + "/");
+                    string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/");
                     MyFolderPath += OldLevelName + "/";
-                    string NewFolderPath = FileUtil.GetFolderPath(DataFolderNames.Levels + "/") + NewLevelName + "/";
+                    string NewFolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/") + NewLevelName + "/";
                     if (Directory.Exists(MyFolderPath) == true && Directory.Exists(NewFolderPath) == false)
                     {
                         string FileName = MyFolderPath + OldLevelName + ".wmt";   // rename meta file

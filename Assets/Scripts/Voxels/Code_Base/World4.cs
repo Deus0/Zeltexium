@@ -100,13 +100,22 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Utility
-
+        string ChunkGetVoxelName;
+        VoxelMeta ChunkGetMeta;
         /// <summary>
         /// Using the index of voxel data, it will use lookup table to get the name, then return the databasse's meta data
         /// </summary>
         public VoxelMeta GetVoxelMeta(int VoxelIndex)
         {
-            return MyDataBase.GetMeta(MyLookupTable.GetName(VoxelIndex));
+            ChunkGetVoxelName = MyLookupTable.GetName(VoxelIndex);
+            ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.VoxelMeta, ChunkGetVoxelName) as VoxelMeta;
+            if (ChunkGetMeta == null)
+            {
+                Debug.LogError("Could not find: " + ChunkGetVoxelName + ":" + VoxelIndex);
+                ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.VoxelMeta, "Air") as VoxelMeta;
+            }
+            return ChunkGetMeta;
+            //return //MyDataBase.GetMeta(VoxelName);
         }
 
         public bool HasCollision()

@@ -84,10 +84,17 @@ namespace Zeltex.Combat
                 {
                     GetStat(i).ResetTimer();
                 }
-                MySource = MyTransform.GetComponent<AudioSource>();
-                MyCharacter = MyTransform.GetComponent<Character>();
-                MyBasicController = MyTransform.GetComponent<BasicController>();
-                MyPosition = MyTransform.position;
+                if (MyTransform != null)
+                {
+                    MySource = MyTransform.GetComponent<AudioSource>();
+                    MyCharacter = MyTransform.GetComponent<Character>();
+                    MyBasicController = MyTransform.GetComponent<BasicController>();
+                    MyPosition = MyTransform.position;
+                }
+                else
+                {
+                    MyCharacter = null;
+                }
                 IsAlive = true;
             }
         }

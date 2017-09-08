@@ -256,7 +256,7 @@ namespace Zeltex.Guis.Maker
                     // Lock Camera on skeleton
                     if (SelectedCharacter)
                     {
-                        SelectedCharacter.GetSkeleton().SetMeshColliders(true);
+                        SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(true);
                     }
                 }
                 else if (PaintType == CharacterPainterType.Move || PaintType == CharacterPainterType.Rotate || PaintType == CharacterPainterType.Scale)
@@ -264,7 +264,7 @@ namespace Zeltex.Guis.Maker
                     // Lock Camera on skeleton
                     if (SelectedCharacter)
                     {
-                        SelectedCharacter.GetSkeleton().SetMeshColliders(false);
+                        SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(false);
                     }
                 }
             }
@@ -447,7 +447,7 @@ namespace Zeltex.Guis.Maker
             SelectedCharacter = NewCharacter;
             if (NewCharacter)
             {
-                Bounds MyBounds = SelectedCharacter.GetSkeleton().GetBounds();
+                Bounds MyBounds = SelectedCharacter.GetSkeleton().GetSkeleton().GetBounds();
                 CharacterSize = MyBounds.extents * 2;
                 SelectedCenter = MyBounds.center;
                 SelectedCube.SetActive(true);
@@ -492,7 +492,7 @@ namespace Zeltex.Guis.Maker
                 Gizmo.layer = 1 << SelectedCharacter.gameObject.layer;
                 Gizmo.GetComponent<Tools.Gizmo>().MyTarget = SelectedCharacter.gameObject;
                 SelectedCharacter.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                SelectedCharacter.GetSkeleton().SetMeshColliders(false);
+                SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(false);
                 SelectedCharacter.GetSkeleton().GetComponent<Skeletons.SkeletonAnimator>().Stop();
             }
         }
@@ -504,7 +504,7 @@ namespace Zeltex.Guis.Maker
             {
                 SelectedCharacter.SetMovement(true);
                 SelectedCharacter.gameObject.GetComponent<CapsuleCollider>().enabled = true;
-                SelectedCharacter.GetSkeleton().SetMeshColliders(true);
+                SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(true);
                 SelectedCharacter.GetSkeleton().GetComponent<Skeletons.SkeletonAnimator>().Play();
                 SelectedCharacter = null;
             }
@@ -669,7 +669,7 @@ namespace Zeltex.Guis.Maker
             if (MyCharacter != null)
             {
                 LastHitCharacter = MyCharacter.GetComponent<Character>();
-                Bounds MyBounds = LastHitCharacter.GetSkeleton().GetBounds();
+                Bounds MyBounds = LastHitCharacter.GetSkeleton().GetSkeleton().GetBounds();
                 VoxelUnit = MyBounds.extents * 2;
                 HighlightedCenter = MyBounds.center;
                 HighLightedCube.SetActive(true);

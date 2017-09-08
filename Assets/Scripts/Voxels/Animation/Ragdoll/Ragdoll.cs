@@ -34,11 +34,11 @@ namespace Zeltex.Skeletons
     {
         public EditorAction ActionRagdoll;
         public EditorAction ActionReverseRagdoll;
+        private SkeletonHandler MySkeleton;
         public bool IsBodyPartsItems = false;
         public bool IsApplyJoints = true;
         private float ExplosionForce = 10f;
         private float DownExplosionForce = 20f;
-        private Skeleton MySkeleton;
         private static float ExplosionPauseTime = 0.02f;
         private static float ExplosionPower = 4f;
         private Characters.Character MyCharacter;
@@ -74,7 +74,7 @@ namespace Zeltex.Skeletons
             CapsuleCollider MyCapsule = transform.parent.GetComponent<CapsuleCollider>();
             Rigidbody MyRigidbody = transform.parent.gameObject.GetComponent<Rigidbody>();
             SkeletonAnimator MyAnimator = gameObject.GetComponent<SkeletonAnimator>();
-            MySkeleton = gameObject.GetComponent<Skeleton>();
+            MySkeleton = gameObject.GetComponent<SkeletonHandler>();
             UnityEngine.Networking.NetworkTransform MyNetworkTransform = transform.parent.gameObject.GetComponent<UnityEngine.Networking.NetworkTransform>();
             if (MyCapsule)
             {
@@ -106,16 +106,16 @@ namespace Zeltex.Skeletons
             }
             //MyAnimator.Stop(); // the bone lines
             //Debug.Log("Reversing Bone Positions.");
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+            for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
-                MySkeleton.MyBones[i].SetBodyCubePosition();    // reverse transform positions in bone structure
+                MySkeleton.GetBones()[i].SetBodyCubePosition();    // reverse transform positions in bone structure
             }
             yield return null;
             //for (int i = MySkeleton.MyBones.Count - 1; i >= 0; i--)
-             for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+             for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
                 //Vector3 BeforePosition = MySkeleton.MyBones[i].MyTransform.position;
-                RemoveBone(MySkeleton.MyBones[i], transform);
+                RemoveBone(MySkeleton.GetBones()[i], transform);
                 /*float TimeStarted = Time.time;
                 while (Time.time - TimeStarted <= 3f)
                 {
@@ -134,13 +134,13 @@ namespace Zeltex.Skeletons
             {
                 yield return null;
             }
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+            for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
-                Rigidbody BoneRigidbody = MySkeleton.MyBones[i].MyTransform.GetComponent<Rigidbody>();
+                Rigidbody BoneRigidbody = MySkeleton.GetBones()[i].MyTransform.GetComponent<Rigidbody>();
                 if (BoneRigidbody != null)
                 {
                     BoneRigidbody.isKinematic = false;
-                    BoneRigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionPower * MySkeleton.GetBounds().extents.magnitude);
+                    BoneRigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionPower * MySkeleton.GetSkeleton().GetBounds().extents.magnitude);
                     BoneRigidbody.AddForce(DownExplosionForce * -Vector3.up);
                 }
             }
@@ -152,10 +152,10 @@ namespace Zeltex.Skeletons
         /// </summary>
         private void ApplyJoints()
         {
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+            for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
-                Transform ChildPart = MySkeleton.MyBones[i].MyTransform;
-                Transform ParentPart = MySkeleton.MyBones[i].ParentTransform;
+                Transform ChildPart = MySkeleton.GetBones()[i].MyTransform;
+                Transform ParentPart = MySkeleton.GetBones()[i].ParentTransform;
                 if (ParentPart != null && ParentPart != transform)
                 {
                     HingeJoint MyJoint = ChildPart.gameObject.GetComponent<HingeJoint>();
@@ -168,15 +168,15 @@ namespace Zeltex.Skeletons
                     MyJoint.enableCollision = true;
                     MyJoint.useSpring = true;
                     MyJoint.autoConfigureConnectedAnchor = false;
-                    for (int j = 0; j < MySkeleton.MyBones.Count; j++)
+                    for (int j = 0; j < MySkeleton.GetBones().Count; j++)
                     {
-                        if (MySkeleton.MyBones[i].ParentTransform == MySkeleton.MyBones[j].MyTransform) // find parent bone transform
+                        if (MySkeleton.GetBones()[i].ParentTransform == MySkeleton.GetBones()[j].MyTransform) // find parent bone transform
                         {
                             //MyJoint.anchor = MySkeleton.MyBones[j].MyJointCube.transform.localPosition;
                             //MyJoint.anchor = MySkeleton.MyBones[j].MyTransform.localPosition;
                             // get parent Bone
-                            MyJoint.anchor = MySkeleton.MyBones[j].GetJointPosition();
-                            MyJoint.connectedAnchor = MySkeleton.MyBones[j].GetJointPosition();
+                            MyJoint.anchor = MySkeleton.GetBones()[j].GetJointPosition();
+                            MyJoint.connectedAnchor = MySkeleton.GetBones()[j].GetJointPosition();
                             break;
                         }
                     }
@@ -285,11 +285,11 @@ namespace Zeltex.Skeletons
                 {
                     MyAnimator.enabled = true;
                 }
-                for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+                for (int i = 0; i < MySkeleton.GetBones().Count; i++)
                 {
-                    AttachBone(MySkeleton.MyBones[i]);
+                    AttachBone(MySkeleton.GetBones()[i]);
                 }
-                MySkeleton.RestoreDefaultPose(5f);
+                MySkeleton.GetSkeleton().RestoreDefaultPose(5f);
                 UniversalCoroutine.CoroutineManager.StartCoroutine(ReverseRagdollRoutine());
             }
         }

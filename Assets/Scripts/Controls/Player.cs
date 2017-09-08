@@ -395,9 +395,9 @@ namespace Zeltex
                 TargetRotation.x = ClampAngle(TargetRotation.x, minimumY, maximumY);
                 CameraBone.eulerAngles = TargetRotation;
                 MyController.InputTargetRotation(TargetRotation);
-                if (MySkeleton && MySkeleton.MyBoneHead)
+                if (MySkeleton && MySkeleton.GetSkeleton().MyBoneHead)
                 {
-                    MySkeleton.MyBoneHead.rotation = CameraBone.rotation;
+                    MySkeleton.GetSkeleton().MyBoneHead.rotation = CameraBone.rotation;
                 }
             }
         }

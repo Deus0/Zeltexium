@@ -5,6 +5,24 @@ using Zeltex.Util;
 
 namespace Zeltex.Voxels
 {
+    [System.Serializable]
+    public class WorldEditorActionBlock
+    {
+        public EditorAction ApplyActionCube = new EditorAction();
+
+        public EditorAction WorldActionExpandForward = new EditorAction();
+        public EditorAction WorldActionExpandBack = new EditorAction();
+        public EditorAction WorldActionExpandLeft = new EditorAction();
+        public EditorAction WorldActionExpandRight = new EditorAction();
+        public EditorAction WorldActionExpandUp = new EditorAction();
+        public EditorAction WorldActionExpandDown = new EditorAction();
+
+
+        public void Update(World MyWorld)
+        {
+
+        }
+    }
     /// <summary>
     /// The main class for voxel models. It is a collection of chunked voxels.
     /// </summary>
@@ -17,7 +35,7 @@ namespace Zeltex.Voxels
         public bool IsDebug = false;
 
         [Header("Actions")]
-        public EditorAction ApplyActionCube = new EditorAction();
+        public WorldEditorActionBlock Actions = new WorldEditorActionBlock();
         public EditorAction ActionGatherChunks = new EditorAction();
         public string VoxelActionName = "Color";
         public List<GameObject> ActionGrayBoxes;
@@ -103,31 +121,15 @@ namespace Zeltex.Voxels
         }
         private void Update()
         {
-            if (ApplyActionCube.IsTriggered())
+            Actions.Update(this);
+            if (Actions.ApplyActionCube.IsTriggered())
             {
                 GatherChunks();
                 GameObject ActionCube;
                 for (int i = 0; i < ActionGrayBoxes.Count; i++)
                 {
                     ActionCube = ActionGrayBoxes[i];
-                    if (ActionCube != null)
-                    {
-                        Debug.LogError("Apply voxel [" + VoxelActionName + "] to: " + RealToBlockPosition(ActionCube.transform.position).ToString());
-                        BoxCollider MyCollider = ActionCube.GetComponent<BoxCollider>();
-                        if (MyCollider)
-                        {
-                            UpdateBlockTypeMassArea(VoxelActionName, RealToBlockPosition(ActionCube.transform.position),
-                                new Vector3(
-                                    (MyCollider.size.x * MyCollider.transform.lossyScale.x - 1f) / 2f,
-                                    (MyCollider.size.y * MyCollider.transform.lossyScale.y - 1f) / 2f,
-                                    (MyCollider.size.z * MyCollider.transform.lossyScale.z - 1f) / 2f)
-                                , Color.white);
-                        }
-                        else
-                        {
-                            UpdateBlockTypeMassArea(VoxelActionName, RealToBlockPosition(ActionCube.transform.position), 0, Color.white);
-                        }
-                    }
+                    ApplyActionCube(ActionCube, VoxelActionName);
                 }
             }
             if (ActionGatherChunks.IsTriggered())
@@ -147,6 +149,35 @@ namespace Zeltex.Voxels
                     Debug.LogError("Could not load " + LoadModelName);
                 }
 
+            }
+        }
+
+
+        public void ApplyActionCube(GameObject ActionCube, string VoxelActionName)
+        {
+            ApplyActionCube(ActionCube, VoxelActionName, Color.white);
+        }
+        public void ApplyActionCube(GameObject ActionCube, string VoxelActionName, Color32 VoxelColor)
+        {
+            if (ActionCube != null)
+            {
+                Debug.Log("Apply voxel [" + VoxelActionName + "] to: " + RealToBlockPosition(ActionCube.transform.position).ToString());
+                BoxCollider MyCollider = ActionCube.GetComponent<BoxCollider>();
+                if (MyCollider)
+                {
+                    UpdateBlockTypeMassArea(
+                        VoxelActionName, 
+                        RealToBlockPosition(ActionCube.transform.position),
+                        new Vector3(
+                            (MyCollider.size.x * MyCollider.transform.lossyScale.x - 1f) / 2f,
+                            (MyCollider.size.y * MyCollider.transform.lossyScale.y - 1f) / 2f,
+                            (MyCollider.size.z * MyCollider.transform.lossyScale.z - 1f) / 2f),
+                        VoxelColor);
+                }
+                else
+                {
+                    UpdateBlockTypeMassArea(VoxelActionName, RealToBlockPosition(ActionCube.transform.position), 0, Color.white);
+                }
             }
         }
         /// <summary>

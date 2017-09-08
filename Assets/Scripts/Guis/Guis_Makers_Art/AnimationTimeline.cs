@@ -206,7 +206,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyAnimator)
             {
-                return MyAnimator.MyAnimations.Count;
+                return MyAnimator.GetAnimations().Count;
             }
             else
             {
@@ -218,7 +218,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyAnimator)
             {
-                MyAnimator.MyAnimations.Add(new ZeltexAnimation());
+                MyAnimator.GetAnimations().Add(new Zanimation());
                 MyIndexController.SetMaxSelected(GetSize());
                 MyIndexController.SelectIndex(GetSize() - 1);
                 MyAnimator.SelectedIndex = MyIndexController.SelectedIndex;
@@ -233,7 +233,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyAnimator)
             {
-                MyAnimator.MyAnimations.RemoveAt(Index);
+                MyAnimator.GetAnimations().RemoveAt(Index);
                 //MyAnimator.Delete();
                 MyIndexController.SetMaxSelected(GetSize());
                 MyIndexController.SelectIndex(MyIndexController.SelectedIndex - 1);
@@ -255,7 +255,7 @@ namespace Zeltex.Guis.Maker
                                 //MyAnimator.Load(MyAnimator.SelectedIndex);
                                 // Update gui
            // MyIndexText.text = "" + (1 + MyAnimator.SelectedIndex);// + "/" + MyAnimator.MyAnimations.Count;
-            NameInput.text = MyAnimator.MyAnimations[MyAnimator.SelectedIndex].Name;
+            NameInput.text = MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].Name;
             MyAnimator.Reset();
             MyAnimator.OnUpdateFrames.Invoke();
         }
@@ -354,9 +354,9 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void UpdateName(string NewName)
         {
-            if (MyAnimator && MyAnimator.MyAnimations.Count != 0)
+            if (MyAnimator && MyAnimator.GetAnimations().Count != 0)
             {
-                MyAnimator.MyAnimations[MyAnimator.SelectedIndex].Name = NewName;
+                MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].Name = NewName;
             }
         }
 
@@ -401,14 +401,14 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private void GenerateCurveTicks()
         {
-            if (MyAnimator && MyAnimator.MyAnimations.Count != 0)
+            if (MyAnimator && MyAnimator.GetAnimations().Count != 0)
             {
-                MyAnimator.SelectedIndex = Mathf.Clamp(MyAnimator.SelectedIndex, 0, MyAnimator.MyAnimations.Count);
-                for (int i = 0; i < MyAnimator.MyAnimations[MyAnimator.SelectedIndex].MyKeyFrames.Count; i++)
+                MyAnimator.SelectedIndex = Mathf.Clamp(MyAnimator.SelectedIndex, 0, MyAnimator.GetAnimations().Count);
+                for (int i = 0; i < MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames.Count; i++)
                 {
-                    if (MyAnimator.MyAnimations[MyAnimator.SelectedIndex].MyKeyFrames[i].MyObject == MySkeletonPainter.GetSelectedBone())
+                    if (MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames[i].MyObject == MySkeletonPainter.GetSelectedBone())
                     {
-                        CreateTicksForCurve(MyAnimator.MyAnimations[MyAnimator.SelectedIndex].MyKeyFrames[i].AnimationCurvePositionX);  // for the selected bone, create the curve positions
+                        CreateTicksForCurve(MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames[i].AnimationCurvePositionX);  // for the selected bone, create the curve positions
                         break;
                     }
                 }

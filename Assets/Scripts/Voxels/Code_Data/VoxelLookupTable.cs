@@ -5,6 +5,16 @@ using Zeltex.Util;
 
 namespace Zeltex.Voxels
 {
+    [System.Serializable()]
+    public class StringIntDictionary : SerializableDictionaryBase<string, int>
+    {
+
+    }
+    [System.Serializable()]
+    public class IntStringDictionary : SerializableDictionaryBase<int, string>
+    {
+
+    }
     /// <summary>
     /// A lookup table for voxel indexes - to make them dynamic
     /// Links a voxel name to an index
@@ -16,14 +26,22 @@ namespace Zeltex.Voxels
         public static string BeginTag = "/BeginVoxelLookup";
         public static string EndTag = "/EndVoxelLookup";
         public static char SplitterTag = ':';
-        public Dictionary<string, int> MyLookupTable = new Dictionary<string, int>();
-        public Dictionary<string, int> VoxelCount = new Dictionary<string, int>();
-        public Dictionary<int, string> MyReverseLookupTable = new Dictionary<int, string>();    // put in an integer and get a string back
+        [SerializeField]
+        private StringIntDictionary MyLookupTable = new StringIntDictionary();
+        [SerializeField]
+        private StringIntDictionary VoxelCount = new StringIntDictionary();
+        [SerializeField]
+        private IntStringDictionary MyReverseLookupTable = new IntStringDictionary();    // put in an integer and get a string back
 
         #region Init
         public VoxelLookupTable()
         {
             Clear();
+        }
+
+        public bool ContainsMeshIndex(int MeshIndex)
+        {
+            return MyReverseLookupTable.ContainsKey(MeshIndex);
         }
         #endregion
 
@@ -125,7 +143,7 @@ namespace Zeltex.Voxels
             {
                 return MyReverseLookupTable[MyValue];
             }
-            else if (MyLookupTable.ContainsValue(MyValue))
+            /*else// if (MyLookupTable.ContainsValue(MyValue))
             {
                 foreach (string MyKey in MyLookupTable.Keys)
                 {
@@ -134,7 +152,7 @@ namespace Zeltex.Voxels
                         return MyKey;
                     }
                 }
-            }
+            }*/
             return "Air";   // default
         }
         #endregion
@@ -212,7 +230,7 @@ namespace Zeltex.Voxels
         }
 
         /// <summary>
-        /// Add a new voxel to the table!
+        /// Add a new voxel to the table! Auto generates the index
         /// </summary>
         private void Add(string VoxelName)
         {
@@ -222,7 +240,7 @@ namespace Zeltex.Voxels
                 bool IsFound = false;
                 while (IsFound == false)
                 {
-                    if (MyLookupTable.ContainsValue(NewValue))
+                    if (MyReverseLookupTable.ContainsKey(NewValue))
                     {
                         NewValue++; // already has it, so increase until found new value
                     }
@@ -237,6 +255,21 @@ namespace Zeltex.Voxels
                 VoxelCount.Add(VoxelName, 0);
                 // Instead of using Voxel Index, it will use the new key!
             }
+        }
+
+        public void AddName(string VoxelName, int VoxelMeshingIndex)
+        {
+            if (MyLookupTable.ContainsKey(VoxelName) == false && MyReverseLookupTable.ContainsKey(VoxelMeshingIndex) == false)
+            {
+                MyLookupTable.Add(VoxelName, VoxelMeshingIndex);
+                MyReverseLookupTable.Add(VoxelMeshingIndex, VoxelName);
+                VoxelCount.Add(VoxelName, 0);
+            }
+        }
+
+        public bool ContainsVoxel(string VoxelName)
+        {
+            return MyLookupTable.ContainsKey(VoxelName);
         }
 
         #endregion
@@ -295,7 +328,7 @@ namespace Zeltex.Voxels
                         int MyValue = int.Parse(ValueString);
                         string MyKey = MyScript[i].Substring(MySplitIndex + 1); 
                         //Debug.Log("MyKey: " + MyKey);
-                        if (MyLookupTable.ContainsKey(MyKey) == false && MyLookupTable.ContainsValue(MyValue) == false)
+                        if (MyLookupTable.ContainsKey(MyKey) == false && MyReverseLookupTable.ContainsKey(MyValue) == false)
                         {
                             MyLookupTable.Add(MyKey, MyValue);
                             MyReverseLookupTable.Add(MyValue, MyKey);

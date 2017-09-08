@@ -24,7 +24,7 @@ namespace Zeltex.Guis.Characters
 	public class CharacterGuis
 	{
         [Header("Actions")]
-        public EditorAction ActionSpawnGui;
+        public EditorAction ActionSpawnGui = new EditorAction();
         public string ActionName = "Skillbar";
 
         [Header("Data")]

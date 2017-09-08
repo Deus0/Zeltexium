@@ -92,7 +92,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void NewBone()
         {
-            MyViewer.MySpawnedSkeleton.CreateBone();
+            MyViewer.MySpawnedSkeleton.GetSkeleton().CreateBone();
             //GameObject NewBone = MyViewer.CreateBone();
         }
         /// <summary>
@@ -199,7 +199,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private IEnumerator OnRemoveRoutine(int NewIndex)
         {
-            yield return MyViewer.MySpawnedSkeleton.Clear();
+            yield return MyViewer.MySpawnedSkeleton.GetSkeleton().Clear();
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Zeltex.Guis.Maker
         {
             MyViewer.OnBegin();
             base.OnBegin();
-            while (MyViewer.MySpawnedSkeleton.IsLoadingSkeleton())
+            while (MyViewer.MySpawnedSkeleton.GetSkeleton().IsLoadingSkeleton())
             {
                 // wait
                 yield return null;
@@ -231,7 +231,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyViewer.MySpawnedSkeleton)
             {
-                string SkeletonScript = FileUtil.ConvertToSingle(MyViewer.MySpawnedSkeleton.GetScriptList());
+                string SkeletonScript = FileUtil.ConvertToSingle(MyViewer.MySpawnedSkeleton.GetSkeleton().GetScriptList());
                 DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), SkeletonScript);
             }
             /*else
@@ -275,12 +275,12 @@ namespace Zeltex.Guis.Maker
         {
             if (MyViewer.MySpawnedSkeleton != null)// && GetSelectedIndex() >= 0 && GetSelectedIndex() < MyData.Count)
             {
-                MyViewer.MySpawnedSkeleton.ForceStopLoad();
+                MyViewer.MySpawnedSkeleton.GetSkeleton().ForceStopLoad();
                 //Debug.LogError("LOading skeleton at: " + GetSelectedIndex());
                 MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().Stop();
                 string MyScript = GetSelected();
                 //Debug.LogError("Loading Skeleton: " + GetSelectedIndex() + ":\n" + MyScript);
-                yield return MyViewer.MySpawnedSkeleton.RunScriptRoutine(FileUtil.ConvertToList(MyScript)); //MyData[GetSelectedIndex()]
+                yield return MyViewer.MySpawnedSkeleton.GetSkeleton().RunScriptRoutine(FileUtil.ConvertToList(MyScript)); //MyData[GetSelectedIndex()]
                 MyViewer.RefreshCamera();
                 //MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().LoadAll();  // takes the animations from the skeleton managers data
             }
@@ -335,7 +335,7 @@ namespace Zeltex.Guis.Maker
 
         public void Mutate()
         {
-            for (int i = 0; i < MyViewer.MySpawnedSkeleton.MyBones.Count; i++)
+            for (int i = 0; i < MyViewer.MySpawnedSkeleton.GetBones().Count; i++)
             {
                 //MyViewer.RescaleBone(i, Random.Range(-MutateValue, MutateValue));
             }

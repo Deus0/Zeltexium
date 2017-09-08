@@ -55,8 +55,6 @@ namespace Zeltex.Guis
                     HeaderText.text = gameObject.name;
                 }
             }
-            MyButton = GetComponent<Button>();
-            MyImage = GetComponent<RawImage>();
             if (IsColorBlank(MyColorBlock.normalColor))
             {
                 MyColorBlock.normalColor = new Color(0.7f, 0.7f, 0.7f);
@@ -69,13 +67,18 @@ namespace Zeltex.Guis
             {
                 MyColorBlock.pressedColor = new Color(0.7f, 1f, 1f);
             }
-            if (MyImage)
-            {
-                MyImage.color = MyColorBlock.normalColor;
-            }
+            MyButton = GetComponent<Button>();
+            MyImage = GetComponent<RawImage>();
             if (MyButton)
             {
                 MyButton.onClick.AddEvent(OnButtonClick);
+            }
+            else
+            {
+                if (MyImage)
+                {
+                    MyImage.color = MyColorBlock.normalColor;
+                }
             }
         }
 

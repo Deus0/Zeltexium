@@ -318,7 +318,7 @@ namespace Zeltex.Guis.Maker
         {
 #if UNITY_EDITOR || UNITY_STANDALONE
             OnUpdatedMap();
-            string ZipFilePath = FileUtil.GetMapPath() + SaveFileName + ".zip";
+            string ZipFilePath = DataManager.GetMapPath() + SaveFileName + ".zip";
             Debug.Log("Saving Zip File: " + ZipFilePath);
             using (ZipFile MyZip = new ZipFile())
             {
@@ -367,7 +367,7 @@ namespace Zeltex.Guis.Maker
 
         public void Upload(string MyData)
         {
-            string ZipFilePath = FileUtil.GetMapPath() + SaveFileName + ".zip";
+            string ZipFilePath = DataManager.GetMapPath() + SaveFileName + ".zip";
             string UploadFileName = "";
             for (int i = 0; i < MyData.Length; i++)
             {

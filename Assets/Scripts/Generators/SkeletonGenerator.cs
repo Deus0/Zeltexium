@@ -8,19 +8,18 @@ namespace Zeltex.Generators
     /// <summary>
     /// Generates Skeletons
     /// </summary>
-    public class SkeletonGenerator : MonoBehaviour
+    public class SkeletonGenerator : ManagerBase<SkeletonGenerator>
     {
-        private static SkeletonGenerator instance;
+        //private static SkeletonGenerator instance;
         public VoxelModelGenerator MyModelGenerator;
 
-        private void Start()
+        public new static SkeletonGenerator Get()
         {
-            instance = this;
-        }
-
-        public static SkeletonGenerator Get()
-        {
-            return instance;
+            if (MyManager == null)
+            {
+                MyManager = GameObject.FindObjectOfType<SkeletonGenerator>();
+            }
+            return MyManager;
         }
         /// <summary>
         /// Generates skeletons

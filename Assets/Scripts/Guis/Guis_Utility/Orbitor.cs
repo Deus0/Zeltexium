@@ -16,7 +16,7 @@ namespace Zeltex.Guis
         [SerializeField] private bool IsTargetMainCamera = true;
         [Tooltip("The target transform o f the orbital paths")]
         public Transform TargetObject;
-        public Skeleton TargetSkeleton;
+        public SkeletonHandler TargetSkeleton;
         private Quaternion TargetRotation;  // the rotation to lerp to
         private Vector3 TargetPosition;		// the position to lerp to
         [Header("Positioning")]
@@ -27,13 +27,16 @@ namespace Zeltex.Guis
         [Tooltip("The linear speed of movement to the orbit position")]
         private float RotationSpeed = 0.5f;
         [Tooltip("Used to make speed instant, attaches itself as a child to the target")]
-		[SerializeField] private bool IsInstant = false;
+		[SerializeField]
+        private bool IsInstant = false;
 		[Header("Positioning")]
 		[Tooltip("The angle used in positioning away from the target")]
-		[SerializeField] private Vector3 MyDirection;
+		[SerializeField]
+        private Vector3 MyDirection;
 		[Tooltip("The distance away from the target")]
 		public float MyDisplayDistance = 1;
-		[SerializeField] private bool IsFollowUserAngle = true;			// rotates to position according to users transform.forward angle
+		[SerializeField]
+        private bool IsFollowUserAngle = true;			// rotates to position according to users transform.forward angle
 		public bool IsFollowUserAngleAddition = true;	// will follow camera rotation on an angle addition
 
         // Spinning
@@ -93,7 +96,7 @@ namespace Zeltex.Guis
         {
             if (TargetSkeleton != null)
             {
-                TargetObject = TargetSkeleton.MyCameraBone;
+                TargetObject = TargetSkeleton.GetSkeleton().MyCameraBone;
             }
             if (TargetObject != null)
             {
@@ -135,7 +138,7 @@ namespace Zeltex.Guis
         /// <summary>
         ///  Sets target of the orbitor
         /// </summary>
-        public void SetTarget(Transform TargetObject_, Skeleton TargetSkeleton_)
+        public void SetTarget(Transform TargetObject_, SkeletonHandler TargetSkeleton_)
         {
             TargetSkeleton = TargetSkeleton_;
             if (TargetObject_ != null)

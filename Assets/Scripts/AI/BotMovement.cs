@@ -96,7 +96,7 @@ namespace Zeltex.AI
         private Character MyCharacter;
        // private BasicController MyController;
         private Mover MyController;
-        private Skeleton MySkeleton;
+        private SkeletonHandler MySkeleton;
         // a little bit of whiskers
         private bool IsWhiskers = true;
         public float RotationSpeed = 360f;
@@ -324,7 +324,7 @@ namespace Zeltex.AI
             TargetPositionIndex = 0;
             if (MyWorld != null)
             {
-                TargetPositions = PathFinder.FindPath(MyWorld, transform.position, TargetPosition, MyCharacter.GetSkeleton().GetBounds());
+                TargetPositions = PathFinder.FindPath(MyWorld, transform.position, TargetPosition, MyCharacter.GetData().MySkeleton.GetBounds());
             }
             else
             {
@@ -465,12 +465,12 @@ namespace Zeltex.AI
         /// </summary>
         public bool IsFacingObject(Transform OtherObject, float AngleThreshold)
         {
-            if (MyCharacter.GetSkeleton().MyBoneHead == null)
+            if (MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead == null)
             {
                 return true;//lol
             }
             //transform.forward
-            if (Vector3.Angle(MyCharacter.GetSkeleton().MyBoneHead.transform.forward, OtherObject.transform.position - transform.position) < AngleThreshold)
+            if (Vector3.Angle(MyCharacter.GetForwardDirection(), OtherObject.transform.position - transform.position) < AngleThreshold)
             {
                 return true;
             }
@@ -490,9 +490,9 @@ namespace Zeltex.AI
         void Attack()
 		{
             // aim head bone up down at target
-            if (MyCharacter.GetSkeleton().MyBoneHead)
+            if (MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead)
             {
-                MyCharacter.GetSkeleton().MyBoneHead.LookAt(TargetObject.transform);  // should be max though direction!
+                MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.LookAt(TargetObject.transform);  // should be max though direction!
             }
             else
             {
@@ -549,7 +549,7 @@ namespace Zeltex.AI
 			ClearPositionIcons();
 			TargetPositions.Clear();
 			TargetPositionIndex = 0;
-            MyCharacter.GetSkeleton().MyBoneHead.transform.eulerAngles = Vector3.zero;
+            MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.transform.eulerAngles = Vector3.zero;
             //OnReachTarget.Invoke(); // finish doing what it was meant to after wandering?
             GetComponent<Bot>().Wander();
         }
@@ -692,7 +692,7 @@ namespace Zeltex.AI
             {
                 RaycastHit MyHit;
                 MovementForce.x = 0;
-                Bounds MyBounds = MySkeleton.GetBounds();
+                Bounds MyBounds = MySkeleton.GetSkeleton().GetBounds();
                 float BoundsX = (MyBounds.center.x + MyBounds.extents.x) * 1.03f;
                 //float DesiredForceX = 0;
                 if (Physics.Raycast(transform.position, transform.right, out MyHit, BoundsX, LayerManager.Get().WorldsLayer))

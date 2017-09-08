@@ -410,13 +410,13 @@ namespace Zeltex.Combat
         {
             if (DataManager.Get())
             {
-                AudioClip MySound = DataManager.Get().GetSound("Sounds", SoundName);
-                return MySound;
+                Sound.Zound MyZound = (DataManager.Get().GetElement(DataFolderNames.Sounds, SoundName) as Zeltex.Sound.Zound);
+                if (MyZound != null)
+                {
+                    return MyZound.GetAudioClip();
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         #endregion
     }

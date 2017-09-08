@@ -41,6 +41,9 @@ namespace Zeltex.Characters
         [Header("Data")]
         [SerializeField]
         private CharacterData Data = new CharacterData();
+        [SerializeField]
+        private bool IsInvinsible;
+
         public CharacterGuis MyGuis = new CharacterGuis();
 
         [Header("Character")]
@@ -69,7 +72,7 @@ namespace Zeltex.Characters
         // Components
         private DialogueHandler MyDialogueHandler;
         private Skillbar MySkillbar;
-        private Skeleton MySkeleton;
+        private SkeletonHandler MySkeleton;
         private Bot MyBot;
         private Rigidbody MyRigidbody;
         private BasicController MyController;
@@ -80,6 +83,17 @@ namespace Zeltex.Characters
         #endregion
 
         #region Mono
+        public Vector3 GetForwardDirection()
+        {
+            if (Data.MySkeleton.MyBoneHead)
+            {
+                return Data.MySkeleton.MyBoneHead.transform.forward;
+            }
+            else
+            {
+                return transform.forward;
+            }
+        }
         public CharacterData GetData()
         {
             return Data;
@@ -124,6 +138,7 @@ namespace Zeltex.Characters
 
         private void Awake()
         {
+            Data.MyStats.SetCharacter(null);
             Data.MyStats.SetCharacter(transform);
         }
 
@@ -166,8 +181,8 @@ namespace Zeltex.Characters
         {
             HasInitialized = false;
             Data.Class = "";
-            MySkeleton.SkeletonName = "";
-            MySkeleton.ForceStopLoad();
+            //Data.MySkeleton.Name = "";
+            Data.MySkeleton.ForceStopLoad();
             StopAllCoroutines();
             Initialize();
         }
@@ -191,10 +206,10 @@ namespace Zeltex.Characters
                 LogManager.Get().Log("Initialised character: " + name, "Characters");
                 RefreshComponents();
                 Data.MyStats.SetCharacter(transform);
-                if (Data.MyStats != null)
+                //if (Data.MyStats != null)
                 {
-                    Data.MyStats.OnDeath.RemoveEvent<GameObject>(OnDeath);
-                    Data.MyStats.OnDeath.AddEvent<GameObject>(OnDeath);
+                    //Data.MyStats.OnDeath.RemoveEvent<GameObject>(OnDeath);
+                    //Data.MyStats.OnDeath.AddEvent<GameObject>(OnDeath);
                 }
                 // spawn guis 
                 MyGuis.SetCharacter(this);
@@ -208,7 +223,7 @@ namespace Zeltex.Characters
                     RefreshComponents();
                     LogManager.Get().Log("Loading new class and skeleton for character: " + name + " - " + 0, "Characters");
                     //RunScript(Zeltex.Util.FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.Classes, 0)));
-                    GetSkeleton().RunScript(Zeltex.Util.FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.Skeletons, 0)));
+                    //GetSkeleton().RunScript(Zeltex.Util.FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.Skeletons, 0)));
                 }
                 //CharacterManager.Get().Register(this);
             }
@@ -284,8 +299,9 @@ namespace Zeltex.Characters
                 MyBot.Disable();
             }
 
+            SetMovement(false);
             // Apply Animations on death - fade effect
-            if (MySkeleton)
+            if (MySkeleton != null)
             {
                 Ragdoll MyRagDoll = MySkeleton.GetComponent<Ragdoll>();
                 if (MyRagDoll)
@@ -308,7 +324,6 @@ namespace Zeltex.Characters
 			{
 				gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
             }
-            SetMovement(false);
             if (DeathHandle != null)
             {
                 UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
@@ -356,9 +371,6 @@ namespace Zeltex.Characters
                 CharacterManager.Get().ReturnObject(this);
             }
         }
-
-        [SerializeField]
-        private bool IsInvinsible;
 
         public bool StopDeath()
         {
@@ -438,7 +450,7 @@ namespace Zeltex.Characters
             Debug.Log(name + " is raytracing " + SelectionType);
             if (IsRayHitGui() == false && MySkeleton)
             {
-                RayTraceSelections(MySkeleton.MyCameraBone, SelectionType);
+                RayTraceSelections(Data.MySkeleton.MyCameraBone, SelectionType);
             }
             else
             {

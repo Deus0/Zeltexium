@@ -35,6 +35,21 @@ namespace Zeltex
                 }
             }
         }
+
+        public static void Die(this GameObject MyObject)
+        {
+            if (MyObject != null)
+            {
+                if (Application.isEditor && !Application.isPlaying)
+                {
+                    GameObject.DestroyImmediate(MyObject.gameObject);
+                }
+                else
+                {
+                    GameObject.Destroy(MyObject.gameObject);
+                }
+            }
+        }
     }
 
 }

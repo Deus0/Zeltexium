@@ -75,7 +75,7 @@ namespace Zeltex.Generators
 			//MyTexGen.Noise(MyTextureManager.ItemTextures[TextureIndex]);
 			MyTextureGenerator.Circle(NewTexture);
 			NewStat.SetTexture(NewTexture);
-			DataManager.Get().AddTexture("StatTextures", NewTexture);
+			//DataManager.Get().AddTexture("StatTextures", NewTexture);
 		}
     }
 }

@@ -23,8 +23,6 @@ namespace Zeltex
         [SerializeField]
         private List<ElementFolder> ElementFolders = new List<ElementFolder>();
         public List<StringFolder> StringFolders = new List<StringFolder>();
-        public List<TextureFolder> TextureFolders = new List<TextureFolder>();
-        public List<AudioFolder> AudioFolders = new List<AudioFolder>();
         
         private string RenameName = "Null";
         //private List<string> MyResourceNames = new List<string>();
@@ -34,10 +32,10 @@ namespace Zeltex
         public UnityEvent OnUpdatedResources = new UnityEvent();
 
         public string ResourcesName = "ResourcesName";
-        public string MapName = "";
+        public string MapName = "Zelnugg";
         public string MapFolderPath = "";
         public string PathTypeKey = "PathType";
-        public FilePathType MyFilePathType;
+        public FilePathType MyFilePathType = FilePathType.StreamingPath;
         [SerializeField, HideInInspector]
         private bool IsJSONFormat = true;
         [SerializeField, HideInInspector]
@@ -65,12 +63,17 @@ namespace Zeltex
             return MyManager;
         }
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
             InitializeFolders();
+            DataManager.Get().MapName = PlayerPrefs.GetString(DataManager.Get().ResourcesName, "Zelnugg");
+            LogManager.Get().Log("Loading Map [" + DataManager.Get().MapName + "]");
+            //if (DataManager.Get().MapName != "")
+            {
+                DataManager.Get().LoadAll();
+            }
         }
-
+        
         private void Update()
         {
             if (Input.GetKeyDown(DebugOpenKey))
@@ -85,7 +88,99 @@ namespace Zeltex
         }
         #endregion
 
-		#region Initialize
+        #region Path
+
+        public static string GetFolderPath(string SubFolderName)
+        {
+            return DataManager.Get().GetFolderPathNS(SubFolderName);
+        }
+
+        /// <summary>
+        /// The main function for the files folder path
+        /// </summary>
+        public string GetFolderPathNS(string SubFolderName)//, string FileExtension)
+        {
+            string FolderPath = "";// = FileUtil.GetSaveFolderPath(, MyWorld);
+            FolderPath = GetMapPathNS() + SubFolderName;// + "/";
+            //Debug.Log("Returning new FolderPath: " + FolderPath);
+            return FolderPath;
+        }
+
+        public static string GetMapPath()
+        {
+            return DataManager.Get().GetMapPathNS();
+        }
+        /// <summary>
+        /// Folder path of current map
+        /// </summary>
+        public string GetMapPathNS()
+        {
+            string CurrentMapPath = GetResourcesPath();
+            if (MapName == "")
+            {
+                MapName = "Zelnugg";
+            }
+            if (MapName != "")
+            {
+                CurrentMapPath += DataManager.Get().MapName + "/";
+            }
+            return CurrentMapPath;
+        }
+
+        public static string GetMapPath(string NewMapName)
+        {
+            if (NewMapName != "")
+            {
+                return GetResourcesPath() + NewMapName + "/";
+            }
+            else return GetResourcesPath();
+        }
+
+        /// <summary>
+        /// Folder Path of maps
+        /// </summary>
+        public static string GetResourcesPath()
+        {
+            if (DataManager.Get().MyFilePathType == FilePathType.PersistentPath)
+            {
+                // "C:/Users/Marz/AppData/LocalLow/Zeltex/Zeltex/";//  + " / ";// + "/Resources/";
+                DataManager.Get().MapFolderPath = Application.persistentDataPath + "/";
+            }
+            else if (DataManager.Get().MyFilePathType == FilePathType.StreamingPath)
+            {
+                // mac or OS
+#if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+                DataManager.Get().MapFolderPath = Application.dataPath + "/StreamingAssets/";
+
+#elif UNITY_ANDROID
+                //On Android, use:
+                 DataManager.Get().MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
+#elif UNITY_IOS
+                //On iOS, use:
+                 DataManager.Get().MapFolderPath = Application.dataPath + "/Raw";
+#elif UNITY_WEBGL
+                DataManager.Get().MapFolderPath = Application.streamingAssetsPath + "/";
+#endif
+            }
+            else
+            {
+                DataManager.Get().MapFolderPath = Application.dataPath + "/";
+                DataManager.Get().MapFolderPath += "Resources/";
+#if UNITY_EDITOR
+                DataManager.Get().MapFolderPath += "ResourcePacks/";
+#endif
+            }
+            if (!System.IO.Directory.Exists(DataManager.Get().MapFolderPath))
+            {
+                System.IO.Directory.CreateDirectory(DataManager.Get().MapFolderPath);
+                Debug.Log("Created Resouces FolderPath [" + DataManager.Get().MapFolderPath + "]");
+            }
+            return DataManager.Get().MapFolderPath;
+        }
+        #endregion
+
+
+        #region Initialize
 
         /// <summary>
         /// Erases resources
@@ -94,7 +189,7 @@ namespace Zeltex
         {
             if(ResourcesName != "")
             {
-                string ResourcesPath = FileUtil.GetResourcesPath();
+                string ResourcesPath = GetResourcesPath();
                 string MapPath = ResourcesPath + ResourcesName + "/";
                 Debug.Log("Attempting to Erasing ResourcesPack [" + ResourcesName + "] " + MapPath);
                 if (System.IO.Directory.Exists(MapPath))
@@ -147,16 +242,16 @@ namespace Zeltex
 
         private void CreateDirectories()
         {
-            if (!System.IO.Directory.Exists(FileUtil.GetMapPath()))
+            if (!System.IO.Directory.Exists(GetMapPath()))
             {
-                System.IO.Directory.CreateDirectory(FileUtil.GetMapPath());
+                System.IO.Directory.CreateDirectory(GetMapPath());
             }
-            Debug.Log("Creating Resouces directory [" + FileUtil.GetMapPath() + "]");
+            Debug.Log("Creating Resouces directory [" + GetMapPath() + "]");
             List<string> FolderNames = GetFolderNames();
             List<string> DirectoryPaths = new List<string>();
             for (int i = 0; i < FolderNames.Count; i++)
             {
-                DirectoryPaths.Add(FileUtil.GetFolderPath(FolderNames[i]));
+                DirectoryPaths.Add(GetFolderPath(FolderNames[i]));
             }
             for (int i = 0; i < DirectoryPaths.Count; i++)
             {
@@ -232,7 +327,7 @@ namespace Zeltex
             //if (!IsInitialized)
             {
                 //IsInitialized = true;
-                MyFilePathType = (FilePathType)PlayerPrefs.GetInt(PathTypeKey, 0);
+                //MyFilePathType = (FilePathType)PlayerPrefs.GetInt(PathTypeKey, 0);
 
                 ElementFolders.Clear();
 
@@ -240,6 +335,8 @@ namespace Zeltex
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelMeta, "zel"));
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolygonModels, "zel"));
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
+                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
+                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Zanimations, "zel"));
 
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Items, "zel"));
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Recipes, "zel"));
@@ -268,10 +365,10 @@ namespace Zeltex
                 // level scripts, each level contains a folder full of chunks and characters too
                 RefreshGuiMapNames();
             }
-            StringFolders.Clear();
-            StringFolders.Add(StringFolder.Create(DataFolderNames.Skeletons, "skl"));
-            AudioFolders.Clear();
-            TextureFolders.Clear();
+           // StringFolders.Clear();
+            //StringFolders.Add(StringFolder.Create(DataFolderNames.Skeletons, "skl"));
+            //AudioFolders.Clear();
+            //TextureFolders.Clear();
         }
         public Texture2D TestTexture;
         public Texture2D TestTexture2;
@@ -298,7 +395,7 @@ namespace Zeltex
         /// </summary>
         public void ClearAll()
         {
-            foreach (DataFolder<string> MyFolder in StringFolders)
+            /*foreach (DataFolder<string> MyFolder in StringFolders)
             {
                 MyFolder.Clear();
             }
@@ -309,7 +406,7 @@ namespace Zeltex
             foreach (DataFolder<AudioClip> MyFolder in AudioFolders)
             {
                 MyFolder.Clear();
-            }
+            }*/
             foreach (ElementFolder MyFolder in ElementFolders)
             {
                 MyFolder.Clear();
@@ -325,7 +422,7 @@ namespace Zeltex
             }
             // get list of current resources
             List<string> Files = new List<string>();
-            Files.AddRange(System.IO.Directory.GetDirectories(FileUtil.GetResourcesPath()));
+            Files.AddRange(System.IO.Directory.GetDirectories(GetResourcesPath()));
             for (int i = 0; i < Files.Count; i++)
             {
                 Files[i] = System.IO.Path.GetFileNameWithoutExtension(Files[i]);
@@ -341,9 +438,9 @@ namespace Zeltex
                     return MapName;
                 }
             }
-            string DirectoryA = FileUtil.GetMapPath(MapName);
+            string DirectoryA = GetMapPath(MapName);
             MapName = NewName;
-            string DirectoryB = FileUtil.GetMapPath(MapName);
+            string DirectoryB = GetMapPath(MapName);
             Debug.Log("MOving directory from [" + DirectoryA + "] to [" + DirectoryB + "]");
             System.IO.Directory.Move(DirectoryA, DirectoryB);
             return NewName;
@@ -415,24 +512,16 @@ namespace Zeltex
         {
             if (IsLoaded == false)
             {
+                LogManager.Get().Log("Loading From map path: " + GetMapPath() + " : " + MapName, "DataManager");
                 if (string.IsNullOrEmpty(MapName) == false)
                 {
-                    if (System.IO.Directory.Exists(FileUtil.GetMapPath()))
+                    //if (System.IO.Directory.Exists(GetMapPath()))
                     {
-                        CreateDirectories();    // do the thing
-                        PlayerPrefs.SetString(ResourcesName, MapName);
-                        Debug.Log("Loading Resources from folder [" + MapName + "]");
-                        RenameName = MapName;
-                        InitializeFolders();
-                        LoadAllStrings();
-                        //LoadAllTextures();
-                        LoadAllAudio();
-                        LoadAllElements();
-                        IsLoaded = true;
+                        UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine());
                     }
-                    else
+                    //else
                     {
-                        Debug.LogWarning(MapName + " Directory Path does not exist.");
+                        //Debug.LogWarning(MapName + " Directory Path does not exist.");
                     }
                 }
                 else
@@ -442,8 +531,22 @@ namespace Zeltex
             }
             else
             {
+                LogManager.Get().Log("Cannot load as already loaded resources.: " + GetResourcesPath(), "DataManager");
                 //Debug.Log("Cannot load as already loaded resources.");
             }
+        }
+
+        private System.Collections.IEnumerator LoadAllRoutine()
+        {
+            //CreateDirectories();    // do the thing
+            PlayerPrefs.SetString(ResourcesName, MapName);
+            Debug.Log("Loading Resources from folder [" + MapName + "]");
+            RenameName = MapName;
+            InitializeFolders();
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllElements());
+            LoadAllStrings();
+            IsLoaded = true;
+            yield return null;
         }
 
         /// <summary>
@@ -454,8 +557,8 @@ namespace Zeltex
             Debug.Log("Saving " + StringFolders.Count + " Folders");
             SaveAllStrings();
             SaveAllElements();
-			SaveAllTextures();
-			SaveAllAudio();
+			//SaveAllTextures();
+			//SaveAllAudio();
 		}
 
 		/// <summary>
@@ -492,7 +595,7 @@ namespace Zeltex
 					ElementFolders[i].DeleteFile(MyNames[j]);
 				}
 			}
-			for (int i = 0; i < TextureFolders.Count; i++)
+			/*for (int i = 0; i < TextureFolders.Count; i++)
 			{
 				List<string> MyNames = TextureFolders[i].GetNames();
 				for (int j = 0; j < MyNames.Count; j++)
@@ -507,7 +610,7 @@ namespace Zeltex
 				{
 					AudioFolders[i].DeleteFile(MyNames[j]);
 				}
-			}
+			}*/
 		}
         #endregion
 
@@ -539,16 +642,6 @@ namespace Zeltex
             {
                 return ElementFolder.GetNames();
             }
-            DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
-            if (TextureFolder != null)
-            {
-                return TextureFolder.GetNames();
-            }
-            DataFolder<AudioClip> AudioFolder = GetAudioFolder(FolderName);
-            if (AudioFolder != null)
-            {
-                return AudioFolder.GetNames();
-            }
             return new List<string>();
         }
 
@@ -563,16 +656,6 @@ namespace Zeltex
             {
                 //Debug.LogError("Getting name: " + Index + " Inside " + FolderName);
                 return MyFolder.SetName(Index, NewName);
-            }
-            DataFolder<Texture2D> TextureFolder = GetTextureFolder(FolderName);
-            if (TextureFolder != null)
-            {
-                return TextureFolder.SetName(Index, NewName);
-            }
-            DataFolder<AudioClip> AudioFolder = GetAudioFolder(FolderName);
-            if (AudioFolder != null)
-            {
-                return AudioFolder.SetName(Index, NewName);
             }
             ElementFolder ElementFolder = GetElementFolder(FolderName);
             if (ElementFolder != null)

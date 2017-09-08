@@ -89,7 +89,7 @@ namespace Zeltex.Voxels
             // GetClass Script
             string ClassScript = DataManager.Get().Get("Classes", ClassName);
             string RaceScript = DataManager.Get().Get("Skeletons", RaceName);
-            yield return MyCharacter.GetSkeleton().Load(RaceName, FileUtil.ConvertToList(RaceScript));
+            //yield return MyCharacter.GetSkeleton().Load(RaceName, FileUtil.ConvertToList(RaceScript));
             yield return MyCharacter.RunScriptRoutine(ClassName, FileUtil.ConvertToList(ClassScript));
             Vector3 NewPosition = SpawnPositionFinder.FindNewPositionChunkBoundaries(MyWorlds[MyWorlds.Count - 1]);
             MyCharacter.transform.position = NewPosition;
@@ -220,7 +220,7 @@ namespace Zeltex.Voxels
                 string LevelName = WorldToSave.name;
                 string LevelScript = "/Level " + LevelName + "\n";
                 LevelScript += FileUtil.ConvertToSingle(MyCharacter.GetScript());
-                string FilePath = FileUtil.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + SavesMaker.DefaultLevelName;
+                string FilePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + SavesMaker.DefaultLevelName;
                 Debug.LogError("Saving [" + SaveGameName + "] with character [" + MyCharacter.name + "] to [" + FilePath + "]:\n" + LevelScript);
                 FileUtil.Save(FilePath, LevelScript);
             }

@@ -18,6 +18,8 @@ namespace Zeltex
 		private Camera MainCamera;
         [SerializeField]
         private Camera GuiCamera;
+        [SerializeField]
+        private Camera FpsCamera;
         [Tooltip("Anything linked to the main camera have their events added to here")]
         public UnityEngine.Events.UnityEvent OnMainCameraChange;
         [SerializeField]
@@ -25,11 +27,6 @@ namespace Zeltex
 
 		private void Start()
 		{
-            /*if (Camera.main)
-            {
-                SetGuiCamera(Camera.main);
-                MainCamera = Camera.main;
-            }*/
 			if (IsSpawnOnStart)
 			{
                 SpawnCamera();
@@ -110,25 +107,23 @@ namespace Zeltex
 
         public void EnableGameCamera()
         {
-            if (GuiCamera)
+            if (FpsCamera && GuiCamera)
             {
                 GuiCamera.gameObject.SetActive(false);
-            }
-            if (MainCamera)
-            {
-                MainCamera.gameObject.SetActive(true);
+                FpsCamera.gameObject.SetActive(true);
+                MainCamera = FpsCamera;
+                OnMainCameraChange.Invoke();
             }
         }
 
         public void EnableMainMenuCamera()
         {
-            if (GuiCamera)
+            if (FpsCamera && GuiCamera)
             {
+                FpsCamera.gameObject.SetActive(false);
                 GuiCamera.gameObject.SetActive(true);
-            }
-            if (MainCamera)
-            {
-                MainCamera.gameObject.SetActive(false);
+                MainCamera = GuiCamera;
+                OnMainCameraChange.Invoke();
             }
         }
 

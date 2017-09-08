@@ -29,11 +29,6 @@ namespace Zeltex.Combat
 
         #region Debug
 
-        public void Awake()
-        {
-            BulletPrefab = BulletManager.Get().GetPrefab(0);
-        }
-
         private void Update()
         {
             if (IsDebug)
@@ -44,9 +39,19 @@ namespace Zeltex.Combat
                 }
             }
         }
+
+        private void OnGUI()
+        {
+            //GUILayout.Label("NetworkActive: " + NetworkServer.active);
+        }
         #endregion
 
         #region Initialization
+
+        public void Awake()
+        {
+            BulletPrefab = BulletManager.Get().GetPrefab(0);
+        }
 
         public Spell GetSpell()
         {
@@ -62,7 +67,7 @@ namespace Zeltex.Combat
             MyCharacter = GetComponent<Character>();
             if (HotSpotTransform == null && MyCharacter && MyCharacter.GetSkeleton())
             {
-                HotSpotTransform = MyCharacter.GetSkeleton().GetCameraBone();
+                HotSpotTransform = MyCharacter.GetCameraBone();
             }
             Transform MyIKLimb = transform.Find("IKHelper");
             if (MyIKLimb)
@@ -108,7 +113,7 @@ namespace Zeltex.Combat
         }
         #endregion
 
-        #region IK
+        #region Shooting
 
         /// <summary>
         /// Stops the aiming.
@@ -120,9 +125,6 @@ namespace Zeltex.Combat
                 MyIKHelper.StopAiming();
             }
         }
-        #endregion
-
-        #region Shooting
 
         /// <summary>
         /// If skill has enough energy, launch bullet
@@ -148,16 +150,23 @@ namespace Zeltex.Combat
                         LastFired = Time.time;
                         // get shooting direction
                         UseEnergy();
+                        Vector3 RandomForce = new Vector3(+Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness));
                         //CreateBullet();
-                        if (isServer)
+                        if (NetworkServer.active)
                         {
-                            ServerCreateBullet(GetSpawnPosition(), HotSpotTransform.rotation, 
-                                new Vector3(+Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness)));
+                            if (isServer)
+                            {
+                                ServerCreateBullet(GetSpawnPosition(), HotSpotTransform.rotation, RandomForce);
+                            }
+                            else
+                            {
+                                ClientCreateBullet(GetSpawnPosition(), HotSpotTransform.rotation, RandomForce);
+                            }
                         }
                         else
                         {
-                            ClientCreateBullet(GetSpawnPosition(), HotSpotTransform.rotation,
-                                new Vector3(+Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness), +Random.Range(-Data.Randomness, Data.Randomness)));
+                            GameObject MyBullet = Instantiate(BulletPrefab, GetSpawnPosition(), HotSpotTransform.rotation);
+                            MyBullet.gameObject.GetComponent<Bullet>().Initialize(gameObject, RandomForce);
                         }
                     }
                     else

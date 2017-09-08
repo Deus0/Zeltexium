@@ -110,13 +110,13 @@ namespace Zeltex.Guis.Maker
                 string TextureName = MyDropdown.options[MyDropdown.value].text;
                 if (MyDropdown.value != 0)
                 {
-                    Texture MyTexture = DataManager.Get().GetTexture(DataFolderNames.ItemTextures, MyDropdown.value - 1);//MyTextureMaker.GetItemTexture(TextureName);
+                    /*Texture MyTexture = DataManager.Get().GetTexture(DataFolderNames.ItemTextures, MyDropdown.value - 1);//MyTextureMaker.GetItemTexture(TextureName);
                     if (MyTexture != null)
                     {
                         MyTexture.name = DataManager.Get().GetName(DataFolderNames.ItemTextures, MyDropdown.value - 1);
                         GetSelectedItem().SetTexture(MyTexture as Texture2D);
                         TextureImage.texture = GetSelectedItem().GetTexture();
-                    }
+                    }*/
                 }
             }
             else if (MyDropdown.name == "MeshDropdown")
@@ -161,11 +161,11 @@ namespace Zeltex.Guis.Maker
                     List<string> MyNames = new List<string>();
                     //Debug.Log(MyItemTextureManager.name + " - Filling " + MyDropdown.name + " with " + MyItemTextureManager.MyTextures.Count + " Textures.");
                     MyNames.Add("Unique");
-                    int ItemTexturesCount = DataManager.Get().GetSizeTextures("ItemTextures");
+                   /* int ItemTexturesCount = DataManager.Get().GetSizeTextures("ItemTextures");
                     for (int i = 0; i < ItemTexturesCount; i++)
                     {
                         MyNames.Add(DataManager.Get().GetTexture("ItemTextures", i).name);
-                    }
+                    }*/
                     FillDropDownWithList(MyDropdown, MyNames);
                 }
                 else if (MyDropdown.name == "MeshDropdown")
