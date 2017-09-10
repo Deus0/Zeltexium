@@ -9,6 +9,7 @@ namespace Zeltex.Voxels
     public class WorldEditorActionBlock
     {
         public EditorAction ApplyActionCube = new EditorAction();
+        public EditorAction ImportVox = new EditorAction();
 
         public EditorAction WorldActionExpandForward = new EditorAction();
         public EditorAction WorldActionExpandBack = new EditorAction();
@@ -149,6 +150,10 @@ namespace Zeltex.Voxels
                     Debug.LogError("Could not load " + LoadModelName);
                 }
 
+            }
+            if (Actions.ImportVox.IsTriggered())
+            {
+                UniversalCoroutine.CoroutineManager.StartCoroutine(DataManager.Get().LoadVoxFile(this));
             }
         }
 
