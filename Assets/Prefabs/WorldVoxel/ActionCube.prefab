@@ -22,13 +22,14 @@ GameObject:
   - component: {fileID: 33727003104645130}
   - component: {fileID: 65382781440430058}
   - component: {fileID: 23175955988017296}
+  - component: {fileID: 114923659242840848}
   m_Layer: 0
   m_Name: ActionCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4228435801516280
 Transform:
   m_ObjectHideFlags: 1
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1301672504249444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.5, y: 2.5, z: 13.5}
+  m_LocalPosition: {x: 5.5, y: 5.5, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -93,3 +94,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114923659242840848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301672504249444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72308a093e234642b11b20a7acd3114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Build:
+    IsTrigger: 0
+  ActionWorld: {fileID: 0}
+  VoxelActionName: Color
+  VoxelActionColor: {r: 1, g: 1, b: 1, a: 1}

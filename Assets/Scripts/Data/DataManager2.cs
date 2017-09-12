@@ -678,11 +678,12 @@ namespace Zeltex
                         Voxels.VoxelData Data = null;
                         if (SpawnedWorld)
                         {
-                            yield return SpawnedWorld.SetWorldSizeRoutine(NewWorldSize);
-                            while (SpawnedWorld.IsWorldLoading())
+                            SpawnedWorld.IsChunksCentred = false;
+                            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SpawnedWorld.SetWorldSizeRoutine(NewWorldSize));
+                            /*while (SpawnedWorld.IsWorldLoading())
                             {
                                 yield return null;
-                            }
+                            }*/
                         }
                         else
                         {
@@ -692,11 +693,11 @@ namespace Zeltex
                                 Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize),
                                 Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize));
                         }
-                        for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; ++VoxelIndex.x)
+                        for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; VoxelIndex.x++)
                         {
-                            for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; ++VoxelIndex.y)
+                            for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; VoxelIndex.y++)
                             {
-                                for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; ++VoxelIndex.z)
+                                for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; VoxelIndex.z++)
                                 {
                                     VoxelIndex2 = (int)MyVoxelMainChunk.voxelChunk.voxels[VoxelIndex.x, VoxelIndex.y, VoxelIndex.z];
                                     //VoxelIndex3.Set(VoxelIndex.x - MyVoxelMainChunk.voxelChunk.sizeX / 2,
@@ -708,6 +709,7 @@ namespace Zeltex
                                         VoxelColor = MyVoxelMainChunk.palatte[VoxelIndex2 - 1];
                                         if (SpawnedWorld)
                                         {
+                                            //Debug.Log(VoxelIndex.ToString() + " -TO- " + VoxelColor.ToString());
                                             SpawnedWorld.UpdateBlockTypeMass(
                                                 "Color",
                                                 VoxelIndex,
@@ -716,7 +718,7 @@ namespace Zeltex
                                         else
                                         {
                                             Data.SetVoxelTypeColorRaw(VoxelIndex, 1, VoxelColor);
-                                            Debug.LogError(VoxelColor.ToString());
+                                           // Debug.LogError(VoxelColor.ToString());
                                         }
                                         /*MassUpdateVoxelIndex = MyBlockType;
                                         MassUpdateVoxelName = MyWorld.MyLookupTable.GetName(MyBlockType);
@@ -728,6 +730,7 @@ namespace Zeltex
                                     {
                                         if (SpawnedWorld)
                                         {
+                                            //Debug.Log(VoxelIndex.ToString() + " -TO- Air");
                                             SpawnedWorld.UpdateBlockTypeMass("Air", VoxelIndex);
                                         }
                                         /*else
@@ -740,7 +743,11 @@ namespace Zeltex
                         }
                         if (SpawnedWorld)
                         {
+                            Debug.Log("Vox Import OnMassUpdate for: " + SpawnedWorld.name);
+                            Voxels.WorldUpdater.Get().Clear(SpawnedWorld);
                             SpawnedWorld.OnMassUpdate();
+                            Voxels.WorldUpdater.Get().IsUpdating = false;
+                            //SpawnedWorld.ForceRefresh();
                         }
                         else
                         {

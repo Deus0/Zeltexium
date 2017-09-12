@@ -51,9 +51,9 @@ namespace Zeltex.Skeletons
         //public string SkeletonName = "Skeleton_0";
         [SerializeField, JsonProperty]
         public List<Bone> MyBones = new List<Bone>();
-        [JsonIgnore]
+        [SerializeField, JsonIgnore, HideInInspector]
         private Bounds MyBounds;
-        [JsonIgnore]    // object spawned in world
+        [SerializeField, JsonIgnore, HideInInspector]    // object spawned in world
         private SkeletonHandler SpawnedSkeleton;
 
         [Header("Bones")]
@@ -474,7 +474,7 @@ namespace Zeltex.Skeletons
         /// </summary>
         public Transform GetCameraBone()
         {
-            if (MyCameraBone == null)
+            if (MyCameraBone == null && SpawnedSkeleton && SpawnedSkeleton.transform)
             {
                 MyCameraBone = SpawnedSkeleton.transform.parent.Find("CameraBone");
             }

@@ -21,6 +21,7 @@ namespace Zeltex.Skeletons
         public EditorAction ActionSetDefaultPose = new EditorAction();
         public EditorAction ActionRestoreDefaultPose = new EditorAction();
         public EditorAction ActionGenerateSkeleton = new EditorAction();
+        public EditorAction ActionConvertMeshes = new EditorAction();
 
         private void Awake()
         {
@@ -74,6 +75,10 @@ namespace Zeltex.Skeletons
             if (ActionGenerateSkeleton.IsTriggered())
             {
                 GetSkeleton().ActionGenerateSkeleton.Trigger();
+            }
+            if (ActionConvertMeshes.IsTriggered())
+            {
+                GetSkeleton().SetMeshColliders(true);
             }
         }
 

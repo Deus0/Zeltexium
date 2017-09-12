@@ -91,7 +91,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void UpdateBlockTypeMass(string VoxelName, Int3 WorldPosition, Color NewColor, bool IsTerrainGeneration = false)
         {
-            MassUpdateChunk = GetChunkWorldPosition(WorldPosition);;
+            MassUpdateChunk = GetChunkWorldPosition(WorldPosition);
             if (MassUpdateChunk != null)
             {
                 //Debug.LogError("Updating: MassUpdateChunk" + MassUpdateChunk.name);
@@ -102,7 +102,6 @@ namespace Zeltex.Voxels
                     PreviousColor = MyVoxel.GetColor();
                     VoxelIndex = MyLookupTable.GetIndex(VoxelName);
                     DidUpdate = MassUpdateChunk.UpdateBlockTypeMass(WorldPosition, VoxelIndex, NewColor);
-                   // Debug.LogError("DidUpdate" + DidUpdate);
                     if (!IsTerrainGeneration && (DidUpdate && PreviousType != 0 && VoxelIndex == 0)) // because air does not drop things! And cannot drop things if not air!
                     {
                         if (IsDropItems || IsDropParticles)

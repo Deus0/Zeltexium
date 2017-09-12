@@ -59,6 +59,10 @@ namespace Zeltex.Voxels
                     Removed++;
                 }
             }
+            if (MyChunks.Count == 0)
+            {
+                IsUpdating = false;
+            }
         }
 
         /// <summary>
@@ -139,7 +143,7 @@ namespace Zeltex.Voxels
             // if already added chunk to updater, return
             if (MyChunks.Contains(MyChunk) == false)// && BuildingChunks.Contains(MyChunk) == false)
             {
-                //Debug.LogError("Adding Chunk: " + NewChunk.name);
+                Debug.LogError("Adding Chunk: " + MyChunk.name);
                 MyChunks.Add(MyChunk);
                 InitializeUpdates();
             }
@@ -159,11 +163,11 @@ namespace Zeltex.Voxels
                     float TimeBegun = Time.realtimeSinceStartup;
                     MyChunks.Remove(UpdatingChunk);
                     yield return CoroutineManager.StartCoroutine(UpdatingChunk.BuildChunkMesh());
-                    if (LogManager.Get())
+                    /*if (LogManager.Get())
                     {
                         string DebugLine = UpdatingChunk.name + "[" + Mathf.RoundToInt((Time.realtimeSinceStartup - TimeStartedChunk) * 1000) + "]";
                         LogManager.Get().Log(DebugLine, "WorldUpdater");
-                    }
+                    }*/
                 }
                 //Debug.LogError("Time Taken for Chunk [" + Mathf.RoundToInt((Time.realtimeSinceStartup - TimeBegunUpdating)*1000) + "ms]");
                 IsUpdatingMesh = false;
