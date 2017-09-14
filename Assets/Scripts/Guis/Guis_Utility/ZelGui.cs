@@ -113,6 +113,7 @@ namespace Zeltex.Guis
             if (MyCanvasGroup)
             {
                 MyCanvasGroup.interactable = false;
+                MyCanvasGroup.blocksRaycasts = false;
                 //MyCanvasGroup.alpha = 0.3f;
                 transform.Find("DisabledOverlay").gameObject.SetActive(true);
             }
@@ -127,6 +128,7 @@ namespace Zeltex.Guis
             if (MyCanvasGroup)
             {
                 MyCanvasGroup.interactable = true;
+                MyCanvasGroup.blocksRaycasts = true;
                 //MyCanvasGroup.alpha = 1f;
                 transform.Find("DisabledOverlay").gameObject.SetActive(false);
             }

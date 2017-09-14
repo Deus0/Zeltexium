@@ -57,11 +57,14 @@ namespace Zeltex.Guis
         /// </summary>
         public static Vector2 BaseToScaledPosition(Vector2 GuiPosition, Vector2 MyScale, float MyDistance)
         {
-            Vector2 ScreenSize = new Vector2(Screen.width, Screen.height);  // orinally 1920 x 1080
+            //Debug.LogError("    x1 Converting gui position: " + GuiPosition.ToString());
+            //Vector2 ScreenSize = ScreenSizeManager.Get().ScreenSize;//new Vector2(Screen.width, Screen.height);  // orinally 1920 x 1080
             Vector2 MySize = GetRectSize(MyDistance);   //
             MySize = new Vector2(MySize.x / MyScale.x, MySize.y / MyScale.y);   // this is scaled resolution
-            GuiPosition = new Vector2(GuiPosition.x / ScreenSize.x, GuiPosition.y / ScreenSize.y);    // Make THE position between 0 and 1
+            //Debug.LogError("    x2 MySize: " + MySize.ToString());
+            GuiPosition = new Vector2(GuiPosition.x / 1920f, GuiPosition.y / 1080f);    // Make THE position between 0 and 1
             GuiPosition = new Vector2(GuiPosition.x * MySize.x, GuiPosition.y * MySize.y);
+            //Debug.LogError("    x3 Converting gui position: " + GuiPosition.ToString());
             return GuiPosition;
         }
 
@@ -71,14 +74,19 @@ namespace Zeltex.Guis
         public static Vector2 GetRectSize(float MyDistance)    // at scale 1
         {
             Vector2 RectSize = new Vector2();
-            if (Camera.main)
+            if (CameraManager.Get())
             {
-                Quaternion TempQuat = Camera.main.transform.rotation;
-                Camera.main.transform.rotation = Quaternion.identity;
-                Vector3 LowerBounds = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, MyDistance));
-                Vector3 UpperBounds = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, MyDistance));
-                RectSize = UpperBounds - LowerBounds;
-                Camera.main.transform.rotation = TempQuat;
+                Camera RectCamera = CameraManager.Get().GetMainCamera();
+                if (RectCamera)
+                {
+                    //return RectCamera.pixelRect.size;
+                    Quaternion TempQuat = RectCamera.transform.rotation;
+                    RectCamera.transform.rotation = Quaternion.identity;
+                    Vector3 LowerBounds = RectCamera.ViewportToWorldPoint(new Vector3(0, 0, MyDistance));
+                    Vector3 UpperBounds = RectCamera.ViewportToWorldPoint(new Vector3(1, 1, MyDistance));
+                    RectSize = UpperBounds - LowerBounds;
+                    RectCamera.transform.rotation = TempQuat;
+                }
             }
             //Debug.LogError("Getting new RectSize in screen: " + RectSize.ToString());
             return RectSize;

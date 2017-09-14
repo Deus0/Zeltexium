@@ -248,7 +248,15 @@ namespace Zeltex.Guis
         {
             Vector2 ScaledPosition = ScreenSizeManager.BaseToScaledPosition(ScreenPosition, transform.lossyScale, MyDisplayDistance);
             Vector3 TransformedGuiOffset = transform.TransformVector(ScaledPosition);
-            return TargetObject.transform.position + TargetPosition + TransformedGuiOffset;
+            Vector3 NewPosition = TargetObject.transform.position + TargetPosition + TransformedGuiOffset;
+            /*if (transform.name == "SkillBar")
+            {
+                Debug.LogError("  0 ScreenPosition: " + ScreenPosition.ToString() + " ::: " + MyDisplayDistance);
+                Debug.LogError("  1 ScaledPosition: " + ScaledPosition.ToString());
+                Debug.LogError("  2 TransformedGuiOffset: " + TransformedGuiOffset.ToString());
+                Debug.LogError("  3 NewPosition: " + NewPosition.ToString());
+            }*/
+            return NewPosition;
         }
         #endregion
     }

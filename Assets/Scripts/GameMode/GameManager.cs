@@ -58,6 +58,7 @@ namespace Zeltex
             if (!Game.GameMode.IsPlaying)
             {
                 Game.GameMode.IsPlaying = true;
+                Debug.Log("Beginning to play game.");
                 Zeltex.Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
                 StartCoroutine(BeginGameRoutine());
             }
@@ -69,6 +70,7 @@ namespace Zeltex
 
         private IEnumerator BeginGameRoutine()
         {
+            GuiSpawner.Get().DisableGui("MainMenu");
             yield return new WaitForSeconds(0.5f);
             PoolsManager.Get().SpawnPools.Invoke();
             //Camera.main.gameObject.SetActive(false);
