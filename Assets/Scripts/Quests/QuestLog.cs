@@ -191,13 +191,33 @@ namespace Zeltex.Quests
         /// </summary>
         public void Add(Quest NewQuest)
         {
-            NewQuest.QuestGiver = MyCharacter;
-            NewQuest.QuestTaker = MyCharacter;
-            if (!MyQuests.Contains(NewQuest))
+            if (NewQuest != null)
             {
-                //Debug.Log("[AddQuest] Adding new Quest in " + name);
-                MyQuests.Add(NewQuest);
-                OnAddQuest.Invoke();
+                //NewQuest.QuestGiver = MyCharacter;
+                NewQuest.QuestTaker = MyCharacter;
+                if (!MyQuests.Contains(NewQuest))
+                {
+                    //Debug.Log("[AddQuest] Adding new Quest in " + name);
+                    MyQuests.Add(NewQuest);
+                    OnAddQuest.Invoke();
+                }
+                Guis.ZelGui MyQuestBeginGui = MyCharacter.MyGuis.Spawn("QuestBegin");
+                if (MyQuestBeginGui)
+                {
+                    Guis.QuestBeginGui MyQuestBegin = MyQuestBeginGui.GetComponent<Guis.QuestBeginGui>();
+                    if (MyQuestBegin)
+                    {
+                        MyQuestBegin.Initialize(NewQuest);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Could not spawn quest begin gui");
+                }
+            }
+            else
+            {
+                Debug.LogError("Trying to add null quest to " + MyCharacter.name);
             }
         }
 

@@ -57,16 +57,20 @@ namespace Zeltex.AI
         public List<BotBehaviour> MyBehaviours = new List<BotBehaviour>();
         [SerializeField]
         public Wander MyWander;
+        [SerializeField]
+        public BotBehaviour MyWaiting;
+
         private float TimeStartedWaiting;
+        [SerializeField]
+        private EditorAction ActionAddWander;
+        [SerializeField]
+        private EditorAction ActionAddWaiting;
+        [SerializeField]
+        private EditorAction ActionClearBehaviours;
 
         void Start()
         {
             //if (MyBehaviours.Count == 0)
-            {
-            }
-            MyBehaviours.Clear();
-            MyBehaviours.Add((new Wander()) as BotBehaviour);
-            MyWander = MyBehaviours[0] as Wander;
             MyCharacter = GetComponent<Character>();
             MySkeleton = MyCharacter.GetSkeleton();
             RefreshRigidbody();
@@ -75,9 +79,14 @@ namespace Zeltex.AI
             {
                 MyBehaviours[i].Initiate(transform);
             }
-            BeginBehaviour("Wander");
+            if (CurrentBehaviour.Name == MyWander.Name)
+            {
+                CurrentBehaviour = MyWander;
+            }
+            //BeginBehaviour(CurrentBehaviour.Name);
             SinAddition = Random.Range(0.0f, 1.0f);
             SinSpeed = Random.Range(0.9f, 1.1f);
+            TargetRotation = transform.eulerAngles;
         }
 
         private void Update()
@@ -86,9 +95,30 @@ namespace Zeltex.AI
             {
                 if (CurrentBehaviour != null)
                 {
-                    CurrentBehaviour.Update();
+                    CurrentBehaviour.Update(this);
                 }
                 UpdateMovement();
+            }
+            if (ActionAddWaiting.IsTriggered())
+            {
+                //if (MyWaiting == null)
+                MyBehaviours.Remove(MyWaiting);
+                MyBehaviours.Add(new BotBehaviour());
+                MyWaiting = MyBehaviours[MyBehaviours.Count - 1] as BotBehaviour;
+                MyWaiting.Name = "Waiting";
+                CurrentBehaviour = MyWaiting;
+            }
+            if (ActionAddWander.IsTriggered())
+            {
+                MyBehaviours.Remove(MyWander);
+                MyBehaviours.Add((new Wander()) as BotBehaviour);
+                MyWander = MyBehaviours[MyBehaviours.Count - 1] as Wander;
+                CurrentBehaviour = MyWander;
+                MyWander.Name = "Wander";
+            }
+            if (ActionClearBehaviours.IsTriggered())
+            {
+                MyBehaviours.Clear();
             }
         }
 

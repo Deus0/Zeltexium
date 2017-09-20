@@ -63,7 +63,8 @@ namespace Zeltex.Guis.Characters
             {
                 // destroy
                 MyToolTip.OnToggledOff();
-                MyGuiManager.Remove(MyZelGui);
+                //MyGuiManager.Remove(MyZelGui);
+                MyZelGui.Toggle();
             }
             else
             {

@@ -187,7 +187,7 @@ namespace Zeltex.Dialogue
 			DialogueData CurrentDialogue = GetCurrentDialogue ();
 			if (CurrentDialogue != null)
             {
-				if (CurrentDialogue.HasEnded ())
+				if (CurrentDialogue.HasEnded())
                 {
 					Debug.Log ("Line has Ended. Moving to next Line. At " + (DialogueIndex + 1) + " out of " + (MyDialogues.Count));
 
@@ -196,7 +196,7 @@ namespace Zeltex.Dialogue
                     // 		-conditions are checked for dialoguetree
                     bool IsFirstChat = (ChattedCount == 0);
                     string NextDialogueName = CurrentDialogue.GetNextDialogueName(IsFirstChat, MyCharacter, OtherCharacter, OptionsIndex);
-                    if (NextDialogueName != DialogueData.EndOfDialogue)
+                    if (NextDialogueName != DialogueGlobals.EndOfDialogue)
                     {
                         DialogueIndex = GetDialogueIndex(NextDialogueName); // use identifier for next  dialogue - change index!
                         CheckForEmptyDialogue(MyCharacter, OtherCharacter);
@@ -212,7 +212,7 @@ namespace Zeltex.Dialogue
                 }
 				else 
 				{
-					CurrentDialogue.NextLine ();
+					CurrentDialogue.NextLine();
 				}
 			}
         }
@@ -303,7 +303,7 @@ namespace Zeltex.Dialogue
 		}
 		public void Add(DialogueData NewData)
         {
-			MyDialogues.Add (NewData);
+			MyDialogues.Add(NewData);
 		}
         public void RemoveAt(int MyIndex)
         {

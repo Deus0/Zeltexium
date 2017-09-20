@@ -52,6 +52,7 @@ namespace Zeltex.AnimationUtilities
                 IsAnimateOnStart = false;
                 MySpeech = AnimationTextReference.text;
                 AnimationTextReference.text = "";
+                IsSpeeching = true;
                 StartCoroutine(DelayBeginning());
             }
             UpdateAnimation ();
@@ -60,7 +61,7 @@ namespace Zeltex.AnimationUtilities
 	    // animates from AnimationTextReference.text to MySpeech (both strings)
 	    private void UpdateAnimation()
         {
-		    if (MySpeech != null)
+		    if (IsSpeeching && MySpeech != null)
             {
 			    if (CharacterIndex < MySpeech.Length && 
 				    Time.time - LastUpdatedTime > UpdateCoolDown)
@@ -88,14 +89,18 @@ namespace Zeltex.AnimationUtilities
                         //Debug.LogError("Ending Animation at " + Time.time);	// debugging
                     
                         OnEnd.Invoke ();
-				    }
+                        IsSpeeching = false;
+
+                    }
 			    }
 		    }
-            else
+           // else
             {
-			    Debug.LogError("NoSpeech bubble reference in animator: " + gameObject.name);
+			  //  Debug.LogError("NoSpeech bubble reference in animator: " + gameObject.name);
 		    }
 	    }
+
+        private bool IsSpeeching;
 
 	    // begins animation a new, normally use new line instead to change what it animates too
 	    public void ResetAnimation()
@@ -106,7 +111,8 @@ namespace Zeltex.AnimationUtilities
 			    LastUpdatedTime = Time.time;
 			    CharacterIndex = 0;
 			    UpdateCoolDown = Random.Range (AnimationSpeedMin, AnimationSpeedMax);
-		    }
+                IsSpeeching = true;
+            }
             else
             {
 			    Debug.LogError("Problem with Speech Animation: " + gameObject.name);

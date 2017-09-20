@@ -58,20 +58,25 @@ namespace Zeltex.Guis.Characters
             return GuiNames;
         }
 
-        public bool Spawn(string GuiName)
+        public ZelGui Spawn(string GuiName)
         {
+            ZelGui MyGui = GetZelGui(GuiName);
+            if (MyGui)
+            {
+                return MyGui;
+            }
             if (MyCharacter && CharacterGuiManager.Get() && GetZelGui(GuiName) == null)
             {
-                ZelGui NewGui = CharacterGuiManager.Get().GetPoolObject(
+                MyGui = CharacterGuiManager.Get().GetPoolObject(
                     GuiName,
                     MyCharacter.GetComponent<UnityEngine.Networking.NetworkIdentity>());
-                Debug.LogError("Spawned " + GuiName + ":" + (NewGui != null));
-                return true;
+                Debug.LogError("Spawned " + GuiName + ":" + (MyGui != null));
+                return MyGui;
             }
             else
             {
                 Debug.LogError("Cannot spawn " + GuiName);
-                return false;
+                return MyGui;
             }
         }
 
@@ -529,13 +534,13 @@ namespace Zeltex.Guis.Characters
 
         private void UpdateDialogue(GameObject GuiObject)
         {
-            DialogueHandler CharacterDialogueHandler = MyCharacter.GetComponent<DialogueHandler>();
+            //DialogueHandler CharacterDialogueHandler = MyCharacter.GetComponent<DialogueHandler>();
             DialogueHandler GuiDialogueHandler = GuiObject.GetComponent<DialogueHandler>();
-            GuiDialogueHandler.MyTree = CharacterDialogueHandler.MyTree;    // set tree up
-            DialogueHandler MySpeech = MyCharacter.GetComponent<DialogueHandler>();
-            if (GuiObject.transform.Find("SpeechTextBackground"))
+            //GuiDialogueHandler.MyTree = CharacterDialogueHandler.MyTree;    // set tree up
+            //DialogueHandler MySpeech = MyCharacter.GetComponent<DialogueHandler>();
+            if (GuiDialogueHandler && GuiObject.transform.Find("SpeechTextBackground"))
             {
-                MySpeech.UpdateDialogueText(GuiObject.transform.Find("SpeechTextBackground").GetChild(0).GetComponent<Text>());
+                GuiDialogueHandler.UpdateDialogueText(GuiObject.transform.Find("SpeechTextBackground").GetChild(0).GetComponent<Text>());
             }
         }
 

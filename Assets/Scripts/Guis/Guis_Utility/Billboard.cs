@@ -42,21 +42,37 @@ namespace Zeltex.Guis
             MyZelGui = gameObject.GetComponent<ZelGui>();
             UpdateMainCamera();
             OnMainCameraChangeAction = UpdateMainCamera;
-            CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChangeAction);
-		}
+            if (CameraManager.Get())
+            {
+                CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChangeAction);
+            }
+            if (TargetPosition)
+            {
+                MyLastPosition = transform.position;
+                LastPosition = TargetPosition.position;
+                LastRotation = TargetPosition.rotation;
+                TargetAngle = Quaternion.Euler(TargetPosition.eulerAngles);
+            }
+        }
 
         public void UpdateMainCamera()
         {
-            ViewerCamera = CameraManager.Get().GetMainCamera();
-            if (ViewerCamera)
+            if (CameraManager.Get())
             {
-                TargetPosition = ViewerCamera.transform;
+                ViewerCamera = CameraManager.Get().GetMainCamera();
+                if (ViewerCamera)
+                {
+                    TargetPosition = ViewerCamera.transform;
+                }
             }
         }
 
         public void OnDestroy()
         {
-            CameraManager.Get().OnMainCameraChange.RemoveEvent(OnMainCameraChangeAction);
+            if (CameraManager.Get())
+            {
+                CameraManager.Get().OnMainCameraChange.RemoveEvent(OnMainCameraChangeAction);
+            }
         }
         /*Camera[] MyCameras = GameObject.FindObjectsOfType<Camera>();
         for (int i = 0; i < MyCameras.Length; i++)

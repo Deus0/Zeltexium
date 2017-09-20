@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using Zeltex.Skeletons;
+using System.Collections;
 
 namespace Zeltex.Guis
 {
@@ -56,6 +57,17 @@ namespace Zeltex.Guis
         private void Awake()
         {
             ScreenSizeChangeEvent = OnScreenSizeChange;
+            DataManager.Get().StartCoroutine(AwakeRoutine());
+        }
+
+        private IEnumerator AwakeRoutine()
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (TargetObject)
+            {
+                CheckOrbitPosition();
+                UpdateOrbit(1000f);
+            }
         }
 
         private void OnEnable()
@@ -80,9 +92,9 @@ namespace Zeltex.Guis
 
         public void OnBegin()
         {
-            if (IsTargetMainCamera)
+            if (IsTargetMainCamera && CameraManager.Get().GetMainCamera())
             {
-                TargetObject = Camera.main.transform;
+                TargetObject = CameraManager.Get().GetMainCamera().transform;
             }
             if (TargetObject != null)
             {
@@ -192,13 +204,16 @@ namespace Zeltex.Guis
         {
             SpinDirection();
             Vector3 TemporaryDirection = new Vector3((MyDirection.x), 0, (MyDirection.z)).normalized;  // first calculate direction
-            if (IsFollowUserAngle)
+            if (TargetObject)
             {
-                TemporaryDirection = TargetObject.transform.forward;
-            }
-            else if (IsFollowUserAngleAddition)
-            {
-                TemporaryDirection = TargetObject.transform.forward * MyDirection.z + TargetObject.transform.right * MyDirection.x;
+                if (IsFollowUserAngle)
+                {
+                    TemporaryDirection = TargetObject.transform.forward;
+                }
+                else if (IsFollowUserAngleAddition)
+                {
+                    TemporaryDirection = TargetObject.transform.forward * MyDirection.z + TargetObject.transform.right * MyDirection.x;
+                }
             }
             // then change the direction into a position value
             TargetPosition = TemporaryDirection * MyDisplayDistance;
@@ -248,7 +263,11 @@ namespace Zeltex.Guis
         {
             Vector2 ScaledPosition = ScreenSizeManager.BaseToScaledPosition(ScreenPosition, transform.lossyScale, MyDisplayDistance);
             Vector3 TransformedGuiOffset = transform.TransformVector(ScaledPosition);
-            Vector3 NewPosition = TargetObject.transform.position + TargetPosition + TransformedGuiOffset;
+            Vector3 NewPosition = TargetPosition + TransformedGuiOffset;
+            if (TargetObject)
+            {
+                NewPosition += TargetObject.transform.position;
+            }
             /*if (transform.name == "SkillBar")
             {
                 Debug.LogError("  0 ScreenPosition: " + ScreenPosition.ToString() + " ::: " + MyDisplayDistance);

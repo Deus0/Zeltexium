@@ -5,6 +5,7 @@ using Zeltex.Quests;	// atm conditions use the quest log, need to abstract this 
 using Zeltex.Util;
 using Zeltex.Characters;
 using Zeltex;
+using Newtonsoft.Json;
 
 // conditions programmed in
 //	/first
@@ -35,6 +36,20 @@ using Zeltex;
 
 namespace Zeltex.Dialogue
 {
+    public static class DialogueGlobals
+    {
+        // Speech
+        public static string SpeakerName1 = "Character";
+        public static string SpeakerName2 = "Player";
+        public static string EndOfDialogue = "EndOfDialogue";
+
+        // Conditions
+        public static string Options = "options";
+        public static string HandedInQuest = "handedinquest";
+
+        // Actions
+        public static string GiveQuest = "GiveQuest";
+    }
     /// <summary>
     /// A single block of dialogue data.
     /// It's main purpose is to alter the flow of the dialogue tree.
@@ -44,29 +59,34 @@ namespace Zeltex.Dialogue
 	public class DialogueData
     {
         #region Variables
+        [JsonProperty]
         public string Name = "";
 		[Header("Functions")]
-		// a function to activate	- used for mostly preset functions like exiting the chat
-		[Tooltip("Preset function calls! Just need their name!")]
-		[SerializeField]
-        public UnityEvent OnNextLine = new UnityEvent ();
-		[SerializeField]
-        public EventObjectString OnNextLine2 = new EventObjectString();
-		public string InputString = "";			// this should just be first parameter for function
+        // a function to activate	- used for mostly preset functions like exiting the chat
+        [JsonProperty]
+        public string InputString = "";			// this should just be first parameter for function
+        [JsonProperty]
         public List<DialogueAction> Actions = new List<DialogueAction>();       // index for each responsee
 
         // All conditions for next dialogue data
         [Header("Conditions")]
+        [JsonProperty]
         public List<DialogueCondition> MyConditions = new List<DialogueCondition>();        // index for each responsee
 
         // All Dialogue entries
         [Header("Speech")]
-		public int SpeechIndex = 0;	// index of speech it is up to
+        [JsonProperty]
 		public List<SpeechLine> SpeechLines = new List<SpeechLine>();                           // maybe the npc has different speech he can chose as well
+        [JsonIgnore]
+        public int SpeechIndex = 0;	// index of speech it is up to
+        [JsonIgnore]
         private int ListIndex = 0;  // just used to
-        public static string SpeakerName1 = "Character";
-        public static string SpeakerName2 = "Player";
-        public static string EndOfDialogue = "EndOfDialogue";
+
+        [Tooltip("Preset function calls! Just need their name!")]
+        [SerializeField, JsonIgnore]
+        public UnityEvent OnNextLine = new UnityEvent();
+        [SerializeField, JsonIgnore]
+        public EventObjectString OnNextLine2 = new EventObjectString();
         #endregion
 
         #region Initiators
@@ -96,7 +116,7 @@ namespace Zeltex.Dialogue
         {
             for (int i = 0; i < MyConditions.Count; i++)
             {
-                if (MyConditions[i].Command == "options")
+                if (MyConditions[i].Command == DialogueGlobals.Options)
                     return true;
             }
             return false;
@@ -198,9 +218,9 @@ namespace Zeltex.Dialogue
 
         public int GetOptionsCount()
         {
-            if (GetSpeaker() == "Player")
+            //if (GetSpeaker() == "Player")
             {
-                DialogueCondition MyCondition = GetCondition("options");
+                DialogueCondition MyCondition = GetCondition(DialogueGlobals.Options);
                 if (MyCondition != null)
                     return MyCondition.NextIndexes.Count;
             }
@@ -248,6 +268,45 @@ namespace Zeltex.Dialogue
         #endregion
 
         #region Conditions
+        
+        public void AddGiveQuestAction(string QuestName)
+        {
+            DialogueAction GiveQuestAction = new DialogueAction();
+            GiveQuestAction.Name = DialogueGlobals.GiveQuest;
+            GiveQuestAction.Input1 = QuestName;
+            Actions.Add(GiveQuestAction);
+        }
+
+
+        public void MakeOptions()
+        {
+            AddCondition(DialogueGlobals.Options);
+        }
+
+        public void MakeOptions(string BeginDialogue, string ConfirmDialogue, string DenyDialogue, string NextDialogue = "")
+        {
+            SpeechLine QuestSpeech = new SpeechLine();
+            QuestSpeech.Speaker = DialogueGlobals.SpeakerName1;
+            QuestSpeech.Speech = BeginDialogue;
+            SpeechLines.Add(QuestSpeech);
+            SpeechLine QuestSpeech2 = new SpeechLine();
+            QuestSpeech2.Speaker = DialogueGlobals.SpeakerName2;
+            QuestSpeech2.Speech = ConfirmDialogue;
+            SpeechLines.Add(QuestSpeech2);
+            SpeechLine QuestSpeech3 = new SpeechLine();
+            QuestSpeech3.Speaker = DialogueGlobals.SpeakerName2;
+            QuestSpeech3.Speech = DenyDialogue;
+            SpeechLines.Add(QuestSpeech3);
+            if (NextDialogue == "")
+            {
+                NextDialogue = DialogueGlobals.EndOfDialogue;
+            }
+            DialogueCondition OptionsCondition = new DialogueCondition(DialogueGlobals.Options, NextDialogue);
+            OptionsCondition.NextIndexes.Clear();
+            OptionsCondition.NextIndexes.Add(NextDialogue);
+            OptionsCondition.NextIndexes.Add(NextDialogue);
+            MyConditions.Add(OptionsCondition);
+        }
 
         public void SetDefault(string MyNextDialogue)
         {
@@ -282,10 +341,12 @@ namespace Zeltex.Dialogue
             //MyNext.Add (MyNextIndex);
             MyConditions.Add(MyCondition);
         }
+
         public void AddOptions(List<string> MyNextIndex)
         {
-            AddCondition("options", MyNextIndex);
+            AddCondition(DialogueGlobals.Options, MyNextIndex);
         }
+
         public void AddCondition(string NewCommand, List<string> MyNextIndex)
         {
             if (MyNextIndex.Count == 0)
@@ -301,6 +362,7 @@ namespace Zeltex.Dialogue
             //MyNext.Add (MyNextIndex);
             MyConditions.Add(MyCondition);
         }
+
         public void RemoveCondition(int ConditionIndex)
         {
             //MyNext.RemoveAt (ConditionIndex);
@@ -312,6 +374,7 @@ namespace Zeltex.Dialogue
         {
             return GetConditionNext("default");
         }
+
         public DialogueCondition GetCondition(string MyConditionName)
         {
             for (int i = 0; i < MyConditions.Count; i++)
@@ -341,7 +404,10 @@ namespace Zeltex.Dialogue
                     return;
                 }
             }
+            DialogueCondition MyCondition = new DialogueCondition(MyCommand, MyNextThing);
+            MyConditions.Add(MyCondition);
         }
+
         /// <summary>
         /// Activates a condition thing!
         /// </summary>
@@ -358,8 +424,9 @@ namespace Zeltex.Dialogue
             {
                 MyNexts.Add("" + (MyInts[j] - 1));
             }
-            AddCondition("options", MyNexts);
+            AddCondition(DialogueGlobals.Options, MyNexts);
         }
+
         #endregion
 
         #region OnFinishDialogueSection
@@ -376,11 +443,11 @@ namespace Zeltex.Dialogue
                 OnNextLine2.Invoke(OtherCharacter.gameObject, InputString);
                 for (int i = 0; i < Actions.Count; i++)
                 {
-                    if (Actions[i].Name == "GiveQuest")
+                    if (Actions[i].Name == DialogueGlobals.GiveQuest)
                     {
                         //QuestMaker MyQuestMaker = QuestMaker.Get();
                         Quest MyQuest = DataManager.Get().GetElement("Quests", Actions[i].Input1) as Quest;
-                        MyCharacter.GetComponent<QuestLog>().Add(MyQuest);
+                        MyCharacter.GetQuestLog().Add(MyQuest);
                     }
                 }
             }
@@ -417,14 +484,14 @@ namespace Zeltex.Dialogue
                         return (MyConditions[i].NextIndex);
                     }
                 }
-                else if (MyConditions[i].Command == "handedinquest")
+                else if (MyConditions[i].Command == DialogueGlobals.HandedInQuest)
                 {
                     if (!OtherCharacter.GetComponent<QuestLog>().HasHandedInQuest(InputString))
                     {
                         return (MyConditions[i].NextIndex);
                     }
                 }
-                else if (MyConditions[i].Command == "options")
+                else if (MyConditions[i].Command == DialogueGlobals.Options)
                 {
                     if (MyConditions[i].NextIndexes.Count == 0)
                     {
@@ -446,7 +513,7 @@ namespace Zeltex.Dialogue
                     return MyConditions[i].NextIndex;
                 }
             }
-            return EndOfDialogue;
+            return DialogueGlobals.EndOfDialogue;
         }
 
         #endregion
@@ -481,14 +548,14 @@ namespace Zeltex.Dialogue
                         SpeechLines.Add(NewSpeechLine);
                     }
                 }
-                else if (SavedData[i].Contains("/" + SpeakerName1))  // adding new charactername
+                else if (SavedData[i].Contains("/" + DialogueGlobals.SpeakerName1))  // adding new charactername
                 {
-                    AddSpeechLine(SpeakerName1, Other);
+                    AddSpeechLine(DialogueGlobals.SpeakerName1, Other);
                     // if (SpeechDialogue != "") MyDialogueGroup.CreateNewDialogueLine();	// original idea was to just split them into new dialogue lines
                 }
-                else if (SavedData[i].Contains("/" + SpeakerName2))  // adding new charactername
+                else if (SavedData[i].Contains("/" + DialogueGlobals.SpeakerName2))  // adding new charactername
                 {
-                    AddSpeechLine(SpeakerName2, Other);
+                    AddSpeechLine(DialogueGlobals.SpeakerName2, Other);
                     // if (SpeechDialogue != "") MyDialogueGroup.CreateNewDialogueLine();	// original idea was to just split them into new dialogue lines
                 }
 

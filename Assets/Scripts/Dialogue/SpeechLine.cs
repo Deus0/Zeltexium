@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Zeltex.Dialogue
 {
@@ -16,18 +17,22 @@ namespace Zeltex.Dialogue
     [System.Serializable]
     public class SpeechLine
     {
+        [JsonProperty]
         public string Speaker = "";
+        [JsonProperty]
         public string Speech = "";
 
         public SpeechLine()
         {
 
         }
+
         public SpeechLine(string Speaker_, string Speech_)
         {
             Speaker = Speaker_;
             Speech = Speech_;
         }
+
         public string GetLabelText()
         {
             return Speaker + ": " + Speech;

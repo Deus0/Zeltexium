@@ -138,8 +138,8 @@ namespace Zeltex.Characters
 
         private void Awake()
         {
-            Data.MyStats.SetCharacter(null);
-            Data.MyStats.SetCharacter(transform);
+            HasInitialized = false;
+            Initialize();
         }
 
         private void Update()
@@ -198,24 +198,21 @@ namespace Zeltex.Characters
                 //&& CharacterManager.Get() && gameObject.activeInHierarchy)
             {
                 HasInitialized = true;
-                if (Name == "Character")
+                /*if (Name == "Character")
                 {
                     Name = "Character_" + Random.Range(1, 10000);
-                }
-                name = Name;
+                }*/
+                //name = Name;
                 LogManager.Get().Log("Initialised character: " + name, "Characters");
                 RefreshComponents();
                 Data.MyStats.SetCharacter(transform);
-                //if (Data.MyStats != null)
-                {
-                    //Data.MyStats.OnDeath.RemoveEvent<GameObject>(OnDeath);
-                    //Data.MyStats.OnDeath.AddEvent<GameObject>(OnDeath);
-                }
-                // spawn guis 
+                Data.MyQuestLog.Initialise(this);
                 MyGuis.SetCharacter(this);
-                if (LayerManager.Get())
+
+                // spawn guis 
+                //if (LayerManager.Get())
                 {
-                    LayerManager.Get().SetLayerCharacter(gameObject);
+                    //LayerManager.Get().SetLayerCharacter(gameObject);
                 }
                 // Default character to load!
                 if (Data.Class == "" && DataManager.Get())
@@ -596,71 +593,95 @@ namespace Zeltex.Characters
 		public bool TalkToCharacter(Character OtherCharacter, int InteractType) 
 		{
             // Initialize that characters dialogue system with (MainCharacter->Lotus dialogue file)
-            DialogueHandler OtherCharacterDialogue = OtherCharacter.GetComponent<DialogueHandler>();
-            Debug.Log(name + " Is Talking to" + OtherCharacterDialogue.name + " with " +
-                OtherCharacterDialogue.MyTree.GetSize() + " dialogue sections.");
-            if (OtherCharacterDialogue.MyTree.GetSize() == 0)
+            //DialogueHandler OtherCharacterDialogue = OtherCharacter.GetComponent<DialogueHandler>();
+
+            if (OtherCharacter.GetData().MyDialogue.GetSize() == 0)
             {
-                DialogueData MyDialoguesData = new DialogueData();
-                MyDialoguesData.Name = "Talk";
-
-                SpeechLine MySpeechLine = new SpeechLine();
-                MySpeechLine.Speaker = DialogueData.SpeakerName1;
-                MySpeechLine.Speech = "Good Evening Sir";
-                MyDialoguesData.SpeechLines.Add(MySpeechLine);
-
-                SpeechLine MySpeechLine2 = new SpeechLine();
-                MySpeechLine2.Speaker = DialogueData.SpeakerName2;
-                MySpeechLine2.Speech = "Good evening";
-                MyDialoguesData.SpeechLines.Add(MySpeechLine2);
-
-                SpeechLine MySpeechLine3 = new SpeechLine();
-                MySpeechLine3.Speaker = DialogueData.SpeakerName1;
-                MySpeechLine3.Speech = "Goodbye Sir";
-                MyDialoguesData.SpeechLines.Add(MySpeechLine3);
-
-                OtherCharacterDialogue.MyTree.Add(MyDialoguesData);
+                GenerateSpeech(OtherCharacter);
             }
-            if (OtherCharacterDialogue.MyTree.GetSize() > 0)
-            {
-                //GuiManager MyGuiManager = GetComponent<GuiManager>();
 
-                ZelGui MyDialogueGui = this.MyGuis.GetZelGui("Dialogue");
+            if (OtherCharacter.GetData().MyDialogue.GetSize() > 0)
+            {
+                ZelGui MyDialogueGui = MyGuis.Spawn("Dialogue");
                 if (MyDialogueGui)
                 {
-
+                    Debug.Log(name + " Is Talking to" + OtherCharacter.name + " with " +
+                        OtherCharacter.GetData().MyDialogue.GetSize() + " dialogue sections.");
                     OnBeginTalk(OtherCharacter);
                     OtherCharacter.OnBeginTalk(this);
                     MyDialogueGui.TurnOn();
                     DialogueHandler MyCharacterDialogue = MyDialogueGui.GetComponent<DialogueHandler>();
-                    MyCharacterDialogue.MyTree = OtherCharacterDialogue.MyTree;    // set gui tree as talked to characters dialogue
+                    MyCharacterDialogue.MyTree = OtherCharacter.GetData().MyDialogue;    // set gui tree as talked to characters dialogue
                     MyCharacterDialogue.MyCharacter = this;
                     MyCharacterDialogue.OtherCharacter = OtherCharacter;
                     MyCharacterDialogue.OnConfirm();//begin the talk
                 }
+                else
+                {
+                    Debug.LogError(name + " does not have Dialogue Gui");
+                }
             }
             else
             {
-                Debug.Log(name + " cannot talk to " + OtherCharacter.name + " due to 0size.");
+                Debug.Log(name + " cannot talk to " + OtherCharacter.name + " due to 0 size.");
             }
             return true;
 		}
 
+        private void GenerateSpeech(Character OtherCharacter)
+        {
+            Debug.LogError("Debug: Giving speech to: " + OtherCharacter.name);
+            DialogueData MyDialoguesData = new DialogueData();
+            MyDialoguesData.Name = "Talk";
+            MyDialoguesData.SetDefault("Quest");
+            OtherCharacter.GetData().MyDialogue.Add(MyDialoguesData);
+
+            SpeechLine MySpeechLine = new SpeechLine();
+            MySpeechLine.Speaker = DialogueGlobals.SpeakerName1;
+            MySpeechLine.Speech = "Good Evening Sir";
+            MyDialoguesData.SpeechLines.Add(MySpeechLine);
+
+            SpeechLine MySpeechLine2 = new SpeechLine();
+            MySpeechLine2.Speaker = DialogueGlobals.SpeakerName2;
+            MySpeechLine2.Speech = "Good evening";
+            MyDialoguesData.SpeechLines.Add(MySpeechLine2);
+
+            DialogueData QuestDialogue = new DialogueData();
+            QuestDialogue.Name = "Quest";
+            OtherCharacter.GetData().MyDialogue.Add(QuestDialogue);
+            QuestDialogue.MakeOptions("Would you like a quest?", "Yes", "No", "QuestBye");
+
+            DialogueData QuestByeDialogue = new DialogueData();
+            QuestByeDialogue.Name = "QuestBye";
+            OtherCharacter.GetData().MyDialogue.Add(QuestByeDialogue);
+            SpeechLine LastQuestSpeech = new SpeechLine();
+            LastQuestSpeech.Speaker = DialogueGlobals.SpeakerName1;
+            LastQuestSpeech.Speech = "Well here you go then";
+            QuestByeDialogue.SpeechLines.Add(LastQuestSpeech);
+            Quest MyQuest = DataManager.Get().GetElement(DataFolderNames.Quests, 0) as Quest;
+            if (MyQuest == null)
+            {
+                MyQuest = new Quest();
+                MyQuest.SetName("Collect the Eggs");
+                MyQuest.SetDescription("Eat the frogs");
+                DataManager.Get().AddElement(DataFolderNames.Quests, MyQuest);
+            }
+            if (MyQuest != null)
+            {
+                QuestByeDialogue.AddGiveQuestAction(MyQuest.Name);
+            }
+        }
         /// <summary>
         /// Called on the character
         /// </summary>
         public void OnBeginTalk(Character Character2)
         {
-            // Hide all guis
-            this.MyGuis.SaveStates();
-            this.MyGuis.HideAll();
             // display the dialogue one
             ZelGui MyDialogueGui = this.MyGuis.GetZelGui("Dialogue");
             if (MyDialogueGui == null)
             {
-                this.MyGuis.Spawn("Dialogue");
-                Character2.MyGuis.Spawn("Dialogue");
-                MyDialogueGui = this.MyGuis.GetZelGui("Dialogue");
+                //Character2.MyGuis.Spawn("Dialogue");
+                MyDialogueGui = MyGuis.Spawn("Dialogue");
                 if (MyDialogueGui)
                 {
                     MyDialogueGui.TurnOff();
@@ -670,30 +691,48 @@ namespace Zeltex.Characters
                     Debug.LogError("Failed to create dialogue");
                 }
             }
-            this.GetComponent<Bot>().FollowTarget(Character2.gameObject);
+            // Hide all guis
+            this.MyGuis.SaveStates();
+            this.MyGuis.HideAll();
+            if (MyBot)
+            {
+                MyBot.FollowTarget(Character2.gameObject);
+            }
             this.OnEndTalkEvent.SetEvent(OnEndTalk);
             SetMovement(false);
 
-            if (IsPlayer)
+            if (IsPlayer && CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
-                Player MyMouseLocker2 = Camera.main.GetComponent<Player>();
-                MyMouseLocker2.SetFreeze(true);
+                Player MyPlayer = CameraManager.Get().GetMainCamera().GetComponent<Player>();
+                if (MyPlayer)
+                {
+                    MyPlayer.SetFreeze(true);
+                }
             }
         }
 
         public void OnEndTalk()
         {
             SetMovement(true);
-            Player MyMouseLocker = Camera.main.GetComponent<Player>();
-            MyMouseLocker.SetFreeze(false);
+            if (IsPlayer && CameraManager.Get() && CameraManager.Get().GetMainCamera())
+            {
+                Player MyPlayer = CameraManager.Get().GetMainCamera().GetComponent<Player>();
+                if (MyPlayer)
+                {
+                    MyPlayer.SetFreeze(false);
+                }
+            }
             MyGuis.RestoreStates();
             Bot OtherBot = gameObject.GetComponent<Bot>();
             if (OtherBot && OtherBot.enabled)
             {
                 OtherBot.Wander();
             }
-            ZelGui MyDialogueGui = this.MyGuis.GetZelGui("Dialogue");
-            MyDialogueGui.TurnOff();
+            ZelGui MyDialogueGui = MyGuis.GetZelGui("Dialogue");
+            if (MyDialogueGui)
+            {
+                MyDialogueGui.TurnOff();
+            }
         }
 
         /// <summary>

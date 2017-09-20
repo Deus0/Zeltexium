@@ -29,7 +29,7 @@ namespace Zeltex.AI
 
         }
 
-        public virtual void Update()
+        public virtual void Update(Bot TargetBot)
         {
 
         }

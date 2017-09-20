@@ -66,7 +66,7 @@ namespace Zeltex.Dialogue
                     string Speaker = CurrentDialogue.GetSpeaker();
                     string NewLine = CurrentDialogue.GetSpeechLine();
                     Text MyText;
-                    if (Speaker == "Player")
+                    if (Speaker == DialogueGlobals.SpeakerName2)
                     {
                         MyText = MyReplyText;
                     }
@@ -103,9 +103,10 @@ namespace Zeltex.Dialogue
         public void UpdateText(DialogueData CurrentDialogue, Text MyText, string NewLine)
         {
             HideButtons();  // Hide Options Buttons
+            SpeechAnimator MySpeechAnimator = MyText.gameObject.GetComponent<SpeechAnimator>();
+            MySpeechAnimator.OnEnd.RemoveAllEvents();
             if (CurrentDialogue.HasOptions())
             {
-                ShowButtons(CurrentDialogue.GetOptionsCount());
                 bool IsAuto = (CurrentDialogue.SpeechIndex == 0);
                 if (IsAuto == false)
                 {
@@ -115,29 +116,47 @@ namespace Zeltex.Dialogue
                 {
                     AddAnimationListener(MyText, 1);
                 }
+                if (CurrentDialogue.GetSpeaker() == DialogueGlobals.SpeakerName2)
+                {
+                    NewLine = "";
+                    for (int i = 0; i < CurrentDialogue.GetOptionsCount(); i++)
+                    {
+                        NewLine += (i + 1) + ": " + CurrentDialogue.GetSpeechLine(CurrentDialogue.SpeechIndex + i) + '\n';
+                    }
+                    CurrentDialogue.SpeechIndex += CurrentDialogue.GetOptionsCount() - 1;  // increase this!
+                    ButtonsToShowCount = CurrentDialogue.GetOptionsCount();
+                    MySpeechAnimator.OnEnd.AddEvent(ShowButtons);
+                }
             }
             else
             {
+                ButtonsToShowCount = 0;
                 AddAnimationListener(MyText, 2);
             }
             MyText.gameObject.GetComponent<SpeechAnimator>().NewLine(NewLine);
         }
 
+        private int ButtonsToShowCount = 0;
+        private void ShowButtons()
+        {
+            ShowButtons(ButtonsToShowCount);
+        }
+
         public void AddAnimationListener(Text MyText, int AddType)
         {
-            SpeechAnimator MySpeechAniamtor = MyText.gameObject.GetComponent<SpeechAnimator>();
-            MySpeechAniamtor.OnEnd = new UnityEvent();
+            SpeechAnimator MySpeechAnimator = MyText.gameObject.GetComponent<SpeechAnimator>();
+            MySpeechAnimator.OnEnd.RemoveAllEvents();
             if (AddType == 0)
             {
-                MySpeechAniamtor.OnEnd.AddEvent(OnEndAnimation);
+                MySpeechAnimator.OnEnd.AddEvent(OnEndAnimation);
             }
             else if (AddType == 1)
             {
-                MySpeechAniamtor.OnEnd.AddEvent(OnEndAnimationAuto);
+                MySpeechAnimator.OnEnd.AddEvent(OnEndAnimationAuto);
             }
             else if (AddType == 2)
             {
-                MySpeechAniamtor.OnEnd.AddEvent(OnEndAnimationSingle);
+                MySpeechAnimator.OnEnd.AddEvent(OnEndAnimationSingle);
             }
         }
 

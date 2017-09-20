@@ -36,6 +36,11 @@ namespace Zeltex.Guis
             MyRect = gameObject.GetComponent<RectTransform>();
         }
 
+        private void Start()
+        {
+            Reposition(10000);
+        }
+
         // Update is called once per frame
         void Update()
         {

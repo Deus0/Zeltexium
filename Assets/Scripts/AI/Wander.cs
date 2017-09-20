@@ -67,8 +67,14 @@ namespace Zeltex.AI
         }
 
         // Update is called once per frame
-        public override void Update()
+        public override void Update(Bot TargetBot)
 		{
+            if (MyBot == null)
+            {
+                MyBot = TargetBot;
+                BotTransform = TargetBot.transform;
+                MyMover = TargetBot.GetComponent<Mover>();
+            }
             if (IsWandering == false)
             {
                 WanderAround();

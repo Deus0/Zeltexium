@@ -29,7 +29,7 @@ namespace Zeltex.Guis
             OnToggledOn.Invoke();
         }
 
-        void Awake()
+        void Start()
         {
             MyOrbitor = gameObject.GetComponent<Orbitor>();
             MyCanvasGroup = GetComponent<CanvasGroup>();
@@ -115,7 +115,10 @@ namespace Zeltex.Guis
                 MyCanvasGroup.interactable = false;
                 MyCanvasGroup.blocksRaycasts = false;
                 //MyCanvasGroup.alpha = 0.3f;
-                transform.Find("DisabledOverlay").gameObject.SetActive(true);
+                if (transform.Find("DisabledOverlay"))
+                {
+                    transform.Find("DisabledOverlay").gameObject.SetActive(true);
+                }
             }
             else
             {
