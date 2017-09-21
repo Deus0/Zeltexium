@@ -13,9 +13,11 @@ namespace Zeltex
         protected Rect EditorRect = new Rect(0, 0, 0, 0);
         protected float ExtraHeight;
         protected bool IsDefaultGui;
+        protected SerializedProperty MyProperty;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            MyProperty = property;
             if (IsDefaultGui)
             {
                 EditorGUI.PropertyField(position, property, label, true);
@@ -124,6 +126,76 @@ namespace Zeltex
             return null;
         }
 
+        public static object SetTargetObjectOfProperty(SerializedProperty prop, object MyObject)
+        {
+            var path = prop.propertyPath.Replace(".Array.data[", "[");
+            object obj = prop.serializedObject.targetObject;
+            var elements = path.Split('.');
+            // for each children class
+            // Start at parent object and movedown to last one
+            //foreach (var element in elements)
+            for (int i = 0; i < elements.Length; i++)
+            {
+                // For arrays
+                if (elements[i].Contains("["))
+                {
+                    var elementName = elements[i].Substring(0, elements[i].IndexOf("["));
+                    var index = System.Convert.ToInt32(elements[i].Substring(elements[i].IndexOf("[")).Replace("[", "").Replace("]", ""));
+                    obj = SetValue_Imp(obj, elementName, index, MyObject, i == elements.Length - 1);
+                }
+                else
+                {
+                    obj = SetValue_Imp(obj, elements[i], MyObject, i == elements.Length - 1);
+                }
+            }
+            return obj;
+        }
+        private static object SetValue_Imp(object source, string name, object MyObject, bool IsLastIndex)
+        {
+            if (source == null)
+                return null;
+            var type = source.GetType();
+
+            while (type != null)
+            {
+                var f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (f != null)
+                {
+                    if (IsLastIndex)
+                    {
+                        f.SetValue(source, MyObject);
+                    }
+                    return f.GetValue(source);
+                }
+
+                var p = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (p != null)
+                {
+                    if (IsLastIndex)
+                    {
+                        p.SetValue(source, MyObject, null);
+                    }
+                    return p.GetValue(source, null);
+                }
+
+                type = type.BaseType;
+            }
+            return null;
+        }
+        private static object SetValue_Imp(object source, string name, int index, object MyObject, bool IsLastIndex)
+        {
+            var enumerable = GetValue_Imp(source, name) as System.Collections.IEnumerable;
+            if (enumerable == null)
+                return null;
+            var enm = enumerable.GetEnumerator();
+
+            for (int i = 0; i <= index; i++)
+            {
+                if (!enm.MoveNext())
+                    return null;
+            }
+            return enm.Current;
+        }
 
         public static object GetTargetObjectOfProperty(SerializedProperty prop)
         {

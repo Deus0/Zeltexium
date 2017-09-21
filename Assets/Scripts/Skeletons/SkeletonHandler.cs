@@ -59,7 +59,7 @@ namespace Zeltex.Skeletons
         private void Update()
         {
             Init();
-            if (Data != null)
+            if (Data != null)// && Application.isPlaying)
             {
                 GetSkeleton().SetSkeletonHandler(this);
                 GetSkeleton().Update();

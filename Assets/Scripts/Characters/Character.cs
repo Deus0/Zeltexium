@@ -612,8 +612,8 @@ namespace Zeltex.Characters
                     MyDialogueGui.TurnOn();
                     DialogueHandler MyCharacterDialogue = MyDialogueGui.GetComponent<DialogueHandler>();
                     MyCharacterDialogue.MyTree = OtherCharacter.GetData().MyDialogue;    // set gui tree as talked to characters dialogue
-                    MyCharacterDialogue.MyCharacter = this;
-                    MyCharacterDialogue.OtherCharacter = OtherCharacter;
+                    MyCharacterDialogue.SetCharacters(this, OtherCharacter);
+                    //MyCharacterDialogue.OtherCharacter = OtherCharacter;
                     MyCharacterDialogue.OnConfirm();//begin the talk
                 }
                 else
@@ -676,21 +676,6 @@ namespace Zeltex.Characters
         /// </summary>
         public void OnBeginTalk(Character Character2)
         {
-            // display the dialogue one
-            ZelGui MyDialogueGui = this.MyGuis.GetZelGui("Dialogue");
-            if (MyDialogueGui == null)
-            {
-                //Character2.MyGuis.Spawn("Dialogue");
-                MyDialogueGui = MyGuis.Spawn("Dialogue");
-                if (MyDialogueGui)
-                {
-                    MyDialogueGui.TurnOff();
-                }
-                else
-                {
-                    Debug.LogError("Failed to create dialogue");
-                }
-            }
             // Hide all guis
             this.MyGuis.SaveStates();
             this.MyGuis.HideAll();

@@ -8,6 +8,7 @@ namespace Zeltex
     /// <summary>
     /// Textures implementation for zeltex
     /// </summary>
+    [System.Serializable]
     public class Zexel : Element
     {
         [SerializeField, JsonProperty]
@@ -15,7 +16,7 @@ namespace Zeltex
         [SerializeField, JsonProperty]
         private Vector2 Size = new Vector2(32, 32);
 
-        [JsonIgnore]
+        [SerializeField, JsonIgnore]
         private Texture2D MyTexture;
 
         public Texture2D GetTexture()
@@ -46,7 +47,10 @@ namespace Zeltex
             }
         }
 
-        private void GenerateTextureFromBytes()
+        /// <summary>
+        /// This should only be used for debug
+        /// </summary>
+        public void GenerateTextureFromBytes()
         {
             if (Pixels != null)
             {

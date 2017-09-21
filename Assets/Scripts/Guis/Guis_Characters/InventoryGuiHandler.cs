@@ -43,9 +43,16 @@ namespace Zeltex.Guis.Characters
 		public AudioClip OnNotSellingSound;
 		public AudioClip OnSellItemSound;
 
+        [Header("Actions")]
+        public EditorAction RefreshInventory;
+
         protected override void Update()
         {
             base.Update();
+            if (RefreshInventory.IsTriggered())
+            {
+                MyInventory = MyCharacter.GetData().Skillbar;
+            }
             if (ActionRefresh.IsTriggered())
             {
                 RefreshList();

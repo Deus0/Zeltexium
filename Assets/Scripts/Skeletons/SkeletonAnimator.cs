@@ -33,7 +33,9 @@ namespace Zeltex.Skeletons
         public UnityEvent OnUpdatedTimeEvent = new UnityEvent();
 
         public EditorAction PlayPause = new EditorAction();
-        public EditorAction GenerateAnimation = new EditorAction();
+        public EditorAction ActionGenerateAnimation = new EditorAction();
+        [SerializeField]
+        private float AnimationRandomness = 0.05f;
         #endregion
 
         #region Mono
@@ -44,13 +46,10 @@ namespace Zeltex.Skeletons
             MySkeleton.GetSkeleton().OnLoadSkeleton.AddEvent(LoadAnimation);
             MyCharacter = transform.parent.GetComponent<Characters.Character>();
         }
-
-        [SerializeField]
-        private float AnimationRandomness = 0.05f;
         
         void Update()
         {
-            if (IsAnimating)
+            if (IsAnimating && Application.isPlaying)
             {
                 CurrentTime += Time.deltaTime * AnimationSpeed;
                 OnUpdateTime();
@@ -59,47 +58,47 @@ namespace Zeltex.Skeletons
             {
                 UpdateRestoringPose();
             }
-            if (GenerateAnimation.IsTriggered())
+            if (ActionGenerateAnimation.IsTriggered())
             {
-                Zanimation NewAnimation = new Zanimation();
-                NewAnimation.SetName(NameGenerator.GenerateVoxelName());
-                for (int i = 0; i < MyCharacter.GetData().MySkeleton.MyBones.Count; i++)
-                {
-                    ZeltexKeyFrame BoneFrames = new ZeltexKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform);
-                    BoneFrames.AnimationCurvePositionY = new AnimationCurve();
-                    float AnimationLength = 3f;
-                    for (float TimeIndex = 0; TimeIndex <= AnimationLength; TimeIndex += 0.2f)
-                    {
-                        if (TimeIndex == 0 || TimeIndex == AnimationLength)
-                        {
-                            BoneFrames.AnimationCurvePositionY.AddKey(
-                                new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
-                        }
-                        else
-                        {
-                            BoneFrames.AnimationCurvePositionY.AddKey(
-                                new Keyframe(TimeIndex,
-                                MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y +
-                                    //Mathf.Sin(TimeIndex) +
-                                    Random.Range(-AnimationRandomness, AnimationRandomness)));
-                        }
-                    }
-                    BoneFrames.AnimationCurvePositionY.AddKey(
-                        new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
-                    NewAnimation.AddKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform, BoneFrames);
-                }
-                MyCharacter.GetData().MyAnimations.Clear();
-                MyCharacter.GetData().MyAnimations.Add(NewAnimation);
+                GenerateAnimation();
             }
             if (PlayPause.IsTriggered())
             {
                 UniversalCoroutine.CoroutineManager.StartCoroutine(PlayOnce());
             }
-            /*if (IsForceLoad)
+        }
+
+        private void GenerateAnimation()
+        {
+            Zanimation NewAnimation = new Zanimation();
+            NewAnimation.SetName(NameGenerator.GenerateVoxelName());
+            for (int i = 0; i < MyCharacter.GetData().MySkeleton.MyBones.Count; i++)
             {
-                IsForceLoad = false;
-                LoadAnimation();
-            }*/
+                ZeltexKeyFrame BoneFrames = new ZeltexKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform);
+                BoneFrames.AnimationCurvePositionY = new AnimationCurve();
+                float AnimationLength = 3f;
+                for (float TimeIndex = 0; TimeIndex <= AnimationLength; TimeIndex += 0.2f)
+                {
+                    if (TimeIndex == 0 || TimeIndex == AnimationLength)
+                    {
+                        BoneFrames.AnimationCurvePositionY.AddKey(
+                            new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
+                    }
+                    else
+                    {
+                        BoneFrames.AnimationCurvePositionY.AddKey(
+                            new Keyframe(TimeIndex,
+                            MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y +
+                                //Mathf.Sin(TimeIndex) +
+                                Random.Range(-AnimationRandomness, AnimationRandomness)));
+                    }
+                }
+                BoneFrames.AnimationCurvePositionY.AddKey(
+                    new Keyframe(3f, MyCharacter.GetData().MySkeleton.MyBones[i].GetDefaultPosition().y));
+                NewAnimation.AddKeyFrame(MyCharacter.GetData().MySkeleton.MyBones[i].MyTransform, BoneFrames);
+            }
+            MyCharacter.GetData().MyAnimations.Clear();
+            MyCharacter.GetData().MyAnimations.Add(NewAnimation);
         }
 
         private IEnumerator PlayOnce()
@@ -116,6 +115,11 @@ namespace Zeltex.Skeletons
             if (IsAnimationLoop)
             {
                 UniversalCoroutine.CoroutineManager.StartCoroutine(PlayOnce());
+            }
+            else
+            {
+                CurrentTime = 0;
+                OnUpdateTime();
             }
         }
 
@@ -374,7 +378,7 @@ namespace Zeltex.Skeletons
             {
                 if (IsAnimationLoop && IsAnimating)
                 {
-                    CurrentTime = 0;
+                    CurrentTime = TotalTime - CurrentTime;
                 }
                 else
                 {

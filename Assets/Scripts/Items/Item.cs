@@ -76,20 +76,16 @@ namespace Zeltex.Items
         //[JsonProperty, SerializeField]
         //private string TextureName = "";
 
+        [JsonIgnore]
         static private string EndingColor = "</color>";
+        [JsonIgnore]
         static private string CommandColor = "<color=#989a33>";
+        [JsonIgnore]
         static private string TagColor = "<color=#779b33>";
+        [JsonIgnore]
         static private string QuantityColor = "<color=#00cca4>";
+        [JsonIgnore]
         static private string DescriptionColor = "<color=#474785>";
-        // Data
-        // Texture Types
-        //public bool IsUniqueTexture = false;
-        //public ItemTextureType TextureType;
-        //[JsonIgnore]
-        //[Tooltip("The icon image")]
-        //public Texture2D MyTexture;
-        // Mesh Types
-        // Normal mesh
         #endregion
 
         #region Initiation

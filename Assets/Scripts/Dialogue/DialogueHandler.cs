@@ -28,6 +28,7 @@ namespace Zeltex.Dialogue
         public Character MyCharacter;
         public Character OtherCharacter;
         public UnityEvent OnEndTalk;
+        public Text HeaderText;
 
         void OnGUI()
         {
@@ -38,6 +39,14 @@ namespace Zeltex.Dialogue
                 GUILayout.Label("IsAnimating? " + IsAnimating);
             }
         }
+
+        public void SetCharacters(Character NewCharacterA, Character NewCharacterB)
+        {
+            MyCharacter = NewCharacterA;
+            OtherCharacter = NewCharacterB;
+            HeaderText.text = OtherCharacter.name;
+        }
+
         void Start()
         {
             MyTree.Reset();

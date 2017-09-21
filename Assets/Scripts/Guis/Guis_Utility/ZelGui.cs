@@ -22,6 +22,7 @@ namespace Zeltex.Guis
         private Canvas MyCanvas;
         [SerializeField]
         private bool IsKeepCamera;
+        private Animator MyAnimator;
         #endregion
 
         public void OnBegin()
@@ -31,6 +32,7 @@ namespace Zeltex.Guis
 
         void Start()
         {
+            MyAnimator = GetComponent<Animator>();
             MyOrbitor = gameObject.GetComponent<Orbitor>();
             MyCanvasGroup = GetComponent<CanvasGroup>();
             MyCanvas = GetComponent<Canvas>();

@@ -13,5 +13,10 @@ namespace Zeltex.Voxels
     public class WorldModel : Element
     {
         public string VoxelData = "";
+
+        public WorldModel(string NewData)
+        {
+            VoxelData = NewData;
+        }
     }
 }

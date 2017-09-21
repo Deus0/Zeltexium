@@ -221,14 +221,25 @@ namespace Zeltex.Skeletons
             }
         }
 
+        private UniversalCoroutine.Coroutine ActivateCoroutine;
         public void Activate()
+        {
+            if (ActivateCoroutine != null)
+            {
+                UniversalCoroutine.CoroutineManager.StopCoroutine(ActivateCoroutine);
+            }
+            ActivateCoroutine = UniversalCoroutine.CoroutineManager.StartCoroutine(ActivateRoutine());
+        }
+
+        public IEnumerator ActivateRoutine()
         {
             for (int i = 0; i < MyBones.Count; i++)
             {
                 MyBones[i].SetSkeleton(this);
-                MyBones[i].Activate();
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyBones[i].ActivateRoutine());
             }
         }
+
         public void Deactivate()
         {
             for (int i = 0; i < MyBones.Count; i++)
@@ -1531,7 +1542,7 @@ namespace Zeltex.Skeletons
                                         if (MyBones.Count > 0)
                                         {
                                             Debug.Log("Loading skeleton Mesh: " + SpawnedSkeleton.transform.name + ":" + MyMeshScript.Count + "\n " + FileUtil.ConvertToSingle(MyMeshScript));
-                                            yield return CoroutineManager.StartCoroutine(MyBone.CreateMeshRoutine(MyMeshScript));
+                                            //yield return CoroutineManager.StartCoroutine(MyBone.CreateMeshRoutine(MyMeshScript));
                                             /*yield return CoroutineManager.StartCoroutine(CreateMeshRoutine(
                                                 MyBone,
                                                 MyMeshScript,
@@ -1595,8 +1606,6 @@ namespace Zeltex.Skeletons
                     // Create a default mesh too - a cube
                 }
                 SetMeshColliders(IsMeshColliders);
-                //MyWorld.SetColliders(IsMeshColliders);
-                //MyWorld.SetConvex(IsConvexMeshes);
                 SetMeshVisibility(true);
                 UpdateBounds();
                 if (DefaultBody)

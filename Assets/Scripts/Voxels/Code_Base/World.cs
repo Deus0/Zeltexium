@@ -42,6 +42,8 @@ namespace Zeltex.Voxels
         public List<GameObject> ActionGrayBoxes;
         public EditorAction ActionLoadModel = new EditorAction();
         public string LoadModelName = "Head";
+        public EditorAction ActionPushModel = new EditorAction();
+        public string PushModelName = "Body";
 
         [Header("Needed References")]
         public WorldUpdater MyUpdater;
@@ -154,6 +156,12 @@ namespace Zeltex.Voxels
             if (Actions.ImportVox.IsTriggered())
             {
                 UniversalCoroutine.CoroutineManager.StartCoroutine(DataManager.Get().LoadVoxFile(this));
+            }
+            if (ActionPushModel.IsTriggered())
+            {
+                WorldModel NewModel = new WorldModel(Util.FileUtil.ConvertToSingle(GetScript()));
+                NewModel.Name = PushModelName;
+                DataManager.Get().AddElement(DataFolderNames.VoxelModels, NewModel);
             }
         }
 
