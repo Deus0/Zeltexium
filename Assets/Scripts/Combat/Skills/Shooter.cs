@@ -25,6 +25,11 @@ namespace Zeltex.Combat
         private IKLimb MyIKHelper;
         private float LastFired = 0f;
         static Transform BulletsParent;
+        
+        public void SetCameraBone(Transform NewCameraBone)
+        {
+            HotSpotTransform = NewCameraBone;
+        }
         #endregion
 
         #region Debug

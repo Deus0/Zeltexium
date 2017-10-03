@@ -13,6 +13,10 @@ namespace Zeltex
         // Use this for initialization
         void Start()
         {
+            if (GetComponent<CanvasGroup>())
+            {
+                GetComponent<CanvasGroup>().alpha = 0;
+            }
             MyAnimator = GetComponent<Animator>();
             GameManager.Get().OnBeginGame.AddEvent(OnBeginGame);
             GameManager.Get().OnEndGame.AddEvent(OnEndGame);

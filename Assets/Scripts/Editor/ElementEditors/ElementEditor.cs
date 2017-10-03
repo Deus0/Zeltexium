@@ -8,17 +8,33 @@ namespace Zeltex
     public class ElementEditor<T> : ZeltexEditor where T : Element
     {
         protected T Data;
+        protected SerializedProperty MyProperty;
         private bool IsPulling;
+
+        protected override bool IsUnityGui()
+        {
+            return Data.IsDefaultGui;
+        }
+
+        protected override void SetIsUnityGui(bool NewDefaultGui)
+        {
+            Data.IsDefaultGui = NewDefaultGui;
+        }
 
         protected virtual string GetDataFolderName()
         {
             return DataFolderNames.DataTypeToFolderName(typeof(T));
         }
 
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            Data = GetTargetObjectOfProperty(property) as T;
+            base.OnGUI(position, property, label);
+        }
+
         public override void OnCustomGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             base.OnCustomGUI(position, property, label);
-            Data = GetTargetObjectOfProperty(property) as T;
             GUILabel(typeof(T).ToString() + ": " + Data.Name);
             Data.Name = GUITextField(Data.Name);
 
@@ -74,7 +90,7 @@ namespace Zeltex
                 }
             }
         }
-        protected SerializedProperty MyProperty;
+
         private void PullFromDataManager(SerializedProperty property, int Index)
         {
             MyProperty = property;

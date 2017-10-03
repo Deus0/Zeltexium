@@ -203,7 +203,8 @@ namespace Zeltex.AI
         /// </summary>
         void CheckForAttack()
         {
-            if (MyBot.Data.IsAggressive && MyBot.IsAttacking() == false && Time.time - LastAttackCheck >= CheckForAttackCooldown)
+            if (MyBot != null && MyBot.GetData() != null
+                && MyBot.GetData().IsAggressive && MyBot.IsAttacking() == false && Time.time - LastAttackCheck >= CheckForAttackCooldown)
             {
                 LastAttackCheck = Time.time;
                 //Debug.Log(BotTransform.name + " is checking for an attack.");
@@ -216,7 +217,7 @@ namespace Zeltex.AI
                     {
                         if (Vector3.Distance(BotTransform.position, TargetCharacter.transform.position) < AttackCheckRange)
                         {
-                            if (TargetCharacter.GetComponent<CharacterStats>().IsDead() == false)
+                            if (TargetCharacter.IsAlive())
                             {
                                 IsAttack = true;
                             }

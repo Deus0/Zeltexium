@@ -76,9 +76,9 @@ namespace Zeltex.Skeletons
         [SerializeField, JsonIgnore]
         public bool IsJointsColliders = true;
         [SerializeField, JsonIgnore]
-        public bool IsMeshColliders = false;
+        public bool IsMeshColliders = true;
         [SerializeField, JsonIgnore]
-        public bool IsConvexMeshes = false;
+        public bool IsConvexMeshes = true;
 
         [Header("Events")]
         [SerializeField, JsonIgnore]
@@ -199,7 +199,6 @@ namespace Zeltex.Skeletons
             if (ActionActivateSkeleton.IsTriggered())
             {
                 Activate();
-
             }
             if (ActionDeactivateSkeleton.IsTriggered())
             {
@@ -303,8 +302,8 @@ namespace Zeltex.Skeletons
                 MyBounds.center -= SpawnedSkeleton.transform.position;
                 Debug.Log("MyBounds: " + MyBounds.extents.ToString() + ":" + MyBounds.center.ToString());
                 //transform.position = MyPosition;
-                MyBounds.center = new Vector3(0.009f, 0.174f, 0.009f);
-                MyBounds.size = new Vector3(0.26f, 0.91f, 0.26f);
+                //MyBounds.center = new Vector3(0.009f, 0.174f, 0.009f);
+                //MyBounds.size = new Vector3(0.26f, 0.91f, 0.26f);
             }
             return MyBounds;
         }
@@ -393,6 +392,36 @@ namespace Zeltex.Skeletons
             return MyBounds;
         }
 
+        public void CalculateCapsule()
+        {
+            CalculateBounds();
+            CapsuleCollider MyCapsule = GetCapsule();
+            if (MyCapsule)
+            {
+                float MyHeight = MyBounds.size.y;// * 0.98f;
+                if (MyHeight == 0)
+                {
+                    MyHeight = 0.1f;
+                }
+                MyCapsule.height = MyHeight;// MyBounds.extents.y * 2;
+                float MyRadius = (MyBounds.extents.x + MyBounds.size.z) / 4f;//3.6f;
+                if (MyRadius == 0)
+                {
+                    MyRadius = 0.1f;
+                }
+                //Vector3 MyCenter = MyBounds.center - SpawnedSkeleton.transform.position;
+                MyCapsule.center = MyBounds.center;
+                //MyCapsule.center = new Vector3(MyCapsule.center.x, -MyCapsule.center.y * 2f, MyCapsule.center.z);
+                if (MyBounds.extents.x > MyBounds.extents.z)
+                {
+                    MyCapsule.radius = MyBounds.extents.x;
+                }
+                else
+                {
+                    MyCapsule.radius = MyBounds.extents.z;
+                }
+            }
+        }
         /// <summary>
         /// Updates the Bounding box of the skeleton
         /// Called when skeleton updates
@@ -404,38 +433,7 @@ namespace Zeltex.Skeletons
             {
                 CalculateBounds();
                 AttachCameraToHead();
-                /*CapsuleCollider MyCollider = SpawnedSkeleton.transform.parent.GetComponent<CapsuleCollider>();
-                float MyHeight = MyBounds.size.y * 0.9f;
-                if (MyHeight == 0)
-                {
-                    MyHeight = 0.1f;
-                }
-                float MyRadius = (MyBounds.extents.x + MyBounds.size.z) / 4f;//3.6f;
-                if (MyRadius == 0)
-                {
-                    MyRadius = 0.1f;
-                }
-                float MyStep = 0.01f * MyHeight;
-                Vector3 MyCenter = MyBounds.center - SpawnedSkeleton.transform.position;
-                GameObject MyCapsuleObject = SpawnedSkeleton.transform.parent.gameObject;
-                if (MyCapsuleObject)
-                {
-                    CapsuleCollider MyCapsule = MyCapsuleObject.GetComponent<CapsuleCollider>();
-                    if (MyCapsule)
-                    {
-                        MyCapsule.center = MyBounds.center;
-                        MyCapsule.height = MyBounds.extents.y * 2;
-                        if (MyBounds.extents.x > MyBounds.extents.z)
-                        {
-                            MyCapsule.radius = MyBounds.extents.x;
-                        }
-                        else
-                        {
-                            MyCapsule.radius = MyBounds.extents.x;
-                        }
-                        StartCoroutine(RefreshCapsule(MyCapsule.GetComponent<CapsuleCollider>()));
-                    }
-                }
+                /*
                 Transform MySheild = SpawnedSkeleton.transform.parent.Find("Sheild");
                 if (MySheild)
                 {
@@ -485,9 +483,20 @@ namespace Zeltex.Skeletons
         /// </summary>
         public Transform GetCameraBone()
         {
-            if (MyCameraBone == null && SpawnedSkeleton && SpawnedSkeleton.transform)
+            /*if (MyCameraBone == null && SpawnedSkeleton && SpawnedSkeleton.transform)
             {
                 MyCameraBone = SpawnedSkeleton.transform.parent.Find("CameraBone");
+            }*/
+            if (MyCameraBone == null)
+            {
+                for (int i = 0; i < MyBones.Count; i++)
+                {
+                    if (MyBones[i].Name.Contains("Camera"))
+                    {
+                        MyCameraBone = MyBones[i].MyTransform;
+                        break;
+                    }
+                }
             }
             return MyCameraBone;
         }
@@ -868,6 +877,21 @@ namespace Zeltex.Skeletons
                         MyBone.BodyCube.transform.position = MyBone.GetMidPoint();
                         MyBone.BodyCube.transform.rotation = MyBone.GetBoneRotation();
                         MyBone.BodyCube.transform.localScale = MyBone.GetBoneScale(MyBone.MyTransform, BoneSize);
+                    }
+                }
+            }
+        }
+
+        public void DestroyBodyCubes()
+        {
+            for (int i = 0; i < MyBones.Count; i++)
+            {
+                if (MyBones[i].MyTransform && MyBones[i].ParentTransform)
+                {
+                    Bone MyBone = MyBones[i];
+                    if (MyBone.BodyCube)    // bone mesh
+                    {
+                        MyBone.BodyCube.gameObject.Die();
                     }
                 }
             }

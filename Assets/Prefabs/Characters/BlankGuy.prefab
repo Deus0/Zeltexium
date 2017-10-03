@@ -1,0 +1,4122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &108802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 444750}
+  - component: {fileID: 114000013389729130}
+  - component: {fileID: 11488850}
+  - component: {fileID: 11414918}
+  m_Layer: 10
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &189778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 405764}
+  - component: {fileID: 11401986}
+  - component: {fileID: 11467544}
+  - component: {fileID: 114244673288810648}
+  - component: {fileID: 5453082}
+  - component: {fileID: 136741730044380406}
+  - component: {fileID: 8228008}
+  - component: {fileID: 114724271812573012}
+  - component: {fileID: 114132710140556466}
+  m_Layer: 10
+  m_Name: BlankGuy
+  m_TagString: Character
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405764
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 8.34, y: 1.233, z: 58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 444750}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!4 &444750
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 405764}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5453082
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0.1
+  m_AngularDrag: 0.1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 2
+--- !u!82 &8228008
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 0.1
+  MaxDistance: 5
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &11401986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd6bff1ff5147d4b85aef718b968b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionLoad:
+    IsTrigger: 0
+  Data:
+    Name: Alzo
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      ElementData:
+        _keys: []
+        _values: []
+    IsDrawGui: 0
+    IsDefaultGui: 1
+    Class: 
+    Race: 
+    Skillbar:
+      Name: Empty
+      HasChanged: 1
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      MyItems:
+      - Name: Fayfay
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: Null
+        Commands:
+        - /Spell Fayfay
+        Tags: []
+        Quantity: 1
+        SellValue: -1
+        BuyValue: -1
+        MyStats:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Data: []
+          OnNewStats:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          OnUpdateStats:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+        MyZexel:
+          Name: Moss
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+        MeshType: 0
+        MyMesh: {fileID: 0}
+        MyMaterial: {fileID: 0}
+        ModelName: 
+      - Name: Fayzagzi Bricks
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: Null
+        Commands: []
+        Tags: []
+        Quantity: 1
+        SellValue: -1
+        BuyValue: -1
+        MyStats:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Data: []
+          OnNewStats:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          OnUpdateStats:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+        MyZexel:
+          Name: Bricks
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: ffa2a2a2ffa7a7a7ff909090ff7c7c7cffa2a2a2ff8c8c8cff979797ff7e7e7eff888888ff555555ff545454ff7c7c7cff7b7b7bff555555ff6c6c6cff6a6a6aff838383ff888888ff7d7d7dff767676ff878787ff797979ff888888ff717171ff686868ff5c5c5cff6e6e6eff535353ff8a8a8affa0a0a0ff9e9e9effa2a2a2ff8b8b8bff565656ff4f4f4fff101010ff4a4a4aff3c3c3cff424242ff242424ff383838ff222222ff646464ff1c1c1cff1e1e1eff212121ff383838ff414141ff494949ff434343ff4b4b4bff393939ff767676ff323232ff4e4e4eff454545ff474747ff464646ff484848ff3c3c3cff3c3c3cff414141ff8f8f8fffa0a0a0ff929292ff2f2f2fff101010ff101010ff3a3a3aff363636ff373737ff292929ff282828ff1d1d1dff6a6a6aff1b1b1bff202020ff1a1a1aff3c3c3cff3a3a3aff474747ff494949ff484848ff434343ff727272ff2a2a2aff2e2e2eff292929ff606060ff5c5c5cff3a3a3aff343434ff383838ff363636ff838383ff787878ff575757ff232323ff101010ff101010ff353535ff2d2d2dff2d2d2dff282828ff2f2f2fff1b1b1bff424242ff1b1b1bff1d1d1dff181818ff303030ff222222ff393939ff353535ff414141ff292929ff3f3f3fff2b2b2bff292929ff383838ff2d2d2dff272727ff3c3c3cff1b1b1bff191919ff2d2d2dff8d8d8dff686868ff8a8a8aff272727ff2e2e2eff212121ff313131ff373737ff323232ff252525ff2b2b2bff1a1a1aff595959ff1c1c1cff1f1f1fff232323ff2f2f2fff313131ff494949ff414141ff4a4a4aff383838ff666666ff2e2e2eff272727ff2a2a2aff282828ff262626ff252525ff191919ff191919ff2c2c2cff565656ff7d7d7dff727272ff272727ff262626ff262626ff353535ff373737ff333333ff202020ff272727ff202020ff3f3f3fff1d1d1dff212121ff1b1b1bff303030ff2c2c2cff525252ff1a1a1aff343434ff212121ff252525ff282828ff4b4b4bff494949ff393939ff484848ff303030ff282828ff313131ff363636ff8a8a8aff9b9b9bff8d8d8dff2d2d2dff2e2e2eff1f1f1fff393939ff363636ff333333ff1c1c1cff2b2b2bff030303ff4b4b4bff0a0a0aff252525ff171717ff424242ff505050ff555555ff0b0b0bff393939ff202020ff3c3c3cff373737ff444444ff3d3d3dff3c3c3cff393939ff292929ff2d2d2dff222222ff333333ff727272ff808080ff666666ff242424ff242424ff1e1e1eff252525ff363636ff232323ff1d1d1dff181818ff030303ff4f4f4fff111111ff161616ff0f0f0fff161616ff2a2a2aff131313ff090909ff090909ff212121ff5f5f5fff141414ff333333ff272727ff373737ff282828ff292929ff1b1b1bff212121ff2b2b2bff666666ff989898ff888888ff3d3d3dff272727ff202020ff1f1f1fff2b2b2bff222222ff212121ff1e1e1eff020202ff202020ff121212ff161616ff151515ff3e3e3eff444444ff1b1b1bff0c0c0cff0b0b0bff131313ff525252ff161616ff4f4f4fff353535ff393939ff282828ff282828ff212121ff292929ff2a2a2aff7b7b7bff7e7e7eff5f5f5fff303030ff1a1a1aff252525ff141414ff282828ff000000ff030303ff030303ff060606ff474747ff2e2e2eff111111ff101010ff232323ff2c2c2cff171717ff090909ff080808ff131313ff4e4e4eff161616ff363636ff2d2d2dff393939ff242424ff2d2d2dff222222ff343434ff262626ff4b4b4bff4f4f4fff626262ff737373ff3e3e3eff3e3e3eff5b5b5bff5e5e5eff5d5d5dff515151ff6a6a6aff353535ff575757ff6d6d6dff5d5d5dff585858ff484848ff414141ff575757ff454545ff3e3e3eff8e8e8eff454545ff5d5d5dff5b5b5bff626262ff616161ff4b4b4bff505050ff494949ff7d7d7dff737373ff676767ff717171ff363636ff383838ff191919ff161616ff000000ff2b2b2bff000000ff101010ff0e0e0eff2d2d2dff363636ff3b3b3bff111111ff111111ff161616ff636363ff181818ff191919ff1a1a1aff1a1a1aff1f1f1fff1d1d1dff2f2f2fff2f2f2fff303030ff535353ff2b2b2bff131313ff262626ff333333ff393939ff383838ff444444ff3b3b3bff333333ff323232ff161616ff5a5a5aff181818ff414141ff393939ff3b3b3bff4a4a4aff5a5a5aff313131ff2a2a2aff232323ff505050ff1f1f1fff232323ff242424ff282828ff2b2b2bff272727ff333333ff393939ff282828ff616161ff2a2a2aff131313ff131313ff404040ff383838ff363636ff3d3d3dff323232ff2b2b2bff313131ff161616ff595959ff0f0f0fff272727ff2a2a2aff414141ff393939ff2f2f2fff2f2f2fff313131ff1f1f1fff444444ff010101ff1b1b1bff1c1c1cff1c1c1cff2a2a2aff242424ff404040ff353535ff2b2b2bff676767ff1d1d1dff131313ff141414ff434343ff3e3e3eff353535ff404040ff3d3d3dff282828ff2a2a2aff272727ff747474ff353535ff383838ff393939ff3d3d3dff3c3c3cff474747ff474747ff3d3d3dff313131ff595959ff161616ff1a1a1aff161616ff1a1a1aff2a2a2aff232323ff323232ff3b3b3bff1a1a1aff6e6e6eff181818ff2b2b2bff303030ff353535ff434343ff404040ff4f4f4fff414141ff313131ff2b2b2bff101010ff545454ff1e1e1eff2a2a2aff202020ff3e3e3eff373737ff3d3d3dff383838ff3e3e3eff3c3c3cff5d5d5dff343434ff181818ff171717ff1f1f1fff272727ff242424ff2c2c2cff3f3f3fff343434ff646464ff333333ff474747ff2c2c2cff3d3d3dff414141ff414141ff626262ff2f2f2fff242424ff333333ff232323ff595959ff232323ff202020ff1d1d1dff373737ff3a3a3aff464646ff3a3a3aff3a3a3aff313131ff656565ff2e2e2eff242424ff181818ff1c1c1cff282828ff353535ff313131ff3c3c3cff2a2a2aff2f2f2fff191919ff313131ff171717ff383838ff424242ff5a5a5aff434343ff383838ff292929ff2a2a2aff0f0f0fff545454ff0f0f0fff242424ff1e1e1eff373737ff363636ff353535ff313131ff343434ff424242ff3a3a3aff1a1a1aff0f0f0fff0e0e0eff111111ff393939ff2b2b2bff1d1d1dff2f2f2fff1f1f1fff6a6a6aff1b1b1bff292929ff272727ff2b2b2bff242424ff2c2c2cff424242ff434343ff242424ff292929ff222222ff575757ff1c1c1cff222222ff2f2f2fff383838ff353535ff393939ff3b3b3bff383838ff262626ff5e5e5eff262626ff161616ff131313ff1a1a1aff282828ff303030ff2d2d2dff3a3a3aff343434ff575757ff1c1c1cff2b2b2bff2b2b2bff2b2b2bff2d2d2dff2a2a2aff414141ff2d2d2dff232323ff232323ff1f1f1fff4a4a4aff212121ff222222ff1f1f1fff252525ff1e1e1eff2e2e2eff212121ff222222ff161616ff727272ff121212ff0d0d0dff111111ff111111ff2e2e2eff2e2e2eff2c2c2cff2c2c2cff262626ff595959ff212121ff282828ff1c1c1cff1c1c1cff202020ff191919ff626262ff5a5a5aff626262ff5b5b5bff6f6f6fff555555ff5f5f5fff454545ff5a5a5aff828282ff444444ff6d6d6dff575757ff565656ff383838ff535353ff474747ff5c5c5cff292929ff636363ff676767ff3c3c3cff505050ff6f6f6fff585858ff4d4d4dff3d3d3dff5c5c5cff616161ff575757ff3b3b3bff565656ff555555ff1e1e1eff1d1d1dff1c1c1cff454545ff404040ff424242ff363636ff3a3a3aff222222ff5e5e5eff1f1f1fff242424ff232323ff242424ff141414ff111111ff0e0e0eff0d0d0dff0d0d0dff676767ff141414ff292929ff252525ff252525ff191919ff232323ff202020ff1b1b1bff1b1b1bff606060ff4e4e4eff424242ff1c1c1cff222222ff1e1e1eff414141ff3c3c3cff3c3c3cff363636ff4e4e4eff262626ff585858ff242424ff212121ff1e1e1eff2e2e2eff262626ff181818ff121212ff272727ff141414ff606060ff101010ff2d2d2dff2c2c2cff282828ff2f2f2fff232323ff2a2a2aff1d1d1dff232323ff5d5d5dff979797ff6d6d6dff232323ff1a1a1aff1e1e1eff434343ff424242ff434343ff383838ff444444ff222222ff5e5e5eff1d1d1dff212121ff212121ff262626ff202020ff151515ff151515ff232323ff121212ff4e4e4eff121212ff272727ff222222ff343434ff2a2a2aff2b2b2bff2d2d2dff1b1b1bff202020ff5e5e5eff9d9d9dff505050ff2e2e2eff323232ff363636ff3d3d3dff3f3f3fff494949ff3e3e3eff484848ff282828ff525252ff242424ff2a2a2aff262626ff2c2c2cff383838ff323232ff363636ff343434ff262626ff787878ff2e2e2eff363636ff333333ff333333ff3a3a3aff3a3a3aff272727ff272727ff3d3d3dff898989ff929292ff686868ff353535ff2b2b2bff313131ff3b3b3bff464646ff454545ff434343ff484848ff1d1d1dff505050ff232323ff202020ff252525ff2a2a2aff424242ff373737ff343434ff3e3e3eff282828ff7f7f7fff272727ff343434ff363636ff343434ff494949ff4c4c4cff232323ff262626ff383838ff787878ffa3a3a3ff7e7e7eff353535ff343434ff393939ff383838ff525252ff404040ff404040ff585858ff000000ff393939ff000000ff232323ff202020ff313131ff484848ff3a3a3aff353535ff3c3c3cff333333ff646464ff333333ff333333ff373737ff3f3f3fff3c3c3cff383838ff292929ff363636ff494949ff797979ff888888ff8d8d8dff333333ff2a2a2aff272727ff262626ff323232ff353535ff222222ff222222ff000000ff353535ff000000ff202020ff242424ff2b2b2bff444444ff3a3a3aff292929ff3c3c3cff222222ff3d3d3dff232323ff383838ff2c2c2cff2c2c2cff202020ff1f1f1fff1e1e1eff242424ff242424ff8e8e8eff878787ff7a7a7aff363636ff313131ff333333ff2f2f2fff323232ff353535ff373737ff3b3b3bff000000ff272727ff000000ff2a2a2aff222222ff3b3b3bff363636ff414141ff252525ff363636ff272727ff6f6f6fff262626ff313131ff292929ff2a2a2aff232323ff2b2b2bff252525ff252525ff4a4a4aff6f6f6fff7f7f7fff818181ff444444ff2c2c2cff2f2f2fff3a3a3aff424242ff3f3f3fff333333ff373737ff1c1c1cff6f6f6fff000000ff434343ff1e1e1eff3e3e3eff454545ff4a4a4aff262626ff414141ff212121ff676767ff242424ff414141ff282828ff2a2a2aff242424ff232323ff232323ff323232ff4c4c4cff9d9d9dff888888ff949494ff989898ff575757ff6e6e6eff7b7b7bff8a8a8aff7c7c7cff747474ff929292ff6b6b6bff707070ff717171ff939393ff5b5b5bff6d6d6dff757575ff757575ff616161ff7d7d7dff717171ff7b7b7bff7f7f7fff979797ff7a7a7aff777777ff727272ff848484ff7c7c7cff848484ff979797ff999999ff878787ffaeaeaeff9c9c9cff898989ff707070ff777777ff707070ff787878ff767676ff7b7b7bff8c8c8cff656565ff858585ff6b6b6bff7f7f7fff7d7d7dff949494ff858585ff7d7d7dff929292ff7f7f7fff6d6d6dff777777ff858585ff7e7e7eff7d7d7dff676767ff878787ff919191ff999999ff9b9b9bff999999ff979797
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+        MeshType: 0
+        MyMesh: {fileID: 0}
+        MyMaterial: {fileID: 0}
+        ModelName: 
+      MaxItems: 0
+      Value: 0
+      CanBuyAllItems: 0
+      CanSellAllItems: 0
+      OnAddItem:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 0
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshList
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshList
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshList
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshList
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshList
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnUpdateItem:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 0
+          - m_Target: {fileID: 0}
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 0
+          - m_Target: {fileID: 11467544}
+            m_MethodName: SetItem
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshAt
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 11467544}
+            m_MethodName: SetItem
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshAt
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 11467544}
+            m_MethodName: SetItem
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshAt
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 11467544}
+            m_MethodName: SetItem
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshAt
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 11467544}
+            m_MethodName: SetItem
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: RefreshAt
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnPickupItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      OnExchangeItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      OnExchangeCurrency:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnItemUpdate:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnLoadEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+    Equipment:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      MyItems: []
+      MaxItems: 0
+      Value: 0
+      CanBuyAllItems: 0
+      CanSellAllItems: 0
+      OnAddItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnUpdateItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnPickupItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      OnExchangeItem:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      OnExchangeCurrency:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnItemUpdate:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnLoadEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+    MyStats:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      Data:
+      - Name: Level
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: An overall indication of power
+        MyType: 0
+        Value:
+        - 1
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      - Name: Experience
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: It grows larger with every monster you slay
+        MyType: 0
+        Value:
+        - 0
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      - Name: Health
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: Heals you! !2
+        MyType: 1
+        Value:
+        - 10
+        - 10
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      - Name: HealthRegen
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: '-------'
+        MyType: 0
+        Value:
+        - 0
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      - Name: Mana
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: '-------!'
+        MyType: 1
+        Value:
+        - 10
+        - 10
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      - Name: ManaRegen
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Description: '!'
+        MyType: 2
+        Value:
+        - 1
+        - 1
+        - 1.4670607
+        Modifiers:
+        - Mana
+        MyZexel:
+          Name: Empty
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      OnNewStats:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnNewStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnUpdateStats:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: OnUpdateStats
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      ActionLoadStats:
+        IsTrigger: 0
+      ActionStatsName: 
+      DebugGui: 0
+      MySource: {fileID: 8228008}
+      MyEquipment:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        MyItems: []
+        MaxItems: 0
+        Value: 0
+        CanBuyAllItems: 0
+        CanSellAllItems: 0
+        OnAddItem:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateItem:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        OnPickupItem:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnExchangeItem:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnExchangeCurrency:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnItemUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        OnLoadEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      EquipmentStats:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Data: []
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      IsAlive: 1
+      IsInflictHeightDamage: 1
+      OnDeath:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.Util.EventObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnDeathSound: {fileID: 0}
+      LevelUpEffectsPrefab: {fileID: 0}
+      PopupFont: {fileID: 0}
+    MyQuestLog:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      DebugGui: 0
+      QuestLimit: -1
+      MyQuests: []
+      OnCompleteQuestSound: {fileID: 0}
+      OnHandInQuestSound: {fileID: 0}
+      BeginQuestSound: {fileID: 0}
+      OnAddQuest:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      OnCompletedQuest:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+    MyDialogue:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      MyDialogues: []
+      ChattedCount: 0
+      DialogueIndex: 0
+      OnEndTree:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+    MySkeleton:
+      Name: Texpie
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 1
+      ActionLoad:
+        IsTrigger: 0
+      ActionClear:
+        IsTrigger: 0
+      ActionExportAsFBX:
+        IsTrigger: 0
+      ActionRestoreDefaultPose:
+        IsTrigger: 0
+      ActionSetDefaultPose:
+        IsTrigger: 0
+      ActionGenerateSkeleton:
+        IsTrigger: 0
+      ActionActivateSkeleton:
+        IsTrigger: 0
+      ActionDeactivateSkeleton:
+        IsTrigger: 0
+      ActionRipSkeleton:
+        IsTrigger: 0
+      MyBones:
+      - MySkeleton:
+          Name: Texpie
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          ActionLoad:
+            IsTrigger: 0
+          ActionClear:
+            IsTrigger: 0
+          ActionExportAsFBX:
+            IsTrigger: 0
+          ActionRestoreDefaultPose:
+            IsTrigger: 0
+          ActionSetDefaultPose:
+            IsTrigger: 0
+          ActionGenerateSkeleton:
+            IsTrigger: 0
+          ActionActivateSkeleton:
+            IsTrigger: 0
+          ActionDeactivateSkeleton:
+            IsTrigger: 0
+          ActionRipSkeleton:
+            IsTrigger: 0
+          MyBones:
+          - MySkeleton:
+              Name: Texpie
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              ActionLoad:
+                IsTrigger: 0
+              ActionClear:
+                IsTrigger: 0
+              ActionExportAsFBX:
+                IsTrigger: 0
+              ActionRestoreDefaultPose:
+                IsTrigger: 0
+              ActionSetDefaultPose:
+                IsTrigger: 0
+              ActionGenerateSkeleton:
+                IsTrigger: 0
+              ActionActivateSkeleton:
+                IsTrigger: 0
+              ActionDeactivateSkeleton:
+                IsTrigger: 0
+              ActionRipSkeleton:
+                IsTrigger: 0
+              MyBones:
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: Body
+                ParentName: 
+                MeshName: Body
+                Tag: Body
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: CameraBone
+                ParentName: 
+                MeshName: 
+                Tag: CameraBone
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 1, y: 1, z: 1}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              MyBounds:
+                m_Center: {x: 0, y: 0, z: 0}
+                m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+              SpawnedSkeleton: {fileID: 114000013389729130}
+              BoneMaterial: {fileID: 0}
+              BoneSize: 0.1
+              BoneColor:
+                serializedVersion: 2
+                rgba: 4283650869
+              IsShowJoints: 1
+              IsShowBones: 1
+              IsShowMeshes: 1
+              IsAnimating: 1
+              IsJointsColliders: 1
+              IsMeshColliders: 0
+              IsConvexMeshes: 1
+              OnLoadSkeleton:
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyCameraBone: {fileID: 0}
+              MyBoneHead: {fileID: 444750}
+              IsReCalculateBounds: 0
+            Name: Body
+            ParentName: 
+            MeshName: Body
+            Tag: Body
+            DefaultPosition: {x: 0, y: 0, z: 0}
+            DefaultScale: {x: 1, y: 1, z: 1}
+            DefaultRotation: {x: 0, y: 0, z: 0}
+            MeshDefaultPosition: {x: 0, y: 0, z: 0}
+            MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+            MeshDefaultRotation: {x: 0, y: 0, z: 0}
+            MyTransform: {fileID: 0}
+            ParentTransform: {fileID: 444750}
+            MyJointCube: {fileID: 0}
+            BodyCube: {fileID: 0}
+            VoxelMesh: {fileID: 0}
+            BoneLength: 0
+          - MySkeleton:
+              Name: Texpie
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              ActionLoad:
+                IsTrigger: 0
+              ActionClear:
+                IsTrigger: 0
+              ActionExportAsFBX:
+                IsTrigger: 0
+              ActionRestoreDefaultPose:
+                IsTrigger: 0
+              ActionSetDefaultPose:
+                IsTrigger: 0
+              ActionGenerateSkeleton:
+                IsTrigger: 0
+              ActionActivateSkeleton:
+                IsTrigger: 0
+              ActionDeactivateSkeleton:
+                IsTrigger: 0
+              ActionRipSkeleton:
+                IsTrigger: 0
+              MyBones:
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: Body
+                ParentName: 
+                MeshName: Body
+                Tag: Body
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: CameraBone
+                ParentName: 
+                MeshName: 
+                Tag: CameraBone
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 1, y: 1, z: 1}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              MyBounds:
+                m_Center: {x: 0, y: 0, z: 0}
+                m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+              SpawnedSkeleton: {fileID: 114000013389729130}
+              BoneMaterial: {fileID: 0}
+              BoneSize: 0.1
+              BoneColor:
+                serializedVersion: 2
+                rgba: 4283650869
+              IsShowJoints: 1
+              IsShowBones: 1
+              IsShowMeshes: 1
+              IsAnimating: 1
+              IsJointsColliders: 1
+              IsMeshColliders: 0
+              IsConvexMeshes: 1
+              OnLoadSkeleton:
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyCameraBone: {fileID: 0}
+              MyBoneHead: {fileID: 444750}
+              IsReCalculateBounds: 0
+            Name: CameraBone
+            ParentName: 
+            MeshName: 
+            Tag: CameraBone
+            DefaultPosition: {x: 0, y: 0, z: 0}
+            DefaultScale: {x: 1, y: 1, z: 1}
+            DefaultRotation: {x: 0, y: 0, z: 0}
+            MeshDefaultPosition: {x: 0, y: 0, z: 0}
+            MeshDefaultScale: {x: 1, y: 1, z: 1}
+            MeshDefaultRotation: {x: 0, y: 0, z: 0}
+            MyTransform: {fileID: 0}
+            ParentTransform: {fileID: 444750}
+            MyJointCube: {fileID: 0}
+            BodyCube: {fileID: 0}
+            VoxelMesh: {fileID: 0}
+            BoneLength: 0
+          MyBounds:
+            m_Center: {x: 0, y: 0, z: 0}
+            m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+          SpawnedSkeleton: {fileID: 114000013389729130}
+          BoneMaterial: {fileID: 0}
+          BoneSize: 0.1
+          BoneColor:
+            serializedVersion: 2
+            rgba: 4283650869
+          IsShowJoints: 1
+          IsShowBones: 1
+          IsShowMeshes: 1
+          IsAnimating: 1
+          IsJointsColliders: 1
+          IsMeshColliders: 0
+          IsConvexMeshes: 1
+          OnLoadSkeleton:
+            m_PersistentCalls:
+              m_Calls:
+              - m_Target: {fileID: 11488850}
+                m_MethodName: LoadAnimation
+                m_Mode: 0
+                m_Arguments:
+                  m_ObjectArgumentAssemblyTypeName: 
+                  m_IntArgument: 0
+                  m_FloatArgument: 0
+                  m_StringArgument: 
+                  m_BoolArgument: 0
+                m_CallState: 2
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          MyCameraBone: {fileID: 0}
+          MyBoneHead: {fileID: 444750}
+          IsReCalculateBounds: 0
+        Name: Body
+        ParentName: 
+        MeshName: Body
+        Tag: Body
+        DefaultPosition: {x: 0, y: 0, z: 0}
+        DefaultScale: {x: 1, y: 1, z: 1}
+        DefaultRotation: {x: 0, y: 0, z: 0}
+        MeshDefaultPosition: {x: 0, y: 0, z: 0}
+        MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+        MeshDefaultRotation: {x: 0, y: 0, z: 0}
+        MyTransform: {fileID: 0}
+        ParentTransform: {fileID: 444750}
+        MyJointCube: {fileID: 0}
+        BodyCube: {fileID: 0}
+        VoxelMesh: {fileID: 0}
+        BoneLength: 0
+      - MySkeleton:
+          Name: Texpie
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            ElementData:
+              _keys: []
+              _values: []
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          ActionLoad:
+            IsTrigger: 0
+          ActionClear:
+            IsTrigger: 0
+          ActionExportAsFBX:
+            IsTrigger: 0
+          ActionRestoreDefaultPose:
+            IsTrigger: 0
+          ActionSetDefaultPose:
+            IsTrigger: 0
+          ActionGenerateSkeleton:
+            IsTrigger: 0
+          ActionActivateSkeleton:
+            IsTrigger: 0
+          ActionDeactivateSkeleton:
+            IsTrigger: 0
+          ActionRipSkeleton:
+            IsTrigger: 0
+          MyBones:
+          - MySkeleton:
+              Name: Texpie
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              ActionLoad:
+                IsTrigger: 0
+              ActionClear:
+                IsTrigger: 0
+              ActionExportAsFBX:
+                IsTrigger: 0
+              ActionRestoreDefaultPose:
+                IsTrigger: 0
+              ActionSetDefaultPose:
+                IsTrigger: 0
+              ActionGenerateSkeleton:
+                IsTrigger: 0
+              ActionActivateSkeleton:
+                IsTrigger: 0
+              ActionDeactivateSkeleton:
+                IsTrigger: 0
+              ActionRipSkeleton:
+                IsTrigger: 0
+              MyBones:
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: Body
+                ParentName: 
+                MeshName: Body
+                Tag: Body
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: CameraBone
+                ParentName: 
+                MeshName: 
+                Tag: CameraBone
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 1, y: 1, z: 1}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              MyBounds:
+                m_Center: {x: 0, y: 0, z: 0}
+                m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+              SpawnedSkeleton: {fileID: 114000013389729130}
+              BoneMaterial: {fileID: 0}
+              BoneSize: 0.1
+              BoneColor:
+                serializedVersion: 2
+                rgba: 4283650869
+              IsShowJoints: 1
+              IsShowBones: 1
+              IsShowMeshes: 1
+              IsAnimating: 1
+              IsJointsColliders: 1
+              IsMeshColliders: 0
+              IsConvexMeshes: 1
+              OnLoadSkeleton:
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyCameraBone: {fileID: 0}
+              MyBoneHead: {fileID: 444750}
+              IsReCalculateBounds: 0
+            Name: Body
+            ParentName: 
+            MeshName: Body
+            Tag: Body
+            DefaultPosition: {x: 0, y: 0, z: 0}
+            DefaultScale: {x: 1, y: 1, z: 1}
+            DefaultRotation: {x: 0, y: 0, z: 0}
+            MeshDefaultPosition: {x: 0, y: 0, z: 0}
+            MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+            MeshDefaultRotation: {x: 0, y: 0, z: 0}
+            MyTransform: {fileID: 0}
+            ParentTransform: {fileID: 444750}
+            MyJointCube: {fileID: 0}
+            BodyCube: {fileID: 0}
+            VoxelMesh: {fileID: 0}
+            BoneLength: 0
+          - MySkeleton:
+              Name: Texpie
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              ActionLoad:
+                IsTrigger: 0
+              ActionClear:
+                IsTrigger: 0
+              ActionExportAsFBX:
+                IsTrigger: 0
+              ActionRestoreDefaultPose:
+                IsTrigger: 0
+              ActionSetDefaultPose:
+                IsTrigger: 0
+              ActionGenerateSkeleton:
+                IsTrigger: 0
+              ActionActivateSkeleton:
+                IsTrigger: 0
+              ActionDeactivateSkeleton:
+                IsTrigger: 0
+              ActionRipSkeleton:
+                IsTrigger: 0
+              MyBones:
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: Body
+                ParentName: 
+                MeshName: Body
+                Tag: Body
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 0.5, y: 0.5, z: 0.5}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              - MySkeleton:
+                  Name: Texpie
+                  HasChanged: 0
+                  IsDrawGui: 0
+                  IsDefaultGui: 0
+                  MyBounds:
+                    m_Center: {x: 0, y: 0, z: 0}
+                    m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+                  BoneSize: 0.1
+                  BoneColor:
+                    serializedVersion: 2
+                    rgba: 4283650869
+                  IsShowJoints: 1
+                  IsShowBones: 1
+                  IsShowMeshes: 1
+                  IsAnimating: 1
+                  IsJointsColliders: 1
+                  IsMeshColliders: 0
+                  IsConvexMeshes: 1
+                  IsReCalculateBounds: 0
+                Name: CameraBone
+                ParentName: 
+                MeshName: 
+                Tag: CameraBone
+                DefaultPosition: {x: 0, y: 0, z: 0}
+                DefaultScale: {x: 1, y: 1, z: 1}
+                DefaultRotation: {x: 0, y: 0, z: 0}
+                MeshDefaultPosition: {x: 0, y: 0, z: 0}
+                MeshDefaultScale: {x: 1, y: 1, z: 1}
+                MeshDefaultRotation: {x: 0, y: 0, z: 0}
+                MyTransform: {fileID: 0}
+                ParentTransform: {fileID: 444750}
+                MyJointCube: {fileID: 0}
+                BodyCube: {fileID: 0}
+                VoxelMesh: {fileID: 0}
+                BoneLength: 0
+              MyBounds:
+                m_Center: {x: 0, y: 0, z: 0}
+                m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+              SpawnedSkeleton: {fileID: 114000013389729130}
+              BoneMaterial: {fileID: 0}
+              BoneSize: 0.1
+              BoneColor:
+                serializedVersion: 2
+                rgba: 4283650869
+              IsShowJoints: 1
+              IsShowBones: 1
+              IsShowMeshes: 1
+              IsAnimating: 1
+              IsJointsColliders: 1
+              IsMeshColliders: 0
+              IsConvexMeshes: 1
+              OnLoadSkeleton:
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyCameraBone: {fileID: 0}
+              MyBoneHead: {fileID: 444750}
+              IsReCalculateBounds: 0
+            Name: CameraBone
+            ParentName: 
+            MeshName: 
+            Tag: CameraBone
+            DefaultPosition: {x: 0, y: 0, z: 0}
+            DefaultScale: {x: 1, y: 1, z: 1}
+            DefaultRotation: {x: 0, y: 0, z: 0}
+            MeshDefaultPosition: {x: 0, y: 0, z: 0}
+            MeshDefaultScale: {x: 1, y: 1, z: 1}
+            MeshDefaultRotation: {x: 0, y: 0, z: 0}
+            MyTransform: {fileID: 0}
+            ParentTransform: {fileID: 444750}
+            MyJointCube: {fileID: 0}
+            BodyCube: {fileID: 0}
+            VoxelMesh: {fileID: 0}
+            BoneLength: 0
+          MyBounds:
+            m_Center: {x: 0, y: 0, z: 0}
+            m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+          SpawnedSkeleton: {fileID: 114000013389729130}
+          BoneMaterial: {fileID: 0}
+          BoneSize: 0.1
+          BoneColor:
+            serializedVersion: 2
+            rgba: 4283650869
+          IsShowJoints: 1
+          IsShowBones: 1
+          IsShowMeshes: 1
+          IsAnimating: 1
+          IsJointsColliders: 1
+          IsMeshColliders: 0
+          IsConvexMeshes: 1
+          OnLoadSkeleton:
+            m_PersistentCalls:
+              m_Calls:
+              - m_Target: {fileID: 11488850}
+                m_MethodName: LoadAnimation
+                m_Mode: 0
+                m_Arguments:
+                  m_ObjectArgumentAssemblyTypeName: 
+                  m_IntArgument: 0
+                  m_FloatArgument: 0
+                  m_StringArgument: 
+                  m_BoolArgument: 0
+                m_CallState: 2
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          MyCameraBone: {fileID: 0}
+          MyBoneHead: {fileID: 444750}
+          IsReCalculateBounds: 0
+        Name: CameraBone
+        ParentName: 
+        MeshName: 
+        Tag: CameraBone
+        DefaultPosition: {x: 0, y: 0, z: 0}
+        DefaultScale: {x: 1, y: 1, z: 1}
+        DefaultRotation: {x: 0, y: 0, z: 0}
+        MeshDefaultPosition: {x: 0, y: 0, z: 0}
+        MeshDefaultScale: {x: 1, y: 1, z: 1}
+        MeshDefaultRotation: {x: 0, y: 0, z: 0}
+        MyTransform: {fileID: 0}
+        ParentTransform: {fileID: 444750}
+        MyJointCube: {fileID: 0}
+        BodyCube: {fileID: 0}
+        VoxelMesh: {fileID: 0}
+        BoneLength: 0
+      MyBounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0.25, y: 0.25, z: 0.25}
+      SpawnedSkeleton: {fileID: 114000013389729130}
+      BoneMaterial: {fileID: 0}
+      BoneSize: 0.1
+      BoneColor:
+        serializedVersion: 2
+        rgba: 4283650869
+      IsShowJoints: 1
+      IsShowBones: 1
+      IsShowMeshes: 1
+      IsAnimating: 1
+      IsJointsColliders: 1
+      IsMeshColliders: 1
+      IsConvexMeshes: 1
+      OnLoadSkeleton:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 11488850}
+            m_MethodName: LoadAnimation
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyCameraBone: {fileID: 0}
+      MyBoneHead: {fileID: 444750}
+      IsReCalculateBounds: 0
+    MyAnimations: []
+    MyGuis:
+      ActionSpawnGui:
+        IsTrigger: 0
+      ActionName: Skillbar
+      ActionDespawnGuis:
+        IsTrigger: 0
+      ActionSpawnGuis:
+        IsTrigger: 0
+      ActionSetGuiStates:
+        IsTrigger: 0
+      GuisEnabled:
+      - Crosshair
+      - StatsBar
+      - SkillBar
+      - Menu
+      - Dialogue
+      GuisEnabledStates: 0101010000
+      MyGuis: []
+      IsHiddenLabel: 0
+      MyCharacter: {fileID: 11401986}
+    BotData:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      IsAggressive: 1
+      CanWander: 1
+    CanRespawn: 1
+    LevelInsideOf: 
+    LevelPosition: {x: 8.34, y: 1.25, z: 58}
+    LevelRotation: {x: 0, y: 180, z: 0}
+    MyCharacter: {fileID: 0}
+  IsPlayer: 0
+  MySummonedCharacter: {fileID: 0}
+  LastHitNormal: {x: 0, y: 0, z: 0}
+  OnEndTalkEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnReturnToPool:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Util.EventObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MyChunk: {fileID: 0}
+  InWorld: {fileID: 0}
+--- !u!114 &11414918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3a9a6f740d664689aa648d05850f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionRagdoll:
+    IsTrigger: 0
+  ActionReverseRagdoll:
+    IsTrigger: 0
+  IsBodyPartsItems: 0
+  IsApplyJoints: 0
+--- !u!114 &11467544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37ed4185de8d6e2478c816ad73fc3322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebug: 0
+  OnChangeItem:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: OnChangeSelectedItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: OnChangeSelectedItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: OnChangeSelectedItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: OnChangeSelectedItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: OnChangeSelectedItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &11488850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe42b738627f7d54ebcf066a73405b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedIndex: 0
+  IsPlayOnStart: 1
+  BeginAnimationName: Bobbing
+  CurrentTime: 0
+  TotalTime: 3
+  IsAnimating: 0
+  IsForceLoad: 0
+  IsAnimationLoop: 1
+  OnUpdateFrames:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnUpdatedTimeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  PlayPause:
+    IsTrigger: 0
+  ActionGenerateAnimation:
+    IsTrigger: 0
+  AnimationRandomness: 0.05
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].Commands.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].Commands.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].Commands.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRagdoll.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnNewStats.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnUpdateStats.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.maxCurve.m_Curve.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minCurve.m_Curve.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddLogString.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.maxCurve.m_Curve.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minCurve.m_Curve.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnCompletedQuest.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnExchangeCurrency.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.data[0].Value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[0].Value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[1].Value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: IsDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyRayObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.data[2]
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.data[3]
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.data[4]
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.data[5]
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyInteractKeys.Array.data[6]
+      value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].Commands.Array.data[0]
+      value: /Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].Name
+      value: Fireball
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].Commands.Array.data[0]
+      value: /Fireball
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].Name
+      value: Sheild
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].MyTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: b05d2e767990645438662a0be02255ff, type: 3}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].Description
+      value: Using mana to sheild your body
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].Commands.Array.data[0]
+      value: /Sheild
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: EmissionModule.rate.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.maxNumParticles
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: VelocityModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: IsMasking
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: DecreaseStatKey
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: Body
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.randomDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.maxCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.maxCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.maxCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.maxCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minCurve.m_Curve.Array.data[0].value
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minCurve.m_Curve.Array.data[0].value
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.2745099
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.49068323
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: transition
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRagdoll.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRagdoll.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRagdoll.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRagdoll.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnRevive.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyAnimator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].Name
+      value: Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 142a5e8f8007b044ea19a1cd9ae478d9, type: 3}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].Quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].SellValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].BuyValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.data[0].Name
+      value: Desire
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.data[0].StatType
+      value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.data[0].Description
+      value: Lets you not die for longer
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[0].MyStats.Data.Array.data[0].Value.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: a6de3e14e6f8def4cb63847c82717c96, type: 3}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].Quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].SellValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].BuyValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[0].Name
+      value: Lifesteal
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[0].StatType
+      value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[0].Value.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[1].Name
+      value: Strength
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[1].StatType
+      value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[1].MyStats.Data.Array.data[1].Value.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].Name
+      value: Dirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].MyTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 02603a704e9abb44b8be4944eca58788, type: 3}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].Description
+      value: A common material found on earth
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].Quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].SellValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[2].BuyValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].Quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].SellValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyItems.Array.data[3].BuyValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: UpdateInventoryGui
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: UpdateInventoryGui
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnAddItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnAddItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddItem.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnExchangeCurrency.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateValueText
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnExchangeCurrency.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnNewStats.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnNewStats
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnNewStats.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnUpdateStats.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateGuiStats
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnUpdateStats.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateGuiStats
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnUpdateStats.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnUpdateStats.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11414918}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Explode
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11401986}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateQuestGuis
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: UpdateQuestGuis
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: UpdateQuestGuis
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: UpdateQuestGuis
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateQuestGuis
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddQuest.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnCompletedQuest.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: FindCurrentQuestTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnCompletedQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnCompletedQuest.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnCompletedQuest.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddLogString.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddGui
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OnAddLogString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 189778}
+  m_IsPrefabParent: 1
+--- !u!114 &114000013389729130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f98d9c8b76c6714c900fff4042d3381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11401986}
+  HasInit: 1
+  ActionSetDefaultPose:
+    IsTrigger: 0
+  ActionRestoreDefaultPose:
+    IsTrigger: 0
+  ActionGenerateSkeleton:
+    IsTrigger: 0
+  ActionConvertMeshes:
+    IsTrigger: 0
+--- !u!114 &114132710140556466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.16666667
+  m_SyncRotationAxis: 4
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 1
+  m_MovementTheshold: 0.01
+  m_VelocityThreshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114244673288810648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673178cdbc3e8f64182cebb7acf9edee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPlayer: 0
+  CameraTransform: {fileID: 0}
+  movementSettings:
+    ForwardSpeed: 1
+    BackwardSpeed: 1
+    StrafeSpeed: 1
+    RunMultiplier: 1
+    RunKey: 304
+    JumpForce: 12
+    SlopeCurveModifier:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: -90
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 90
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    CurrentTargetSpeed: 1
+  mouseLook:
+    XSensitivity: 2
+    YSensitivity: 2
+    clampVerticalRotation: 1
+    MinimumX: -90
+    MaximumX: 90
+    smooth: 0
+    smoothTime: 5
+    lockCursor: 1
+  advancedSettings:
+    groundCheckDistance: 0.1
+    stickToGroundHelperDistance: 0.1
+    slowDownRate: 150
+    airControl: 1
+    shellOffset: 0.01
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &114724271812573012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 170
+    i1: 224
+    i2: 160
+    i3: 75
+    i4: 52
+    i5: 175
+    i6: 89
+    i7: 132
+    i8: 104
+    i9: 152
+    i10: 95
+    i11: 244
+    i12: 22
+    i13: 201
+    i14: 237
+    i15: 87
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!136 &136741730044380406
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189778}
+  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 0.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

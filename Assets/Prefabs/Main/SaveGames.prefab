@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1168187068892924
 GameObject:
   m_ObjectHideFlags: 1
@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 222491225087274454}
   - component: {fileID: 114702167250970856}
   - component: {fileID: 114868787211509898}
+  - component: {fileID: 114011374399843102}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Scrollbar
@@ -233,6 +234,7 @@ GameObject:
   - component: {fileID: 222274171671955140}
   - component: {fileID: 114773685498108098}
   - component: {fileID: 114281469626372384}
+  - component: {fileID: 114952170812833858}
   m_Layer: 5
   m_Name: NewGameButton
   m_TagString: Button
@@ -334,6 +336,7 @@ GameObject:
   - component: {fileID: 222998110004294476}
   - component: {fileID: 114088521855376780}
   - component: {fileID: 114205379300969520}
+  - component: {fileID: 114073159029189210}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -375,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1356716304795396
 GameObject:
   m_ObjectHideFlags: 1
@@ -486,6 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224158718897867454}
   - component: {fileID: 223063811554697974}
+  - component: {fileID: 225935420912403378}
   - component: {fileID: 222794028898575588}
   - component: {fileID: 114582415656688268}
   - component: {fileID: 114362447125268266}
@@ -560,6 +564,7 @@ GameObject:
   - component: {fileID: 224247018904808458}
   - component: {fileID: 222153369798668378}
   - component: {fileID: 114523874701018666}
+  - component: {fileID: 114156891199451608}
   m_Layer: 5
   m_Name: LabelText
   m_TagString: Untagged
@@ -578,8 +583,9 @@ GameObject:
   - component: {fileID: 222666987547716438}
   - component: {fileID: 114627813816259638}
   - component: {fileID: 114336135976904642}
+  - component: {fileID: 114588060166914560}
   m_Layer: 5
-  m_Name: Logo (1)
+  m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -678,6 +684,7 @@ GameObject:
   - component: {fileID: 224127377718802292}
   - component: {fileID: 222322688241451100}
   - component: {fileID: 114686494132070796}
+  - component: {fileID: 114881545576486920}
   m_Layer: 5
   m_Name: SubHeaderButtons
   m_TagString: Untagged
@@ -734,7 +741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1664043599516014
 GameObject:
   m_ObjectHideFlags: 1
@@ -819,6 +826,7 @@ GameObject:
   - component: {fileID: 114225817898113146}
   - component: {fileID: 114927524428118926}
   - component: {fileID: 114053888656841330}
+  - component: {fileID: 114233542832241934}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -1115,6 +1123,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114011374399843102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238046872514350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114027012499527680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1153,7 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd381a7c3b81ee54a90316f15c8b995d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreviousGui: {fileID: 0}
+  PreviousGui: {fileID: 1452143079834616}
 --- !u!114 &114055511911798858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1166,7 +1188,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: 2}
+  m_EffectDistance: {x: 4, y: 4}
+  m_UseGraphicAlpha: 1
+--- !u!114 &114073159029189210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305245201257984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
 --- !u!114 &114088521855376780
 MonoBehaviour:
@@ -1416,6 +1452,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114156891199451608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1557975632892452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114164103248906658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1741,6 +1791,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Erase
+--- !u!114 &114233542832241934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1760966833297370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114242038118692566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2472,6 +2536,9 @@ MonoBehaviour:
   IsSelectable: 1
   MaxCells: 0
   IsStretchHorizontal: 1
+  ScrollBeginPositions: []
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2963,8 +3030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4c9ddb0457e6f4886d6f87f03a8049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceOn: 0
-  IsBeginOn: 0
   OnToggledOn:
     m_PersistentCalls:
       m_Calls:
@@ -2997,6 +3062,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  IsKeepCamera: 0
+--- !u!114 &114588060166914560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561348384929768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114596924608941078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3212,6 +3292,34 @@ MonoBehaviour:
           m_Calls: []
         m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
       Description: Null
       Commands: []
       Tags: []
@@ -3219,15 +3327,125 @@ MonoBehaviour:
       SellValue: -1
       BuyValue: -1
       MyStats:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
         Data: []
-      IsUniqueTexture: 0
-      TextureType: 0
-      MyTexture: {fileID: 0}
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}
       ModelName: 
-      MyModel: 
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3542,7 +3760,7 @@ MonoBehaviour:
   m_Script: {fileID: -1200242548, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
+  m_ShowMaskGraphic: 0
 --- !u!114 &114828210377303230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3660,6 +3878,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114881545576486920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635887568197406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114886520292680980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3944,6 +4176,20 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114952170812833858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240445869233478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114974346464453384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4547,16 +4793,16 @@ RectTransform:
   m_LocalScale: {x: 0.0014, y: 0.0014, z: 0.0014}
   m_Children:
   - {fileID: 224446096835678676}
+  - {fileID: 224331996589818504}
   - {fileID: 224231798266036542}
   - {fileID: 224468885977907368}
   - {fileID: 224755065151252028}
-  - {fileID: 224331996589818504}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.266, y: 0}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 420, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224171661242788198
@@ -4648,7 +4894,7 @@ RectTransform:
   m_Children:
   - {fileID: 224247018904808458}
   m_Father: {fileID: 224158718897867454}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -4818,7 +5064,7 @@ RectTransform:
   - {fileID: 224090576245002614}
   - {fileID: 224349969261723276}
   m_Father: {fileID: 224158718897867454}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5011,7 +5257,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224158718897867454}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5363,7 +5609,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224158718897867454}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -5387,7 +5633,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_SizeDelta: {x: 140, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224821848276815024
 RectTransform:
@@ -5477,7 +5723,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5536,3 +5782,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225935420912403378
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1452143079834616}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

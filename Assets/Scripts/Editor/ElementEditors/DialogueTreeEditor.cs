@@ -10,6 +10,15 @@ namespace Zeltex
     [CustomPropertyDrawer(typeof(DialogueTree))]
     public class DialogueTreeEditor : ElementEditor<DialogueTree>
     {
+        public override void DrawCustomGUI()
+        {
+            base.DrawCustomGUI();
+            if (GUIButton("Generate"))
+            {
+                DialogueGenerator.Get().SetTargetData(Data);
+                UniversalCoroutine.CoroutineManager.StartCoroutine(DialogueGenerator.Get().Generate());
+            }
+        }
 
         protected override void SetPropertyValue(object NewValue)
         {

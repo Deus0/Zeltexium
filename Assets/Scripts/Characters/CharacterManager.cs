@@ -113,7 +113,7 @@ namespace Zeltex.Characters
                     Bot MyBot = Pools[0].SpawnedObjects[i].GetComponent<Bot>();
                     if (MyBot)
                     {
-                        MyBot.Data.IsAggressive = NewAngryState;
+                        MyBot.GetData().IsAggressive = NewAngryState;
                         if (NewAngryState)
                         {
                             // if kill!!
@@ -428,7 +428,7 @@ namespace Zeltex.Characters
             {
                 LogManager.Get().Log("ReadyObject (Final2) " + PoolObject.GetComponent<NetworkIdentity>().netId, "PoolsReadying");
                 LayerManager.Get().SetLayerCharacter(PoolObject.gameObject);
-                PoolObject.ForceInitialize();
+                //PoolObject.ForceInitialize();
                 PoolObject.transform.position =
                     new Vector3(Random.Range(-5, 5), 5, Random.Range(-5, 5));
             }

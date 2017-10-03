@@ -136,12 +136,16 @@ namespace Zeltex.Skeletons
             }
             for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
-                Rigidbody BoneRigidbody = MySkeleton.GetBones()[i].MyTransform.GetComponent<Rigidbody>();
-                if (BoneRigidbody != null)
+                Transform BoneTransform = MySkeleton.GetBones()[i].MyTransform;
+                if (BoneTransform)
                 {
-                    BoneRigidbody.isKinematic = false;
-                    BoneRigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionPower * MySkeleton.GetSkeleton().GetBounds().extents.magnitude);
-                    BoneRigidbody.AddForce(DownExplosionForce * -Vector3.up);
+                    Rigidbody BoneRigidbody = BoneTransform.GetComponent<Rigidbody>();
+                    if (BoneRigidbody != null)
+                    {
+                        BoneRigidbody.isKinematic = false;
+                        BoneRigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionPower * MySkeleton.GetSkeleton().GetBounds().extents.magnitude);
+                        BoneRigidbody.AddForce(DownExplosionForce * -Vector3.up);
+                    }
                 }
             }
             // finally release kinematics
@@ -200,7 +204,7 @@ namespace Zeltex.Skeletons
 		private void RemoveBone(Bone MyBone, Transform MyRoot)
         { 
             Transform MyBoneTransform = MyBone.MyTransform;
-            if (MyBone != null)
+            if (MyBone != null && MyBoneTransform)
             {
                 Vector3 BeforeScale = new Vector3(0.5f, 0.5f, 0.5f);
                 if (MyBone.VoxelMesh != null && MyBone.VoxelMesh.localScale != Vector3.zero)
@@ -217,17 +221,17 @@ namespace Zeltex.Skeletons
                         MyWorld.SetConvex(true);
                     }
                 }
-            }
 
-            Rigidbody MyRigid = MyBoneTransform.gameObject.GetComponent<Rigidbody>();
-            if (MyRigid == null)
-            {
-                MyRigid = MyBone.MyTransform.gameObject.AddComponent<Rigidbody>();
-                MyRigid.isKinematic = true;
-                MyRigid.useGravity = false;
+                Rigidbody MyRigid = MyBoneTransform.gameObject.GetComponent<Rigidbody>();
+                if (MyRigid == null)
+                {
+                    MyRigid = MyBone.MyTransform.gameObject.AddComponent<Rigidbody>();
+                    MyRigid.isKinematic = true;
+                    MyRigid.useGravity = false;
 
-                ArtificialGravity MyGrav = MyBoneTransform.gameObject.AddComponent<ArtificialGravity>();
-                MyGrav.GravityForce = new Vector3(0, -0.5f, 0);
+                    ArtificialGravity MyGrav = MyBoneTransform.gameObject.AddComponent<ArtificialGravity>();
+                    MyGrav.GravityForce = new Vector3(0, -0.5f, 0);
+                }
             }
         }
 

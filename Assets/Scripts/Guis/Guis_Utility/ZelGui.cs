@@ -30,6 +30,11 @@ namespace Zeltex.Guis
             OnToggledOn.Invoke();
         }
 
+        private void Awake()
+        {
+            gameObject.SetActive(true);
+        }
+
         void Start()
         {
             MyAnimator = GetComponent<Animator>();
@@ -45,6 +50,7 @@ namespace Zeltex.Guis
             {
                 Debug.LogError("Camera Manager or Canvas not in scene.");
             }
+            //gameObject.SetActive(true);
         }
 
         private void OnMainCameraChangeAction()
@@ -111,15 +117,21 @@ namespace Zeltex.Guis
 
         public void Disable()
         {
-            CanvasGroup MyCanvasGroup = GetComponent<CanvasGroup>();
+            if (MyCanvasGroup == null)
+            {
+                MyCanvasGroup = GetComponent<CanvasGroup>();
+            }
             if (MyCanvasGroup)
             {
                 MyCanvasGroup.interactable = false;
                 MyCanvasGroup.blocksRaycasts = false;
-                //MyCanvasGroup.alpha = 0.3f;
                 if (transform.Find("DisabledOverlay"))
                 {
                     transform.Find("DisabledOverlay").gameObject.SetActive(true);
+                }
+                else
+                {
+                    MyCanvasGroup.alpha = 0f;
                 }
             }
             else
@@ -130,12 +142,22 @@ namespace Zeltex.Guis
 
         public void Enable()
         {
+            if (MyCanvasGroup == null)
+            {
+                MyCanvasGroup = GetComponent<CanvasGroup>();
+            }
             if (MyCanvasGroup)
             {
                 MyCanvasGroup.interactable = true;
                 MyCanvasGroup.blocksRaycasts = true;
-                //MyCanvasGroup.alpha = 1f;
-                transform.Find("DisabledOverlay").gameObject.SetActive(false);
+                if (transform.Find("DisabledOverlay"))
+                {
+                    transform.Find("DisabledOverlay").gameObject.SetActive(false);
+                }
+                else
+                {
+                    MyCanvasGroup.alpha = 1f;
+                }
             }
             else
             {
@@ -144,61 +166,3 @@ namespace Zeltex.Guis
         }
     }
 }
-
-
-// Auto toggle
-
-//IsAutoToggle = NewToggle;
-//IsAutoToggle = !IsAutoToggle;
-//if (IsTargetMainCamera)
-//{
-//    TargetObject = Camera.main.transform;
-//    transform.rotation = Camera.main.transform.rotation;
-//}
-//if (TargetObject != null)
-//{
-//    transform.position = TargetObject.position;
-//    transform.rotation = TargetObject.rotation;
-//}
-/// <summary>
-/// if we change our main camera in our scene, we will need to update it.. lol
-/// </summary>
-/*public void UpdateMainCamera() 
-{
-    if (IsTargetMainCamera && Camera.main) {
-        if (TargetObject == null || TargetObject != Camera.main.transform) 
-        {
-            TargetObject = Camera.main.transform;
-        }
-    }
-}*/
-/*public void SetAuto(bool NewAuto) 
-{
-    IsAutoToggle = NewAuto;
-}*/
-
-/*public void SetTarget(Transform NewTarget)
-{
-    TargetObject = NewTarget;
-}*/
-/// <summary>
-/// saves the distance, and turns it on or off depending on distance
-/// </summary>
-/*private void UpdateDistance()
-{
-    float DisableDistance = 10;
-    if (IsAutoToggle && OverrideActive && TargetObject)
-    {
-        // Find the current distance to the toggle gameobject
-        float DistanceToCam = Vector3.Distance(transform.position, TargetObject.transform.position);
-
-        if (DistanceToCam > DisableDistance)
-        {
-            SetActive(false);
-        }
-        else
-        {
-            SetActive(true);
-        }
-    }
-}*/

@@ -39,7 +39,11 @@ namespace Zeltex.Guis.Characters
 
         private void Start()
         {
-            GetComponent<CharacterGuiHandle>().GetCharacter().MyGuis.UpdateLabel(gameObject);
+            CharacterGuiHandle MyCharacterGuiHandle = GetComponent<CharacterGuiHandle>();
+            if (MyCharacterGuiHandle && MyCharacterGuiHandle.GetCharacter())
+            {
+                GetComponent<CharacterGuiHandle>().GetCharacter().GetGuis().UpdateLabel(gameObject);
+            }
             RefreshStats();
         }
 
@@ -232,7 +236,13 @@ namespace Zeltex.Guis.Characters
         {
             DefaultStats();
             Clear();
-            Character MyCharacter = gameObject.GetComponent<CharacterGuiHandle>().GetCharacter();
+            CharacterGuiHandle MyCharacterGuiHandle = gameObject.GetComponent<CharacterGuiHandle>();
+            if (MyCharacterGuiHandle == null)
+            {
+                Debug.LogError("MyCharacterGuiHandle is null inside: " + name);
+                return;
+            }
+            Character MyCharacter = MyCharacterGuiHandle.GetCharacter();
             if (MyCharacter != null)
             {
                 //Debug.LogError("Created bar for " + TargetCharacter.name);
@@ -321,8 +331,6 @@ namespace Zeltex.Guis.Characters
                             (byte)(ColorCorrection(MyColor.b)),
                             255);
                 }
-                //ZelGui MyZelGui = gameObject.GetComponent<ZelGui>();
-                //NewBar.SetActive(MyZelGui.GetActive());
                 return NewBar;
             }
             else
@@ -376,14 +384,5 @@ namespace Zeltex.Guis.Characters
             return NewPosition;
         }
         #endregion
-        /*private void RefreshFollower() 
-		{
-			//Debug.LogError ("Refreshing FOllower in StatBarManager.");
-			Follower MyFollower = gameObject.GetComponent<Follower> ();
-			if (MyFollower) 
-			{
-				MyFollower.SetTargetOffset(new Vector3 (0, 0.6f+(transform.lossyScale.y * GetTotalRectSize ()), 0));
-			}
-		}*/
     }
 }

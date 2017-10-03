@@ -12,10 +12,16 @@ namespace Zeltex
     public class LayerManager : ManagerBase<LayerManager>
     {
         [Header("Layers")]
+
         [SerializeField]
         private LayerMask CharacterLayer;
         [SerializeField]
+        private LayerMask CharacterInteractLayer;
+
+        [SerializeField]
         private LayerMask SkeletonLayer;
+        [SerializeField]
+        private LayerMask ItemsLayer;
         // raycasts in characters movement uses this
         [SerializeField]
         public LayerMask WorldsLayer;
@@ -51,7 +57,12 @@ namespace Zeltex
         {
             Camera.main.cullingMask = MainCameraMask;
         }
-        
+
+        public LayerMask GetInteractLayer()
+        {
+            return CharacterInteractLayer;
+        }
+
         public LayerMask GetWorldsLayer()
         {
             return WorldsLayer;
@@ -60,6 +71,16 @@ namespace Zeltex
         public LayerMask GetWaypointLayer()
         {
             return WaypointsLayer;
+        }
+
+        public LayerMask GetSkeletonLayer()
+        {
+            return SkeletonLayer;
+        }
+
+        public LayerMask GetItemsLayer()
+        {
+            return ItemsLayer;
         }
 
         public void SetLayerWorld(GameObject MyObject)

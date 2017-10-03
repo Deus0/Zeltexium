@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Zeltex.Skeletons
 {
@@ -10,18 +11,32 @@ namespace Zeltex.Skeletons
     [System.Serializable]
     public class ZeltexKeyFrame
     {
-        public Transform MyObject;
+        [JsonProperty]
         public Vector3 OriginalPosition;
+        [JsonProperty]
         public Quaternion OriginalRotation;
-        public Vector3 OriginalScale;
+        [JsonProperty]
+        public Vector3 OriginalScale = new Vector3(1,1,1);
+        [Header("Unity Instantiated")]
+        [JsonIgnore]
+        public Transform MyObject;
+        [JsonIgnore]
         public AnimationCurve AnimationCurvePositionX;
+        [JsonIgnore]
         public AnimationCurve AnimationCurvePositionY;
+        [JsonIgnore]
         public AnimationCurve AnimationCurvePositionZ;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveRotationX;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveRotationY;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveRotationZ;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveScaleX;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveScaleY;
+        [JsonIgnore]
         public AnimationCurve AnimationCurveScaleZ;
 
         public ZeltexKeyFrame(Transform MyTransform)
@@ -36,9 +51,12 @@ namespace Zeltex.Skeletons
             AnimationCurveScaleY = new AnimationCurve();
             AnimationCurveScaleZ = new AnimationCurve();
             MyObject = MyTransform;
-            OriginalPosition = MyTransform.localPosition;
-            OriginalRotation = MyTransform.localRotation;
-            OriginalScale = MyTransform.localScale;
+            if (MyTransform)
+            {
+                OriginalPosition = MyTransform.localPosition;
+                OriginalRotation = MyTransform.localRotation;
+                OriginalScale = MyTransform.localScale;
+            }
             AnimationCurveScaleX.AddKey(new Keyframe(0, OriginalScale.x));
             AnimationCurveScaleY.AddKey(new Keyframe(0, OriginalScale.y));
             AnimationCurveScaleZ.AddKey(new Keyframe(0, OriginalScale.z));

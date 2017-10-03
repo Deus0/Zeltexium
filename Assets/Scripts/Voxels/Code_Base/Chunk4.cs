@@ -7,7 +7,6 @@ namespace Zeltex.Voxels
 {
     public partial class Chunk : MonoBehaviour
     {
-
         #region File
         private static bool IsMutateColor = false;
         private static Color MutateColorAddition = new Color(0.88f, 0.4f, 0.58f, 1f);
@@ -147,7 +146,7 @@ namespace Zeltex.Voxels
             //DebugChunkVoxels();
             WasMassUpdated = true;
 
-            Debug.LogError("Finished loading script on chunk: " + name + ":" + MyLines.Count + "\n" + FileUtil.ConvertToSingle(MyLines));
+            //Debug.LogError("Finished loading script on chunk: " + name + ":" + MyLines.Count + "\n" + FileUtil.ConvertToSingle(MyLines));
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BuildChunkMesh());
 
             /*if (UnityEngine.Application.isEditor && UnityEngine.Application.isPlaying == false)
@@ -256,7 +255,6 @@ namespace Zeltex.Voxels
             return Data;
         }
         #endregion
-
 
         #region TerrainUpdates
         [HideInInspector]

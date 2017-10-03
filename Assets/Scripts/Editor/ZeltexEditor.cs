@@ -10,21 +10,31 @@ namespace Zeltex
 {
     public class ZeltexEditor : PropertyDrawer
     {
+        private bool IsDefaultGui;
         protected Rect EditorRect = new Rect(0, 0, 0, 0);
         protected float ExtraHeight;
-        protected bool IsDefaultGui;
         protected SerializedProperty MyProperty;
+
+        protected virtual bool IsUnityGui()
+        {
+            return IsDefaultGui;
+        }
+
+        protected virtual void SetIsUnityGui(bool NewDefaultGui)
+        {
+            IsDefaultGui = NewDefaultGui;
+        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             MyProperty = property;
-            if (IsDefaultGui)
+            if (IsUnityGui())
             {
                 EditorGUI.PropertyField(position, property, label, true);
                 ExtraHeight = EditorGUI.GetPropertyHeight(property);
                 EditorRect = new Rect(position.xMin, position.yMax - 20f, position.width, 20f);//  - 20f
                 ExtraHeight += EditorRect.height;
-                IsDefaultGui = GUI.Toggle(EditorRect, IsDefaultGui, "Default [true]");
+                SetIsUnityGui(GUI.Toggle(EditorRect, IsUnityGui(), "Default [true]"));
             }
             else
             {
@@ -39,7 +49,7 @@ namespace Zeltex
                 if (property.isExpanded)
                 {
                     OnCustomGUI(position, property, label);
-                    IsDefaultGui = GUIToggle(IsDefaultGui, "Default [false]");
+                    SetIsUnityGui(GUIToggle(IsUnityGui(), "Default [false]"));
                 }
             }
         }

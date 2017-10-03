@@ -16,30 +16,30 @@ namespace Zeltex.Voxels
 
         #region LevelWithCharacters
 
-        public void LoadSaveGame(Level MyLevel, string CharacterScript, string StartingLocation = "")
+        public void LoadSaveGame(SaveGame MyGame)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
-            StartCoroutine(LoadSaveGameRoutine(MyLevel, CharacterScript));
+            StartCoroutine(LoadSaveGameRoutine(MyGame));// MyLevel, CharacterScript));
         }
 
         /// <summary>
         /// Used by SaveGameMaker to load a level with a character script
         /// </summary>
-        public IEnumerator LoadSaveGameRoutine(Level MyLevel, string CharacterScript, string StartingLocation = "")
+        public IEnumerator LoadSaveGameRoutine(SaveGame MyGame)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
             // fade out and begin loading
-			if (ImageFader.Get())
+			/*if (ImageFader.Get())
 			{
 				ImageFader.Get().FadeOut(1f);
-			}
+			}*/
 
             World SpawnedWorld = SpawnWorld();
 
             // Load Character First
-            Character MyCharacter = CharacterManager.Get().GetPoolObject();
+            /*Character MyCharacter = CharacterManager.Get().GetPoolObject();
             if (MyCharacter)
             {
                 yield return MyCharacter.RunScriptRoutine(FileUtil.ConvertToList(CharacterScript));
-            }
+            }*/
 
             // Next Load the level
             // yield return LoadLevelWorldless(MyLevel, MyCharacter.GetChunkPosition());
@@ -48,9 +48,9 @@ namespace Zeltex.Voxels
             //Int3 CameraDistance = new Int3(10, 4, 10);
            // yield return SpawnedWorld.SetWorldSizeRoutine(CameraDistance, MyCharacter.GetChunkPosition());
             // Next Load the level
-            yield return LoadLevel(SpawnedWorld, MyLevel, MyCharacter.GetChunkPosition());
+            yield return LoadLevel(SpawnedWorld, MyGame.GetLevel(), MyCharacter.GetChunkPosition());
 
-			if (ImageFader.Get())
+			/*if (ImageFader.Get())
 			{
 				// while until fading finishes if loads too fast
 				while (ImageFader.Get().IsFading)
@@ -58,9 +58,9 @@ namespace Zeltex.Voxels
 					yield return null;
 				}
 			}
-            Possess.PossessCharacter(MyCharacter);
+            Possess.PossessCharacter(MyCharacter);*/
             //MyCharacter.SetMovement(false);
-            GuiSpawner.Get().DestroySpawn("MainMenu");
+            /*GuiSpawner.Get().DestroySpawn("MainMenu");
 			if (ImageFader.Get())
 			{
 				ImageFader.Get().FadeIn(1.5f);
@@ -68,34 +68,46 @@ namespace Zeltex.Voxels
 				{
 					yield return null;
 				}
-			}
+			}*/
             //MyCharacter.SetMovement(true);
         }
 
         /// <summary>
         /// Creates new save game using a racename and classname
         /// </summary>
-        public IEnumerator LoadNewSaveGame(Level MyLevel, string RaceName, string ClassName, string StartingLocation = "")
+        public IEnumerator LoadNewSaveGame(SaveGame MyGame, System.Action OnLoadChunk = null)    //Level MyLevel, string RaceName, string ClassName, string StartingLocation = ""
         {
             // fade out and begin loading
-			if (ImageFader.Get())
+			/*if (ImageFader.Get())
 			{
 				ImageFader.Get().FadeOut(1f);
-			}
+			}*/
             // Load the level
-            yield return LoadLevelWorldless(MyLevel);
-            // then load bot with script
-            Character MyCharacter = CharacterManager.Get().GetPoolObject();
-            // GetClass Script
-            string ClassScript = DataManager.Get().Get("Classes", ClassName);
-            string RaceScript = DataManager.Get().Get("Skeletons", RaceName);
-            //yield return MyCharacter.GetSkeleton().Load(RaceName, FileUtil.ConvertToList(RaceScript));
-            yield return MyCharacter.RunScriptRoutine(ClassName, FileUtil.ConvertToList(ClassScript));
-            Vector3 NewPosition = SpawnPositionFinder.FindNewPositionChunkBoundaries(MyWorlds[MyWorlds.Count - 1]);
-            MyCharacter.transform.position = NewPosition;
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadLevelWorldless(MyGame.GetLevel(), OnLoadChunk));
 
+            // Creates a new character
+            if (MyGame.CharacterName == "")
+            {
+                // then load bot with script
+                Character MyCharacter = CharacterManager.Get().GetPoolObject();
+                // GetClass Script
+                CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
+                //Vector3 NewPosition = SpawnPositionFinder.FindNewPositionChunkBoundaries(MyWorlds[MyWorlds.Count - 1]);
+               // MyCharacter.transform.position = NewPosition;
+                MyGame.SetCharacter(MyCharacter);
+                if (OnLoadChunk != null)
+                {
+                    OnLoadChunk.Invoke();
+                }
+            }
+            else
+            {
+                // Set character to levels loaded character
+                ///MyGame.SetCharacter(MyCharacter);
+            }
             // while until fading finishes if loads too fast
-            int FramesCount = 0;
+            /*int FramesCount = 0;
 			if (ImageFader.Get())
 			{
 				while (ImageFader.Get().IsFading)
@@ -109,12 +121,10 @@ namespace Zeltex.Voxels
 						break;
 					}
 				}
-			}
-            WorldManager.Get().SaveGame(MyCharacter);
-            Possess.PossessCharacter(MyCharacter);
+			}*/
+            // WorldManager.Get().SaveGame(MyCharacter);
 
-            GuiSpawner.Get().DestroySpawn("MainMenu");
-			if (ImageFader.Get())
+			/*if (ImageFader.Get())
 			{
 				ImageFader.Get().FadeIn(1.5f);
 				while (ImageFader.Get().IsFading)
@@ -126,7 +136,7 @@ namespace Zeltex.Voxels
             if (StartingLocation != "")
             {
                 MyCharacter.transform.position = new Vector3(666, MyCharacter.transform.position.y, 666);
-            }
+            }*/
             //MyCharacter.SetMovement(true);
         }
         #endregion
@@ -219,7 +229,7 @@ namespace Zeltex.Voxels
                 World WorldToSave = MyWorlds[MyWorlds.Count - 1];   // should be a character->GetWorldIn function
                 string LevelName = WorldToSave.name;
                 string LevelScript = "/Level " + LevelName + "\n";
-                LevelScript += FileUtil.ConvertToSingle(MyCharacter.GetScript());
+                //LevelScript += FileUtil.ConvertToSingle(MyCharacter.GetScript());
                 string FilePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + SavesMaker.DefaultLevelName;
                 Debug.LogError("Saving [" + SaveGameName + "] with character [" + MyCharacter.name + "] to [" + FilePath + "]:\n" + LevelScript);
                 FileUtil.Save(FilePath, LevelScript);

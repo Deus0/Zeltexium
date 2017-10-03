@@ -43,7 +43,7 @@ namespace Zeltex.Voxels
 
         [Tooltip("Models won't be centred, but worlds will.")]
         //[SerializeField]
-        public bool IsChunksCentred = true;
+        public bool IsChunksCentred = false;
         private bool IsResizingWorld;
 
         Vector3 WorldTotalSize = Vector3.zero;

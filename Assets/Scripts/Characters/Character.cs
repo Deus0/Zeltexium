@@ -41,25 +41,13 @@ namespace Zeltex.Characters
         [Header("Data")]
         [SerializeField]
         private CharacterData Data = new CharacterData();
-        [SerializeField]
-        private bool IsInvinsible;
-
-        public CharacterGuis MyGuis = new CharacterGuis();
 
         [Header("Character")]
         public bool IsPlayer;
         private int KillCount = 0;
+        [HideInInspector]
         public GameObject MySummonedCharacter;
 
-        [Header("Interact")]
-        [SerializeField]
-        private LayerMask InteractLayer;
-        [SerializeField]
-        private LayerMask ItemsLayer;
-        [SerializeField]
-        private LayerMask WorldsLayer;
-        [SerializeField]
-        private LayerMask CharacterLayer;
         // Raycasting
         private static float RaycastRange = 5;
         [HideInInspector]
@@ -79,15 +67,25 @@ namespace Zeltex.Characters
         private CharacterMapChecker MyCharacterMapChecker;
         private CapsuleCollider MyCollider;
 
+        // Saving?
         private bool HasInitialized;
+        private UniversalCoroutine.Coroutine DeathHandle;
+        public static string FolderPath = "Characters/";
+        private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
+        private string LastSavedFileName = "";
+
+        [HideInInspector]
+        public Chunk MyChunk;
+        [HideInInspector]
+        public World InWorld;
         #endregion
 
         #region Mono
         public Vector3 GetForwardDirection()
         {
-            if (Data.MySkeleton.MyBoneHead)
+            if (Data.MySkeleton.GetCameraBone())
             {
-                return Data.MySkeleton.MyBoneHead.transform.forward;
+                return Data.MySkeleton.GetCameraBone().transform.forward;
             }
             else
             {
@@ -96,22 +94,30 @@ namespace Zeltex.Characters
         }
         public CharacterData GetData()
         {
+            Data.Update();
             return Data;
         }
 
         public void SetData(CharacterData NewData)
         {
-            Data = NewData;
+            if (Data != NewData)
+            {
+                Data = NewData;
+                Initialize();
+                MySkeleton.GetSkeleton().ActionActivateSkeleton.Trigger();
+                transform.position = Data.LevelPosition;
+                transform.eulerAngles = Data.LevelRotation;
+            }
         }
 
         public void SetGuisActive(bool NewState)
         {
-            MyGuis.SetGuisActive(NewState);
+            Data.MyGuis.SetGuisActive(NewState);
         }
 
         public void ToggleGuis()
         {
-            MyGuis.ToggleGuis();
+            Data.MyGuis.ToggleGuis();
         }
 
         /// <summary>
@@ -121,9 +127,9 @@ namespace Zeltex.Characters
         {
             Vector3 DifferencePosition = NewPosition - transform.position;
             transform.position = NewPosition;
-            for (int i = 0; i < MyGuis.GetSize(); i++)
+            for (int i = 0; i < Data.MyGuis.GetSize(); i++)
             {
-                ZelGui MyZelGui = MyGuis.GetZelGui(i);
+                ZelGui MyZelGui = Data.MyGuis.GetZelGui(i);
                 if (MyZelGui)
                 {
                     MyZelGui.transform.position += DifferencePosition;
@@ -136,11 +142,13 @@ namespace Zeltex.Characters
             Data.MyStats.OnGUI();
         }
 
-        private void Awake()
+        /*private void Awake()
         {
-            HasInitialized = false;
-            Initialize();
-        }
+            if (gameObject.activeSelf)
+            {
+                Initialize(true);
+            }
+        }*/
 
         private void Update()
         {
@@ -170,31 +178,72 @@ namespace Zeltex.Characters
                     Debug.LogError("Cannot find: " + LoadStatsName);
                 }
             }
-            if (MyGuis != null)
+            if (Data.MyGuis != null)
             {
-                MyGuis.SetCharacter(this);
-                MyGuis.Update();
+                if (Application.isPlaying == false)
+                {
+                    Data.MyGuis.SetCharacter(this);
+                }
+                Data.MyGuis.Update();
             }
         }
 
         public void ForceInitialize()
         {
-            HasInitialized = false;
-            Data.Class = "";
-            //Data.MySkeleton.Name = "";
             Data.MySkeleton.ForceStopLoad();
             StopAllCoroutines();
-            Initialize();
+            Initialize(true);
         }
 
+        public void SetPlayer(bool NewState)
+        {
+            IsPlayer = NewState;
+            GetComponent<Mover>().IsPlayer = NewState;
+        }
+
+        public System.Collections.IEnumerator SetDataRoutine(CharacterData NewData)
+        {
+            if (Data != NewData)
+            {
+                Data = NewData;
+                name = Data.Name;
+                RefreshComponents();
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MySkeleton.GetSkeleton().ActivateRoutine());
+                Data.MyStats.SetCharacter(transform);
+                Data.MyQuestLog.Initialise(this);
+                transform.position = Data.LevelPosition;
+                transform.eulerAngles = Data.LevelRotation;
+                GetComponent<Mover>().SetCameraBone(GetCameraBone());
+                GetComponent<Mover>().IsPlayer = IsPlayer;
+                if (GetComponent<Shooter>())
+                {
+                    GetComponent<Shooter>().SetCameraBone(GetCameraBone());
+                }
+                Data.MyGuis.SetCharacter(this);
+                if (IsPlayer == false)
+                {
+                    MySkeleton.GetSkeleton().CalculateCapsule();
+                    if (MyBot == null)
+                    {
+                        MyBot = gameObject.AddComponent<Bot>();
+                        GetComponent<Mover>().SetBot(MyBot);
+                    }
+                }
+                for (int i = 0; i < 300; i++)
+                {
+                    yield return null;
+                }
+                Data.MyGuis.SetGuiStates();
+            }
+        }
         /// <summary>
         ///  Called after spawning a character by CharacterManager
         ///  Set on the network to ensure data updated accross all machines
         ///  -only updates on the players character - when updating a character into a controlled one
         /// </summary>
-        public void Initialize(string Name = "Character")
+        public void Initialize(bool IsForce = false)    //string Name = "Character"
         {
-            if (!HasInitialized)
+            if (!HasInitialized || IsForce)
                 //&& CharacterManager.Get() && gameObject.activeInHierarchy)
             {
                 HasInitialized = true;
@@ -207,7 +256,7 @@ namespace Zeltex.Characters
                 RefreshComponents();
                 Data.MyStats.SetCharacter(transform);
                 Data.MyQuestLog.Initialise(this);
-                MyGuis.SetCharacter(this);
+                Data.MyGuis.SetCharacter(this);
 
                 // spawn guis 
                 //if (LayerManager.Get())
@@ -215,10 +264,9 @@ namespace Zeltex.Characters
                     //LayerManager.Get().SetLayerCharacter(gameObject);
                 }
                 // Default character to load!
-                if (Data.Class == "" && DataManager.Get())
+                //if (Data.Class == "" && DataManager.Get())
                 {
-                    RefreshComponents();
-                    LogManager.Get().Log("Loading new class and skeleton for character: " + name + " - " + 0, "Characters");
+                    //LogManager.Get().Log("Loading new class and skeleton for character: " + name + " - " + 0, "Characters");
                     //RunScript(Zeltex.Util.FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.Classes, 0)));
                     //GetSkeleton().RunScript(Zeltex.Util.FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.Skeletons, 0)));
                 }
@@ -250,18 +298,6 @@ namespace Zeltex.Characters
         }
 
         /// <summary>
-        /// Add in auto revive
-        /// </summary>
-        public void AddRespawning()
-        {
-            // first auto revive
-            if (CharacterRespawner.Get())
-            {
-                Data.MyStats.OnDeath.AddEvent(CharacterRespawner.Get().RevivePlayer);
-            }
-        }
-
-        /// <summary>
         /// Sets the character to not respawn, using the character respawner class
         /// </summary>
         public void DontRespawn()
@@ -269,7 +305,6 @@ namespace Zeltex.Characters
             Data.CanRespawn = false;
         }
 
-        private UniversalCoroutine.Coroutine DeathHandle;
         /// <summary>
         /// Called when stats health reaches 0
         ///     -Disable Bot and Player Controls
@@ -281,16 +316,9 @@ namespace Zeltex.Characters
             {
                 MyCharacter = gameObject;
             }
-			MyGuis.SaveStates();
-            MyGuis.HideAll();
-            // Disable collision for ragdoll - this can be handled in ragdoll
-            /*if (MyCollider)
-            {
-                MyCollider.enabled = false;
-            }*/
-            // drain all other stats, ie energy and mana
-            // stop saving when dead
-            //Bot MyBot = gameObject.GetComponent<Bot>();
+            Data.MyGuis.SaveStates();
+            Data.MyGuis.HideAll();
+
             if (MyBot)
             {
                 MyBot.Disable();
@@ -300,16 +328,17 @@ namespace Zeltex.Characters
             // Apply Animations on death - fade effect
             if (MySkeleton != null)
             {
+                SkeletonAnimator MyAnimator = MySkeleton.GetComponent<SkeletonAnimator>();
+                if (MyAnimator)
+                {
+                    MyAnimator.Stop();
+                }
                 Ragdoll MyRagDoll = MySkeleton.GetComponent<Ragdoll>();
                 if (MyRagDoll)
                 {
                     MyRagDoll.RagDoll();
                 }
-                /*SkeletonAnimator MyAnimator = MySkeleton.GetComponent<SkeletonAnimator>();
-                if (MyAnimator)
-                {
-                    MyAnimator.Stop();
-                }*/
+                MySkeleton.GetSkeleton().DestroyBodyCubes();
             }
             else
             {
@@ -326,6 +355,16 @@ namespace Zeltex.Characters
                 UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
             }
             DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+
+            
+            if (IsPlayer)
+            {
+                ZelGui RespawnGui = GetGuis().GetZelGui("Respawn");
+                if (RespawnGui)
+                {
+                    RespawnGui.TurnOn();     // turn gui on when reviving begins
+                }
+            }
         }
 
         private System.Collections.IEnumerator DeathRoutine()
@@ -340,7 +379,7 @@ namespace Zeltex.Characters
             {
                 yield return null;
             }
-            if (IsInvinsible)
+            if (Data.CanRespawn)
             {
                 MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll();
                 TimeStarted = Time.time;
@@ -350,7 +389,7 @@ namespace Zeltex.Characters
                 }
                 Debug.LogError("Reviving Character.");
                 Data.MyStats.RestoreFullHealth();
-                MyGuis.RestoreStates();
+                Data.MyGuis.RestoreStates();
                 DeathHandle = null;
                 if (IsPlayer)
                 {
@@ -364,7 +403,7 @@ namespace Zeltex.Characters
                 {
                     Camera.main.gameObject.GetComponent<Player>().RemoveCharacter();
                 }
-                MyGuis.Clear();
+                Data.MyGuis.Clear();
                 CharacterManager.Get().ReturnObject(this);
             }
         }
@@ -421,17 +460,19 @@ namespace Zeltex.Characters
         #endregion
 
         #region Collision
+        //void OnControllerColliderHit(ControllerColliderHit MyHit)
+
         /// <summary>
         /// When player collides with something
         /// </summary>
-        void OnControllerColliderHit(ControllerColliderHit MyHit)
+        void OnTriggerEnter(Collider MyCollider)
         {
-            ItemObject MyItem = MyHit.gameObject.GetComponent<ItemObject>();
+            ItemObject MyItem = MyCollider.gameObject.GetComponent<ItemObject>();
             if (MyItem)
             {
                 MyItem.OnContact(gameObject);
             }
-            Teleporter MyTeleporter = MyHit.gameObject.GetComponent<Teleporter>();
+            Teleporter MyTeleporter = MyCollider.gameObject.GetComponent<Teleporter>();
             if (MyTeleporter)
             {
                 MyTeleporter.OnContact(gameObject);
@@ -471,11 +512,11 @@ namespace Zeltex.Characters
         private bool RayTraceSelections(Transform CameraBone, int SelectionType)
 		{
 			RaycastHit MyHit;
-			if (Physics.Raycast(CameraBone.position, CameraBone.forward, out MyHit, RaycastRange, InteractLayer))
+			if (Physics.Raycast(CameraBone.position, CameraBone.forward, out MyHit, RaycastRange, LayerManager.Get().GetInteractLayer()))
 			{
                 Debug.Log(name + " has interacted with: " + MyHit.collider.gameObject.name);
 
-                if (AreLayersEqual(ItemsLayer, MyHit.collider.gameObject.layer))
+                if (AreLayersEqual(LayerManager.Get().GetItemsLayer(), MyHit.collider.gameObject.layer))
                 {
                     ItemObject HitItemObject = MyHit.collider.gameObject.GetComponent<ItemObject>();
                     if (HitItemObject != null)
@@ -495,7 +536,7 @@ namespace Zeltex.Characters
                     }
                     Debug.Log(name + " Hit a items layer without item object");
                 }
-                else if (AreLayersEqual(CharacterLayer, MyHit.collider.gameObject.layer))
+                else if (AreLayersEqual(LayerManager.Get().GetSkeletonLayer(), MyHit.collider.gameObject.layer))
                 {
                     Character MyCharacter = MyHit.collider.transform.FindRootCharacter();
                     if (MyCharacter)
@@ -510,7 +551,7 @@ namespace Zeltex.Characters
                         Debug.Log(name + " Hit a characters layer without character root.");
                     }
                 }
-                else if (AreLayersEqual(WorldsLayer, MyHit.collider.gameObject.layer))
+                else if (AreLayersEqual(LayerManager.Get().GetWorldsLayer(), MyHit.collider.gameObject.layer))
                 {
                     /*Door MyDoor = MyHit.collider.gameObject.GetComponent<Door>();
                     if (MyDoor)
@@ -592,17 +633,9 @@ namespace Zeltex.Characters
         /// </summary>
 		public bool TalkToCharacter(Character OtherCharacter, int InteractType) 
 		{
-            // Initialize that characters dialogue system with (MainCharacter->Lotus dialogue file)
-            //DialogueHandler OtherCharacterDialogue = OtherCharacter.GetComponent<DialogueHandler>();
-
-            if (OtherCharacter.GetData().MyDialogue.GetSize() == 0)
-            {
-                GenerateSpeech(OtherCharacter);
-            }
-
             if (OtherCharacter.GetData().MyDialogue.GetSize() > 0)
             {
-                ZelGui MyDialogueGui = MyGuis.Spawn("Dialogue");
+                ZelGui MyDialogueGui = Data.MyGuis.Spawn("Dialogue");
                 if (MyDialogueGui)
                 {
                     Debug.Log(name + " Is Talking to" + OtherCharacter.name + " with " +
@@ -628,57 +661,14 @@ namespace Zeltex.Characters
             return true;
 		}
 
-        private void GenerateSpeech(Character OtherCharacter)
-        {
-            Debug.LogError("Debug: Giving speech to: " + OtherCharacter.name);
-            DialogueData MyDialoguesData = new DialogueData();
-            MyDialoguesData.Name = "Talk";
-            MyDialoguesData.SetDefault("Quest");
-            OtherCharacter.GetData().MyDialogue.Add(MyDialoguesData);
-
-            SpeechLine MySpeechLine = new SpeechLine();
-            MySpeechLine.Speaker = DialogueGlobals.SpeakerName1;
-            MySpeechLine.Speech = "Good Evening Sir";
-            MyDialoguesData.SpeechLines.Add(MySpeechLine);
-
-            SpeechLine MySpeechLine2 = new SpeechLine();
-            MySpeechLine2.Speaker = DialogueGlobals.SpeakerName2;
-            MySpeechLine2.Speech = "Good evening";
-            MyDialoguesData.SpeechLines.Add(MySpeechLine2);
-
-            DialogueData QuestDialogue = new DialogueData();
-            QuestDialogue.Name = "Quest";
-            OtherCharacter.GetData().MyDialogue.Add(QuestDialogue);
-            QuestDialogue.MakeOptions("Would you like a quest?", "Yes", "No", "QuestBye");
-
-            DialogueData QuestByeDialogue = new DialogueData();
-            QuestByeDialogue.Name = "QuestBye";
-            OtherCharacter.GetData().MyDialogue.Add(QuestByeDialogue);
-            SpeechLine LastQuestSpeech = new SpeechLine();
-            LastQuestSpeech.Speaker = DialogueGlobals.SpeakerName1;
-            LastQuestSpeech.Speech = "Well here you go then";
-            QuestByeDialogue.SpeechLines.Add(LastQuestSpeech);
-            Quest MyQuest = DataManager.Get().GetElement(DataFolderNames.Quests, 0) as Quest;
-            if (MyQuest == null)
-            {
-                MyQuest = new Quest();
-                MyQuest.SetName("Collect the Eggs");
-                MyQuest.SetDescription("Eat the frogs");
-                DataManager.Get().AddElement(DataFolderNames.Quests, MyQuest);
-            }
-            if (MyQuest != null)
-            {
-                QuestByeDialogue.AddGiveQuestAction(MyQuest.Name);
-            }
-        }
         /// <summary>
         /// Called on the character
         /// </summary>
         public void OnBeginTalk(Character Character2)
         {
             // Hide all guis
-            this.MyGuis.SaveStates();
-            this.MyGuis.HideAll();
+            this.Data.MyGuis.SaveStates();
+            this.Data.MyGuis.HideAll();
             if (MyBot)
             {
                 MyBot.FollowTarget(Character2.gameObject);
@@ -707,13 +697,13 @@ namespace Zeltex.Characters
                     MyPlayer.SetFreeze(false);
                 }
             }
-            MyGuis.RestoreStates();
+            Data.MyGuis.RestoreStates();
             Bot OtherBot = gameObject.GetComponent<Bot>();
             if (OtherBot && OtherBot.enabled)
             {
                 OtherBot.Wander();
             }
-            ZelGui MyDialogueGui = MyGuis.GetZelGui("Dialogue");
+            ZelGui MyDialogueGui = Data.MyGuis.GetZelGui("Dialogue");
             if (MyDialogueGui)
             {
                 MyDialogueGui.TurnOff();
@@ -741,28 +731,6 @@ namespace Zeltex.Characters
 
         #region Controls
 
-        /*public override void OnStartServer()
-        {
-            base.OnStartServer();
-        }*/
-
-        /// <summary>
-        /// This is used in the character selector to hide characters depending on permissions.
-        /// </summary>
-        public bool CanPlayerPlay(string PlayerName)
-        {
-            /*for (int i = 0; i < PlayerPermissions.Count; i++)
-            {
-                if (PlayerName == PlayerPermissions[i])
-                {
-                    return true;
-                }
-            }
-            return false;*/
-            return true;
-        }
-       // private CharacterLimiter MyCharacterLimiter;
-
         private void RefreshComponents2()
         {
             MyBot = GetComponent<Bot>();
@@ -777,16 +745,7 @@ namespace Zeltex.Characters
         /// </summary>
         public void SetMovement(bool NewState)
         {
-            //Debug.LogError("InSetMovement: " + NewState);
             RefreshComponents2();
-            /*if (MyCharacterMapChecker)
-            {
-                MyCharacterMapChecker.enabled = NewState;
-            }
-            if (MyCharacterLimiter)
-            {
-                MyCharacterLimiter.enabled = NewState;
-            }*/
             if (MyController)
             {
                 MyController.enabled = NewState;
@@ -795,14 +754,10 @@ namespace Zeltex.Characters
             {
                 MyRigidbody.isKinematic = !NewState;
             }
-            /*if (MyBot)
+            if (MyBot)
             {
                 MyBot.enabled = NewState;
             }
-            if (MyBotMovement)
-            {
-                MyBotMovement.enabled = NewState;
-            }*/
             enabled = NewState;
         }
 		#endregion

@@ -42,11 +42,13 @@ namespace Zeltex
         protected static KeyCode InteractKey1 = KeyCode.E;    // interaction
         protected static KeyCode InteractKey2 = KeyCode.Q;
         protected static KeyCode DropItemKey = KeyCode.Z;
-        protected static KeyCode ToggleMouseKey = KeyCode.C;
+
         protected static KeyCode ForwardKey = KeyCode.W;
         protected static KeyCode BackwardKey = KeyCode.S;
         protected static KeyCode LeftKey = KeyCode.A;
         protected static KeyCode RightKey = KeyCode.D;
+
+        protected static KeyCode ToggleMouseKey = KeyCode.LeftControl;
         // Movement
         private Vector3 Movement;
         // Rotation
@@ -98,7 +100,7 @@ namespace Zeltex
                     ToggleMouse();
                     if (MyGuiManager == null)
                     {
-                        MyGuiManager = MyCharacter.MyGuis;
+                        MyGuiManager = MyCharacter.GetGuis();
                     }
                     if (MyGuiManager != null)
                     {
@@ -128,11 +130,7 @@ namespace Zeltex
             //IsCursorActive = !IsInput;
             if (MyCrosshair == null)
             {
-                if (MyCharacter.MyGuis == null)
-                {
-                    MyCharacter.MyGuis = new Guis.Characters.CharacterGuis();
-                }
-                MyCrosshair = MyCharacter.MyGuis.GetZelGui("Crosshair");
+                MyCrosshair = MyCharacter.GetGuis().GetZelGui("Crosshair");
             }
             if (MyCrosshair)
             {

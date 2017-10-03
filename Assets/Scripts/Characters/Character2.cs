@@ -19,24 +19,6 @@ namespace Zeltex.Characters
     /// </summary>
     public partial class Character : NetworkBehaviour
     {
-        #region Variables
-        public static string FolderPath = "Characters/";
-        private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
-        private string LastSavedFileName = "";
-        // References used for character
-        // These use references until set to false - until they are made unique through ingame changes
-        private bool IsStaticRace = true;
-        private bool IsStaticClass = true;
-        // Need to be implemented - these are for npcs mostly as the players data will change alot
-        private bool IsStaticStats = true;
-        private bool IsStaticItems = true;
-        private bool IsStaticQuests = true;
-        private bool IsStaticDialogue = true;
-        [Header("LevelData")]
-        public Chunk MyChunk;
-        public World InWorld;
-        #endregion
-
         #region Utility
 
         public bool CanRespawn()
@@ -48,13 +30,17 @@ namespace Zeltex.Characters
         {
             return Data.MyStats;
         }
+        public Guis.Characters.CharacterGuis GetGuis()
+        {
+            return Data.MyGuis;
+        }
         /// <summary>
         /// Sets new race name and sets it to nonunique
         /// </summary>
         public void SetRace(string NewRaceName)
         {
             Data.Race = NewRaceName;
-            IsStaticRace = !string.IsNullOrEmpty(Data.Race);    // sets true if not null string
+            //IsStaticRace = !string.IsNullOrEmpty(Data.Race);    // sets true if not null string
         }
         /// <summary>
         /// A race name used for cosmetic purposes
@@ -63,13 +49,13 @@ namespace Zeltex.Characters
         public void SetRaceUnique(string NewRaceName)
         {
             Data.Race = NewRaceName;
-            IsStaticRace = false;
+            //IsStaticRace = false;
         }
 
         private void SetClass(string NewClassName)
         {
             Data.Class = NewClassName;
-            IsStaticClass = !string.IsNullOrEmpty(Data.Class);
+            //IsStaticClass = !string.IsNullOrEmpty(Data.Class);
         }
 
         public World GetWorldInsideOf()
@@ -145,9 +131,9 @@ namespace Zeltex.Characters
 		/// </summary>
 		public void SetGuisTarget(Transform NewTarget)
 		{
-			for (int i = 0; i < MyGuis.GetSize(); i++)
+			for (int i = 0; i < Data.MyGuis.GetSize(); i++)
 			{
-				Transform MyGui = MyGuis.GetZelGui(i).transform;
+				Transform MyGui = Data.MyGuis.GetZelGui(i).transform;
 				if (MyGui.GetComponent<Orbitor>())
 				{
 					MyGui.GetComponent<Orbitor>().SetTarget(NewTarget);
@@ -297,13 +283,15 @@ namespace Zeltex.Characters
             {
                 UniversalCoroutine.CoroutineManager.StopCoroutine(RunScriptCoroutine);
             }
-            RunScriptCoroutine = CoroutineManager.StartCoroutine(RunScriptRoutine(MySaveFile));
+            //yield return null;
+            //RunScriptCoroutine = CoroutineManager.StartCoroutine(RunScriptRoutine(MySaveFile));
         }
 
         public IEnumerator RunScriptRoutine(string NewClassName, List<string> MySaveFile)
         {
             SetClass(NewClassName);
-            yield return CoroutineManager.StartCoroutine(RunScriptRoutine(MySaveFile));
+            yield return null;
+            //yield return CoroutineManager.StartCoroutine(RunScriptRoutine(MySaveFile));
         }
 
         public void SetClassName(string NewClass)
@@ -311,9 +299,9 @@ namespace Zeltex.Characters
             Data.Class = NewClass;
         }
 
-        public IEnumerator RunScriptRoutineWithSkeleton(string ClassScript, string SkeletonScript)
+       /* public IEnumerator RunScriptRoutineWithSkeleton(string ClassScript, string SkeletonScript)
         {
-            ZelGui MyStatsBar = MyGuis.GetZelGui("StatsBar");
+            ZelGui MyStatsBar = Data.MyGuis.GetZelGui("StatsBar");
             if (MyStatsBar)
             {
                 MyStatsBar.SetState(false);
@@ -367,7 +355,7 @@ namespace Zeltex.Characters
         {
             RefreshComponents();
             List<string> MyCharacterData = new List<string>();
-            /*MyCharacterData.Add("/Name " + name);
+            MyCharacterData.Add("/Name " + name);
             // Transform
             MyCharacterData.AddRange(GetTransformText());
             // First load race
@@ -424,9 +412,9 @@ namespace Zeltex.Characters
                     MyEquipmentData.Add("/EndEquipment");
                     MyCharacterData.AddRange(MyEquipmentData);
                 }
-            }*/
+            }
             return MyCharacterData;
-        }
+        }*/
         #endregion
 
         #region Transform

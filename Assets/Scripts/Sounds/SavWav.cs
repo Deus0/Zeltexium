@@ -43,7 +43,7 @@ namespace Zeltex.Util
                 filename += ".wav";
             }
 
-            var filepath = Path.Combine(Application.persistentDataPath, filename);
+            var filepath = Path.Combine(Application.streamingAssetsPath, filename);
 
             Debug.Log(filepath);
 
@@ -122,7 +122,7 @@ namespace Zeltex.Util
         static void ConvertAndWrite(FileStream fileStream, AudioClip clip)
         {
 
-            var samples = new float[clip.samples];
+            var samples = new float[clip.samples * clip.channels];
 
             clip.GetData(samples, 0);
 

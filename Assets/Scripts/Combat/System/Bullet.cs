@@ -446,7 +446,7 @@ namespace Zeltex.Combat
                         
                         if (HitBot && Data.MyCharacter)
                         {
-                            HitBot.WasHit(Data.MyCharacter.gameObject);
+                            HitBot.WasHit(Data.MyCharacter);
                         }
                         // Check for applied status
                         if (Data.AddStatName == "Health")

@@ -23,8 +23,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void Init(Transform character, Transform camera)
         {
-            m_CharacterTargetRot = character.localRotation;
-            m_CameraTargetRot = camera.localRotation;
+            if (character)
+            {
+                m_CharacterTargetRot = character.localRotation;
+            }
+            if (camera)
+            {
+                m_CameraTargetRot = camera.localRotation;
+            }
         }
 
         public void LookRotation(Transform character, Transform camera)
@@ -45,13 +51,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
                     smoothTime * Time.deltaTime);
-                camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
+                if (camera)
+                {
+                    camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot,
                     smoothTime * Time.deltaTime);
+                }
             }
             else
             {
                 character.localRotation = m_CharacterTargetRot;
-                camera.localRotation = m_CameraTargetRot;
+                if (camera)
+                {
+                    camera.localRotation = m_CameraTargetRot;
+                }
             }
         }
 

@@ -54,27 +54,6 @@ namespace Zeltex.Characters
             Camera.main.gameObject.GetComponent<Player>().SetCharacter(MyCharacter);
         }
 
-
-	    public void RevivePlayer(GameObject MyCharacter) 
-	    {
-            if (MyCharacter.GetComponent<Character>().CanRespawn() == false)
-                return;
-            IsEndRespawning = false;
-		    bool IsPlayer = MyCharacter.GetComponent<Player> ();
-		    if (IsPlayer)
-            {
-                RespawnGui.gameObject.GetComponent<ZelGui>().TurnOn();     // turn gui on when reviving begins
-            }
-            List<string> MyScript = MyCharacter.GetComponent<Character>().GetScript();
-            //MyCharacter.GetComponent<CharacterSaver>().Delete();
-            StartCoroutine (RespawnCharacter2(MyCharacter.name,
-                                            MyScript,
-                                            RespawnTime, 
-										    MyCharacter.transform.position, 
-										    IsPlayer));
-            // MyCharacter.GetComponent<Character>().LastSavedFileName));
-        }
-
         /// <summary>
         /// Repsawns a character
         /// </summary>
@@ -128,7 +107,7 @@ namespace Zeltex.Characters
                 MyCharacter = CharacterManager.Get().GetPoolObject();// MyCharacterName, MyPosition);
             }
             //MyCharacter.GetComponent<Character>().LastSavedFileName = LastSaveFile;
-            yield return MyCharacter.GetComponent<Character>().RunScriptRoutine(MyScript);
+            //yield return MyCharacter.GetComponent<Character>().RunScriptRoutine(MyScript);
 
             if (MyPositionFinder)
             {

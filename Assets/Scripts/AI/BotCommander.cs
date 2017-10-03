@@ -93,7 +93,7 @@ namespace Zeltex.Combat
                             }
                             else
                             {
-                                MyBot.WasHit(MyHitCharacter.gameObject);
+                                MyBot.WasHit(MyHitCharacter);
                             }
 
                         }

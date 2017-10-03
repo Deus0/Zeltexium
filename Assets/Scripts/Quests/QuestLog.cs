@@ -201,7 +201,7 @@ namespace Zeltex.Quests
                     MyQuests.Add(NewQuest);
                     OnAddQuest.Invoke();
                 }
-                Guis.ZelGui MyQuestBeginGui = MyCharacter.MyGuis.Spawn("QuestBegin");
+                Guis.ZelGui MyQuestBeginGui = MyCharacter.GetGuis().Spawn("QuestBegin");
                 if (MyQuestBeginGui)
                 {
                     Guis.QuestBeginGui MyQuestBegin = MyQuestBeginGui.GetComponent<Guis.QuestBeginGui>();

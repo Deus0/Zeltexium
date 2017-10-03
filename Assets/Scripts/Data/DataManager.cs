@@ -302,7 +302,6 @@ namespace Zeltex
             FolderNames.Add(DataFolderNames.ItemTextures);
 
             FolderNames.Add((DataFolderNames.Levels));
-
             FolderNames.Add((DataFolderNames.Saves));
 
             FolderNames.Add(DataFolderNames.Sounds);

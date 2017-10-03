@@ -99,5 +99,10 @@ namespace Zeltex.Skeletons
             }
             return new List<Bone>();
         }
+
+        public void OnDeath()
+        {
+            GetSkeleton().DestroyBodyCubes();
+        }
     }
 }

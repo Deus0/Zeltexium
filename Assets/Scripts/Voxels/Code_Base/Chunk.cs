@@ -63,6 +63,18 @@ namespace Zeltex.Voxels
         private MeshRenderer MyMeshRenderer;
         private MeshCollider MyMeshCollider;
         private Int3 VoxelsRawPosition = Int3.Zero();
+        [SerializeField]
+        private bool IsDirty = true;    // start as dirty until saved by level manager
+
+        public bool IsDirtyTrigger()
+        {
+            if (IsDirty)
+            {
+                IsDirty = false;
+                return true;
+            }
+            return false;
+        }
         #endregion
 
         #region Utility
@@ -382,6 +394,7 @@ namespace Zeltex.Voxels
                 if (WasUpdated)
                 {
                     WasMassUpdated = true;
+                    IsDirty = true;
                     //Debug.Log("[" + name + "] Updated voxel in world position: " + WorldPosition.ToString() 
                     //    + "\n" + InChunkPositionX + ":" + InChunkPositionY + ":" + InChunkPositionZ
                     //    + "\n" + PreviousIndex + " to " + Type + " of color " + NewColor.ToString());

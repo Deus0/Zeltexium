@@ -230,7 +230,7 @@ namespace Zeltex
                 }
                 LastCharacter = MyCharacter;
                 Debug.Log("Player is now removing control from [" + MyCharacter.name + "]");
-                MyCharacter.IsPlayer = false;
+                MyCharacter.SetPlayer(false);
                 SetHeadMesh(true);
                 SetBot(true);
                 if (IsParentOfAllCameras)
@@ -263,8 +263,8 @@ namespace Zeltex
 
         private void SetGuiTargets(Transform NewCameraBone, SkeletonHandler NewSkeleton)
         {
-            bool NewState = (MySkeleton == null);   // if no skeleton (possession by human camera), turn them on
-            if (!NewState && MyGuiManager != null)
+            //bool NewState = (MySkeleton == null);   // if no skeleton (possession by human camera), turn them on
+            if (MyGuiManager != null)   //!NewState && 
             {
                 MyCrosshair = MyGuiManager.GetZelGui("Crosshair");
             }
@@ -273,14 +273,14 @@ namespace Zeltex
             if (MyLabel)
             {
                 MyLabel.GetComponent<Orbitor>().SetTarget(CameraBone, MySkeleton);
-                MyLabel.SetState(NewState);
+                //MyLabel.SetState(NewState);
             }
 
             ZelGui MySkillBar = MyGuiManager.GetZelGui("SkillBar");
             if (MySkillBar)
             {
                 MySkillBar.GetComponent<Orbitor>().SetTarget(CameraBone, MySkeleton);
-                MySkillBar.SetState(NewState);
+                //MySkillBar.SetState(NewState);
             }
 
             ZelGui MyItemPickup = MyGuiManager.GetZelGui("ItemPickup");
@@ -322,7 +322,7 @@ namespace Zeltex
                 {
                     CameraMovement.enabled = false;
                 }
-                MyCharacter.IsPlayer = true;
+                MyCharacter.SetPlayer(true);
                 MySkeleton = MyCharacter.GetSkeleton();
                 if (MySkeleton)
                 {
@@ -352,7 +352,7 @@ namespace Zeltex
                 SetHeadMesh(false);
                 SetBot(false);
 
-				MyGuiManager = MyCharacter.MyGuis;
+				MyGuiManager = MyCharacter.GetGuis();
 				if (MyGuiManager != null)// && MyGuiManager.GetZelGui("Label"))
                 {
                     MyGuiManager.Spawn("Menu");
@@ -488,16 +488,27 @@ namespace Zeltex
 
         #region Statics
 
-        public static void PossessCharacter(Character MyCharacter)
+        public static void PossessCharacter(Character MyCharacter, Camera MyCamera = null)
         {
-            Possess[] MyControllers = Camera.main.gameObject.GetComponents<Possess>();
-            for (int i = 0; i < MyControllers.Length; i++)
+            if (MyCamera == null)
             {
-                if (MyControllers[i].enabled)
+                MyCamera = Camera.main;
+            }
+            if (MyCamera != null)
+            {
+                Possess[] MyControllers = MyCamera.gameObject.GetComponents<Possess>();
+                for (int i = 0; i < MyControllers.Length; i++)
                 {
-                    MyControllers[i].SetCharacter(MyCharacter);
-                    break;
+                    if (MyControllers[i].enabled)
+                    {
+                        MyControllers[i].SetCharacter(MyCharacter);
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                Debug.LogError("No Main Camera.");
             }
         }
         #endregion

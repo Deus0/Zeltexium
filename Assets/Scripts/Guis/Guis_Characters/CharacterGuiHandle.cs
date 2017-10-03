@@ -25,7 +25,7 @@ namespace Zeltex.Guis.Characters
         
         public void Close()
         {
-            MyCharacter.MyGuis.Remove(GetComponent<ZelGui>());
+            MyCharacter.GetGuis().Remove(GetComponent<ZelGui>());
         }
     }
 }

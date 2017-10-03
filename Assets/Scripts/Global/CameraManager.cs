@@ -15,6 +15,8 @@ namespace Zeltex
 		[SerializeField]
 		private GameObject CameraPrefab;
         [SerializeField]
+        private GameObject FpsCameraPrefab;
+        [SerializeField]
 		private Camera MainCamera;
         [SerializeField]
         private Camera GuiCamera;
@@ -40,6 +42,17 @@ namespace Zeltex
                 }
 			}
 		}
+
+        public Camera SpawnGameCamera()
+        {
+            if (FpsCamera)
+            {
+                return FpsCamera;
+            }
+            GameObject SpawnedCamera = Instantiate(FpsCameraPrefab);
+            FpsCamera = SpawnedCamera.GetComponent<Camera>();
+            return FpsCamera;
+        }
 
         public void SetGuiCamera(Camera NewGuiCamera)
         {

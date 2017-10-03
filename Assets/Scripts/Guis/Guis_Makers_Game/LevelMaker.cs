@@ -329,7 +329,7 @@ namespace Zeltex.Guis.Maker
 
 			// Save any characters that have changed in the world
 			List<Character> MyCharacters = CharacterManager.Get().GetSpawned();
-            for (int i = 0; i < MyCharacters.Count; i++)
+            /*for (int i = 0; i < MyCharacters.Count; i++)
             {
                 List<string> MyScript = MyCharacters[i].GetScript();
                 string MyFilePath = GetFilePath(MyCharacters[i].gameObject);
@@ -338,7 +338,8 @@ namespace Zeltex.Guis.Maker
                 FileUtil.Save(MyFilePath, MyScriptSingle);
                 Debug.Log("Saved [" + MyCharacters[i].name + "], Taken [" + (Time.realtimeSinceStartup - TimeBegin) + "]");
                 yield return null;
-            }
+            }*/
+            yield return null;
             Debug.Log("Finished saving " + MyCharacters.Count + " characters in world " + MyWorld.name);
             SetButtons(true);
         }

@@ -43,6 +43,8 @@ namespace Zeltex.Skeletons
         public Transform MyTransform;
         [JsonIgnore]
         public Transform ParentTransform;
+        [SerializeField, JsonIgnore]
+        private Bone ParentBone;
         //public Transform MyLineRender;
         // joint! its a cube at the end of bones!
         [JsonIgnore]
@@ -147,7 +149,24 @@ namespace Zeltex.Skeletons
             NewBoneObject.tag = BoneTag;
             //NewBone.transform.position = MyCamera.transform.position + MyCamera.transform.forward * 2f;
             //NewBoneObject.transform.position = new Vector3();
-            NewBoneObject.transform.SetParent(FindParentBone(MySkeleton.GetTransform()), false);
+            FindParentBone();
+            if (ParentBone != null)
+            {
+                if (ParentBone.MyTransform != null)
+                {
+                    NewBoneObject.transform.SetParent(ParentBone.MyTransform, false);
+                }
+                else
+                {
+                    NewBoneObject.transform.SetParent(MySkeleton.GetTransform(), false);
+                    UniversalCoroutine.CoroutineManager.StartCoroutine(ParentBoneWhenSpawned());
+                }
+            }
+            else
+            {
+                NewBoneObject.transform.SetParent(MySkeleton.GetTransform(), false);
+            }
+            //NewBoneObject.transform.SetParent(FindParentBone(MySkeleton.GetTransform()), false);
             NewBoneObject.transform.localPosition = DefaultPosition;
             NewBoneObject.transform.localEulerAngles = DefaultRotation;
             NewBoneObject.transform.localScale = DefaultScale;
@@ -188,6 +207,34 @@ namespace Zeltex.Skeletons
             }
         }
 
+        private IEnumerator ParentBoneWhenSpawned()
+        {
+            while (true)
+            {
+                if (ParentBone.MyTransform != null)
+                {
+                    MyTransform.SetParent(ParentBone.MyTransform, false);
+                    MyTransform.localPosition = DefaultPosition;
+                    MyTransform.localEulerAngles = DefaultRotation;
+                    MyTransform.localScale = DefaultScale;
+                    ParentTransform = MyTransform.parent;
+                    yield break;
+                }
+                yield return null;
+            }
+        }
+        
+        private void FindParentBone()
+        {
+            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+            {
+                if (MySkeleton.MyBones[i].Name == ParentName)
+                {
+                    ParentBone = MySkeleton.MyBones[i];
+                    break;
+                }
+            }
+        }
         private Transform FindParentBone(Transform MyParent)
         {
             for (int i = 0; i < MyParent.childCount; i++)
@@ -533,7 +580,10 @@ namespace Zeltex.Skeletons
         }
         public void SetBodyCubePosition()
         {
-            OriginalJointPosition = MyTransform.localPosition;
+            if (MyTransform)
+            {
+                OriginalJointPosition = MyTransform.localPosition;
+            }
         }
         public Vector3 GetMidPoint()
         {

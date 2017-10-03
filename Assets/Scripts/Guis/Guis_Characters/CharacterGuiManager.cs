@@ -6,47 +6,6 @@ using UnityEngine.Networking;
 
 namespace Zeltex.Guis.Characters
 {
-	/*[System.Serializable]
-	public class CharacterGuiPool
-	{
-		public string Name;
-		private List<ZelGui> PooledCharacterGuis = new List<ZelGui>();
-        public GameObject MyObject;
-
-		public CharacterGuiPool(GameObject MyObject2)
-		{
-            MyObject = MyObject2;
-		}
-
-		public void Add(ZelGui MyZelGui)
-		{
-			if (MyZelGui != null)
-			{
-				MyZelGui.name = "ZelGui_" + Random.Range(1, 100000);
-				MyZelGui.transform.SetParent(MyObject.transform);
-                MyZelGui.transform.localPosition = Vector3.zero;
-				MyZelGui.gameObject.SetActive(false);
-				PooledCharacterGuis.Add(MyZelGui);
-			}
-		}
-
-		public ZelGui Get()
-		{
-			if (PooledCharacterGuis.Count > 0)
-			{
-				ZelGui MyZelGui = PooledCharacterGuis[0];
-				PooledCharacterGuis.RemoveAt(0);
-				MyZelGui.gameObject.SetActive(true);
-				return MyZelGui;
-			}
-			else
-			{
-				//Debug.LogError("No Character Guis Left.");
-				return null;
-			}
-		}
-	}*/
-
 	/// <summary>
 	/// Pools the guis character
 	/// </summary>
@@ -83,7 +42,7 @@ namespace Zeltex.Guis.Characters
                 PoolObject.gameObject.SetActive(false);
                 if (Data.ExtraData != null)
                 {
-                    Data.ExtraData.gameObject.GetComponent<Character>().MyGuis.AttachGui(PoolObject);
+                    Data.ExtraData.gameObject.GetComponent<Character>().GetGuis().AttachGui(PoolObject);
                 }
             }
         }

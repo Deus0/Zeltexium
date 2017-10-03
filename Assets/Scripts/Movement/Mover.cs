@@ -9,8 +9,7 @@ namespace Zeltex
     //[RequireComponent(typeof(CapsuleCollider))]
     public class Mover : MonoBehaviour
     {
-        [SerializeField]
-        private bool IsPlayer;
+        public bool IsPlayer;
         [SerializeField]
         private Transform CameraTransform;
         public MovementSettings movementSettings = new MovementSettings();
@@ -26,6 +25,12 @@ namespace Zeltex
         public LayerMask GroundLayer;
         private Vector2 MovementInput = Vector2.zero;
         private Vector2 RotationInput = Vector2.zero;
+
+        public void SetCameraBone(Transform NewCameraBone)
+        {
+            CameraTransform = NewCameraBone;
+            mouseLook.Init(transform, CameraTransform);
+        }
 
         public void RefreshRigidbody()
         {
@@ -65,7 +70,13 @@ namespace Zeltex
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             MyBot = GetComponent<AI.Bot>();
-            mouseLook.Init(transform, CameraTransform);
+            //CameraTransform = GetComponent<Characters.Character>().GetSkeleton().GetSkeleton().GetCameraBone();
+            //mouseLook.Init(transform, CameraTransform);
+        }
+
+        public void SetBot(AI.Bot NewBot)
+        {
+            MyBot = NewBot;
         }
 
 
@@ -108,7 +119,10 @@ namespace Zeltex
             }
             else
             {
-                MovementInput = MyBot.GetInput();
+                if (MyBot)
+                {
+                    MovementInput = MyBot.GetInput();
+                }
                 movementSettings.UpdateDesiredTargetSpeed(MovementInput);
             }
 
@@ -199,10 +213,9 @@ namespace Zeltex
                 mouseLook.LookRotation(transform, CameraTransform, RotationInput);
                 mouseLook.UpdateCursorLock();
             }
-            else
+            else if (MyBot)
             {
-                //RotationInput = MyBot.GetRotationInput();
-                //RotationInput.Set(RotationInput.x * mouseLook.XSensitivity, RotationInput.y * mouseLook.YSensitivity);
+                //Vector3 TargetRotation = MyBot.GetTargetRotation();
                 mouseLook.SetRotation(transform, CameraTransform, MyBot.GetTargetRotation());
             }
 
@@ -256,7 +269,11 @@ namespace Zeltex
 
             public void UpdateDesiredTargetSpeed(Vector2 input)
             {
-                if (input == Vector2.zero) return;
+                if (input == Vector2.zero)
+                {
+                    CurrentTargetSpeed = 0;
+                    return;
+                }
                 if (input.x > 0 || input.x < 0)
                 {
                     //strafe

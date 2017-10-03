@@ -73,14 +73,16 @@ namespace Zeltex
             GuiSpawner.Get().DisableGui("MainMenu");
             yield return new WaitForSeconds(0.5f);
             PoolsManager.Get().SpawnPools.Invoke();
-            //Camera.main.gameObject.SetActive(false);
+            OnBeginGame.Invoke();
+        }
+
+        public void PlayCharacter()
+        {
             CameraManager.Get().EnableGameCamera();
-            //CameraManager.Get().GetMainCamera().GetComponent<Possess>().SetCharacter(Characters.CharacterManager.Get().GetSpawn(0, 0));
             if (OnBeginAudio)
             {
                 GetComponent<AudioSource>().PlayOneShot(OnBeginAudio);
             }
-            OnBeginGame.Invoke();
         }
 
         public void EndGame()

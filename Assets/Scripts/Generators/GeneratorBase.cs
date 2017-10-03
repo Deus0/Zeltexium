@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Zeltex
 {
-    public class GeneratorBase : MonoBehaviour
+    public class GeneratorBase : ManagerBase<GeneratorBase>
     {
         /// <summary>
         /// Generates content in a certain folder

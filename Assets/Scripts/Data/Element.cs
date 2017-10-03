@@ -49,6 +49,10 @@ namespace Zeltex
         private Type DataType = typeof(Element);
         [JsonIgnore, HideInInspector]
         public bool IsDrawGui;
+#if UNITY_EDITOR
+        [JsonIgnore, HideInInspector]
+        public bool IsDefaultGui;
+#endif
 
         public Type GetDataType()
         {
@@ -244,9 +248,9 @@ namespace Zeltex
             return JsonConvert.SerializeObject(this);
         }
 
-        public void Save()
+        public void Save(bool IsForce = false)
         {
-            if (CanSave())
+            if (CanSave() || IsForce)
             {
                 Util.FileUtil.Save(GetFullFilePath(), GetSerial());
                 OnSaved();

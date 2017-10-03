@@ -47,7 +47,6 @@ namespace Zeltex.AI
     [ExecuteInEditMode]
 	public partial class Bot : MonoBehaviour
 	{
-        public BotMeta Data;
         // StateData
         public bool Attacking;
         // Components
@@ -60,17 +59,28 @@ namespace Zeltex.AI
         [SerializeField]
         public BotBehaviour MyWaiting;
 
-        private float TimeStartedWaiting;
+        private float TimeStartedWaiting = 0;
         [SerializeField]
-        private EditorAction ActionAddWander;
+        private EditorAction ActionAddWander = new EditorAction();
         [SerializeField]
-        private EditorAction ActionAddWaiting;
+        private EditorAction ActionAddWaiting = new EditorAction();
         [SerializeField]
-        private EditorAction ActionClearBehaviours;
+        private EditorAction ActionClearBehaviours = new EditorAction();
 
+        public BotMeta GetData()
+        {
+            return MyCharacter.GetData().BotData;
+        }
         void Start()
         {
-            //if (MyBehaviours.Count == 0)
+            if (MyWaiting == null)
+            {
+                MyWaiting = new BotBehaviour();
+            }
+            if (MyWander == null)
+            {
+                MyWander = new Wander();
+            }
             MyCharacter = GetComponent<Character>();
             MySkeleton = MyCharacter.GetSkeleton();
             RefreshRigidbody();
@@ -79,7 +89,7 @@ namespace Zeltex.AI
             {
                 MyBehaviours[i].Initiate(transform);
             }
-            if (CurrentBehaviour.Name == MyWander.Name)
+            if (CurrentBehaviour == null || CurrentBehaviour.Name == MyWander.Name)
             {
                 CurrentBehaviour = MyWander;
             }
@@ -189,7 +199,10 @@ namespace Zeltex.AI
         public void Disable()
         {
             Debug.Log("Disabling bot: " + name);
-            CurrentBehaviour.Exit();
+            if (CurrentBehaviour != null)
+            {
+                CurrentBehaviour.Exit();
+            }
             enabled = false;
         }
 
@@ -229,19 +242,15 @@ namespace Zeltex.AI
         /// <summary>
         /// When hit in combat
         /// </summary>
-        public void WasHit(GameObject NewTarget)
+        public void WasHit(Character AttackingCharacter)
         {
-            /*if (enabled)
+            if (enabled)
             {
-                if (NewTarget != gameObject)
+                if (AttackingCharacter != gameObject)
                 {
-                    ChangeState(MovementState.Attacking);
-                    if (MyMovement)
-                    {
-                        MyMovement.AttackTarget(NewTarget.GetComponent<Character>());
-                    }
+                    AttackTarget(AttackingCharacter);
                 }
-            }*/
+            }
         }
 
         /// <summary>

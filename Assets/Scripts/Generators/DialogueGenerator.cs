@@ -1,14 +1,75 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MakerGuiSystem;
+using Zeltex.Quests;
 
 namespace Zeltex.Dialogue
 {
     /// <summary>
     /// Generate random like dialogue
     /// </summary>
-    public class DialogueGenerator : MonoBehaviour
-	{
+    public class DialogueGenerator : GeneratorBase
+    {
+        private DialogueTree MyData;
+
+        public new static DialogueGenerator Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.FindObjectOfType<DialogueGenerator>();
+            }
+            return MyManager as DialogueGenerator;
+        }
+
+        public void SetTargetData(DialogueTree TargetData)
+        {
+            MyData = TargetData;
+        }
+
+        public override IEnumerator Generate()
+        {
+            Debug.LogError("Debug: Giving speech to: " + MyData.GetName());
+            DialogueData MyDialoguesData = new DialogueData();
+            MyDialoguesData.Name = "Talk";
+            MyDialoguesData.SetDefault("Quest");
+            MyData.Add(MyDialoguesData);
+
+            SpeechLine MySpeechLine = new SpeechLine();
+            MySpeechLine.Speaker = DialogueGlobals.SpeakerName1;
+            MySpeechLine.Speech = "Good Evening Sir";
+            MyDialoguesData.SpeechLines.Add(MySpeechLine);
+
+            SpeechLine MySpeechLine2 = new SpeechLine();
+            MySpeechLine2.Speaker = DialogueGlobals.SpeakerName2;
+            MySpeechLine2.Speech = "Good evening";
+            MyDialoguesData.SpeechLines.Add(MySpeechLine2);
+
+            DialogueData QuestDialogue = new DialogueData();
+            QuestDialogue.Name = "Quest";
+            MyData.Add(QuestDialogue);
+            QuestDialogue.MakeOptions("Would you like a quest?", "Yes", "No", "QuestBye");
+
+            DialogueData QuestByeDialogue = new DialogueData();
+            QuestByeDialogue.Name = "QuestBye";
+            MyData.Add(QuestByeDialogue);
+            SpeechLine LastQuestSpeech = new SpeechLine();
+            LastQuestSpeech.Speaker = DialogueGlobals.SpeakerName1;
+            LastQuestSpeech.Speech = "Well here you go then";
+            QuestByeDialogue.SpeechLines.Add(LastQuestSpeech);
+            Quest MyQuest = DataManager.Get().GetElement(DataFolderNames.Quests, 0) as Quest;
+            if (MyQuest == null)
+            {
+                MyQuest = new Quest();
+                MyQuest.SetName("Collect the Eggs");
+                MyQuest.SetDescription("Eat the frogs");
+                DataManager.Get().AddElement(DataFolderNames.Quests, MyQuest);
+            }
+            if (MyQuest != null)
+            {
+                QuestByeDialogue.AddGiveQuestAction(MyQuest.Name);
+            }
+            yield return null;
+        }
 
 		public IEnumerator GenerateData()
         {

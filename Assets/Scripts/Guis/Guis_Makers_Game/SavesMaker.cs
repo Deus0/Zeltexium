@@ -10,12 +10,6 @@ using Zeltex.Util;
 
 namespace Zeltex.Guis.Maker
 {
-    [System.Serializable]
-    public class SaveGame
-    {
-        public string LevelName;        // level that character was last in
-        public string CharacterScript;  // A string version of our character
-    }
     // Creating a new game:
     // First Terrain
     // it has just the seed input, for basic
@@ -96,7 +90,7 @@ namespace Zeltex.Guis.Maker
             }
             else if (MyButton.name == "ConfirmCreationButton")
             {
-                StartCoroutine(CreateNewGame());
+                UniversalCoroutine.CoroutineManager.StartCoroutine(CreateNewGame());
             }
             else if (MyButton.name == "PlayGameButton")
             {
@@ -134,13 +128,16 @@ namespace Zeltex.Guis.Maker
 
         #region Save
 
+        private SaveGame NewGame;
+
         /// <summary>
         /// Begin creating a new game
         /// </summary>
         private void BeginCreatingNewGame()
         {
             MyTabManager.EnableTab("CreationTab");
-            GetInput("NameInput").text = "Game" + Random.Range(1, 100000);
+            GetInput("NameInput").text = "New Game";
+            NewGame = new SaveGame();
         }
 
         /// <summary>
@@ -156,8 +153,14 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private IEnumerator CreateNewGame()
         {
-            GetComponent<ZelGui>().SetChildStates(false);
-            GetButton("PlayGameButton").interactable = true;
+            GuiSpawner.Get().DestroySpawn("MainMenu");
+            OnConfirm.Invoke();
+            GetComponent<ZelGui>().TurnOff();
+            LoadingGui.Get().SetPercentage(0);
+            LoadingGui.Get().MyZel.TurnOn();
+            //GetButton("PlayGameButton").interactable = true;
+            DataManager.Get().AddElement(DataFolderNames.Saves, NewGame as Element);
+
             GuiList SavesList = GetListHandler("SavesList");
             string SaveGameName = GetInput("NameInput").text;
             string MyDirectory = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
@@ -169,28 +172,42 @@ namespace Zeltex.Guis.Maker
             }
             else
             {
-                Debug.LogError("wow... tried to create a duplicate savegame!");
+                Debug.LogError("Tried to create a duplicate savegame [" + SaveGameName + "]");
             }
             SetSaveGameName(SaveGameName);
             // Go to Character Create Screen and Level Select
             // wait just pick first one for now...!
-
-            string LevelName = "";
-            List<string> LevelNames = DataManager.Get().GetNames(DataFolderNames.Levels);
-            if (LevelNames.Count > 0)
+            float ChunksLoaded = 0;
+            float MaxLoading = (NewGame.GetLevel().GetWorldSize().x * NewGame.GetLevel().GetWorldSize().y * NewGame.GetLevel().GetWorldSize().z)
+                 + NewGame.GetLevel().GetCharactersCount() - 2;
+            if (NewGame.CharacterName == "")
             {
-                LevelName = LevelNames[0];
+                // if save game has no character
+                MaxLoading++;
             }
-            string RaceName = DataManager.Get().GetName(DataFolderNames.Skeletons, 0);
-            //string ClassName = DataManager.Get().GetName(DataFolderNames.Classes, 0);
-            Level MyLevel = DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
-            yield return Voxels.WorldManager.Get().LoadNewSaveGame(
-                MyLevel, 
-                RaceName, 
-                "",
-                StartingLocation);
-            OnConfirm.Invoke();
-            GuiSpawner.Get().DestroySpawn(gameObject);
+            MaxLoading += NewGame.GetLevel().GetCharactersCount();
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(Voxels.WorldManager.Get().LoadNewSaveGame(
+                NewGame, 
+                () =>
+                {
+                    ChunksLoaded++;
+                    LoadingGui.Get().SetPercentage( ChunksLoaded / MaxLoading);
+                }));
+            LoadingGui.Get().SetPercentage(1f);
+            Camera MyCamera = CameraManager.Get().SpawnGameCamera();
+            MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
+            MyCamera.transform.localPosition = Vector3.zero;
+            MyCamera.transform.localEulerAngles = Vector3.zero;
+            CameraManager.Get().EnableGameCamera();
+            Possess.PossessCharacter(NewGame.MyCharacter, MyCamera);
+
+            NewGame.Save();
+
+            for (int i = 0; i < 120; i++)
+            {
+                yield return null;
+            }
+            LoadingGui.Get().MyZel.TurnOff();
         }
 
 		/// <summary>
@@ -203,31 +220,33 @@ namespace Zeltex.Guis.Maker
             GuiList MyList = GetListHandler("SavesList");
             if (MyList.GetSelected() >= 0 && MyList.GetSize() > 0)
             {
+                GuiSpawner.Get().DestroySpawn(gameObject);
                 string SaveGameName = MyList.GetSelectedName();
-                string SaveGamePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + DefaultLevelName;
-                string SaveGameScript = FileUtil.Load(SaveGamePath);
+                SaveGame MyGame = DataManager.Get().GetElement(DataFolderNames.Saves, SaveGameName) as SaveGame;
+
+                //string SaveGamePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + DefaultLevelName;
+                //string SaveGameScript = FileUtil.Load(SaveGamePath);
                 // remove first line
-                List<string> CharacterScript = FileUtil.ConvertToList(SaveGameScript);
-                string LevelName = CharacterScript[0];
-                CharacterScript.RemoveAt(0);
-                LevelName = ScriptUtil.RemoveCommand(LevelName);    // get level name /Level [LevelName]
-                string CharacterScriptSingle = FileUtil.ConvertToSingle(CharacterScript);
+                //List<string> CharacterScript = FileUtil.ConvertToList(SaveGameScript);
+                //string LevelName = CharacterScript[0];
+                //CharacterScript.RemoveAt(0);
+                //LevelName = ScriptUtil.RemoveCommand(LevelName);    // get level name /Level [LevelName]
+                //string CharacterScriptSingle = FileUtil.ConvertToSingle(CharacterScript);
                 // Load Level
                 //Debug.LogError("Loading save game from: " + SaveGamePath + "\n" + SaveGameScript);
                 //Debug.LogError("Loading Level: " + LevelName + " with:\n" + CharacterScriptSingle);
-                Level MyLevel = DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
+                Level MyLevel = MyGame.GetLevel();// //DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
+
                 if (MyLevel != null)
                 {
-                    GetComponent<ZelGui>().SetChildStates(false);
                     SetSaveGameName(SaveGameName);   // set the SaveGameName somewhere for when saving
-                    Voxels.WorldManager.Get().LoadSaveGame(MyLevel, CharacterScriptSingle);
+                    Voxels.WorldManager.Get().LoadSaveGame(MyGame);// MyLevel, CharacterScriptSingle);
                     // Load Character using script
                     //Debug.LogError("Loading Character:\n" + CharacterScriptSingle);
-                    GuiSpawner.Get().DestroySpawn(gameObject);
                 }
                 else
                 {
-                    Debug.LogError("Failure to find level: " + LevelName);
+                    Debug.LogError("Failure to find level: " + MyGame.LevelName);
                     // go to default level now with character
                 }
             }

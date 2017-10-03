@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1297023910727788}
   m_IsPrefabParent: 1
+--- !u!1 &1040488374603792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4265207468161010}
+  - component: {fileID: 114211306171828378}
+  m_Layer: 0
+  m_Name: MouseCursorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1297023910727788
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,6 +44,90 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1694612428132762
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4371347972191992}
+  - component: {fileID: 114355967873586906}
+  m_Layer: 0
+  m_Name: ToolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1749649369118086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4834778390361362}
+  - component: {fileID: 114135477409813758}
+  - component: {fileID: 114001733018519508}
+  - component: {fileID: 114780304909660610}
+  - component: {fileID: 114654669467207146}
+  - component: {fileID: 114113488882066000}
+  - component: {fileID: 114339567469787086}
+  - component: {fileID: 114722134354722680}
+  - component: {fileID: 114228467036845114}
+  - component: {fileID: 114171499961951008}
+  - component: {fileID: 114855110791261484}
+  - component: {fileID: 114705437804356980}
+  - component: {fileID: 114218058822362088}
+  - component: {fileID: 114504012014183798}
+  m_Layer: 0
+  m_Name: Generators
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4265207468161010
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040488374603792}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4371347972191992}
+  m_Father: {fileID: 4862764363874374}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4371347972191992
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1694612428132762}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4265207468161010}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4834778390361362
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4862764363874374}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4862764363874374
 Transform:
   m_ObjectHideFlags: 1
@@ -37,7 +137,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4834778390361362}
+  - {fileID: 4265207468161010}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -121,6 +223,119 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114001733018519508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64401b80b7d64449885d021a260c10c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyModelGenerator: {fileID: 114654669467207146}
+--- !u!114 &114113488882066000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0049d3a3580024cab75a1a3a64c4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextureResolution: 32
+  MyTextureGenerator: {fileID: 0}
+--- !u!114 &114135477409813758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd6441ea0470f842bd1d66b1950d58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyGenerators: []
+  MyStatGenerator: {fileID: 0}
+  MyVoxelMetaGenerator: {fileID: 0}
+  MyItemGenerator: {fileID: 0}
+  MySpellGenerator: {fileID: 0}
+  MyDialogueGenerator: {fileID: 0}
+  MyClassGenerator: {fileID: 0}
+  MyVoxelModelGenerator: {fileID: 0}
+  MySkeletonGenerator: {fileID: 0}
+  MySoundGenerator: {fileID: 0}
+  MyGui: {fileID: 0}
+  MyStatusText: {fileID: 0}
+  OnGenerateMap:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &114171499961951008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6f8156a6a9630489b19e2e6aeeb7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114211306171828378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040488374603792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbbea0ccd19fa748b9320c063c50929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCursors:
+  - {fileID: 2800000, guid: 847cfafd8d566244eb0809b58c91910e, type: 3}
+  - {fileID: 2800000, guid: 0b719b415e2dacf43ab0f06eb8fc19e2, type: 3}
+  - {fileID: 2800000, guid: d32fecf76ce12c84b91e393ad71487c3, type: 3}
+  - {fileID: 2800000, guid: 7ac4e8588b49b2244bd41260e229f9d0, type: 3}
+  - {fileID: 2800000, guid: 0283179ca6a3fad418366df5a8fed557, type: 3}
+  - {fileID: 2800000, guid: 1fad807f73038994d84862d6232e3026, type: 3}
+  - {fileID: 2800000, guid: 8c5f1dccdcb9a454085d8ea4e39961a8, type: 3}
+  - {fileID: 2800000, guid: e8625a4bc158de641b618e8ba722620e, type: 3}
+  - {fileID: 2800000, guid: 8d2967b168bbfe2459af37d53cc68672, type: 3}
+  - {fileID: 2800000, guid: 54c8a8ac07eb2354188af415068ef483, type: 3}
+  - {fileID: 2800000, guid: a8902ecad9723504384c83aa40d33830, type: 3}
+  - {fileID: 2800000, guid: 7a0d4ad81e06db44a8847b89ad7d69c2, type: 3}
+  - {fileID: 2800000, guid: 41c24dc7af716e04b960551c98a8157b, type: 3}
+  - {fileID: 2800000, guid: a577e5b5f88d73b46a047312167aff5a, type: 3}
+  - {fileID: 2800000, guid: 32549cd5c35406a4092333fb6d73946a, type: 3}
+  - {fileID: 2800000, guid: 865ff28f8c8df754a96fe8f1d5ca44f6, type: 3}
+  - {fileID: 2800000, guid: fc3b8a7640e5d2c4796c3ccb070275d8, type: 3}
+  - {fileID: 2800000, guid: a84e5167ecb10fa4eb1ffee839edd303, type: 3}
+  - {fileID: 2800000, guid: 8814eea50479ec140904898d0185a964, type: 3}
+  - {fileID: 2800000, guid: b33aeba17490dec4f9211fc512f7ba41, type: 3}
+  - {fileID: 2800000, guid: 68b7ce7fe69f1da4ea55a50f4abfb636, type: 3}
+  - {fileID: 2800000, guid: aff424d14fc8ee848bf2d4e1d58e1fad, type: 3}
+  - {fileID: 2800000, guid: 735076c80a107ea4aa258458bf462b7c, type: 3}
+  - {fileID: 2800000, guid: 2a61ea41e1a8a8843b24ef0aad675546, type: 3}
+  - {fileID: 2800000, guid: f2159ff323e0b2746819e9b0431c1ef6, type: 3}
+  - {fileID: 2800000, guid: 4b7613d441e6ebf489a41f71001232f7, type: 3}
+--- !u!114 &114218058822362088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5537b4a9b2f604da43b6170a70c3a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114221526777607998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,6 +401,56 @@ MonoBehaviour:
       _keys: []
       _values: []
   - FolderName: VoxelModels
+    FileExtension: zel
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    ElementData:
+      _keys: []
+      _values: []
+  - FolderName: Skeletons
+    FileExtension: zel
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    ElementData:
+      _keys: []
+      _values: []
+  - FolderName: Zanimations
     FileExtension: zel
     ModifiedEvent:
       m_PersistentCalls:
@@ -693,7 +958,7 @@ MonoBehaviour:
       PublicKeyToken=null
   ResourcesName: ResourcesName
   MapName: Zelnugg
-  MapFolderPath: D:/Projects/Zeltex/Assets/StreamingAssets/
+  MapFolderPath: D:/Projects/Zeltexium/Assets/StreamingAssets/
   PathTypeKey: PathType
   MyFilePathType: 2
   IsJSONFormat: 1
@@ -701,3 +966,141 @@ MonoBehaviour:
   TestTexture: {fileID: 0}
   TestTexture2: {fileID: 0}
   LatestPlayed: {fileID: 0}
+--- !u!114 &114228467036845114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215ee853750a5284e91bb9bc39689875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114339567469787086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c3120ba0876fcc42bccdda150756e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyTextureGenerator: {fileID: 0}
+  TextureResolution: 32
+--- !u!114 &114355967873586906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1694612428132762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b2c68fbf174564c9de6d644ccdcd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCursors: []
+--- !u!114 &114504012014183798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fd092b5f0ab824482d3d3ae6e744c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VoxelType: 1
+  IsCreateNoiseSphere: 0
+  SphereRadius: 24
+  SphereOffset: {x: 0, y: 0, z: 0}
+  SphereNoiseCutoff: 0.5
+  SphereMultiplier: 2
+  MyWorld: {fileID: 0}
+--- !u!114 &114654669467207146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5773b5242fd49e747bdd9ef25408e804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114705437804356980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7b2ee1a1977a64eaf05abe1500e018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SampleCount: 512
+  SoundsToGenerate: 12
+--- !u!114 &114722134354722680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfc0b286caa4ad4988b77776d8c8cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114780304909660610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f78e648912f10f4083305c7f28fcd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyTexGen: {fileID: 0}
+  TextureNoiseAmplitude: 0.2
+  TextureNoiseFrequency: 0.05
+  TextureResolution: 64
+  MyPrimaryColours: []
+  MySecondaryColours: []
+  DirtColorMin: {r: 0, g: 0, b: 0, a: 0}
+  DirtColorMax: {r: 0, g: 0, b: 0, a: 0}
+  BricksColorMin: {r: 0, g: 0, b: 0, a: 0}
+  BricksColorMax: {r: 0, g: 0, b: 0, a: 0}
+  WoodColorMin: {r: 0, g: 0, b: 0, a: 0}
+  WoodColorMax: {r: 0, g: 0, b: 0, a: 0}
+  LeavesColorMin: {r: 0, g: 0, b: 0, a: 0}
+  LeavesColorMax: {r: 0, g: 0, b: 0, a: 0}
+  SandColorMin: {r: 0, g: 0, b: 0, a: 0}
+  SandColorMax: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &114855110791261484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749649369118086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb430c8c7ead1e54cbb95b9babd47d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyTextureEditor: {fileID: 0}
+  NoiseFrequency: 0.2
+  NoiseAmplitude: 1
+  NoiseLimits: {x: 0.2, y: 0.8}
+  NoiseMinimum: 0.3
+  IsReduceBrightness: 0
+  IsVoroniLines: 0
+  ReductionRate: 0.9
+  IsBrickShading: 0
+  NoiseOffset: {x: 0, y: 0}
+  IsNoiseCutoff: 0

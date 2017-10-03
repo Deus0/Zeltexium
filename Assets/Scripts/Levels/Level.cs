@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zeltex.Voxels;
 using Newtonsoft.Json;
+using Zeltex.Characters;
 
 namespace Zeltex
 {
@@ -29,6 +30,13 @@ namespace Zeltex
         // The world loaded for the level
         [SerializeField, JsonIgnore]
         private World MyWorld;
+        /// <summary>
+        /// Characters linked to a level
+        /// </summary>
+        [SerializeField, JsonIgnore]
+        protected List<Character> MyCharacters = new List<Character>();
+        [SerializeField, JsonProperty]
+        protected int CharactersCount = 0;
 
         #region Overrides
 
@@ -163,6 +171,72 @@ namespace Zeltex
                 System.IO.Directory.CreateDirectory(FolderPath);
             }
             return FolderPath;
+        }
+
+        public static string ChunkFileExtension = "chn";
+        public static string CharacterFileExtension = "chr";
+        public void SaveOpenCharacters(bool IsForceSaveAll = false)
+        {
+            for (int i = 0; i < MyCharacters.Count;i++)
+            {
+                if (MyCharacters[i])
+                {
+                    CharacterData MyData = MyCharacters[i].GetData();
+                    if (MyData.CanSave() || IsForceSaveAll)
+                    {
+                        string SerializedCharacterData = MyData.GetSerial();
+                        string CharacterPath = GetFilePath(MyCharacters[i]);
+                        Util.FileUtil.Save(CharacterPath, SerializedCharacterData);
+                        MyData.OnSaved();
+                    }
+                }
+            }
+        }
+
+        public string GetFilePath(Character MyCharacter)
+        {
+            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
+        }
+
+        public void SaveOpenChunks(bool IsForceSaveAll = false)
+        {
+            if (GetWorld())
+            {
+                foreach (KeyValuePair<Int3, Chunk> MyChunkDataPair in GetWorld().MyChunkData)
+                {
+                    Chunk MyChunk = MyChunkDataPair.Value;
+                    if (MyChunk && (MyChunk.IsDirtyTrigger() || IsForceSaveAll))
+                    {
+                        string ChunkData = Util.FileUtil.ConvertToSingle(MyChunk.GetScript());
+                        string ChunkPath = GetFilePath(MyChunk);
+                        Debug.Log("Saving chunk to: " + ChunkPath);
+                        Util.FileUtil.Save(ChunkPath, ChunkData);
+                    }
+                    else
+                    {
+                        Debug.Log("Could not save Chunk: " + MyChunkDataPair.Key.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("    Level has no world.");
+            }
+        }
+
+        public string GetFilePath(Chunk MyChunk)
+        {
+            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
+        }
+
+        public int GetCharactersCount()
+        {
+            return CharactersCount;
+        }
+
+        public void AddCharacter(Character NewCharacter)
+        {
+            MyCharacters.Add(NewCharacter);
         }
     }
 

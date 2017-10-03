@@ -30,7 +30,7 @@ namespace Zeltex.AnimationUtilities
         private float LastUpdatedTime = 0;
         private AudioSource MyAudioSource;
 
-        void Start()
+        void Awake()
         {
             AnimationTextReference = gameObject.GetComponent<Text>();
             if (MyAudioSource == null)
@@ -119,18 +119,26 @@ namespace Zeltex.AnimationUtilities
 		    }
 	    }
 
-	    public void NewLine(string NewLine)
+        UniversalCoroutine.Coroutine DelayRoutine;
+
+        public void NewLine(string NewLine)
         {
 		    MySpeech = NewLine;
-            StopCoroutine(DelayBeginning());
-            StartCoroutine(DelayBeginning());
+            if (DelayRoutine != null)
+            {
+                UniversalCoroutine.CoroutineManager.StopCoroutine(DelayRoutine);
+            }
+            DelayRoutine = UniversalCoroutine.CoroutineManager.StartCoroutine(DelayBeginning());
         }
         public void UpdateLine(string NewLine, float Delay2)
         {
             MySpeech = NewLine;
             Delay = Delay2;
-            StopCoroutine(DelayBeginning());
-            StartCoroutine(DelayBeginning());
+            if (DelayRoutine != null)
+            {
+                UniversalCoroutine.CoroutineManager.StopCoroutine(DelayRoutine);
+            }
+            DelayRoutine = UniversalCoroutine.CoroutineManager.StartCoroutine(DelayBeginning());
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Zeltex
                             }
                             else
                             {
-                                MyBot.WasHit(MyHitCharacter.gameObject);
+                                MyBot.WasHit(MyHitCharacter);
                             }
 
                         }

@@ -169,7 +169,7 @@ namespace Zeltex.Combat
                     SummonedCharacter.SetRace(MyRaceName);
                     //yield return MySkeleton.RunScriptRoutine(MySkeletonScript);
                     SummonedCharacter.SetClassName(MyClassName);
-                    yield return SummonedCharacter.RunScriptRoutine(MyClassScript);
+                    //yield return SummonedCharacter.RunScriptRoutine(MyClassScript);
 					//SetRenderQue(MySummonedObject, true);
 					Initiate();
 					if (TimeBeginStage1 != -1)
@@ -190,6 +190,7 @@ namespace Zeltex.Combat
                 Debug.LogError("Skeleton Script null. Class Script: " + MyClassScript.Count);
                 Destroy(gameObject);
             }
+            yield return null;
             //Debug.LogError("Began animation at " + TimeBeginStage0);
         }
         /// <summary>

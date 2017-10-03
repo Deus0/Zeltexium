@@ -101,8 +101,8 @@ namespace Zeltex.AI
         private bool IsWhiskers = true;
         public float RotationSpeed = 360f;
         private float SlowRotationDistance = 1f;
-        //[SerializeField]
-        //private BotMovementSettings Settings;
+        private bool IsMovementDisplayed = false;
+        private Transform WaypointParent;
         #endregion
 
         #region Mono
@@ -181,13 +181,6 @@ namespace Zeltex.AI
             }
             RefreshPathTargetObject();
             UpdatePositionIcon();
-
-            /*if (TargetPositionIndex == TargetPositions.Count && TargetObject != null)
-            {
-                if (TargetObject.GetComponent<Zeltex.Combat.CharacterStats>().IsDead())
-                {
-                }
-            }*/
         }
 
         /// <summary>
@@ -212,73 +205,78 @@ namespace Zeltex.AI
         /// </summary>
         private void UpdatePositionIcon()
         {
-            if (PositionIcons.Count != TargetPositions.Count)
+            if (IsMovementDisplayed)
             {
-                Debug.LogError("Positions noot equal to icons: " + TargetPositions.Count + ":" + PositionIcons.Count);
-                CreatePositionIcons();
-                Debug.LogError("Positions now equal to icons: " + TargetPositions.Count + ":" + PositionIcons.Count);
-            }
-            /*if (TargetObject)
-            {
-                Bounds TargetBounds = TargetObject.transform.GetChild(0).gameObject.GetComponent<Skeleton>().GetBounds();
-                PositionIcons[i].transform.position = TargetObject.transform.position + new Vector3(0, TargetBounds.extents.y + TargetBounds.center.y + 0.2f, 0);
-            }*/
-            if (TargetObject)
-            {
-                if (TargetPositions.Count != 0)
+                if (PositionIcons.Count != TargetPositions.Count)
                 {
-                    TargetPositions[TargetPositions.Count - 1] = TargetObject.transform.position;
+                    Debug.LogError("Positions noot equal to icons: " + TargetPositions.Count + ":" + PositionIcons.Count);
+                    CreatePositionIcons();
+                    Debug.LogError("Positions now equal to icons: " + TargetPositions.Count + ":" + PositionIcons.Count);
                 }
-            }
-            for (int i = 0; i < PositionIcons.Count; i++)
-            {
-                PositionIcons[i].transform.localScale = (0.10f + 0.02f * Mathf.Sin(SinSpeed * Time.time + SinAddition)) * (new Vector3(1, 1, 1));
-                PositionIcons[i].transform.position = TargetPositions[i] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0));
-                if (i != 0)
+                /*if (TargetObject)
                 {
-                    PositionIcons[i].GetComponent<LineRenderer>().startWidth = 0.1f + 0.04f * Mathf.Sin(SinSpeed * Time.time + SinAddition);
-                    PositionIcons[i].GetComponent<LineRenderer>().endWidth = 0.1f + 0.04f * Mathf.Sin(SinSpeed * Time.time + SinAddition);
-                    PositionIcons[i].GetComponent<LineRenderer>().SetPosition(0, TargetPositions[i-1] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0)));
-                    PositionIcons[i].GetComponent<LineRenderer>().SetPosition(1, TargetPositions[i] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0)));
+                    Bounds TargetBounds = TargetObject.transform.GetChild(0).gameObject.GetComponent<Skeleton>().GetBounds();
+                    PositionIcons[i].transform.position = TargetObject.transform.position + new Vector3(0, TargetBounds.extents.y + TargetBounds.center.y + 0.2f, 0);
+                }*/
+                if (TargetObject)
+                {
+                    if (TargetPositions.Count != 0)
+                    {
+                        TargetPositions[TargetPositions.Count - 1] = TargetObject.transform.position;
+                    }
+                }
+                for (int i = 0; i < PositionIcons.Count; i++)
+                {
+                    PositionIcons[i].transform.localScale = (0.10f + 0.02f * Mathf.Sin(SinSpeed * Time.time + SinAddition)) * (new Vector3(1, 1, 1));
+                    PositionIcons[i].transform.position = TargetPositions[i] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0));
+                    if (i != 0)
+                    {
+                        PositionIcons[i].GetComponent<LineRenderer>().startWidth = 0.1f + 0.04f * Mathf.Sin(SinSpeed * Time.time + SinAddition);
+                        PositionIcons[i].GetComponent<LineRenderer>().endWidth = 0.1f + 0.04f * Mathf.Sin(SinSpeed * Time.time + SinAddition);
+                        PositionIcons[i].GetComponent<LineRenderer>().SetPosition(0, TargetPositions[i - 1] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0)));
+                        PositionIcons[i].GetComponent<LineRenderer>().SetPosition(1, TargetPositions[i] + 0.02f * (new Vector3(0, Mathf.Sin(SinSpeed * Time.time - SinAddition), 0)));
+                    }
                 }
             }
         }
 
-        private Transform WaypointParent;
         /// <summary>
         /// Creates all the position icons
         /// </summary>
         private void CreatePositionIcons()
         {
-            if (WaypointParent == null)
+            if (IsMovementDisplayed)
             {
-                WaypointParent = GameObject.Find("WayPoints").transform;
-            }
-            ClearPositionIcons();
-            Transform WayPoints = WaypointParent.transform;
-            for (int i = 0; i < TargetPositions.Count; i++)
-            {
-                GameObject PositionIcon = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                PositionIcon.layer = LayerManager.Get().GetWaypointLayer();
-                PositionIcon.transform.SetParent(WayPoints);
-                PositionIcon.name = (i + 1) + ": " + gameObject.name + " [" + TargetPositions[i].x + ", " + TargetPositions[i].y + ", " + TargetPositions[i].z + "]";
-                PositionIcon.transform.localScale = 0.1f * (new Vector3(1, 1, 1));
-                // change layer to gameobjects
-                //ObjectViewer.SetLayerRecursive(PositionIcon, 1 << gameObject.layer);
-                Destroy(PositionIcon.GetComponent<BoxCollider>());
-                PositionIcons.Add(PositionIcon);
-                if (i != 0)
+                if (WaypointParent == null)
                 {
-                    LineRenderer MyLineRenderer = PositionIcon.AddComponent<LineRenderer>();
-                    MyLineRenderer.startWidth = 0.1f;
-                    MyLineRenderer.endWidth = 0.1f;
-                    //MyLineRenderer.positionCount = 2;
-                    //MyLineRenderer.SetPositions(2);
-                    MyLineRenderer.SetPosition(0, TargetPositions[i - 1]);
-                    MyLineRenderer.SetPosition(1, TargetPositions[i]);
+                    WaypointParent = GameObject.Find("WayPoints").transform;
                 }
+                ClearPositionIcons();
+                Transform WayPoints = WaypointParent.transform;
+                for (int i = 0; i < TargetPositions.Count; i++)
+                {
+                    GameObject PositionIcon = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    PositionIcon.layer = LayerManager.Get().GetWaypointLayer();
+                    PositionIcon.transform.SetParent(WayPoints);
+                    PositionIcon.name = (i + 1) + ": " + gameObject.name + " [" + TargetPositions[i].x + ", " + TargetPositions[i].y + ", " + TargetPositions[i].z + "]";
+                    PositionIcon.transform.localScale = 0.1f * (new Vector3(1, 1, 1));
+                    // change layer to gameobjects
+                    //ObjectViewer.SetLayerRecursive(PositionIcon, 1 << gameObject.layer);
+                    Destroy(PositionIcon.GetComponent<BoxCollider>());
+                    PositionIcons.Add(PositionIcon);
+                    if (i != 0)
+                    {
+                        LineRenderer MyLineRenderer = PositionIcon.AddComponent<LineRenderer>();
+                        MyLineRenderer.startWidth = 0.1f;
+                        MyLineRenderer.endWidth = 0.1f;
+                        //MyLineRenderer.positionCount = 2;
+                        //MyLineRenderer.SetPositions(2);
+                        MyLineRenderer.SetPosition(0, TargetPositions[i - 1]);
+                        MyLineRenderer.SetPosition(1, TargetPositions[i]);
+                    }
+                }
+                LoadTargetPositionMaterial();
             }
-            LoadTargetPositionMaterial();
         }
 
         /// <summary>
@@ -333,6 +331,7 @@ namespace Zeltex.AI
             }
             CreatePositionIcons();
         }
+
         /// <summary>
         /// Walk towards a target position
         /// </summary>
@@ -341,6 +340,7 @@ namespace Zeltex.AI
             RotateTowards(Position);
             MoveForwards(Position);
         }
+
         /// <summary>
         /// Sets the bot to move to a position
         /// </summary>
@@ -465,18 +465,13 @@ namespace Zeltex.AI
         /// </summary>
         public bool IsFacingObject(Transform OtherObject, float AngleThreshold)
         {
-            if (MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead == null)
+            if (MyCharacter.GetSkeleton().GetSkeleton().GetCameraBone() != null)
             {
-                return true;//lol
-            }
-            //transform.forward
-            if (Vector3.Angle(MyCharacter.GetForwardDirection(), OtherObject.transform.position - transform.position) < AngleThreshold)
-            {
-                return true;
+                return (Vector3.Angle(MyCharacter.GetForwardDirection(), OtherObject.transform.position - transform.position) < AngleThreshold);
             }
             else
             {
-                return false;
+                return true;
             }
         }
         #endregion
@@ -490,28 +485,21 @@ namespace Zeltex.AI
         void Attack()
 		{
             // aim head bone up down at target
-            if (MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead)
+            if (MyCharacter.GetSkeleton().GetSkeleton().GetCameraBone())
             {
-                MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.LookAt(TargetObject.transform);  // should be max though direction!
-            }
-            else
-            {
-                //Debug.LogError(MyCharacter.name + " does no thave a head.");
+                MyCharacter.GetSkeleton().GetSkeleton().GetCameraBone().LookAt(TargetObject.transform);  // should be max though direction!
+                // head bone should follow camera bone!
             }
             //Debug.Log(name + " is trying to attack!");
             if (DistanceToTarget < 8f)
             {
                 if (IsFacingObject(TargetObject.transform, 60f))  // if distance within spell range 	- and line of sight range - ie some will be aoe spells
                 {
-                    if (MySkillbar == null)
-                    {
-                        MySkillbar = gameObject.GetComponent<Skillbar>();
-                    }
                     if (MyCharacter && MyCharacter.GetSkillbar())
                     {
                         MySkillbar = MyCharacter.GetSkillbar();
                         Debug.Log(name + " is attacking!");
-                        if (TargetObject.GetComponent<CharacterStats>().Alive())
+                        if (TargetObject.GetComponent<Character>().IsAlive())
                         {
                             MySkillbar.SwitchToAttackSpell();  // if not already switched
                             if (gameObject.GetComponent<Shooter>())
@@ -549,7 +537,10 @@ namespace Zeltex.AI
 			ClearPositionIcons();
 			TargetPositions.Clear();
 			TargetPositionIndex = 0;
-            MyCharacter.GetSkeleton().GetSkeleton().MyBoneHead.transform.eulerAngles = Vector3.zero;
+            if (MyCharacter.GetSkeleton().GetSkeleton().GetCameraBone())
+            {
+                MyCharacter.GetSkeleton().GetSkeleton().GetCameraBone().transform.localEulerAngles = Vector3.zero;
+            }
             //OnReachTarget.Invoke(); // finish doing what it was meant to after wandering?
             GetComponent<Bot>().Wander();
         }
@@ -592,10 +583,6 @@ namespace Zeltex.AI
 
         public Vector3 GetTargetRotation()
         {
-            /*Vector3 BeforeRotation = transform.eulerAngles;
-            transform.LookAt(GetTargetPosition());
-            TargetRotation = transform.eulerAngles;
-            transform.eulerAngles = BeforeRotation;*/
             return TargetRotation;
         }
 
@@ -608,16 +595,6 @@ namespace Zeltex.AI
             RotationInput.Set(TargetRotation.normalized.x, TargetRotation.normalized.y);
             return RotationInput;
         }
-
-        /// <summary>
-        /// The main movement function
-        /// </summary>
-        //void MovementUpdate()
-        //{
-            //MyController.RotateCamera(TargetRotation);
-            //MyController.Input(, IsJump);
-            //MyController.InputTargetRotation(TargetRotation);
-        //}
 
         /// <summary>
         /// Gets the current movement force being applied to the bot
@@ -745,7 +722,11 @@ namespace Zeltex.AI
         /// </summary>
         Vector3 GetTargetPosition()
         {
-            if (TargetPositions.Count > 0 && TargetPositionIndex < TargetPositions.Count)
+            if (TargetObject)
+            {
+                return TargetObject.transform.position;
+            }
+            else if (TargetPositions.Count > 0 && TargetPositionIndex < TargetPositions.Count)
             {
                 return TargetPositions[TargetPositionIndex];
             }
@@ -792,7 +773,7 @@ namespace Zeltex.AI
 		{
 			if (MyRigidbody)
             {
-                if (TargetObject != null && Attacking && TargetObject.GetComponent<CharacterStats>().IsDead())
+                if (TargetObject != null && Attacking && !TargetObject.GetComponent<Character>().IsAlive())
                 {
                     StopAttacking();
                 }

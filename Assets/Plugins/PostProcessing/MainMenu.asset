@@ -109,15 +109,15 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 3
   colorGrading:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       tonemapping:
         tonemapper: 2
         neutralBlackIn: 0.02
         neutralWhiteIn: 10
         neutralBlackOut: 0
-        neutralWhiteOut: 10
-        neutralWhiteLevel: 5.3
+        neutralWhiteOut: 1
+        neutralWhiteLevel: 20
         neutralWhiteClip: 10
       basic:
         postExposure: 1
@@ -302,10 +302,10 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       mode: 0
-      color: {r: 0.27205884, g: 0.024005199, b: 0.024005199, a: 1}
+      color: {r: 0.06617647, g: 0.13235295, b: 0.049632356, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.69
-      smoothness: 1
+      intensity: 0.7
+      smoothness: 0.19
       roundness: 0
       mask: {fileID: 0}
       opacity: 1

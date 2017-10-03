@@ -76,6 +76,9 @@
 			{
 				o.Albedo = BaseColor * IN.color * Brightness;
 			}
+			o.Albedo.r *= ColorTint.r;
+			o.Albedo.g *= ColorTint.g;
+			o.Albedo.b *= ColorTint.b;
 		}
 		ENDCG
 	}
