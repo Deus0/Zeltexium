@@ -255,7 +255,7 @@ namespace Zeltex.Quests
 			// inventory condition checks
 			if (MyCondition.IsInventory()) 
 			{
-				Inventory MyInventory = MyCharacter.GetInventory();
+				Inventory MyInventory = MyCharacter.GetBackpackItems();
 				if (MyInventory != null) 
 				{
                     Item MyItem = MyInventory.GetItem(MyCondition.ObjectName);

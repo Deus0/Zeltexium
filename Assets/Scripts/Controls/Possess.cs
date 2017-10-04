@@ -383,6 +383,7 @@ namespace Zeltex
         #endregion
 
         #region State
+
         /// <summary>
         /// Disables the player
         /// </summary>
@@ -390,6 +391,7 @@ namespace Zeltex
         {
             SetInput(false);
         }
+
         /// <summary>
         /// Sets fps controls on - fps gui etc
         /// </summary>
@@ -397,6 +399,7 @@ namespace Zeltex
 		{
 			IsInput = IsInput_;
         }
+
         /// <summary>
         /// Toggles the mouse
         /// </summary>
@@ -407,6 +410,15 @@ namespace Zeltex
                 SetInput(!IsInput);
             }
         }
+
+        public void SetMouse(bool NewInput)
+        {
+            if (IsFrozen == false)
+            {
+                SetInput(NewInput);
+            }
+        }
+
         /// <summary>
         /// Freezes the player
         /// </summary>

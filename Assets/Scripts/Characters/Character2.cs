@@ -148,9 +148,14 @@ namespace Zeltex.Characters
         /// <summary>
         /// Returns players inventory
         /// </summary>
-        public Inventory GetInventory()
+        public Inventory GetSkillbarItems()
         {
             return Data.Skillbar;
+        }
+
+        public Inventory GetBackpackItems()
+        {
+            return Data.Backpack;
         }
 
         public Inventory GetEquipment()
@@ -200,7 +205,8 @@ namespace Zeltex.Characters
             List<string> MyData = new List<string>();
             MyData.Add("Character [" + name + "]\n" +
                 "   Stats: " + Data.MyStats.GetSize() + "\n" +
-                "   Inventory Items: " + GetInventory().GetSize() + "\n" +
+                "   Skillbar Items: " + GetSkillbarItems().GetSize() + "\n" +
+                "   Backpack Items: " + GetBackpackItems().GetSize() + "\n" +
                 "   Quests: " + Data.MyQuestLog.GetSize() + "\n" +
                 "   Dialogue: " + MyDialogueHandler.MyTree.GetSize() + "\n" +
                 "   Skeleton: " + Data.MySkeleton.MyBones.Count + "\n");
@@ -262,16 +268,7 @@ namespace Zeltex.Characters
         /// </summary>
         private void Clear()
         {
-            Data.MyStats.Clear();
-            Data.MyQuestLog.Clear();
-            MyDialogueHandler.MyTree.Clear();
-            if (GetInventory() != null)
-            {
-                GetInventory().Clear();
-                GetEquipment().Clear();
-            }
-            //IsStaticRace = false;
-            //IsStaticClass = false;
+            Data.Clear();
         }
 
         private UniversalCoroutine.Coroutine RunScriptCoroutine = null;

@@ -57,7 +57,7 @@ namespace Zeltex.Voxels
                     MyLevel.SetWorldSize(Int3.Zero());
                 }
 
-                Debug.LogError("Loading level with offset: " + PositionOffset.GetVector().ToString()
+                Debug.Log("Loading level with offset: " + PositionOffset.GetVector().ToString()
                     + " with size: " + MyLevel.GetWorldSize().GetVector().ToString());
                 //Vector3 MapSize = new Vector3(float.Parse(MyScript[0]), float.Parse(MyScript[1]), float.Parse(MyScript[2]));
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SetWorldSizeRoutine(MyLevel.GetWorldSize(), PositionOffset));

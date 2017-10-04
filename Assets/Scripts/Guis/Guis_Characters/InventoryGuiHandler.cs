@@ -78,6 +78,13 @@ namespace Zeltex.Guis.Characters
 
 		public override void Select(int NewSelectedIndex)
 		{
+            if (MyCharacter && MyDraggedItem == null)
+            {
+                ZelGui MyItemPickup = MyCharacter.GetGuis().Spawn("ItemPickup");
+                MyCharacter.GetGuis().AttachGui(MyItemPickup);
+                MyDraggedItem = MyItemPickup.transform.GetChild(0).gameObject;
+                //UpdateItemPickup(MyItemPickup.gameObject);
+            }
             if (NewSelectedIndex >= 0 && NewSelectedIndex < MyGuis.Count && MyDraggedItem != null && MyGuis[NewSelectedIndex])
             {
                 // Get the 2 item objects
@@ -172,7 +179,7 @@ namespace Zeltex.Guis.Characters
             MyData.DescriptionText = MyItem.GetDescriptionLabel();
             if (MyItem.Name == "Empty")
             {
-                Debug.LogError("Item is empty");
+               // Debug.LogError("Item is empty");
                 MyData.LabelText = "";
                 MyData.DescriptionText = "";
                 MyData.IsToolTip = false;
@@ -250,7 +257,7 @@ namespace Zeltex.Guis.Characters
         public override void RefreshList() 
 		{
 			//Debug.Log ("Refreshing Inventory Gui: " + Time.time);
-			Clear ();
+			Clear();
             if (MyInventory != null)
             {
                 if (IsSpellbook)
@@ -274,7 +281,10 @@ namespace Zeltex.Guis.Characters
         public void RefreshAt(int MyIndex)
         {
             Item MyItem = MyInventory.GetItem(MyIndex);
-            DestroyImmediate(MyGuis[MyIndex]);
+            if (MyGuis[MyIndex])
+            {
+                MyGuis[MyIndex].gameObject.Die();
+            }
             MyGuis.RemoveAt(MyIndex);
             ItemToGui(MyItem, MyIndex);
         }

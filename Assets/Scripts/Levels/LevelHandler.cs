@@ -12,25 +12,26 @@ namespace Zeltex
     public class LevelHandler : MonoBehaviour
     {
         public Level MyLevel;
-
-        public EditorAction ActionSpawn;
-        public EditorAction ActionDeSpawn;
-        public EditorAction ActionSaveChunks;
-        public EditorAction ActionSaveCharacters;
-
+        public EditorAction ActionSpawn = new EditorAction();
+        public EditorAction ActionDeSpawn = new EditorAction();
+        public EditorAction ActionSaveChunks = new EditorAction();
+        public EditorAction ActionSaveCharacters = new EditorAction();
         public bool IsForceSaveAll;
 
         private void Update()
         {
-            if (ActionSaveChunks.IsTriggered())
+            if (MyLevel != null)
             {
-                Debug.Log("Saving Level: " + MyLevel.Name);
-                MyLevel.SaveOpenChunks(IsForceSaveAll);
-            }
-            if (ActionSaveCharacters.IsTriggered())
-            {
-                Debug.Log("Saving Level: " + MyLevel.Name);
-                MyLevel.SaveOpenCharacters(IsForceSaveAll);
+                if (ActionSaveChunks.IsTriggered())
+                {
+                    Debug.Log("Saving Level: " + MyLevel.Name);
+                    MyLevel.SaveOpenChunks(IsForceSaveAll);
+                }
+                if (ActionSaveCharacters.IsTriggered())
+                {
+                    Debug.Log("Saving Level: " + MyLevel.Name);
+                    MyLevel.SaveOpenCharacters(IsForceSaveAll);
+                }
             }
         }
     }

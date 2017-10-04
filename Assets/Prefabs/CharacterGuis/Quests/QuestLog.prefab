@@ -463,9 +463,9 @@ MonoBehaviour:
   IsTargetMainCamera: 0
   TargetObject: {fileID: 0}
   TargetSkeleton: {fileID: 0}
-  ScreenPosition: {x: 0, y: 0}
+  ScreenPosition: {x: -700, y: 0}
   MovementSpeed: 3
-  IsInstant: 0
+  IsInstant: 1
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
   IsFollowUserAngle: 1
@@ -936,7 +936,7 @@ RectTransform:
   m_GameObject: {fileID: 122924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0012, y: 0.0012, z: 1}
+  m_LocalScale: {x: 0.0008, y: 0.0008, z: 1}
   m_Children:
   - {fileID: 22430262}
   - {fileID: 22400698}
@@ -1358,6 +1358,7 @@ MonoBehaviour:
           _keys: []
           _values: []
       IsDrawGui: 0
+      IsDefaultGui: 0
       Description: Null
       Commands: []
       Tags: []
@@ -1414,6 +1415,7 @@ MonoBehaviour:
             _keys: []
             _values: []
         IsDrawGui: 0
+        IsDefaultGui: 0
         Data: []
         OnNewStats:
           m_PersistentCalls:
@@ -1425,6 +1427,60 @@ MonoBehaviour:
             m_Calls: []
           m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}

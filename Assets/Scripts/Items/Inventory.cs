@@ -314,9 +314,18 @@ namespace Zeltex.Items
             Item MyItem2 = ItemB.Clone<Item>();
             MyItems[ItemIndex] = MyItem2;
             ItemB = MyItem1;
-            OnAddItem.Invoke();    // refresh gui
-            OnUpdateItem.Invoke(ItemIndex);
-            OnItemUpdate.Invoke(ItemIndex);
+            if (OnAddItem != null)
+            {
+                OnAddItem.Invoke();    // refresh gui
+            }
+            if (OnUpdateItem != null)
+            {
+                OnUpdateItem.Invoke(ItemIndex);
+            }
+            if (OnItemUpdate != null)
+            {
+                OnItemUpdate.Invoke(ItemIndex);
+            }
             return ItemB;
         }
 
@@ -326,7 +335,10 @@ namespace Zeltex.Items
             Item MyItem2 = MyItems[ItemIndex2].Clone<Item>();
             MyItems[ItemIndex] = MyItem2;
             MyItems[ItemIndex2] = MyItem;
-            OnAddItem.Invoke();    // refresh gui
+            if (OnAddItem != null)
+            {
+                OnAddItem.Invoke();    // refresh gui
+            }
         }
 
         /// <summary>
@@ -339,7 +351,9 @@ namespace Zeltex.Items
 
             Item MyItemFound = GetItem(MyItem.Name);
             if (MyItemFound == null)
+            {
                 return false;
+            }
             return MyItemFound.IsBuyable();
         }
 

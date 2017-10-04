@@ -155,6 +155,20 @@ namespace Zeltex
             RefreshListener();
             IsEnding = false;
         }*/
+        Player PausingPlayer;
+
+        public void PauseGame(Player MyPlayer)
+        {
+           // Time.timeScale = 0;
+            PausingPlayer = MyPlayer;
+            PausingPlayer.SetMouse(false);
+        }
+
+        public void ResumeGame()
+        {
+            //Time.timeScale = 1;
+            PausingPlayer.SetMouse(true);
+        }
     }
 
 }

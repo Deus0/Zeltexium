@@ -127,14 +127,7 @@ namespace Zeltex.Guis
             {
                 if (MyGuis[i])
                 {
-                    if (Application.isEditor && !Application.isPlaying)
-                    {
-                        DestroyImmediate(MyGuis[i].gameObject);
-                    }
-                    else
-                    {
-                        Destroy(MyGuis[i].gameObject);
-                    }
+                    MyGuis[i].gameObject.Die();
                 }
             }
             MyGuis.Clear();

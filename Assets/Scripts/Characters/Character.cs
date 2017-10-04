@@ -199,13 +199,22 @@ namespace Zeltex.Characters
         {
             IsPlayer = NewState;
             GetComponent<Mover>().IsPlayer = NewState;
+            if (MyBot == null)
+            {
+                MyBot = GetComponent<Bot>();
+            }
+            if (MyBot)
+            {
+                MyBot.enabled = !IsPlayer;
+            }
         }
 
         public System.Collections.IEnumerator SetDataRoutine(CharacterData NewData)
         {
             if (Data != NewData)
             {
-                Data = NewData;
+                Data = NewData.Clone<CharacterData>();
+                Data.OnInitialized();
                 name = Data.Name;
                 RefreshComponents();
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MySkeleton.GetSkeleton().ActivateRoutine());

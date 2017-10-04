@@ -144,7 +144,7 @@ namespace Zeltex.Items
                     OnItemInteract.Invoke(MyCharacter.gameObject);
                 }
                 //Debug.LogError(MyCharacter.name + " is still picking up " + MyItem.Name + ":" + name);
-                Inventory MyInventory = MyCharacter.GetInventory();
+                Inventory MyInventory = MyCharacter.GetBackpackItems();
                 if (MyInventory != null)
                 {
                     MyInventory.PickupItem(gameObject);

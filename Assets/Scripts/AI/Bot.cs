@@ -14,7 +14,7 @@ namespace Zeltex.AI
     [System.Serializable]
     public class BotMeta : Element
     {
-        public bool IsAggressive = true;
+        public bool IsAggressive = false;
         public bool CanWander = true;
 
 

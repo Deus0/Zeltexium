@@ -99,6 +99,7 @@ namespace Zeltex.Guis.Characters
                 if (MySpawn && i < GuisEnabledStates.Count)
                 {
                     MySpawn.SetState(GuisEnabledStates[i]);
+                    AttachGui(MySpawn);
                 }
             }
         }
@@ -488,6 +489,7 @@ namespace Zeltex.Guis.Characters
                 Debug.LogError("Character is null while attaching gui: " + GuiObject.name);
                 return;
             }
+
             if (LayerManager.Get())
             {
                 LayerManager.Get().SetLayerGui(GuiObject.gameObject);
@@ -658,7 +660,7 @@ namespace Zeltex.Guis.Characters
             if (MyCharacter)
             {
                 InventoryGuiHandler MyInventoryGuiHandler = GuiObject.GetComponent<InventoryGuiHandler>();
-                Inventory MyInventory = MyCharacter.GetInventory();
+                Inventory MyInventory = MyCharacter.GetBackpackItems();
                 MyInventoryGuiHandler.MyCharacter = MyCharacter;
                 MyInventoryGuiHandler.MyInventory = MyInventory;
                 QuestLog MyQuestLog = MyCharacter.GetData().MyQuestLog;
@@ -682,7 +684,7 @@ namespace Zeltex.Guis.Characters
             {
                 // Get References
                 InventoryGuiHandler MyInventoryGuiHandler = GuiObject.GetComponent<InventoryGuiHandler>();
-                Inventory MyInventory = MyCharacter.GetInventory();
+                Inventory MyInventory = MyCharacter.GetSkillbarItems();
                 Skillbar MySkillbar = MyCharacter.GetComponent<Skillbar>();
                 MySkillbar.OnChangeItem.AddEvent(MyInventoryGuiHandler.OnChangeSelectedItem);
                 if (MyInventory != null)
@@ -838,7 +840,7 @@ namespace Zeltex.Guis.Characters
                 Log MyLog = MyCharacter.GetComponent<Log>();
                 if (MyLog)
                 {
-                    GuiList MyLogGuiList = GuiObject.GetComponent<GuiList>();
+                    /*GuiList MyLogGuiList = GuiObject.GetComponent<GuiList>();
                     Inventory MyInventory = MyCharacter.GetInventory();
                     if (MyLogGuiList)
                     {
@@ -853,7 +855,7 @@ namespace Zeltex.Guis.Characters
                         MyInventory.OnPickupItem.AddEvent<GameObject, string>(MyLog.AddLogEvent);
                         MyInventory.OnExchangeItem = new EventObjectString();
                         MyInventory.OnExchangeItem.AddEvent<GameObject, string>(MyLog.AddLogEvent);
-                    }
+                    }*/
                 }
             }
         }

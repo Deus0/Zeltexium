@@ -364,8 +364,8 @@ namespace Zeltex.Quests
                 {
 					if (MyQuest.MyConditions[i].IsInventory())
                     {
-						Inventory MyInventory = MyCharacter.GetInventory();
-                        Inventory MyInventory2 = QuestGiver.GetInventory();
+						Inventory MyInventory = MyCharacter.GetBackpackItems();
+                        Inventory MyInventory2 = QuestGiver.GetBackpackItems();
                         if (MyInventory != null && MyInventory2 != null)
                         {
 							MyInventory.GiveItem(MyInventory2, MyQuest.MyConditions[i].ObjectName, MyQuest.MyConditions[i].ItemQuantity);
@@ -377,8 +377,8 @@ namespace Zeltex.Quests
 					if (MyReward.IsInventory) 
 					{
 						Debug.Log(QuestGiver.name + " is rewarding: " + MyCharacter.name);
-						Inventory MyInventory = MyCharacter.GetInventory();
-						Inventory MyInventory2 = QuestGiver.GetInventory();
+						Inventory MyInventory = MyCharacter.GetBackpackItems();
+						Inventory MyInventory2 = QuestGiver.GetBackpackItems();
 						if (MyInventory != null && MyInventory2 != null)
                         {
 							MyInventory2.GiveItem(MyInventory, MyReward.ItemName, MyReward.ItemQuantity);

@@ -94,7 +94,7 @@ namespace Zeltex.Guis.Players
                                 {
                                     Quantity = int.Parse(CommandParts[3]);
                                 }
-                                MyPlayer.GetComponent<Zeltex.Player>().GetCharacter().GetInventory().Add(MyItem, Quantity);
+                                MyPlayer.GetComponent<Zeltex.Player>().GetCharacter().GetBackpackItems().Add(MyItem, Quantity);
                                 AddLine("Command executed successfully.");
                                 return;
                             }

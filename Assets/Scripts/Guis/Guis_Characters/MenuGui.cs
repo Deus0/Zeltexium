@@ -58,7 +58,7 @@ namespace Zeltex.Guis.Characters
         public void Toggle(string GuiName, GuiListElement MyToolTip)
         {
             ZelGui MyZelGui = MyGuiManager.GetZelGui(GuiName);
-            Debug.LogError("Is " + GuiName + " ZelGui ? " + (MyZelGui != null));
+            Debug.Log("Is " + GuiName + " ZelGui ? " + (MyZelGui != null));
             if (MyZelGui != null)
             {
                 // destroy
@@ -82,6 +82,26 @@ namespace Zeltex.Guis.Characters
         public void SaveGame()
         {
             Voxels.WorldManager.Get().SaveGame(MyGuiManager.GetCharacter());
+        }
+
+        public void ResumeGame()
+        {
+            GameManager.Get().ResumeGame();
+            GetComponent<ZelGui>().TurnOff();
+        }
+        
+        public void ToggleGui(string GuiName)
+        {
+            ZelGui MyZelGui = MyGuiManager.GetZelGui(GuiName);
+            Debug.Log("ToggleGui - Is " + GuiName + " ZelGui ? " + (MyZelGui != null));
+            if (MyZelGui != null)
+            {
+                MyZelGui.Toggle();
+            }
+            else
+            {
+                MyGuiManager.Spawn(GuiName);
+            }
         }
     }
 }

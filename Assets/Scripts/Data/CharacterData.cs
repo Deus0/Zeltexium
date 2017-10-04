@@ -26,12 +26,17 @@ namespace Zeltex
         public string Class = "";
         [JsonProperty]
         public string Race = "";
+
+        [JsonProperty]
+        public CharacterStats MyStats = new CharacterStats();
+
         [JsonProperty]
         public Inventory Skillbar = new Inventory();
         [JsonProperty]
         public Inventory Equipment = new Inventory();
         [JsonProperty]
-        public CharacterStats MyStats = new CharacterStats();
+        public Inventory Backpack = new Inventory();
+
         [JsonProperty]
         public QuestLog MyQuestLog = new QuestLog();
         [JsonProperty]
@@ -44,6 +49,7 @@ namespace Zeltex
         public CharacterGuis MyGuis = new CharacterGuis();
         [JsonProperty]
         public AI.BotMeta BotData = new AI.BotMeta();
+
         // respawn data
         [JsonProperty]
         public bool CanRespawn = true;  // can player respawn after death
@@ -74,6 +80,28 @@ namespace Zeltex
             {
                 LevelPosition = MyCharacter.transform.position;
                 LevelRotation = MyCharacter.transform.eulerAngles;
+            }
+        }
+
+        public void Clear()
+        {
+            MyStats.Clear();
+            MyQuestLog.Clear();
+            MyDialogue.Clear();
+            Skillbar.Clear();
+            Backpack.Clear();
+            Equipment.Clear();
+        }
+
+        public void OnInitialized()
+        {
+            for (int i = Skillbar.MyItems.Count; i < 5; i++)
+            {
+                Skillbar.MyItems.Add(new Item());
+            }
+            for (int i = Backpack.MyItems.Count; i < 20; i++)
+            {
+                Backpack.MyItems.Add(new Item());
             }
         }
     }

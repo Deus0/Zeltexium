@@ -37,6 +37,10 @@ namespace Zeltex
     {
         #region Variables
         // Keys
+        protected static KeyCode InventoryKey = KeyCode.I;
+        protected static KeyCode EquipmentKey = KeyCode.U;
+        protected static KeyCode QuestlogKey = KeyCode.Y;
+
         protected static KeyCode ActivateKey = KeyCode.Mouse0; // spells
         protected static KeyCode ActivateKey2 = KeyCode.Mouse1;
         protected static KeyCode InteractKey1 = KeyCode.E;    // interaction
@@ -97,8 +101,14 @@ namespace Zeltex
                 }
                 if (Input.GetKeyDown(ToggleMouseKey) || Input.GetKeyDown(KeyCode.Escape))
                 {
-                    ToggleMouse();
-                    if (MyGuiManager == null)
+                    if (IsInput)
+                    {
+                        MyGuiManager.Spawn("Menu");
+                        MyGuiManager.EnableGui("Menu");
+                        GameManager.Get().PauseGame(this);
+                    }
+                    //ToggleMouse();
+                   /* if (MyGuiManager == null)
                     {
                         MyGuiManager = MyCharacter.GetGuis();
                     }
@@ -115,7 +125,7 @@ namespace Zeltex
                             MyGuiManager.DisableGui("Menu");
                             //Time.timeScale = 1f;
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -186,7 +196,7 @@ namespace Zeltex
                     MySkeleton.MyCameraBone);*/
             }
             // Character Interaction Key - E
-            if (Input.GetKeyDown(InteractKey1))// || Input.GetButtonDown("Fire4"))
+            else if (Input.GetKeyDown(InteractKey1))// || Input.GetButtonDown("Fire4"))
             {
                 MyCharacter.RayTrace();
             }
@@ -194,6 +204,34 @@ namespace Zeltex
             {
                 MyCharacter.RayTrace(1);
             }
+            else if (Input.GetKeyDown(InventoryKey))
+            {
+                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("Inventory");
+                if (InventoryGui == null)
+                {
+                    InventoryGui = MyCharacter.GetGuis().Spawn("Inventory");
+                }
+                InventoryGui.Toggle();
+            }
+            else if (Input.GetKeyDown(QuestlogKey))
+            {
+                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("QuestLog");
+                if (InventoryGui == null)
+                {
+                    InventoryGui = MyCharacter.GetGuis().Spawn("QuestLog");
+                }
+                InventoryGui.Toggle();
+            }
+            else if (Input.GetKeyDown(EquipmentKey))
+            {
+                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("Equipment");
+                if (InventoryGui == null)
+                {
+                    InventoryGui = MyCharacter.GetGuis().Spawn("Equipment");
+                }
+                InventoryGui.Toggle();
+            }
+            
         }
 
         /// <summary>
@@ -274,7 +312,7 @@ namespace Zeltex
                     MySkills[i].Activate();
                 }
             }
-			if (Input.GetKeyDown (ActivateKey2))    // || Input.GetButtonDown("Fire2")
+			if (Input.GetKeyDown(ActivateKey2))    // || Input.GetButtonDown("Fire2")
             {
                 if (MyCharacter.GetComponent<BotCommander>())
                 {
@@ -282,7 +320,7 @@ namespace Zeltex
                 }
             }
 			// for fire on hold skills
-			if (Input.GetKey (ActivateKey)) // || Input.GetButtonDown("Fire3")
+			if (Input.GetKey(ActivateKey)) // || Input.GetButtonDown("Fire3")
             {
 				if (MyCharacter.GetComponent<Shooter> ()) 
 				{

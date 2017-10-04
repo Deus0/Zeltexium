@@ -164,9 +164,9 @@ namespace Zeltex.Guis.Maker
             GuiList SavesList = GetListHandler("SavesList");
             string SaveGameName = GetInput("NameInput").text;
             string MyDirectory = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
-            if (Directory.Exists(MyDirectory) == false)
+            if (FileManagement.FileExists(MyDirectory) == false)
             {
-                Directory.CreateDirectory(MyDirectory);
+                FileManagement.CreateDirectory(MyDirectory);
                 SavesList.Add(SaveGameName);
                 MyNames.Add(SaveGameName);
             }

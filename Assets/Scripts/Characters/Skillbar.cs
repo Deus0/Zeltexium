@@ -35,7 +35,7 @@ namespace Zeltex.Combat
 
         private Inventory GetInventory()
         {
-            return MyCharacter.GetInventory();
+            return MyCharacter.GetSkillbarItems();
         }
 
 

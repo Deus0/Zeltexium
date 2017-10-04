@@ -11,10 +11,14 @@ namespace Zeltex.Voxels
     {
         private static bool UnlimitedMode = true;
         [Header("Brush Settings")]
-        [SerializeField] private bool IsPickaxe;
-        [SerializeField] private float VoxelBrushSize = 0;
-		[SerializeField] private string VoxelBrushType = "Air";
-		[SerializeField] private int VoxelBrushRange = 15;
+        [SerializeField]
+        private bool IsPickaxe;
+        [SerializeField]
+        private float VoxelBrushSize = 0;
+		[SerializeField]
+        private string VoxelBrushType = "Air";
+		[SerializeField]
+        private int VoxelBrushRange = 15;
         private float LastUpdatedTime;
         private Inventory MyInventory;
         private Item MyItem;
@@ -49,6 +53,12 @@ namespace Zeltex.Voxels
 		}
 		public void Activate() 
 		{
+            if (MyItem == null)
+            {
+                UpdateItem(GetComponent<Characters.Character>().GetSkillbarItems(), 
+                    GetComponent<Combat.Skillbar>().GetSelectedItem(), 
+                    GetComponent<Combat.Skillbar>().GetSelectedIndex());
+            }
             LastUpdatedTime = Time.realtimeSinceStartup;
             if (IsPickaxe)
             {
@@ -67,6 +77,7 @@ namespace Zeltex.Voxels
                 }
             }
         }
+
         public void UpdateBlockCamera(string VoxelName, float BrushSize, float BrushRange)
         {
             UpdateBlockCamera(Camera.main, VoxelName, BrushSize, BrushRange, null);
@@ -86,6 +97,7 @@ namespace Zeltex.Voxels
                                 MyCamera.transform.forward,
                                 MyCharacter);
         }
+
         public void UpdateBlockCamera2(string VoxelName, float BrushSize, float BrushRange, Vector3 RayOrigin, Vector3 RayDirection, GameObject MyCharacter)  // the character we are aiming from
         {
             // only characters layer
