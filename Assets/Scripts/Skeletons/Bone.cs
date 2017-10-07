@@ -420,7 +420,7 @@ namespace Zeltex.Skeletons
 
             //yield return null;
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.RunScriptRoutine(Zeltex.Util.FileUtil.ConvertToList(MeshData.VoxelData)));
-            Debug.LogError("-----------------------------------");
+            //Debug.LogError("-----------------------------------");
             //Debug.LogError("Waited : " + WaitCount + " for mesh to load.");
         }
 

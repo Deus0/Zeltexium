@@ -106,12 +106,15 @@ namespace Zeltex
             Clear();
             List<string> FileNames;
             string ElementFolderPath = GetFolderPath();
-            if (ElementFolderPath.Contains("://") || ElementFolderPath.Contains(":///"))
+            //if (ElementFolderPath.Contains("://") || ElementFolderPath.Contains(":///"))
+            //{
+            FileNames = new List<string>();
+            if (ElementFolderPath != null)
             {
-                FileNames = new List<string>();
-                if (ElementFolderPath != null)
+                // string FullFolderPath = DataManager.Get().MapName + "/" + FolderName;
+                if (FileManagement.DirectoryExists(ElementFolderPath, true, true))
                 {
-                    string[] FoundFiles = FileManagement.ListFiles(DataManager.Get().MapName + "/" + FolderName, new string[] { "." + FileExtension });//, true, true); // + "/"
+                    string[] FoundFiles = FileManagement.ListFiles(ElementFolderPath, new string[] { "." + FileExtension }, true, true);//, true, true); // + "/"
                     if (FoundFiles != null)
                     {
                         for (int i = 0; i < FoundFiles.Length; i++)
@@ -119,7 +122,6 @@ namespace Zeltex
                             string FileName = System.IO.Path.GetFileNameWithoutExtension(FoundFiles[i]) + "." + FileExtension;
                             FileNames.Add(ElementFolderPath + FileName);
                         }
-                        //FileNames.AddRange(FoundFiles);
                     }
                     else
                     {
@@ -128,13 +130,12 @@ namespace Zeltex
                 }
                 else
                 {
-                    LogManager.Get().Log("Folder is null");
+                    Debug.LogError("Directory Path does not exist: " + ElementFolderPath);
                 }
-                //FileNames = FileManagement.ListFiles();//FileUtil.GetFilesOfType(ElementFolderPath, FileExtension);
             }
             else
             {
-                FileNames = FileUtil.GetFilesOfType(ElementFolderPath, FileExtension);
+                LogManager.Get().Log("Folder is null");
             }
             LogManager.Get().Log("[" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension, "DataManager");
             FileNames = FileUtil.SortAlphabetically(FileNames);

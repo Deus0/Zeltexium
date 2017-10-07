@@ -897,7 +897,7 @@ public static class FileManagement
                 result = CheckNameOnIndex("StreamingAssets/" + folder, "D");
 #else
                 path = Combine(streamingAssetsPath, folder);
-                result = System.IO.Directory.Exists(path);
+                result = FileManagement.DirectoryExists(path);
 #endif
             }
         }
@@ -905,6 +905,23 @@ public static class FileManagement
         {
             // Direct check:
             result = System.IO.Directory.Exists(folder);
+            if (!result && checkSA)
+            {
+                // Then check StreamingAssets path:
+#if UNITY_ANDROID || UNITY_WEBGL
+                int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
+                string FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                if (FolderNameToCheck[FolderNameToCheck.Length - 1] == '/')
+                {
+                    FolderNameToCheck = FolderNameToCheck.Substring(0, FolderNameToCheck.Length - 1);
+                }
+                //Debug.LogError("Checking if directory exists for webgl: " + FolderNameToCheck);
+                result = CheckNameOnIndex(FolderNameToCheck, "D");
+#else
+                path = Combine(streamingAssetsPath, folder);
+                result = FileManagement.DirectoryExists(path);
+#endif
+            }
         }
         return result;
     }
@@ -1032,12 +1049,39 @@ public static class FileManagement
             }
             else
             {
+#if UNITY_ANDROID || UNITY_WEBGL
                 // Checks directly:
-                if (DirectoryExists(folder, false, true))
+                if (checkSA)
+                {
+                    if (DirectoryExists(folder, checkSA, fullPath))
+                    {
+                        int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
+                        string FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                        /*if (FolderNameToCheck[FolderNameToCheck.Length - 1] == '/')
+                        {
+                            FolderNameToCheck = FolderNameToCheck.Substring(0, FolderNameToCheck.Length - 1);
+                        }*/
+                        //Debug.LogError("Listing Files in folder for webgl: " + FolderNameToCheck);
+                        if (result != null)
+                        {
+                            string[] temp = GetNamesOnIndex(FolderNameToCheck, "F");
+                            temp = FilterPathNames(temp);
+                            result = result.Union(temp).ToArray();
+                        }
+                        else
+                        {
+                            result = GetNamesOnIndex(FolderNameToCheck, "F");
+                            result = FilterPathNames(result);
+                        }
+                    }
+                }
+#else
+                if (DirectoryExists(folder, checkSA, fullPath))
                 {
                     result = System.IO.Directory.GetFiles(folder);
                     result = FilterPathNames(result);
                 }
+#endif
             }
             SortPathNames(result);
             

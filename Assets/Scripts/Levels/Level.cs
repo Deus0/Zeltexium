@@ -165,10 +165,14 @@ namespace Zeltex
         public string GetFolderPath()
         {
             string FolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/";
-            if (System.IO.Directory.Exists(FolderPath) == false)
+            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
             {
-                Debug.Log("Creating Directory: " + FolderPath);
-                System.IO.Directory.CreateDirectory(FolderPath);
+                Debug.LogError("Creating Directory for Level [" + Name + "]: "    + FolderPath);
+                FileManagement.CreateDirectory(FolderPath, true);
+            }
+            else
+            {
+                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
             }
             return FolderPath;
         }

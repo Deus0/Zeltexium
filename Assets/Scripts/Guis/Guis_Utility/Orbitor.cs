@@ -92,7 +92,7 @@ namespace Zeltex.Guis
 
         public void OnBegin()
         {
-            if (IsTargetMainCamera && CameraManager.Get().GetMainCamera())
+            if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
                 TargetObject = CameraManager.Get().GetMainCamera().transform;
             }

@@ -17,7 +17,7 @@ class StreamingAssetsIndexer : AssetPostprocessor
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
         // Creates the StreamingAssets folder:
-        if (System.IO.Directory.Exists(Application.streamingAssetsPath))
+        if (FileManagement.DirectoryExists(Application.streamingAssetsPath))
         {
             // Add first the files, then the folders and iterate through each one.
             string content = "";

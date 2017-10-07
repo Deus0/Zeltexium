@@ -94,7 +94,7 @@ namespace Zeltex
                 Zeltex.Networking.NetworkManager.Get().StopHosting();
                 OnEndGame.Invoke();
                 CameraManager.Get().EnableMainMenuCamera();
-                GuiSpawner.Get().EnableGui("MainMenu");
+                GuiSpawner.Get().SpawnGui("MainMenu");
             }
         }
 

@@ -33,6 +33,18 @@ namespace Zeltex
 
         public Level GetLevel()
         {
+            if (LevelName == "")
+            {
+                List<string> LevelNames = DataManager.Get().GetNames(DataFolderNames.Levels);
+                if (LevelNames.Count > 0)
+                {
+                    LevelName = LevelNames[0];
+                }
+                else
+                {
+                    Debug.LogError("No Levels in DataManager.");
+                }
+            }
             Level MyLevel = DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
             return MyLevel;
         }

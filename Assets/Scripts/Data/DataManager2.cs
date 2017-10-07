@@ -221,9 +221,9 @@ namespace Zeltex
             if (GUILayout.Button("Open " + OpenedFolderName))
             {
                 string FolderPath = GetMapPath() + OpenedFolderName + "/";
-                if (System.IO.Directory.Exists(FolderPath) == false)
+                if (FileManagement.DirectoryExists(FolderPath, true, true) == false)
                 {
-                    System.IO.Directory.CreateDirectory(FolderPath);
+                    FileManagement.CreateDirectory(FolderPath, true);
                 }
                 FileUtil.OpenPathInWindows(FolderPath);
             }
@@ -384,39 +384,18 @@ namespace Zeltex
                     IsOpenedElementFolder = true;
                 }
             }
-            /*for (int i = 0; i < TextureFolders.Count; i++)
-            {
-                if (GUILayout.Button(TextureFolders[i].FolderName))
-                {
-                    OpenedFolderName = TextureFolders[i].FolderName;
-                    OpenedFolderIndex = i;
-                    IsOpenedElementFolder = false;
-                }
-            }*/
         }
 
         private List<string> GetStatisticsList()
         {
             List<string> MyStatistics = new List<string>();
-            int TotalCount = StringFolders.Count +ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count +  TextureFolders.Count + AudioFolders.Count + 
-            MyStatistics.Add("DataManager -:- Folders: " + TotalCount);
-            for (int i = 0; i < StringFolders.Count; i++)
-            {
-                MyStatistics.Add("String[" + i + "]: " + StringFolders[i].FolderName + ":" + StringFolders[i].Data.Count);
-            }
-            /*for (int i = 0; i < AudioFolders.Count; i++)
-            {
-                MyStatistics.Add("Audio[" + i + "]: " + AudioFolders[i].FolderName + ":" + AudioFolders[i].Data.Count);
-            }
-            
-             */
+            int TotalCount = ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count +  TextureFolders.Count + AudioFolders.Count + 
+            MyStatistics.Add("DataManager -:- Element Types: " + TotalCount);
+
             for (int i = 0; i < ElementFolders.Count; i++)
             {
-                MyStatistics.Add("Elements[" + i + "]: " + ElementFolders[i].FolderName + ":" + ElementFolders[i].Data.Count);
+                MyStatistics.Add("[" + (i + 1) + "] " + ElementFolders[i].FolderName + ": " + ElementFolders[i].Data.Count);
             }
-            //MyStatistics.Add("-Voxel Manager-");
-            //MyStatistics.Add("Voxel Models: " + Voxels.VoxelManager.Get().MyModels.Count);
-            //MyStatistics.Add("Voxel Meta: " + Voxels.VoxelManager.Get().MyMetas.Count);
             return MyStatistics;
         }
 
@@ -424,7 +403,7 @@ namespace Zeltex
         {
             string OldFolderPath = GetResourcesPath() + MapName + "/";
             string NewFolderPath = GetResourcesPath() + NewName + "/";
-            if (System.IO.Directory.Exists(NewFolderPath) == false)
+            if (FileManagement.DirectoryExists(NewFolderPath, true, true) == false)
             {
                 System.IO.Directory.Move(OldFolderPath, NewFolderPath);
                 MapName = NewName;

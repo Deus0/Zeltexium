@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224161723985147104}
   - component: {fileID: 222173077788474278}
   - component: {fileID: 114459310342054288}
+  - component: {fileID: 114251079581285776}
   m_Layer: 5
   m_Name: StatText
   m_TagString: Untagged
@@ -78,6 +79,7 @@ GameObject:
   - component: {fileID: 114054669654708302}
   - component: {fileID: 114093462794006856}
   - component: {fileID: 95244950230148978}
+  - component: {fileID: 114658362079108062}
   m_Layer: 5
   m_Name: TutorialGui
   m_TagString: CharacterGui
@@ -138,6 +140,31 @@ MonoBehaviour:
   IsFaceMainCamera: 1
   TargetPosition: {fileID: 0}
   ViewerCamera: {fileID: 0}
+--- !u!114 &114251079581285776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1519125188814374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4bcd9cd6ee10941b7fe80ab7ffff70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  IsAnimateOnStart: 1
+  Delay: 0
+  AnimationSpeedMin: 0.02
+  AnimationSpeedMax: 0.06
+  MySpeechSounds: []
+  IsSound: 1
+  SoundInterval: 3
+  SoundMin: 0.25
+  SoundMax: 0.8
 --- !u!114 &114298343685015212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,6 +242,7 @@ MonoBehaviour:
           _keys: []
           _values: []
       IsDrawGui: 0
+      IsDefaultGui: 0
       Description: Null
       Commands: []
       Tags: []
@@ -271,6 +299,7 @@ MonoBehaviour:
             _keys: []
             _values: []
         IsDrawGui: 0
+        IsDefaultGui: 0
         Data: []
         OnNewStats:
           m_PersistentCalls:
@@ -282,6 +311,60 @@ MonoBehaviour:
             m_Calls: []
           m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}
@@ -339,7 +422,7 @@ MonoBehaviour:
 
     Click to Attack
 
-    Press C for Menu
+    Press Control for Menu
 
     WASD to Move'
 --- !u!114 &114465412884828936
@@ -368,6 +451,18 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114658362079108062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840211046176604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f748000853b08174fb1df4f238b82435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimateDelay: 8
 --- !u!114 &114747961199037736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -494,8 +589,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840211046176604}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 28.75}
-  m_LocalScale: {x: 0.0011999999, y: 0.0011999999, z: 0.0011999999}
+  m_LocalPosition: {x: 0, y: 0, z: 57.217}
+  m_LocalScale: {x: 0.0024, y: 0.0024, z: 0.0024}
   m_Children:
   - {fileID: 224482133883687986}
   - {fileID: 224253356263118714}
@@ -504,7 +599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.8, y: 0.868}
+  m_AnchoredPosition: {x: 7.435, y: 1.526}
   m_SizeDelta: {x: 300, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224253356263118714
@@ -551,7 +646,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840211046176604}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

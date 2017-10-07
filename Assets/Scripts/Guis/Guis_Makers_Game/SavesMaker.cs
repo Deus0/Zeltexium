@@ -35,7 +35,7 @@ namespace Zeltex.Guis.Maker
         public override void OnBegin()
         {
             string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/");    // get folder path
-            string[] MyDirectories = Directory.GetDirectories(MyFolderPath);
+            string[] MyDirectories = FileManagement.ListDirectories(MyFolderPath);
             GuiList SavesList = GetListHandler("SavesList");
             Debug.Log("Saves folder path is:" + MyFolderPath + " with " + MyDirectories.Length + " Saves!");
             if (MyDirectories.Length != 0)
@@ -164,15 +164,23 @@ namespace Zeltex.Guis.Maker
             GuiList SavesList = GetListHandler("SavesList");
             string SaveGameName = GetInput("NameInput").text;
             string MyDirectory = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
-            if (FileManagement.FileExists(MyDirectory) == false)
+            Debug.Log("Creating New Save Game at: [" + MyDirectory + "]");
+            try
             {
-                FileManagement.CreateDirectory(MyDirectory);
-                SavesList.Add(SaveGameName);
-                MyNames.Add(SaveGameName);
+                if (FileManagement.DirectoryExists(MyDirectory, true, true) == false)
+                {
+                    FileManagement.CreateDirectory(MyDirectory, true);
+                    SavesList.Add(SaveGameName);
+                    MyNames.Add(SaveGameName);
+                }
+                else
+                {
+                    Debug.LogError("Tried to create a duplicate savegame [" + SaveGameName + "]");
+                }
             }
-            else
+            catch (System.IO.DirectoryNotFoundException e)
             {
-                Debug.LogError("Tried to create a duplicate savegame [" + SaveGameName + "]");
+                Debug.LogError("DirectoryNotFoundException at: " + MyDirectory);
             }
             SetSaveGameName(SaveGameName);
             // Go to Character Create Screen and Level Select
@@ -195,7 +203,10 @@ namespace Zeltex.Guis.Maker
                 }));
             LoadingGui.Get().SetPercentage(1f);
             Camera MyCamera = CameraManager.Get().SpawnGameCamera();
-            MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
+            if (NewGame.MyCharacter)
+            {
+                MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
+            }
             MyCamera.transform.localPosition = Vector3.zero;
             MyCamera.transform.localEulerAngles = Vector3.zero;
             CameraManager.Get().EnableGameCamera();

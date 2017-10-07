@@ -91,9 +91,9 @@ namespace Zeltex.Util
                 {
                     File.Move(Path1 + ".meta", Path2 + ".meta");
                 }
-#if UNITY_WEBGL && !UNITY_EDITOR
+/*#if UNITY_WEBGL && !UNITY_EDITOR
             Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
             }
         }
 
@@ -108,9 +108,9 @@ namespace Zeltex.Util
                 {
                     File.Delete(Path);
                 }
-#if UNITY_WEBGL && !UNITY_EDITOR
+/*#if UNITY_WEBGL && !UNITY_EDITOR
                 Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
             }
             else
             {
@@ -120,9 +120,9 @@ namespace Zeltex.Util
 
         public static string Load(string Path)
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
+/*#if UNITY_WEBGL && !UNITY_EDITOR
             Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
             if (File.Exists(Path))
             {
                 return File.ReadAllText(Path);
@@ -136,15 +136,15 @@ namespace Zeltex.Util
         public static void Save(string Path, string Data)
         {
             File.WriteAllText(Path, Data);
-#if UNITY_WEBGL
+/*#if UNITY_WEBGL
             Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
         }
         public static byte[] LoadBytes(string Path)
         {
-#if UNITY_WEBGL
+/*#if UNITY_WEBGL
             Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
             if (File.Exists(Path))
             {
                 return File.ReadAllBytes(Path);
@@ -158,9 +158,9 @@ namespace Zeltex.Util
         public static void SaveBytes(string Path, byte[] Data)
         {
             File.WriteAllBytes(Path, Data);
-#if UNITY_WEBGL
+/*#if UNITY_WEBGL
             Application.ExternalCall("SyncFiles");
-#endif
+#endif*/
         }
 
 #endregion
@@ -486,7 +486,7 @@ namespace Zeltex.Util
             // try windows
             string winPath = path.Replace("/", "\\"); // windows explorer doesn't like forward slashes
 
-            if (System.IO.Directory.Exists(winPath)) // if path requested is a folder, automatically open insides of that folder
+            if (FileManagement.DirectoryExists(winPath, true, true)) // if path requested is a folder, automatically open insides of that folder
             {
                 openInsidesOfFolder = true;
             }

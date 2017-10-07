@@ -597,7 +597,7 @@ namespace UnityFBXExporter
                 path += "/";
             string testPath = path.Remove(path.Length - 1);
 
-            if (System.IO.Directory.Exists(testPath) == false)
+            if (FileManagement.DirectoryExists(testPath, true, true) == false)
             {
                 Debug.LogError("This folder does not exist " + testPath);
                 return null;

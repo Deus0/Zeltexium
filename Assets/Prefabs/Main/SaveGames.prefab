@@ -4138,7 +4138,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114053888656841330}
-        m_MethodName: EnableGui
+        m_MethodName: SpawnGui
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

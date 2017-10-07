@@ -588,7 +588,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 440}
   MovementSpeed: 3
-  IsInstant: 0
+  IsInstant: 1
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
   IsFollowUserAngle: 1

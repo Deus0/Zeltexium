@@ -77,67 +77,43 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator LoadNewSaveGame(SaveGame MyGame, System.Action OnLoadChunk = null)    //Level MyLevel, string RaceName, string ClassName, string StartingLocation = ""
         {
-            // fade out and begin loading
-			/*if (ImageFader.Get())
-			{
-				ImageFader.Get().FadeOut(1f);
-			}*/
             // Load the level
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadLevelWorldless(MyGame.GetLevel(), OnLoadChunk));
+            if (MyGame != null)
+            {
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadLevelWorldless(MyGame.GetLevel(), OnLoadChunk));
+            }
+            else
+            {
+                Debug.LogError("MyGame is null LoadNewSaveGame");
+            }
 
             // Creates a new character
-            if (MyGame.CharacterName == "")
+            if (MyGame != null && MyGame.CharacterName == "")
             {
                 // then load bot with script
                 Character MyCharacter = CharacterManager.Get().GetPoolObject();
-                // GetClass Script
-                CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
-                //Vector3 NewPosition = SpawnPositionFinder.FindNewPositionChunkBoundaries(MyWorlds[MyWorlds.Count - 1]);
-               // MyCharacter.transform.position = NewPosition;
-                MyGame.SetCharacter(MyCharacter);
-                if (OnLoadChunk != null)
+                if (MyCharacter != null)
                 {
-                    OnLoadChunk.Invoke();
+                    // GetClass Script
+                    CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
+                    MyGame.SetCharacter(MyCharacter);
+                    if (OnLoadChunk != null)
+                    {
+                        OnLoadChunk.Invoke();
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Character Pooled Object is null inside LoadNewSaveGame function");
                 }
             }
             else
             {
+                Debug.LogError("Either MyGame is null or CharacterName isn't Nothing");
                 // Set character to levels loaded character
                 ///MyGame.SetCharacter(MyCharacter);
             }
-            // while until fading finishes if loads too fast
-            /*int FramesCount = 0;
-			if (ImageFader.Get())
-			{
-				while (ImageFader.Get().IsFading)
-				{
-					yield return null;
-					FramesCount++;
-					MyCharacter.transform.position = NewPosition;
-					if (FramesCount >= 5000)
-					{
-						Debug.LogError("Waited past 5000 frames");
-						break;
-					}
-				}
-			}*/
-            // WorldManager.Get().SaveGame(MyCharacter);
-
-			/*if (ImageFader.Get())
-			{
-				ImageFader.Get().FadeIn(1.5f);
-				while (ImageFader.Get().IsFading)
-				{
-					yield return null;
-				}
-			}
-			MyCharacter.transform.position = NewPosition;
-            if (StartingLocation != "")
-            {
-                MyCharacter.transform.position = new Vector3(666, MyCharacter.transform.position.y, 666);
-            }*/
-            //MyCharacter.SetMovement(true);
         }
         #endregion
 

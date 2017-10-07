@@ -99,7 +99,7 @@ namespace Zeltex.Guis.Maker
         {
             List<string> MyNames = new List<string>();
             string MyFolderPath = DataManager.GetResourcesPath();    // get folder path
-            string[] MyDirectories = Directory.GetDirectories(MyFolderPath);
+            string[] MyDirectories = FileManagement.ListDirectories(MyFolderPath);
             for (int i = 0; i < MyDirectories.Length; i++)
             {
                 string MyPath = Path.GetFileName(MyDirectories[i]);

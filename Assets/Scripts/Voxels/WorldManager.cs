@@ -29,9 +29,9 @@ namespace Zeltex.Voxels
         [SerializeField]
         private EditorAction IsClear;
         [SerializeField]
-        private EditorAction ActionLoadLevel;
+        private EditorAction ActionLoadLevel = new EditorAction();
         [SerializeField]
-        private EditorAction ActionSaveLevel;
+        private EditorAction ActionSaveLevel = new EditorAction();
         [SerializeField]
         private Int3 ActionPosition;
         [SerializeField]
@@ -186,25 +186,37 @@ namespace Zeltex.Voxels
         public IEnumerator LoadLevel(World MyWorld, Level NewLevel, Int3 PositionOffset, System.Action OnLoadChunk = null)
         {
             IsLoading = true;
-            if (NewLevel != null)
+            if (PositionOffset == null)
             {
-                LevelHandler MyLevelHandler = MyWorld.gameObject.GetComponent<LevelHandler>();
-                if (MyLevelHandler == null)
+                Debug.LogError("PositionOffset is null inside LoadLevel function");
+                PositionOffset = Int3.Zero();
+            }
+            if (MyWorld != null)
+            {
+                if (NewLevel != null)
                 {
-                    MyLevelHandler = MyWorld.gameObject.AddComponent<LevelHandler>();
+                    LevelHandler MyLevelHandler = MyWorld.gameObject.GetComponent<LevelHandler>();
+                    if (MyLevelHandler == null)
+                    {
+                        MyLevelHandler = MyWorld.gameObject.AddComponent<LevelHandler>();
+                    }
+                    MyLevelHandler.MyLevel = NewLevel;
+                    Debug.Log("Loading Level: " + NewLevel.Name);
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.LoadLevelRoutine(NewLevel, PositionOffset));
+                    MyWorld.name = NewLevel.Name;
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadChunksInLevel(MyWorld, NewLevel, OnLoadChunk));
+                    NewLevel.SetWorld(MyWorld);
                 }
-                MyLevelHandler.MyLevel = NewLevel;
-                Debug.Log("Loading Level: " + NewLevel.Name);
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.LoadLevelRoutine(NewLevel, PositionOffset));
-                MyWorld.name = NewLevel.Name;
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadChunksInLevel(MyWorld, NewLevel, OnLoadChunk));
-                NewLevel.SetWorld(MyWorld);
+                else
+                {
+                    Debug.LogError("Level is null inside LoadLevel function");
+                    //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyTerrainGenerator.CreateTerrainWorldRoutine(MyWorld));
+                    //MyWorld.name = "Error";
+                }
             }
             else
             {
-                Debug.LogError("Level is null, loading random world.");
-                //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyTerrainGenerator.CreateTerrainWorldRoutine(MyWorld));
-                //MyWorld.name = "Error";
+                Debug.LogError("World is null inside LoadLevel function");
             }
             IsLoading = false;
         }
@@ -213,30 +225,67 @@ namespace Zeltex.Voxels
         {
             // load chunks
             string FolderPath = NewLevel.GetFolderPath();
-            List<string> MyFiles = FileUtil.GetFilesOfType(FolderPath, ChunkFileExtention);
-            if (MyFiles.Count == 0)
+            string[] FilesInFolder = FileManagement.ListFiles(FolderPath, true, true);
+            Debug.Log("Loading level files: " + FilesInFolder.Length + " from " + FolderPath);
+            List<string> ChunkFiles = new List<string>();
+            for (int i = 0; i < FilesInFolder.Length; i++)
             {
-                MyFiles = FileUtil.GetFilesOfType(FolderPath, "");
-            }
-            Debug.Log("Loading Level from path: " + FolderPath + " - With files count of " + MyFiles.Count);
-            if (MyFiles.Count > 0)
-            {
-                for (int i = 0; i < MyFiles.Count; i++)
+                if (Path.GetExtension(FilesInFolder[i]) == "." + ChunkFileExtention)
                 {
-                    string FileName = MyFiles[i];
-                    //Debug.LogError("Loading Chunk: " + FileName);
-                    List<string> MyScript = FileUtil.ConvertToList(FileUtil.Load(FileName));
+                    ChunkFiles.Add(FolderPath + FilesInFolder[i]);
+                }
+            }
+            //Debug.Log("Loading Level from path: " + FolderPath + " - With files count of " + ChunkFiles.Count);
+            string ChunkData = "";
+            Int3 ChunkPosition = Int3.Zero();
+            Chunk MyChunk = null;
+            string[] ChunkPositionStrings = null;
+            if (ChunkFiles.Count > 0)
+            {
+                for (int i = 0; i < ChunkFiles.Count; i++)
+                {
+                    string FileName = ChunkFiles[i];
+                    //ChunkData = FileManagement.ReadAllLines(FileName, //FileUtil.Load(FileName);
+                    //Debug.Log("Loading Chunk: " + FileName + "\n" + ChunkData);
                     FileName = Path.GetFileName(FileName);
-                    string[] MyInput = (FileName.Substring(0, FileName.Length - 4)).Split('_');
-                    int ChunkPositionX = int.Parse(MyInput[1]);
-                    int ChunkPositionY = int.Parse(MyInput[2]);
-                    int ChunkPositionZ = int.Parse(MyInput[3]);
-                    Chunk MyChunk = MyWorld.GetChunk(new Int3(ChunkPositionX, ChunkPositionY, ChunkPositionZ));
+                    ChunkPositionStrings = (FileName.Substring(0, FileName.Length - 4)).Split('_');
+                    try
+                    {
+                        if (ChunkPositionStrings.Length >= 4)
+                        {
+                            ChunkPosition.Set(int.Parse(ChunkPositionStrings[1]), int.Parse(ChunkPositionStrings[2]), int.Parse(ChunkPositionStrings[3]));
+                            //Debug.Log("Chunk [" + FileName + "] is at position: " + ChunkPosition.GetVector().ToString());
+                            MyChunk = MyWorld.GetChunk(ChunkPosition);
+                        }
+                        else
+                        {
+                            Debug.LogError("MyInput.Length is " + ChunkPositionStrings.Length + " in 'LoadChunksInLevel'");
+                        }
+                    }
+                    catch(System.FormatException e)
+                    {
+                        Debug.LogError("Problem reading chunks in level: FOrmatException in 'LoadChunksInLevel'");
+                    }
                     if (MyChunk)
                     {
                         MyChunk.SetDefaultVoxelNames();
                         //Debug.LogError("Loading ChunkName [" + FileName + "] - at " + MyChunk.name + " of size: " + MyScript.Count);
-                        yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyChunk.RunScript(MyScript));
+                        //MyChunk.RunScript(FileUtil.ConvertToList(ChunkData))
+                        List<string> MyStrings = new List<string>();
+                        //MyStrings.AddRange(FileManagement.ReadAllLines(ChunkFiles[i], false, true, true));
+                        if (ChunkFiles[i].Contains("://") || ChunkFiles[i].Contains(":///"))
+                        {
+                            WWW UrlRequest = new WWW(ChunkFiles[i]);
+                            yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
+                            //Scripts.Add(UrlRequest.text);
+                            MyStrings = FileUtil.ConvertToList(UrlRequest.text);
+                        }
+                        else
+                        {
+                            MyStrings = FileUtil.ConvertToList(File.ReadAllText(ChunkFiles[i]));
+                            //Scripts.Add(File.ReadAllText(FileNames[i]));
+                        }
+                        yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyChunk.RunScript(MyStrings));
                         if (OnLoadChunk != null)
                         {
                             OnLoadChunk.Invoke();
@@ -244,25 +293,51 @@ namespace Zeltex.Voxels
                     }
                     else
                     {
-                        Debug.LogError("While loading world: " + MyWorld.name + " - Could not find chunk at position: " + ChunkPositionX + ":" + ChunkPositionY + ":" + ChunkPositionZ);
+                        Debug.LogError("While loading world: " + MyWorld.name + " - Could not find chunk");
                     }
                 }
             }
 
             LevelHandler MyLevelHandler = MyWorld.gameObject.GetComponent<LevelHandler>();
-            List<string> CharacterFiles = FileUtil.GetFilesOfType(FolderPath, CharacterFileExtension);
-            Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);
+            List<string> CharacterFiles = new List<string>();//FileUtil.GetFilesOfType(FolderPath, CharacterFileExtension);
+            for (int i = 0; i < FilesInFolder.Length; i++)
+            {
+                if (Path.GetExtension(FilesInFolder[i]) == "." + CharacterFileExtension)
+                    //if (FilesInFolder[i].Contains(CharacterFileExtension))
+                {
+                    CharacterFiles.Add(FolderPath + FilesInFolder[i]);
+                }
+            }
+            //Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);
             for (int i = 0; i < CharacterFiles.Count; i++)
             {
-                CharacterData NewData = Newtonsoft.Json.JsonConvert.DeserializeObject(FileUtil.Load(CharacterFiles[i]), typeof(CharacterData)) as CharacterData;
+                string CharacterScript = "";
+                if (CharacterFiles[i].Contains("://") || CharacterFiles[i].Contains(":///"))
+                {
+                    WWW UrlRequest = new WWW(CharacterFiles[i]);
+                    yield return (UrlRequest);
+                    CharacterScript = UrlRequest.text;
+                }
+                else
+                {
+                    CharacterScript = File.ReadAllText(CharacterFiles[i]);
+                }
+                CharacterData NewData = Newtonsoft.Json.JsonConvert.DeserializeObject(CharacterScript, typeof(CharacterData)) as CharacterData;
                 if (NewData != null)
                 {
                     Character MyCharacter = CharacterManager.Get().GetPoolObject();
-                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(NewData));
-                    MyLevelHandler.MyLevel.AddCharacter(MyCharacter);
-                    if (OnLoadChunk != null)
+                    if (MyCharacter)
                     {
-                        OnLoadChunk.Invoke();
+                        yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(NewData));
+                        MyLevelHandler.MyLevel.AddCharacter(MyCharacter);
+                        if (OnLoadChunk != null)
+                        {
+                            OnLoadChunk.Invoke();
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Character Pool was empty in WorldManager:LoadChunksInLevel");
                     }
                 }
             }

@@ -170,9 +170,9 @@ namespace Zeltex
                 DataManager.Get().MapFolderPath += "ResourcePacks/";
 #endif
             }
-            if (!System.IO.Directory.Exists(DataManager.Get().MapFolderPath))
+            if (!FileManagement.DirectoryExists(DataManager.Get().MapFolderPath, true, true))
             {
-                System.IO.Directory.CreateDirectory(DataManager.Get().MapFolderPath);
+                FileManagement.CreateDirectory(DataManager.Get().MapFolderPath, true);
                 Debug.Log("Created Resouces FolderPath [" + DataManager.Get().MapFolderPath + "]");
             }
             return DataManager.Get().MapFolderPath;
@@ -192,7 +192,7 @@ namespace Zeltex
                 string ResourcesPath = GetResourcesPath();
                 string MapPath = ResourcesPath + ResourcesName + "/";
                 Debug.Log("Attempting to Erasing ResourcesPack [" + ResourcesName + "] " + MapPath);
-                if (System.IO.Directory.Exists(MapPath))
+                if (FileManagement.DirectoryExists(MapPath))
                 {
                     Debug.Log("Erasing Resources [" + MapPath + "]");
                     System.IO.Directory.Delete(MapPath, true);
@@ -242,9 +242,9 @@ namespace Zeltex
 
         private void CreateDirectories()
         {
-            if (!System.IO.Directory.Exists(GetMapPath()))
+            if (!FileManagement.DirectoryExists(GetMapPath(), true, true))
             {
-                System.IO.Directory.CreateDirectory(GetMapPath());
+                FileManagement.CreateDirectory(GetMapPath(), true);
             }
             Debug.Log("Creating Resouces directory [" + GetMapPath() + "]");
             List<string> FolderNames = GetFolderNames();
@@ -266,10 +266,10 @@ namespace Zeltex
 
         private void CreateDirectory(string DirectoryPath)
         {
-            if (!System.IO.Directory.Exists(DirectoryPath))
+            if (!FileManagement.DirectoryExists(DirectoryPath, true, true))
             {
                 Debug.Log("Created directory [" + DirectoryPath + "]");
-                System.IO.Directory.CreateDirectory(DirectoryPath);
+                FileManagement.CreateDirectory(DirectoryPath, true);
             }
             else
             {
@@ -323,6 +323,7 @@ namespace Zeltex
                 Debug.LogError("Element Folders are 0.");
                 //IsInitialized = false;
             }
+            StringFolders.Clear();
             //if (!IsInitialized)
             {
                 //IsInitialized = true;
@@ -364,7 +365,6 @@ namespace Zeltex
                 // level scripts, each level contains a folder full of chunks and characters too
                 RefreshGuiMapNames();
             }
-           // StringFolders.Clear();
             //StringFolders.Add(StringFolder.Create(DataFolderNames.Skeletons, "skl"));
             //AudioFolders.Clear();
             //TextureFolders.Clear();
@@ -421,7 +421,7 @@ namespace Zeltex
             }
             // get list of current resources
             List<string> Files = new List<string>();
-            Files.AddRange(System.IO.Directory.GetDirectories(GetResourcesPath()));
+            Files.AddRange(FileManagement.ListDirectories(GetResourcesPath()));
             for (int i = 0; i < Files.Count; i++)
             {
                 Files[i] = System.IO.Path.GetFileNameWithoutExtension(Files[i]);
@@ -514,7 +514,7 @@ namespace Zeltex
                 LogManager.Get().Log("Loading From map path: " + GetMapPath() + " : " + MapName, "DataManager");
                 if (string.IsNullOrEmpty(MapName) == false)
                 {
-                    //if (System.IO.Directory.Exists(GetMapPath()))
+                    //if (FileManagement.DirectoryExists(GetMapPath()))
                     {
                         UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine());
                     }
