@@ -64,22 +64,34 @@ namespace Zeltex
         [JsonIgnore]
         public Character MyCharacter;
 
-        public void SetCharacter(Character NewCharacter)
+        public void SetCharacter(Character NewCharacter, bool IsSetTransform = true)
         {
             MyCharacter = NewCharacter;
-            if (MyCharacter)
+            if (MyCharacter && IsSetTransform)
             {
                 MyCharacter.transform.position = LevelPosition;
                 MyCharacter.transform.eulerAngles = LevelRotation;
             }
         }
 
-        public void Update()
+        public void RefreshTransform()
         {
             if (MyCharacter)
             {
-                LevelPosition = MyCharacter.transform.position;
-                LevelRotation = MyCharacter.transform.eulerAngles;
+                if (MyCharacter.transform.position.x != LevelPosition.x
+                    || MyCharacter.transform.position.y != LevelPosition.y
+                    || MyCharacter.transform.position.z != LevelPosition.z)
+                {
+                    LevelPosition = MyCharacter.transform.position;
+                    OnModified();
+                }
+                if (MyCharacter.transform.eulerAngles.x != LevelRotation.x
+                    || MyCharacter.transform.eulerAngles.y != LevelRotation.y
+                    || MyCharacter.transform.eulerAngles.z != LevelRotation.z)
+                {
+                    LevelRotation = MyCharacter.transform.eulerAngles;
+                    OnModified();
+                }
             }
         }
 

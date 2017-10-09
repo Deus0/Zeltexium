@@ -354,6 +354,7 @@ namespace Zeltex
 
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Characters, "zel"));
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Levels, "zel"));
+                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Saves, "zel"));
 
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Sounds, "zel"));
                 ElementFolders.Add(ElementFolder.Create(DataFolderNames.Musics, "zel"));

@@ -25,12 +25,12 @@ namespace Zeltex
                 if (ActionSaveChunks.IsTriggered())
                 {
                     Debug.Log("Saving Level: " + MyLevel.Name);
-                    MyLevel.SaveOpenChunks(IsForceSaveAll);
+                    MyLevel.SaveOpenChunks("", IsForceSaveAll);
                 }
                 if (ActionSaveCharacters.IsTriggered())
                 {
                     Debug.Log("Saving Level: " + MyLevel.Name);
-                    MyLevel.SaveOpenCharacters(IsForceSaveAll);
+                    MyLevel.SaveOpenCharacters("", IsForceSaveAll);
                 }
             }
         }

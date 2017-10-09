@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1168187068892924
 GameObject:
   m_ObjectHideFlags: 1
@@ -378,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1356716304795396
 GameObject:
   m_ObjectHideFlags: 1
@@ -2541,7 +2541,18 @@ MonoBehaviour:
   CellSize: {x: 0, y: 0}
   OnActivateEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114517298085598222}
+        m_MethodName: UseInput
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 114396838264018550}
+          m_ObjectArgumentAssemblyTypeName: Zeltex.Guis.GuiList, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   IsActiveOnClick: 1
@@ -4733,8 +4744,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224788829375943122}
-  - {fileID: 224689914613813966}
   - {fileID: 224236311958254274}
+  - {fileID: 224689914613813966}
   m_Father: {fileID: 224090576245002614}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4931,7 +4942,7 @@ RectTransform:
   m_Children:
   - {fileID: 224839302130456666}
   m_Father: {fileID: 224127377718802292}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -5463,7 +5474,7 @@ RectTransform:
   m_Children:
   - {fileID: 224699891125919196}
   m_Father: {fileID: 224127377718802292}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}

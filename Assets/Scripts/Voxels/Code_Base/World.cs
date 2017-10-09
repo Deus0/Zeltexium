@@ -88,6 +88,9 @@ namespace Zeltex.Voxels
         [Header("Roaming")]
         public VoxelTerrain MyVoxelTerrain;
         public bool IsHeight = false;
+
+        [HideInInspector]
+        public bool IsAddOutline = true;
         #endregion
 
         #region Mono

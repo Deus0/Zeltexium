@@ -4,6 +4,7 @@ using Zeltex.Characters;
 using Zeltex.Guis.Maker;
 using Zeltex.Guis;
 using Zeltex.Util;
+using System;
 
 namespace Zeltex.Voxels
 {
@@ -16,60 +17,75 @@ namespace Zeltex.Voxels
 
         #region LevelWithCharacters
 
-        public void LoadSaveGame(SaveGame MyGame)//Level MyLevel, string CharacterScript, string StartingLocation = "")
+        public void LoadSaveGame(Action OnLoadChunk = null, SaveGame MyGame = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
-            StartCoroutine(LoadSaveGameRoutine(MyGame));// MyLevel, CharacterScript));
+            UniversalCoroutine.CoroutineManager.StartCoroutine(LoadSaveGameRoutine(OnLoadChunk, MyGame));// MyLevel, CharacterScript));
         }
 
         /// <summary>
         /// Used by SaveGameMaker to load a level with a character script
         /// </summary>
-        public IEnumerator LoadSaveGameRoutine(SaveGame MyGame)//Level MyLevel, string CharacterScript, string StartingLocation = "")
+        public IEnumerator LoadSaveGameRoutine(Action OnLoadChunk = null, SaveGame MyGame = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
-            // fade out and begin loading
-			/*if (ImageFader.Get())
-			{
-				ImageFader.Get().FadeOut(1f);
-			}*/
-
+            LoadedSaveGame = MyGame;
             World SpawnedWorld = SpawnWorld();
 
-            // Load Character First
-            /*Character MyCharacter = CharacterManager.Get().GetPoolObject();
-            if (MyCharacter)
+            // Next Load the level
+            if (MyCharacter != null)
             {
-                yield return MyCharacter.RunScriptRoutine(FileUtil.ConvertToList(CharacterScript));
-            }*/
+                yield return LoadLevel(SpawnedWorld, MyGame.GetLevel(), MyCharacter.GetChunkPosition());
+            }
+            else
+            {
+                yield return LoadLevel(SpawnedWorld, MyGame.GetLevel(), Int3.Zero(), OnLoadChunk, MyGame);
+            }
 
-            // Next Load the level
-            // yield return LoadLevelWorldless(MyLevel, MyCharacter.GetChunkPosition());
-            // get camera distance
-
-            //Int3 CameraDistance = new Int3(10, 4, 10);
-           // yield return SpawnedWorld.SetWorldSizeRoutine(CameraDistance, MyCharacter.GetChunkPosition());
-            // Next Load the level
-            yield return LoadLevel(SpawnedWorld, MyGame.GetLevel(), MyCharacter.GetChunkPosition());
-
-			/*if (ImageFader.Get())
-			{
-				// while until fading finishes if loads too fast
-				while (ImageFader.Get().IsFading)
-				{
-					yield return null;
-				}
-			}
-            Possess.PossessCharacter(MyCharacter);*/
-            //MyCharacter.SetMovement(false);
-            /*GuiSpawner.Get().DestroySpawn("MainMenu");
-			if (ImageFader.Get())
-			{
-				ImageFader.Get().FadeIn(1.5f);
-				while (ImageFader.Get().IsFading)
-				{
-					yield return null;
-				}
-			}*/
-            //MyCharacter.SetMovement(true);
+            // Creates a new character
+            if (MyGame.CharacterName == "")
+            {
+                // then load bot with script
+                Character MyCharacter = CharacterManager.Get().GetPoolObject();
+                if (MyCharacter != null)
+                {
+                    // GetClass Script
+                    CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
+                    if (OnLoadChunk != null)
+                    {
+                        OnLoadChunk.Invoke();
+                    }
+                    MyGame.GetLevel().AddCharacter(MyCharacter);
+                    MyGame.SetCharacter(MyCharacter);
+                }
+                else
+                {
+                    Debug.LogError("Character Pooled Object is null inside LoadNewSaveGame function");
+                }
+            }
+            else
+            {
+                bool WasFound = false;
+                Character LevelCharacter = null;
+                // Set character to levels loaded character
+                for (int i = 0; i < MyGame.GetLevel().GetRealCharactersCount(); i++)
+                {
+                    LevelCharacter = MyGame.GetLevel().GetCharacter(i);
+                    if (LevelCharacter && LevelCharacter.GetData().Name == MyGame.CharacterName)
+                    {
+                        MyGame.SetCharacter(LevelCharacter);
+                        WasFound = true;
+                        break;
+                    }
+                }
+                if (WasFound == false)
+                {
+                    Debug.LogError("Did not find Character spawned: " + MyGame.CharacterName);
+                }
+                else
+                {
+                    Debug.LogError("Set Save Game Character to: " + MyGame.MyCharacter.name);
+                }
+            }
         }
 
         /// <summary>
@@ -77,6 +93,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator LoadNewSaveGame(SaveGame MyGame, System.Action OnLoadChunk = null)    //Level MyLevel, string RaceName, string ClassName, string StartingLocation = ""
         {
+            LoadedSaveGame = MyGame;
             // Load the level
             if (MyGame != null)
             {
@@ -102,6 +119,7 @@ namespace Zeltex.Voxels
                     {
                         OnLoadChunk.Invoke();
                     }
+                    MyGame.GetLevel().AddCharacter(MyCharacter);
                 }
                 else
                 {
@@ -142,7 +160,7 @@ namespace Zeltex.Voxels
             if (MyLevel.Infinite())
             {
                 // chose an area in the level
-                NewPosition = new Int3((int)Random.Range(-3000, 3000), 8, (int)Random.Range(-3000, 3000));
+                NewPosition = new Int3((int)UnityEngine.Random.Range(-3000, 3000), 8, (int)UnityEngine.Random.Range(-3000, 3000));
                 // when world spawns at this point, the position finder will find closest point in chunk
 
             }
@@ -195,20 +213,34 @@ namespace Zeltex.Voxels
             return MyPlayer;
         }
 
+        private SaveGame LoadedSaveGame;
         /// <summary>
         /// Saves the current game
         /// </summary>
         public void SaveGame(Character MyCharacter)
         {
+            if (LoadedSaveGame != null)
+            {
+                // Save the loaded save game
+                Level LoadedLevel = LoadedSaveGame.GetLevel();
+                // First chunk Changes
+                LoadedLevel.SaveOpenChunks(LoadedSaveGame.Name);
+                // Next Any character changes - CharacterData - make sure to refresh their transforms
+                LoadedLevel.SaveOpenCharacters(LoadedSaveGame.Name);
+            }
+            else
+            {
+                Debug.LogError("No LoadedSaveGame in WorldManager");
+            }
             if (MyWorlds.Count > 0)
             {
                 World WorldToSave = MyWorlds[MyWorlds.Count - 1];   // should be a character->GetWorldIn function
-                string LevelName = WorldToSave.name;
-                string LevelScript = "/Level " + LevelName + "\n";
+                //string LevelName = WorldToSave.name;
+               // string LevelScript = "/Level " + LevelName + "\n";
                 //LevelScript += FileUtil.ConvertToSingle(MyCharacter.GetScript());
-                string FilePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + SavesMaker.DefaultLevelName;
-                Debug.LogError("Saving [" + SaveGameName + "] with character [" + MyCharacter.name + "] to [" + FilePath + "]:\n" + LevelScript);
-                FileUtil.Save(FilePath, LevelScript);
+               // string FilePath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/" + SavesMaker.DefaultLevelName;
+                //Debug.LogError("Saving [" + SaveGameName + "] with character [" + MyCharacter.name + "] to [" + FilePath + "]:\n" + LevelScript);
+                //FileUtil.Save(FilePath, LevelScript);
             }
             else
             {

@@ -183,7 +183,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Load the level ! Base function for loading level meta into a world!
         /// </summary>
-        public IEnumerator LoadLevel(World MyWorld, Level NewLevel, Int3 PositionOffset, System.Action OnLoadChunk = null)
+        public IEnumerator LoadLevel(World MyWorld, Level NewLevel, Int3 PositionOffset, System.Action OnLoadChunk = null, SaveGame SavedGame = null)
         {
             IsLoading = true;
             if (PositionOffset == null)
@@ -204,7 +204,7 @@ namespace Zeltex.Voxels
                     Debug.Log("Loading Level: " + NewLevel.Name);
                     yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.LoadLevelRoutine(NewLevel, PositionOffset));
                     MyWorld.name = NewLevel.Name;
-                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadChunksInLevel(MyWorld, NewLevel, OnLoadChunk));
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadChunksInLevel(MyWorld, NewLevel, OnLoadChunk, SavedGame));
                     NewLevel.SetWorld(MyWorld);
                 }
                 else
@@ -221,7 +221,7 @@ namespace Zeltex.Voxels
             IsLoading = false;
         }
 
-        private IEnumerator LoadChunksInLevel(World MyWorld, Level NewLevel, System.Action OnLoadChunk = null)
+        private IEnumerator LoadChunksInLevel(World MyWorld, Level NewLevel, System.Action OnLoadChunk = null, SaveGame SavedGame = null)
         {
             // load chunks
             string FolderPath = NewLevel.GetFolderPath();
@@ -244,10 +244,10 @@ namespace Zeltex.Voxels
             {
                 for (int i = 0; i < ChunkFiles.Count; i++)
                 {
-                    string FileName = ChunkFiles[i];
+                    string FullFilePath = ChunkFiles[i];
+                    string FileName = Path.GetFileName(FullFilePath);
                     //ChunkData = FileManagement.ReadAllLines(FileName, //FileUtil.Load(FileName);
                     //Debug.Log("Loading Chunk: " + FileName + "\n" + ChunkData);
-                    FileName = Path.GetFileName(FileName);
                     ChunkPositionStrings = (FileName.Substring(0, FileName.Length - 4)).Split('_');
                     try
                     {
@@ -273,17 +273,27 @@ namespace Zeltex.Voxels
                         //MyChunk.RunScript(FileUtil.ConvertToList(ChunkData))
                         List<string> MyStrings = new List<string>();
                         //MyStrings.AddRange(FileManagement.ReadAllLines(ChunkFiles[i], false, true, true));
-                        if (ChunkFiles[i].Contains("://") || ChunkFiles[i].Contains(":///"))
+
+                        if (SavedGame != null)
                         {
-                            WWW UrlRequest = new WWW(ChunkFiles[i]);
+                            // if chunk in saved game is modified, load it instead
+                            string SavedGameFilePath = NewLevel.GetFilePath(MyChunk, SavedGame.Name);
+                            if (FileManagement.FileExists(SavedGameFilePath, true, true))
+                            {
+                                Debug.Log("Replacing file name: " + FileName + " with " + SavedGameFilePath);
+                                FullFilePath = SavedGameFilePath;
+                            }
+                        }
+                        if (FullFilePath.Contains("://") || FullFilePath.Contains(":///"))
+                        {
+                            WWW UrlRequest = new WWW(FullFilePath);
                             yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
                             //Scripts.Add(UrlRequest.text);
                             MyStrings = FileUtil.ConvertToList(UrlRequest.text);
                         }
                         else
                         {
-                            MyStrings = FileUtil.ConvertToList(File.ReadAllText(ChunkFiles[i]));
-                            //Scripts.Add(File.ReadAllText(FileNames[i]));
+                            MyStrings = FileUtil.ConvertToList(File.ReadAllText(FullFilePath));
                         }
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyChunk.RunScript(MyStrings));
                         if (OnLoadChunk != null)
@@ -303,15 +313,57 @@ namespace Zeltex.Voxels
             for (int i = 0; i < FilesInFolder.Length; i++)
             {
                 if (Path.GetExtension(FilesInFolder[i]) == "." + CharacterFileExtension)
-                    //if (FilesInFolder[i].Contains(CharacterFileExtension))
                 {
                     CharacterFiles.Add(FolderPath + FilesInFolder[i]);
+                }
+            }
+            if (SavedGame != null)
+            {
+                string SaveGameFolderPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SavedGame.Name + "/" + NewLevel.Name + "/";
+                string[] FilesInSaveFolder = FileManagement.ListFiles(SaveGameFolderPath, true, true);
+                for (int i = 0; i < FilesInSaveFolder.Length; i++)
+                {
+                    if (Path.GetExtension(FilesInSaveFolder[i]) == "." + CharacterFileExtension)
+                    {
+                        string NewCharacterPath = SaveGameFolderPath + FilesInSaveFolder[i];
+                        string CharacterName = Path.GetFileNameWithoutExtension(FilesInSaveFolder[i]);
+                        bool IsInFilesAlready = false;
+                        Debug.Log("Looking for: " + CharacterName + " at new path: " + FilesInSaveFolder[i] + " --- " + NewCharacterPath);
+                        for (int j = 0; j < CharacterFiles.Count; j++)
+                        {
+                            if (Path.GetFileNameWithoutExtension(CharacterFiles[j]) == CharacterName)
+                            {
+                                Debug.LogError("Setting for: " + CharacterName + " at New: " + NewCharacterPath + " Old: " + CharacterFiles[j]);
+                                CharacterFiles[j] = NewCharacterPath;
+                                IsInFilesAlready = true;
+                                break;
+                            }
+                        }
+                        if (!IsInFilesAlready)
+                        {
+                            Debug.LogError("Adding for: " + CharacterName + " at New: " + NewCharacterPath);
+                            CharacterFiles.Add(NewCharacterPath);
+                        }
+                    }
                 }
             }
             //Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);
             for (int i = 0; i < CharacterFiles.Count; i++)
             {
                 string CharacterScript = "";
+                string FileName = CharacterFiles[i];
+                // Check for saved game path
+                /*if (SavedGame != null)
+                {
+                    // if chunk in saved game is modified, load it instead
+                    string SavedGameFilePath = NewLevel.GetCharacterFilePath(Path.GetFileNameWithoutExtension(FileName), SavedGame.Name);
+                    if (FileManagement.FileExists(SavedGameFilePath, true, true))
+                    {
+                        Debug.Log("Replacing file name: " + FileName + " with " + SavedGameFilePath);
+                        FileName = SavedGameFilePath;
+                    }
+                }*/
+
                 if (CharacterFiles[i].Contains("://") || CharacterFiles[i].Contains(":///"))
                 {
                     WWW UrlRequest = new WWW(CharacterFiles[i]);

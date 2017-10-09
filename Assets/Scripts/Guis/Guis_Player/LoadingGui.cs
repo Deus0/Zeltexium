@@ -21,7 +21,7 @@ namespace Zeltex.Guis
         public void SetPercentage(float NewPercent)
         {
             Percent = NewPercent;
-            PercentText.text = Mathf.RoundToInt(NewPercent * 100f) + "%";
+            PercentText.text = Mathf.FloorToInt(NewPercent * 100f) + "%";
         }
     }
 }

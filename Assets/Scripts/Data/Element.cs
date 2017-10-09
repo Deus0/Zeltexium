@@ -101,6 +101,7 @@ namespace Zeltex
                 Name = NewName;
                 HasMoved = true;
                 RenamedEvent.Invoke(this);
+                OnModified();
             }
         }
 
@@ -238,8 +239,17 @@ namespace Zeltex
                 NewElement.RunScript(Script);
             }*/
             NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-            NewElement.Name = NewName;
-            NewElement.MyFolder = NewFolder;
+            if (NewElement == null)
+            {
+                //System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(new Type[] { DataType });
+                //dynamic NewElement2 = MyConstructor.Invoke(null);
+               // NewElement = NewElement2 as Element;
+            }
+            if (NewElement != null)
+            {
+                NewElement.Name = NewName;
+                NewElement.MyFolder = NewFolder;
+            }
             return NewElement;
         }
 

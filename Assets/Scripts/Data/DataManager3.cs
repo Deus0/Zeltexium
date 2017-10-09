@@ -223,6 +223,15 @@ namespace Zeltex
                 SaveElement(MyElement);
             }
         }
+        public void SaveElement(string ElementFolderName, string ElementName)
+        {
+            ElementFolder MyFolder = GetElementFolder(ElementFolderName);
+            if (MyFolder != null)
+            {
+                Element MyElement = MyFolder.Get(ElementName);
+                SaveElement(MyElement);
+            }
+        }
 
         public void SaveElement(Element MyElement)
         {
@@ -230,7 +239,7 @@ namespace Zeltex
             if (MyFolder != null
                 && MyElement.CanSave())
             {
-                MyFolder.SaveFile(MyElement.Name, MyElement.GetScript());
+                MyFolder.SaveFile(MyElement.Name, MyElement.GetSerial());
                 MyElement.OnSaved();
             }
         }
@@ -257,6 +266,10 @@ namespace Zeltex
             if (MyFolder != null && MyFolder.Data.ContainsKey(FileName))
             {
                 return MyFolder.Get(FileName);
+            }
+            else
+            {
+                Debug.LogError("Could not find folder with name: " + FolderName);
             }
             return null;
         }
@@ -295,6 +308,7 @@ namespace Zeltex
                 }
             }
         }
+
         /// <summary>
         /// Add a texture
         /// </summary>

@@ -167,6 +167,10 @@ namespace Zeltex
             {
                 DataType = typeof(Level);
             }
+            else if (FolderName == DataFolderNames.Saves)
+            {
+                DataType = typeof(SaveGame);
+            }
 
             else if (FolderName == DataFolderNames.StatGroups)
             {

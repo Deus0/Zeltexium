@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 81857041541487770}
   - component: {fileID: 114788748654151560}
   - component: {fileID: 114341061690345964}
+  - component: {fileID: 114744114969261060}
   m_Layer: 10
   m_Name: FpsCamera
   m_TagString: Untagged
@@ -108,6 +109,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalSpeed: 30
   ViewerSpeed: 10
+--- !u!114 &114744114969261060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051870445208286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 45f1546a1408bf44a814300be1b71095, type: 2}
 --- !u!114 &114788748654151560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,12 +149,15 @@ MonoBehaviour:
       IsTrigger: 0
     ActionSpawnGuis:
       IsTrigger: 0
+    ActionSetGuiStates:
+      IsTrigger: 0
     GuisEnabled:
     - Crosshair
     - Dialogue
     - StatsBar
     - Skillbar
     - Menu
+    GuisEnabledStates: 
     MyGuis:
     - {fileID: 0}
     - {fileID: 0}

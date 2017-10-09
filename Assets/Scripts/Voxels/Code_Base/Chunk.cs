@@ -64,7 +64,7 @@ namespace Zeltex.Voxels
         private MeshCollider MyMeshCollider;
         private Int3 VoxelsRawPosition = Int3.Zero();
         [SerializeField]
-        private bool IsDirty = true;    // start as dirty until saved by level manager
+        private bool IsDirty = false;    // start as dirty until saved by level manager
 
         public bool IsDirtyTrigger()
         {
@@ -119,6 +119,10 @@ namespace Zeltex.Voxels
             if (MyMeshRenderer == null)
             {
                 MyMeshRenderer = gameObject.AddComponent<MeshRenderer>();
+                /*if (MyWorld.IsAddOutline)
+                {
+                    gameObject.AddComponent<cakeslice.Outline>();
+                }*/
             }
             MyMeshRenderer.enabled = IsMeshVisible;
             return MyMeshRenderer;

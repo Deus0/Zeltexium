@@ -94,7 +94,6 @@ namespace Zeltex.Characters
         }
         public CharacterData GetData()
         {
-            Data.Update();
             return Data;
         }
 
@@ -742,10 +741,19 @@ namespace Zeltex.Characters
 
         private void RefreshComponents2()
         {
-            MyBot = GetComponent<Bot>();
-            MyRigidbody = GetComponent<Rigidbody>();
-            MyController = GetComponent<BasicController>();
-            MyCharacterMapChecker = GetComponent<CharacterMapChecker>();
+            if (MyBot == null)
+            {
+                MyBot = GetComponent<Bot>();
+            }
+            if (MyRigidbody == null)
+            {
+                MyRigidbody = GetComponent<Rigidbody>();
+            }
+            if (MyController == null)
+            {
+                MyController = GetComponent<BasicController>();
+            }
+            //MyCharacterMapChecker = GetComponent<CharacterMapChecker>();
             //MyCharacterLimiter = GetComponent<CharacterLimiter>();
         }
 

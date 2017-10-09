@@ -52,6 +52,7 @@ namespace Zeltex
         public void SetCharacter(Character NewCharacter)
         {
             MyCharacter = NewCharacter;
+            string OldCharacterName = CharacterName;
             if (MyCharacter)
             {
                 CharacterName = MyCharacter.name;
@@ -59,6 +60,10 @@ namespace Zeltex
             else
             {
                 CharacterName = "";
+            }
+            if (OldCharacterName != CharacterName)
+            {
+                OnModified();
             }
         }
     }

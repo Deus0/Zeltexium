@@ -17,6 +17,8 @@ namespace Zeltex
     [System.Serializable]
     public class Level : Element
     {
+        public static string ChunkFileExtension = "chn";
+        public static string CharacterFileExtension = "chr";
         // The initial script for debugging
         [SerializeField, JsonProperty]
         private Int3 MyWorldSize = new Int3(0, 0, 0);
@@ -177,19 +179,19 @@ namespace Zeltex
             return FolderPath;
         }
 
-        public static string ChunkFileExtension = "chn";
-        public static string CharacterFileExtension = "chr";
-        public void SaveOpenCharacters(bool IsForceSaveAll = false)
+        public void SaveOpenCharacters(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
             for (int i = 0; i < MyCharacters.Count;i++)
             {
                 if (MyCharacters[i])
                 {
                     CharacterData MyData = MyCharacters[i].GetData();
+                    MyData.SetCharacter(MyCharacters[i], false);
+                    MyData.RefreshTransform();
                     if (MyData.CanSave() || IsForceSaveAll)
                     {
                         string SerializedCharacterData = MyData.GetSerial();
-                        string CharacterPath = GetFilePath(MyCharacters[i]);
+                        string CharacterPath = GetFilePath(MyCharacters[i], SaveFolderName);
                         Util.FileUtil.Save(CharacterPath, SerializedCharacterData);
                         MyData.OnSaved();
                     }
@@ -197,12 +199,8 @@ namespace Zeltex
             }
         }
 
-        public string GetFilePath(Character MyCharacter)
-        {
-            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
-        }
 
-        public void SaveOpenChunks(bool IsForceSaveAll = false)
+        public void SaveOpenChunks(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
             if (GetWorld())
             {
@@ -212,7 +210,7 @@ namespace Zeltex
                     if (MyChunk && (MyChunk.IsDirtyTrigger() || IsForceSaveAll))
                     {
                         string ChunkData = Util.FileUtil.ConvertToSingle(MyChunk.GetScript());
-                        string ChunkPath = GetFilePath(MyChunk);
+                        string ChunkPath = GetFilePath(MyChunk, SaveFolderName);
                         Debug.Log("Saving chunk to: " + ChunkPath);
                         Util.FileUtil.Save(ChunkPath, ChunkData);
                     }
@@ -228,11 +226,6 @@ namespace Zeltex
             }
         }
 
-        public string GetFilePath(Chunk MyChunk)
-        {
-            return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
-        }
-
         public int GetCharactersCount()
         {
             return CharactersCount;
@@ -240,8 +233,60 @@ namespace Zeltex
 
         public void AddCharacter(Character NewCharacter)
         {
-            MyCharacters.Add(NewCharacter);
+            if (MyCharacters.Contains(NewCharacter) == false)
+            {
+                MyCharacters.Add(NewCharacter);
+                //CharactersCount = MyCharacters.Count;
+                //OnModified();
+            }
         }
+
+        public int GetRealCharactersCount()
+        {
+            return MyCharacters.Count;
+        }
+        public Character GetCharacter(int CharacterIndex)
+        {
+            return MyCharacters[CharacterIndex];
+        }
+
+        #region Paths
+        public string GetFilePath(Chunk MyChunk, string SaveFolderName = "")
+        {
+            if (SaveFolderName == "")
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
+            }
+            else
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
+            }
+        }
+
+        public string GetFilePath(Character MyCharacter, string SaveFolderName = "")
+        {
+            if (SaveFolderName == "")
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
+            }
+            else
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
+            }
+        }
+
+        public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
+        {
+            if (SaveFolderName == "")
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + CharacterName + "." + CharacterFileExtension;
+            }
+            else
+            {
+                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + CharacterName + "." + CharacterFileExtension;
+            }
+        }
+        #endregion
     }
 
 }

@@ -342,8 +342,6 @@ namespace Zeltex
                     MyController.SetMovementSpeed(MyController.GetMovementSpeed() * 1.2f);
                 }
                 BodyBone = MyCharacter.transform;
-                //CameraBone.localPosition = MySkeleton.GetOriginalCameraPosition() + CameraPositionOffset;
-                //CameraBone.localEulerAngles = CameraRotationOffset;
                 if (!IsAttachedToCharacter)
                 {
                     transform.localPosition = CameraPositionOffset;
@@ -356,18 +354,7 @@ namespace Zeltex
 				if (MyGuiManager != null)// && MyGuiManager.GetZelGui("Label"))
                 {
                     MyGuiManager.Spawn("Menu");
-                    /*MyGuiManager.Spawn("StatsBar");
-                    MyGuiManager.Spawn("Crosshair");
-                    MyGuiManager.Spawn("SkillBar");
-                    MyGuiManager.Spawn("Inventory");
-                    MyGuiManager.Spawn("Tooltip");
-                    MyGuiManager.Spawn("ScoreBoard");
-                    MyGuiManager.Spawn("QuestLog");
-                    MyGuiManager.Spawn("QuestBegin");
-                    MyGuiManager.Spawn("Dialogue");*/
-                    //SetGuiTargets(transform, null);
                 }
-                //MyCharacter.GetComponent<CharacterStats>().AddStat("Strength", 15);
                 SetInput(true); // turn mouse off
             }
         }
