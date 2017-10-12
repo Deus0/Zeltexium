@@ -57,7 +57,17 @@ namespace Zeltex.Guis
         private void Awake()
         {
             ScreenSizeChangeEvent = OnScreenSizeChange;
+            if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
+            {
+                TargetObject = CameraManager.Get().GetMainCamera().transform;
+                CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChange);
+            }
             DataManager.Get().StartCoroutine(AwakeRoutine());
+        }
+
+        private void OnMainCameraChange()
+        {
+            TargetObject = CameraManager.Get().GetMainCamera().transform;
         }
 
         private IEnumerator AwakeRoutine()
@@ -92,10 +102,6 @@ namespace Zeltex.Guis
 
         public void OnBegin()
         {
-            if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
-            {
-                TargetObject = CameraManager.Get().GetMainCamera().transform;
-            }
             if (TargetObject != null)
             {
                 CheckOrbitPosition();

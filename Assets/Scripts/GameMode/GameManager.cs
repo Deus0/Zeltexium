@@ -91,10 +91,18 @@ namespace Zeltex
             {
                 Game.GameMode.IsPlaying = false;
                 PoolsManager.Get().ClearPools.Invoke();
+                Voxels.WorldManager.Get().Clear();
+                Characters.CharacterManager.Get().Clear();
+
                 Zeltex.Networking.NetworkManager.Get().StopHosting();
                 OnEndGame.Invoke();
+                GameObject MainMenuGui = GuiSpawner.Get().SpawnGui("MainMenu");
+                if (MainMenuGui)
+                {
+                    MainMenuGui.GetComponent<ZelGui>().TurnOn();
+                    MainMenuGui.GetComponent<ZelGui>().Enable();
+                }
                 CameraManager.Get().EnableMainMenuCamera();
-                GuiSpawner.Get().SpawnGui("MainMenu");
             }
         }
 

@@ -19,18 +19,38 @@ namespace Zeltex.Guis
         {
             if (GuiSpawner.Get())
             {
+                if (SpawnedGui != null)
+                {
+                   // Destroy(SpawnedGui);
+                    GuiSpawner.Get().DestroySpawn(SpawnedGui);
+                }
+
+                SpawnedGui = GuiSpawner.Get().GetGui(GuiName);
                 if (SpawnedGui == null)
                 {
                     SpawnedGui = GuiSpawner.Get().SpawnGui(GuiName);
-                    if (PreviousGui)
+                }
+                if (SpawnedGui)
+                {
+                    ZelGui MyGui = SpawnedGui.GetComponent<ZelGui>();
+                    if (MyGui)
                     {
-                        Destroy(PreviousGui);
+                        MyGui.TurnOn();
+                        MyGui.Enable();
+                    }
+                    else
+                    {
+                        Debug.LogError("Unable to GetComponent ZelGui off gui: " + GuiName);
                     }
                 }
                 else
                 {
-                    Destroy(SpawnedGui);
+                    Debug.LogError("Unable to spawn gui: " + GuiName);
                 }
+                /*if (PreviousGui)
+                {
+                    Destroy(PreviousGui);
+                }*/
             }
         }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,6 @@ using Zeltex.Skeletons;
 using Zeltex.Game;
 using Zeltex.Dialogue;
 using Zeltex.Guis;
-using Zeltex.Guis.Characters;
 using Zeltex.Combat;
 using Zeltex.Util;
 using Zeltex.Quests;
@@ -64,15 +64,15 @@ namespace Zeltex.Characters
         private Bot MyBot;
         private Rigidbody MyRigidbody;
         private BasicController MyController;
-        private CharacterMapChecker MyCharacterMapChecker;
+        //private CharacterMapChecker MyCharacterMapChecker;
         private CapsuleCollider MyCollider;
 
         // Saving?
         private bool HasInitialized;
         private UniversalCoroutine.Coroutine DeathHandle;
-        public static string FolderPath = "Characters/";
-        private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
-        private string LastSavedFileName = "";
+        //public static string FolderPath = "Characters/";
+        //private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
+        //private string LastSavedFileName = "";
 
         [HideInInspector]
         public Chunk MyChunk;
@@ -358,13 +358,13 @@ namespace Zeltex.Characters
 			{
 				gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
             }
-            if (DeathHandle != null)
+            if (DeathHandle == null)
             {
-                UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
+                //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
+                DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
             }
-            DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
 
-            
+
             if (IsPlayer)
             {
                 ZelGui RespawnGui = GetGuis().GetZelGui("Respawn");
@@ -375,10 +375,10 @@ namespace Zeltex.Characters
             }
         }
 
-        private System.Collections.IEnumerator DeathRoutine()
+        public IEnumerator DeathRoutine()
         {
-            float TimeStarted = Time.time;
-            float DeathTime = Random.Range(14f, 30f);
+            /*float TimeStarted = Time.time;
+            float DeathTime = Random.Range(5, 5);
             if (IsPlayer)
             {
                 DeathTime = 5f;
@@ -386,11 +386,11 @@ namespace Zeltex.Characters
             while (Time.time - TimeStarted <= DeathTime)
             {
                 yield return null;
-            }
-            if (Data.CanRespawn)
+            }*/
+            // if (Data.CanRespawn)
             {
                 MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll();
-                TimeStarted = Time.time;
+                float TimeStarted = Time.time;
                 while (Time.time - TimeStarted <= 5.1f)
                 {
                     yield return null;
@@ -405,7 +405,7 @@ namespace Zeltex.Characters
                     CameraManager.Get().GetMainCamera().transform.localRotation = Quaternion.identity;
                 }
             }
-            else
+            /*else
             {
                 if (IsPlayer)
                 {
@@ -413,7 +413,8 @@ namespace Zeltex.Characters
                 }
                 Data.MyGuis.Clear();
                 CharacterManager.Get().ReturnObject(this);
-            }
+            }*/
+            DeathHandle = null;
         }
 
         public bool StopDeath()

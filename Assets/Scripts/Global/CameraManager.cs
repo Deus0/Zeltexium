@@ -120,9 +120,12 @@ namespace Zeltex
 
         public void EnableGameCamera()
         {
-            if (FpsCamera && GuiCamera)
+            if (GuiCamera)
             {
                 GuiCamera.gameObject.SetActive(false);
+            }
+            if (FpsCamera)
+            {
                 FpsCamera.gameObject.SetActive(true);
                 MainCamera = FpsCamera;
                 OnMainCameraChange.Invoke();
@@ -131,9 +134,12 @@ namespace Zeltex
 
         public void EnableMainMenuCamera()
         {
-            if (FpsCamera && GuiCamera)
+            if (FpsCamera)
             {
                 FpsCamera.gameObject.SetActive(false);
+            }
+            if (GuiCamera)
+            {
                 GuiCamera.gameObject.SetActive(true);
                 MainCamera = GuiCamera;
                 OnMainCameraChange.Invoke();

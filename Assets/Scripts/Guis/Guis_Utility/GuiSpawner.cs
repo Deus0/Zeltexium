@@ -272,9 +272,13 @@ namespace Zeltex.Guis
                 Destroy(MyGui);
             }
         }
+
         public void DestroySpawn(GameObject MyGui)
         {
-            GuiSpawns.Remove(MyGui);
+            if (GuiSpawns.Contains(MyGui))
+            {
+                GuiSpawns.Remove(MyGui);
+            }
             Destroy(MyGui);
         }
 

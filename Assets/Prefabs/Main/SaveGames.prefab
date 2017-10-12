@@ -2854,7 +2854,6 @@ MonoBehaviour:
   MyToggles: []
   MyLists:
   - {fileID: 114396838264018550}
-  MyNames: []
   OnConfirm:
     m_PersistentCalls:
       m_Calls: []

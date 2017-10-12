@@ -177,13 +177,13 @@ namespace cakeslice
                 {
                     LayerMask l = sourceCamera.cullingMask;
 
-                    if(outline != null && l == (l | (1 << outline.originalLayer)))
+                    if(outline != null && outline.Renderer != null && l == (l | (1 << outline.originalLayer)))
                     {
                         for(int v = 0; v < outline.Renderer.sharedMaterials.Length; v++)
                         {
                             Material m = null;
 
-                            if(outline.Renderer.sharedMaterials[v].mainTexture != null && outline.Renderer.sharedMaterials[v])
+                            if(outline.Renderer && outline.Renderer.sharedMaterials[v] && outline.Renderer.sharedMaterials[v].mainTexture != null && outline.Renderer.sharedMaterials[v])
                             {
                                 foreach(Material g in materialBuffer)
                                 {
@@ -221,7 +221,7 @@ namespace cakeslice
 
                             commandBuffer.DrawRenderer(outline.GetComponent<Renderer>(), m, 0, 0);
                             MeshFilter mL = outline.GetComponent<MeshFilter>();
-                            if(mL)
+                            if(mL && mL.sharedMesh)
                             {
                                 for(int i = 1; i < mL.sharedMesh.subMeshCount; i++)
                                     commandBuffer.DrawRenderer(outline.GetComponent<Renderer>(), m, i, 0);
