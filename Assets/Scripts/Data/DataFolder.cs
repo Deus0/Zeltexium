@@ -187,11 +187,21 @@ namespace Zeltex
             //Debug.LogError("Saving: " + SavePath + ":" + Data);
             FileUtil.Save(SavePath, Data);
         }
+
         public void SaveFile(string FileName, string Data)
         {
             string SavePath = GetFolderPath() + FileName + "." + FileExtension;
-            //Debug.LogError("Saving: " + SavePath + ":" + Data);
-            FileUtil.Save(SavePath, Data);
+            Debug.Log("Saving: " + SavePath + ":" + Data);
+            //FileManagement.SaveFile(SavePath, Data);
+            string DirecetoryPath = Path.GetDirectoryName(SavePath);
+            if (FileManagement.DirectoryExists(DirecetoryPath, true, true))
+            {
+                FileManagement.SaveFile(SavePath, Data, false, true);
+            }
+            else
+            {
+                Debug.LogError("Cannot save path as directory does not exist: " + SavePath);
+            }
         }
 
         public void SaveFileTexture(int FileIndex, Texture2D Data)

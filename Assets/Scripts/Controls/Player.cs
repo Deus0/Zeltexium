@@ -107,6 +107,11 @@ namespace Zeltex
                         MyGuiManager.EnableGui("Menu");
                         GameManager.Get().PauseGame(this);
                     }
+                    else
+                    {
+                        GameManager.Get().ResumeGame();
+                        MyGuiManager.DisableGui("Menu");
+                    }
                     //ToggleMouse();
                    /* if (MyGuiManager == null)
                     {
@@ -138,9 +143,16 @@ namespace Zeltex
             base.SetInput(IsInput_);
             //IsFPSEnabled = IsFirstPersonControl;
             //IsCursorActive = !IsInput;
-            if (MyCrosshair == null)
+            if (MyCrosshair == null && MyCharacter)
             {
-                MyCrosshair = MyCharacter.GetGuis().GetZelGui("Crosshair");
+                if (MyCharacter.GetGuis() != null)
+                {
+                    MyCrosshair = MyCharacter.GetGuis().GetZelGui("Crosshair");
+                }
+                else
+                {
+                    Debug.LogError(MyCharacter.name + " has no gui");
+                }
             }
             if (MyCrosshair)
             {
@@ -153,7 +165,7 @@ namespace Zeltex
                     MyCrosshair.TurnOff();
                 }
             }
-            if (MyController == null)
+            if (MyController == null && MyCharacter)
             {
                 MyController = MyCharacter.GetComponent<AI.BasicController>();
             }
@@ -162,7 +174,7 @@ namespace Zeltex
                 MyController.SetRotationVelocity(Vector3.zero);
                 MyController.SetRotationState(IsInput);
             }
-            if (MyCharacter.GetComponent<Mover>())
+            if (MyCharacter && MyCharacter.GetComponent<Mover>())
             {
                 MyCharacter.GetComponent<Mover>().enabled = IsInput;
             }

@@ -320,31 +320,39 @@ namespace Zeltex.Voxels
             if (SavedGame != null)
             {
                 string SaveGameFolderPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SavedGame.Name + "/" + NewLevel.Name + "/";
-                string[] FilesInSaveFolder = FileManagement.ListFiles(SaveGameFolderPath, true, true);
-                for (int i = 0; i < FilesInSaveFolder.Length; i++)
+                if (FileManagement.DirectoryExists(SaveGameFolderPath))
                 {
-                    if (Path.GetExtension(FilesInSaveFolder[i]) == "." + CharacterFileExtension)
+                    string[] FilesInSaveFolder = FileManagement.ListFiles(SaveGameFolderPath, true, true);
+                    for (int i = 0; i < FilesInSaveFolder.Length; i++)
                     {
-                        string NewCharacterPath = SaveGameFolderPath + FilesInSaveFolder[i];
-                        string CharacterName = Path.GetFileNameWithoutExtension(FilesInSaveFolder[i]);
-                        bool IsInFilesAlready = false;
-                        Debug.Log("Looking for: " + CharacterName + " at new path: " + FilesInSaveFolder[i] + " --- " + NewCharacterPath);
-                        for (int j = 0; j < CharacterFiles.Count; j++)
+                        if (Path.GetExtension(FilesInSaveFolder[i]) == "." + CharacterFileExtension)
                         {
-                            if (Path.GetFileNameWithoutExtension(CharacterFiles[j]) == CharacterName)
+                            string NewCharacterPath = SaveGameFolderPath + FilesInSaveFolder[i];
+                            string CharacterName = Path.GetFileNameWithoutExtension(FilesInSaveFolder[i]);
+                            bool IsInFilesAlready = false;
+                            Debug.Log("Looking for: " + CharacterName + " at new path: " + FilesInSaveFolder[i] + " --- " + NewCharacterPath);
+                            for (int j = 0; j < CharacterFiles.Count; j++)
                             {
-                                Debug.LogError("Setting for: " + CharacterName + " at New: " + NewCharacterPath + " Old: " + CharacterFiles[j]);
-                                CharacterFiles[j] = NewCharacterPath;
-                                IsInFilesAlready = true;
-                                break;
+                                if (Path.GetFileNameWithoutExtension(CharacterFiles[j]) == CharacterName)
+                                {
+                                    Debug.LogError("Setting for: " + CharacterName + " at New: " + NewCharacterPath + " Old: " + CharacterFiles[j]);
+                                    CharacterFiles[j] = NewCharacterPath;
+                                    IsInFilesAlready = true;
+                                    break;
+                                }
+                            }
+                            if (!IsInFilesAlready)
+                            {
+                                Debug.LogError("Adding for: " + CharacterName + " at New: " + NewCharacterPath);
+                                CharacterFiles.Add(NewCharacterPath);
                             }
                         }
-                        if (!IsInFilesAlready)
-                        {
-                            Debug.LogError("Adding for: " + CharacterName + " at New: " + NewCharacterPath);
-                            CharacterFiles.Add(NewCharacterPath);
-                        }
                     }
+                }
+                else
+                {
+                    Debug.Log("Save game path does not exist: " + SaveGameFolderPath);
+                    // no need to add changes
                 }
             }
             //Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);

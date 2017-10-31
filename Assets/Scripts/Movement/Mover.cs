@@ -25,6 +25,7 @@ namespace Zeltex
         public LayerMask GroundLayer;
         private Vector2 MovementInput = Vector2.zero;
         private Vector2 RotationInput = Vector2.zero;
+        private float OriginalDrag;
 
         public void SetCameraBone(Transform NewCameraBone)
         {
@@ -70,8 +71,7 @@ namespace Zeltex
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             MyBot = GetComponent<AI.Bot>();
-            //CameraTransform = GetComponent<Characters.Character>().GetSkeleton().GetSkeleton().GetCameraBone();
-            //mouseLook.Init(transform, CameraTransform);
+            OriginalDrag = m_RigidBody.drag;
         }
 
         public void SetBot(AI.Bot NewBot)
@@ -141,10 +141,9 @@ namespace Zeltex
                     m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
                 }
             }
-
             if (m_IsGrounded)
             {
-                m_RigidBody.drag = 1f;
+                m_RigidBody.drag = OriginalDrag;
 
                 if (m_Jump)
                 {
@@ -164,7 +163,7 @@ namespace Zeltex
                 m_RigidBody.drag = 0f;
                 if (m_PreviouslyGrounded && !m_Jumping)
                 {
-                    StickToGroundHelper();
+                    //StickToGroundHelper();
                 }
             }
             m_Jump = false;
@@ -181,9 +180,15 @@ namespace Zeltex
         private void StickToGroundHelper()
         {
             RaycastHit hitInfo;
-            if (Physics.SphereCast(transform.position, m_Capsule.radius * (1.0f - advancedSettings.shellOffset), Vector3.down, out hitInfo,
-                                   ((m_Capsule.height / 2f) - m_Capsule.radius) +
-                                   advancedSettings.stickToGroundHelperDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(
+                                    transform.position,
+                                    m_Capsule.radius * (1.0f - advancedSettings.shellOffset), 
+                                    Vector3.down, out hitInfo,
+                                   // ((m_Capsule.height / 2f) - m_Capsule.radius) +
+                                   //advancedSettings.stickToGroundHelperDistance,
+                                   (m_Capsule.height / 2f),
+                                   GroundLayer))
+                                   //, QueryTriggerInteraction.Ignore))// Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 if (Mathf.Abs(Vector3.Angle(hitInfo.normal, Vector3.up)) < 85f)
                 {
@@ -227,13 +232,20 @@ namespace Zeltex
             }
         }
 
+        public bool IsDebugRay;
         /// sphere cast down just beyond the bottom of the capsule to see if the capsule is colliding round the bottom
         private void GroundCheck()
         {
             m_PreviouslyGrounded = m_IsGrounded;
             RaycastHit hitInfo;
-            if (Physics.SphereCast(transform.position, m_Capsule.radius * (1.0f - advancedSettings.shellOffset), Vector3.down, out hitInfo,
-                                   ((m_Capsule.height / 2f) - m_Capsule.radius) + advancedSettings.groundCheckDistance, GroundLayer, QueryTriggerInteraction.Ignore))   // Physics.AllLayers
+            float RayDistance = 1.02f * ((m_Capsule.height / 2f) + Mathf.Abs(m_Capsule.center.y));
+            if (IsDebugRay)
+            {
+                Debug.DrawLine(transform.position, transform.position - transform.up * RayDistance, Color.red);
+            }
+            if (Physics.Raycast(transform.position, -transform.up, out hitInfo, RayDistance, GroundLayer))
+            //if (Physics.SphereCast(transform.position, m_Capsule.radius * (1.0f - advancedSettings.shellOffset), Vector3.down, out hitInfo,
+           //                        ((m_Capsule.height / 2f) - m_Capsule.radius) + advancedSettings.groundCheckDistance, GroundLayer, QueryTriggerInteraction.Ignore))   // Physics.AllLayers
             {
                 m_IsGrounded = true;
                 m_GroundContactNormal = hitInfo.normal;

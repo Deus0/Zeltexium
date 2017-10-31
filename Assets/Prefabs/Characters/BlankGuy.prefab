@@ -75,14 +75,14 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189778}
   serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 0.1
+  m_Mass: 4
+  m_Drag: 1
   m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!82 &8228008
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1009,8 +1009,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnUpdateStats:
         m_PersistentCalls:
           m_Calls:
@@ -1080,8 +1080,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       ActionLoadStats:
         IsTrigger: 0
       ActionStatsName: 
@@ -1146,7 +1146,7 @@ MonoBehaviour:
         OnAddItem:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         OnUpdateItem:
           m_PersistentCalls:
@@ -1166,7 +1166,7 @@ MonoBehaviour:
         OnExchangeCurrency:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         OnItemUpdate:
           m_PersistentCalls:
@@ -1176,7 +1176,7 @@ MonoBehaviour:
         OnLoadEvent:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
       EquipmentStats:
         Name: Empty
@@ -1233,12 +1233,12 @@ MonoBehaviour:
         OnNewStats:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         OnUpdateStats:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
       IsAlive: 1
       IsInflictHeightDamage: 1
@@ -1414,12 +1414,12 @@ MonoBehaviour:
           OnNewStats:
             m_PersistentCalls:
               m_Calls: []
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           OnUpdateStats:
             m_PersistentCalls:
               m_Calls: []
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
         MyZexel:
           Name: Moss
@@ -1590,12 +1590,12 @@ MonoBehaviour:
           OnNewStats:
             m_PersistentCalls:
               m_Calls: []
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           OnUpdateStats:
             m_PersistentCalls:
               m_Calls: []
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
         MyZexel:
           Name: Bricks
@@ -1728,8 +1728,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnUpdateItem:
         m_PersistentCalls:
           m_Calls:
@@ -1880,8 +1880,8 @@ MonoBehaviour:
       OnExchangeCurrency:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnItemUpdate:
         m_PersistentCalls:
           m_Calls: []
@@ -1890,8 +1890,8 @@ MonoBehaviour:
       OnLoadEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
     Equipment:
       Name: Empty
       HasChanged: 0
@@ -1951,8 +1951,8 @@ MonoBehaviour:
       OnAddItem:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnUpdateItem:
         m_PersistentCalls:
           m_Calls: []
@@ -1971,8 +1971,8 @@ MonoBehaviour:
       OnExchangeCurrency:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnItemUpdate:
         m_PersistentCalls:
           m_Calls: []
@@ -1981,8 +1981,8 @@ MonoBehaviour:
       OnLoadEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
     Backpack:
       Name: Empty
       HasChanged: 0
@@ -2042,8 +2042,8 @@ MonoBehaviour:
       OnAddItem:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnUpdateItem:
         m_PersistentCalls:
           m_Calls: []
@@ -2062,8 +2062,8 @@ MonoBehaviour:
       OnExchangeCurrency:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnItemUpdate:
         m_PersistentCalls:
           m_Calls: []
@@ -2072,8 +2072,8 @@ MonoBehaviour:
       OnLoadEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
     MyQuestLog:
       Name: Empty
       HasChanged: 0
@@ -2134,13 +2134,13 @@ MonoBehaviour:
       OnAddQuest:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       OnCompletedQuest:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
     MyDialogue:
       Name: Empty
       HasChanged: 0
@@ -2198,8 +2198,8 @@ MonoBehaviour:
       OnEndTree:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
     MySkeleton:
       Name: Texpie
       HasChanged: 0
@@ -2480,8 +2480,8 @@ MonoBehaviour:
               IsMeshColliders: 0
               IsConvexMeshes: 1
               OnLoadSkeleton:
-                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
+                  Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
               MyCameraBone: {fileID: 0}
               MyBoneHead: {fileID: 444750}
               IsReCalculateBounds: 0
@@ -2641,8 +2641,8 @@ MonoBehaviour:
               IsMeshColliders: 0
               IsConvexMeshes: 1
               OnLoadSkeleton:
-                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
+                  Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
               MyCameraBone: {fileID: 0}
               MyBoneHead: {fileID: 444750}
               IsReCalculateBounds: 0
@@ -2691,7 +2691,7 @@ MonoBehaviour:
                   m_StringArgument: 
                   m_BoolArgument: 0
                 m_CallState: 2
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           MyCameraBone: {fileID: 0}
           MyBoneHead: {fileID: 444750}
@@ -2922,8 +2922,8 @@ MonoBehaviour:
               IsMeshColliders: 0
               IsConvexMeshes: 1
               OnLoadSkeleton:
-                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
+                  Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
               MyCameraBone: {fileID: 0}
               MyBoneHead: {fileID: 444750}
               IsReCalculateBounds: 0
@@ -3083,8 +3083,8 @@ MonoBehaviour:
               IsMeshColliders: 0
               IsConvexMeshes: 1
               OnLoadSkeleton:
-                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
+                m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
+                  Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
               MyCameraBone: {fileID: 0}
               MyBoneHead: {fileID: 444750}
               IsReCalculateBounds: 0
@@ -3133,7 +3133,7 @@ MonoBehaviour:
                   m_StringArgument: 
                   m_BoolArgument: 0
                 m_CallState: 2
-            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+            m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           MyCameraBone: {fileID: 0}
           MyBoneHead: {fileID: 444750}
@@ -3184,8 +3184,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       MyCameraBone: {fileID: 0}
       MyBoneHead: {fileID: 444750}
       IsReCalculateBounds: 0
@@ -3274,8 +3274,8 @@ MonoBehaviour:
   OnEndTalkEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnReturnToPool:
     m_PersistentCalls:
       m_Calls: []
@@ -3394,13 +3394,13 @@ MonoBehaviour:
   OnUpdateFrames:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnUpdatedTimeEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   PlayPause:
     IsTrigger: 0
   ActionGenerateAnimation:
@@ -3598,7 +3598,7 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: EmissionModule.rate.scalar
+      propertyPath: EmissionModule.rateOverTime.scalar
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -3614,7 +3614,7 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: ShapeModule.radius
+      propertyPath: ShapeModule.radius.value
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -4057,6 +4057,66 @@ Prefab:
       propertyPath: OnAddLogString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189778}
@@ -4117,12 +4177,12 @@ MonoBehaviour:
   IsPlayer: 0
   CameraTransform: {fileID: 0}
   movementSettings:
-    ForwardSpeed: 1
-    BackwardSpeed: 1
-    StrafeSpeed: 1
+    ForwardSpeed: 3
+    BackwardSpeed: 2
+    StrafeSpeed: 3
     RunMultiplier: 1
     RunKey: 304
-    JumpForce: 12
+    JumpForce: 15
     SlopeCurveModifier:
       serializedVersion: 2
       m_Curve:
@@ -4147,7 +4207,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    CurrentTargetSpeed: 1
+    CurrentTargetSpeed: 8
   mouseLook:
     XSensitivity: 2
     YSensitivity: 2
@@ -4158,11 +4218,11 @@ MonoBehaviour:
     smoothTime: 5
     lockCursor: 1
   advancedSettings:
-    groundCheckDistance: 0.2
-    stickToGroundHelperDistance: 0.1
-    slowDownRate: 150
-    airControl: 1
-    shellOffset: 0.01
+    groundCheckDistance: 0.01
+    stickToGroundHelperDistance: 0.5
+    slowDownRate: 20
+    airControl: 0
+    shellOffset: 0
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -4204,7 +4264,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189778}
-  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.15

@@ -347,6 +347,31 @@ namespace Zeltex
         }
 
         /// <summary>
+        /// Removes a particular data
+        /// </summary>
+        public void RemoveElement(string FolderName, string FileName)
+        {
+            ElementFolder MyFolder = GetElementFolder(FolderName);
+            if (MyFolder != null)
+            {
+                int IndexOf = MyFolder.IndexOf(FileName);
+                if (IndexOf != -1)
+                {
+                    MyFolder.Remove(IndexOf);
+                    if (FolderName == DataFolderNames.VoxelMeta)
+                    {
+                        Voxels.VoxelManager.Get().RemoveMeta(IndexOf);
+                    }
+                    if (FolderName == DataFolderNames.PolygonModels)
+                    {
+                        Voxels.VoxelManager.Get().RemoveModel(IndexOf);
+                    }
+                    OnUpdatedResources.Invoke();
+                }
+            }
+        }
+
+        /// <summary>
         /// returns the size of a folder
         /// </summary>
         public int GetSizeElements(string FolderName)

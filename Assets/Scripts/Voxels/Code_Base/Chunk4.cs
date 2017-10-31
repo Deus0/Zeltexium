@@ -52,6 +52,8 @@ namespace Zeltex.Voxels
                 Debug.LogError(name + " didnt have a LookupTable");
                 MyWorld.MyLookupTable = new VoxelLookupTable();
             }
+            bool DidUpdateChunk = false;
+            bool DidUpdateVoxel = false;
             MyWorld.MyLookupTable.AddName("Color");
             for (LoadingVoxelIndex.x = 0; LoadingVoxelIndex.x < Chunk.ChunkSize; LoadingVoxelIndex.x++)
             {
@@ -76,7 +78,11 @@ namespace Zeltex.Voxels
                                         }
                                         MassUpdateColor = Color.white;
                                         MassUpdatePosition.Set(LoadingVoxelIndex);
-                                        UpdateBlockTypeLoading();
+                                        DidUpdateVoxel = UpdateBlockTypeLoading();
+                                        if (DidUpdateChunk == false && DidUpdateVoxel)
+                                        {
+                                            DidUpdateChunk = true;
+                                        }
                                     }
                                     //DidUpdate = UpdateBlockTypeMass(VoxelIndex, MyBlockType, Color.white);
                                     /*if (DidUpdate)
@@ -119,8 +125,11 @@ namespace Zeltex.Voxels
                                         }
                                         MassUpdateVoxelIndex = MyBlockType;
                                         MassUpdatePosition.Set(LoadingVoxelIndex);
-                                        UpdateBlockTypeLoading();
-                                        //Debug.LogError("Updating block: " + VoxelIndex.GetVector().ToString());
+                                        DidUpdateVoxel = UpdateBlockTypeLoading();
+                                        if (DidUpdateChunk == false && DidUpdateVoxel)
+                                        {
+                                            DidUpdateChunk = true;
+                                        }
                                     }
                                     //DidUpdate = UpdateBlockTypeMass(VoxelIndex, MyBlockType, MyColor);
                                     /*if (DidUpdate)
@@ -138,7 +147,7 @@ namespace Zeltex.Voxels
                         //Debug.LogError("Running script for: " + name + "'s VoxelDatas:" + MyVoxels.GetVoxelRaw(DebugVoxelIndex).GetVoxelType().ToString());
                     }
                 }
-                if (LoadingVoxelIndex.x % 2 == 0)
+                if (DidUpdateChunk && LoadingVoxelIndex.x % 2 == 0)
                 {
                     yield return null;
                 }
@@ -147,7 +156,10 @@ namespace Zeltex.Voxels
             WasMassUpdated = true;
 
             //Debug.LogError("Finished loading script on chunk: " + name + ":" + MyLines.Count + "\n" + FileUtil.ConvertToSingle(MyLines));
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BuildChunkMesh());
+            if (DidUpdateChunk)
+            {
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BuildChunkMesh());
+            }
 
             /*if (UnityEngine.Application.isEditor && UnityEngine.Application.isPlaying == false)
             {
@@ -277,14 +289,15 @@ namespace Zeltex.Voxels
             UpdateBlockTypeLoading();
         }
 
-        private void UpdateBlockTypeLoading()
+        private bool UpdateBlockTypeLoading()
         {
             PreviousIndex = MyVoxels.GetVoxelType(MassUpdatePosition.x, MassUpdatePosition.y, MassUpdatePosition.z);
-            if (MyVoxels.SetVoxelType(
+            bool DidUpdate = MyVoxels.SetVoxelType(
                 this,
                 MassUpdatePosition,
                 MassUpdateVoxelIndex,
-                MassUpdateColor))
+                MassUpdateColor);
+            if (DidUpdate)
             {
                 // get names
                 PreviousVoxelName = MyWorld.MyLookupTable.GetName(PreviousIndex);
@@ -295,10 +308,7 @@ namespace Zeltex.Voxels
                 // OnUpdatedAtPosition(InChunkPosition);
                 //HasChangedAt(InChunkPositionX, InChunkPositionY, InChunkPositionZ, false);
             }
-            //else
-            {
-                //Debug.LogError("Not Setting voxel at: " + MassUpdatePosition.GetVector().ToString() + " - with type: " + MassUpdateVoxelIndex);
-            }
+            return DidUpdate;
         }
         //Debug.Log("[" + name + "] Updated voxel in world position: " + WorldPosition.ToString() 
         //    + "\n" + InChunkPositionX + ":" + InChunkPositionY + ":" + InChunkPositionZ

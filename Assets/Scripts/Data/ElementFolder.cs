@@ -34,6 +34,23 @@ namespace Zeltex
             return NewFolder;
         }
 
+        public int IndexOf(string FileName)
+        {
+            if (Data.ContainsKey(FileName))
+            {
+                int FileCount = 0;
+                foreach (KeyValuePair<string, Element> MyKeyValue in Data)
+                {
+                    if (MyKeyValue.Key == FileName)
+                    {
+                        return FileCount;
+                    }
+                    FileCount++;
+                }
+            }
+            return -1;
+        }
+
         public void Revert()
         {
             Clear();

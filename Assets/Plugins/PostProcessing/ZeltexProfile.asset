@@ -109,7 +109,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 3
   colorGrading:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       tonemapping:
         tonemapper: 1
@@ -120,27 +120,27 @@ MonoBehaviour:
         neutralWhiteLevel: 5.3
         neutralWhiteClip: 10
       basic:
-        postExposure: 0
+        postExposure: 0.2
         temperature: 0
         tint: 0
         hueShift: 0
         saturation: 1
         contrast: 1
       channelMixer:
-        red: {x: 1.25, y: 0, z: 0}
-        green: {x: 0, y: 0.87, z: 0}
-        blue: {x: 0, y: 0, z: 0.87}
-        currentEditingChannel: 2
+        red: {x: 1, y: 0, z: 0}
+        green: {x: 0, y: 1, z: 0}
+        blue: {x: 0, y: 0, z: 1}
+        currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
-          slope: {r: 0.8785263, g: 0.9940565, b: 1, a: 0}
-          power: {r: 1, g: 0.840265, b: 0.85812825, a: 0}
-          offset: {r: 0.9300974, g: 1, b: 0.9757039, a: 0}
+          slope: {r: 1, g: 1, b: 1, a: 0}
+          power: {r: 1, g: 1, b: 1, a: 0}
+          offset: {r: 1, g: 1, b: 1, a: 0}
         linear:
-          lift: {r: 1, g: 1, b: 1, a: 0}
-          gamma: {r: 1, g: 1, b: 1, a: 0}
-          gain: {r: 1, g: 1, b: 1, a: 0}
+          lift: {r: 0, g: 0, b: 0, a: 0}
+          gamma: {r: 0, g: 0, b: 0, a: 0}
+          gain: {r: 0, g: 0, b: 0, a: 0}
       curves:
         master:
           curve:
@@ -296,9 +296,9 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       mode: 0
-      color: {r: 0.08088237, g: 0, b: 0, a: 1}
+      color: {r: 0.4044118, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.637
+      intensity: 0.6
       smoothness: 1
       roundness: 0
       mask: {fileID: 0}

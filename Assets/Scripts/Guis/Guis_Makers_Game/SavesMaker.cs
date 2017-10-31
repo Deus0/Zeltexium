@@ -319,6 +319,7 @@ namespace Zeltex.Guis.Maker
                     Directory.Delete(LevelPath, true);
                 }
                 MyList.RemoveSelected();
+                DataManager.Get().RemoveElement(DataFolderNames.Saves, SaveGameName);
             }
         }
         #endregion
