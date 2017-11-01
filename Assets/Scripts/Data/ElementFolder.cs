@@ -136,8 +136,29 @@ namespace Zeltex
                     {
                         for (int i = 0; i < FoundFiles.Length; i++)
                         {
-                            string FileName = System.IO.Path.GetFileNameWithoutExtension(FoundFiles[i]) + "." + FileExtension;
-                            FileNames.Add(ElementFolderPath + FileName);
+                            if (FoundFiles[i] != null)
+                            {
+                                Debug.Log("FoundFiles " + i + " " + FoundFiles[i]);
+                                try
+                                {
+                                    FileManagement.GetFileName(FoundFiles[i]);
+                                    string FileExtention = FileManagement.GetFileExtension(FoundFiles[i]);
+                                    string CulledFileName = FileManagement.GetFileName(FoundFiles[i]);
+                                    if (CulledFileName.Contains(FileExtention))
+                                    {
+                                        FileNames.Add(ElementFolderPath + CulledFileName);
+                                    }
+                                    else
+                                    {
+                                        string FileName = CulledFileName + "." + FileExtension;
+                                        FileNames.Add(ElementFolderPath + FileName);
+                                    }
+                                }
+                                catch(System.FormatException e)
+                                {
+                                    Debug.LogError("[LoadAllElements] has error: " + e.ToString());
+                                }
+                            }
                         }
                     }
                     else
@@ -147,37 +168,60 @@ namespace Zeltex
                 }
                 else
                 {
-                    Debug.LogError("Directory Path does not exist: " + ElementFolderPath);
+                    Debug.LogError("[LoadAllElements] Directory Path does not exist: " + ElementFolderPath);
                 }
             }
             else
             {
                 LogManager.Get().Log("Folder is null");
             }
-            LogManager.Get().Log("[" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension, "DataManager");
-            FileNames = FileUtil.SortAlphabetically(FileNames);
-            //List<string> MyNames = new List<string>();
-            //for (int i = 0; i < FileNames.Count; i++)
+            string LoadAllElementsDebug = "[LoadAllElements] -=- [" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension;
+            Debug.Log(LoadAllElementsDebug);
+            LogManager.Get().Log(LoadAllElementsDebug, "DataManager");
+
+            /*try
             {
-                //MyNames.Add(Path.GetFileNameWithoutExtension(MyFiles[i]));
-                //Data.Add(Path.GetFileNameWithoutExtension(FileNames[i]), default(T));
+                FileNames = FileUtil.SortAlphabetically(FileNames);
             }
-            // RetrieveElements();
-            // Load folder files
-            //List<string> FileNames = new List<string>();
+            catch (System.FormatException e)
+            {
+                Debug.LogError("Error while loading file : SortAlphabetically: " + e.ToString());
+            }*/
+
             List<string> Scripts = new List<string>();
+            string LoadLog = "";
             for (int i = 0; i < FileNames.Count; i++)
             {
-                LogManager.Get().Log("Loading Element file in : " + FolderName + " of - " + FileNames[i], "DataManagerFiles");
-                if (FileNames[i].Contains("://") || FileNames[i].Contains(":///"))
+                LoadLog = "Loading Element file in : " + FolderName + " of - " + FileNames[i];
+                LogManager.Get().Log(LoadLog, "DataManagerFiles");
+                Debug.Log(LoadLog);
+                if (FileNames[i] != null && (FileNames[i].Contains("://") || FileNames[i].Contains(":///")))
                 {
-                    WWW UrlRequest = new WWW(FileNames[i]);
-                    yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
-                    Scripts.Add(UrlRequest.text);
+                    WWW UrlRequest = null;
+                    try
+                    {
+                        UrlRequest = new WWW(FileNames[i]);
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Debug.LogError("Error while loading file : UrlRequest: " + FileNames[i] + ": " + e.ToString());
+                    }
+                    if (UrlRequest != null)
+                    {
+                        yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
+                        Scripts.Add(UrlRequest.text);
+                    }
                 }
                 else
                 {
-                    Scripts.Add(File.ReadAllText(FileNames[i]));
+                    try
+                    {
+                        Scripts.Add(File.ReadAllText(FileNames[i]));
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Debug.LogError("Error while loading file : ReadAllText: " + FileNames[i] + ": " + e.ToString());
+                    }
                 }
             }
             for (int i = 0; i < FileNames.Count; i++)
@@ -194,28 +238,33 @@ namespace Zeltex
 
         public List<Element> RetrieveElements(List<string> Names, List<string> Scripts)
         {
-            //List<string> MyScripts = LoadAllStrings();
-            //Debug.LogError("Retrieved " + MyScripts.Count + " element files.");
             List<Element> MyElements = new List<Element>();
             for (int i = 0; i < Scripts.Count; i++)
             {
-                Element NewElement = Element.Load(Names[i], this as ElementFolder, Scripts[i]);
-                if (FolderName == DataFolderNames.PolygonModels)
+                try
                 {
-                    if (VoxelManager.Get())
+                    Element NewElement = Element.Load(Names[i], this as ElementFolder, Scripts[i]);
+                    if (FolderName == DataFolderNames.PolygonModels)
                     {
-                        VoxelManager.Get().AddModelRaw(NewElement as VoxelModel);
+                        if (VoxelManager.Get())
+                        {
+                            VoxelManager.Get().AddModelRaw(NewElement as VoxelModel);
+                        }
                     }
+                    else if (FolderName == DataFolderNames.VoxelMeta)
+                    {
+                        if (VoxelManager.Get())
+                        {
+                            VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
+                        }
+                    }
+                    //Debug.LogError("Loading: " + NewElement + ":" + MyScripts[i]);
+                    MyElements.Add(NewElement);
                 }
-                else if (FolderName == DataFolderNames.VoxelMeta)
+                catch (System.FormatException e)
                 {
-                    if (VoxelManager.Get())
-                    {
-                        VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
-                    }
+                    Debug.LogError("Error while loading file: " + Names[i] + ": " + e.ToString());
                 }
-                //Debug.LogError("Loading: " + NewElement + ":" + MyScripts[i]);
-                MyElements.Add(NewElement);
             }
             return MyElements;
         }

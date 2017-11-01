@@ -196,7 +196,14 @@ namespace Zeltex
             string DirecetoryPath = Path.GetDirectoryName(SavePath);
             if (FileManagement.DirectoryExists(DirecetoryPath, true, true))
             {
-                FileManagement.SaveFile(SavePath, Data, false, true);
+                try
+                {
+                    FileManagement.SaveFile(SavePath, Data, false, true);
+                }
+                catch(System.IO.IsolatedStorage.IsolatedStorageException e)
+                {
+                    Debug.LogError(e.ToString());
+                }
             }
             else
             {

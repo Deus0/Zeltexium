@@ -907,6 +907,16 @@ public static class FileManagement
             result = System.IO.Directory.Exists(folder);
             if (!result && checkSA)
             {
+               /* if (folder.Contains("file:///"))
+                {
+                    string WindowsPath = folder.Substring(("file:///").Length, folder.Length - ("file:///").Length);
+                    Debug.Log("Checking directory exists removing file:/// --- " + WindowsPath);
+                    bool NewResult = System.IO.Directory.Exists(WindowsPath);
+                    if (NewResult)
+                    {
+                        return NewResult;
+                    }
+                }*/
                 // Then check StreamingAssets path:
 #if UNITY_ANDROID || UNITY_WEBGL
                 int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
@@ -915,11 +925,12 @@ public static class FileManagement
                 {
                     FolderNameToCheck = FolderNameToCheck.Substring(0, FolderNameToCheck.Length - 1);
                 }
+                Debug.Log("Checking if directory exists for webgl: " + FolderNameToCheck);
                 //Debug.LogError("Checking if directory exists for webgl: " + FolderNameToCheck);
                 result = CheckNameOnIndex(FolderNameToCheck, "D");
 #else
-                path = Combine(streamingAssetsPath, folder);
-                result = FileManagement.DirectoryExists(path);
+                //path = Combine(streamingAssetsPath, folder);
+                //result = FileManagement.DirectoryExists(path);
 #endif
             }
         }

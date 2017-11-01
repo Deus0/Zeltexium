@@ -228,16 +228,6 @@ namespace Zeltex
         {
             Element NewElement = new Element();
             Type DataType = DataFolderNames.GetDataType(NewFolder.FolderName);
-            /*if (IsJSONFormat)
-            {
-            }
-            else
-            {
-                System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(Type.EmptyTypes);
-                dynamic NewElement2 = MyConstructor.Invoke(null);
-                NewElement = NewElement2 as Element;
-                NewElement.RunScript(Script);
-            }*/
             NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
             if (NewElement == null)
             {
