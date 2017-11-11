@@ -187,29 +187,29 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1899823104185248}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4e42fb3417ee4fc2aa1e2fdcf9f7fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  predefinedModel: 1
+  predefinedModel: 2
   blurSize: 0.7
   blurStrength: 0.6
   bleedingSize: 0.75
   bleedingStrength: 0.5
   chromaticAberrationOffset: 1.25
-  RGBMaskIntensivity: 0.6
-  RGBMaskStrength: 0.6
+  RGBMaskIntensivity: 0.4
+  RGBMaskStrength: 0.4
   RGBMaskBleeding: 0.1
   colorNoiseMode: 0
   colorNoiseStrength: 0.15
   whiteNoiseMode: 4
-  whiteNoiseStrength: 0.25
+  whiteNoiseStrength: 0.15
   darkestLevel: {r: 0, g: 0, b: 0, a: 1}
   brightestLevel: {r: 0.92156863, g: 0.92156863, b: 0.92156863, a: 1}
-  darkestColor: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
+  darkestColor: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
   brightestColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 0.2
+  brightness: 0.1
   contrast: 0.1
   saturation: -0.05
   interferenceWidth: 25
@@ -217,9 +217,9 @@ MonoBehaviour:
   interferenceStrength: 0
   interferenceSplit: 0.25
   maskMode: 1
-  maskStrength: 0.35
-  curvatureX: 0.6
-  curvatureY: 0.6
+  maskStrength: 0.25
+  curvatureX: 0.3
+  curvatureY: 0.3
   overscan: 0
   vignetteSize: 0.35
   vignetteStrength: 0.1
@@ -252,4 +252,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SinAmplitude: {x: 12, y: 1, z: 1}
   NoiseAmplitude: {x: 0.5, y: 0.5, z: 0.5}
-  TimeScale: 0.3
+  TimeScale: 0.5

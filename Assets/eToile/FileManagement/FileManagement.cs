@@ -907,20 +907,24 @@ public static class FileManagement
             result = System.IO.Directory.Exists(folder);
             if (!result && checkSA)
             {
-               /* if (folder.Contains("file:///"))
-                {
-                    string WindowsPath = folder.Substring(("file:///").Length, folder.Length - ("file:///").Length);
-                    Debug.Log("Checking directory exists removing file:/// --- " + WindowsPath);
-                    bool NewResult = System.IO.Directory.Exists(WindowsPath);
-                    if (NewResult)
-                    {
-                        return NewResult;
-                    }
-                }*/
+                /* if (folder.Contains("file:///"))
+                 {
+                     string WindowsPath = folder.Substring(("file:///").Length, folder.Length - ("file:///").Length);
+                     Debug.Log("Checking directory exists removing file:/// --- " + WindowsPath);
+                     bool NewResult = System.IO.Directory.Exists(WindowsPath);
+                     if (NewResult)
+                     {
+                         return NewResult;
+                     }
+                 }*/
                 // Then check StreamingAssets path:
 #if UNITY_ANDROID || UNITY_WEBGL
-                int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
-                string FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                string FolderNameToCheck = folder;
+                if (folder.Contains("StreamingAssets/"))
+                {
+                    int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
+                    FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                }
                 if (FolderNameToCheck[FolderNameToCheck.Length - 1] == '/')
                 {
                     FolderNameToCheck = FolderNameToCheck.Substring(0, FolderNameToCheck.Length - 1);
@@ -1066,8 +1070,12 @@ public static class FileManagement
                 {
                     if (DirectoryExists(folder, checkSA, fullPath))
                     {
-                        int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
-                        string FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                        string FolderNameToCheck = folder;
+                        if (folder.Contains("StreamingAssets/"))
+                        {
+                            int StreamingAssetsIndex = folder.IndexOf("StreamingAssets/");
+                            FolderNameToCheck = folder.Substring(StreamingAssetsIndex);
+                        }
                         /*if (FolderNameToCheck[FolderNameToCheck.Length - 1] == '/')
                         {
                             FolderNameToCheck = FolderNameToCheck.Substring(0, FolderNameToCheck.Length - 1);
@@ -1085,6 +1093,11 @@ public static class FileManagement
                             result = FilterPathNames(result);
                         }
                     }
+                }
+                else
+                {
+                    result = System.IO.Directory.GetFiles(folder);
+                    result = FilterPathNames(result);
                 }
 #else
                 if (DirectoryExists(folder, checkSA, fullPath))

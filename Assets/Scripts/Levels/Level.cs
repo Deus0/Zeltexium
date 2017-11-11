@@ -39,7 +39,13 @@ namespace Zeltex
         protected List<Character> MyCharacters = new List<Character>();
         [SerializeField, JsonProperty]
         protected int CharactersCount = 0;
+        [SerializeField, JsonIgnore]
+        private Zeltex.Util.FilePathType MyFilePathType;
 
+        public void SetFilePathType(Zeltex.Util.FilePathType NewType)
+        {
+            MyFilePathType = NewType;
+        }
         #region Overrides
 
         private void SetDefaults()
@@ -164,9 +170,25 @@ namespace Zeltex
             return MyWorld;
         }
 
+        public string GetSaveFolderPath(string SaveFolderName)
+        {
+            Debug.LogError("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
+            string FolderPath = DataManager.Get().GetResourcesPath(Util.FilePathType.PersistentPath) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
+            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            {
+                Debug.LogError("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
+                FileManagement.CreateDirectory(FolderPath, true);
+            }
+            else
+            {
+                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+            }
+            return FolderPath;
+        }
+
         public string GetFolderPath()
         {
-            string FolderPath = DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/";
+            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
             if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
             {
                 Debug.LogError("Creating Directory for Level [" + Name + "]: "    + FolderPath);
@@ -255,11 +277,11 @@ namespace Zeltex
         {
             if (SaveFolderName == "")
             {
-                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
+                return GetFolderPath() + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;    //DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" 
             }
             else
             {
-                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
+                return GetSaveFolderPath(SaveFolderName) + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
             }
         }
 
@@ -267,11 +289,11 @@ namespace Zeltex
         {
             if (SaveFolderName == "")
             {
-                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
+                return GetFolderPath() + MyCharacter.name + "." + CharacterFileExtension;
             }
             else
             {
-                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + MyCharacter.name + "." + CharacterFileExtension;
+                return GetSaveFolderPath(SaveFolderName) + MyCharacter.name + "." + CharacterFileExtension;
             }
         }
 
@@ -279,11 +301,11 @@ namespace Zeltex
         {
             if (SaveFolderName == "")
             {
-                return DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" + CharacterName + "." + CharacterFileExtension;
+                return GetFolderPath() + CharacterName + "." + CharacterFileExtension;
             }
             else
             {
-                return DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/" + CharacterName + "." + CharacterFileExtension;
+                return GetSaveFolderPath(SaveFolderName) + CharacterName + "." + CharacterFileExtension;
             }
         }
         #endregion

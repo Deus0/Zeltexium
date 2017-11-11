@@ -92,13 +92,13 @@ namespace Zeltex.Guis.Maker
             {
                 MyList.Select(0);
             }
-            GetLabel("ResourcesDirectory").text = DataManager.GetResourcesPath();
+            GetLabel("ResourcesDirectory").text = DataManager.Get().GetResourcesPath();
         }
 
         public static List<string> GetResourceNames()
         {
             List<string> MyNames = new List<string>();
-            string MyFolderPath = DataManager.GetResourcesPath();    // get folder path
+            string MyFolderPath = DataManager.Get().GetResourcesPath();    // get folder path
             string[] MyDirectories = FileManagement.ListDirectories(MyFolderPath);
             for (int i = 0; i < MyDirectories.Length; i++)
             {
@@ -162,23 +162,24 @@ namespace Zeltex.Guis.Maker
         {
             string Name1 = GetList("MyList").GetSelectedName();
             string Name2 = NameGenerator.GenerateVoxelName();
-            string Path1 = DataManager.GetResourcesPath() + Name1 + "/";
-            string Path2 = DataManager.GetResourcesPath() + Name2 + "/";
+            string Path1 = DataManager.Get().GetResourcesPath() + Name1 + "/";
+            string Path2 = DataManager.Get().GetResourcesPath() + Name2 + "/";
             if (Directory.Exists(Path1) && !Directory.Exists(Path2))
             {
                 DirectoryCopy(Path1, Path2);
                 GetList("MyList").Add(Name2);
             }
         }
+
         private void DuplicateResourcesToPersistent()
         {
             if (DataManager.Get().MyFilePathType == FilePathType.StreamingPath)
             {
                 string Name1 = GetList("MyList").GetSelectedName();
                 string Name2 = NameGenerator.GenerateVoxelName();
-                string Path1 = DataManager.GetResourcesPath() + Name1 + "/";
+                string Path1 = DataManager.Get().GetResourcesPath() + Name1 + "/";
                 FileUtil.SetPersistentPath(FilePathType.PersistentPath);
-                string Path2 = DataManager.GetResourcesPath() + Name2 + "/";
+                string Path2 = DataManager.Get().GetResourcesPath() + Name2 + "/";
                 if (Directory.Exists(Path1) && !Directory.Exists(Path2))
                 {
                     DirectoryCopy(Path1, Path2);

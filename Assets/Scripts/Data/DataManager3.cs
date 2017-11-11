@@ -170,6 +170,17 @@ namespace Zeltex
             return null;
         }
 
+        private void LoadFolder(string FolderName)
+        {
+            Debug.LogError("Loading: " + FolderName);
+            ElementFolder MyFolder = GetElementFolder(FolderName);
+            if (MyFolder != null)
+            {
+                UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
+                Debug.LogError("Loading SUCCESS: " + FolderName);
+                OnUpdatedResources.Invoke();
+            }
+        }
         /// <summary>
         /// Loads all the data!
         /// </summary>

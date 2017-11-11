@@ -31,6 +31,11 @@ namespace Zeltex
 				}
 			}
 		}
-	}
+
+        private void Update()
+        {
+            RenderSettings.ambientIntensity = 0.5f + 0.2f * Mathf.Sin((Time.time) * 0.1f);
+        }
+    }
 }
 

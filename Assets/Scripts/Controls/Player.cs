@@ -93,7 +93,7 @@ namespace Zeltex
         {
             base.HandleInput();
             // if player is local to this machine!
-            if (MyCharacter)// && gameObject.GetComponent<PhotonView>().owner == PhotonNetwork.player)
+            if (MyCharacter && MyCharacter.enabled)// && gameObject.GetComponent<PhotonView>().owner == PhotonNetwork.player)
             {
                 if (IsInput)
                 {

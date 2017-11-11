@@ -123,6 +123,7 @@ namespace Zeltex
             Clear();
             List<string> FileNames;
             string ElementFolderPath = GetFolderPath();
+            Debug.Log(ElementFolderPath + " is beginning to load now!");
             //if (ElementFolderPath.Contains("://") || ElementFolderPath.Contains(":///"))
             //{
             FileNames = new List<string>();
@@ -131,9 +132,11 @@ namespace Zeltex
                 // string FullFolderPath = DataManager.Get().MapName + "/" + FolderName;
                 if (FileManagement.DirectoryExists(ElementFolderPath, true, true))
                 {
-                    string[] FoundFiles = FileManagement.ListFiles(ElementFolderPath, new string[] { "." + FileExtension }, true, true);//, true, true); // + "/"
+                    //
+                    string[] FoundFiles = FileManagement.ListFiles(ElementFolderPath, new string[] { "." + FileExtension }, DataManager.Get().MyFilePathType == FilePathType.StreamingPath, true);//, true, true); // + "/"
                     if (FoundFiles != null)
                     {
+                        Debug.Log(ElementFolderPath + " has found " + FoundFiles.Length + " [" + FileExtension + "] Files.");
                         for (int i = 0; i < FoundFiles.Length; i++)
                         {
                             if (FoundFiles[i] != null)
@@ -244,6 +247,12 @@ namespace Zeltex
                 try
                 {
                     Element NewElement = Element.Load(Names[i], this as ElementFolder, Scripts[i]);
+                    if (DataFolderNames.GetDataType(FolderName) == typeof(Level))
+                    {
+                        // Do the thing!
+                        Level MyLevel = NewElement as Level;
+                        MyLevel.SetFilePathType(DataManager.Get().MyFilePathType);
+                    }
                     if (FolderName == DataFolderNames.PolygonModels)
                     {
                         if (VoxelManager.Get())

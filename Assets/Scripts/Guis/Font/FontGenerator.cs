@@ -51,7 +51,7 @@ namespace Zeltex.Generators
             {
                 TileMap NewMap = new TileMap();
                 MyTexture = NewMap.CreateTileMap(CapitalLetters);
-                File.WriteAllBytes(DataManager.GetResourcesPath() + "Output.png", MyTexture.EncodeToPNG());
+                File.WriteAllBytes(DataManager.Get().GetResourcesPath() + "Output.png", MyTexture.EncodeToPNG());
                 MyFont.material.mainTexture = (MyTexture);
             }
             // Generate rects per texture i add to

@@ -39,8 +39,8 @@ namespace Zeltex.Skeletons
         public bool IsApplyJoints = true;
         private float ExplosionForce = 10f;
         private float DownExplosionForce = 20f;
-        private static float ExplosionPauseTime = 0.02f;
-        private static float ExplosionPower = 4f;
+        private static float ExplosionPauseTime = 0.05f;
+        private static float ExplosionPower = 12f;
         private Characters.Character MyCharacter;
 
         private void Awake()
@@ -204,7 +204,7 @@ namespace Zeltex.Skeletons
 		private void RemoveBone(Bone MyBone, Transform MyRoot)
         { 
             Transform MyBoneTransform = MyBone.MyTransform;
-            if (MyBone != null && MyBoneTransform)
+            if (MyBone != null && MyBoneTransform && MyBone.VoxelMesh)
             {
                 Vector3 BeforeScale = new Vector3(0.5f, 0.5f, 0.5f);
                 if (MyBone.VoxelMesh != null && MyBone.VoxelMesh.localScale != Vector3.zero)
@@ -265,7 +265,7 @@ namespace Zeltex.Skeletons
             }
         }
 
-        public void ReverseRagdoll()
+        public void ReverseRagdoll(float ReverseTime = 5)
         {
             if (MySkeleton)
             {
@@ -294,14 +294,14 @@ namespace Zeltex.Skeletons
                     AttachBone(MySkeleton.GetBones()[i]);
                 }
                 MySkeleton.GetSkeleton().RestoreDefaultPose(5f);
-                UniversalCoroutine.CoroutineManager.StartCoroutine(ReverseRagdollRoutine());
+                UniversalCoroutine.CoroutineManager.StartCoroutine(ReverseRagdollRoutine(ReverseTime));
             }
         }
 
-        private IEnumerator ReverseRagdollRoutine()
+        private IEnumerator ReverseRagdollRoutine(float ReverseTime)
         {
             float TimeStarted = Time.time;
-            while (Time.time - TimeStarted <= 5f)
+            while (Time.time - TimeStarted <= ReverseTime)
             {
                 yield return null;
             }

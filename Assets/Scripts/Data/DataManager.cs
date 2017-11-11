@@ -65,15 +65,48 @@ namespace Zeltex
 
         private void Start()
         {
+            UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine2());
+        }
+
+        private System.Collections.IEnumerator LoadAllRoutine2()
+        {
             InitializeFolders();
             DataManager.Get().MapName = PlayerPrefs.GetString(DataManager.Get().ResourcesName, "Zelnugg");
             LogManager.Get().Log("Loading Map [" + DataManager.Get().MapName + "]");
-            //if (DataManager.Get().MapName != "")
+            MakeStreaming();
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine());
+            MakePersistent();
+            //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ClearConsole());
+            // load saving
+            //LoadFolder(DataFolderNames.Saves);
+            Debug.LogError("Loading: " + DataFolderNames.Saves);
+            ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
+            if (MyFolder != null)
             {
-                DataManager.Get().LoadAll();
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
+                Debug.LogError("Loading SUCCESS: " + DataFolderNames.Saves);
+                OnUpdatedResources.Invoke();
             }
         }
-        
+
+        System.Collections.IEnumerator ClearConsole()
+        {
+            // wait until console visible
+            while (!Debug.developerConsoleVisible)
+            {
+                yield return null;
+            }
+            yield return null; // this is required to wait for an additional frame, without this clearing doesn't work (at least for me)
+
+            // Debug.ClearDeveloperConsole();
+#if UNITY_EDITOR
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.SceneView));
+            System.Type logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
+            System.Reflection.MethodInfo clearConsoleMethod = logEntries.GetMethod("Clear");
+            clearConsoleMethod.Invoke(new object(), null);
+#endif
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(DebugOpenKey))
@@ -106,10 +139,20 @@ namespace Zeltex
             return FolderPath;
         }
 
+        public string GetMapName()
+        {
+            if (MapName == "")
+            {
+                MapName = "Zelnugg";
+            }
+            return MapName;
+        }
+
         public static string GetMapPath()
         {
             return DataManager.Get().GetMapPathNS();
         }
+
         /// <summary>
         /// Folder path of current map
         /// </summary>
@@ -127,7 +170,7 @@ namespace Zeltex
             return CurrentMapPath;
         }
 
-        public static string GetMapPath(string NewMapName)
+        public string GetMapPath(string NewMapName)
         {
             if (NewMapName != "")
             {
@@ -136,46 +179,61 @@ namespace Zeltex
             else return GetResourcesPath();
         }
 
+        public void MakeStreaming()
+        {
+            MyFilePathType = FilePathType.StreamingPath;
+        }
+
+        public void MakePersistent()
+        {
+            MyFilePathType = FilePathType.PersistentPath;
+        }
+
+        public string GetResourcesPath()
+        {
+            return GetResourcesPath(MyFilePathType);
+        }
+
         /// <summary>
         /// Folder Path of maps
         /// </summary>
-        public static string GetResourcesPath()
+        public string GetResourcesPath(FilePathType MyType)
         {
-            if (DataManager.Get().MyFilePathType == FilePathType.PersistentPath)
+            if (MyType == FilePathType.PersistentPath)
             {
                 // "C:/Users/Marz/AppData/LocalLow/Zeltex/Zeltex/";//  + " / ";// + "/Resources/";
-                DataManager.Get().MapFolderPath = Application.persistentDataPath + "/";
+                MapFolderPath = Application.persistentDataPath + "/";
             }
-            else if (DataManager.Get().MyFilePathType == FilePathType.StreamingPath)
+            else if (MyType == FilePathType.StreamingPath)
             {
                 // mac or OS
 #if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-                DataManager.Get().MapFolderPath = Application.dataPath + "/StreamingAssets/";
+                MapFolderPath = Application.dataPath + "/StreamingAssets/";
 
 #elif UNITY_ANDROID
                 //On Android, use:
-                 DataManager.Get().MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
+                 MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
 #elif UNITY_IOS
                 //On iOS, use:
-                 DataManager.Get().MapFolderPath = Application.dataPath + "/Raw";
+                 MapFolderPath = Application.dataPath + "/Raw";
 #elif UNITY_WEBGL
-                DataManager.Get().MapFolderPath = Application.streamingAssetsPath + "/";
+                MapFolderPath = Application.streamingAssetsPath + "/";
 #endif
             }
             else
             {
-                DataManager.Get().MapFolderPath = Application.dataPath + "/";
-                DataManager.Get().MapFolderPath += "Resources/";
+                MapFolderPath = Application.dataPath + "/";
+                MapFolderPath += "Resources/";
 #if UNITY_EDITOR
-                DataManager.Get().MapFolderPath += "ResourcePacks/";
+                MapFolderPath += "ResourcePacks/";
 #endif
             }
-            if (!FileManagement.DirectoryExists(DataManager.Get().MapFolderPath, true, true))
+            if (!FileManagement.DirectoryExists(MapFolderPath, true, true))
             {
-                FileManagement.CreateDirectory(DataManager.Get().MapFolderPath, true);
-                Debug.Log("Created Resouces FolderPath [" + DataManager.Get().MapFolderPath + "]");
+                FileManagement.CreateDirectory(MapFolderPath, true);
+                Debug.Log("Created Resouces FolderPath [" + MapFolderPath + "]");
             }
-            return DataManager.Get().MapFolderPath;
+            return MapFolderPath;
         }
         #endregion
 
@@ -395,18 +453,6 @@ namespace Zeltex
         /// </summary>
         public void ClearAll()
         {
-            /*foreach (DataFolder<string> MyFolder in StringFolders)
-            {
-                MyFolder.Clear();
-            }
-            foreach (DataFolder<Texture2D> MyFolder in TextureFolders)
-            {
-                MyFolder.Clear();
-            }
-            foreach (DataFolder<AudioClip> MyFolder in AudioFolders)
-            {
-                MyFolder.Clear();
-            }*/
             foreach (ElementFolder MyFolder in ElementFolders)
             {
                 MyFolder.Clear();
@@ -538,7 +584,6 @@ namespace Zeltex
 
         private System.Collections.IEnumerator LoadAllRoutine()
         {
-            //CreateDirectories();    // do the thing
             PlayerPrefs.SetString(ResourcesName, MapName);
             Debug.Log("Loading Resources from folder [" + MapName + "]");
             RenameName = MapName;
@@ -557,22 +602,7 @@ namespace Zeltex
             Debug.Log("Saving " + StringFolders.Count + " Folders");
             SaveAllStrings();
             SaveAllElements();
-			//SaveAllTextures();
-			//SaveAllAudio();
 		}
-
-		/// <summary>
-		/// Save all the folders
-		/// </summary>
-		/*public void SaveAll(string FolderName)
-		{
-			Debug.Log("Saving " + StringFolders.Count + " Folders");
-            DataFolder<string> MyFolder = Get(FolderName);
-            if (MyFolder != null)
-			{
-				//MyFolder.SaveFile();
-			}
-		}*/
 
 		/// <summary>
 		/// Delete all the folders
@@ -595,22 +625,6 @@ namespace Zeltex
 					ElementFolders[i].DeleteFile(MyNames[j]);
 				}
 			}
-			/*for (int i = 0; i < TextureFolders.Count; i++)
-			{
-				List<string> MyNames = TextureFolders[i].GetNames();
-				for (int j = 0; j < MyNames.Count; j++)
-				{
-					TextureFolders[i].DeleteFile(MyNames[j]);
-				}
-			}
-			for (int i = 0; i < AudioFolders.Count; i++)
-			{
-				List<string> MyNames = AudioFolders[i].GetNames();
-				for (int j = 0; j < MyNames.Count; j++)
-				{
-					AudioFolders[i].DeleteFile(MyNames[j]);
-				}
-			}*/
 		}
         #endregion
 
@@ -677,559 +691,3 @@ namespace Zeltex
         #endregion
     }
 }
-
-/*
-
-
-        #region Stats
-        private void LoadAllStats()
-        {
-            for (int i = 0; i < StatFolders.Count; i++)
-            {
-                List<Stat> MyData = StatFolders[i].LoadAllStats();
-                for (int j = 0; j < MyData.Count; j++)
-                {
-                    StatFolders[i].Set(j, MyData[j]);
-                }
-            }
-        }
-
-        private DataFolder<Stat> GetStatFolder(string FolderName)
-        {
-            for (int i = 0; i < StatFolders.Count; i++)
-            {
-                if (StatFolders[i].FolderName == FolderName)
-                {
-                    return StatFolders[i];
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Get an item  from a folder, using an index
-        /// </summary>
-        public Stat GetStat(string FolderName, int Index)
-        {
-            DataFolder<Stat> MyFolder = GetStatFolder(FolderName);
-            if (MyFolder != null)
-            {
-                return MyFolder.Get(Index);
-            }
-            return null;
-        }
-        /// <summary>
-        /// Get an item  from a folder, using an index
-        /// </summary>
-        public Stat GetStat(string FolderName, string FileName)
-        {
-            DataFolder<Stat> MyFolder = GetStatFolder(FolderName);
-            if (MyFolder != null)
-            {
-                return MyFolder.Get(FileName);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Add a texture
-        /// </summary>
-        public void AddStat(string FolderName, Stat NewStat)
-        {
-            DataFolder<Stat> MyFolder = GetStatFolder(FolderName);
-            if (MyFolder != null && NewStat != null)
-            {
-                MyFolder.Add(NewStat.Name, NewStat);
-            }
-        }
-
-        /// <summary>
-        /// Removes a particular data
-        /// </summary>
-        public void RemoveStat(string FolderName, int FileIndex)
-        {
-            DataFolder<Stat> MyFolder = GetStatFolder(FolderName);
-            if (MyFolder != null)
-            {
-                MyFolder.Remove(FileIndex);
-            }
-        }
-
-        /// <summary>
-        /// returns the size of a folder
-        /// </summary>
-        public int GetSizeStats(string FolderName)
-        {
-            DataFolder<Stat> MyFolder = GetStatFolder(FolderName);
-            if (MyFolder != null)
-            {
-                return MyFolder.Data.Count;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        #endregion
-
-        #region Items
-        private void LoadAllItems()
-        {
-            for (int i = 0; i < ItemFolders.Count; i++)
-            {
-                List<Item> MyData = ItemFolders[i].LoadAllItems();
-                for (int j = 0; j < MyData.Count; j++)
-                {
-                    ItemFolders[i].Set(j, MyData[j]);
-                }
-            }
-        }
-        private DataFolder<Item> GetItemFolder(string FolderName)
-        {
-            for (int i = 0; i < ItemFolders.Count; i++)
-            {
-                if (ItemFolders[i].FolderName == FolderName)
-                {
-                    return ItemFolders[i];
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Get an item  from a folder, using an index
-        /// </summary>
-        public Item GetItem(string FolderName, int Index)
-        {
-            DataFolder<Item> MyFolder = GetItemFolder(FolderName);
-            if (MyFolder != null)
-            {
-                Item MyItem = MyFolder.Get(Index);
-                if (MyItem == null)
-                {
-                    //Debug.LogError("[DataManager] Item " + Index + " is null");
-                }
-                return MyItem;
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Add a texture
-        /// </summary>
-        public void AddItem(string FolderName, Item NewItem)
-        {
-            DataFolder<Item> MyFolder = GetItemFolder(FolderName);
-            if (MyFolder != null && NewItem != null)
-            {
-                MyFolder.Add(NewItem.Name, NewItem);
-            }
-        }
-
-        /// <summary>
-        /// Removes a particular data
-        /// </summary>
-        public void RemoveItem(string FolderName, int FileIndex)
-        {
-            DataFolder<Item> MyFolder = GetItemFolder(FolderName);
-            if (MyFolder != null)
-            {
-                MyFolder.Remove(FileIndex);
-            }
-        }
-
-        /// <summary>
-        /// returns the size of a folder
-        /// </summary>
-        public int GetSizeItems(string FolderName)
-        {
-            DataFolder<Item> MyFolder = GetItemFolder(FolderName);
-            if (MyFolder != null)
-            {
-                return MyFolder.Data.Count;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        #endregion
-
- #region Quests
-
-/// <summary>
-/// Get the quest folder
-/// </summary>
-private DataFolder<Quest> GetQuestFolder(string FolderName)
-{
-    for (int i = 0; i < QuestFolders.Count; i++)
-    {
-        if (QuestFolders[i].FolderName == FolderName)
-        {
-            return QuestFolders[i];
-        }
-    }
-    return null;
-}
-
-private void LoadAllQuests()
-{
-    for (int i = 0; i < QuestFolders.Count; i++)
-    {
-        List<Quest> MyData = QuestFolders[i].LoadAllQuests();
-        for (int j = 0; j < MyData.Count; j++)
-        {
-            QuestFolders[i].Set(j, MyData[j]);
-        }
-    }
-}
-/// <summary>
-/// Get an item  from a folder, using an index
-/// </summary>
-public Quest GetQuest(string FolderName, int Index)
-{
-    DataFolder<Quest> MyFolder = GetQuestFolder(FolderName);
-    if (MyFolder != null)
-    {
-        return MyFolder.Get(Index);
-    }
-    return null;
-}
-
-/// <summary>
-/// Get an item  from a folder, using an index
-/// </summary>
-public Quest GetQuest(string FolderName, string FileName)
-{
-    DataFolder<Quest> MyFolder = GetQuestFolder(FolderName);
-    if (MyFolder != null && MyFolder.Data.ContainsKey(FileName))
-    {
-        return MyFolder.Get(FileName);
-    }
-    return null;
-}
-
-/// <summary>
-/// Add a texture
-/// </summary>
-public void AddQuest(string FolderName, Quest NewQuest)
-{
-    DataFolder<Quest> MyFolder = GetQuestFolder(FolderName);
-    if (MyFolder != null && NewQuest != null)
-    {
-        MyFolder.Add(NewQuest.Name, NewQuest);
-    }
-}
-
-/// <summary>
-/// Removes a particular data
-/// </summary>
-public void RemoveQuest(string FolderName, int FileIndex)
-{
-    DataFolder<Quest> MyFolder = GetQuestFolder(FolderName);
-    if (MyFolder != null)
-    {
-        MyFolder.Remove(FileIndex);
-    }
-}
-
-/// <summary>
-/// returns the size of a folder
-/// </summary>
-public int GetSizeQuests(string FolderName)
-{
-    DataFolder<Quest> MyFolder = GetQuestFolder(FolderName);
-    if (MyFolder != null)
-    {
-        return MyFolder.Data.Count;
-    }
-    else
-    {
-        return 0;
-    }
-}
-#endregion*/
-
-/*#region Recipes
-
-/// <summary>
-/// Get the quest folder
-/// </summary>
-private DataFolder<Recipe> GetRecipeFolder(string FolderName)
-{
-    for (int i = 0; i < RecipeFolders.Count; i++)
-    {
-        if (RecipeFolders[i].FolderName == FolderName)
-        {
-            return RecipeFolders[i];
-        }
-    }
-    return null;
-}
-/// <summary>
-/// Get an item  from a folder, using an index
-/// </summary>
-public Recipe GetRecipe(string FolderName, int Index)
-{
-    DataFolder<Recipe> MyFolder = GetRecipeFolder(FolderName);
-    if (MyFolder != null)
-    {
-        return MyFolder.Get(Index);
-    }
-    return null;
-}
-
-/// <summary>
-/// Get an item  from a folder, using an index
-/// </summary>
-public Recipe GetRecipe(string FolderName, string FileName)
-{
-    DataFolder<Recipe> MyFolder = GetRecipeFolder(FolderName);
-    if (MyFolder != null && MyFolder.Data.ContainsKey(FileName))
-    {
-        return MyFolder.Get(FileName);
-    }
-    return null;
-}
-
-/// <summary>
-/// Add a texture
-/// </summary>
-public void AddRecipe(string FolderName, Recipe NewQuest)
-{
-    DataFolder<Recipe> MyFolder = GetRecipeFolder(FolderName);
-    if (MyFolder != null && NewQuest != null)
-    {
-        MyFolder.Add(NewQuest.Name, NewQuest);
-    }
-}
-
-/// <summary>
-/// Removes a particular data
-/// </summary>
-public void RemoveRecipe(string FolderName, int FileIndex)
-{
-    DataFolder<Recipe> MyFolder = GetRecipeFolder(FolderName);
-    if (MyFolder != null)
-    {
-        MyFolder.Remove(FileIndex);
-    }
-}
-
-/// <summary>
-/// returns the size of a folder
-/// </summary>
-public int GetSizeRecipes(string FolderName)
-{
-    DataFolder<Recipe> MyFolder = GetRecipeFolder(FolderName);
-    if (MyFolder != null)
-    {
-        return MyFolder.Data.Count;
-    }
-    else
-    {
-        return 0;
-    }
-}
-#endregion*/
-/* #region Spells
-
- private void LoadAllSpells()
- {
-
-     for (int i = 0; i < SpellFolders.Count; i++)
-     {
-         List<Spell> MyData = SpellFolders[i].LoadAllSpells();
-         for (int j = 0; j < MyData.Count; j++)
-         {
-             SpellFolders[i].Set(j, MyData[j]);
-         }
-     }
- }
- private DataFolder<Spell> GetSpellFolder(string FolderName)
- {
-     for (int i = 0; i < SpellFolders.Count; i++)
-     {
-         if (SpellFolders[i].FolderName == FolderName)
-         {
-             return SpellFolders[i];
-         }
-     }
-     return null;
- }
- /// <summary>
- /// Get an item  from a folder, using an index
- /// </summary>
- public Spell GetSpell(string FolderName, int Index)
- {
-     DataFolder<Spell> MyFolder = GetSpellFolder(FolderName);
-     if (MyFolder != null)
-     {
-         return MyFolder.Get(Index);
-     }
-     return null;
- }
- /// <summary>
- /// Get an item  from a folder, using an index
- /// </summary>
- public Spell GetSpell(string FolderName, string FileName)
- {
-     DataFolder<Spell> MyFolder = GetSpellFolder(FolderName);
-     if (MyFolder != null && MyFolder.Data.ContainsKey(FileName))
-     {
-         return MyFolder.Get(FileName);
-     }
-     return null;
- }
-
- /// <summary>
- /// Add a texture
- /// </summary>
- public void AddSpell(string FolderName, Spell NewSpell)
- {
-     DataFolder<Spell> MyFolder = GetSpellFolder(FolderName);
-     if (MyFolder != null && NewSpell != null)
-     {
-         MyFolder.Add(NewSpell.Name, NewSpell);
-     }
- }
-
- /// <summary>
- /// Removes a particular data
- /// </summary>
- public void RemoveSpell(string FolderName, int FileIndex)
- {
-     DataFolder<Spell> MyFolder = GetSpellFolder(FolderName);
-     if (MyFolder != null)
-     {
-         MyFolder.Remove(FileIndex);
-     }
- }
-
- /// <summary>
- /// returns the size of a folder
- /// </summary>
- public int GetSizeSpells(string FolderName)
- {
-     DataFolder<Spell> MyFolder = GetSpellFolder(FolderName);
-     if (MyFolder != null)
-     {
-         return MyFolder.Data.Count;
-     }
-     else
-     {
-         return 0;
-     }
- }
- #endregion*/
-
-//#region FilePaths
-/*public string GetFilePath()
-{
-    SetFilePaths();
-    return FileUtil.GetFolderPath(FolderName);
-}
-public string GetFilePath(string MyName)
-{
-    SetFilePaths();
-    return FileUtil.GetFolderPath(FolderName) + MyName + "." + FileExtension;
-}
-public string GetFilePath(int MyIndex)
-{
-    SetFilePaths();
-    return FileUtil.GetFolderPath(FolderName) + MyNames[MyIndex] + "." + FileExtension;
-}
-/// <summary>
-/// Returns a list of the file names in the folder path
-/// </summary>
-protected List<string> GetFileNames()
-{
-    string FilePath = GetFilePath();
-    return FileUtil.GetFilesOfType(FilePath, FileExtension);
-}*/
-//#endregion
-
-/*
- * ItemTextures
-    StatTextures
-    VoxelTexturesNormals
-    VoxelTexturesDiffuse
-    png
-
-    Sounds
-    Music
-    wav
-
-    PolygonModels
-    vmd
-
-    Stats
-    sts
-
-    VoxelMeta
-    vmt
-
-    VoxelModels
-    vxm
-
-    ItemMeta
-    itm
-
-    Classes
-    txt
-
-    Dialogues
-    dlg
-
-    Quests
-    qst
-
-    Spells
-    spl
-
-    Skeletons
-    skl
- * 
- * */
-
-/*public string Rename(string MyInput)
-{
-    // make sure name doesn't already exist
-    string OriginalName = MyInput;
-    bool HasFoundNewName = false;
-    int Checks = 1;
-    while (HasFoundNewName == false)
-    {
-        if (MyNames.Contains(MyInput))  //ScriptUtil.RemoveWhiteSpace(
-        {
-            Checks++;
-            MyInput = OriginalName + " (" + Checks + ")";
-        }
-        else
-        {
-            HasFoundNewName = true;
-        }
-    }
-    return MyInput;
-}*/
-/// <summary>
-/// Deletes the current file
-/// </summary>
-/*protected virtual void DeleteFile()
-{
-    //DeleteFile(GetSelectedName());
-}
-public void DeleteFile(string MyName)
-{
-    string MyFileName = FileUtil.GetFolderPath(FolderName) + MyName + "." + FileExtension;
-    FileUtil.Delete(MyFileName);
-}
-/// <summary>
-/// Used just for texture maker
-/// </summary>
-public void DeleteFile(string PathName, string MyName)
-{
-    string MyFileName = FileUtil.GetFolderPath(PathName) + MyName + "." + FileExtension;
-    FileUtil.Delete(MyFileName);
-}*/
-//#endregion

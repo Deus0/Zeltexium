@@ -197,7 +197,8 @@ namespace Zeltex.Guis.Maker
                 MaxLoading++;
             }
             MaxLoading += NewGame.GetLevel().GetCharactersCount();
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(Voxels.WorldManager.Get().LoadNewSaveGame(
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
+                Voxels.WorldManager.Get().LoadSaveGameRoutine(
                 NewGame, 
                 () =>
                 {
@@ -257,10 +258,11 @@ namespace Zeltex.Guis.Maker
                         SetSaveGameName(SaveGameName);   // set the SaveGameName somewhere for when saving
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
                             Voxels.WorldManager.Get().LoadSaveGameRoutine(
-                            () => {
-                                ChunksLoaded++;
-                                LoadingGui.Get().SetPercentage(ChunksLoaded / MaxLoading);
-                            }, MyGame));
+                                MyGame,
+                                () => {
+                                    ChunksLoaded++;
+                                    LoadingGui.Get().SetPercentage(ChunksLoaded / MaxLoading);
+                                }));
                         LoadingGui.Get().SetPercentage(1f);
 
 

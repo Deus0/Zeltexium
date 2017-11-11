@@ -403,7 +403,7 @@ namespace Zeltex.Util
         [DllImport("user32.dll")]
         private static extern void OpenFileDialog(); //in your case : OpenFileDialog
 
-        public static string Import(string ObjectName, string FunctionName, string FileType)
+        /*public static string Import(string ObjectName, string FunctionName, string FileType)
         {
             Debug.Log("Importing file: " + ObjectName + ":" + FunctionName + " - " + FileType);
 #if UNITY_WEBGL
@@ -426,25 +426,15 @@ namespace Zeltex.Util
             }
 #endif
             return "";
-        }
+        }*/
 
-        public static void Export(string Name, string FileExtension, string Data)
+        /*public static void Export(string Name, string FileExtension, string Data)
         {
             Debug.Log("Exporting file: " + Name);
 #if UNITY_WEBGL
             Application.ExternalCall("Export", Name + "." + FileExtension, Data);
 #elif UNITY_EDITOR
-
-            /*if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
-            {
-                string[] files = Directory.GetFiles(fbd.SelectedPath);
-
-                System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
-
-            };*/
             System.Windows.Forms.FolderBrowserDialog MyFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            /*System.Windows.Forms.SaveFileDialog MySaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            MySaveFileDialog.Filter = "*." + FileExtension + "| *." + FileExtension;*/
             //OpenFileDialog open = new OpenFileDialog();
             //MyFolderDialog.Title = "Export a " + FileExtension.ToUpper() + " File";
             MyFolderDialog.ShowDialog();
@@ -455,9 +445,9 @@ namespace Zeltex.Util
                 File.WriteAllText(MyFileName, Data);
             }
 #endif
-        }
+        }*/
 
-        public static void ExportImage(string Name, string FileExtension, string Data)
+       /* public static void ExportImage(string Name, string FileExtension, string Data)
         {
             Debug.Log("Exporting file: " + Name);
 #if UNITY_WEBGL
@@ -474,7 +464,7 @@ namespace Zeltex.Util
                 FileUtil.SaveBytes(MySaveFileDialog.FileName, MyBytes);
             }
 #endif
-        }
+        }*/
         #endregion
 
 

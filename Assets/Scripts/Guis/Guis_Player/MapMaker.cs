@@ -345,7 +345,7 @@ namespace Zeltex.Guis.Maker
             }
             string MyZipScript = System.Convert.ToBase64String(File.ReadAllBytes(ZipFilePath));
             Debug.Log("Exporting Map: " + SaveFileName + " as zip [" + MyZipScript.Length + "]");
-            FileUtil.ExportImage(SaveFileName, "zip", MyZipScript);
+            //FileUtil.ExportImage(SaveFileName, "zip", MyZipScript);
 #endif
         }
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -362,7 +362,7 @@ namespace Zeltex.Guis.Maker
 
         public void Import()
         {
-            FileUtil.Import(name, "Upload", "zip");
+            //FileUtil.Import(name, "Upload", "zip");
         }
 
         public void Upload(string MyData)

@@ -319,13 +319,37 @@ namespace Zeltex.Characters
         /// Need to add reviving functionality
         /// </summary>
         public void OnDeath(GameObject MyCharacter = null)
-		{
+        {
             if (MyCharacter == null)
             {
-                MyCharacter = gameObject;
+                MyCharacter = gameObject;   // killed yourself
+            }
+            if (DeathHandle == null)
+            {
+                //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
+                DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+            }
+        }
+
+        public IEnumerator DeathRoutine()
+        {
+            float DeathTime = 13 + Random.Range(0,13);
+            /*if (IsPlayer)
+            {
+                DeathTime = 13;
+            }*/
+            yield return null;
+            if (MyBot)
+            {
+                MyBot.StopFollowing();
+            }
+            if (IsPlayer)
+            {
+                CameraManager.Get().GetMainCamera().GetComponent<Player>().SetMouse(false);
             }
             Data.MyGuis.SaveStates();
             Data.MyGuis.HideAll();
+            MySkillbar.RemoveSkills();
 
             if (MyBot)
             {
@@ -355,55 +379,45 @@ namespace Zeltex.Characters
 
             // burnt, sliced, crushed, chocolified, decapitated, exploded
             if (!Data.CanRespawn)
-			{
-				gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
-            }
-            if (DeathHandle == null)
             {
-                //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
-                DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+                gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
             }
-
-
-            if (IsPlayer)
-            {
-                ZelGui RespawnGui = GetGuis().GetZelGui("Respawn");
-                if (RespawnGui)
-                {
-                    RespawnGui.TurnOn();     // turn gui on when reviving begins
-                }
-            }
-        }
-
-        public IEnumerator DeathRoutine()
-        {
-            /*float TimeStarted = Time.time;
-            float DeathTime = Random.Range(5, 5);
-            if (IsPlayer)
-            {
-                DeathTime = 5f;
-            }
-            while (Time.time - TimeStarted <= DeathTime)
-            {
-                yield return null;
-            }*/
             // if (Data.CanRespawn)
             {
-                MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll();
+                if (IsPlayer)
+                {
+                    ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
+                    if (RespawnZelGui)
+                    {
+                        yield return null;
+                        yield return null;
+                        yield return null;
+                        RespawnZelGui.TurnOn();     // turn gui on when reviving begins
+                        RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
+                        if (MyRespawner)
+                        {
+                            StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)DeathTime));
+                        }
+                    }
+                }
+                MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(DeathTime);
                 float TimeStarted = Time.time;
-                while (Time.time - TimeStarted <= 5.1f)
+                while (Time.time - TimeStarted <= DeathTime)
                 {
                     yield return null;
                 }
-                Debug.LogError("Reviving Character.");
-                Data.MyStats.RestoreFullHealth();
+                yield return null;
+                Debug.Log("Reviving Character [" + name + "].");
                 Data.MyGuis.RestoreStates();
-                DeathHandle = null;
+                Data.MyStats.RestoreFullHealth();
+                SetMovement(true);
                 if (IsPlayer)
                 {
                     CameraManager.Get().GetMainCamera().transform.localPosition = Vector3.zero;
                     CameraManager.Get().GetMainCamera().transform.localRotation = Quaternion.identity;
+                    CameraManager.Get().GetMainCamera().GetComponent<Player>().SetMouse(true);
                 }
+                DeathHandle = null;
             }
             /*else
             {
@@ -772,9 +786,13 @@ namespace Zeltex.Characters
             {
                 MyRigidbody.isKinematic = !NewState;
             }
-            if (MyBot)
+            /*if (MyBot)
             {
                 MyBot.enabled = NewState;
+            }*/
+            if (GetComponent<Mover>())
+            {
+                GetComponent<Mover>().enabled = NewState;
             }
             enabled = NewState;
         }

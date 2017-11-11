@@ -15,17 +15,17 @@ namespace Zeltex.Voxels
     {
         private Character MyCharacter;
 
-        #region LevelWithCharacters
+        #region LoadSaveGames
 
         public void LoadSaveGame(Action OnLoadChunk = null, SaveGame MyGame = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(LoadSaveGameRoutine(OnLoadChunk, MyGame));// MyLevel, CharacterScript));
+            UniversalCoroutine.CoroutineManager.StartCoroutine(LoadSaveGameRoutine(MyGame, OnLoadChunk));// MyLevel, CharacterScript));
         }
 
         /// <summary>
         /// Used by SaveGameMaker to load a level with a character script
         /// </summary>
-        public IEnumerator LoadSaveGameRoutine(Action OnLoadChunk = null, SaveGame MyGame = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")
+        public IEnumerator LoadSaveGameRoutine(SaveGame MyGame = null, Action OnLoadChunk = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")
         {
             LoadedSaveGame = MyGame;
             World SpawnedWorld = SpawnWorld();
@@ -43,24 +43,7 @@ namespace Zeltex.Voxels
             // Creates a new character
             if (MyGame.CharacterName == "")
             {
-                // then load bot with script
-                Character MyCharacter = CharacterManager.Get().GetPoolObject();
-                if (MyCharacter != null)
-                {
-                    // GetClass Script
-                    CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
-                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
-                    if (OnLoadChunk != null)
-                    {
-                        OnLoadChunk.Invoke();
-                    }
-                    MyGame.GetLevel().AddCharacter(MyCharacter);
-                    MyGame.SetCharacter(MyCharacter);
-                }
-                else
-                {
-                    Debug.LogError("Character Pooled Object is null inside LoadNewSaveGame function");
-                }
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMainCharacter(MyGame, OnLoadChunk));
             }
             else
             {
@@ -88,11 +71,34 @@ namespace Zeltex.Voxels
             }
         }
 
+        private IEnumerator CreateMainCharacter(SaveGame MyGame = null, Action OnLoadChunk = null)
+        {
+            // then load bot with script
+            Character MyCharacter = CharacterManager.Get().GetPoolObject();
+            if (MyCharacter != null)
+            {
+                // GetClass Script
+                CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
+                if (OnLoadChunk != null)
+                {
+                    OnLoadChunk.Invoke();
+                }
+                MyGame.GetLevel().AddCharacter(MyCharacter);
+                MyGame.SetCharacter(MyCharacter);
+            }
+            else
+            {
+                Debug.LogError("Character Pooled Object is null inside LoadNewSaveGame function");
+            }
+        }
+
         /// <summary>
         /// Creates new save game using a racename and classname
         /// </summary>
-        public IEnumerator LoadNewSaveGame(SaveGame MyGame, System.Action OnLoadChunk = null)    //Level MyLevel, string RaceName, string ClassName, string StartingLocation = ""
+        /*public IEnumerator LoadNewSaveGame(SaveGame MyGame, System.Action OnLoadChunk = null)    //Level MyLevel, string RaceName, string ClassName, string StartingLocation = ""
         {
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(GameManager.Get().BeginGameRoutineMain());
             LoadedSaveGame = MyGame;
             // Load the level
             if (MyGame != null)
@@ -132,7 +138,7 @@ namespace Zeltex.Voxels
                 // Set character to levels loaded character
                 ///MyGame.SetCharacter(MyCharacter);
             }
-        }
+        }*/
         #endregion
 
 

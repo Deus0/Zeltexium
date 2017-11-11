@@ -68,6 +68,21 @@ namespace Zeltex
             }
         }
 
+        public IEnumerator BeginGameRoutineMain()
+        {
+            if (!Game.GameMode.IsPlaying)
+            {
+                Game.GameMode.IsPlaying = true;
+                Debug.Log("Beginning to play game.");
+                Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BeginGameRoutine());
+            }
+            else
+            {
+                Debug.LogError("Already playing game.");
+            }
+        }
+
         private IEnumerator BeginGameRoutine()
         {
             GuiSpawner.Get().DisableGui("MainMenu");
