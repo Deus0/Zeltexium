@@ -250,6 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1979da9417fc9f41a98eb9aa4ced606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SinAmplitude: {x: 12, y: 1, z: 1}
+  SinAmplitude: {x: 10, y: 1, z: 1}
   NoiseAmplitude: {x: 0.5, y: 0.5, z: 0.5}
   TimeScale: 0.5

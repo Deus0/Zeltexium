@@ -1,0 +1,4 @@
+Flying Enemy:Trigger box around it -> turns on when you enter its area
+Chases you. If you are no longer in range for > 5 seconds it turns off
+It tries to randomly find you once it loses you for that time
+it shoots you and flies -> it tries to stay above the ground tiles

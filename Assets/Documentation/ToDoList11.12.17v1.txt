@@ -1,0 +1,254 @@
+Vertical Slice:
+Begin at town
+up to 10 custom quest lines (includes 3-10 quest blocks)
+Over 200 lines of custom dialogue
+over 10 custom characters (specially detailed ones)
+Level up - 20 different skills
+MiniMap
+Punching and physical / animation based skills
+Active Ragdoll Animations (blending)
+Gun Model, sword, etc
+Logic Based voxels
+Basic Water + physics + cool shader
+Portals to other levels
+Downloadable new map packs
+
+-----------
+
+1   Fix Respawning - With Respawn Gui - And respawn animation
+0   Add what level is loading and if save game is loading to loading UI - 'Loading GlubGlorg in Tezpie'
+0   When Click Select on a save game, show a preview tab and a button that says Play after
+0   When loading, load the terrain generation settings last if no level data exists
+2   Fix Exiting Game - And coming back into the game
+1   Fix GameOver Screen
+
+- Characters-
+1  Make Tim Idle, and not wander
+X  Import model in as new enemy, make it patrol the hallway up and down (preset way points)
+4   Npcs facing wrong way - Test placing and saving a new npc
+5   CharacterData to contain bot data - Idle or Wander at start
+
+- Gameplay-
+6   Bot to look at player - and to lock onto player when talking
+7   Change mouse icon when highlighting a character or item or special block (like the chest)
+13 Respawning when die
+
+- Items-
+8   Fix Item Tooltips
+9   Fix Item Objects - placing 3 items on a bench at start
+10 Block placing isnt working - /Block item
+
+11 Fix Block Textures
+11 Place block in hallways
+11 Mining to work - Only on special ore blocks in hallways
+
+12 Patroling npc - like metroid/mario - small enemy that only takes damage when jumped on
+
+14 Tip to player to not attack friendlies
+14 Item can click on - Opens up book
+14 Give a 'Survivors Guide' when starting game
+
+15 Crosshair to turn red when facing an aggressive npc
+16 Add sounds to play when firing bullets
+17 Third person camera mode to be fixed
+18 Add Chest blocks - when mouse over change crosshair too
+When possessing character turn bot off
+19 Fix Equipment UI
+
+TODO:
+Fix Save Games - Loading - Save etc - Loads position in map as well as positions of other characters
+Loading a level -> Loads last saved level, as well as a loading screen
+Creating new game - Pick from 3 characters, and 3 level locations
+Fix respawning
+Game Over Screen
+
+Save Level - Characters
+Load Level - Chunks
+Load Level - Characters -> Transforms etc
+Save Level - Zones etc
+Put an item on the ground - E to pick it up
+Put ItemObject in Level
+Save/Load ItemObjects in Level
+Fix Spawn Zones to spawn characters
+
+Fix Quest log
+'I' for inventory
+Make Characters head look at you when you are close by - use trigger for this
+
+-------
+Current goal:
+Fix Block Placing
+Fix Respawning
+Fix Spawn Zones
+Fix coming back into game after death
+Fix editors - any that are broken
+
+Keep on website as a 
+
+--------
+Zeltex Latest:
+Character Creation Gui
+-> if no saved character -> open that
+After creating a characater, you can chose from 3 different locations
+A seed is used to create a save game -> Save this seed and reuse for future generated maps
+Fix GameOverScreen
+Add sounds into bullets
+Create a better guis to edit particular data - like bullets
+ -> Select an item -> it also edits the spell linked up to the item -> also can select the texture of the item and the animation of the character
+Make Save games use persistent data instead of streaming
+LoadScreen to say what its loading
+Loading Characters 1 out of 8
+Reduce lag in combat
+Automate build process to build out 4 different builds for new features
+
+---
+Make images for tutorial on how to do things:Tutorials:
+    Pick Up Items
+    Walk Around
+    Talk To Characters
+    Perform Quests
+    Shoot Enemies
+
+When dead, should just respawn another you and keep that body dead -> respawn at last check point
+Checkpoints -> A glowing particle thing -> makes a sound when hitting it
+
+-------
+Scenes:
+Main Game
+Test SkeletonMaker (and other tools) - spawns guis
+Test Combat - using plane as ground - spawns character  and has them fight each other
+Test World Loading - Spawns worlds, multiple, tests designed to speed up loading
+-----
+
+Save Level chunks
+Load Level chunks
+Mark Edited chunks as dirty
+Save Levels Characters
+Load Levels Characters
+
+Level Select Screen
+
+Glypths for button controls
+Detect if controller is connected -> switch from pc to console
+
+Fix Textures from working in game
+Import another model type and place in editor (Corner Pillar)
+
+---------
+
+Loading Chunks for Save Games
+Chunk.HasLoaded = false for all
+Then Save Game -> Has saved a chunk?
+Level -> Load -> if no string, go on
+Level Generation settings -> if all else fails!
+
+-----------
+Current Goal:
+Save Data use persistent data
+Custom Maps to be really large - Save any edited Chunks only - Use the terrain generation details as the base
+The datamanager will load/unload things at runtime, but mostly at the beginning of the maps
+Player can load maps in gui - from server or from local files
+They first pick a map pack, then a level (tagged as begin level)
+A save game will be associated with a mappack, if they begin on a certain level
+
+-------------
+Top Priority:
+Save Games
+Revive of characters
+Pause Menu Update
+Status Screen to replace others (for useability)
+Smaller Rats to spawn inside the tunnels -> and just move around in a fixed radius
+Create human body, arms and legs
+Animate them inside editor -> Add keyframes -> Adjust Time
+Animate the disspearing of the healthbar once they take damage
+A level portal and second level
+Procedural Music System
+Music for game
+Music for Menu
+
+Bug Fixes:Bots to not work after they die
+Quest Log doesnt work
+can't update stats when level up
+Stats Bar to hie when they die
+Give Voxels Textures Again
+
+---------------
+
+Zeltex Goals:Multiplayer game loop working
+Multiplayer lobbies
+Multiplayer Default Resources
+Multiplayer Download Resources gui
+
+New Pause Gui
+New Lobby Selection
+New Pre Game Gui
+
+--------------
+
+Done:
+Save Game
+Load Save games
+When loading: load the level chunks from save games first, then level data
+Remove Menu and replace with just a pause screen
+Loading Screen when loading new level
+Capsule Collider is wrong size for MC
+Skillbar not refreshed when spawned
+Press 'I' to open inventory - and can place items in it
+Fix item clicking, and dragging, dropping
+
+Guis not set properly - started as disabled
+Loading New One - doesn't spawn character properly
+Doesn't save colours of map properly atm - check this
+Save the characters in the level
+IsPlayer is not set properly for mc
+Load Characters in level
+
+Import Vox As a level
+Bake Audio Notes into a list -> and play them at random each time
+Push and pull skeletons
+Save Level - Chunks
+Make Control for cursor
+
+Character saves - to reference skeletons, etc
+Decouple Data from MakerGuis
+Update Makers when data is uploaded -> create an event on datamanagers, when loaded a type of data, activate thus event (add to datafolder)
+Then fix custom maps
+
+fine:
+Fixing push pull of skeletons
+-> rip to work on meshes
+-> activate to work on meshes
+-> Load voxel model in editor onto a world script
+Duplicate a bot -> Make its normal movement idle
+Fix Skillbar Item Textures
+Give bot dialogue
+Upon press e -> open dialogue gui
+Fix Choices
+Give Quest on choice
+-> Tooltip - press e to talk
+----------------
+
+Level Select Screen -> used if admin -> can  start playing from any level once selected -> Displays level in a grid
+
+Game Begins on Countdown, after 3 seconds, it will count down for 5 seconds before game begins
+
+Toast on Game Begin
+Toast Icon for new Quest Accepted
+
+GameOver - Upon death, display gameover, give COntinue/NewGame options
+If die, revert all the npc positions/stats etc, as well as any changed chunks - rewind mode
+Checkpoints -> Upon reaching a save point, it will save current status (in save games) of game -> It's a weird voxel model that animates when you click it -> Like zelda game
+
+Portal -> Teleports player to a new level or old one -> once teleported someone it will disable for 15 seconds
+
+Misc:
+Wall Placer
+Edit Transform thing - Select either VoxelModel, Skeleton bone, polygon helper thing, character in map, zone, voxel placer (a group of voxels that have yet to be placed)
+Edit Level - Edit the game rules - Add timed events - ie spawn x unit at location
+Limit character units , say 100
+if Characters count goes over 32, cull their meshes to half subdivision (make the thing for this)
+if over 64 half again
+limit of 128 per map
+Cube Placement, and erasing, like magic voxel
+First area pass: 3 enemy spawn zones
+Biome map - paint over it too - determines where enemies spawn
