@@ -214,14 +214,15 @@ namespace Zeltex.Guis
                 //MySpawn.layer = 1 << LayerManager.Get().ViewerLayer;
                 if (ParentsTransform == null)
                 {
-                    GameObject ViewerParnets = GameObject.Find("ViewerObjects");
-                    if (ViewerParnets)
+                    GameObject ViewerParents = GameObject.Find("Viewers");
+                    if (ViewerParents == null)
                     {
-                        ParentsTransform = ViewerParnets.transform;
+                        ViewerParents = new GameObject();
+                        ViewerParents.name = "Viewers";
                     }
-                    else
+                    if (ViewerParents)
                     {
-                        Debug.LogError("Please name a viewer object as [ViewerObjects]");
+                        ParentsTransform = ViewerParents.transform;
                     }
                 }
                 if (MySpawn)

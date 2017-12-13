@@ -243,9 +243,22 @@ namespace Zeltex
 		public List<T> GetData()
         {
             List<T> MyData = new List<T>();
-            foreach (var KeyVarPair in Data)
+            try
             {
-                MyData.Add(KeyVarPair.Value);
+                if (Data != null)
+                {
+                    foreach (var KeyVarPair in Data)
+                    {
+                        if (KeyVarPair.Value != null)
+                        {
+                            MyData.Add(KeyVarPair.Value);
+                        }
+                    }
+                }
+            }
+            catch (System.ObjectDisposedException e)
+            {
+                Debug.LogError(e.ToString());
             }
             return MyData;
         }

@@ -65,11 +65,11 @@ namespace Zeltex.Guis.Maker
             DataManager.Get().OnUpdatedResources.AddEvent(OnUpdatedResources);
             MainTabs.EnableTab("EditTab");
             EditTabs.EnableTab("Tab1");
+            OpenFoldersList();
         }
 
         public override void OnEnd()
         {
-            Debug.LogError("Ending Resources.");
             base.OnEnd();
             DataManager.Get().OnUpdatedResources.RemoveListener(OnUpdatedResources);
         }
@@ -330,7 +330,7 @@ namespace Zeltex.Guis.Maker
             for (int i = 0; i < ElementFolders.Count; i++)
             {
                 ElementFolder MyFolder = ElementFolders[i];
-                if (MyFolder != null)
+                if (MyFolder != null && i < FileActionsModified.Count)
                 {
                     MyFolder.ModifiedEvent.RemoveListener(FileActionsModified[i]);
                     MyFolder.SavedEvent.RemoveListener(FileActionsSaved[i]);
