@@ -35,6 +35,11 @@ namespace Zeltex
         [SerializeField]
         private LayerMask MainCameraMask;
 
+        public static bool AreLayersEqual(LayerMask MyLayer, int GameObjectLayer)
+        {
+            return (MyLayer.value == 1 << GameObjectLayer);
+        }
+
         public static LayerManager Get()
         {
             if (MyManager == null)

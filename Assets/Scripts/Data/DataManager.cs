@@ -79,12 +79,11 @@ namespace Zeltex
             //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ClearConsole());
             // load saving
             //LoadFolder(DataFolderNames.Saves);
-            Debug.LogError("Loading: " + DataFolderNames.Saves);
+            //Debug.LogError("Loading: " + DataFolderNames.Saves);
             ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
             if (MyFolder != null)
             {
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
-                Debug.LogError("Loading SUCCESS: " + DataFolderNames.Saves);
                 OnUpdatedResources.Invoke();
             }
         }

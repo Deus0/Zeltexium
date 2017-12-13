@@ -284,7 +284,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!20 &20681123822308698
 Camera:
   m_ObjectHideFlags: 1
@@ -294,7 +293,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6666667, g: 0.9098039, b: 0.9098039, a: 1}
+  m_BackGroundColor: {r: 0.043137256, g: 0.3882353, b: 0.40392157, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -320,7 +319,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!81 &81273929646184980
 AudioListener:
   m_ObjectHideFlags: 1
@@ -342,13 +340,14 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
 --- !u!114 &114035979487907756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -369,6 +368,24 @@ MonoBehaviour:
   BodyBone: {fileID: 0}
   MyController: {fileID: 0}
   IsParentOfAllCameras: 0
+  MyGuiManager:
+    ActionSpawnGui:
+      IsTrigger: 0
+    ActionName: Skillbar
+    ActionDespawnGuis:
+      IsTrigger: 0
+    ActionSpawnGuis:
+      IsTrigger: 0
+    ActionSetGuiStates:
+      IsTrigger: 0
+    GuisEnabled: []
+    GuisEnabledStates: 
+    MyGuis: []
+    IsHiddenLabel: 0
+    MyCharacter: {fileID: 0}
+  MySkillbar: {fileID: 0}
+  MySkeleton: {fileID: 0}
+  MyCrosshair: {fileID: 0}
   IsRotateCamera: 1
 --- !u!114 &114050607226503348
 MonoBehaviour:
@@ -794,13 +811,14 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
 --- !u!114 &114500606769569556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -902,8 +920,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114637458155800436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1032,6 +1050,24 @@ MonoBehaviour:
   BodyBone: {fileID: 0}
   MyController: {fileID: 0}
   IsParentOfAllCameras: 0
+  MyGuiManager:
+    ActionSpawnGui:
+      IsTrigger: 0
+    ActionName: Skillbar
+    ActionDespawnGuis:
+      IsTrigger: 0
+    ActionSpawnGuis:
+      IsTrigger: 0
+    ActionSetGuiStates:
+      IsTrigger: 0
+    GuisEnabled: []
+    GuisEnabledStates: 
+    MyGuis: []
+    IsHiddenLabel: 0
+    MyCharacter: {fileID: 0}
+  MySkillbar: {fileID: 0}
+  MySkeleton: {fileID: 0}
+  MyCrosshair: {fileID: 0}
   LastHitPosition: {x: 0, y: 0, z: 0}
   LastHitWorld: {fileID: 0}
   MyLayer:
@@ -1163,7 +1199,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1508747526363778}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.0056243}
+  m_LocalPosition: {x: -4.2669983, y: -0.49900055, z: -4.0056243}
   m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
   m_Children:
   - {fileID: 224762325819507646}
@@ -1200,7 +1236,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870399240700584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -31.99997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224508175134185326}
@@ -1218,7 +1254,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1934228651786102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.011169434, y: 0.001159668, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 224444377515376160}
@@ -1237,7 +1273,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246234636012582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.012233734, y: -88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224713225752978938}
@@ -1256,7 +1292,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1064362749218006}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0010986328, y: -0.0010986328, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 224590206306019796}
@@ -1311,7 +1347,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996865599596964}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.005624}
+  m_LocalPosition: {x: -7, y: -0.49890137, z: -4.005624}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_Children:
   - {fileID: 224730949284122586}

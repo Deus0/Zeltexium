@@ -62,11 +62,12 @@ namespace Zeltex.Voxels
                 }
                 if (WasFound == false)
                 {
-                    Debug.LogError("Did not find Character spawned: " + MyGame.CharacterName);
+                    Debug.Log("Could not find Main Character in Level: " + MyGame.CharacterName);
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMainCharacter(MyGame, OnLoadChunk));
                 }
                 else
                 {
-                    Debug.LogError("Set Save Game Character to: " + MyGame.MyCharacter.name);
+                    Debug.Log("Set Save Game Character to: " + MyGame.MyCharacter.name);
                 }
             }
         }

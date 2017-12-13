@@ -202,8 +202,10 @@ namespace Zeltex.Voxels
                 HideChunks();
                 SetAllVoxelsRaw();  // clear the voxel indexes
                 List<string> LookupData = new List<string>();
-                if (MyData[0] == VoxelLookupTable.BeginTag)
+                bool HasLookupTable = (MyData[0] == VoxelLookupTable.BeginTag);
+                if (HasLookupTable)
                 {
+                    // Use lookup table data at start of world
                     for (int i = 0; i < MyData.Count; i++)
                     {
                         if (MyData[i] == VoxelLookupTable.EndTag)
@@ -214,10 +216,6 @@ namespace Zeltex.Voxels
                         }
                     }
                     // Remove lookup table from list
-                }
-                else
-                {
-                    Debug.LogError("Loading World without LookupTable Tag");
                 }
                 Reset();
                 bool IsMultiChunk = (MyData[0].Contains("/World"));
@@ -262,6 +260,10 @@ namespace Zeltex.Voxels
                     {
                         Debug.LogError(name + " has no chunk.");
                     }
+                }
+                if (!HasLookupTable)
+                {
+                    MyLookupTable.Generate(this);
                 }
             }
             else

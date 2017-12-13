@@ -172,16 +172,16 @@ namespace Zeltex
 
         public string GetSaveFolderPath(string SaveFolderName)
         {
-            Debug.LogError("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
+            //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
             string FolderPath = DataManager.Get().GetResourcesPath(Util.FilePathType.PersistentPath) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
             if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
             {
-                Debug.LogError("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
+                Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
                 FileManagement.CreateDirectory(FolderPath, true);
             }
             else
             {
-                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
             }
             return FolderPath;
         }

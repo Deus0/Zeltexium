@@ -61,6 +61,7 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Counting
+
         /// <summary>
         /// Clears the lookup table and adds default variable to it
         /// </summary>
@@ -275,10 +276,39 @@ namespace Zeltex.Voxels
         #endregion
 
         #region File
+
+        /// <summary>
+        /// When world is loaded without lookup data, generate it
+        /// This is used for save games
+        /// </summary>
+        public void Generate(World MyWorld)
+        {
+            Clear();
+            Debug.Log("Loading World [" + MyWorld.name + "] without LookupTable Tag: Generating Lookup Table");
+            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+            {
+                Add(DataManager.Get().GetName(DataFolderNames.VoxelMeta, i));
+            }
+            foreach (KeyValuePair<Int3, Chunk> MyPair in MyWorld.MyChunkData)
+            {
+                Int3 ChunkPosition = Int3.Zero();
+                for (ChunkPosition.x = 0; ChunkPosition.x < Chunk.ChunkSize; ChunkPosition.x++)
+                {
+                    for (ChunkPosition.y = 0; ChunkPosition.y < Chunk.ChunkSize; ChunkPosition.y++)
+                    {
+                        for (ChunkPosition.z = 0; ChunkPosition.z < Chunk.ChunkSize; ChunkPosition.z++)
+                        {
+                            Increase(DataManager.Get().GetName(DataFolderNames.VoxelMeta, MyPair.Value.GetVoxelType(ChunkPosition)));
+                        }
+                    }
+                }
+            }
+            DebugLog();
+        }
+
         /// <summary>
         /// Returns the script for the lookup table
         /// </summary>
-        /// <returns></returns>
         public List<string> GetScript()
         {
             List<string> MyScript = new List<string>();
@@ -339,6 +369,22 @@ namespace Zeltex.Voxels
                         }
                     }
                 }
+            }
+        }
+
+        public void DebugLog()
+        {
+            int Index = 0;
+            Debug.Log("Printing " + MyLookupTable.Count + " Lookup Voxels");
+            foreach (KeyValuePair<string, int> MyPair in MyLookupTable)
+            {
+                Debug.Log(" [" + Index + "] ~LookupTable " + MyPair.Key + " [" + MyPair.Value + "]");
+                Index++;
+            }
+            Debug.Log("Now printing " + DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta) + " VoxelMetas");
+            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+            {
+                Debug.Log(i + ": " + DataManager.Get().GetName(DataFolderNames.VoxelMeta, i));
             }
         }
         #endregion

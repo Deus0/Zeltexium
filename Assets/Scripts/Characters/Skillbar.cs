@@ -146,7 +146,6 @@ namespace Zeltex.Combat
                         break;
                     }
                 }
-
             }
             else
             {
@@ -191,14 +190,6 @@ namespace Zeltex.Combat
             return SelectedIndex;
         }
 
-        /*[PunRPC]
-        private void SetSelectedItemNetwork(int ItemIndex)
-        {
-            Debug.LogError("Error in SetSelectedItemNetwork");
-            //int NewItemIndex = IncreaseSelectedIcon(ItemIndex - SelectedIndex);
-            //OnChangeSelectedItem();
-        }*/
-        
         private void IncreaseSelectedIcon()
         {
             int NewItemIndex = IncreaseSelectedIcon(1);
@@ -214,7 +205,6 @@ namespace Zeltex.Combat
         /// <summary>
         /// Checks to see if item has any of the commands
         /// </summary>
-        /// <param name="MyItem"></param>
         bool HasAnyCommand(Item MyItem)
         {
             return (SelectedIcon.HasCommand("/Block")
@@ -223,6 +213,22 @@ namespace Zeltex.Combat
                 || SelectedIcon.HasCommand("/Sheild")
                 || SelectedIcon.HasCommand("/Commander")
                 || SelectedIcon.HasCommand("/Pickaxe"));
+        }
+
+        public Spell GetSelectedSpell()
+        {
+            if (SelectedIcon.HasCommand("/Spell"))
+            {
+                Inventory MyInventory = GetInventory();
+                SelectedIcon = MyInventory.GetItem(SelectedIndex);
+                string MyInput = SelectedIcon.GetInput("/Spell");
+                Spell SelectedSpell = Zeltex.DataManager.Get().GetElement("Spells", MyInput) as Spell;
+                return SelectedSpell;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -270,15 +276,13 @@ namespace Zeltex.Combat
 
                     if (SelectedIcon.HasCommand("/Spell"))     // /Spell [SpellName]
                     {
-                        string MyInput = SelectedIcon.GetInput("/Spell");
                         //string MyInput = ScriptUtil.RemoveCommand();
                         Shooter MyShooter = gameObject.GetComponent<Shooter>();
                         if (MyShooter == null)
                         {
                             MyShooter = gameObject.AddComponent<Shooter>();
                         }
-                        Spell NewSpell = Zeltex.DataManager.Get().GetElement("Spells", MyInput) as Spell;
-                        MyShooter.SetSpell(NewSpell);// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
+                        MyShooter.SetSpell(GetSelectedSpell());// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
                     }
 
                     if (SelectedIcon.HasCommand("/Summoner"))

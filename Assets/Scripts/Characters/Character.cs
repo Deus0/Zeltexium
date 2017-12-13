@@ -384,40 +384,7 @@ namespace Zeltex.Characters
             }
             // if (Data.CanRespawn)
             {
-                if (IsPlayer)
-                {
-                    ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
-                    if (RespawnZelGui)
-                    {
-                        yield return null;
-                        yield return null;
-                        yield return null;
-                        RespawnZelGui.TurnOn();     // turn gui on when reviving begins
-                        RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
-                        if (MyRespawner)
-                        {
-                            StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)DeathTime));
-                        }
-                    }
-                }
-                MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(DeathTime);
-                float TimeStarted = Time.time;
-                while (Time.time - TimeStarted <= DeathTime)
-                {
-                    yield return null;
-                }
-                yield return null;
-                Debug.Log("Reviving Character [" + name + "].");
-                Data.MyGuis.RestoreStates();
-                Data.MyStats.RestoreFullHealth();
-                SetMovement(true);
-                if (IsPlayer)
-                {
-                    CameraManager.Get().GetMainCamera().transform.localPosition = Vector3.zero;
-                    CameraManager.Get().GetMainCamera().transform.localRotation = Quaternion.identity;
-                    CameraManager.Get().GetMainCamera().GetComponent<Player>().SetMouse(true);
-                }
-                DeathHandle = null;
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(Respawn(DeathTime));
             }
             /*else
             {
@@ -428,6 +395,46 @@ namespace Zeltex.Characters
                 Data.MyGuis.Clear();
                 CharacterManager.Get().ReturnObject(this);
             }*/
+            DeathHandle = null;
+        }
+
+        private IEnumerator Respawn(float DeathTime)
+        {
+            if (IsPlayer)
+            {
+                ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
+                if (RespawnZelGui)
+                {
+                    yield return null;
+                    yield return null;
+                    yield return null;
+                    RespawnZelGui.TurnOn();     // turn gui on when reviving begins
+                    RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
+                    if (MyRespawner)
+                    {
+                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)DeathTime));
+                    }
+                }
+            }
+            MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(DeathTime);
+            float TimeStarted = Time.time;
+            while (Time.time - TimeStarted <= DeathTime)
+            {
+                yield return null;
+            }
+            yield return null;
+            Debug.Log("Reviving Character [" + name + "].");
+            Data.MyGuis.RestoreStates();
+            Data.MyStats.RestoreFullHealth();
+            SetMovement(true);
+            if (IsPlayer)
+            {
+                CameraManager.Get().GetMainCamera().transform.localPosition = Vector3.zero;
+                CameraManager.Get().GetMainCamera().transform.localRotation = Quaternion.identity;
+                CameraManager.Get().GetMainCamera().GetComponent<Player>().SetMouse(true);
+            }
+            MySkillbar.SetItem(-1);
+            MySkillbar.SetItem(0);
             DeathHandle = null;
         }
 
@@ -451,6 +458,9 @@ namespace Zeltex.Characters
             AddScore(1);
             Data.MyStats.AddExperience(1);
         }
+        #endregion
+
+        #region GameModeScores
 
         // Add To Log Class - used to log events
         // quick score system, put it somewhere else later
@@ -459,31 +469,32 @@ namespace Zeltex.Characters
             KillCount += Addition;
             OnScoreChange();
         }
+
         public void SetScore(int NewScore)
         {
             KillCount = NewScore;
         }
+
         public int GetScore()
         {
             return KillCount;
         }
+
         void OnScoreChange()
         {
-            GameObject GameManager = GameObject.Find("GameManager");
-            if (GameManager)
+            if (GameMode.Get())
             {
-                GameMode MyMode = GameManager.GetComponent<GameMode>();
-                MyMode.CheckKillCondition(GetScore());
+                GameMode.Get().CheckKillCondition(GetScore());
             }
             else
             {
-                Debug.LogError("No Game Manager for scoring.");
+                Debug.LogError("No GameMode for scoring.");
             }
         }
         #endregion
 
+
         #region Collision
-        //void OnControllerColliderHit(ControllerColliderHit MyHit)
 
         /// <summary>
         /// When player collides with something
@@ -519,19 +530,6 @@ namespace Zeltex.Characters
             }
         }
 
-        /*public static bool GetRayFromCamera(Transform MyCamera, float Range, out RaycastHit MyHit)
-        {
-            var CharactersLayer = (1 << 15);
-            var ExcludeCharactersLayer = ~CharactersLayer;  // everything except characters
-            bool DoesHit = Physics.Raycast(MyCamera.transform.position, MyCamera.transform.forward,
-                out MyHit, Range, ExcludeCharactersLayer);
-            return DoesHit;
-        }*/
-        private bool AreLayersEqual(LayerMask MyLayer, int GameObjectLayer)
-        {
-            return (MyLayer.value == 1 << GameObjectLayer);
-        }
-
         private bool RayTraceSelections(Transform CameraBone, int SelectionType)
 		{
 			RaycastHit MyHit;
@@ -539,7 +537,7 @@ namespace Zeltex.Characters
 			{
                 Debug.Log(name + " has interacted with: " + MyHit.collider.gameObject.name);
 
-                if (AreLayersEqual(LayerManager.Get().GetItemsLayer(), MyHit.collider.gameObject.layer))
+                if (LayerManager.AreLayersEqual(LayerManager.Get().GetItemsLayer(), MyHit.collider.gameObject.layer))
                 {
                     ItemObject HitItemObject = MyHit.collider.gameObject.GetComponent<ItemObject>();
                     if (HitItemObject != null)
@@ -559,7 +557,7 @@ namespace Zeltex.Characters
                     }
                     Debug.Log(name + " Hit a items layer without item object");
                 }
-                else if (AreLayersEqual(LayerManager.Get().GetSkeletonLayer(), MyHit.collider.gameObject.layer))
+                else if (LayerManager.AreLayersEqual(LayerManager.Get().GetSkeletonLayer(), MyHit.collider.gameObject.layer))
                 {
                     Character MyCharacter = MyHit.collider.transform.FindRootCharacter();
                     if (MyCharacter)
@@ -574,7 +572,7 @@ namespace Zeltex.Characters
                         Debug.Log(name + " Hit a characters layer without character root.");
                     }
                 }
-                else if (AreLayersEqual(LayerManager.Get().GetWorldsLayer(), MyHit.collider.gameObject.layer))
+                else if (LayerManager.AreLayersEqual(LayerManager.Get().GetWorldsLayer(), MyHit.collider.gameObject.layer))
                 {
                     /*Door MyDoor = MyHit.collider.gameObject.GetComponent<Door>();
                     if (MyDoor)
@@ -768,8 +766,6 @@ namespace Zeltex.Characters
             {
                 MyController = GetComponent<BasicController>();
             }
-            //MyCharacterMapChecker = GetComponent<CharacterMapChecker>();
-            //MyCharacterLimiter = GetComponent<CharacterLimiter>();
         }
 
         /// <summary>
@@ -786,10 +782,6 @@ namespace Zeltex.Characters
             {
                 MyRigidbody.isKinematic = !NewState;
             }
-            /*if (MyBot)
-            {
-                MyBot.enabled = NewState;
-            }*/
             if (GetComponent<Mover>())
             {
                 GetComponent<Mover>().enabled = NewState;
@@ -799,64 +791,3 @@ namespace Zeltex.Characters
 		#endregion
     }
 }
-
-
-/*public static void SetTransformText(Transform MyTransform, string[] MyData)
-{
-    List<string> NewData = new List<string>();
-    for (int i = 0; i < MyData.Length; i++)
-        NewData.Add(MyData[i]);
-    SetTransformText(MyTransform, NewData);
-}*/
-
-/*public void RunScriptNetwork(List<string> MySaveFile)
-{
-    string MyScript = FileUtil.ConvertToSingle(MySaveFile);
-    if (MyScript.Length < 32767)
-    {
-        gameObject.GetComponent<PhotonView>().RPC("RunScriptNetwork2",
-            PhotonTargets.All,  // send just to the player that requested the data
-            MyScript
-            );
-    }
-    else
-    {
-        Debug.LogError("Character string length over max, breaking up into parts.\n Current length: " + MyScript.Length);
-        //Debug.LogError(MyScript);
-        // this is primarily due to texture size being so high. Need to break this up into many component scripts to send accross.
-    }
-}
-[PunRPC]
-public void RunScriptNetwork2(string MyScript)
-{
-    RunScript(FileUtil.ConvertToList(MyScript));
-}*/
-
-/*public void RunScript(string[] MySaveFile)
-{
-    List<string> MyScriptList = new List<string>();
-    for (int i = 0; i < MySaveFile.Length; i++)
-    {
-        MyScriptList.Add(MySaveFile[i]);
-    }
-    RunScript(MyScriptList);
-}*/
-
-/*if (MySelections[i].ComponentName != "" && MySelections[i].FunctionName != "") 
-{
-    Component MyComponent = (Component) MyHit.collider.gameObject.GetComponent(MySelections[i].ComponentName);
-    MyComponent.BroadcastMessage(MySelections[i].FunctionName);
-}*/
-//Debug.LogError ("HitObject! " + MyHit.collider.gameObject.name);
-//MySelections[i].HandleOnSelect(InteractType, MyHit.collider.gameObject);
-/*Zeltex.AnimationUtilities.BodyPart MyBodyPart = MyHit.collider.gameObject.GetComponent<Zeltex.AnimationUtilities.BodyPart>();
-if (MyBodyPart)
-{
-    if (MyBodyPart.RagdollBrain.OnInteract.Count > InteractType  && InteractType >= 0)
-        MyBodyPart.RagdollBrain.OnInteract[InteractType].Invoke(MyHit.collider.gameObject);
-}
-*/
-//Debug.LogError("Hit object: " + MyHit.collider.gameObject.name);
-// add a value to statistics! for things 
-//if (gameObject.GetComponent<QuestLog>())
-//	gameObject.GetComponent<QuestLog>().RefreshQuestsGui();

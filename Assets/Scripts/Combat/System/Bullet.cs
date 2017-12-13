@@ -83,23 +83,37 @@ namespace Zeltex.Combat
             if (MyCharacter)
             {
                 LogManager.Get().Log("Initializing bullet at " + Time.time, "Bullets");
-                Data = MyCharacter.GetComponent<Shooter>().GetSpell();
-                transform.SetParent(BulletManager.Get().transform);
-                LayerManager.Get().SetLayerBullet(gameObject);
-                gameObject.name = "Bullet" + Random.Range(1, 100000);
-                Rigidbody MyRigid = GetComponent<Rigidbody>();
-                OriginalForce = (new Vector3(transform.forward.x,
-                                                transform.forward.y + Random.Range(-Data.Randomness, Data.Randomness),
-                                                transform.forward.z + Random.Range(-Data.Randomness, Data.Randomness)
-                                                ) * Data.BulletForce);
-                MyRigid.AddForce(OriginalForce);
-                //MyRigid.isKinematic = true;
-                transform.localScale = ConvertSize(Data.Size);
-                gameObject.GetComponent<MeshRenderer>().material.color = Data.ColorTint;
-                gameObject.GetComponent<TrailRenderer>().material.color = Data.ColorTint;
-                Zeltex.Sounds.SoundManager.CreateNewSound(transform.position, Data.GetSpawnSound(), Data.GetSoundVolume());
-                StartCoroutine(FindTarget());
-                StartCoroutine(ImplodeInTime(Data.LifeTime));
+                //Shooter MyShooter = MyCharacter.GetComponent<Shooter>();
+               // if (MyShooter)
+                {
+                    Data = MyCharacter.GetComponent<Character>().GetSkillbar().GetSelectedSpell();
+                    transform.SetParent(BulletManager.Get().transform);
+                    LayerManager.Get().SetLayerBullet(gameObject);
+                    gameObject.name = "Bullet" + Random.Range(1, 100000);
+                    Rigidbody MyRigid = GetComponent<Rigidbody>();
+                    OriginalForce = (new Vector3(transform.forward.x,
+                                                    transform.forward.y + Random.Range(-Data.Randomness, Data.Randomness),
+                                                    transform.forward.z + Random.Range(-Data.Randomness, Data.Randomness)
+                                                    ) * Data.BulletForce);
+                    MyRigid.AddForce(OriginalForce);
+                    //MyRigid.isKinematic = true;
+                    transform.localScale = ConvertSize(Data.Size);
+                    gameObject.GetComponent<MeshRenderer>().material.color = Data.ColorTint;
+                    gameObject.GetComponent<TrailRenderer>().material.color = Data.ColorTint;
+                    Zeltex.Sounds.SoundManager.CreateNewSound(transform.position, Data.GetSpawnSound(), Data.GetSoundVolume());
+                    StartCoroutine(FindTarget());
+                    StartCoroutine(ImplodeInTime(Data.LifeTime));
+                }
+               // else
+                {
+                    //Debug.LogError(MyCharacter.name + " does not have a shooter script");
+                   // Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Debug.LogError(name + " spawned bullet has a missing character. Can not exist.");
+                Destroy(gameObject);
             }
         }
 
@@ -477,6 +491,10 @@ namespace Zeltex.Combat
                         //MySource.PlayOneShot(Data.GetHitTerrainSound());
                     }
                 }
+            }
+            else
+            {
+                IsUsed = false; // not used yet!
             }
         }
         #endregion
