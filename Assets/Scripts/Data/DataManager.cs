@@ -75,16 +75,19 @@ namespace Zeltex
             LogManager.Get().Log("Loading Map [" + DataManager.Get().MapName + "]");
             MakeStreaming();
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine());
-            MakePersistent();
-            //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ClearConsole());
-            // load saving
-            //LoadFolder(DataFolderNames.Saves);
-            //Debug.LogError("Loading: " + DataFolderNames.Saves);
-            ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
-            if (MyFolder != null)
+            if (Application.isEditor == false)
             {
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
-                OnUpdatedResources.Invoke();
+                MakePersistent();
+                //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ClearConsole());
+                // load saving
+                //LoadFolder(DataFolderNames.Saves);
+                //Debug.LogError("Loading: " + DataFolderNames.Saves);
+                ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
+                if (MyFolder != null)
+                {
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
+                    OnUpdatedResources.Invoke();
+                }
             }
         }
 

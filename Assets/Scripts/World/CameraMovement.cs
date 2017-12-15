@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using Zeltex.Guis;
 
 // Utility download
-namespace Zeltex.WorldUtilities
+namespace Zeltex.Cameras
 {
     /// <summary>
     /// Basic camera movement script
@@ -32,6 +32,16 @@ namespace Zeltex.WorldUtilities
         {
             //Debug.Log("OnEnable [" + Time.realtimeSinceStartup + "] Setting MouseLocker in " + name + " to " + false);
 	    }
+
+        private void Awake()
+        {
+            DoesHaveCamera();
+        }
+
+        public bool IsCameraMoving()
+        {
+            return (MyCamera && MyCamera.transform.position != TargetPosition);
+        }
 
 	    void Update()
 	    {

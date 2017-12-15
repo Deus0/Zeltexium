@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Zeltex.Animations
+namespace Zeltex.Cameras
 {
     public class CameraIdle : MonoBehaviour
     {
@@ -12,18 +12,60 @@ namespace Zeltex.Animations
         private Vector3 Rotation;
         private Vector3 NewRotation;
         private Vector3 Noise;
+        private CameraMovement MyCameraMover;
+        private float TimeMovementStopped;
+        private float TimeToStartIdling = 5f;
+        private bool IsIdling = true;
 
         private void Start()
         {
-            Rotation = transform.localRotation.eulerAngles;
+            MyCameraMover = GetComponent<CameraMovement>();
+            BeginIdling();
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (MyCameraMover == null)
+            {
+                UpdateIdleMovement();
+            }
+            else
+            {
+                if (MyCameraMover.IsCameraMoving() == false)
+                {
+                    if (IsIdling)
+                    {
+                        UpdateIdleMovement();   // normal
+                    }
+                    else
+                    {
+                        // Check if has stopped moving for over 5 seconds
+                        if (Time.time - TimeMovementStopped >= TimeToStartIdling)
+                        {
+                            IsIdling = true;
+                        }
+                    }
+                }
+                else
+                {
+                    TimeMovementStopped = Time.time;    // referenced when movement stops
+                    IsIdling = false;
+                }
+            }
+        }
+
+        private void BeginIdling()
+        {
+            IsIdling = true;
+            Rotation = transform.localRotation.eulerAngles;
+        }
+
+        private void UpdateIdleMovement()
+        {
             Noise.Set(
-                Mathf.PerlinNoise(NoiseAmplitude.x, TimeScale * Time.time), 
-                Mathf.PerlinNoise(NoiseAmplitude.y, TimeScale * Time.time), 
+                Mathf.PerlinNoise(NoiseAmplitude.x, TimeScale * Time.time),
+                Mathf.PerlinNoise(NoiseAmplitude.y, TimeScale * Time.time),
                 Mathf.PerlinNoise(NoiseAmplitude.z, TimeScale * Time.time));
             NewRotation.Set(
                 Rotation.x + (SinAmplitude.x * Noise.x) * Mathf.Sin(TimeScale * Time.time),

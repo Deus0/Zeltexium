@@ -9,8 +9,11 @@ namespace Zeltex.Voxels
     /// </summary>
 	public class VoxelBrush : MonoBehaviour
     {
-        private static bool UnlimitedMode = true;
         [Header("Brush Settings")]
+        [SerializeField]
+        private bool UnlimitedMode;
+        [SerializeField]
+        private bool IsDebugClick;
         [SerializeField]
         private bool IsPickaxe;
         [SerializeField]
@@ -23,11 +26,30 @@ namespace Zeltex.Voxels
         private Inventory MyInventory;
         private Item MyItem;
         private int SelectedItemIndex;
+        private Combat.Skillbar MySkillbar;
+        private Characters.Character MyCharacter;
+        private Camera MyCamera;
+
+        private void Awake()
+        {
+            MySkillbar = GetComponent<Combat.Skillbar>();
+            MyCharacter = GetComponent<Characters.Character>();
+            MyCamera = GetComponent<Camera>();
+        }
+
+        public void Update()
+        {
+            if (IsDebugClick && Input.GetMouseButtonDown(0))
+            {
+                Activate();
+            }
+        }
 
         public void SetAsPickaxe()
         {
             IsPickaxe = true;
         }
+
         /// <summary>
         /// Use the item to place blocks!
         /// </summary>
@@ -38,6 +60,7 @@ namespace Zeltex.Voxels
             MyItem = NewItem;
             SelectedItemIndex = NewSelectedItemIndex;
         }
+
         /*public void UpdateItemType(string NewType)
         {
             VoxelBrushType = NewType;
@@ -47,28 +70,34 @@ namespace Zeltex.Voxels
 		{
 			VoxelBrushType = NewBrushType;
 		}
+
 		public void UpdateBrushSize(float NewVoxelBrushSize)
 		{
 			VoxelBrushSize = NewVoxelBrushSize;
 		}
+
 		public void Activate() 
 		{
-            if (MyItem == null)
-            {
-                UpdateItem(GetComponent<Characters.Character>().GetSkillbarItems(), 
-                    GetComponent<Combat.Skillbar>().GetSelectedItem(), 
-                    GetComponent<Combat.Skillbar>().GetSelectedIndex());
-            }
             LastUpdatedTime = Time.realtimeSinceStartup;
+            if (MyCamera == null)
+            {
+                MyCamera = CameraManager.Get().GetMainCamera();
+            }
             if (IsPickaxe)
             {
                     
                 // i need to get back the amount of blocks required from this placement..
                 UpdateBlockCamera("Air", VoxelBrushSize, VoxelBrushRange, gameObject);
             }
-            else if (MyItem.GetQuantity() >= 1 || UnlimitedMode)
+            else if ((MyItem != null && MyItem.GetQuantity() >= 1) || UnlimitedMode)
             {
-                // i need to get back the amount of blocks required from this placement..
+                // i need to get back the amount of blocks
+                if (!UnlimitedMode && MyItem == null &&
+                    MySkillbar && MyCharacter)
+                {
+                    UpdateItem(MyCharacter.GetSkillbarItems(), MySkillbar.GetSelectedItem(), MySkillbar.GetSelectedIndex());
+                }
+                // required from this placement..
                 UpdateBlockCamera(VoxelBrushType, VoxelBrushSize, VoxelBrushRange, gameObject);
                 // whatever i just need to create a new block here based on those removed
                 if (!UnlimitedMode)
@@ -80,22 +109,29 @@ namespace Zeltex.Voxels
 
         public void UpdateBlockCamera(string VoxelName, float BrushSize, float BrushRange)
         {
-            UpdateBlockCamera(Camera.main, VoxelName, BrushSize, BrushRange, null);
+            UpdateBlockCamera(MyCamera, VoxelName, BrushSize, BrushRange, null);
         }
 
         public void UpdateBlockCamera(string VoxelName, float BrushSize, float BrushRange, GameObject MyCharacter)
         {
-            UpdateBlockCamera(Camera.main, VoxelName, BrushSize, BrushRange, MyCharacter);
+            UpdateBlockCamera(MyCamera, VoxelName, BrushSize, BrushRange, MyCharacter);
         }
 
         public void UpdateBlockCamera(Camera MyCamera, string VoxelName, float BrushSize, float BrushRange, GameObject MyCharacter)
         {
-            UpdateBlockCamera2( VoxelName,
-                                BrushSize,
-                                BrushRange,
-                                MyCamera.transform.position,
-                                MyCamera.transform.forward,
-                                MyCharacter);
+            if (MyCamera)
+            {
+                UpdateBlockCamera2(VoxelName,
+                                    BrushSize,
+                                    BrushRange,
+                                    MyCamera.transform.position,
+                                    MyCamera.transform.forward,
+                                    MyCharacter);
+            }
+            else
+            {
+                Debug.LogError("Could not get a camera with voxelbrush: " + name);
+            }
         }
 
         public void UpdateBlockCamera2(string VoxelName, float BrushSize, float BrushRange, Vector3 RayOrigin, Vector3 RayDirection, GameObject MyCharacter)  // the character we are aiming from

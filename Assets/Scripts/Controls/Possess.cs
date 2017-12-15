@@ -7,6 +7,7 @@ using Zeltex.Characters;
 using Zeltex.Guis;
 using Zeltex.Guis.Characters;
 using Zeltex.Guis.Players;
+using Zeltex.Cameras;
 
 /*
 		Player class
@@ -61,6 +62,8 @@ namespace Zeltex
         protected SkeletonHandler MySkeleton;
         [SerializeField, HideInInspector]
         protected ZelGui MyCrosshair;
+        [SerializeField, HideInInspector]
+        protected CameraMovement MyCameraMovement;
         // States
         protected bool IsInput = true;
         protected bool IsFrozen = false;
@@ -82,6 +85,11 @@ namespace Zeltex
         #endregion
 
         #region Mono
+        private void Awake()
+        {
+            MyCameraMovement = GetComponent<CameraMovement>();
+        }
+
         protected virtual void Start()
         {
             SetSettings();
@@ -224,9 +232,9 @@ namespace Zeltex
         {
             if (MyCharacter)
             {
-                if (GetComponent<CameraMovement>())
+                if (MyCameraMovement)
                 {
-                    GetComponent<CameraMovement>().enabled = true;
+                    MyCameraMovement.enabled = true;
                 }
                 LastCharacter = MyCharacter;
                 Debug.Log("Player is now removing control from [" + MyCharacter.name + "]");
@@ -317,10 +325,9 @@ namespace Zeltex
             if (MyCharacter != null && MyCharacter.IsAlive())
             {
                 Debug.Log("Player is now taking over [" + MyCharacter.name + "]");
-                CameraMovement CameraMovement = GetComponent<CameraMovement>();
-                if (CameraMovement)
+                if (MyCameraMovement)
                 {
-                    CameraMovement.enabled = false;
+                    MyCameraMovement.enabled = false;
                 }
                 MyCharacter.SetPlayer(true);
                 MySkeleton = MyCharacter.GetSkeleton();

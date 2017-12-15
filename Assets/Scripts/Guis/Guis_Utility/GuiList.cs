@@ -38,18 +38,18 @@ namespace Zeltex.Guis
         [Tooltip("stretches the cell to the horizontal of the rect area")]
         [SerializeField]
         private bool IsStretchHorizontal;
-        [SerializeField]//, HideInInspector]
-        private List<Vector2> ScrollBeginPositions = new List<Vector2>();
         private float ScrollBeginTime;
         private float ScrollBeginPositionY;
         private float LastScrollPositionY;
         //[Tooltip("Time it takes to scroll from one position to the next")]
         private float ScrollAnimationTime = 0.5f;
         private Vector2 ScrollPosition = new Vector2(0, 0);
-        [SerializeField]//, HideInInspector]
+        [SerializeField, HideInInspector]
         private Vector2 MaxGrid;    // visible amount of cells showing
-        [SerializeField]//, HideInInspector]
+        [SerializeField, HideInInspector]
         private Vector2 CellSize;	// this depends on prefab
+        [SerializeField, HideInInspector]
+        private List<Vector2> ScrollBeginPositions = new List<Vector2>();
 
         protected int SelectedIndex = -1;
 		protected string SelectedName = "";

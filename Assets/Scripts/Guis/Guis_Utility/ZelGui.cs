@@ -50,7 +50,6 @@ namespace Zeltex.Guis
             {
                 Debug.LogError("Camera Manager or Canvas not in scene.");
             }
-            //gameObject.SetActive(true);
         }
 
         private void OnMainCameraChangeAction()
@@ -59,6 +58,7 @@ namespace Zeltex.Guis
         }
 
         #region GettersAndSetters
+
         // other stuff
         public bool GetState()
         {

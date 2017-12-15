@@ -29,15 +29,11 @@ namespace Zeltex.Guis.Maker
         public UnityEvent OnConfirmEvent;    // on confirm, normally, close the gui, and open the main menu
         public TabManager MainTabs;
         public TabManager EditTabs;
+        public ResourcesFileHandler MyFileHandler;
         private string BeforeCreationResoucesName;
         private string BeforeEditedResourcesName;
         private UnityAction OnUpdatedResources;
-        private bool IsInFolder = false;
-        private string SelectedFolderName = "";
         private string BeforeEnableResoucesName;
-        // Keep track of the actions for file events
-        private List<UnityAction<Element>> FileActionsModified = new List<UnityAction<Element>>();
-        private List<UnityAction<Element>> FileActionsSaved = new List<UnityAction<Element>>();
 
         #region ZelGui
 
@@ -65,7 +61,7 @@ namespace Zeltex.Guis.Maker
             DataManager.Get().OnUpdatedResources.AddEvent(OnUpdatedResources);
             MainTabs.EnableTab("EditTab");
             EditTabs.EnableTab("Tab1");
-            OpenFoldersList();
+            MyFileHandler.OpenFoldersList();
         }
 
         public override void OnEnd()
@@ -73,6 +69,18 @@ namespace Zeltex.Guis.Maker
             base.OnEnd();
             DataManager.Get().OnUpdatedResources.RemoveListener(OnUpdatedResources);
         }
+
+        private void OnUpdatedResourceStatistics()
+        {
+            Debug.Log("Updating resources statistics.");
+            string MyStatistics = DataManager.Get().GetStatistics();
+            GetLabel("CreationResourceStatistics").text = MyStatistics;
+            GetLabel("EditingResourceStatistics").text = MyStatistics;
+        }
+
+        #endregion
+
+        #region Resource Folders
 
         /// <summary>
         /// Gets a list of the folders in the resources path and adds them to the list
@@ -111,14 +119,6 @@ namespace Zeltex.Guis.Maker
             return MyNames;
         }
 
-        private void OnUpdatedResourceStatistics()
-        {
-            Debug.Log("Updating resources statistics.");
-            string MyStatistics = DataManager.Get().GetStatistics();
-            GetLabel("CreationResourceStatistics").text = MyStatistics;
-            GetLabel("EditingResourceStatistics").text = MyStatistics;
-        }
-
         #endregion
 
         #region Files
@@ -134,7 +134,7 @@ namespace Zeltex.Guis.Maker
         private void EditResources()
         {
             BeforeEditedResourcesName = DataManager.Get().MapName;
-            OpenFoldersList();
+            MyFileHandler.OpenFoldersList();
             string LoadName = GetList("MyList").GetSelectedName();
             GetLabel("ResourcesName").text = LoadName;
             Debug.Log("Editing Resources: New: " + LoadName + " - Previous: " + BeforeEditedResourcesName);
@@ -225,202 +225,8 @@ namespace Zeltex.Guis.Maker
 
         #endregion
 
-        #region FileList
-
-        /// <summary>
-        /// When user clicks on a list element
-        /// </summary>
-        public void OnClickFile(int FileIndex)
-        {
-            GuiList FilesList = GetList("FilesList");
-            if (IsInFolder == false)
-            {
-                CloseFoldersList(FilesList);
-                OpenFilesList(FilesList); 
-            }
-            else if (IsInFolder == true)
-            {
-                // return to main folders
-                if (FileIndex == 0)
-                {
-                    CloseFilesList();
-                    // Now Clear the list and add folders again
-                    OpenFoldersList();
-                }
-                else if (FileIndex == 1)
-                {
-                    GameObject MakerGui = GuiSpawner.Get().SpawnGui(DataFolderNames.FolderToGuiName(SelectedFolderName));
-                    if (MakerGui)
-                    {
-                        MakerGui MyMaker = MakerGui.GetComponent<MakerGui>();
-                        TextureMaker MyTextureMaker = MyMaker.GetComponent<TextureMaker>();
-                        if (MyTextureMaker)
-                        {
-                            MyTextureMaker.SetFolder(SelectedFolderName);
-                        }
-                        MyMaker.New();
-                    }
-                    else
-                    {
-                        Debug.LogError("Failed to open: " + SelectedFolderName);
-                    }
-                }
-                else
-                {
-                    MakerGui MyMaker = GuiSpawner.Get().SpawnGui(DataFolderNames.FolderToGuiName(SelectedFolderName)).GetComponent<MakerGui>();
-                    TextureMaker MyTextureMaker = MyMaker.GetComponent<TextureMaker>();
-                    if (MyTextureMaker)
-                    {
-                        MyTextureMaker.SetFolder(SelectedFolderName);
-                    }
-                    MyMaker.Select(FileIndex - 2);
-                    Debug.Log("Spawned maker: " + SelectedFolderName + " to select: " + (FileIndex - 2));
-                }
-            }
-            Debug.Log("On Clicked file: " + FileIndex + "- IsInFolder: " + IsInFolder.ToString());
-        }
-
-
-        /// <summary>
-        /// Adds the folder names and events
-        /// </summary>
-        private void OpenFoldersList()
-        {
-            IsInFolder = false;
-            GuiList FilesList = GetList("FilesList");
-            FilesList.Clear();  // clear any files remaining, or when on begin
-            List<string> FolderNames = DataManager.Get().GetFolderNames();
-            FilesList.AddRange(FolderNames);
-            for (int i = 0; i < FolderNames.Count; i++)
-            {
-                // if modified element, add to folder
-                GuiListElementFile MyElementFile = FilesList.GetCell(i).GetComponent<GuiListElementFile>();
-                MyElementFile.SetModified(DataManager.Get().IsFolderModified(FolderNames[i]));
-            }
-            // Add listeners for each one of the files
-            List<ElementFolder> ElementFolders = DataManager.Get().GetElementFolders();
-            for (int i = 0; i < ElementFolders.Count; i++)
-            {
-                ElementFolder MyFolder = ElementFolders[i];
-                GameObject ListElementObject = FilesList.GetCell(MyFolder.FolderName);
-                if (ListElementObject != null)
-                {
-                    GuiListElementFile ListElement = ListElementObject.GetComponent<GuiListElementFile>();
-
-                    UnityAction<Element> ModifiedAction = ListElement.OnModified;
-                    MyFolder.ModifiedEvent.AddEvent(ModifiedAction);
-                    FileActionsModified.Add(ModifiedAction);
-
-                    UnityAction<Element> SavedAction = ListElement.OnSaved;
-                    MyFolder.SavedEvent.AddEvent(SavedAction);
-                    FileActionsSaved.Add(SavedAction);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Closes the files list
-        /// </summary>
-        private void CloseFoldersList(GuiList FilesList)
-        {
-            SelectedFolderName = FilesList.GetSelectedName();
-            FilesList.Clear();
-            // Remove listeners from element folders
-            List<ElementFolder> ElementFolders = DataManager.Get().GetElementFolders();
-            for (int i = 0; i < ElementFolders.Count; i++)
-            {
-                ElementFolder MyFolder = ElementFolders[i];
-                if (MyFolder != null && i < FileActionsModified.Count)
-                {
-                    MyFolder.ModifiedEvent.RemoveListener(FileActionsModified[i]);
-                    MyFolder.SavedEvent.RemoveListener(FileActionsSaved[i]);
-                }
-            }
-            // Clear actions
-            FileActionsModified.Clear();
-            FileActionsSaved.Clear();
-        }
-
-        /// <summary>
-        /// Creates all the elements for a folder of files
-        /// </summary>
-        private void OpenFilesList(GuiList FilesList)
-        {
-            FilesList.Clear();  // just incase
-            IsInFolder = true;
-            FilesList.Add("Back");
-            FilesList.Add("New");
-            // Add listeners too
-            // Add in file tags to elements that are added
-            int FilesCount = DataManager.Get().GetSize(SelectedFolderName);
-            for (int i = 0; i < FilesCount; i++)
-            {
-                GameObject FileElement = FilesList.Add(DataManager.Get().GetName(SelectedFolderName, i));
-                // for each element, add OnModified Events to the guis
-                // also initiate the gui difference on it
-                // Make GuiListElement for file? with the managing of these icons
-                Element MyElement = DataManager.Get().GetElement(SelectedFolderName, i);
-                GuiListElementFile ListElement = FileElement.GetComponent<GuiListElementFile>();
-                if (MyElement != null && ListElement != null)
-                {
-                    UnityAction<Element> ModifiedAction = ListElement.OnModified;
-                    MyElement.ModifiedEvent.AddEvent(ModifiedAction);
-                    FileActionsModified.Add(ModifiedAction);
-                    UnityAction<Element> SavedAction = ListElement.OnSaved;
-                    MyElement.SavedEvent.AddEvent(SavedAction);
-                    FileActionsSaved.Add(SavedAction);
-                    ListElement.CheckElement(MyElement);
-                }
-            }
-            Debug.Log("Opened folder: " + SelectedFolderName + " with " + FilesCount + " files.");
-        }
-
-        /// <summary>
-        /// Closes all the files
-        /// </summary>
-        private void CloseFilesList()
-        {
-            // Clean up files list
-            // ALso remove listeners from the current folder
-            for (int i = 0; i < DataManager.Get().GetSize(SelectedFolderName); i++)
-            {
-                Element MyElement = DataManager.Get().GetElement(SelectedFolderName, i);
-                if (MyElement != null)
-                {
-                    MyElement.ModifiedEvent.RemoveListener(FileActionsModified[i]);
-                    MyElement.SavedEvent.RemoveListener(FileActionsSaved[i]);
-                }
-            }
-            FileActionsModified.Clear();
-            FileActionsSaved.Clear();
-            SelectedFolderName = "";    // no folder selected now
-        }
-
-        public void OnModifiedElement(Element MyElement)
-        {
-
-        }
-        #endregion
 
         #region UI
-
-       /* public override void UseInput(Toggle MyToggle)
-        {
-            if (MyToggle.name == "PersistentPathToggle")
-            {
-                if (FileUtil.SetPersistentPath(MyToggle.isOn)) 
-                {
-                    RefreshList();
-                }
-            }
-            else if (MyToggle.name == "StreamingPathToggle")
-            {
-                if (FileUtil.SetStreamingPath(MyToggle.isOn))
-                {
-                    RefreshList();
-                }
-            }
-        }*/
 
         public override void UseInput(Dropdown MyDropdown)
         {
@@ -515,70 +321,16 @@ namespace Zeltex.Guis.Maker
                 DataManager.Get().SaveAll();
             }
         }
-
+        
         private bool IsMakerButton(Button MyButton)
         {
-            if (MyButton.name == "TextureMaker")
+            bool IsMaker = MyButton.name.Contains("Maker");
+
+            if (IsMaker)
             {
-                GuiSpawner.Get().SpawnGui("TextureMaker");
+                GuiSpawner.Get().SpawnMakerGui(MyButton.name);
             }
-            else if (MyButton.name == "PolygonMaker")
-            {
-                GuiSpawner.Get().SpawnGui("PolygonMaker");
-            }
-            else if (MyButton.name == "ModelMaker")
-            {
-                GuiSpawner.Get().SpawnGui("ModelMaker");
-            }
-            else if (MyButton.name == "SkeletonMaker")
-            {
-                GuiSpawner.Get().SpawnGui("SkeletonMaker");
-            }
-            else if (MyButton.name == "SoundMaker")
-            {
-                GuiSpawner.Get().SpawnGui("SoundMaker");
-            }
-            else if (MyButton.name == "LevelMaker")
-            {
-                GuiSpawner.Get().SpawnGui("LevelMaker");
-            }
-            else if (MyButton.name == "ClassMaker")
-            {
-                GuiSpawner.Get().SpawnGui("ClassMaker");
-            }
-            else if (MyButton.name == "DialogueMaker")
-            {
-                GuiSpawner.Get().SpawnGui("DialogueMaker");
-            }
-            else if (MyButton.name == "ItemMaker")
-            {
-                GuiSpawner.Get().SpawnGui("ItemMaker");
-            }
-            else if (MyButton.name == "QuestMaker")
-            {
-                GuiSpawner.Get().SpawnGui("QuestMaker");
-            }
-            else if (MyButton.name == "RecipeMaker")
-            {
-                GuiSpawner.Get().SpawnGui("RecipeMaker");
-            }
-            else if (MyButton.name == "SpellMaker")
-            {
-                GuiSpawner.Get().SpawnGui("SpellMaker");
-            }
-            else if (MyButton.name == "StatsMaker")
-            {
-                GuiSpawner.Get().SpawnGui("StatsMaker");
-            }
-            else if (MyButton.name == "VoxelMaker")
-            {
-                GuiSpawner.Get().SpawnGui("VoxelMaker");
-            }
-            else
-            {
-                return false;
-            }
-            return true;
+            return IsMaker;
         }
 
         #endregion
@@ -625,6 +377,66 @@ namespace Zeltex.Guis.Maker
     }
 }
 
+/* if (MyButton.name == "TextureMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("TextureMaker");
+ }
+ else if (MyButton.name == "PolygonMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("PolygonMaker");
+ }
+ else if (MyButton.name == "ModelMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("ModelMaker");
+ }
+ else if (MyButton.name == "SkeletonMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("SkeletonMaker");
+ }
+ else if (MyButton.name == "SoundMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("SoundMaker");
+ }
+ else if (MyButton.name == "LevelMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("LevelMaker");
+ }
+ else if (MyButton.name == "ClassMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("ClassMaker");
+ }
+ else if (MyButton.name == "DialogueMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("DialogueMaker");
+ }
+ else if (MyButton.name == "ItemMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("ItemMaker");
+ }
+ else if (MyButton.name == "QuestMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("QuestMaker");
+ }
+ else if (MyButton.name == "RecipeMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("RecipeMaker");
+ }
+ else if (MyButton.name == "SpellMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("SpellMaker");
+ }
+ else if (MyButton.name == "StatsMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("StatsMaker");
+ }
+ else if (MyButton.name == "VoxelMaker")
+ {
+     PreviousMakerGui = GuiSpawner.Get().SpawnGui("VoxelMaker");
+ }
+ else
+ {
+     return false;
+ }*/
 /// <summary>
 /// Creates a new Resources Pack!
 /// </summary>

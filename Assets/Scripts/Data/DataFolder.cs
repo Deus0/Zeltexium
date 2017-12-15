@@ -258,7 +258,7 @@ namespace Zeltex
             }
             catch (System.ObjectDisposedException e)
             {
-                Debug.LogError(e.ToString());
+                Debug.LogError("Bug Found in DataFolder: " + e.ToString());
             }
             return MyData;
         }

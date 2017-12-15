@@ -12,7 +12,7 @@ namespace Zeltex.Guis
     [ExecuteInEditMode]
     public class GuiSpawner : ManagerBase<GuiSpawner>
     {
-        public static bool IsUseSortOrders = false;
+        public static bool IsUseSortOrders = true;
         [Header("Debug")]
         public bool IsDebugGui;
         [SerializeField]
@@ -322,6 +322,22 @@ namespace Zeltex.Guis
                     MyGuiZelGui.Enable();
                 }
             }
+        }
+
+        public static bool IsSingleMakerMode = true;
+        private GameObject PreviousSpawnedMakerGui;
+        public GameObject SpawnMakerGui(string MakerName)
+        {
+            GameObject PreviousPreviousMakerGui = PreviousSpawnedMakerGui;
+            if (MakerName.Contains("Maker"))
+            {
+                PreviousSpawnedMakerGui = SpawnGui(MakerName);
+            }
+            if (PreviousPreviousMakerGui && IsSingleMakerMode)
+            {
+                Destroy(PreviousPreviousMakerGui);
+            }
+            return PreviousSpawnedMakerGui;
         }
     }
 }
