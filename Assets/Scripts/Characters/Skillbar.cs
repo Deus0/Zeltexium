@@ -282,6 +282,7 @@ namespace Zeltex.Combat
                         {
                             MyShooter = gameObject.AddComponent<Shooter>();
                         }
+                        GetSelectedSpell().MyCharacter = MyCharacter;
                         MyShooter.SetSpell(GetSelectedSpell());// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
                     }
 

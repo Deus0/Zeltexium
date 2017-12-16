@@ -3,6 +3,7 @@ using System.Collections;
 using Zeltex.Voxels;
 using Zeltex.Combat;
 using Zeltex.Items;
+using System.Collections.Generic;
 
 namespace Zeltex.Generators
 {
@@ -11,7 +12,7 @@ namespace Zeltex.Generators
     /// </summary>
     public class ItemGenerator : MonoBehaviour
     {
-        private VoxelManager MyVoxelManager;
+        //private VoxelManager MyVoxelManager;
         [Header("References")]
         public TextureGenerator MyTextureGenerator;
         public int TextureResolution = 32;
@@ -23,10 +24,10 @@ namespace Zeltex.Generators
 
         public IEnumerator GenerateData()
         {
-            if (MyVoxelManager == null)
+            /*if (MyVoxelManager == null)
             {
                 MyVoxelManager = VoxelManager.Get();
-            }
+            }*/
             yield return GenerateItemsForVoxels();
             yield return GenerateItemSpells();
         }
@@ -64,11 +65,12 @@ namespace Zeltex.Generators
 
         public IEnumerator GenerateItemsForVoxels()
         {
-            Debug.Log("Generating " + MyVoxelManager.MyMetas.Count + " Items!");
-            for (int i = 1; i < MyVoxelManager.MyMetas.Count; i++)    // skip air
+            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.VoxelMeta);
+            Debug.Log("Generating " + MyMetas.Count + " Items!");
+            for (int i = 1; i < MyMetas.Count; i++)    // skip air
             {
                 Item MyItem = GenerateItem(i);
-                MyItem.Name = MyVoxelManager.GetMetaName(i);
+                MyItem.Name = DataManager.Get().GetName(DataFolderNames.VoxelMeta, i);
                 //MyItem.MyMesh = MyVoxelManager.GetSingleVoxelMesh(i);
                 //MyItem.MyMaterial = MyVoxelManager.GetMaterial(0);
 
@@ -99,19 +101,21 @@ namespace Zeltex.Generators
         public Item GenerateItem(int VoxelIndex)
         {
             Item NewItem = new Item();
-            if (MyVoxelManager.MyMetas.Count != 0 && VoxelIndex >= 0 && VoxelIndex < MyVoxelManager.MyMetas.Count)
+            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.VoxelMeta);
+            if (MyMetas.Count != 0 && VoxelIndex >= 0 && VoxelIndex < MyMetas.Count)
             {
-                VoxelMeta MyMeta = MyVoxelManager.GetMeta(VoxelIndex);
+                VoxelMeta MyMeta = MyMetas[VoxelIndex] as VoxelMeta;//.GetMeta(VoxelIndex);
                 NewItem.Name = MyMeta.Name;
                 NewItem.SetDescription(MyMeta.GetDescription());
                 NewItem.SetCommands("/Block " + MyMeta.Name);  // make command /Block[MetaIndex] work!
                 //NewItem.MeshName = MyMeta.Name;
                 //if (MyTextureManager)
                 {
-                    if (MyVoxelManager.DiffuseTextures.Count > 0 && MyMeta.TextureMapID >= 0 &&
-                                        MyMeta.TextureMapID < MyVoxelManager.DiffuseTextures.Count)
+                    int VoxelMetaSize = DataManager.Get().GetSize(DataFolderNames.VoxelDiffuseTextures);
+                    if (VoxelMetaSize > 0 && MyMeta.TextureMapID >= 0 && MyMeta.TextureMapID < VoxelMetaSize)
                     {
-                        NewItem.SetTexture(MyVoxelManager.DiffuseTextures[MyMeta.TextureMapID]);
+                        Zexel MyZexel = DataManager.Get().GetElement(DataFolderNames.VoxelDiffuseTextures, MyMeta.TextureMapID) as Zexel;
+                        NewItem.SetTexture(MyZexel.GetTexture());
                     }
                 }
 

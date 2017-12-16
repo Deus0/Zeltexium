@@ -70,6 +70,16 @@ namespace Zeltex
             UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine2());
         }
 
+        public List<Element> GetElements(string FolderName)
+        {
+            ElementFolder MyFolder = GetElementFolder(FolderName);
+            if (MyFolder != null)
+            {
+                return MyFolder.GetData();
+            }
+            return new List<Element>();
+        }
+
         private System.Collections.IEnumerator LoadAllRoutine2()
         {
             OnBeginLoading.Invoke();

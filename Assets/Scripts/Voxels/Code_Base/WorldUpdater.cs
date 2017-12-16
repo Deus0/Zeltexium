@@ -143,7 +143,7 @@ namespace Zeltex.Voxels
             // if already added chunk to updater, return
             if (MyChunks.Contains(MyChunk) == false)// && BuildingChunks.Contains(MyChunk) == false)
             {
-                Debug.LogError("Adding Chunk: " + MyChunk.name);
+                //Debug.LogError("Adding Chunk: " + MyChunk.name);
                 MyChunks.Add(MyChunk);
                 InitializeUpdates();
             }

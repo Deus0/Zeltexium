@@ -93,6 +93,10 @@ namespace Zeltex.Items
         /// </summary>
         public GameObject SpawnItem(Transform DropTransform, Item MyItem)
         {
+            if (ItemObjectPrefab == null)
+            {
+                return null;
+            }
             GameObject ItemWorld;
             if (DropTransform)
             {

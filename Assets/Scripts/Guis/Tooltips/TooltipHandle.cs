@@ -11,6 +11,7 @@ namespace Zeltex.Guis
                                 IPointerExitHandler
     {
         private TooltipGui MyTooltipGui;
+        private bool HasEntered;
         public string TooltipNameLabel = "Play";
         public string TooltipDescriptionLabel = "Play through the game. You will fight many foes and make many allies.";
 
@@ -21,13 +22,41 @@ namespace Zeltex.Guis
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            HasEntered = true;
             MyTooltipGui.gameObject.SetActive(true);
             MyTooltipGui.SetTexts(TooltipNameLabel, TooltipDescriptionLabel);
         }
 
+        private void Update()
+        {
+            if (HasEntered)
+            {
+
+            }
+        }
+
         public void OnPointerExit(PointerEventData eventData)
         {
-            MyTooltipGui.gameObject.SetActive(false);
+            HideTooltip();
+        }
+
+        private void OnDisable()
+        {
+            HideTooltip();
+        }
+
+        private void OnDestroy()
+        {
+            HideTooltip();
+        }
+
+        private void HideTooltip()
+        {
+            if (HasEntered)
+            {
+                HasEntered = false;
+                MyTooltipGui.gameObject.SetActive(false);
+            }
         }
     }
 }
