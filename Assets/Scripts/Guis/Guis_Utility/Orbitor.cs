@@ -14,17 +14,20 @@ namespace Zeltex.Guis
         #region Variables
         [Header("Target")]
         [Tooltip("Sets the target to the main camera")]
-        [SerializeField] private bool IsTargetMainCamera = true;
+        [SerializeField]
+        private bool IsTargetMainCamera = true;
         [Tooltip("The target transform o f the orbital paths")]
         public Transform TargetObject;
         public SkeletonHandler TargetSkeleton;
         private Quaternion TargetRotation;  // the rotation to lerp to
         private Vector3 TargetPosition;		// the position to lerp to
         [Header("Positioning")]
-        [SerializeField] private Vector2 ScreenPosition = new Vector2(0, 0);
+        [SerializeField]
+        private Vector2 ScreenPosition = new Vector2(0, 0);
         [Header("Movement")]
         [Tooltip("The linear speed of movement to the orbit position")]
-		[SerializeField] private float MovementSpeed = 3f;
+		[SerializeField]
+        private float MovementSpeed = 3f;
         [Tooltip("The linear speed of movement to the orbit position")]
         private float RotationSpeed = 0.5f;
         [Tooltip("Used to make speed instant, attaches itself as a child to the target")]
@@ -57,12 +60,19 @@ namespace Zeltex.Guis
         private void Awake()
         {
             ScreenSizeChangeEvent = OnScreenSizeChange;
-            if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
+            if (IsTargetMainCamera && CameraManager.Get())
             {
-                TargetObject = CameraManager.Get().GetMainCamera().transform;
                 CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChange);
             }
             DataManager.Get().StartCoroutine(AwakeRoutine());
+        }
+
+        private void Start()
+        {
+            if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
+            {
+                TargetObject = CameraManager.Get().GetMainCamera().transform;
+            }
         }
 
         private void OnMainCameraChange()

@@ -43,8 +43,18 @@ namespace Zeltex.Skeletons
         {
             // load in 1 second
             MySkeleton = GetComponent<SkeletonHandler>();
-            MySkeleton.GetSkeleton().OnLoadSkeleton.AddEvent(LoadAnimation);
-            MyCharacter = transform.parent.GetComponent<Characters.Character>();
+            if (MySkeleton && MySkeleton.GetSkeleton() != null)
+            {
+                MySkeleton.GetSkeleton().OnLoadSkeleton.AddEvent(LoadAnimation);
+            }
+            else
+            {
+                Debug.LogError("No skeleton or handler insie animator: " + name);
+            }
+            if (transform.parent)
+            {
+                MyCharacter = transform.parent.GetComponent<Characters.Character>();
+            }
         }
         
         void Update()

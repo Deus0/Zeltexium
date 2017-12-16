@@ -222,7 +222,7 @@ namespace Zeltex.Guis
         /// </summary>
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (MyGuiListElementData.IsToolTip )
+            if (MyGuiListElementData.IsToolTip)
             {
                 if (MyTooltipGui)
                 {

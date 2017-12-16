@@ -26,10 +26,6 @@ namespace Zeltex
         
         private string RenameName = "Null";
         //private List<string> MyResourceNames = new List<string>();
-        [Header("Events")]
-        // Invoked when: Cleared, Add new file, Loaded files
-        [Tooltip("Invoked when the file size changes")]
-        public UnityEvent OnUpdatedResources = new UnityEvent();
 
         public string ResourcesName = "ResourcesName";
         public string MapName = "Zelnugg";
@@ -42,6 +38,12 @@ namespace Zeltex
         private bool IsLoaded;
         //[SerializeField, HideInInspector]
         //private bool IsInitialized;
+        [Header("Events")]
+        // Invoked when: Cleared, Add new file, Loaded files
+        [Tooltip("Invoked when the file size changes")]
+        public UnityEvent OnUpdatedResources = new UnityEvent();
+        public UnityEvent OnBeginLoading = new UnityEvent();
+        public UnityEvent OnEndLoading = new UnityEvent();
         #endregion
 
         #region Mono
@@ -70,6 +72,7 @@ namespace Zeltex
 
         private System.Collections.IEnumerator LoadAllRoutine2()
         {
+            OnBeginLoading.Invoke();
             InitializeFolders();
             DataManager.Get().MapName = PlayerPrefs.GetString(DataManager.Get().ResourcesName, "Zelnugg");
             LogManager.Get().Log("Loading Map [" + DataManager.Get().MapName + "]");
@@ -78,10 +81,6 @@ namespace Zeltex
             if (Application.isEditor == false)
             {
                 MakePersistent();
-                //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ClearConsole());
-                // load saving
-                //LoadFolder(DataFolderNames.Saves);
-                //Debug.LogError("Loading: " + DataFolderNames.Saves);
                 ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
                 if (MyFolder != null)
                 {
@@ -89,6 +88,7 @@ namespace Zeltex
                     OnUpdatedResources.Invoke();
                 }
             }
+            OnEndLoading.Invoke();
         }
 
         System.Collections.IEnumerator ClearConsole()

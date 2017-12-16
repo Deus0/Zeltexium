@@ -107,7 +107,14 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnChunkReset()
         {
-            MyMeshFilter.sharedMesh.Clear();
+            if (MyMeshFilter && MyMeshFilter.sharedMesh)
+            {
+                MyMeshFilter.sharedMesh.Clear();
+            }
+            else
+            {
+                //Debug.LogError("MyMeshFilter or MyMeshFilter.sharedMesh is null inside " + name);
+            }
         }
 
         public MeshRenderer GetMeshRenderer()

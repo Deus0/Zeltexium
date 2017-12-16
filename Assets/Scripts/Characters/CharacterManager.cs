@@ -172,13 +172,20 @@ namespace Zeltex.Characters
         public void Clear()
 		{
             StopAllCoroutines();
-			for (int i = Pools[0].SpawnedObjects.Count - 1; i >= 0; i--)
-			{
-				if (Pools[0].SpawnedObjects[i])
+            if (Pools.Count > 0)
+            {
+                for (int i = Pools[0].SpawnedObjects.Count - 1; i >= 0; i--)
                 {
-                    ReturnObject(Pools[0].SpawnedObjects[i]);
+                    if (Pools[0].SpawnedObjects[i])
+                    {
+                        ReturnObject(Pools[0].SpawnedObjects[i]);
+                    }
                 }
-			}
+            }
+            else
+            {
+                Debug.LogError("No Character Pools, cannot clear.");
+            }
             //SpawnedObjects.Clear();
         }
         /// <summary>
