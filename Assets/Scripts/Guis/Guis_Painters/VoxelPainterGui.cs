@@ -429,7 +429,7 @@ namespace Zeltex.Guis.Maker
         private void RaycastWorld()
         {
             Ray MyRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(MyRay.origin, MyRay.direction, out MyHit))
+            if (UnityEngine.Physics.Raycast(MyRay.origin, MyRay.direction, out MyHit))
             {
                 Chunk MyChunk = MyHit.collider.gameObject.GetComponent<Chunk>();
                 if (MyChunk)

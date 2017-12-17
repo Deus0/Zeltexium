@@ -95,6 +95,10 @@ namespace Zeltex
             // if player is local to this machine!
             if (MyCharacter && MyCharacter.enabled)// && gameObject.GetComponent<PhotonView>().owner == PhotonNetwork.player)
             {
+                if (CheatsManager.Get().IsCheatsEnabled && Input.GetKeyDown(CheatsManager.Get().DamageCheatKey))
+                {
+                    MyCharacter.GetSkillbar().GetSelectedSpell().AddStatValue = -10000;
+                }
                 if (IsInput)
                 {
                     HandleIngameInput();

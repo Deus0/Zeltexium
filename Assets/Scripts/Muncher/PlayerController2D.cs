@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+using Zeltex.Physics;
 
-namespace Zeltex.AI {
+namespace Zeltex.AI
+{
+
     public class PlayerController2D : MonoBehaviour
     {
 	    private bool m_Jump;
@@ -53,14 +56,14 @@ namespace Zeltex.AI {
 		    //if (m_GroundCheck != null) 
 		    {
 
-			    if (gameObject.GetComponent<ArtificialGravity>()) {
-				    GroundCheckPosition = gameObject.GetComponent<ArtificialGravity>().GravityForce.normalized;
+			    if (gameObject.GetComponent<Gravity>()) {
+				    GroundCheckPosition = gameObject.GetComponent<Gravity>().GravityForce.normalized;
 			    }
 			    GroundCheckPosition.x *= transform.lossyScale.x;
 			    GroundCheckPosition.y *= Mathf.Abs(transform.lossyScale.y);
 			    //Vector3 GroundCheckPosition2 = (GroundCheckPosition);		//transform.parent.TransformDirection
 			    //Debug.LogError("GroundCheckPosition: " + GroundCheckPosition2.ToString());
-			    Collider[] colliders = Physics.OverlapSphere (transform.position+GroundCheckPosition, k_GroundedRadius*transform.lossyScale.y, m_WhatIsGround);	//
+			    Collider[] colliders = UnityEngine.Physics.OverlapSphere (transform.position+GroundCheckPosition, k_GroundedRadius*transform.lossyScale.y, m_WhatIsGround);	//
 			    //Debug.DrawLine(GroundCheckPosition2, 
 			    //               transform.position + transform.parent.TransformDirection(GroundCheckPosition/20f+new Vector3(0,0,-0.1f)), Color.red, 30f);
 			    //Debug.LogError("colliders: " + colliders.Length);
@@ -141,9 +144,10 @@ namespace Zeltex.AI {
 		    }
 	    }
 
-	    void DoJump(float JumpForce) {
+	    void DoJump(float JumpForce)
+        {
 		    // Add a vertical force to the player.
-		    Vector3 JumpForce2 = -gameObject.GetComponent<ArtificialGravity>().GravityForce.normalized*JumpForce;
+		    Vector3 JumpForce2 = -gameObject.GetComponent<Gravity>().GravityForce.normalized*JumpForce;
 		    if (MyRigidBody.velocity.y < 0 && !m_Grounded)
 		    {
 			    MyRigidBody.velocity = new Vector3(MyRigidBody.velocity.x, 0, MyRigidBody.velocity.z);

@@ -672,17 +672,17 @@ namespace Zeltex.AI
                 Bounds MyBounds = MySkeleton.GetSkeleton().GetBounds();
                 float BoundsX = (MyBounds.center.x + MyBounds.extents.x) * 1.03f;
                 //float DesiredForceX = 0;
-                if (Physics.Raycast(transform.position, transform.right, out MyHit, BoundsX, LayerManager.Get().WorldsLayer))
+                if (UnityEngine.Physics.Raycast(transform.position, transform.right, out MyHit, BoundsX, LayerManager.Get().WorldsLayer))
                 {
                     //Debug.Log(name + " hit " + MyHit.collider.name);
                     MovementForce.x -= 1f;
                 }
-                if (Physics.Raycast(transform.position, -transform.right, out MyHit, BoundsX, LayerManager.Get().WorldsLayer))
+                if (UnityEngine.Physics.Raycast(transform.position, -transform.right, out MyHit, BoundsX, LayerManager.Get().WorldsLayer))
                 {
                     //Debug.Log(name + " hit " + MyHit.collider.name);
                     MovementForce.x += 1f;
                 }
-                if (Physics.Raycast(transform.position, transform.forward, out MyHit, (MyBounds.center.z + MyBounds.extents.z) * 1.03f, LayerManager.Get().WorldsLayer))
+                if (UnityEngine.Physics.Raycast(transform.position, transform.forward, out MyHit, (MyBounds.center.z + MyBounds.extents.z) * 1.03f, LayerManager.Get().WorldsLayer))
                 {
                     MovementForce.z *= -1;
                 }

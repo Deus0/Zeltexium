@@ -3,6 +3,7 @@ using UnityEngine;
 using Zeltex.Items;
 using Zeltex.AI;
 using Zeltex.Generators;
+using Zeltex.Physics;
 
 namespace Zeltex.Voxels
 {
@@ -85,7 +86,7 @@ namespace Zeltex.Voxels
                     NewMoveableVoxel.GetComponent<Rigidbody>().isKinematic = false;
                     NewMoveableVoxel.GetComponent<Rigidbody>().useGravity = false;
                     //Destroy(NewMoveableVoxel.GetComponent<Rigidbody>());
-                    NewMoveableVoxel.AddComponent<ArtificialGravity>().GravityForce = new Vector3(0, -0.05f, 0);
+                    NewMoveableVoxel.AddComponent<Gravity>().GravityForce = new Vector3(0, -0.05f, 0);
                 }
             }
             else

@@ -15,7 +15,7 @@ namespace UniversalCoroutine
 	public class CoroutineManager: MonoBehaviour
 	{
 		/// <summary>The initial size of object pools</summary>
-		private const int INITIAL_OBJECT_POOL_SIZE = 100;
+		private const int INITIAL_OBJECT_POOL_SIZE = 1000;
 
 		/// <summary>Singleton instance of CoroutineManager</summary>
 		private static CoroutineManager instance;

@@ -185,7 +185,7 @@ namespace Zeltex.AI
                 Vector3 Normal = (WanderTheta - MyBot.transform.position).normalized;
                 Normal.y = 0;
                 MyRay = new Ray(MyBot.transform.position, Normal);
-                if (Physics.Raycast(MyRay, out MyHit, WanderRange, MyMover.GroundLayer))
+                if (UnityEngine.Physics.Raycast(MyRay, out MyHit, WanderRange, MyMover.GroundLayer))
                 {
                     //Debug.LogError(i + " ~ Hitting " + MyHit.point.ToString());
                 }

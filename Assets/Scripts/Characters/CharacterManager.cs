@@ -6,6 +6,7 @@ using Zeltex.AI;
 using Zeltex.Util;
 using Zeltex.Skeletons;
 using Zeltex.Guis.Maker;
+using Zeltex.Physics;
 
 namespace Zeltex.Characters
 {

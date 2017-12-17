@@ -228,7 +228,7 @@ namespace Zeltex.AI
         {
 			RaycastHit hitInfo;
 			float CheckDistance = m_Capsule.radius + advancedSettings.groundCheckDistance;
-			if (Physics.SphereCast(transform.position, m_Capsule.radius-advancedSettings.groundCheckDistance, Vector3.down, out hitInfo, CheckDistance))
+			if (UnityEngine.Physics.SphereCast(transform.position, m_Capsule.radius-advancedSettings.groundCheckDistance, Vector3.down, out hitInfo, CheckDistance))
            // if (Physics.SphereCast(transform.position, m_Capsule.radius, Vector3.down, out hitInfo,
 			//                       m_Capsule.radius + advancedSettings.stickToGroundHelperDistance))
             {

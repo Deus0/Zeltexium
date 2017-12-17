@@ -21,10 +21,11 @@ namespace Zeltex.WorldUtilities
             {
 			    Debug.Log("Attempting to open door!");
 			    RaycastHit MyHit;
-			    if (Physics.Raycast (MyRaycastObject.transform.position, MyRaycastObject.transform.forward, out MyHit))
+			    if (UnityEngine.Physics.Raycast(MyRaycastObject.transform.position, MyRaycastObject.transform.forward, out MyHit))
                 {
 				    Door MyDoor = MyHit.collider.gameObject.GetComponent<Door>();
-				    if (MyDoor) {
+				    if (MyDoor)
+                    {
 					    Debug.Log("Toggling door!");
 					    MyDoor.ToggleDoor();
 				    }

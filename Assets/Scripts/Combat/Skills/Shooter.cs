@@ -276,7 +276,7 @@ if (Time.time - LastBoost >= BoostRate) {
 		Vector3 BulletOffset = new Vector3 (0, -Mathf.Abs (MyRect.lossyScale.x) / 3f, 0);
 		BulletOffset = transform.parent.TransformDirection(BulletOffset);
 		Vector2 BulletDirection = new Vector2 (0, -1);
-		Vector3 GravityDirection = gameObject.GetComponent<ArtificialGravity>().GravityForce.normalized;
+		Vector3 GravityDirection = gameObject.GetComponent<Gravity>().GravityForce.normalized;
 		BulletDirection = new Vector2(GravityDirection.x, 
 		                              GravityDirection.y);
 		BulletOffset = Mathf.Abs (MyRect.lossyScale.x/3f)*( new Vector3(GravityDirection.x/2f, GravityDirection.y,0));

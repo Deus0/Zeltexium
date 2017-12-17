@@ -183,11 +183,11 @@ namespace Zeltex.AI
             Vector3 Position3 = Position0 + transform.TransformDirection(new Vector3(-Width, 0, Depth));
             Vector3 Position4 = Position0 + transform.TransformDirection(new Vector3(-Width, 0, -Depth));
             LayerMask MyLayer = LayerManager.Get().GetWorldsLayer();
-            IsGrounded = (Physics.Raycast(Position0, GravitationalForce.normalized, Height, MyLayer)
-                || Physics.Raycast(Position1, GravitationalForce.normalized, Height, MyLayer)
-                || Physics.Raycast(Position2, GravitationalForce.normalized, Height, MyLayer)
-                || Physics.Raycast(Position3, GravitationalForce.normalized, Height, MyLayer)
-                || Physics.Raycast(Position4, GravitationalForce.normalized, Height, MyLayer));
+            IsGrounded = (UnityEngine.Physics.Raycast(Position0, GravitationalForce.normalized, Height, MyLayer)
+                || UnityEngine.Physics.Raycast(Position1, GravitationalForce.normalized, Height, MyLayer)
+                || UnityEngine.Physics.Raycast(Position2, GravitationalForce.normalized, Height, MyLayer)
+                || UnityEngine.Physics.Raycast(Position3, GravitationalForce.normalized, Height, MyLayer)
+                || UnityEngine.Physics.Raycast(Position4, GravitationalForce.normalized, Height, MyLayer));
             if (IsDebugLines)
             {
                 Debug.DrawLine(Position1, Position1 + GravitationalForce.normalized * Height, Color.red);

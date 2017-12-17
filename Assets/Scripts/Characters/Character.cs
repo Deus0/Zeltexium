@@ -15,6 +15,7 @@ using Zeltex.Guis;
 using Zeltex.Combat;
 using Zeltex.Util;
 using Zeltex.Quests;
+using Zeltex.Physics;
 
 namespace Zeltex.Characters
 {
@@ -324,15 +325,28 @@ namespace Zeltex.Characters
             {
                 MyCharacter = gameObject;   // killed yourself
             }
-            if (DeathHandle == null)
+
+            if (Application.isPlaying)
             {
-                //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
-                DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+                StartCoroutine(DeathRoutine());
+            }
+            else
+            {
+                if (DeathHandle == null)
+                {
+                    //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
+                    DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+                }
+                else
+                {
+                    Debug.LogError(name + " cannot die as already dying?");
+                }
             }
         }
 
         public IEnumerator DeathRoutine()
         {
+            Debug.LogError(name + " Has started dying.");
             float DeathTime = 13 + Random.Range(0,13);
             /*if (IsPlayer)
             {
@@ -492,8 +506,7 @@ namespace Zeltex.Characters
             }
         }
         #endregion
-
-
+        
         #region Collision
 
         /// <summary>
@@ -533,7 +546,7 @@ namespace Zeltex.Characters
         private bool RayTraceSelections(Transform CameraBone, int SelectionType)
 		{
 			RaycastHit MyHit;
-			if (Physics.Raycast(CameraBone.position, CameraBone.forward, out MyHit, RaycastRange, LayerManager.Get().GetInteractLayer()))
+			if (UnityEngine.Physics.Raycast(CameraBone.position, CameraBone.forward, out MyHit, RaycastRange, LayerManager.Get().GetInteractLayer()))
 			{
                 Debug.Log(name + " has interacted with: " + MyHit.collider.gameObject.name);
 

@@ -142,7 +142,7 @@ namespace Zeltex.Voxels
             var ExcludeCharactersLayer = ~CharactersLayer;
             RaycastHit MyHitCharacter;
             // Find out about hit character
-            bool DoesHitCharacter = Physics.Raycast(RayOrigin, RayDirection, out MyHitCharacter, BrushRange, CharactersLayer);
+            bool DoesHitCharacter = UnityEngine.Physics.Raycast(RayOrigin, RayDirection, out MyHitCharacter, BrushRange, CharactersLayer);
             // if ray hits another character
             if (DoesHitCharacter && MyHitCharacter.collider.gameObject == MyCharacter)
             {
@@ -152,7 +152,7 @@ namespace Zeltex.Voxels
             if (!DoesHitCharacter)  // if doesn't hit character, check for blocks collide
             {
                 RaycastHit MyHit;
-                if (Physics.Raycast(RayOrigin, RayDirection, out MyHit, BrushRange, ExcludeCharactersLayer))
+                if (UnityEngine.Physics.Raycast(RayOrigin, RayDirection, out MyHit, BrushRange, ExcludeCharactersLayer))
                 {
                     Chunk MyChunk = MyHit.collider.gameObject.GetComponent<Chunk>();
                     //Debug.LogError("Hit object: " + MyHit.collider.transform.parent.name);

@@ -35,7 +35,7 @@ namespace Zeltex.Combat
         public GameObject GetRayHitObject() 
 		{
 			RaycastHit MyRaycast;
-			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out MyRaycast, 10)) 
+			if (UnityEngine.Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out MyRaycast, 10)) 
 			{
 				LastHitPosition = MyRaycast.point;
                 if (MyRaycast.collider.gameObject.GetComponent<World>())

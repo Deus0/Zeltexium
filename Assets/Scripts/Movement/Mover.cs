@@ -180,7 +180,7 @@ namespace Zeltex
         private void StickToGroundHelper()
         {
             RaycastHit hitInfo;
-            if (Physics.SphereCast(
+            if (UnityEngine.Physics.SphereCast(
                                     transform.position,
                                     m_Capsule.radius * (1.0f - advancedSettings.shellOffset), 
                                     Vector3.down, out hitInfo,
@@ -243,7 +243,7 @@ namespace Zeltex
             {
                 Debug.DrawLine(transform.position, transform.position - transform.up * RayDistance, Color.red);
             }
-            if (Physics.Raycast(transform.position, -transform.up, out hitInfo, RayDistance, GroundLayer))
+            if (UnityEngine.Physics.Raycast(transform.position, -transform.up, out hitInfo, RayDistance, GroundLayer))
             //if (Physics.SphereCast(transform.position, m_Capsule.radius * (1.0f - advancedSettings.shellOffset), Vector3.down, out hitInfo,
            //                        ((m_Capsule.height / 2f) - m_Capsule.radius) + advancedSettings.groundCheckDistance, GroundLayer, QueryTriggerInteraction.Ignore))   // Physics.AllLayers
             {

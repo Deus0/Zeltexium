@@ -605,7 +605,7 @@ namespace Zeltex.Guis.Maker
 		{
 			Ray MyRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			//DidRayHitGui = IsRayHitGui();
-			if (Physics.Raycast(MyRay.origin, MyRay.direction, out MyHit))
+			if (UnityEngine.Physics.Raycast(MyRay.origin, MyRay.direction, out MyHit))
 			{
 				Chunk MyChunk = MyHit.collider.gameObject.GetComponent<Chunk>();
                 GameObject MyCharacterObject = MyHit.collider.transform.FindRootFromBone();

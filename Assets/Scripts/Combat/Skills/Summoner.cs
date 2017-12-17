@@ -20,7 +20,7 @@ namespace Zeltex.Combat
            {
                 LastTime = Time.time;
                 RaycastHit MyHit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out MyHit))
+                if (UnityEngine.Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out MyHit))
                 {
                     if (MyHit.collider.gameObject.GetComponent<Zeltex.Voxels.Chunk>() || (MyHit.collider.gameObject.tag == "World"))
                     {

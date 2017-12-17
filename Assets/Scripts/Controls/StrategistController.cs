@@ -102,7 +102,7 @@ namespace Zeltex
             Ray MyRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             //Debug.DrawLine(MyRay.origin, MyRay.origin + MyRay.direction * 2, Color.red, 5);
             //Debug.Break();
-            if (Physics.Raycast(MyRay.origin, MyRay.direction, out MyRaycast, MaxDistance, MyLayer))  // Camera.main.transform.position, Camera.main.transform.forward   // 10, 
+            if (UnityEngine.Physics.Raycast(MyRay.origin, MyRay.direction, out MyRaycast, MaxDistance, MyLayer))  // Camera.main.transform.position, Camera.main.transform.forward   // 10, 
             {
                 LastHitPosition = MyRaycast.point;
                 if (MyRaycast.collider.gameObject.GetComponent<World>())

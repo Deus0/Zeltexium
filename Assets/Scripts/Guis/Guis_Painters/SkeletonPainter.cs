@@ -9,6 +9,7 @@ using Zeltex.Util;
 using Zeltex.Voxels;
 using Zeltex.AnimationUtilities;
 using Zeltex.Generators;
+using Zeltex.Physics;
 
 namespace Zeltex.Guis.Maker
 {

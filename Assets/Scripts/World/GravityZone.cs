@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Zeltex.AI
+namespace Zeltex.Physics
 {
-
-    public class GravityZone : ArtificialGravity
+    /// <summary>
+    /// Imposes Gravity Rules on all those in a zone, with the gravity script attached
+    /// </summary>
+    public class GravityZone : Gravity
     {
         void Update()
         {

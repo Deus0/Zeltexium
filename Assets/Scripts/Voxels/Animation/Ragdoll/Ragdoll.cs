@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using Zeltex.AI;
 using Zeltex.Util;
 using Zeltex.Voxels;
+using Zeltex.Skeletons;
 
 // Need to decouple this script
 // to do:
@@ -25,7 +26,7 @@ using Zeltex.Voxels;
 
 // another one would be, convert only the bottom parts of the body, ie feet, then calves etc, until it is just a head
 
-namespace Zeltex.Skeletons 
+namespace Zeltex.Physics 
 {
     /// <summary>
     /// Rag doll is a system of bones but connected using joints instead of transforms.
@@ -61,12 +62,13 @@ namespace Zeltex.Skeletons
             }
         }
 
+        private Zeltine RagdollHandle;
         // gets any child body with a mesh
         // keeps its mesh and position/rotation
         // creates a new body in that position with that, and a rigidbody
         public void RagDoll()
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(RagDollRoutine());
+            RagdollHandle = RoutineManager.Get().StartCoroutine(RagDollRoutine());
         }
 
         private IEnumerator RagDollRoutine()
@@ -229,7 +231,7 @@ namespace Zeltex.Skeletons
                     MyRigid.isKinematic = true;
                     MyRigid.useGravity = false;
 
-                    ArtificialGravity MyGrav = MyBoneTransform.gameObject.AddComponent<ArtificialGravity>();
+                    Gravity MyGrav = MyBoneTransform.gameObject.AddComponent<Gravity>();
                     MyGrav.GravityForce = new Vector3(0, -0.5f, 0);
                 }
             }
@@ -257,7 +259,7 @@ namespace Zeltex.Skeletons
             {
                 Destroy(MyRigid);
 
-                ArtificialGravity MyGrav = MyBone.MyTransform.gameObject.GetComponent<ArtificialGravity>();
+                Gravity MyGrav = MyBone.MyTransform.gameObject.GetComponent<Gravity>();
                 if (MyGrav)
                 {
                     Destroy(MyGrav);
@@ -266,6 +268,11 @@ namespace Zeltex.Skeletons
         }
 
         public void ReverseRagdoll(float ReverseTime = 5)
+        {
+            RagdollHandle = RoutineManager.Get().StartCoroutine(ReverseRagdollRoutine(ReverseTime));
+        }
+
+        private IEnumerator ReverseRagdollRoutine(float ReverseTime)
         {
             if (MySkeleton)
             {
@@ -294,29 +301,24 @@ namespace Zeltex.Skeletons
                     AttachBone(MySkeleton.GetBones()[i]);
                 }
                 MySkeleton.GetSkeleton().RestoreDefaultPose(5f);
-                UniversalCoroutine.CoroutineManager.StartCoroutine(ReverseRagdollRoutine(ReverseTime));
-            }
-        }
+                float TimeStarted = Time.time;
+                while (Time.time - TimeStarted <= ReverseTime)
+                {
+                    yield return null;
+                }
 
-        private IEnumerator ReverseRagdollRoutine(float ReverseTime)
-        {
-            float TimeStarted = Time.time;
-            while (Time.time - TimeStarted <= ReverseTime)
-            {
-                yield return null;
-            }
-
-            BasicController MyController = transform.parent.gameObject.GetComponent<BasicController>();
-            if (MyController)
-            {
-                MyController.RefreshRigidbody();
-                MyController.enabled = true;
-            }
-            Mover MyMover = transform.parent.gameObject.GetComponent<Mover>();
-            if (MyMover)
-            {
-                MyMover.RefreshRigidbody();
-                MyMover.enabled = true;
+                BasicController MyController = transform.parent.gameObject.GetComponent<BasicController>();
+                if (MyController)
+                {
+                    MyController.RefreshRigidbody();
+                    MyController.enabled = true;
+                }
+                Mover MyMover = transform.parent.gameObject.GetComponent<Mover>();
+                if (MyMover)
+                {
+                    MyMover.RefreshRigidbody();
+                    MyMover.enabled = true;
+                }
             }
         }
     }
