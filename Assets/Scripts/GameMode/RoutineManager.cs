@@ -20,6 +20,33 @@ namespace Zeltex
     public class RoutineManager : ManagerBase<RoutineManager>
     {
 
+        public void StopCoroutine(Zeltine MyHandle)
+        {
+            if (MyHandle.UnityRoutine != null)
+            {
+                base.StopCoroutine(MyHandle.UnityRoutine);
+            }
+            else if (MyHandle.UniversalRoutine != null)
+            {
+                UniversalCoroutine.CoroutineManager.StopCoroutine(MyHandle.UniversalRoutine);
+            }
+        }
+
+        /// <summary>
+        /// If previous handle is not null it will get stopped first
+        /// </summary>
+        public Zeltine StartCoroutine(Zeltine MyHandle, IEnumerator MyAction)
+        {
+            if (MyHandle != null)
+            {
+                StopCoroutine(MyHandle);
+            }
+            return StartCoroutine(MyAction);
+        }
+
+        /// <summary>
+        /// Start a new coroutine!
+        /// </summary>
         public new Zeltine StartCoroutine(IEnumerator NewAction)
         {
             Zeltine NewRoutine = new Zeltine();

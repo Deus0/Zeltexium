@@ -38,10 +38,10 @@ namespace Zeltex.Physics
         private SkeletonHandler MySkeleton;
         public bool IsBodyPartsItems = false;
         public bool IsApplyJoints = true;
-        private float ExplosionForce = 10f;
+        private float ExplosionForce = 100f;
         private float DownExplosionForce = 20f;
-        private static float ExplosionPauseTime = 0.05f;
-        private static float ExplosionPower = 12f;
+        private static float ExplosionPauseTime = 0.25f;
+        private static float ExplosionPower = 24;
         private Characters.Character MyCharacter;
 
         private void Awake()
@@ -55,9 +55,10 @@ namespace Zeltex.Physics
             {
                 RagDoll();
             }
-            if (ActionReverseRagdoll.IsTriggered() && MyCharacter.StopDeath())
+            if (ActionReverseRagdoll.IsTriggered())
             {
                 // Stop Dying and reverse
+                MyCharacter.StopDeath();
                 ReverseRagdoll();
             }
         }
@@ -114,7 +115,7 @@ namespace Zeltex.Physics
             }
             yield return null;
             //for (int i = MySkeleton.MyBones.Count - 1; i >= 0; i--)
-             for (int i = 0; i < MySkeleton.GetBones().Count; i++)
+            for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
                 //Vector3 BeforePosition = MySkeleton.MyBones[i].MyTransform.position;
                 RemoveBone(MySkeleton.GetBones()[i], transform);
@@ -257,19 +258,19 @@ namespace Zeltex.Physics
             Rigidbody MyRigid = MyBone.MyTransform.gameObject.GetComponent<Rigidbody>();
             if (MyRigid != null)
             {
-                Destroy(MyRigid);
-
+                // Remove gravity first as it depends on rigidbody!
                 Gravity MyGrav = MyBone.MyTransform.gameObject.GetComponent<Gravity>();
                 if (MyGrav)
                 {
                     Destroy(MyGrav);
                 }
+                Destroy(MyRigid);
             }
         }
 
         public void ReverseRagdoll(float ReverseTime = 5)
         {
-            RagdollHandle = RoutineManager.Get().StartCoroutine(ReverseRagdollRoutine(ReverseTime));
+            RagdollHandle = RoutineManager.Get().StartCoroutine(RagdollHandle, ReverseRagdollRoutine(ReverseTime));
         }
 
         private IEnumerator ReverseRagdollRoutine(float ReverseTime)

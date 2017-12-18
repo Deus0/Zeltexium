@@ -30,6 +30,8 @@ namespace Zeltex.Guis
         private float MovementSpeed = 3f;
         [Tooltip("The linear speed of movement to the orbit position")]
         private float RotationSpeed = 0.5f;
+        [SerializeField]
+        private bool IsInstantOnStart;
         [Tooltip("Used to make speed instant, attaches itself as a child to the target")]
 		[SerializeField]
         private bool IsInstant = false;
@@ -72,6 +74,12 @@ namespace Zeltex.Guis
             if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
                 TargetObject = CameraManager.Get().GetMainCamera().transform;
+            }
+            if (IsInstantOnStart)
+            {
+                IsInstant = true;
+                UpdateOrbit(Time.deltaTime);
+                IsInstant = false;
             }
         }
 

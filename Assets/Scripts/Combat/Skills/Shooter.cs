@@ -56,6 +56,7 @@ namespace Zeltex.Combat
         public void Awake()
         {
             BulletPrefab = BulletManager.Get().GetPrefab(0);
+            MyCharacter = GetComponent<Character>();
         }
 
         public Spell GetSpell()
@@ -69,7 +70,6 @@ namespace Zeltex.Combat
         public void SetSpell(Spell MySpell_)
         {
             LastFired = Time.time;
-            MyCharacter = GetComponent<Character>();
             if (HotSpotTransform == null && MyCharacter && MyCharacter.GetSkeleton())
             {
                 HotSpotTransform = MyCharacter.GetCameraBone();
@@ -81,10 +81,11 @@ namespace Zeltex.Combat
             }
             if (MySpell_ != null)
             {
-                Data = MySpell_.Clone();
-                Data.MyCharacter = MyCharacter;
+                Data = MySpell_;
                 if (MyIdentity == null)
-                    MyIdentity = GetComponent<NetworkIdentity>();
+                {
+                    MyIdentity = gameObject.GetComponent<NetworkIdentity>();
+                }
 
                 if (MyIdentity)
                 {

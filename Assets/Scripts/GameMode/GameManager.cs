@@ -13,7 +13,7 @@ namespace Zeltex
     /// </summary>
     public class GameManager : ManagerBase<GameManager>
     {
-        private GameObject MainMenu;
+        //private GameObject MainMenu;
         public UnityEvent OnBeginGame = new UnityEvent();
         public UnityEvent OnEndGame = new UnityEvent();
         public AudioClip OnBeginAudio;
@@ -53,12 +53,17 @@ namespace Zeltex
             }
         }
 
+        /// <summary>
+        /// Begin normal game mode
+        /// </summary>
         public void BeginGame()
         {
             if (!Game.GameMode.IsPlaying)
             {
                 Game.GameMode.IsPlaying = true;
                 Debug.Log("Beginning to play game.");
+                GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
+                GuiSpawner.Get().SpawnGui("SaveGames");
                 Zeltex.Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
                 StartCoroutine(BeginGameRoutine());
             }
@@ -66,6 +71,15 @@ namespace Zeltex
             {
                 Debug.LogError("Already playing game.");
             }
+        }
+
+        /// <summary>
+        /// Begin editing the resources
+        /// </summary>
+        public void BeginResourcesEditing()
+        {
+            GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
+            GuiSpawner.Get().SpawnGui("ResourcesMaker");
         }
 
         public IEnumerator BeginGameRoutineMain()
@@ -123,7 +137,7 @@ namespace Zeltex
 
         private void RefreshMainMenuListener()
         {
-            MainMenu = GuiSpawner.Get().GetGui("MainMenu");
+            GameObject MainMenu = GuiSpawner.Get().GetGui("MainMenu");
             if (MainMenu)
             {
                 Button StartMenuButton = MainMenu.transform.Find("Header").Find("StartButton").GetComponent<Button>();
@@ -138,6 +152,7 @@ namespace Zeltex
 
         public void MainMenu_StartButtonClicked()
         {
+            GameObject MainMenu = GuiSpawner.Get().GetGui("MainMenu");
             if (MainMenu)
             {
                 GuiSpawner.Get().Disable(MainMenu);

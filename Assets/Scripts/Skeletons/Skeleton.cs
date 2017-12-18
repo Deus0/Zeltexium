@@ -795,14 +795,10 @@ namespace Zeltex.Skeletons
             }
         }
 
-        private UniversalCoroutine.Coroutine RestoratingPoseRoutineCoroutine;
+        private Zeltine RestoratingPoseHandle;
         public void RestoreDefaultPose(float TimeTaken)
         {
-            if (RestoratingPoseRoutineCoroutine != null)
-            {
-                UniversalCoroutine.CoroutineManager.StopCoroutine(RestoratingPoseRoutineCoroutine);
-            }
-            RestoratingPoseRoutineCoroutine = UniversalCoroutine.CoroutineManager.StartCoroutine(RestoreDefaultPoseRoutine(TimeTaken));
+            RestoratingPoseHandle = RoutineManager.Get().StartCoroutine(RestoratingPoseHandle, RestoreDefaultPoseRoutine(TimeTaken));
         }
 
         private IEnumerator RestoreDefaultPoseRoutine(float TimeTaken)

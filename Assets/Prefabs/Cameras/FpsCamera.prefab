@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 114788748654151560}
   - component: {fileID: 114341061690345964}
   - component: {fileID: 114744114969261060}
-  - component: {fileID: 114703549337618014}
   m_Layer: 10
   m_Name: FpsCamera
   m_TagString: Untagged
@@ -101,23 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalSpeed: 30
   ViewerSpeed: 10
---- !u!114 &114703549337618014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1051870445208286}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8791817fddfb5147972ac30db9b878c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UnlimitedMode: 1
-  IsDebugClick: 1
-  IsPickaxe: 0
-  VoxelBrushSize: 0
-  VoxelBrushType: Bricks
-  VoxelBrushRange: 15
 --- !u!114 &114744114969261060
 MonoBehaviour:
   m_ObjectHideFlags: 1

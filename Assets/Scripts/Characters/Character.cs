@@ -70,7 +70,7 @@ namespace Zeltex.Characters
 
         // Saving?
         private bool HasInitialized;
-        private UniversalCoroutine.Coroutine DeathHandle;
+        private Zeltine DeathHandle;
         //public static string FolderPath = "Characters/";
         //private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
         //private string LastSavedFileName = "";
@@ -209,7 +209,7 @@ namespace Zeltex.Characters
             }
         }
 
-        public System.Collections.IEnumerator SetDataRoutine(CharacterData NewData)
+        public IEnumerator SetDataRoutine(CharacterData NewData)
         {
             if (Data != NewData)
             {
@@ -335,7 +335,7 @@ namespace Zeltex.Characters
                 if (DeathHandle == null)
                 {
                     //UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
-                    DeathHandle = UniversalCoroutine.CoroutineManager.StartCoroutine(DeathRoutine());
+                    DeathHandle = RoutineManager.Get().StartCoroutine(DeathRoutine());
                 }
                 else
                 {
@@ -347,7 +347,7 @@ namespace Zeltex.Characters
         public IEnumerator DeathRoutine()
         {
             Debug.LogError(name + " Has started dying.");
-            float DeathTime = 13 + Random.Range(0,13);
+            float DeathTime = 6 + Random.Range(0,8);
             /*if (IsPlayer)
             {
                 DeathTime = 13;
@@ -396,9 +396,14 @@ namespace Zeltex.Characters
             {
                 gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
             }
+            float TimeBeginRespawn = Time.time;
+            while (Time.time - TimeBeginRespawn < DeathTime)
+            {
+                yield return null;
+            }
             // if (Data.CanRespawn)
             {
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(Respawn(DeathTime));
+                yield return RoutineManager.Get().StartCoroutine(Respawn(10));
             }
             /*else
             {
@@ -412,27 +417,29 @@ namespace Zeltex.Characters
             DeathHandle = null;
         }
 
-        private IEnumerator Respawn(float DeathTime)
+        private IEnumerator Respawn(float ReviveTime)
         {
+            yield return null;
             if (IsPlayer)
             {
                 ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
                 if (RespawnZelGui)
                 {
-                    yield return null;
-                    yield return null;
-                    yield return null;
                     RespawnZelGui.TurnOn();     // turn gui on when reviving begins
                     RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
                     if (MyRespawner)
                     {
-                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)DeathTime));
+                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)ReviveTime));
                     }
                 }
+                else
+                {
+                    Debug.LogError("Could not find RespawnGui in guis");
+                }
             }
-            MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(DeathTime);
+            MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(ReviveTime);
             float TimeStarted = Time.time;
-            while (Time.time - TimeStarted <= DeathTime)
+            while (Time.time - TimeStarted <= ReviveTime)
             {
                 yield return null;
             }
@@ -447,6 +454,13 @@ namespace Zeltex.Characters
                 CameraManager.Get().GetMainCamera().transform.localRotation = Quaternion.identity;
                 CameraManager.Get().GetMainCamera().GetComponent<Player>().SetMouse(true);
             }
+            else
+            {
+                if (MyBot)
+                {
+                    MyBot.EnableBot();
+                }
+            }
             MySkillbar.SetItem(-1);
             MySkillbar.SetItem(0);
             DeathHandle = null;
@@ -456,7 +470,7 @@ namespace Zeltex.Characters
         {
             if (DeathHandle != null)
             {
-                UniversalCoroutine.CoroutineManager.StopCoroutine(DeathHandle);
+                RoutineManager.Get().StopCoroutine(DeathHandle);
                 DeathHandle = null;
                 return true;
             }

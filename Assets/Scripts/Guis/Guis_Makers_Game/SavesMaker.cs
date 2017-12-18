@@ -49,6 +49,10 @@ namespace Zeltex.Guis.Maker
                 {
                     SavesList.Add(SaveGameNames[i]);
                 }
+                if (SaveGameNames.Count > 0)
+                {
+                    SavesList.Select(0);
+                }
             }
             else
             {

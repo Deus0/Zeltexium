@@ -24,6 +24,7 @@ namespace Zeltex.Combat
         public MyEventInt OnChangeItem;
         private Character MyCharacter;
         private UnityAction OnLoadInventoryAction;
+        private Spell SelectedSpell;
 
         void Start()
         {
@@ -215,20 +216,24 @@ namespace Zeltex.Combat
                 || SelectedIcon.HasCommand("/Pickaxe"));
         }
 
-        public Spell GetSelectedSpell()
+        private void RefreshSelectedSpell()
         {
-            if (SelectedIcon.HasCommand("/Spell"))
+            if (SelectedIcon != null && SelectedIcon.HasCommand("/Spell"))
             {
                 Inventory MyInventory = GetInventory();
                 SelectedIcon = MyInventory.GetItem(SelectedIndex);
                 string MyInput = SelectedIcon.GetInput("/Spell");
-                Spell SelectedSpell = Zeltex.DataManager.Get().GetElement("Spells", MyInput) as Spell;
-                return SelectedSpell;
+                SelectedSpell = (Zeltex.DataManager.Get().GetElement("Spells", MyInput) as Spell).Clone<Spell>();
             }
             else
             {
-                return null;
+                SelectedSpell = null;
             }
+        }
+
+        public Spell GetSelectedSpell()
+        {
+            return SelectedSpell;
         }
 
         /// <summary>
@@ -244,10 +249,12 @@ namespace Zeltex.Combat
             {
                 NewIndex = -1;
             }
-            else if (SelectedIndex != NewIndex)
+
+            if (SelectedIndex != NewIndex)
             {
                 SelectedIndex = NewIndex;
                 SelectedIcon = MyInventory.GetItem(SelectedIndex);
+                RefreshSelectedSpell();
                 if (SelectedIcon != null)
                 {
                     bool HasCommand = HasAnyCommand(SelectedIcon);
@@ -282,8 +289,10 @@ namespace Zeltex.Combat
                         {
                             MyShooter = gameObject.AddComponent<Shooter>();
                         }
-                        GetSelectedSpell().MyCharacter = MyCharacter;
-                        MyShooter.SetSpell(GetSelectedSpell());// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
+
+                        Spell EquipSpell = GetSelectedSpell();
+                        EquipSpell.MyCharacter = MyCharacter;
+                        MyShooter.SetSpell(EquipSpell);// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
                     }
 
                     if (SelectedIcon.HasCommand("/Summoner"))
