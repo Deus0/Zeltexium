@@ -7,8 +7,9 @@ using UnityEngine.Events;
 using MakerGuiSystem;
 using Zeltex.Guis;
 using Zeltex.Util;
+using Zeltex.Guis.Maker;
 
-namespace Zeltex.Guis.Maker
+namespace Zeltex.Saves
 {
     // Creating a new game:
     // First Terrain
@@ -31,10 +32,16 @@ namespace Zeltex.Guis.Maker
         public UnityEvent OnConfirm;
         public TabManager MyTabManager;
         private SaveGame NewGame;
+        public SaveGameViewer MySaveGameViewer;
 
         #region ZelGui
 
-        public override void OnBegin()
+        private void Start()
+        {
+            Initiate();
+        }
+
+        public void Initiate()
         {
             /*string MyFolderPath = DataManager.GetFolderPath(DataFolderNames.Saves + "/");    // get folder path
             string[] MyDirectories = FileManagement.ListDirectories(MyFolderPath);*/
@@ -49,16 +56,16 @@ namespace Zeltex.Guis.Maker
                 {
                     SavesList.Add(SaveGameNames[i]);
                 }
-                if (SaveGameNames.Count > 0)
-                {
-                    SavesList.Select(0);
-                }
+                SavesList.Select(0);
+                MySaveGameViewer.RefreshUI(DataManager.Get().GetElement(DataFolderNames.Saves, 0) as SaveGame);
+                MyTabManager.EnableTab("ViewSaveGameTab");
             }
             else
             {
                 GetButton("PlayGameButton").interactable = false;
                 GetButton("CancelCreationButton").interactable = false;
                 BeginCreatingNewGame();
+                MySaveGameViewer.RefreshUI(null, true);
             }
         }
 
@@ -96,8 +103,7 @@ namespace Zeltex.Guis.Maker
             else if (MyButton.name == "PlayGameButton")
             {
                 // chose character tab!
-                UniversalCoroutine.CoroutineManager.StartCoroutine(PlayGameRoutine());
-                OnConfirm.Invoke();
+                BeginPlayingGame();
             }
             else if (MyButton.name == "EraseGameButton")
             {
@@ -227,6 +233,33 @@ namespace Zeltex.Guis.Maker
             Possess.PossessCharacter(NewGame.MyCharacter, MyCamera);
             LoadingGui.Get().MyZel.TurnOff();
             DataManager.Get().SaveElement(NewGame);
+        }
+
+
+
+        /// <summary>
+        /// Play the game
+        /// </summary>
+        private void BeginPlayingGame()
+        {
+            GuiList MyList = GetListHandler("SavesList");
+            int SelectedSaveGame = MyList.GetSelected();
+            if (SelectedSaveGame >= 0)
+            {
+                MySaveGameViewer.RefreshUI(DataManager.Get().GetElement(DataFolderNames.Saves, SelectedSaveGame) as SaveGame);
+                MyTabManager.EnableTab("ViewSaveGameTab");
+            }
+        }
+
+        public void CancelSelectedSaveGame()
+        {
+            MyTabManager.EnableTab("SelectionTab");
+        }
+
+        public void EnterSaveGame()
+        {
+            UniversalCoroutine.CoroutineManager.StartCoroutine(PlayGameRoutine());
+            OnConfirm.Invoke();
         }
 
 		/// <summary>
