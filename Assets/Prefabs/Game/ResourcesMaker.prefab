@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 114702441903691368}
   - component: {fileID: 114845096379772874}
   - component: {fileID: 114910163404685118}
+  - component: {fileID: 114250653840200870}
   m_Layer: 5
   m_Name: SpellMaker
   m_TagString: Button
@@ -746,6 +747,7 @@ GameObject:
   - component: {fileID: 114010344640133446}
   - component: {fileID: 114590413935991488}
   - component: {fileID: 114254819545522746}
+  - component: {fileID: 114250460881447068}
   m_Layer: 5
   m_Name: DialogueMaker
   m_TagString: Button
@@ -894,6 +896,7 @@ GameObject:
   - component: {fileID: 114866857352321580}
   - component: {fileID: 114311854286027172}
   - component: {fileID: 114592048360704322}
+  - component: {fileID: 114589113929531760}
   m_Layer: 5
   m_Name: StatsMaker
   m_TagString: Button
@@ -1068,6 +1071,7 @@ GameObject:
   - component: {fileID: 114645947068056704}
   - component: {fileID: 114284194671922162}
   - component: {fileID: 114444190517914984}
+  - component: {fileID: 114394382636017466}
   m_Layer: 5
   m_Name: RecipeMaker
   m_TagString: Button
@@ -1350,6 +1354,7 @@ GameObject:
   - component: {fileID: 114281776690140214}
   - component: {fileID: 114700667002277798}
   - component: {fileID: 114184879339599432}
+  - component: {fileID: 114468893100299622}
   m_Layer: 5
   m_Name: QuestMaker
   m_TagString: Button
@@ -1615,6 +1620,7 @@ GameObject:
   - component: {fileID: 114916853903445924}
   - component: {fileID: 114555212773548842}
   - component: {fileID: 114872800540169316}
+  - component: {fileID: 114150941241434506}
   m_Layer: 5
   m_Name: ClassMaker
   m_TagString: Button
@@ -1904,6 +1910,7 @@ GameObject:
   - component: {fileID: 114198246570348146}
   - component: {fileID: 114950057428073260}
   - component: {fileID: 114064817823738538}
+  - component: {fileID: 114553149064943970}
   m_Layer: 5
   m_Name: VoxelMaker
   m_TagString: Button
@@ -1923,6 +1930,7 @@ GameObject:
   - component: {fileID: 114555736209664550}
   - component: {fileID: 114533100991453006}
   - component: {fileID: 114698255311396972}
+  - component: {fileID: 114845908673219858}
   m_Layer: 5
   m_Name: ItemMaker
   m_TagString: Button
@@ -2980,6 +2988,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FilesList: {fileID: 114498475383396402}
+--- !u!114 &114150941241434506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1796354111472430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Class Maker
+  TooltipDescriptionLabel: Edit classes!
 --- !u!114 &114152680258080070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4067,6 +4088,32 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114250460881447068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311093794618742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Dialogue Maker
+  TooltipDescriptionLabel: Edit dialogue!
+--- !u!114 &114250653840200870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272259242831108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Spells Maker
+  TooltipDescriptionLabel: Edit spells!
 --- !u!114 &114254819545522746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4915,8 +4962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipNameLabel: Main Menu
-  TooltipDescriptionLabel: 
+  TooltipNameLabel: Close
+  TooltipDescriptionLabel: Return to the Main Menu
 --- !u!114 &114386925160774084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4983,6 +5030,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &114394382636017466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1503568978776746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Recipe Maker
+  TooltipDescriptionLabel: Edit recipes!
 --- !u!114 &114394768355660294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5438,6 +5498,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114468893100299622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641457377003456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Quest Maker
+  TooltipDescriptionLabel: Edit quests!
 --- !u!114 &114480893727554780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6001,6 +6074,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114553149064943970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1921299506201094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Voxel Maker
+  TooltipDescriptionLabel: Edit voxels!
 --- !u!114 &114555212773548842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6275,6 +6361,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114589113929531760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1410891545122418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Stats Maker
+  TooltipDescriptionLabel: Edit stats!
 --- !u!114 &114590413935991488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7829,6 +7928,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114845908673219858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1921531241871958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipNameLabel: Item Maker
+  TooltipDescriptionLabel: Edit items!
 --- !u!114 &114849367780864260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7854,8 +7966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d7d7a0c3fac854f9f115518fb066a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipNameLabel: Texture Maker
-  TooltipDescriptionLabel: Edit textures. Painting is fun!
+  TooltipNameLabel: Sound Maker
+  TooltipDescriptionLabel: Edit sounds. Songing is fun!
 --- !u!114 &114861580801933074
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -169,7 +169,7 @@ namespace Zeltex.Skeletons
             }
             if (ActionExportAsFBX.IsTriggered())
             {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR //|| UNITY_STANDALONE_WIN
                 System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
                 if (MyResult == System.Windows.Forms.DialogResult.OK)

@@ -54,6 +54,24 @@ namespace Zeltex
         }
 
         /// <summary>
+        /// Begin editing the resources
+        /// </summary>
+        public void BeginResourcesEditing()
+        {
+            GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
+            GuiSpawner.Get().SpawnGui("ResourcesMaker");
+        }
+
+        /// <summary>
+        /// Begin editing the resources
+        /// </summary>
+        public void BeginSettings()
+        {
+            GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
+            GuiSpawner.Get().SpawnGui("Settings");
+        }
+
+        /// <summary>
         /// Begin normal game mode
         /// </summary>
         public void BeginGame()
@@ -71,15 +89,6 @@ namespace Zeltex
             {
                 Debug.LogError("Already playing game.");
             }
-        }
-
-        /// <summary>
-        /// Begin editing the resources
-        /// </summary>
-        public void BeginResourcesEditing()
-        {
-            GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
-            GuiSpawner.Get().SpawnGui("ResourcesMaker");
         }
 
         public IEnumerator BeginGameRoutineMain()

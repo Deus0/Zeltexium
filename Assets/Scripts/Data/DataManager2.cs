@@ -284,7 +284,7 @@ namespace Zeltex
                 {
                     if (GUILayout.Button("Import"))
                     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                         if (HasOpenedZexels())
                         {
                             ImportZexel();
@@ -479,7 +479,7 @@ namespace Zeltex
 
                     if (GUILayout.Button("Import"))
                     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                         ImportZexel();
 #else
                         Debug.LogError("Platform not supported.");
@@ -513,7 +513,7 @@ namespace Zeltex
 
                     if (GUILayout.Button("Import"))
                     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                         ImportZound(OpenedFolderName, OpenedElement as Sound.Zound);
 #else
                         Debug.LogError("Platform not supported.");
@@ -602,7 +602,7 @@ namespace Zeltex
         {
             //ElementFolder MyFolder = GetElementFolder(FolderName);
             //if (MyFolder != null)
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
             {
                 System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
@@ -637,7 +637,7 @@ namespace Zeltex
         public System.Collections.IEnumerator LoadVoxFile(Voxels.World SpawnedWorld = null)
         {
             yield return null;
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
             System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
             System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
             string FilePath = MyDialog.FileName;
@@ -800,7 +800,7 @@ namespace Zeltex
 
         public void ExportPolygon(MeshFilter MyMeshFilter)//int FileIndex)
         {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
             System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
             System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
             if (MyResult == System.Windows.Forms.DialogResult.OK)
@@ -863,7 +863,7 @@ namespace Zeltex
             ElementFolder MyFolder = GetElementFolder(FolderName);
             if (MyFolder != null)
             {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                 System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
                 if (MyResult == System.Windows.Forms.DialogResult.OK)
@@ -888,7 +888,7 @@ namespace Zeltex
             ElementFolder MyFolder = GetElementFolder(FolderName);
             if (MyFolder != null)
             {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                 System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
                 if (MyResult == System.Windows.Forms.DialogResult.OK)

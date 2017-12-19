@@ -43,7 +43,7 @@ namespace Zeltex.Cameras
                         // Check if has stopped moving for over 5 seconds
                         if (Time.time - TimeMovementStopped >= TimeToStartIdling)
                         {
-                            IsIdling = true;
+                            BeginIdling();
                         }
                     }
                 }
@@ -59,18 +59,21 @@ namespace Zeltex.Cameras
         {
             IsIdling = true;
             Rotation = transform.localRotation.eulerAngles;
+            TimeBegun = Time.time;
         }
-
+        float CurrentTime;
+        float TimeBegun;
         private void UpdateIdleMovement()
         {
+            CurrentTime = TimeScale * (Time.time - TimeBegun);
             Noise.Set(
-                Mathf.PerlinNoise(NoiseAmplitude.x, TimeScale * Time.time),
-                Mathf.PerlinNoise(NoiseAmplitude.y, TimeScale * Time.time),
-                Mathf.PerlinNoise(NoiseAmplitude.z, TimeScale * Time.time));
+                Mathf.PerlinNoise(NoiseAmplitude.x, CurrentTime),
+                Mathf.PerlinNoise(NoiseAmplitude.y, CurrentTime),
+                Mathf.PerlinNoise(NoiseAmplitude.z, CurrentTime));
             NewRotation.Set(
-                Rotation.x + (SinAmplitude.x * Noise.x) * Mathf.Sin(TimeScale * Time.time),
-                Rotation.y + (SinAmplitude.y * Noise.y) * Mathf.Sin(TimeScale * Time.time),
-                Rotation.z + (SinAmplitude.z * Noise.z) * Mathf.Sin(TimeScale * Time.time));
+                Rotation.x + (SinAmplitude.x * Noise.x) * Mathf.Sin(CurrentTime),
+                Rotation.y + (SinAmplitude.y * Noise.y) * Mathf.Sin(CurrentTime),
+                Rotation.z + (SinAmplitude.z * Noise.z) * Mathf.Sin(CurrentTime));
             transform.localRotation = Quaternion.Euler(NewRotation);
         }
     }

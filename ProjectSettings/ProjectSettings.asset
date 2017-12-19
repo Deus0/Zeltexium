@@ -82,7 +82,7 @@ PlayerSettings:
   resizableWindow: 0
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
-  gpuSkinning: 0
+  gpuSkinning: 1
   graphicsJobs: 1
   xboxPIXTextureCapture: 0
   xboxEnableAvatar: 0
@@ -283,7 +283,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: d853812ae2da5514e852460085dbddb1, type: 3}
+      m_Icon: {fileID: 2800000, guid: 003a4286eee2a43478f161a1bc8d4f77, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -294,7 +294,7 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: WindowsStandaloneSupport
     m_APIs: 12000000020000000100000011000000
-    m_Automatic: 0
+    m_Automatic: 1
   - m_BuildTarget: AndroidPlayer
     m_APIs: 0b00000015000000
     m_Automatic: 1

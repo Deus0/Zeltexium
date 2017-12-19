@@ -58,10 +58,10 @@ namespace Zeltex
         }
 
         // Use this for initialization
-        void Start()
-        {
-            Camera.main.cullingMask = MainCameraMask;
-        }
+        //void Start()
+        //{
+            //Camera.main.cullingMask = MainCameraMask;
+        //}
 
         public LayerMask GetInteractLayer()
         {

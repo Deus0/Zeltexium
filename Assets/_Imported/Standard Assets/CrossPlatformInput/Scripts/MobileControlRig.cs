@@ -1,3 +1,4 @@
+#if UNITY_ANDROID || UNITY_WEBGL
 using System;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -100,3 +101,4 @@ namespace UnityStandardAssets.CrossPlatformInput
 #endif
     }
 }
+#endif

@@ -163,7 +163,7 @@ namespace Zeltex.Guis.Maker
                 string FileName = MyDropdown.options[MyDropdown.value].text + "." + "obj";
                 Debug.Log("Loading: " + FileName);*/
 
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                 System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
                 if (MyResult == System.Windows.Forms.DialogResult.OK)

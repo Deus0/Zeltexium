@@ -40,7 +40,7 @@ namespace Zeltex.Cameras
 
         public bool IsCameraMoving()
         {
-            return (MyCamera && MyCamera.transform.position != TargetPosition);
+            return (MyCamera && (MyCamera.transform.position != TargetPosition || IsMoving));
         }
 
 	    void Update()
@@ -153,19 +153,22 @@ namespace Zeltex.Cameras
             }
         }
 
-        void MoveCamera()
+        private void RotateCamera()
         {
             LastMousePosition = Input.mousePosition - LastMousePosition;
             LastMousePosition = new Vector3(-LastMousePosition.y * camSens, LastMousePosition.x * camSens, 0);
             LastMousePosition = new Vector3(
                 MyCamera.transform.eulerAngles.x + LastMousePosition.x,
-                MyCamera.transform.eulerAngles.y + LastMousePosition.y, 
+                MyCamera.transform.eulerAngles.y + LastMousePosition.y,
                 0);
             MyCamera.transform.eulerAngles = LastMousePosition;
             LastMousePosition = Input.mousePosition;
-            //Mouse  camera angle done.  
+        }
 
-            //Keyboard commands
+        void MoveCamera()
+        {
+            RotateCamera();
+
             var BaseInput = GetBaseInput();
             var MouseScrollInput = GetInputMouseScroll();
             BaseInput = BaseInput * MovementSpeed;
