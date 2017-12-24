@@ -16,13 +16,13 @@ namespace Zeltex
             while (Counter > 0)
             {
                 TextDots += ".";
-                CountingDownText.text = "Respawning " + TextDots;
                 yield return new WaitForSeconds(1f);
                 Counter--;
                 if (TextDots.Length > 6)
                 {
                     TextDots = "";
                 }
+                CountingDownText.text = " Respawning in " + "[" + Counter + "] " + TextDots;
             }
             if (OnFinish != null)
             {

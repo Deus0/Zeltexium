@@ -897,7 +897,14 @@ public static class FileManagement
                 result = CheckNameOnIndex("StreamingAssets/" + folder, "D");
 #else
                 path = Combine(streamingAssetsPath, folder);
-                result = FileManagement.DirectoryExists(path);
+                try
+                {
+                    result = FileManagement.DirectoryExists(path);
+                }
+                catch (System.StackOverflowException e)
+                {
+                    Debug.LogError("FileManagement.DirectoryExists is causing a StackOverflowException: " + e.ToString());
+                }
 #endif
             }
         }

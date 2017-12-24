@@ -537,40 +537,41 @@ namespace Zeltex.Voxels
             }
         }
 
+        private MeshData CreateMeshMeshData;
+        private Mesh NewMesh;
         /// <summary>
         /// Create teh mesh data
         /// </summary>
         private IEnumerator CreateMesh(MeshFilter MyMeshFilter)
         {
-            if (MyMeshFilter.sharedMesh == null)
-            {
-                //DestroyImmediate(MyMeshFilter.sharedMesh);
-                MyMeshFilter.sharedMesh = new Mesh();
-            }
+            NewMesh = new Mesh();
             // Set up meshes
             for (CreateMeshChunkIndex = 0; CreateMeshChunkIndex < ChunkMeshes.Count; CreateMeshChunkIndex++)
             {
-                ChunkMeshes[CreateMeshChunkIndex].Clear();
-                for (CreateMeshVoxelIndex.x = 0; CreateMeshVoxelIndex.x < Chunk.ChunkSize; CreateMeshVoxelIndex.x++)
+                CreateMeshMeshData = ChunkMeshes[CreateMeshChunkIndex];
+                if (CreateMeshMeshData != null)
                 {
-                    for (CreateMeshVoxelIndex.y = 0; CreateMeshVoxelIndex.y < Chunk.ChunkSize; CreateMeshVoxelIndex.y++)
+                    CreateMeshMeshData.Clear();
+                    for (CreateMeshVoxelIndex.x = 0; CreateMeshVoxelIndex.x < Chunk.ChunkSize; CreateMeshVoxelIndex.x++)
                     {
-                        for (CreateMeshVoxelIndex.z = 0; CreateMeshVoxelIndex.z < Chunk.ChunkSize; CreateMeshVoxelIndex.z++)
+                        for (CreateMeshVoxelIndex.y = 0; CreateMeshVoxelIndex.y < Chunk.ChunkSize; CreateMeshVoxelIndex.y++)
                         {
-                            CreateMeshVoxel = MyVoxels.GetVoxel(CreateMeshVoxelIndex.x, CreateMeshVoxelIndex.y, CreateMeshVoxelIndex.z);
-                            ChunkMeshes[CreateMeshChunkIndex].AddDataMesh = CreateMeshVoxel.MyMeshData;
-                            ChunkMeshes[CreateMeshChunkIndex].Add();
+                            for (CreateMeshVoxelIndex.z = 0; CreateMeshVoxelIndex.z < Chunk.ChunkSize; CreateMeshVoxelIndex.z++)
+                            {
+                                CreateMeshVoxel = MyVoxels.GetVoxel(CreateMeshVoxelIndex.x, CreateMeshVoxelIndex.y, CreateMeshVoxelIndex.z);
+                                CreateMeshMeshData.AddDataMesh = CreateMeshVoxel.MyMeshData;
+                                CreateMeshMeshData.Add();
+                            }
+                        }
+                        if ((CreateMeshVoxelIndex.x + 1) % 4 == 0)
+                        {
+                            yield return null;
                         }
                     }
-                    if ((CreateMeshVoxelIndex.x + 1) % 4 == 0)
-                    {
-                        yield return null;
-                    }
+                    CreateMeshMeshData.AddToVertex(-MyWorld.CentreOffset);
                 }
-                ChunkMeshes[CreateMeshChunkIndex].AddToVertex(-MyWorld.CentreOffset);
             }
             //Debug.Log(MyWorld.name + "'s chunk has vertex count of: " + ChunkMeshes[0].Verticies.Count + ":" + MyWorld.WorldSize.ToString());
-            MyMeshFilter.mesh.Clear();
             //Debug.LogError("Updated Mesh: ChunkMeshes: " + ChunkMeshes.Count +
             //    " - Materials: " + GetWorld().MyMaterials.Count);
             if (ChunkMeshes.Count > 0)
@@ -580,34 +581,43 @@ namespace Zeltex.Voxels
                 // Combine all the materials together
                 for (MaterialIndex = 0; MaterialIndex < GetWorld().MyMaterials.Count; MaterialIndex++)
                 {
-                    CombineInstance NewCombineInstance = new CombineInstance();
-                    NewCombineInstance.mesh = new Mesh();
-                    yield return null;
-                    NewCombineInstance.transform = transform.localToWorldMatrix;
-                    CombiningMeshList.Add(NewCombineInstance);
-                    CombiningMeshList[MaterialIndex].mesh.vertices = ChunkMeshes[MaterialIndex].GetVerticies();
-                    CombiningMeshList[MaterialIndex].mesh.triangles = ChunkMeshes[MaterialIndex].GetTriangles();
-                    CombiningMeshList[MaterialIndex].mesh.uv = ChunkMeshes[MaterialIndex].GetTextureCoordinates();
-                    CombiningMeshList[MaterialIndex].mesh.colors32 = ChunkMeshes[MaterialIndex].GetColors().ToArray();
-                    VertCount += ChunkMeshes[MaterialIndex].Verticies.Count;
+                    CreateMeshMeshData = ChunkMeshes[MaterialIndex];
+                    if (CreateMeshMeshData != null)
+                    {
+                        CombineInstance NewCombineInstance = new CombineInstance();
+                        NewCombineInstance.mesh = new Mesh();
+                        yield return null;
+                        NewCombineInstance.transform = transform.localToWorldMatrix;
+                        CombiningMeshList.Add(NewCombineInstance);
+                        CombiningMeshList[MaterialIndex].mesh.vertices = CreateMeshMeshData.GetVerticies();
+                        CombiningMeshList[MaterialIndex].mesh.triangles = CreateMeshMeshData.GetTriangles();
+                        CombiningMeshList[MaterialIndex].mesh.uv = CreateMeshMeshData.GetTextureCoordinates();
+                        CombiningMeshList[MaterialIndex].mesh.colors32 = CreateMeshMeshData.GetColors().ToArray();
+                        VertCount += CreateMeshMeshData.Verticies.Count;
+                    }
                 }
                 //Debug.LogError("Before CombineMeshes.");
-                MyMeshFilter.sharedMesh.CombineMeshes(CombiningMeshList.ToArray(), false, false);
+                NewMesh.CombineMeshes(CombiningMeshList.ToArray(), false, false);
                 //Debug.LogError("After CombineMeshes.");
                 //Debug.LogError("Updated Mesh:[" + name + "] Vertexes: " + MyMeshFilter.sharedMesh.vertexCount);
-                MyMeshFilter.sharedMesh.subMeshCount = CombiningMeshList.Count;
-                MyMeshFilter.sharedMesh.name = name + " Mesh";
-                MyMeshFilter.sharedMesh.RecalculateNormals();
+                NewMesh.subMeshCount = CombiningMeshList.Count;
+                NewMesh.name = name + " Mesh";
+                NewMesh.RecalculateNormals();
                 //MyMeshFilter.sharedMesh.RecalculateBounds();
-                MyMeshFilter.sharedMesh.RecalculateTangents();
+                NewMesh.RecalculateTangents();
                 for (MaterialIndex = 0; MaterialIndex < CombiningMeshList.Count; MaterialIndex++)
                 {
                     MonoBehaviourExtension.Kill(CombiningMeshList[MaterialIndex].mesh);
                 }
                 CombiningMeshList.Clear();
                 //Debug.LogError("Before UploadMeshData.");
-                MyMeshFilter.sharedMesh.UploadMeshData(false);
+                NewMesh.UploadMeshData(false);
                 //Debug.LogError("Finished UploadMeshData.");
+                if (MyMeshFilter.sharedMesh != null)
+                {
+                    DestroyImmediate(MyMeshFilter.sharedMesh);
+                }
+                MyMeshFilter.sharedMesh = NewMesh;
             }
             else
             {

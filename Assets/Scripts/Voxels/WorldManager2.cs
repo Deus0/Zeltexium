@@ -72,6 +72,10 @@ namespace Zeltex.Voxels
             }
         }
 
+        /// <summary>
+        /// Creates the main character
+        /// Currently uses 0 - which happens to be Alzo
+        /// </summary>
         private IEnumerator CreateMainCharacter(SaveGame MyGame = null, Action OnLoadChunk = null)
         {
             // then load bot with script
@@ -81,6 +85,8 @@ namespace Zeltex.Voxels
                 // GetClass Script
                 CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
+                World MyWorld = MyGame.GetLevel().GetWorld();
+                MyCharacter.OnLoadedInWorld(MyWorld);
                 if (OnLoadChunk != null)
                 {
                     OnLoadChunk.Invoke();
@@ -90,7 +96,9 @@ namespace Zeltex.Voxels
             }
             else
             {
+                Debug.LogError("=====-=-----------==========------");
                 Debug.LogError("Character Pooled Object is null inside LoadNewSaveGame function");
+                Debug.LogError("=====-=-----------==========------");
             }
         }
 

@@ -336,7 +336,7 @@ namespace Zeltex
                 }
             }
 			// for fire on hold skills
-			if (Input.GetKey(ActivateKey)) // || Input.GetButtonDown("Fire3")
+			if (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") >= 0.5f)//Input.GetKey(ActivateKey)) // || Input.GetButtonDown("Fire3")
             {
 				if (MyCharacter.GetComponent<Shooter> ()) 
 				{

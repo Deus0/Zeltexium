@@ -43,6 +43,13 @@ namespace Zeltex.Guis.Maker
         #endregion
 
         #region DataManager
+
+        public new Skeleton GetSelected()
+        {
+            //Debug.LogError("Getting Selected: " + DataManagerFolder);
+            return DataManager.Get().GetElement(DataManagerFolder, GetSelectedIndex()) as Skeletons.Skeleton;
+        }
+
         /// <summary>
         /// Set file paths!
         /// </summary>
@@ -229,10 +236,10 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private void UpdateSkeletonScript()
         {
-            if (MyViewer.MySpawnedSkeleton)
+            //if (MyViewer.MySpawnedSkeleton)
             {
-                string SkeletonScript = FileUtil.ConvertToSingle(MyViewer.MySpawnedSkeleton.GetSkeleton().GetScriptList());
-                DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), SkeletonScript);
+                //string SkeletonScript = FileUtil.ConvertToSingle(MyViewer.MySpawnedSkeleton.GetSkeleton().GetScriptList());
+                //DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), SkeletonScript);
             }
             /*else
             {
@@ -275,13 +282,21 @@ namespace Zeltex.Guis.Maker
         {
             if (MyViewer.MySpawnedSkeleton != null)// && GetSelectedIndex() >= 0 && GetSelectedIndex() < MyData.Count)
             {
-                MyViewer.MySpawnedSkeleton.GetSkeleton().ForceStopLoad();
-                //Debug.LogError("LOading skeleton at: " + GetSelectedIndex());
-                MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().Stop();
-                string MyScript = GetSelected();
-                //Debug.LogError("Loading Skeleton: " + GetSelectedIndex() + ":\n" + MyScript);
-                yield return MyViewer.MySpawnedSkeleton.GetSkeleton().RunScriptRoutine(FileUtil.ConvertToList(MyScript)); //MyData[GetSelectedIndex()]
+                if (MyViewer.MySpawnedSkeleton.GetSkeleton() != null)
+                {
+                    MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().Stop();
+                    MyViewer.MySpawnedSkeleton.GetSkeleton().ForceStopLoad();
+                }
+                if (GetSelected() != null)
+                {
+                    MyViewer.MySpawnedSkeleton.SetSkeletonData(GetSelected());
+                    yield return UniversalCoroutine.CoroutineManager.StartCoroutine(GetSelected().ActivateRoutine());
+                }
+
                 MyViewer.RefreshCamera();
+                //string MyScript = GetSelected();
+                //Debug.LogError("Loading Skeleton: " + GetSelectedIndex() + ":\n" + MyScript);
+                //yield return MyViewer.MySpawnedSkeleton.GetSkeleton().RunScriptRoutine(FileUtil.ConvertToList(MyScript)); //MyData[GetSelectedIndex()]
                 //MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().LoadAll();  // takes the animations from the skeleton managers data
             }
             else
@@ -313,7 +328,8 @@ namespace Zeltex.Guis.Maker
             base.UseInput(MyButton);
             if (MyButton.name == "ExportButton")
             {
-                Debug.Log("Exporting Skeleton: " + GetSelectedName());
+                //GetSelected()
+                //Debug.Log("Exporting Skeleton: " + GetSelectedName());
                 //SetSelected(FileUtil.ConvertToSingle(MyViewer.GetSpawn().GetComponent<Skeleton>().GetScriptList()));    // make sure using latest
                 //FileUtil.Export(GetSelectedName(), FileExtension, MyData[GetSelectedIndex()]);
             }

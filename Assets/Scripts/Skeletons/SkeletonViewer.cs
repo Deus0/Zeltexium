@@ -45,16 +45,19 @@ namespace Zeltex.Guis
         {
             base.OnBegin();
             MySpawnedSkeleton = GetSpawn().GetComponent<SkeletonHandler>();
-            StopCoroutine(OnLoad());
-            StartCoroutine(OnLoad());
+            //StopCoroutine(OnLoad());
+            //StartCoroutine(OnLoad());
         }
         private IEnumerator OnLoad()
         {
-            while (MySpawnedSkeleton.GetSkeleton().IsLoadingSkeleton())
+            if (MySpawnedSkeleton.GetSkeleton() != null)
             {
-                yield return null;
+                while (MySpawnedSkeleton.GetSkeleton().IsLoadingSkeleton())
+                {
+                    yield return null;
+                }
+                RefreshCamera();
             }
-            RefreshCamera();
             //ObjectViewer.SetLayerRecursive(MySpawnedSkeleton.gameObject, ViewerLayer);
         }
 

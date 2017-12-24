@@ -8,23 +8,22 @@ namespace Zeltex.Guis.Characters
     /// A quick list of guis the character can enable and disable
     /// </summary>
     [ExecuteInEditMode]
-    public class MenuGui : GuiList
+    public class MenuGui : MonoBehaviour
     {
-        public EditorAction ActionRefreshElements;
+        //public EditorAction ActionRefreshElements;
         public CharacterGuis MyGuiManager;
         public Color32 OffColor;
         public Color32 OnColor;
 
-        protected override void Update()
+        /*public void Update()
         {
-            base.Update();
             if (ActionRefreshElements.IsTriggered())
             {
                 RefreshElements();
             }
-        }
+        }*/
 
-        public void RefreshElements()
+        /*public void RefreshElements()
         {
             Clear();
             List<string> MyGuis = CharacterGuiManager.Get().GetNames();//MyGuiManager.GetNames();
@@ -32,19 +31,15 @@ namespace Zeltex.Guis.Characters
             {
                 AddElement(MyGuis[i]);
             }
-        }
+        }*/
 
-        public void AddElement(string GuiName)
+        /*public void AddElement(string GuiName)
         {
             if ((Contains(GuiName) == false)
                 && GuiName != "Menu" 
                 && GuiName != "Dialogue"
                 && GuiName != "ItemPickup"
-                && GuiName != "Tooltip"
-                /*
-                && GuiName != "Crosshair"
-                
-                */)
+                && GuiName != "Tooltip")
             {
                 Add(GuiName);
                 GuiListElement MyToolTip = MyGuis[MyGuis.Count - 1].GetComponent<GuiListElement>();
@@ -53,7 +48,7 @@ namespace Zeltex.Guis.Characters
                 MyToolTip.SetColors(OffColor, OnColor);
                 MyToolTip.MyGuiListElementData.IsToolTip = false;
             }
-        }
+        }*/
 
         public void Toggle(string GuiName, GuiListElement MyToolTip)
         {
@@ -100,7 +95,15 @@ namespace Zeltex.Guis.Characters
             }
             else
             {
-                MyGuiManager.Spawn(GuiName);
+                ZelGui MyGui = MyGuiManager.Spawn(GuiName);
+                if (MyGui)
+                {
+                    MyGui.TurnOn();
+                }
+                else
+                {
+                    Debug.LogError("Could not spawn: " + GuiName);
+                }
             }
         }
     }

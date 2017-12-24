@@ -81,6 +81,18 @@ namespace Zeltex.Guis.Characters
         private void SpawnAllGuis()
         {
             DespawnAllGuis();
+            if (GameManager.Get().IsAllHaveStatsBar)
+            {
+                if (GuisEnabled.Contains("StatsBar") == false)
+                {
+                    GuisEnabled.Add("StatsBar");
+                    GuisEnabledStates.Add(true);
+                }
+                else if (GuisEnabledStates.Count < GuisEnabled.Count)
+                {
+                    GuisEnabledStates.Add(true);
+                }
+            }
             for (int i = 0; i < GuisEnabled.Count; i++)
             {
                 ZelGui MySpawn = Spawn(GuisEnabled[i]);
@@ -143,6 +155,12 @@ namespace Zeltex.Guis.Characters
                     MyCharacter.GetComponent<UnityEngine.Networking.NetworkIdentity>());
                 Debug.Log("Spawned " + GuiName + ":" + (MyGui != null));
                 AttachGui(MyGui);
+                if (GuisEnabled.Contains(GuiName) == false)
+                {
+                    GuisEnabled.Add(GuiName);
+                    GuisEnabledStates.Add(MyGui.GetBeginState());
+                }
+                RoutineManager.Get().StartCoroutine(FreezeGuiState(MyGui));
                 return MyGui;
             }
             else
@@ -150,6 +168,17 @@ namespace Zeltex.Guis.Characters
                 Debug.LogError("Cannot spawn " + GuiName + " from CharacterGuiManager");
                 return MyGui;
             }
+        }
+
+        public System.Collections.IEnumerator FreezeGuiState(ZelGui MyGui)
+        {
+            // wait for gui readying object
+            for (int i = 0; i < 30; i++)
+            {
+                MyGui.SetState(MyGui.GetBeginState());
+                yield return null;
+            }
+            MyGui.SetState(MyGui.GetBeginState());
         }
 
         public void Remove(ZelGui MyZelGui)
@@ -320,11 +349,11 @@ namespace Zeltex.Guis.Characters
                 return; // Already exists
             }
             // add it onto the menu gui as a toggle gui
-            ZelGui MyMenu = GetZelGui("Menu");
+            /*ZelGui MyMenu = GetZelGui("Menu");
             if (MyMenu != null)
             {
                 MyMenu.GetComponent<MenuGui>().AddElement(NewZelGui.name);
-            }
+            }*/
             // Finally add it to the list
             MyGuis.Add(NewZelGui);
         }
@@ -606,7 +635,7 @@ namespace Zeltex.Guis.Characters
             else if (GuiObject.name.Contains("Menu"))
             {
                 GuiObject.GetComponent<MenuGui>().MyGuiManager = this;
-                GuiObject.GetComponent<MenuGui>().RefreshElements();
+                //GuiObject.GetComponent<MenuGui>().RefreshElements();
             }
         }
 
@@ -731,7 +760,18 @@ namespace Zeltex.Guis.Characters
         private void UpdateItemPickup(GameObject GuiObject)
         {
             GameObject MyDraggedItem = GuiObject.transform.GetChild(0).gameObject;
-            if (GetZelGui("Inventory"))
+            for (int i = 0; i < MyGuis.Count; i++)
+            {
+                if (MyGuis[i])
+                {
+                    InventoryGuiHandler MyInventoryGui = MyGuis[i].gameObject.GetComponent<InventoryGuiHandler>();
+                    if (MyInventoryGui)
+                    {
+                        MyInventoryGui.MyDraggedItem = MyDraggedItem;
+                    }
+                }
+            }
+            /*if (GetZelGui("Inventory"))
             {
                 ZelGui InventoryZelGui = GetZelGui("Inventory");
                 if (InventoryZelGui)
@@ -764,7 +804,7 @@ namespace Zeltex.Guis.Characters
             else if (MyCharacter)
             {
                 Debug.LogError(MyCharacter.name + " does not have right guis.");
-            }
+            }*/
         }
 
 		/// <summary>
@@ -774,11 +814,11 @@ namespace Zeltex.Guis.Characters
         {
             if (GetZelGui("Menu"))
             {
-				ZelGui MenuToggle = GetZelGui("Menu");
+				/*ZelGui MenuToggle = GetZelGui("Menu");
 				if (MenuToggle)
 				{
 					MenuToggle.GetComponent<MenuGui>().SetTooltip(GuiObject);
-				}
+				}*/
 
 				ZelGui LabelToggle = GetZelGui("Label");
 				if (LabelToggle)

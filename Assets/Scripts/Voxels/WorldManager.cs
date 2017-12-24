@@ -21,6 +21,9 @@ namespace Zeltex.Voxels
         public static string CharacterFileExtension = "chr";
         public static string SaveGameName = "";
 
+        [Header("Settings")]
+        public Vector3 SpawnedWorldScale = 0.5f * (new Vector3(1, 1, 1));
+
         [Header("Actions")]
         [SerializeField]
         private EditorAction IsSpawn;
@@ -143,6 +146,7 @@ namespace Zeltex.Voxels
             MyWorld.MyDataBase = MyVoxelManager;
             MyWorld.MyMaterials = MyVoxelManager.MyMaterials;
             MyWorld.MyVoxelTerrain = MyTerrainGenerator;
+            MyWorld.VoxelScale = SpawnedWorldScale;
             MyWorlds.Add(MyWorld);
             return MyWorld;
         }
@@ -407,6 +411,7 @@ namespace Zeltex.Voxels
                     if (MyCharacter)
                     {
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(NewData));
+                        MyCharacter.OnLoadedInWorld(MyWorld);
                         MyLevelHandler.MyLevel.AddCharacter(MyCharacter);
                         if (OnLoadChunk != null)
                         {

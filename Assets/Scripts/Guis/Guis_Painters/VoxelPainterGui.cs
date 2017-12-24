@@ -77,7 +77,9 @@ namespace Zeltex.Guis.Maker
         private int SelectionNegativeDepth = -5;
         private List<Int3> SelectedPositions = new List<Int3>();
         private Int3 FirstHitBlockPosition;
-        private bool IsFirstClick = true;
+		private bool IsFirstClick = true;
+		private bool WasConvexMesh = false;
+		private World HighlightedWorld;
         #endregion
 
         #region Mono
@@ -107,10 +109,28 @@ namespace Zeltex.Guis.Maker
                 Raycast();
                 UpdateHighlighted();
                 // Handle input
-                if (DidRayHit && ((!IsSpray && Input.GetMouseButtonDown(0)) || (IsSpray && Input.GetMouseButton(0))))
-                {
-                    HandleWorldInteraction(MyHit.point, MyHit.normal);
-                }
+				if (DidRayHit && ((!IsSpray && Input.GetMouseButtonDown (0)) || (IsSpray && Input.GetMouseButton (0)))) 
+				{
+					if (MyWorld == HighlightedWorld) 
+					{
+						HandleWorldInteraction(MyHit.point, MyHit.normal);
+					}
+					else 
+					{
+						SelectWorld(HighlightedWorld);
+					}
+				}
+				// When missing ray hit outside guis
+				if (DidRayHit == false && DidRayHitGuis == false && Input.GetMouseButtonDown(0))
+				{
+					SelectWorld(null);
+				}
+				// When missing ray hit in viewer
+				if (DidRayHit == false && DidRayHitGuis == true && DidRayHitViewer == true && Input.GetMouseButtonDown(0))
+				{
+					SelectWorld(null);
+				}
+				// Note: Still doesn't work properly when clicking on gui that is over a viewer
                 AlterBrush();
             }
         }
@@ -248,6 +268,10 @@ namespace Zeltex.Guis.Maker
             }
         }
 
+		/// <summary>
+		/// Selects the position.
+		/// </summary>
+		/// <param name="SelectionPosition">Selection position.</param>
         private void SelectPosition(Int3 SelectionPosition)
         {
             if (SelectedPositions.Contains(SelectionPosition) == false)
@@ -327,7 +351,9 @@ namespace Zeltex.Guis.Maker
         }
         #endregion
 
-        #region Raycasting
+		#region Raycasting
+		private bool DidRayHitViewer;
+		private bool DidRayHitGuis;
         /// <summary>
         /// First raycast for guis
         /// Then raycast for worlds
@@ -335,18 +361,26 @@ namespace Zeltex.Guis.Maker
         private void Raycast()
         {
             HighLightedCube.SetActive(false);
-            DidRayHit = false;
-            if (RaycastViewer() == false)
+			DidRayHit = false;
+			HighlightedWorld = null;	// default highlighted state
+			DidRayHitGuis = RaycastViewer();
+			if (DidRayHitGuis == false)
             {
                 RaycastWorld();
             }
+			if (DidRayHit == false) 
+			{
+				// Hide the grid
+				HighlightedGrid.gameObject.SetActive(false);
+			}
         }
 
         /// <summary>
         /// Returns whether it hit a gui
         /// </summary>
         private bool RaycastViewer()
-        {
+		{
+			DidRayHitViewer = false;
             Ray MyRay;
             //Create the PointerEventData with null for the EventSystem
             PointerEventData MyPointerEvent = new PointerEventData(EventSystem.current);
@@ -357,10 +391,13 @@ namespace Zeltex.Guis.Maker
             //Raycast it
             EventSystem.current.RaycastAll(MyPointerEvent, MyResults);
             //Debug.LogError("Raycast results: " + MyResults.Count + " at position: " + MyPointerEvent.position.ToString());
-            for (int i = 0; i < MyResults.Count; i++)
+			if (MyResults.Count > 0)
+			for (int i = 0; i < 1; i++)// MyResults.Count; i++)
             {
+				//int i = 0;	// check only the top most one
                 if (MyResults[i].gameObject.GetComponent<VoxelViewer>())
                 {
+					DidRayHitViewer = true;
                     if (MyViewer != MyResults[i].gameObject.GetComponent<VoxelViewer>())
                     {
                         MyViewer = MyResults[i].gameObject.GetComponent<VoxelViewer>();
@@ -370,12 +407,13 @@ namespace Zeltex.Guis.Maker
                     if (DidHit)
                     {
                         DidRayHit = true;
-                        SelectWorld(MyViewer.GetSpawn().GetComponent<World>());
+                        HighlightWorld(MyViewer.GetSpawn().GetComponent<World>());
                     }
                     break;
                 }
                 else if (MyResults[i].gameObject.GetComponent<SkeletonViewer>())
-                {
+				{
+					DidRayHitViewer = true;
                     if (MySkeletonViewer != MyResults[i].gameObject.GetComponent<SkeletonViewer>())
                     {
                         MySkeletonViewer = MyResults[i].gameObject.GetComponent<SkeletonViewer>();
@@ -384,13 +422,14 @@ namespace Zeltex.Guis.Maker
                     bool DidHit = MySkeletonViewer.GetRayHitInViewer(Input.mousePosition, out MyRay, out MyHit);
                     if (DidHit && MyHit.collider.gameObject.GetComponent<Chunk>())
                     {
-                        SelectWorld(MyHit.collider.gameObject.GetComponent<Chunk>().GetWorld());
+                        HighlightWorld(MyHit.collider.gameObject.GetComponent<Chunk>().GetWorld());
                         DidRayHit = true;
                     }
                     break;
                 }
                 else if (MyResults[i].gameObject.GetComponent<ObjectViewer>())
-                {
+				{
+					DidRayHitViewer = true;
                     ObjectViewer NewViewer = MyResults[i].gameObject.GetComponent<ObjectViewer>();
                     if (NewViewer.GetSpawn())
                     {
@@ -406,7 +445,7 @@ namespace Zeltex.Guis.Maker
                             if (DidHit)
                             {
                                 DidRayHit = true;
-                                SelectWorld(MyObjectViewer.GetSpawn().GetComponent<World>());
+                                HighlightWorld(MyObjectViewer.GetSpawn().GetComponent<World>());
                             }
                             break;
                         }
@@ -423,6 +462,7 @@ namespace Zeltex.Guis.Maker
             }
             return (MyResults.Count != 0);
         }
+
         /// <summary>
         /// Raycast against the world!
         /// </summary>
@@ -436,7 +476,7 @@ namespace Zeltex.Guis.Maker
                 {
                     if (MyWorld != MyChunk.GetWorld())
                     {
-                        SelectWorld(MyChunk.GetWorld());
+						HighlightWorld(MyChunk.GetWorld());
                     }
                     DidRayHit = true;
                 }
@@ -517,27 +557,52 @@ namespace Zeltex.Guis.Maker
             }
         }
         private Vector3 PreviousHitNormal;
+		private GridOverlay HighlightedGrid;
         /// <summary>
         /// Updates the Highlighted cube
         /// </summary>
         private void UpdateHighlighted()
         {
-            if (DidRayHit && MyWorld)
+			if (DidRayHit && HighlightedWorld)
             {
-                HighLightedCube.SetActive(true);
-                HighLightedCube.layer = MyWorld.gameObject.layer;
-                HitNormal = MyWorld.transform.InverseTransformDirection(MyHit.normal);  //Vector3
-                LastHitBlockPosition = MyWorld.RayHitToBlockPosition(MyHit.point, MyHit.normal);
-                bool IsAir = VoxelName == "Air";
-                if (PaintType == VoxelPaintType.Build && IsAir == false)    // not equal air
-                {
-                    LastHitBlockPosition += HitNormal;
-                }
-                HighLightedCube.transform.position = MyWorld.BlockToRealPosition(LastHitBlockPosition);// + PositionOffset;
-                HighLightedCube.transform.rotation = MyWorld.transform.rotation;
-                HighLightedCube.transform.localScale = MyWorld.GetUnit() * 1.01f;
+				if (MyWorld && MyWorld == HighlightedWorld) 
+				{
+					HighLightedCube.SetActive(true);
+					HighLightedCube.layer = HighlightedWorld.gameObject.layer;
+					HitNormal = HighlightedWorld.transform.InverseTransformDirection(MyHit.normal);  //Vector3
+					LastHitBlockPosition = HighlightedWorld.RayHitToBlockPosition(MyHit.point, MyHit.normal);
+					bool IsAir = VoxelName == "Air";
+					if (PaintType == VoxelPaintType.Build && IsAir == false)    // not equal air
+					{
+						LastHitBlockPosition += HitNormal;
+					}
+					HighLightedCube.transform.position = HighlightedWorld.BlockToRealPosition(LastHitBlockPosition);// + PositionOffset;
+					HighLightedCube.transform.rotation = HighlightedWorld.transform.rotation;
+					HighLightedCube.transform.localScale = HighlightedWorld.GetUnit() * 1.01f;
+					if (HighlightedGrid)
+					{
+						HighlightedGrid.gameObject.SetActive(false);
+					}
+				} 
+				else 
+				{
+					// un selected world is highlighted
+					if (HighlightedGrid) 
+					{
+						HighlightedGrid.gameObject.SetActive(true);
+					}
+				}
             }
         }
+
+		private void CreateHighlightGrid() 
+		{
+			if (HighlightedGrid == null) 
+			{
+				GameObject NewGrid = new GameObject();
+				HighlightedGrid = NewGrid.AddComponent<GridOverlay>();
+			}
+		}
 
         /*Vector3 GetVoxelLossyScale()
         {
@@ -561,6 +626,33 @@ namespace Zeltex.Guis.Maker
         #endregion
 
         #region WorldSelection
+
+		private void HighlightWorld(World MouseOverWorld) 
+		{
+			if (HighlightedWorld != MouseOverWorld) 
+			{
+				HighlightedWorld = MouseOverWorld;
+				if (HighlightedWorld) 
+				{
+					CreateHighlightGrid();
+					HighlightedGrid.gameObject.SetActive(true);
+					HighlightedGrid.gameObject.SetLayerRecursiveInt(HighlightedWorld.gameObject.layer);
+					HighlightedGrid.IsCentred = HighlightedWorld.IsCentreWorld;
+					HighlightedGrid.SpawnForWorld(HighlightedWorld.GetWorldSize().ToInt3());
+					HighlightedGrid.transform.SetParent(HighlightedWorld.transform);
+					HighlightedGrid.transform.localPosition = Vector3.zero;
+					HighlightedGrid.transform.localEulerAngles = Vector3.zero;
+					HighlightedGrid.transform.localScale = HighlightedWorld.VoxelScale;
+				} 
+				else 
+				{
+					if (HighlightedGrid)
+					{
+						HighlightedGrid.gameObject.SetActive(false);
+					}
+				}
+			}
+		}
         /// <summary>
         /// Selecting a new world
         /// </summary>
@@ -578,16 +670,21 @@ namespace Zeltex.Guis.Maker
                             false,
                             MyWorld.GetWorldBlockSize().ToInt3());
                     }
-                    MyWorld.RemoveOnLoad(OnWorldLoad);
+					MyWorld.RemoveOnLoad(OnWorldLoad);
+					MyWorld.SetConvex(WasConvexMesh);
                 }
                 MyWorld = NewWorld;
-                if (NewWorld != null)
-                {
+				if (MyWorld != null)
+				{
+					Debug.Log("Selecting world: " + MyWorld.name);
                     RefreshWorldData();
-                    MyWorld.AddOnLoad(OnWorldLoad);
+					MyWorld.AddOnLoad(OnWorldLoad);
+					WasConvexMesh = MyWorld.IsConvex;
+					MyWorld.SetConvex(false);
                 }
                 else
-                {
+				{
+					Debug.Log("Selecting world: None");
                     GetLabel("StatisticsText").text = "No World Selected";
                     GetLabel("MySizeLabelX").text = "";
                     GetLabel("MySizeLabelY").text = "";

@@ -66,20 +66,41 @@ namespace Zeltex.Guis
             {
                 CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChange);
             }
-            DataManager.Get().StartCoroutine(AwakeRoutine());
+            //DataManager.Get().StartCoroutine(AwakeRoutine());
+            Initiate();
         }
 
         private void Start()
+        {
+            Initiate();
+        }
+
+        void OnEnable()
+        {
+            Initiate();
+        }
+
+        void Initiate()
+        {
+            RoutineManager.Get().StartCoroutine(InitiateRoutine());
+        }
+
+        private IEnumerator InitiateRoutine()
         {
             if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
                 TargetObject = CameraManager.Get().GetMainCamera().transform;
             }
-            if (IsInstantOnStart)
+            if (TargetObject != null)
             {
-                IsInstant = true;
-                UpdateOrbit(Time.deltaTime);
-                IsInstant = false;
+                CheckOrbitPosition();
+                Vector3 StartPosition = GetTargetWorldPosition();
+                for (int i = 0; i < 30; i++)
+                {
+                    transform.position = StartPosition;
+                    transform.rotation = TargetRotation;
+                    yield return null;
+                }
             }
         }
 
@@ -88,44 +109,9 @@ namespace Zeltex.Guis
             TargetObject = CameraManager.Get().GetMainCamera().transform;
         }
 
-        private IEnumerator AwakeRoutine()
-        {
-            yield return new WaitForSeconds(0.1f);
-            if (TargetObject)
-            {
-                CheckOrbitPosition();
-                UpdateOrbit(1000f);
-            }
-        }
-
-        private void OnEnable()
-        {
-            OnBegin();
-        }
-
-        private void OnDisable()
-        {
-
-        }
-
-        private void OnDestroy()
-        {
-
-        }
-
         public void OnScreenSizeChange()
         {
 
-        }
-
-        public void OnBegin()
-        {
-            if (TargetObject != null)
-            {
-                CheckOrbitPosition();
-                transform.position = GetTargetWorldPosition();
-                transform.rotation = TargetRotation;
-            }
         }
 
         void Update()

@@ -310,7 +310,7 @@ namespace Wasabimole.ProceduralTree
 			EditorGUILayout.EndVertical();
 			EditorGUILayout.EndHorizontal();
 			
-			if (Event.current.type == EventType.repaint)
+			if (Event.current.type == EventType.Repaint)
 			{
 				Rect rect = GUILayoutUtility.GetLastRect();
 				float size = rect.height + 28;

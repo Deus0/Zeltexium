@@ -279,6 +279,11 @@ namespace Zeltex.Guis
             {
                 GuiSpawns.Remove(MyGui);
             }
+			ZelGui MyZelGui = MyGui.GetComponent<ZelGui>();
+			if (MyZelGui) 
+			{
+				MyZelGui.OnToggledOffEvent();
+			}
             Destroy(MyGui);
         }
 

@@ -627,6 +627,9 @@ MonoBehaviour:
   IsSelectable: 0
   MaxCells: 0
   IsStretchHorizontal: 0
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
+  ScrollBeginPositions: []
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -634,6 +637,8 @@ MonoBehaviour:
       PublicKeyToken=null
   IsActiveOnClick: 1
   isDeselectOnActivate: 0
+  ActionRefresh:
+    IsTrigger: 0
   IsSpellbook: 0
   MyGuiPositions:
   - {x: 0, y: 220}
@@ -681,12 +686,44 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      ElementData:
+        _keys: []
+        _values: []
+    IsDrawGui: 0
+    IsDefaultGui: 0
     MyItems: []
+    MaxItems: 20
+    Value: 0
+    CanBuyAllItems: 0
+    CanSellAllItems: 0
     OnAddItem:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     OnUpdateItem:
       m_PersistentCalls:
         m_Calls: []
@@ -705,22 +742,18 @@ MonoBehaviour:
     OnExchangeCurrency:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     OnItemUpdate:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    MaxItems: 20
-    Value: 0
-    CanBuyAllItems: 0
-    CanSellAllItems: 0
     OnLoadEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   MyAudioSource: {fileID: 8229968}
   MyDraggedItem: {fileID: 0}
   HighlightedIcon: {fileID: 0}
@@ -728,6 +761,8 @@ MonoBehaviour:
   OnNonBuyItemSound: {fileID: 8300000, guid: 75c71aabec4120d4aaadb159ab1cf1e7, type: 3}
   OnNotSellingSound: {fileID: 8300000, guid: fc74d1d2acc830947bc7fca90a6e0d03, type: 3}
   OnSellItemSound: {fileID: 8300000, guid: 476a9f0650851b54587d45db023ddeb4, type: 3}
+  RefreshInventory:
+    IsTrigger: 0
 --- !u!114 &11470128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -816,6 +851,9 @@ MonoBehaviour:
   IsSelectable: 0
   MaxCells: 0
   IsStretchHorizontal: 0
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
+  ScrollBeginPositions: []
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -893,6 +931,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 0}
   MovementSpeed: 3
+  IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
@@ -914,13 +953,15 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
 --- !u!114 &11499094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -937,8 +978,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!222 &22205466
 CanvasRenderer:

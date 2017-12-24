@@ -45,7 +45,7 @@ namespace Zeltex.AnimationUtilities
         [Header("Steps")]
         public float LargeStep = 16;
         public float SmallStep = 4;
-        public bool IsScaleSize = true;
+        public bool IsScaleSize = false;
         public bool IsJustFloor = false;
         #endregion
 
@@ -140,6 +140,11 @@ namespace Zeltex.AnimationUtilities
 
         void Generate()
         {
+			if (MainMaterial == null || SubMaterial == null) 
+			{
+				MainMaterial = new Material(Shader.Find("Standard"));
+				SubMaterial = new Material(Shader.Find("Standard"));
+			}
             DoTheLines();
         }
         void Clear()

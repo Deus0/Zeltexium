@@ -39,7 +39,7 @@ namespace Zeltex.Guis.Characters
             }
             if (PoolObject)
             {
-                PoolObject.gameObject.SetActive(false);
+                //PoolObject.gameObject.SetActive(false);
                 if (Data.ExtraData != null)
                 {
                     Data.ExtraData.gameObject.GetComponent<Character>().GetGuis().AttachGui(PoolObject);

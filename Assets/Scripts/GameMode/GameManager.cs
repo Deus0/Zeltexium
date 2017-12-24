@@ -18,6 +18,7 @@ namespace Zeltex
         public UnityEvent OnEndGame = new UnityEvent();
         public AudioClip OnBeginAudio;
         private bool IsEnding;
+        public bool IsAllHaveStatsBar = true;
 
         // Use this for initialization
         void Start()
@@ -134,12 +135,12 @@ namespace Zeltex
 
                 Zeltex.Networking.NetworkManager.Get().StopHosting();
                 OnEndGame.Invoke();
-                GameObject MainMenuGui = GuiSpawner.Get().SpawnGui("MainMenu");
+               /* GameObject MainMenuGui = GuiSpawner.Get().SpawnGui("MainMenu");
                 if (MainMenuGui)
                 {
                     MainMenuGui.GetComponent<ZelGui>().TurnOn();
                     MainMenuGui.GetComponent<ZelGui>().Enable();
-                }
+                }*/
                 CameraManager.Get().EnableMainMenuCamera();
             }
         }

@@ -302,11 +302,11 @@ namespace Zeltex.Saves
                                 }));
                         LoadingGui.Get().SetPercentage(1f);
 
-
-                        for (int i = 0; i < 120; i++)
+                        yield return null;
+                        /*for (int i = 0; i < 120; i++)
                         {
                             yield return null;
-                        }
+                        }*/
                         // Camera and possession
                         if (MyGame.MyCharacter)
                         {
@@ -319,7 +319,34 @@ namespace Zeltex.Saves
                         }
                         else
                         {
-                            Debug.LogError("Save Game [" + MyGame.Name + "]has no character: " + MyGame.CharacterName);
+                            Debug.LogError("Save Game [" + MyGame.Name + "] has no character: " + MyGame.CharacterName);
+                        }
+
+                        List<Characters.Character> MyCharacters = Characters.CharacterManager.Get().GetSpawned();
+                        Debug.Log("Allowing all [" + MyCharacters.Count + "] bots to wander.");
+                        for (int i = 0; i < Characters.CharacterManager.Get().GetSize(); i++)
+                        {
+                            Characters.Character MyCharacter = MyCharacters[i];
+                            if (MyCharacter)
+                            {
+                                AI.Bot MyBot = MyCharacter.gameObject.GetComponent<AI.Bot>();
+                                if (MyBot == null && MyCharacter.IsPlayer == false)
+                                {
+                                    MyBot = MyCharacter.gameObject.AddComponent<AI.Bot>();
+                                }
+                                if (MyBot)
+                                {
+                                    MyBot.OnBeginGame();
+                                }
+                                else
+                                {
+                                    Debug.LogError("Could not begin game for bot: " + MyCharacter.name);
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError("Could not begin game for bot: " + i);
+                            }
                         }
                     }
                     else

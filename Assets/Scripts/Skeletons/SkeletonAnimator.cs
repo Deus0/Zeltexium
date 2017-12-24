@@ -135,7 +135,16 @@ namespace Zeltex.Skeletons
 
         public List<Zanimation> GetAnimations()
         {
-            return MyCharacter.GetData().MyAnimations;
+            if (MyCharacter && MyCharacter.GetData() != null)
+            {
+                return MyCharacter.GetData().MyAnimations;
+            }
+            else
+            {
+                //GetComponent<SkeletonHandler>().GetSkeleton().
+                Debug.LogError("Still have not loaded animations in editor.");
+                return new List<Zanimation>();
+            }
         }
         #endregion
 

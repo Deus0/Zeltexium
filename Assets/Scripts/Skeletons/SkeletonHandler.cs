@@ -22,6 +22,7 @@ namespace Zeltex.Skeletons
         public EditorAction ActionRestoreDefaultPose = new EditorAction();
         public EditorAction ActionGenerateSkeleton = new EditorAction();
         public EditorAction ActionConvertMeshes = new EditorAction();
+        protected Skeleton MySkeleton;
 
         private void Awake()
         {
@@ -59,7 +60,7 @@ namespace Zeltex.Skeletons
         private void Update()
         {
             Init();
-            if (Data != null)// && Application.isPlaying)
+            if (GetSkeleton() != null)// && Application.isPlaying)
             {
                 GetSkeleton().SetSkeletonHandler(this);
                 GetSkeleton().Update();
@@ -82,6 +83,19 @@ namespace Zeltex.Skeletons
             }
         }
 
+        public void SetSkeletonData(Skeleton NewSkeleton)
+        {
+            if (MySkeleton != null)
+            {
+                MySkeleton.SetSkeletonHandler(null);
+            }
+            MySkeleton = NewSkeleton;
+            if (MySkeleton != null)
+            {
+                MySkeleton.SetSkeletonHandler(this);
+            }
+        }
+
         public SkeletonAnimator GetAnimator()
         {
             return MyAnimator;
@@ -89,11 +103,18 @@ namespace Zeltex.Skeletons
 
         public Skeleton GetSkeleton()
         {
-            return Data.GetData().MySkeleton;
+            if (Data != null && Data.GetData() != null)
+            {
+                return Data.GetData().MySkeleton;
+            }
+            else
+            {
+                return MySkeleton;
+            }
         }
         public List<Bone> GetBones()
         {
-            if (Data != null)
+            if (GetSkeleton() != null)
             {
                 return GetSkeleton().MyBones;
             }
@@ -102,7 +123,14 @@ namespace Zeltex.Skeletons
 
         public void OnDeath()
         {
-            GetSkeleton().DestroyBodyCubes();
+            if (GetSkeleton() != null)
+            {
+                GetSkeleton().DestroyBodyCubes();
+            }
+            else
+            {
+                Debug.LogError("No Skeleton cannot destroy cubes.");
+            }
         }
     }
 }

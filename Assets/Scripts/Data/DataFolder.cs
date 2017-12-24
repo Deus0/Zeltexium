@@ -75,11 +75,17 @@ namespace Zeltex
                 }
                 else if (FolderName == DataFolderNames.VoxelDiffuseTextures)
                 {
-                    VoxelManager.Get().DiffuseTextures.Clear();
+                    if (VoxelManager.Get().DiffuseTextures != null)
+                    {
+                        VoxelManager.Get().DiffuseTextures.Clear();
+                    }
                 }
                 else if (FolderName == DataFolderNames.VoxelNormalTextures)
                 {
-                    VoxelManager.Get().NormalTextures.Clear();
+                    if (VoxelManager.Get().NormalTextures != null)
+                    {
+                        VoxelManager.Get().NormalTextures.Clear();
+                    }
                 }
             }
 			Data.Clear();

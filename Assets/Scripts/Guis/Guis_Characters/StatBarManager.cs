@@ -31,8 +31,8 @@ namespace Zeltex.Guis.Characters
         private List<Color32> MyColours = new List<Color32>();
         // gets linked to tooltips
         private GameObject MyTooltipGui;
-        private GameObject NameBar;
-        public GameObject NameBarPrefab;
+        public GameObject NameBar;
+        //public GameObject NameBarPrefab;
 
         private static string BarAddOnText = " Bar";
         #endregion
@@ -180,7 +180,7 @@ namespace Zeltex.Guis.Characters
         /// </summary>
         private void Clear()
         {
-            Destroy(NameBar);
+            //Destroy(NameBar);
             for (int i = 0; i < SpawnedBars.Count; i++)
             {
                 if (SpawnedBars[i])
@@ -189,7 +189,7 @@ namespace Zeltex.Guis.Characters
                 }
             }
             SpawnedBars.Clear();
-            NameBar = null;
+            //NameBar = null;
         }
         #endregion
 
@@ -246,7 +246,7 @@ namespace Zeltex.Guis.Characters
             if (MyCharacter != null)
             {
                 //Debug.LogError("Created bar for " + TargetCharacter.name);
-                NameBar = CreateBar();
+                AlterNameBar();
                 if (NameBar)
                 {
                     NameBar.transform.GetChild(0).gameObject.GetComponent<Text>().text = MyCharacter.name;
@@ -271,14 +271,14 @@ namespace Zeltex.Guis.Characters
             }
         }
 
-        public GameObject CreateBar()
+        public void AlterNameBar()
         {
             Character MyCharacter = gameObject.GetComponent<CharacterGuiHandle>().GetCharacter();
-            if (NameBarPrefab && MyCharacter)
+            if (MyCharacter)    //NameBarPrefab && 
             {
-                GameObject NewBar = (GameObject)Instantiate(NameBarPrefab, transform.position, Quaternion.identity);
+                GameObject NewBar = NameBar.gameObject;// (GameObject)Instantiate(NameBarPrefab, transform.position, Quaternion.identity);
                 NewBar.name = MyCharacter.name + BarAddOnText;
-                NewBar.transform.SetParent(transform, false);
+                //NewBar.transform.SetParent(transform, false);
                 NewBar.transform.localPosition = GetBarPosition(0);
                 Color32 MyColor = Color.gray;
                 //MyColor = Generators.TextureGenerator.DarkenColor(MyColor);
@@ -291,12 +291,12 @@ namespace Zeltex.Guis.Characters
                         (byte)(ColorCorrection(MyColor.g)),
                         (byte)(ColorCorrection(MyColor.b)),
                         255);
-                return NewBar;
+                //return NewBar;
             }
-            else
-            {
-                return null;
-            }
+           // else
+            //{
+            //    return null;
+            //}
         }
         /// <summary>
         /// Creates a new stat bar
@@ -307,9 +307,10 @@ namespace Zeltex.Guis.Characters
             {
                 //  create new bar object
                 GameObject NewBar = (GameObject)Instantiate(StatBarPrefab, transform.position, Quaternion.identity);
+                NewBar.SetActive(true);
                 NewBar.name = MyStat.Name + " Bar";
                 NewBar.transform.SetParent(transform, false);
-                NewBar.transform.localPosition = GetBarPosition(SpawnedBars.Count);
+                NewBar.transform.localPosition = GetBarPosition(SpawnedBars.Count + 1);
                 // set tooltips
                 GuiListElementData MyGuiListElementData = new GuiListElementData();
                 MyGuiListElementData.LabelText = MyStat.GetToolTipName();
@@ -365,10 +366,6 @@ namespace Zeltex.Guis.Characters
         {
             //BarsCount--;    // if count 1, position index is 0
             float TotalHeight = GetComponent<RectTransform>().GetHeight();
-            if (NameBar)
-            {
-                BarsCount++;    // increase for named bar
-            }
             Vector3 NewPosition = new Vector3();
             float BarHeight = StatBarPrefab.GetComponent<RectTransform>().GetHeight();
 

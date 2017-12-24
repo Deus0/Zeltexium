@@ -119,7 +119,7 @@ namespace Wasabimole.ProceduralTree
                 if (UpdateNotifications.HasNotification) // Draw '!' icon if there's a notification
                 {
                     GUILayout.Label(iconGUIContent, iconGUIStyle, GUILayout.Width(25));
-                    if (Event.current.type == EventType.mouseDown && GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                    if (Event.current.type == EventType.MouseDown && GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
                         UpdateNotifications.AttendNotification();
                 }
             }

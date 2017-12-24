@@ -349,8 +349,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &11440326
 MonoBehaviour:
@@ -427,9 +427,9 @@ MonoBehaviour:
   IsSelectable: 0
   MaxCells: 0
   IsStretchHorizontal: 1
-  ScrollBeginPositions: []
   MaxGrid: {x: 0, y: 0}
   CellSize: {x: 0, y: 0}
+  ScrollBeginPositions: []
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -465,7 +465,8 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: -700, y: 0}
   MovementSpeed: 3
-  IsInstant: 1
+  IsInstantOnStart: 1
+  IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
   IsFollowUserAngle: 1
@@ -614,14 +615,15 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
 --- !u!114 &11470954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1420,12 +1422,12 @@ MonoBehaviour:
         OnNewStats:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         OnUpdateStats:
           m_PersistentCalls:
             m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
       MyZexel:
         Name: Empty
@@ -1488,8 +1490,8 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnClickListElement:
     m_PersistentCalls:
       m_Calls: []

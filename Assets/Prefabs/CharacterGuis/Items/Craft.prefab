@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 22473448}
   - component: {fileID: 22212978}
-  - component: {fileID: 11480788}
+  - component: {fileID: 114408899569278780}
   m_Layer: 5
   m_Name: LabelText
   m_TagString: HeaderText
@@ -271,8 +271,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &11427892
 MonoBehaviour:
@@ -322,8 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 4f96adf633a22524ba8b6f4f295c57b8, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.85490197}
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.096020766, g: 0.27205884, b: 0.13365649, a: 0.85490197}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: df003eb3afc512b4a9e7fc2e339402ed, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.30882353, g: 0.13242452, b: 0.01816609, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -378,13 +378,15 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
 --- !u!114 &11453112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -408,6 +410,9 @@ MonoBehaviour:
   IsSelectable: 0
   MaxCells: 0
   IsStretchHorizontal: 0
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
+  ScrollBeginPositions: []
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -415,6 +420,8 @@ MonoBehaviour:
       PublicKeyToken=null
   IsActiveOnClick: 1
   isDeselectOnActivate: 0
+  ActionRefresh:
+    IsTrigger: 0
   IsSpellbook: 0
   MyGuiPositions:
   - {x: -360, y: 380}
@@ -456,12 +463,44 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      ElementData:
+        _keys: []
+        _values: []
+    IsDrawGui: 0
+    IsDefaultGui: 0
     MyItems: []
+    MaxItems: 20
+    Value: 0
+    CanBuyAllItems: 0
+    CanSellAllItems: 0
     OnAddItem:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     OnUpdateItem:
       m_PersistentCalls:
         m_Calls: []
@@ -480,22 +519,18 @@ MonoBehaviour:
     OnExchangeCurrency:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     OnItemUpdate:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    MaxItems: 20
-    Value: 0
-    CanBuyAllItems: 0
-    CanSellAllItems: 0
     OnLoadEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   MyAudioSource: {fileID: 0}
   MyDraggedItem: {fileID: 0}
   HighlightedIcon: {fileID: 0}
@@ -503,6 +538,8 @@ MonoBehaviour:
   OnNonBuyItemSound: {fileID: 8300000, guid: 75c71aabec4120d4aaadb159ab1cf1e7, type: 3}
   OnNotSellingSound: {fileID: 8300000, guid: fc74d1d2acc830947bc7fca90a6e0d03, type: 3}
   OnSellItemSound: {fileID: 8300000, guid: 476a9f0650851b54587d45db023ddeb4, type: 3}
+  RefreshInventory:
+    IsTrigger: 0
 --- !u!114 &11473570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,8 +551,8 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: df003eb3afc512b4a9e7fc2e339402ed, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.25, g: 0.17068966, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -529,39 +566,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &11480788
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 117070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 7b322b4cd71fc6541be11350f901e4d6, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e00995507c2406448b4c8429136104dd, type: 3}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 60
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Crafting
 --- !u!114 &11481496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -573,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 47caff45fd177c640a990abaece6f0a9, type: 2}
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
   m_Color: {r: 0.99264705, g: 0.98534817, b: 0.98534817, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -604,6 +608,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 0}
   MovementSpeed: 1.4
+  IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
@@ -657,7 +662,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 27
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -713,8 +718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 0, y: -80}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22471860
 RectTransform:
@@ -735,7 +740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.074, y: 0.276}
+  m_AnchoredPosition: {x: -0.809, y: 0.276}
   m_SizeDelta: {x: 920, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22473448
@@ -785,6 +790,119 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160902}
   m_IsPrefabParent: 1
+--- !u!114 &114408899569278780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1453722849, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_text: Crafting
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 590c038853e23ff4f9a2c08627facea6, type: 2}
+  m_sharedMaterial: {fileID: 21627151743750816, guid: 590c038853e23ff4f9a2c08627facea6,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4292148992
+  m_fontColor: {r: 0, g: 1, b: 0.83448267, a: 1}
+  m_enableVertexGradient: 0
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 60
+  m_fontSizeBase: 60
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 8194
+  m_isAlignmentEnumConverted: 1
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 114408899569278780}
+    characterCount: 8
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_havePropertiesChanged: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_isInputParsingRequired: 1
+  m_inputSource: 0
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114538142831465930
 MonoBehaviour:
   m_ObjectHideFlags: 1

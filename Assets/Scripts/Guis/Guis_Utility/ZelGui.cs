@@ -23,18 +23,20 @@ namespace Zeltex.Guis
         [SerializeField]
         private bool IsKeepCamera;
         private Animator MyAnimator;
+        public UnityEngine.UI.Selectable FirstSelected;
+        [SerializeField]
+        private bool BeginState = true;
         #endregion
+
+        public bool GetBeginState()
+        {
+            return BeginState;
+        }
 
         public void OnBegin()
         {
             OnToggledOn.Invoke();
         }
-
-        private void Awake()
-        {
-            gameObject.SetActive(true);
-        }
-
         void Start()
         {
             MyAnimator = GetComponent<Animator>();
@@ -49,6 +51,10 @@ namespace Zeltex.Guis
             else
             {
                 Debug.LogError("Camera Manager or Canvas not in scene.");
+            }
+            if (FirstSelected)
+            {
+                FirstSelected.Select();
             }
         }
 
@@ -94,10 +100,10 @@ namespace Zeltex.Guis
                 if (IsEnabled)
                 {
                     OnToggledOn.Invoke();
-                    if (MyOrbitor != null)
-                    {
-                        MyOrbitor.OnBegin();
-                    }
+                    //if (MyOrbitor != null)
+                    //{
+                    //    ''MyOrbitor.Ini();
+                    //}
                 }
                 else
                 {
@@ -105,6 +111,11 @@ namespace Zeltex.Guis
                 }
             }
         }
+
+		public void OnToggledOffEvent() 
+		{ 
+			OnToggledOff.Invoke();
+		}
         #endregion
 
         public void SetChildStates(bool NewState)

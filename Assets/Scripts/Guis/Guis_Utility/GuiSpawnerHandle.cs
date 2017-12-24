@@ -15,6 +15,20 @@ namespace Zeltex.Guis
         public GameObject PreviousGui;
         private GameObject SpawnedGui;
 
+        /// <summary>
+        /// Moves to a new gui
+        /// </summary>
+        /// <param name="GuiName"></param>
+        public void MoveToGUI(string GuiName)
+        {
+            if (PreviousGui != null)
+            {
+                // Destroy(SpawnedGui);
+                GuiSpawner.Get().DestroySpawn(PreviousGui);
+            }
+            SpawnGui(GuiName);
+        }
+
         public void SpawnGui(string GuiName)
         {
             if (GuiSpawner.Get())

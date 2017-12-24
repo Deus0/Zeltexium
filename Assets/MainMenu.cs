@@ -10,6 +10,11 @@ namespace Zeltex.Guis
     public class MainMenu : MonoBehaviour
     {
 
+        public void OnEnable()
+        {
+            GameManager.Get().EndGame();    // incase it was canceled.
+        }
+
         public void PushAdventureButton()
         {
             GameManager.Get().BeginGame();

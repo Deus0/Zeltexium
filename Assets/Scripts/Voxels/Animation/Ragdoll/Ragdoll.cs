@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using Zeltex.AI;
 using Zeltex.Util;
 using Zeltex.Voxels;
+using Zeltex.Characters;
 using Zeltex.Skeletons;
 
 // Need to decouple this script
@@ -46,7 +47,10 @@ namespace Zeltex.Physics
 
         private void Awake()
         {
-            MyCharacter = transform.parent.GetComponent<Characters.Character>();
+            if (transform.parent)
+            {
+                MyCharacter = transform.parent.GetComponent<Characters.Character>();
+            }
         }
 
         private void Update()
@@ -58,7 +62,10 @@ namespace Zeltex.Physics
             if (ActionReverseRagdoll.IsTriggered())
             {
                 // Stop Dying and reverse
-                MyCharacter.StopDeath();
+                if (MyCharacter)
+                {
+                    MyCharacter.StopDeath();
+                }
                 ReverseRagdoll();
             }
         }
@@ -72,8 +79,12 @@ namespace Zeltex.Physics
             RagdollHandle = RoutineManager.Get().StartCoroutine(RagDollRoutine());
         }
 
+        private Vector3 RagdolledPosition;
+        private Quaternion RagdolledRotation;
         private IEnumerator RagDollRoutine()
         {
+            RagdolledPosition = MyCharacter.transform.position;
+            RagdolledRotation = MyCharacter.transform.rotation;
             CapsuleCollider MyCapsule = transform.parent.GetComponent<CapsuleCollider>();
             Rigidbody MyRigidbody = transform.parent.gameObject.GetComponent<Rigidbody>();
             SkeletonAnimator MyAnimator = gameObject.GetComponent<SkeletonAnimator>();
@@ -250,7 +261,7 @@ namespace Zeltex.Physics
                     World MyWorld = MyBone.VoxelMesh.GetComponent<World>();
                     if (MyWorld)
                     {
-                        MyWorld.SetConvex(false);
+                        MyWorld.SetConvex(true);
                     }
                 }
             }
@@ -272,7 +283,7 @@ namespace Zeltex.Physics
         {
             RagdollHandle = RoutineManager.Get().StartCoroutine(RagdollHandle, ReverseRagdollRoutine(ReverseTime));
         }
-
+        
         private IEnumerator ReverseRagdollRoutine(float ReverseTime)
         {
             if (MySkeleton)
@@ -301,10 +312,16 @@ namespace Zeltex.Physics
                 {
                     AttachBone(MySkeleton.GetBones()[i]);
                 }
-                MySkeleton.GetSkeleton().RestoreDefaultPose(5f);
+                MySkeleton.GetSkeleton().RestoreDefaultPose(ReverseTime);
+                Vector3 StartPosition = MyCharacter.transform.position;
+                Quaternion StartRotation = MyCharacter.transform.rotation;
                 float TimeStarted = Time.time;
+                float LerpTime = 0;
                 while (Time.time - TimeStarted <= ReverseTime)
                 {
+                    LerpTime = ((Time.time - TimeStarted) / ReverseTime);
+                    MyCharacter.transform.position = Vector3.Lerp(StartPosition, RagdolledPosition, LerpTime);
+                    MyCharacter.transform.rotation = Quaternion.Lerp(StartRotation, RagdolledRotation, LerpTime);
                     yield return null;
                 }
 

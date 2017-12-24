@@ -72,12 +72,18 @@ namespace Zeltex.Combat
         public void RemoveSkills(Item MyItem = null)
         {
             // Remove all skills
-            if (MyItem == null || (!MyItem.HasCommand("/Block") && !MyItem.HasCommand("/Pickaxe")))
+            if (MyItem == null || !MyItem.HasCommand("/Block"))
             {
                 if (GetComponent<VoxelBrush>())
                 {
-                    //Debug.LogError("Destroying brush, as " + MyItem.Name + " has no brush command");
                     DestroyImmediate(GetComponent<VoxelBrush>());
+                }
+            }
+            if (MyItem == null || !MyItem.HasCommand("/Pickaxe"))
+            {
+                if (GetComponent<Pickaxe>())
+                {
+                    DestroyImmediate(GetComponent<Pickaxe>());
                 }
             }
             if (MyItem == null || !MyItem.HasCommand("/Command"))
@@ -244,7 +250,7 @@ namespace Zeltex.Combat
         {
             Inventory MyInventory = GetInventory();
             Debug.Log(name + "'s SetItem in Skillbar: " + NewIndex + " - previous: " + SelectedIndex + " with inventory: " + MyInventory.GetSize());
-            NewIndex = Mathf.Clamp(NewIndex, 0, MyInventory.GetSize() - 1);
+            NewIndex = Mathf.Clamp(NewIndex, -1, MyInventory.GetSize() - 1);
             if (MyInventory.GetSize() == 0)
             {
                 NewIndex = -1;
@@ -273,12 +279,11 @@ namespace Zeltex.Combat
                     }
                     else if (SelectedIcon.HasCommand("/Pickaxe"))
                     {
-                        VoxelBrush MyBrush = gameObject.GetComponent<VoxelBrush>();
+                        Pickaxe MyBrush = gameObject.GetComponent<Pickaxe>();
                         if (MyBrush == null)
                         {
-                            MyBrush = gameObject.AddComponent<VoxelBrush>();
+                            MyBrush = gameObject.AddComponent<Pickaxe>();
                         }
-                        MyBrush.SetAsPickaxe();
                     }
 
                     if (SelectedIcon.HasCommand("/Spell"))     // /Spell [SpellName]

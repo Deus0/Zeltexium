@@ -66,49 +66,83 @@ namespace Zeltex.AI
         private EditorAction ActionAddWaiting = new EditorAction();
         [SerializeField]
         private EditorAction ActionClearBehaviours = new EditorAction();
+        private bool CanMove = false;
 
         public BotMeta GetData()
         {
             return MyCharacter.GetData().BotData;
         }
+
+        public void OnBeginGame()
+        {
+            CanMove = true;
+            Initiate();
+            BeginBehaviour("Wander");
+        }
+
+        public void OnEndGame()
+        {
+            CanMove = false;
+        }
+
         void Start()
         {
-            if (MyWaiting == null)
+            Initiate();
+        }
+
+        private bool HasInitiated;
+        private void Initiate()
+        {
+            if (HasInitiated == false)
             {
-                MyWaiting = new BotBehaviour();
+                HasInitiated = true;
+                if (MyWaiting == null)
+                {
+                    MyWaiting = new BotBehaviour();
+                    MyBehaviours.Add(MyWaiting);
+                }
+                if (MyWander == null)
+                {
+                    MyWander = new Wander();
+                    MyBehaviours.Add(MyWander);
+                }
+                MyCharacter = GetComponent<Character>();
+                MySkeleton = MyCharacter.GetSkeleton();
+                RefreshRigidbody();
+                // The beginning state is paused
+                for (int i = 0; i < MyBehaviours.Count; i++)
+                {
+                    MyBehaviours[i].Initiate(transform);
+                }
+                if (CurrentBehaviour == null)// || CurrentBehaviour.Name == MyWander.Name)
+                {
+                    CurrentBehaviour = MyWaiting;
+                }
+                //BeginBehaviour(CurrentBehaviour.Name);
+                SinAddition = Random.Range(0.0f, 1.0f);
+                SinSpeed = Random.Range(0.9f, 1.1f);
+                TargetRotation = transform.eulerAngles;
             }
-            if (MyWander == null)
-            {
-                MyWander = new Wander();
-            }
-            MyCharacter = GetComponent<Character>();
-            MySkeleton = MyCharacter.GetSkeleton();
-            RefreshRigidbody();
-            // The beginning state is paused
-            for (int i = 0; i < MyBehaviours.Count; i++)
-            {
-                MyBehaviours[i].Initiate(transform);
-            }
-            if (CurrentBehaviour == null || CurrentBehaviour.Name == MyWander.Name)
-            {
-                CurrentBehaviour = MyWander;
-            }
-            //BeginBehaviour(CurrentBehaviour.Name);
-            SinAddition = Random.Range(0.0f, 1.0f);
-            SinSpeed = Random.Range(0.9f, 1.1f);
-            TargetRotation = transform.eulerAngles;
         }
 
         private void Update()
         {
             if (Application.isEditor == false || (Application.isEditor && Application.isPlaying))
             {
-                if (CurrentBehaviour != null)
+                if (CanMove)
                 {
-                    CurrentBehaviour.Update(this);
+                    if (CurrentBehaviour != null)
+                    {
+                        CurrentBehaviour.Update(this);
+                    }
+                    UpdateMovement();
                 }
-                UpdateMovement();
             }
+            HandleActions();
+        }
+
+        private void HandleActions()
+        {
             if (ActionAddWaiting.IsTriggered())
             {
                 //if (MyWaiting == null)

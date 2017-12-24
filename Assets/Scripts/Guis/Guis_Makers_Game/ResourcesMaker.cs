@@ -324,13 +324,17 @@ namespace Zeltex.Guis.Maker
         
         private bool IsMakerButton(Button MyButton)
         {
-            bool IsMaker = MyButton.name.Contains("Maker");
-
-            if (IsMaker)
+            if (MyButton)
             {
-                GuiSpawner.Get().SpawnMakerGui(MyButton.name);
+                bool IsMaker = MyButton.name.Contains("Maker");
+
+                if (IsMaker)
+                {
+                    GuiSpawner.Get().SpawnMakerGui(MyButton.name);
+                }
+                return IsMaker;
             }
-            return IsMaker;
+            return false;
         }
 
         #endregion

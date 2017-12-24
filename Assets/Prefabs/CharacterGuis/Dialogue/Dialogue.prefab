@@ -537,8 +537,8 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsAnimateOnStart: 0
   Delay: 0
   AnimationSpeedMin: 0.02
@@ -869,8 +869,8 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsAnimateOnStart: 0
   Delay: 0
   AnimationSpeedMin: 0.02
@@ -1174,6 +1174,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: -200}
   MovementSpeed: 3
+  IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
   MyDisplayDistance: 0.4
@@ -1195,14 +1196,16 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 0
 --- !u!114 &11473898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1403,21 +1406,22 @@ MonoBehaviour:
         _keys: []
         _values: []
     IsDrawGui: 0
+    IsDefaultGui: 0
     MyDialogues: []
     ChattedCount: 0
     DialogueIndex: 0
     OnEndTree:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   MyCharacter: {fileID: 0}
   OtherCharacter: {fileID: 0}
   OnEndTalk:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   HeaderText: {fileID: 11436190}
 --- !u!114 &11481408
 MonoBehaviour:

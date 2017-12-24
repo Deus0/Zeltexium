@@ -60,7 +60,7 @@ namespace Zeltex.Skeletons
         [SerializeField, JsonIgnore]
         public Material BoneMaterial;
         [SerializeField, JsonIgnore]
-        public float BoneSize = 0.1f;   // cube meshes
+        public float BoneSize = 0.02f;   // cube meshes
         [SerializeField, JsonIgnore]
         public Color32 BoneColor = new Color32(53, 83, 83, 255);
 
@@ -77,8 +77,8 @@ namespace Zeltex.Skeletons
         public bool IsJointsColliders = true;
         [SerializeField, JsonIgnore]
         public bool IsMeshColliders = true;
-        [SerializeField, JsonIgnore]
-        public bool IsConvexMeshes = true;
+        //[SerializeField, JsonIgnore]
+        //public bool IsConvexMeshes = true;
 
         [Header("Events")]
         [SerializeField, JsonIgnore]

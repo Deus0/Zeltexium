@@ -8,10 +8,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 22405598}
+  - component: {fileID: 11448122}
   - component: {fileID: 22309084}
   - component: {fileID: 11416750}
   - component: {fileID: 11449038}
-  - component: {fileID: 11448122}
   - component: {fileID: 11459982}
   - component: {fileID: 11462036}
   - component: {fileID: 114722183654712096}
@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &131086
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113142}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef4c9ddb0457e6f4886d6f87f03a8049, type: 3}
   m_Name: 
@@ -75,13 +75,16 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 0
 --- !u!114 &11448842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +135,34 @@ MonoBehaviour:
           m_Calls: []
         m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
       Description: Null
       Commands: []
       Tags: []
@@ -139,20 +170,130 @@ MonoBehaviour:
       SellValue: -1
       BuyValue: -1
       MyStats:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
         Data: []
-      IsUniqueTexture: 0
-      TextureType: 0
-      MyTexture: {fileID: 0}
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
       MeshType: 0
       MyMesh: {fileID: 0}
       MyMaterial: {fileID: 0}
       ModelName: 
-      MyModel: 
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnClickListElement:
     m_PersistentCalls:
       m_Calls: []
@@ -171,7 +312,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113142}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 901c54d86c1a4a043867aa802fc3975b, type: 3}
   m_Name: 
@@ -181,6 +322,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 0}
   MovementSpeed: 5
+  IsInstantOnStart: 0
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.32

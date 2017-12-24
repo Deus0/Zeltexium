@@ -176,13 +176,14 @@ namespace Zeltex.Voxels
             IsConvex = NewState;
             if (IsColliders)
             {
+				Debug.Log("Setting " + name + " to new convex state: " + NewState.ToString());
                 foreach (Int3 MyKey in MyChunkData.Keys)
                 {
                     Chunk MyChunk = MyChunkData[MyKey];
                     MeshCollider MyMeshCollider = MyChunk.gameObject.GetComponent<MeshCollider>();
                     if (MyMeshCollider)
                     {
-                        MyMeshCollider.convex = true;
+						MyMeshCollider.convex = IsConvex;
                     }
                 }
             }

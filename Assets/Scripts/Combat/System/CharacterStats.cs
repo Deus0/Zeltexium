@@ -27,9 +27,9 @@ namespace Zeltex.Combat
         [JsonIgnore]
         public static float ExperienceMultiplier = 1.5f;
         [JsonIgnore]
-        private static float BaseSpeed = 25;
+        private static float BaseSpeed = 12.5f;
         [JsonIgnore]
-        private static float SpeedMultiplier = 5;
+        private static float SpeedMultiplier = 2.5f;
 
         public bool DebugGui = false;
         [Header("References")]

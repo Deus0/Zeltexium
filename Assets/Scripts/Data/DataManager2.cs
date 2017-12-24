@@ -911,7 +911,7 @@ namespace Zeltex
         {
             WWW MyWavLoader = new WWW("file://" + FileName);
             yield return MyWavLoader;
-            LatestPlayed = WWWAudioExtensions.GetAudioClip(MyWavLoader);
+            LatestPlayed = MyWavLoader.GetAudioClip();
             MyZound.UseAudioClip(LatestPlayed);
         }
 
@@ -1143,6 +1143,10 @@ namespace Zeltex
                     }
 #else
                     Debug.LogError("Not implemented for net 3.5");
+                    //ConstructorInfo constructor = typeof(T).GetConstructor(System.Type.EmptyTypes);
+                    //dynamic NewValue = constructor.Invoke(null);
+                    object NewValue = System.Activator.CreateInstance(typeof(T));
+                    ListElements.Add((T)NewValue);
 #endif
                 }
                 WasModified = true;

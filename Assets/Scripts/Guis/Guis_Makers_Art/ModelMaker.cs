@@ -28,6 +28,11 @@ namespace Zeltex.Guis.Maker
 
         #region DataManager
 
+        public new WorldModel GetSelected()
+        {
+            return DataManager.Get().GetElement(DataFolderNames.VoxelModels, GetSelectedIndex()) as WorldModel;
+        }
+
         private void OnDestroy()
         {
             OnEnd();
@@ -74,10 +79,10 @@ namespace Zeltex.Guis.Maker
         /// Used for some methods
         /// </summary>
         /// <returns></returns>
-        public static ModelMaker Get()
+        /*public static ModelMaker Get()
         {
             return GameObject.Find("GameManager").GetComponent<MapMaker>().MyModelMaker;
-        }
+        }*/
         /// <summary>
         /// Returns a script using the name
         /// </summary>
@@ -136,9 +141,10 @@ namespace Zeltex.Guis.Maker
             }
             GetInput("NameInput").text = GetSelectedName();
             CancelInvokes();
-            string MyScript = GetSelected();
+            string MyScript = GetSelected().VoxelData;
             //Debug.LogError("Loading Model " + GetSelectedIndex() + ":" + MyScript);
             StartCoroutine(MyVoxelGui.RunScript(FileUtil.ConvertToList(MyScript)));
+            //MyVoxelGui.GetSpawn().GetComponent<
         }
 
         /// <summary>

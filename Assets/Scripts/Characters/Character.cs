@@ -209,6 +209,62 @@ namespace Zeltex.Characters
             }
         }
 
+        /// <summary>
+        /// Once character is loaded into a world
+        /// </summary>
+        public void OnLoadedInWorld(World MyWorld)
+        {
+            //Debug.LogError("[" + name + "] has been loaded into world of [" + MyWorld.name + "]");
+            transform.position = new Vector3(transform.position.x * MyWorld.GetUnit().x, transform.position.y * MyWorld.GetUnit().y, transform.position.z * MyWorld.GetUnit().z);
+            if (GetSkeleton() != null && GetSkeleton().GetSkeleton() != null)
+            {
+                Bounds MyBounds = GetSkeleton().GetSkeleton().GetBounds();
+                int MaxChecks = 100;
+                int ChecksCount = 0;
+                if (MyBounds != null)
+                {
+                    Vector3 VoxelPosition = MyWorld.RealToBlockPosition(transform.position).GetVector();
+                    // find new voxel position that is air or non block
+                    while (true)
+                    {
+                        int VoxelType = MyWorld.GetVoxel(VoxelPosition.ToInt3()).GetVoxelType();
+                        if (VoxelType == 0)
+                        {
+                            break;
+                        }
+                        VoxelMeta MyMeta = MyWorld.GetVoxelMeta(VoxelType);
+                        if (MyMeta == null)
+                        {
+                            break;
+                        }
+                        if (MyMeta.ModelID != "Block")
+                        {
+                            break;
+                        }
+                        VoxelPosition.y++;
+                        ChecksCount++;
+                        if (ChecksCount >= MaxChecks)
+                        {
+                            Debug.LogError("Could not find a new position for " + name);
+                            break;
+                        }
+                    }
+                    // Convert position to real world
+                    VoxelPosition = MyWorld.BlockToRealPosition(VoxelPosition);// new Vector3(VoxelPosition.x * MyWorld.GetUnit().x, VoxelPosition.y * MyWorld.GetUnit().y, VoxelPosition.z * MyWorld.GetUnit().z);
+                    Debug.LogError("[" + name + "] has bounds of [" + MyBounds.center.ToString() + " - " + MyBounds.size.ToString() + "] at position [" + VoxelPosition.ToString() + "]");
+                    transform.position = new Vector3(VoxelPosition.x, VoxelPosition.y + MyBounds.extents.y - MyBounds.center.y / 2f - MyWorld.GetUnit().y / 2f, VoxelPosition.z);
+                }
+                else
+                {
+                    Debug.LogError("No bounds in skeleton of: " + name);
+                }
+            }
+            else
+            {
+                Debug.LogError("No skeleton in character: " + name);
+            }
+        }
+
         public IEnumerator SetDataRoutine(CharacterData NewData)
         {
             if (Data != NewData)
@@ -396,6 +452,33 @@ namespace Zeltex.Characters
             {
                 gameObject.name += "'s Corpse"; // burnt, sliced, crushed, chocolified, decapitated, exploded
             }
+            float ReviveTime = 10;
+            if (IsPlayer)
+            {
+                ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
+                if (RespawnZelGui)
+                {
+                    RespawnZelGui.TurnOn();     // turn gui on when reviving begins
+                    RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
+                    if (MyRespawner)
+                    {
+                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)(ReviveTime + DeathTime)));
+                    }
+                    else
+                    {
+                        Debug.LogError("Respawn gui doesn't have respawn gui.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Could not find RespawnGui in guis for: " + name);
+                }
+                yield return null;
+                if (RespawnZelGui)
+                {
+                    RespawnZelGui.gameObject.SetActive(true);     // turn gui on when reviving begins
+                }
+            }
             float TimeBeginRespawn = Time.time;
             while (Time.time - TimeBeginRespawn < DeathTime)
             {
@@ -403,7 +486,7 @@ namespace Zeltex.Characters
             }
             // if (Data.CanRespawn)
             {
-                yield return RoutineManager.Get().StartCoroutine(Respawn(10));
+                yield return RoutineManager.Get().StartCoroutine(Respawn(ReviveTime));
             }
             /*else
             {
@@ -420,23 +503,6 @@ namespace Zeltex.Characters
         private IEnumerator Respawn(float ReviveTime)
         {
             yield return null;
-            if (IsPlayer)
-            {
-                ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
-                if (RespawnZelGui)
-                {
-                    RespawnZelGui.TurnOn();     // turn gui on when reviving begins
-                    RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
-                    if (MyRespawner)
-                    {
-                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)ReviveTime));
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Could not find RespawnGui in guis");
-                }
-            }
             MySkeleton.GetComponent<Ragdoll>().ReverseRagdoll(ReviveTime);
             float TimeStarted = Time.time;
             while (Time.time - TimeStarted <= ReviveTime)

@@ -996,7 +996,6 @@ GameObject:
   - component: {fileID: 114356593475440494}
   - component: {fileID: 114309769899363054}
   - component: {fileID: 114356224875761676}
-  - component: {fileID: 114366361630966476}
   m_Layer: 5
   m_Name: QuestMaker
   m_TagString: Untagged
@@ -2054,6 +2053,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 0}
   MovementSpeed: 3
+  IsInstantOnStart: 0
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
   MyDisplayDistance: 0.5
@@ -2247,6 +2247,9 @@ MonoBehaviour:
   IsSelectable: 0
   MaxCells: 0
   IsStretchHorizontal: 1
+  MaxGrid: {x: 0, y: 0}
+  CellSize: {x: 0, y: 0}
+  ScrollBeginPositions: []
   OnActivateEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2725,8 +2728,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114332851785849594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2851,13 +2854,78 @@ MonoBehaviour:
   - {fileID: 114191847008555724}
   MyIndexController: {fileID: 114780892732868182}
   MyList: {fileID: 114191847008555724}
-  MyDataManager: {fileID: 0}
   OnUpdateSize:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MyQuestLog: {fileID: 114366361630966476}
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  MyQuestLog:
+    Name: Empty
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      ElementData:
+        _keys: []
+        _values: []
+    IsDrawGui: 0
+    IsDefaultGui: 0
+    DebugGui: 0
+    QuestLimit: -1
+    MyQuests: []
+    OnCompleteQuestSound: {fileID: 0}
+    OnHandInQuestSound: {fileID: 0}
+    BeginQuestSound: {fileID: 0}
+    OnAddQuest:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnCompletedQuest:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
 --- !u!114 &114356593475440494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2869,8 +2937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4c9ddb0457e6f4886d6f87f03a8049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceOn: 0
-  IsBeginOn: 0
   OnToggledOn:
     m_PersistentCalls:
       m_Calls:
@@ -2885,8 +2951,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls:
@@ -2901,35 +2967,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
---- !u!114 &114366361630966476
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1713193433435196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd23e8b1ae7c8ae40880d11103f30acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DebugGui: 0
-  OnAddQuest:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  OnCompletedQuest:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  QuestLimit: -1
-  MyQuests: []
-  OnCompleteQuestSound: {fileID: 0}
-  OnHandInQuestSound: {fileID: 0}
-  BeginQuestSound: {fileID: 0}
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &114371717770313686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3247,8 +3289,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &114476484401442280
 MonoBehaviour:
@@ -4356,8 +4398,8 @@ MonoBehaviour:
   OnListEmpty:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   MyIndexLabel: {fileID: 114010785448341508}
   MyNextButton: {fileID: 114008309714329110}
   MyBackButton: {fileID: 114228777481920408}

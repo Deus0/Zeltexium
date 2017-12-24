@@ -11,6 +11,59 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1066057203497478}
   m_IsPrefabParent: 1
+--- !u!1 &1029297191448192
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224108348840234196}
+  - component: {fileID: 222820676221098148}
+  - component: {fileID: 114908686070047946}
+  m_Layer: 5
+  m_Name: StatText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1043327654629208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224739102442793618}
+  - component: {fileID: 222253192246461750}
+  - component: {fileID: 114429774986481272}
+  - component: {fileID: 114413492580196612}
+  - component: {fileID: 114633976621760738}
+  m_Layer: 5
+  m_Name: StatBarGui
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &1051217548679030
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224291574919278424}
+  - component: {fileID: 222852818098954770}
+  - component: {fileID: 114992234317992888}
+  m_Layer: 5
+  m_Name: StatText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1066057203497478
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,23 +87,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1574868083031178
+--- !u!1 &1271917456530342
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224878535778924894}
+  - component: {fileID: 222841799698636254}
+  - component: {fileID: 114317956899006230}
+  m_Layer: 5
+  m_Name: BarState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1683815698010944
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 224245958600993854}
-  - component: {fileID: 222146435583278634}
-  - component: {fileID: 114981080270172352}
+  - component: {fileID: 224699616604426026}
+  - component: {fileID: 222326735751541558}
+  - component: {fileID: 114897314441428718}
+  - component: {fileID: 114837422813327820}
   m_Layer: 5
-  m_Name: Background
-  m_TagString: GuiBackground
+  m_Name: NameBar
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &114083551074515388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,6 +168,32 @@ MonoBehaviour:
   TargetObject: {fileID: 0}
   TargetSkeleton: {fileID: 0}
   TargetCharacter: {fileID: 0}
+--- !u!114 &114317956899006230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271917456530342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.14511244, g: 0.89705884, b: 0.77259886, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!114 &114375478117842968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +208,267 @@ MonoBehaviour:
   IsFaceMainCamera: 1
   TargetPosition: {fileID: 0}
   ViewerCamera: {fileID: 0}
+--- !u!114 &114413492580196612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043327654629208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efd092bfb3541842878578abc63030c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyGuiList: {fileID: 0}
+  MyGuiListElementData:
+    Index: 0
+    LabelText: '-'
+    DescriptionText: 
+    IsToolTip: 1
+    OnSelectEventString:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.EventString, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    OnSelectEventInt:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyItem:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      Description: Null
+      Commands: []
+      Tags: []
+      Quantity: 1
+      SellValue: -1
+      BuyValue: -1
+      MyStats:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Data: []
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
+      MeshType: 0
+      MyMesh: {fileID: 0}
+      MyMaterial: {fileID: 0}
+      ModelName: 
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnClickListElement:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Util.EventGuiListElement, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  MyColorBlock:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+--- !u!114 &114429774986481272
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043327654629208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.3063477, g: 0.38235295, b: 0.18555363, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &114633976621760738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043327654629208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: 1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114635020842636632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +485,227 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114837422813327820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683815698010944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efd092bfb3541842878578abc63030c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyGuiList: {fileID: 0}
+  MyGuiListElementData:
+    Index: 0
+    LabelText: '-'
+    DescriptionText: 
+    IsToolTip: 1
+    OnSelectEventString:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.EventString, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    OnSelectEventInt:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyItem:
+      Name: Empty
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        ElementData:
+          _keys: []
+          _values: []
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      Description: Null
+      Commands: []
+      Tags: []
+      Quantity: 1
+      SellValue: -1
+      BuyValue: -1
+      MyStats:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Data: []
+        OnNewStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        OnUpdateStats:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+      MyZexel:
+        Name: Empty
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          ElementData:
+            _keys: []
+            _values: []
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        Pixels: 
+        Size: {x: 32, y: 32}
+        MyTexture: {fileID: 0}
+      MeshType: 0
+      MyMesh: {fileID: 0}
+      MyMaterial: {fileID: 0}
+      ModelName: 
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnClickListElement:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Util.EventGuiListElement, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  MyColorBlock:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
 --- !u!114 &114887879552536884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,14 +717,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581556388269c5f46893dc7f03d67267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StatBarPrefab: {fileID: 136496, guid: 309141980a49a5549906cddc9d155990, type: 2}
+  ActionRefreshStats:
+    IsTrigger: 0
+  StatBarPrefab: {fileID: 1043327654629208}
   MyStats:
   - Level
   - Health
   - Mana
   MarginY: 0
-  IsRefreshStats: 0
-  NameBarPrefab: {fileID: 136496, guid: d94f2c1f3817dde48b9bcdda1cf3acc6, type: 2}
+  NameBar: {fileID: 1683815698010944}
+--- !u!114 &114897314441428718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683815698010944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.3063477, g: 0.38235295, b: 0.18555363, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &114908686070047946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029297191448192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.6965518, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: ba458c1184541476091009c1abe64a66, type: 3}
+    m_FontSize: 26
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Error
 --- !u!114 &114948108467436598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,45 +820,78 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
---- !u!114 &114981080270172352
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+--- !u!114 &114992234317992888
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1574868083031178}
+  m_GameObject: {fileID: 1051217548679030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: df003eb3afc512b4a9e7fc2e339402ed, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: 8fe8591ee6a57b14c96291a89b4a6175, type: 2}
+  m_Color: {r: 0.6965518, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!222 &222146435583278634
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: ba458c1184541476091009c1abe64a66, type: 3}
+    m_FontSize: 28
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Monster
+--- !u!222 &222253192246461750
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1574868083031178}
+  m_GameObject: {fileID: 1043327654629208}
+--- !u!222 &222326735751541558
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683815698010944}
+--- !u!222 &222820676221098148
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029297191448192}
+--- !u!222 &222841799698636254
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271917456530342}
+--- !u!222 &222852818098954770
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051217548679030}
 --- !u!223 &223820321433948292
 Canvas:
   m_ObjectHideFlags: 1
@@ -240,23 +912,98 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!224 &224245958600993854
+--- !u!224 &224108348840234196
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1574868083031178}
+  m_GameObject: {fileID: 1029297191448192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224978858783498804}
+  m_Father: {fileID: 224739102442793618}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.0000019073486}
+  m_SizeDelta: {x: 0, y: -0.0000038146973}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224291574919278424
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051217548679030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224699616604426026}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.0000019073486}
+  m_SizeDelta: {x: 0, y: -0.0000038146973}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224699616604426026
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683815698010944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224291574919278424}
+  m_Father: {fileID: 224978858783498804}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 60}
+  m_SizeDelta: {x: 300, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224739102442793618
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043327654629208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224878535778924894}
+  - {fileID: 224108348840234196}
+  m_Father: {fileID: 224978858783498804}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 300, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224878535778924894
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271917456530342}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224739102442793618}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 75, y: -0.000049591064}
+  m_SizeDelta: {x: 150, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224978858783498804
 RectTransform:
@@ -268,7 +1015,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0012, y: 0.0012, z: 0.0012}
   m_Children:
-  - {fileID: 224245958600993854}
+  - {fileID: 224699616604426026}
+  - {fileID: 224739102442793618}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

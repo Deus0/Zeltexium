@@ -10,7 +10,12 @@ namespace Zeltex.Guis
         public Orbitor MyPositioner;
         private Vector2 MousePosition;
 
-	    void Update ()
+        private void OnEnable()
+        {
+            Debug.LogError("Item Pickup enabled..");
+        }
+
+        void Update ()
         {
             FollowMouse();
         }

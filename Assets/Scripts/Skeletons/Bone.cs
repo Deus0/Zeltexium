@@ -405,7 +405,7 @@ namespace Zeltex.Skeletons
             }
 
             MyWorld.SetColliders(false);
-            MyWorld.SetConvex(MySkeleton.IsConvexMeshes);
+            MyWorld.SetConvex(true);
             MyWorld.SetMeshVisibility(IsMeshVisible);
 
             MyWorld.VoxelScale = VoxelScale;

@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 423562}
-  - component: {fileID: 11420666}
+  - component: {fileID: 114699391578339882}
   - component: {fileID: 11487848}
   - component: {fileID: 114000010301214292}
   - component: {fileID: 11404022}
@@ -43,50 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b3a9a6f740d664689aa648d05850f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionRagdoll:
+    IsTrigger: 0
+  ActionReverseRagdoll:
+    IsTrigger: 0
   IsBodyPartsItems: 0
   IsApplyJoints: 1
---- !u!114 &11420666
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832ce6f5dd9c43543b64544c7ec4d288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SkeletonName: Skeleton_0
-  MyCameraBone: {fileID: 0}
-  MyBoneHead: {fileID: 0}
-  MyBones: []
-  MyBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  BoneMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
-  BoneSize: 0.1
-  BoneColor:
-    serializedVersion: 2
-    rgba: 1481855797
-  IsShowJoints: 1
-  IsShowBones: 1
-  IsShowMeshes: 1
-  IsAnimating: 1
-  IsJointsColliders: 0
-  IsMeshColliders: 1
-  IsConvexMeshes: 0
-  OnLoadSkeleton:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  JointMaterial: {fileID: 2100000, guid: a124f45e3161971469462dc7e90ce5c9, type: 2}
-  JointColor:
-    serializedVersion: 2
-    rgba: 4282079792
-  JointSize: 0.08
-  IsReCalculateBounds: 0
-  DefaultBody: {fileID: 0}
 --- !u!114 &11487848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,19 +66,23 @@ MonoBehaviour:
   CurrentTime: 0
   TotalTime: 3
   IsAnimating: 0
+  IsForceLoad: 0
+  IsAnimationLoop: 0
   OnUpdateFrames:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnUpdatedTimeEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  IsForceLoad: 0
-  IsAnimationLoop: 0
-  MyAnimations: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  PlayPause:
+    IsTrigger: 0
+  ActionGenerateAnimation:
+    IsTrigger: 0
+  AnimationRandomness: 0.05
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -166,3 +132,24 @@ MonoBehaviour:
   IsJustFloor: 0
   IsForce: 0
   IsCentredXZ: 1
+--- !u!114 &114699391578339882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f98d9c8b76c6714c900fff4042d3381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 0}
+  HasInit: 0
+  ActionSetDefaultPose:
+    IsTrigger: 0
+  ActionRestoreDefaultPose:
+    IsTrigger: 0
+  ActionGenerateSkeleton:
+    IsTrigger: 0
+  ActionConvertMeshes:
+    IsTrigger: 0

@@ -98,7 +98,7 @@ namespace UniversalCoroutine
 					Stop(); //Ready to be reused
 				}
 			}
-			else
+			else if (currentRoutine != null)
 			{
 				object current = currentRoutine.Current;
 				if(current != null)

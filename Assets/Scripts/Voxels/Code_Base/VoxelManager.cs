@@ -17,7 +17,7 @@ namespace Zeltex.Voxels
         #region Variables
         [Header("Debug")]
         public bool IsDebugGui;
-        public EditorAction ActionGenerateTilemap;
+        public EditorAction ActionGenerateTilemap = new EditorAction();
 
 		[Header("MyMetas")]
         public Dictionary<string, VoxelModel> MyModels = new Dictionary<string, VoxelModel>();

@@ -113,9 +113,9 @@ namespace Zeltex.Voxels
                     }
                 }
             }
-            else
+            //else
             {
-                Debug.LogError("Chunk is null at: " + WorldPosition.ToString());
+                //Debug.LogError("Chunk is null at: " + WorldPosition.ToString());
             }
         }
 
