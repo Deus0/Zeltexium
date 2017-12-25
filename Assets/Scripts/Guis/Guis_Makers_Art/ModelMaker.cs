@@ -38,18 +38,18 @@ namespace Zeltex.Guis.Maker
             OnEnd();
         }
 
-        public override void SaveAll()
+        /*public override void SaveAll()
         {
             // turn world into script
-            string Script = FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript());
-            Debug.LogError(GetSelectedIndex() + ":Saving:\n" + Script);
+            //string Script = FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript());
+            //Debug.LogError(GetSelectedIndex() + ":Saving:\n" + Script);
             DataManager.Get().Set(
                 DataFolderNames.VoxelModels, 
                 GetSelectedIndex(), 
                 Script
                );
             base.SaveAll();
-        }
+        }*/
 
         /// <summary>
         /// Use the folder name!
@@ -62,14 +62,14 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// Add a new data!
         /// </summary>
-        public void AddData(string MyName, string MyScript)
+        /*public void AddData(string MyName, string MyScript)
         {
             if (DataManager.Get())
             {
                 DataManager.Get().Add(DataManagerFolder, MyName, MyScript);// DataFolders[0].MyData.Count;
             }
             MyIndexController.SetMaxSelected(GetSize());
-        }
+        }*/
 
         #endregion
 
@@ -159,11 +159,11 @@ namespace Zeltex.Guis.Maker
 		/// <summary>
 		/// Add a new model to our list
 		/// </summary>
-		protected override void AddData()
-		{
+		//protected override void AddData()
+		//{
 			//StartCoroutine(CreateNew(NewIndex, ""));
-			DataManager.Get().Add(DataManagerFolder, "Data " + GetSize(), VoxelModelGenerator.Get().GetComponent<VoxelModelGenerator>().GetSphere());   //GameObject.Find("Generators")
-        }
+			//ataManager.Get().Add(DataManagerFolder, "Data " + GetSize(), VoxelModelGenerator.Get().GetComponent<VoxelModelGenerator>().GetSphere());   //GameObject.Find("Generators")
+       // }
 
         private IEnumerator CreateNew(int NewIndex, string NewData)
         {
@@ -191,7 +191,7 @@ namespace Zeltex.Guis.Maker
             if (NewData != "")
             {
                 GetWorld().RunScript(FileUtil.ConvertToList(NewData));
-                AddData(NewName, NewData);
+                //AddData(NewName, NewData);
             }
             else
             {
@@ -201,7 +201,7 @@ namespace Zeltex.Guis.Maker
                 VoxelPrimitives.Get().MyWorld = GetWorld();
                 VoxelPrimitives.Get().CreateSphere();
                 NewData = (FileUtil.ConvertToSingle(GetWorld().GetScript()));
-                AddData(NewName, NewData);
+                //AddData(NewName, NewData);
             }
             yield break;
         }
@@ -235,10 +235,10 @@ namespace Zeltex.Guis.Maker
             if (GetSelectedIndex() >= 0 && GetSelectedIndex() < GetSize())
             {
                 //Set(FileUtil.ConvertToSingle(GetWorld().GetScript()), GetSelectedIndex());
-                DataManager.Get().Set(
+                /*DataManager.Get().Set(
                     DataFolderNames.VoxelModels,
                     GetSelectedIndex(),
-                    FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript()));
+                    FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript()));*/
             }
             base.OnEnd();
             MyVoxelGui.OnEnd();
@@ -312,7 +312,7 @@ namespace Zeltex.Guis.Maker
             if (UploadFileName != "")
             {
                 Debug.Log("Uploading new model:" + UploadFileName + "\n" + MyData.Length);
-                AddData(UploadFileName, MyData);
+                //AddData(UploadFileName, MyData);
                 UploadFileName = "";
             }
         }

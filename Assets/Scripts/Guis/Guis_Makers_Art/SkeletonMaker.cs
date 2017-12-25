@@ -71,9 +71,9 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected override void AddData()
         {
-            string NewSkeletonName = "S" + Random.Range(1, 10000);
-            string GeneratedSkeleton = Generators.SkeletonGenerator.Get().GenerateBasicSkeleton(NewSkeletonName);
-            DataManager.Get().Add(DataManagerFolder, NewSkeletonName, GeneratedSkeleton);
+            //string NewSkeletonName = "S" + Random.Range(1, 10000);
+            //string GeneratedSkeleton = Generators.SkeletonGenerator.Get().GenerateBasicSkeleton(NewSkeletonName);
+            //DataManager.Get().Add(DataManagerFolder, NewSkeletonName, GeneratedSkeleton);
         }
         #endregion
 
@@ -322,8 +322,8 @@ namespace Zeltex.Guis.Maker
         {
             if (MyButton.name == "SaveButton")
             {
-                DataManager.Get().Set(DataFolderNames.Skeletons, GetSelectedIndex(), 
-                    FileUtil.ConvertToSingle(MyViewer.GetSpawn().GetComponent<Skeleton>().GetScriptList()));
+                //DataManager.Get().Set(DataFolderNames.Skeletons, GetSelectedIndex(), 
+               //     FileUtil.ConvertToSingle(MyViewer.GetSpawn().GetComponent<Skeleton>().GetScriptList()));
             }
             base.UseInput(MyButton);
             if (MyButton.name == "ExportButton")

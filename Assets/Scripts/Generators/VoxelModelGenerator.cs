@@ -26,7 +26,7 @@ namespace Zeltex.Generators
         {
             // First generate a voxel model
             int MyRed = Random.Range(1, 255);
-			DataManager.Get().Add("VoxelModels", "Model 1", GetSphere());
+			//DataManager.Get().Add("VoxelModels", "Model 1", GetSphere());
 
             /*List<string> MyVoxelModelData2 = new List<string>();
             for (int i = 0; i < Chunk.ChunkSize; i++)

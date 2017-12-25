@@ -136,9 +136,9 @@ namespace Zeltex.Combat
 		/// </summary>
 		public IEnumerator BeginAnimationRoutine()
 		{
-			List<string> MySkeletonScript = FileUtil.ConvertToList(Zeltex.DataManager.Get().Get("Skeletons", 0));
-            List<string> MyClassScript = FileUtil.ConvertToList(Zeltex.DataManager.Get().Get("Classes", 0));
-			if (MySkeletonScript.Count > 0)
+			//List<string> MySkeletonScript = FileUtil.ConvertToList(Zeltex.DataManager.Get().Get("Skeletons", 0));
+            //List<string> MyClassScript = FileUtil.ConvertToList(Zeltex.DataManager.Get().Get("Classes", 0));
+			//if (MySkeletonScript.Count > 0)
             {
                 // Spawn the Summoned object
                 SummonedCharacter = CharacterManager.Get().GetPoolObject();
@@ -185,10 +185,10 @@ namespace Zeltex.Combat
                     Destroy(gameObject);
                 }
 			}
-			else
+			//else
             {
-                Debug.LogError("Skeleton Script null. Class Script: " + MyClassScript.Count);
-                Destroy(gameObject);
+                //Debug.LogError("Skeleton Script null. Class Script: " + MyClassScript.Count);
+                //Destroy(gameObject);
             }
             yield return null;
             //Debug.LogError("Began animation at " + TimeBeginStage0);

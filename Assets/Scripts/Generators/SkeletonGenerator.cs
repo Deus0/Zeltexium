@@ -30,7 +30,7 @@ namespace Zeltex.Generators
             List<string> SkeletonData = new List<string>();
             string SkeletonName = Zeltex.NameGenerator.GenerateVoxelName();
             GetBasicSkeleton(SkeletonData, SkeletonName);
-            DataManager.Get().Add("Skeletons", SkeletonName, FileUtil.ConvertToSingle(SkeletonData));
+           // DataManager.Get().Add("Skeletons", SkeletonName, FileUtil.ConvertToSingle(SkeletonData));
         }
 
         public string GenerateBasicSkeleton(string SkeletonName)

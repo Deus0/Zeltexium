@@ -232,7 +232,7 @@ namespace Zeltex.Guis.Maker
             if (MyIndexController.GetOldIndex() != NewIndex && MyIndexController.GetOldIndex() >= 0 && MyIndexController.GetOldIndex() < GetSize())   // will not work when opening for first time
             {
                 string DialogueScript = FileUtil.ConvertToSingle(MyDialogueHandler.MyTree.GetScriptList());
-                DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), DialogueScript);
+                //DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), DialogueScript);
                 //Debug.Log("Storing Model as script to: " + MyIndexController.GetOldIndex() + " as moving to " + ":\n" + MyData[MyIndexController.GetOldIndex()]);
             }
             GetInput("NameInput").text = MyDialogueHandler.MyTree.Name;// MyNames[NewIndex];

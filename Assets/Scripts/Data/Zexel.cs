@@ -47,12 +47,17 @@ namespace Zeltex
             }
         }
 
+        public bool HasPixels()
+        {
+            return Pixels != null;
+        }
+
         /// <summary>
         /// This should only be used for debug
         /// </summary>
         public void GenerateTextureFromBytes()
         {
-            if (Pixels != null)
+            if (HasPixels())
             {
                 MyTexture = new Texture2D(
                 (int)Size.x,

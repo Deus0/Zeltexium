@@ -44,7 +44,7 @@ namespace Zeltex
         /// <summary>
         /// Uses reflection to get the property instance
         /// </summary>
-        protected object GetInstance2<T>(SerializedProperty property)
+        /*protected object GetInstance2<T>(SerializedProperty property)
         {
             //Debug.LogError(property.serializedObject.targetObject.GetType());
             Type ComponentType = property.serializedObject.targetObject.GetType();
@@ -100,6 +100,6 @@ namespace Zeltex
                 // return
                 return ParentObject;
             }
-        }
+        }*/
     }
 }

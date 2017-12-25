@@ -445,6 +445,7 @@ namespace Zeltex
                 }
                 Count++;
             }
+            Debug.LogError("Could not find file " + FileIndex + " inside of " + FolderName);
             return default(T);
         }
 

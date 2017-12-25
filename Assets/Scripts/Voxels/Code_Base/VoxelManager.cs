@@ -137,13 +137,13 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Add a Voxel Texture to the game
         /// </summary>
-        public void AddTexture(Texture2D NewTexture)
-        {
+        //public void AddTexture(Texture2D NewTexture)
+        //{
             // add to MyMetasbase
-            DiffuseTextures.Add(NewTexture);
+            //DiffuseTextures.Add(NewTexture);
             // alsoo add to MyMetasmanager
-            DataManager.Get().AddEmptyString("VoxelTexturesDiffuse", NewTexture.name);
-        }
+            //DataManager.Get().AddEmptyString("VoxelTexturesDiffuse", NewTexture.name);
+        //}
 
         public Texture2D GetTextureDiffuse(int FileIndex)
         {
@@ -216,8 +216,8 @@ namespace Zeltex.Voxels
         {
             if (MyModels.ContainsKey(NewModel.Name) == false)
             {
-                MyModels.Add(NewModel.Name, NewModel);
-                DataManager.Get().AddEmptyString("PolygonModels", NewModel.Name);
+                //MyModels.Add(NewModel.Name, NewModel);
+                //DataManager.Get().AddEmptyString("PolygonModels", NewModel.Name);
             }
             else
             {

@@ -1060,6 +1060,21 @@ namespace Zeltex
                                 (MyObject as Element).OnModified();
                             }
                         }
+                        else if (Fields[i].FieldType.BaseType == typeof(Zexel))
+                        {
+                            GUILayout.Label("Element: " + i + ": " + Fields[i].Name);
+                            DrawFieldsForObject(value);
+                            Zexel MyZexel = Fields[i].GetValue(MyObject) as Zexel;
+                            if (MyZexel != null)
+                            {
+                                Texture2D OldValue = MyZexel.GetTexture();
+                                GUILayout.Label(OldValue);
+                            }
+                            else
+                            {
+                                GUILayout.Label("No Texture.");
+                            }
+                        }
                         else if (Fields[i].FieldType.BaseType == typeof(Element))
                         {
                             GUILayout.Label("Element: " + i + ": " + Fields[i].Name);

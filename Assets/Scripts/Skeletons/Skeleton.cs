@@ -154,13 +154,13 @@ namespace Zeltex.Skeletons
             }
             if (ActionLoad.IsTriggered())
             {
-                string Script = DataManager.Get().Get(DataFolderNames.Skeletons, 0);
+                /*string Script = DataManager.Get().GetElement(DataFolderNames.Skeletons, 0);
                 IsLoading = false;
                 if (LoadRoutine != null)
                 {
                     UniversalCoroutine.CoroutineManager.StopCoroutine(LoadRoutine);
                 }
-                LoadRoutine = CoroutineManager.StartCoroutine(RunScriptRoutine(FileUtil.ConvertToList(Script)));
+                LoadRoutine = CoroutineManager.StartCoroutine(RunScriptRoutine(FileUtil.ConvertToList(Script)));*/
                 //Load();
             }
             if (ActionClear.IsTriggered())

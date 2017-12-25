@@ -37,7 +37,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public virtual void SaveAll()
         {
-            DataManager.Get().Save(DataManagerFolder);
+            DataManager.Get().SaveElements(DataManagerFolder);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected virtual void AddData()
         {
-            DataManager.Get().Add(DataManagerFolder, "Data " + GetSize(), "");
+            //DataManager.Get().AddElement(DataManagerFolder,);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected virtual void RemovedData(int Index)
         {
-            DataManager.Get().Remove(DataManagerFolder, Index);
+            DataManager.Get().RemoveElement(DataManagerFolder, Index);
         }
 
         /// <summary>
@@ -96,7 +96,8 @@ namespace Zeltex.Guis.Maker
         public virtual string GetSelected()
         {
             //Debug.LogError("Getting Selected: " + DataManagerFolder);
-            return DataManager.Get().Get(DataManagerFolder, GetSelectedIndex());
+            //return DataManager.Get().Get(DataManagerFolder, GetSelectedIndex());
+            return "";
         }
 
         /// <summary>
@@ -104,7 +105,8 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public string Get(int FileIndex)
         {
-            return DataManager.Get().Get(DataManagerFolder, FileIndex);
+            //return DataManager.Get().Get(DataManagerFolder, FileIndex);
+            return "";
         }
 
         /// <summary>
@@ -112,12 +114,13 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public string Get(string FileName)
         {
-            return DataManager.Get().Get(DataManagerFolder, FileName);
+            //return DataManager.Get().Get(DataManagerFolder, FileName);
+            return "";
         }
 
         protected void Set(string MyScript, int Index)
         {
-            DataManager.Get().Set(DataManagerFolder, Index, MyScript);
+            //DataManager.Get().Set(DataManagerFolder, Index, MyScript);
         }
         #endregion
 

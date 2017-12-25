@@ -21,13 +21,25 @@ namespace Zeltex
             {
                 MyCharacter.GetData().MySkeleton = NewValue as Skeleton;
             }*/
-        }
+        }   
 
         public override void DrawCustomGUI()
         {
             if (GUIButton("Generate"))
             {
                 Data.GenerateTextureFromBytes();
+            }
+            //Zexel MyZexel = GetTargetObjectOfProperty(MyProperty) as Zexel;
+            GUILabel("Has Pixels? " + Data.HasPixels().ToString());
+            Texture2D MyTexture = Data.GetTexture();
+            if (MyTexture != null)
+            {
+                GUILabel("Texture [" + MyTexture.name + "] - [" + MyTexture.width + ":" + MyTexture.height + "].");
+                GUILabel(MyTexture);
+            }
+            else
+            {
+                GUILabel("No texture data inside [" + Data.Name + "].");
             }
         }
     }

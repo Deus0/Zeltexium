@@ -20,10 +20,9 @@ namespace Zeltex
         private KeyCode DebugOpenKey = KeyCode.F1;
         public bool IsLoad;     // loads all the data
         [Header("Data")]
-        [SerializeField]
+        [SerializeField]//, HideInInspector]
         private List<ElementFolder> ElementFolders = new List<ElementFolder>();
-        public List<StringFolder> StringFolders = new List<StringFolder>();
-        
+        //public List<StringFolder> StringFolders = new List<StringFolder>();
         private string RenameName = "Null";
         //private List<string> MyResourceNames = new List<string>();
 
@@ -44,6 +43,14 @@ namespace Zeltex
         public UnityEvent OnUpdatedResources = new UnityEvent();
         public UnityEvent OnBeginLoading = new UnityEvent();
         public UnityEvent OnEndLoading = new UnityEvent();
+
+        [Header("Debug Zexels")]
+        public bool IsGetZexels;
+        private int PreviousZexel;
+        public int CurrentZexel;
+        public string ZexelsFolderName = DataFolderNames.VoxelDiffuseTextures;
+        public Element DebugElement = new Element();
+        public Zexel DebugZexel = new Zexel();
         #endregion
 
         #region Mono
@@ -119,6 +126,8 @@ namespace Zeltex
 #endif
         }
 
+        public bool IsIncreaseZexelIndex;
+        public bool IsDecreaseZexelIndex;
         private void Update()
         {
             if (Input.GetKeyDown(DebugOpenKey))
@@ -129,6 +138,44 @@ namespace Zeltex
             {
                 IsLoad = false;
                 LoadAll();
+            }
+            if (IsIncreaseZexelIndex)
+            {
+                IsIncreaseZexelIndex = false;
+                CurrentZexel++;
+            }
+            if (IsDecreaseZexelIndex)
+            {
+                IsDecreaseZexelIndex = false;
+                CurrentZexel--;
+            }
+            if (IsGetZexels || CurrentZexel != PreviousZexel)
+            {
+                IsGetZexels = false;
+                DebugZexel = null;
+                PreviousZexel = CurrentZexel;
+                ElementFolder MyFolder = GetElementFolder(ZexelsFolderName);
+                if (MyFolder != null)
+                {
+                    List<Element> MyData = MyFolder.GetData();
+                    CurrentZexel = Mathf.Clamp(CurrentZexel, 0, MyData.Count - 1);
+                    PreviousZexel = CurrentZexel;
+                    if (MyData.Count > 0)
+                    {
+                        Debug.LogError("Setting Zexel [" + MyData[CurrentZexel].Name + "] Debug.");
+                        DebugElement = GetElement(ZexelsFolderName, CurrentZexel);
+                        Debug.LogError("Zexel base type is: " + DebugElement.GetType().ToString());
+                        DebugZexel = ((Zexel)MyFolder.Get(CurrentZexel));
+                    }
+                    else
+                    {
+                        Debug.LogError(ZexelsFolderName + " has no elements.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError(ZexelsFolderName + " is null.");
+                }
             }
         }
         #endregion
@@ -393,7 +440,6 @@ namespace Zeltex
                 Debug.LogError("Element Folders are 0.");
                 //IsInitialized = false;
             }
-            StringFolders.Clear();
             //if (!IsInitialized)
             {
                 //IsInitialized = true;
@@ -512,42 +558,10 @@ namespace Zeltex
         /// </summary>
         public void Clear(string FolderName)
         {
-            DataFolder<string> MyFolder = Get(FolderName);
+            DataFolder<Element> MyFolder = GetElementFolder(FolderName);
             if (MyFolder != null)
             {
                 MyFolder.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Adds the data
-        /// </summary>
-        public void Add(string FolderName)
-        {
-            for (int i = 0; i < StringFolders.Count; i++)
-            {
-                if (StringFolders[i].FolderName == FolderName)
-                {
-                    StringFolders[i].New("New" + Random.Range(1,100000));
-                    //DataFolders[i].MyNames.Add("");
-                    //DataFolders[i].MyData.Add("");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Adds the data, used in voxel manager for new meta
-        /// </summary>
-        public void AddEmptyString(string FolderName, string NewName)
-        {
-            for (int i = 0; i < StringFolders.Count; i++)
-            {
-                if (StringFolders[i].FolderName == FolderName)
-                {
-                    StringFolders[i].New(NewName);
-                    //DataFolders[i].MyNames.Add(NewName);
-                    //DataFolders[i].MyData.Add("");
-                }
             }
         }
         #endregion
@@ -601,7 +615,6 @@ namespace Zeltex
             RenameName = MapName;
             InitializeFolders();
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllElements());
-            LoadAllStrings();
             IsLoaded = true;
             yield return null;
         }
@@ -611,8 +624,7 @@ namespace Zeltex
         /// </summary>
         public void SaveAll()
         {
-            Debug.Log("Saving " + StringFolders.Count + " Folders");
-            SaveAllStrings();
+            Debug.Log("Saving " + ElementFolders.Count + " Folders");
             SaveAllElements();
 		}
 
@@ -621,14 +633,6 @@ namespace Zeltex
 		/// </summary>
 		public void DeleteAll()
 		{
-			for (int i = 0; i < StringFolders.Count; i++)
-			{
-				List<string> MyNames = StringFolders[i].GetNames();
-				for (int j = 0; j < MyNames.Count; j++)
-				{
-					StringFolders[i].DeleteFile(MyNames[j]);
-				}
-			}
 			for (int i = 0; i < ElementFolders.Count; i++)
 			{
 				List<string> MyNames = ElementFolders[i].GetNames();
@@ -658,11 +662,6 @@ namespace Zeltex
 
         public List<string> GetNames(string FolderName)
         {
-            DataFolder<string> MyFolder = Get(FolderName);
-            if (MyFolder != null)
-            {
-                return MyFolder.GetNames();
-            }
             ElementFolder ElementFolder = GetElementFolder(FolderName);
             if (ElementFolder != null)
             {
@@ -677,12 +676,6 @@ namespace Zeltex
         /// </summary>
         public string SetName(string FolderName, int Index, string NewName)
         {
-            DataFolder<string> MyFolder = Get(FolderName);
-            if (MyFolder != null)
-            {
-                //Debug.LogError("Getting name: " + Index + " Inside " + FolderName);
-                return MyFolder.SetName(Index, NewName);
-            }
             ElementFolder ElementFolder = GetElementFolder(FolderName);
             if (ElementFolder != null)
             {

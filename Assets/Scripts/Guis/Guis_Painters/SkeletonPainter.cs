@@ -897,10 +897,10 @@ namespace Zeltex.Guis.Maker
         {
             if (SelectedBone != null)
             {
-                string VoxelData = DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("VoxelModelDropdown").value);
+                //string VoxelData = DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("VoxelModelDropdown").value);
                 //MySkeleton.GetSkeleton().CreateMesh(SelectedBone, VoxelData);
-                SelectedBone.CreateMesh(VoxelData);
-                GetButton("DeleteSelectedMeshButton").interactable = true;
+                //SelectedBone.CreateMesh(VoxelData);
+                //GetButton("DeleteSelectedMeshButton").interactable = true;
             }
         }
         #endregion
@@ -1324,7 +1324,7 @@ namespace Zeltex.Guis.Maker
                         if (MySkeleton != null && SelectedBone != null)
                         {
                             int MeshIndex = GetDropdown("VoxelModelDropdown").value;
-                            SelectedBone.CreateMesh(DataManager.Get().Get(DataFolderNames.VoxelModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
+                            //SelectedBone.CreateMesh(DataManager.Get().Get(DataFolderNames.VoxelModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
                         }
                     }
                     else if (MyButton.name == "ExplodeButton")

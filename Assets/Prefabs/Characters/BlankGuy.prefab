@@ -2409,7 +2409,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: Body
                 ParentName: 
@@ -2445,7 +2444,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: CameraBone
                 ParentName: 
@@ -2478,7 +2476,6 @@ MonoBehaviour:
               IsAnimating: 1
               IsJointsColliders: 1
               IsMeshColliders: 0
-              IsConvexMeshes: 1
               OnLoadSkeleton:
                 m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
                   Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -2570,7 +2567,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: Body
                 ParentName: 
@@ -2606,7 +2602,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: CameraBone
                 ParentName: 
@@ -2639,7 +2634,6 @@ MonoBehaviour:
               IsAnimating: 1
               IsJointsColliders: 1
               IsMeshColliders: 0
-              IsConvexMeshes: 1
               OnLoadSkeleton:
                 m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
                   Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -2677,7 +2671,6 @@ MonoBehaviour:
           IsAnimating: 1
           IsJointsColliders: 1
           IsMeshColliders: 0
-          IsConvexMeshes: 1
           OnLoadSkeleton:
             m_PersistentCalls:
               m_Calls:
@@ -2851,7 +2844,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: Body
                 ParentName: 
@@ -2887,7 +2879,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: CameraBone
                 ParentName: 
@@ -2920,7 +2911,6 @@ MonoBehaviour:
               IsAnimating: 1
               IsJointsColliders: 1
               IsMeshColliders: 0
-              IsConvexMeshes: 1
               OnLoadSkeleton:
                 m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
                   Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -3012,7 +3002,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: Body
                 ParentName: 
@@ -3048,7 +3037,6 @@ MonoBehaviour:
                   IsAnimating: 1
                   IsJointsColliders: 1
                   IsMeshColliders: 0
-                  IsConvexMeshes: 1
                   IsReCalculateBounds: 0
                 Name: CameraBone
                 ParentName: 
@@ -3081,7 +3069,6 @@ MonoBehaviour:
               IsAnimating: 1
               IsJointsColliders: 1
               IsMeshColliders: 0
-              IsConvexMeshes: 1
               OnLoadSkeleton:
                 m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule,
                   Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -3119,7 +3106,6 @@ MonoBehaviour:
           IsAnimating: 1
           IsJointsColliders: 1
           IsMeshColliders: 0
-          IsConvexMeshes: 1
           OnLoadSkeleton:
             m_PersistentCalls:
               m_Calls:
@@ -3169,7 +3155,6 @@ MonoBehaviour:
       IsAnimating: 1
       IsJointsColliders: 1
       IsMeshColliders: 1
-      IsConvexMeshes: 1
       OnLoadSkeleton:
         m_PersistentCalls:
           m_Calls:
@@ -4141,6 +4126,18 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.1000
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189778}
@@ -4289,7 +4286,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189778}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3aeb7dadc0c69d54d9e5777e9d5631f1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.15

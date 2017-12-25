@@ -987,7 +987,7 @@ namespace Zeltex.Guis.Maker
             {
                 if (MyButton.name == "ModelLoadButton")
                 {
-                    MyWorld.RunScript(FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("ModelLoadDropdown").value)));
+                    //MyWorld.RunScript(FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("ModelLoadDropdown").value)));
                 }
                 else if (MyButton.name == "CutToOtherModelButton")
                 {

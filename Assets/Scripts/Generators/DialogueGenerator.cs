@@ -164,10 +164,11 @@ namespace Zeltex.Dialogue
 /default End
 /EndDialogue
 ";
-			DataManager.Get().Add("Dialogues", "Dialogue1", MyScript1);
+            /*DataManager.Get().Add("Dialogues", "Dialogue1", MyScript1);
 			DataManager.Get().Add("Dialogues", "Dialogue2", MyScript2);
 			DataManager.Get().Add("Dialogues", "Dialogue3", MyScript3);
-			DataManager.Get().Add("Dialogues", "Dialogue4", MyScript4);
+			DataManager.Get().Add("Dialogues", "Dialogue4", MyScript4);*/
+            
 			yield break;
         }
     }

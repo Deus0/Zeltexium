@@ -33,7 +33,7 @@ namespace Zeltex.Characters
 			// MyScript1 += "/GiveDialogue " + MyDialogueMaker.MyNames[0];
 			//MyClassMaker.AddData(Zeltex.NameGenerator.GenerateVoxelName(), MyScript1);
 			//Debug.LogError("Adding new class:\n" + MyScript);
-            DataManager.Get().Add("Classes", NewClassName, MyScript);
+            //DataManager.Get().Add("Classes", NewClassName, MyScript);
             yield return new WaitForSeconds(PauseTime);
 
             /*string MyScript2 = GetDefaultStats();

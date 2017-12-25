@@ -119,7 +119,7 @@ namespace Zeltex.Guis.Maker
             }
             else if (MyInputField.name == "ScriptInput")
             {
-                DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), MyInputField.text);
+                //DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), MyInputField.text);
             }
         }
 

@@ -79,6 +79,25 @@ namespace Zeltex
             GUI.Label(EditorRect, ToggleLabel);
         }
 
+        private static float TextureMultiple = 4;
+        protected void GUILabel(Texture2D ToggleLabel)
+        {
+            if (ToggleLabel != null)
+            {
+                float PreviousHeight = EditorRect.height;
+                float PreviousWidth = EditorRect.width;
+                EditorRect.height = ToggleLabel.height * TextureMultiple;
+                EditorRect.width = ToggleLabel.width * TextureMultiple;
+                EditorRect.y += 20;
+                ExtraHeight += EditorRect.height;
+                //GUI.Label(EditorRect, ToggleLabel);
+                GUI.DrawTexture(EditorRect, ToggleLabel);
+                EditorRect.y += EditorRect.height - 20;
+                EditorRect.height = PreviousHeight;
+                EditorRect.width = PreviousWidth;
+            }
+        }
+
         public string GUITextField(string InputText)
         {
             EditorRect.y += EditorRect.height;
@@ -209,6 +228,11 @@ namespace Zeltex
 
         public static object GetTargetObjectOfProperty(SerializedProperty prop)
         {
+            if (prop == null || prop.propertyPath == null)
+            {
+                Debug.LogError("Property is null.");
+                return null;
+            }
             var path = prop.propertyPath.Replace(".Array.data[", "[");
             object obj = prop.serializedObject.targetObject;
             var elements = path.Split('.');

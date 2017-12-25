@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 namespace Zeltex
-{ 
+{
     public class ElementEditor<T> : ZeltexEditor where T : Element
     {
         protected T Data;
