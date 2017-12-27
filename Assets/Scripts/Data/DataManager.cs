@@ -43,14 +43,6 @@ namespace Zeltex
         public UnityEvent OnUpdatedResources = new UnityEvent();
         public UnityEvent OnBeginLoading = new UnityEvent();
         public UnityEvent OnEndLoading = new UnityEvent();
-
-        [Header("Debug Zexels")]
-        public bool IsGetZexels;
-        private int PreviousZexel;
-        public int CurrentZexel;
-        public string ZexelsFolderName = DataFolderNames.VoxelDiffuseTextures;
-        public Element DebugElement = new Element();
-        public Zexel DebugZexel = new Zexel();
         #endregion
 
         #region Mono
@@ -94,9 +86,12 @@ namespace Zeltex
             DataManager.Get().MapName = PlayerPrefs.GetString(DataManager.Get().ResourcesName, "Zelnugg");
             LogManager.Get().Log("Loading Map [" + DataManager.Get().MapName + "]");
             MakeStreaming();
+#if !UNITY_ANDROID || UNITY_EDITOR
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine());
+#endif
             if (Application.isEditor == false)
             {
+#if !UNITY_ANDROID || UNITY_EDITOR
                 MakePersistent();
                 ElementFolder MyFolder = GetElementFolder(DataFolderNames.Saves);
                 if (MyFolder != null)
@@ -104,30 +99,12 @@ namespace Zeltex
                     yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
                     OnUpdatedResources.Invoke();
                 }
+#endif
             }
             OnEndLoading.Invoke();
+            yield return null;
         }
 
-        System.Collections.IEnumerator ClearConsole()
-        {
-            // wait until console visible
-            while (!Debug.developerConsoleVisible)
-            {
-                yield return null;
-            }
-            yield return null; // this is required to wait for an additional frame, without this clearing doesn't work (at least for me)
-
-            // Debug.ClearDeveloperConsole();
-#if UNITY_EDITOR
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.SceneView));
-            System.Type logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
-            System.Reflection.MethodInfo clearConsoleMethod = logEntries.GetMethod("Clear");
-            clearConsoleMethod.Invoke(new object(), null);
-#endif
-        }
-
-        public bool IsIncreaseZexelIndex;
-        public bool IsDecreaseZexelIndex;
         private void Update()
         {
             if (Input.GetKeyDown(DebugOpenKey))
@@ -138,44 +115,6 @@ namespace Zeltex
             {
                 IsLoad = false;
                 LoadAll();
-            }
-            if (IsIncreaseZexelIndex)
-            {
-                IsIncreaseZexelIndex = false;
-                CurrentZexel++;
-            }
-            if (IsDecreaseZexelIndex)
-            {
-                IsDecreaseZexelIndex = false;
-                CurrentZexel--;
-            }
-            if (IsGetZexels || CurrentZexel != PreviousZexel)
-            {
-                IsGetZexels = false;
-                DebugZexel = null;
-                PreviousZexel = CurrentZexel;
-                ElementFolder MyFolder = GetElementFolder(ZexelsFolderName);
-                if (MyFolder != null)
-                {
-                    List<Element> MyData = MyFolder.GetData();
-                    CurrentZexel = Mathf.Clamp(CurrentZexel, 0, MyData.Count - 1);
-                    PreviousZexel = CurrentZexel;
-                    if (MyData.Count > 0)
-                    {
-                        Debug.LogError("Setting Zexel [" + MyData[CurrentZexel].Name + "] Debug.");
-                        DebugElement = GetElement(ZexelsFolderName, CurrentZexel);
-                        Debug.LogError("Zexel base type is: " + DebugElement.GetType().ToString());
-                        DebugZexel = ((Zexel)MyFolder.Get(CurrentZexel));
-                    }
-                    else
-                    {
-                        Debug.LogError(ZexelsFolderName + " has no elements.");
-                    }
-                }
-                else
-                {
-                    Debug.LogError(ZexelsFolderName + " is null.");
-                }
             }
         }
         #endregion
@@ -435,56 +374,42 @@ namespace Zeltex
         /// </summary>
         private void InitializeFolders()
         {
-            if (ElementFolders.Count == 0)
-            {
-                Debug.LogError("Element Folders are 0.");
-                //IsInitialized = false;
-            }
-            //if (!IsInitialized)
-            {
-                //IsInitialized = true;
-                //MyFilePathType = (FilePathType)PlayerPrefs.GetInt(PathTypeKey, 0);
+            ElementFolders.Clear();
 
-                ElementFolders.Clear();
+            // Element Folders
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelMeta, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolygonModels, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Zanimations, "zel"));
 
-                // Element Folders
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelMeta, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolygonModels, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Zanimations, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Items, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Recipes, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Inventorys, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Items, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Recipes, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Inventorys, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Stats, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.StatGroups, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Spells, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Stats, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.StatGroups, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Spells, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Quests, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.QuestLogs, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Quests, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.QuestLogs, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Dialogues, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.DialogueTrees, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Dialogues, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.DialogueTrees, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Characters, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Levels, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Saves, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Characters, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Levels, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Saves, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Sounds, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Musics, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelDiffuseTextures, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelNormalTextures, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.ItemTextures, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.StatTextures, "zel"));
 
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Sounds, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.Musics, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelDiffuseTextures, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelNormalTextures, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.ItemTextures, "zel"));
-                ElementFolders.Add(ElementFolder.Create(DataFolderNames.StatTextures, "zel"));
-
-                // level scripts, each level contains a folder full of chunks and characters too
-                RefreshGuiMapNames();
-            }
-            //StringFolders.Add(StringFolder.Create(DataFolderNames.Skeletons, "skl"));
-            //AudioFolders.Clear();
-            //TextureFolders.Clear();
+            // level scripts, each level contains a folder full of chunks and characters too
+            RefreshGuiMapNames();
         }
         public Texture2D TestTexture;
         public Texture2D TestTexture2;

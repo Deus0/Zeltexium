@@ -162,7 +162,7 @@ namespace Zeltex.Guis.Maker
             else if (MyButton.name == "RecordButton")
             {
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID
                 // Find a webgl solution for recording audio
 #else
                 SetSelected(Microphone.Start("Built-in Microphone", true, 3, 44100));
@@ -173,8 +173,8 @@ namespace Zeltex.Guis.Maker
         public IEnumerator StopRecording()
         {
             yield return new WaitForSeconds(3f);
-#if UNITY_WEBGL
-// Find a webgl solution for recording audio
+#if UNITY_WEBGL || UNITY_ANDROID
+            // Find a webgl solution for recording audio
 #else
             Microphone.End("Built-in Microphone");
             SetSelected(GetSelectedAudio()); // update the things

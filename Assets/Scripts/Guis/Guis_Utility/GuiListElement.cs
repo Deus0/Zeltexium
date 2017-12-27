@@ -37,14 +37,24 @@ namespace Zeltex.Guis
         protected GameObject MyTooltipGui;                     // reference to the tooltip it is linked to
         protected Text TooltipLabelText;
         protected Text TooltipDescriptionText;
-        protected RectTransform TooltipRect;
+        //protected RectTransform TooltipRect;
         [Header("Color")]
         public ColorBlock MyColorBlock;
         #endregion
 
         // THe update function is used for mouse following
         #region Mono
-        
+        private TooltipHandle MyHandle;
+        private void Awake()
+        {
+            MyHandle = GetComponent<TooltipHandle>();
+            if (MyHandle == null)
+            {
+                MyHandle = gameObject.AddComponent<TooltipHandle>();
+            }
+            MyHandle.enabled = false;
+        }
+
         public void Initialize()
         {
             if (transform.childCount > 0)
@@ -87,10 +97,10 @@ namespace Zeltex.Guis
             return (MyColor.r == 0 && MyColor.g == 0 && MyColor.b == 0 && MyColor.a == 0);
         }
 
-        void Update()
+        /*void Update()
         {
             MouseFollow();
-        }
+        }*/
 
         void OnDisable()
         {
@@ -152,23 +162,35 @@ namespace Zeltex.Guis
         /// <summary>
         /// Link up the tooltip to the gui list element
         /// </summary>
-        public void SetTooltip(GameObject NewTooltipGui)
+        /* public void SetTooltip(GameObject NewTooltipGui)
+         {
+             MyTooltipGui = NewTooltipGui;
+             if (MyTooltipGui != null)
+             {
+                 TooltipLabelText = MyTooltipGui.transform.Find("LabelText").GetComponent<Text>();
+                 TooltipDescriptionText = MyTooltipGui.transform.Find("DescriptionText").GetComponent<Text>();
+                 TooltipRect = MyTooltipGui.GetComponent<RectTransform>();
+             }
+             else
+             {
+                 TooltipLabelText = null;
+                 TooltipDescriptionText = null;
+                 TooltipRect = null;
+             }
+         }*/
+
+        public void SetData(GuiListElementData NewData)
         {
-            MyTooltipGui = NewTooltipGui;
-            if (MyTooltipGui != null)
-            {
-                TooltipLabelText = MyTooltipGui.transform.Find("LabelText").GetComponent<Text>();
-                TooltipDescriptionText = MyTooltipGui.transform.Find("DescriptionText").GetComponent<Text>();
-                TooltipRect = MyTooltipGui.GetComponent<RectTransform>();
-            }
-            else
-            {
-                TooltipLabelText = null;
-                TooltipDescriptionText = null;
-                TooltipRect = null;
-            }
+            MyGuiListElementData = NewData;
+            OnUpdatedTooltip();
         }
 
+        private void OnUpdatedTooltip()
+        {
+            MyHandle.TooltipNameLabel = MyGuiListElementData.LabelText;
+            MyHandle.TooltipDescriptionLabel = MyGuiListElementData.DescriptionText;
+            MyHandle.enabled = MyHandle.TooltipNameLabel != "";
+        }
         /// <summary>
         /// Main function used to set tool tip texts.
         /// </summary>
@@ -177,6 +199,7 @@ namespace Zeltex.Guis
             MyGuiListElementData = new GuiListElementData();
             MyGuiListElementData.LabelText = LabelText;
             MyGuiListElementData.DescriptionText = DescriptionText;
+            OnUpdatedTooltip();
         }
         #endregion
 
@@ -350,7 +373,7 @@ namespace Zeltex.Guis
         /// Makes the tooltip follow the mouse
         /// Accounts for going out of the screen's size
         /// </summary>
-        private void MouseFollow()
+        /*private void MouseFollow()
         {
             if (IsMouseFollow)
             {
@@ -393,7 +416,7 @@ namespace Zeltex.Guis
                     Debug.LogError(name + " is trying to follow but with no linked tooltip object.");
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

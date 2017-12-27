@@ -21,7 +21,7 @@ namespace Zeltex
             {
                 MyCharacter.GetData().MySkeleton = NewValue as Skeleton;
             }*/
-        }   
+        }
 
         public override void DrawCustomGUI()
         {

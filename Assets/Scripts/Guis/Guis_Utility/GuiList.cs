@@ -18,8 +18,8 @@ namespace Zeltex.Guis
 		public GameObject GuiCellPrefab;
         [Tooltip("Parent of the spawned elements.")]
         public GameObject MyList;
-        [Tooltip("Tool tip gui, used to show descriptions of highlighted elements.")]
-        public GameObject MyTooltipGui;
+       // [Tooltip("Tool tip gui, used to show descriptions of highlighted elements.")]
+        //public GameObject MyTooltipGui;
         public Scrollbar MyScrollbar;
 
         [Header("Options")]
@@ -88,7 +88,7 @@ namespace Zeltex.Guis
         /// <summary>
         /// Sets the tooltip for the entire list
         /// </summary>
-        public void SetTooltip(GameObject NewTooltipGui)
+        /*public void SetTooltip(GameObject NewTooltipGui)
         {
             MyTooltipGui = NewTooltipGui;
             for (int i = 0; i < MyGuis.Count; i++)
@@ -98,7 +98,7 @@ namespace Zeltex.Guis
                     MyGuis[i].GetComponent<GuiListElement>().SetTooltip(NewTooltipGui);
                 }
             }
-        }
+        }*/
         #endregion
 
         #region Events
@@ -382,7 +382,7 @@ namespace Zeltex.Guis
                 RectTransform ListRect = MyList.GetComponent<RectTransform>();
                 RectTransform CellRect = NewGuiCell.GetComponent<RectTransform>();
                 MyGuiListElement.MyGuiList = this;
-                MyGuiListElement.SetTooltip(MyTooltipGui);
+                //MyGuiListElement.SetTooltip(MyTooltipGui);
                 MyGuiListElementData.OnSelectEventInt.RemoveAllListeners();
                 MyGuiListElementData.OnSelectEventInt.AddEvent(Select);
                 if (Index == -1)

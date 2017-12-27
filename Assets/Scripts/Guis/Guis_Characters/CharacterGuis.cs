@@ -826,7 +826,7 @@ namespace Zeltex.Guis.Characters
 					LabelToggle.GetComponent<StatBarManager>().SetTooltip(GuiObject);
 				}
 
-				ZelGui InventoryToggle = GetZelGui("Inventory");
+                /*ZelGui InventoryToggle = GetZelGui("Inventory");
 				if (InventoryToggle)
 				{
 					InventoryToggle.GetComponent<InventoryGuiHandler>().SetTooltip(GuiObject);
@@ -859,7 +859,7 @@ namespace Zeltex.Guis.Characters
 				if (LogToggle)
 				{
 					LogToggle.GetComponent<GuiList>().SetTooltip(GuiObject);
-				}
+				}*/
 
             }
             else

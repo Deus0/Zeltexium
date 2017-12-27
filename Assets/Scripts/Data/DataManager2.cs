@@ -218,6 +218,7 @@ namespace Zeltex
         {
             GUILayout.Space(30);
             GUILayout.Label("Opened Folder [" + OpenedFolderName + "] " + DataFolderNames.GetDataType(OpenedFolderName).ToString());
+            ElementFolder TheFolder = GetElementFolder(OpenedFolderName);
             if (GUILayout.Button("Open " + OpenedFolderName))
             {
                 string FolderPath = GetMapPath() + OpenedFolderName + "/";
@@ -282,12 +283,12 @@ namespace Zeltex
                 }
                 if (!IsOpenedElementFolder)
                 {
-                    if (GUILayout.Button("Import"))
+                    //if (GUILayout.Button("Import"))
                     {
 #if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                        if (HasOpenedZexels())
+                       // if (HasOpenedZexels())
                         {
-                            ImportZexel();
+                            //ImportZexel();
                         }
 #else
                         Debug.LogError("Platform not supported.");
@@ -424,17 +425,17 @@ namespace Zeltex
 
         private void DrawFile()
         {
-            GUILayout.Label("Opened Folder [" + OpenedFolderName + "]");
+            GUILabel("Opened Folder [" + OpenedFolderName + "]");
             GUILayout.Space(30);
             if (IsOpenedElementFolder)
             {
-                GUILayout.Label("Opened File [" + OpenedFileName + "] - Type [" + OpenedElement.GetType() + "]");
+                GUILabel("Opened File [" + OpenedFileName + "] - Type [" + OpenedElement.GetType() + "]");
             }
             else
             {
-                GUILayout.Label("Opened File [" + OpenedFileName + "] - Type [" + OpenedTexture.GetType() + "]");
+                GUILabel("Opened File [" + OpenedFileName + "] - Type [" + OpenedTexture.GetType() + "]");
             }
-            if (GUILayout.Button("Close"))
+            if (GUIButton("Close"))
             {
                 OpenedFileName = "";
             }
@@ -442,9 +443,9 @@ namespace Zeltex
             {
                 if (IsOpenedElementFolder)
                 {
-                    GUILayout.Label(OpenedElement.Name + " - [" + OpenedElement.CanSave().ToString() + "]");
+                    GUILabel(OpenedElement.Name + " - [" + OpenedElement.CanSave().ToString() + "]");
                 }
-                if (GUILayout.Button("ForceSave"))
+                if (GUIButton("ForceSave"))
                 {
                     if (IsOpenedElementFolder)
                     {
@@ -452,45 +453,34 @@ namespace Zeltex
                         OpenedElement.Save();
                     }
                 }
-                if (GUILayout.Button("Save"))
+                if (GUIButton("Save"))
                 {
                     if (IsOpenedElementFolder)
                     {
                         OpenedElement.Save();
                     }
                 }
-                if (GUILayout.Button("Revert"))
+                if (GUIButton("Revert"))
                 {
                     if (IsOpenedElementFolder)
                     {
                         OpenedElement = RevertElement(OpenedElement);
                     }
                 }
-                if (GUILayout.Button("Delete"))
+                if (GUIButton("Delete"))
                 {
                     Debug.LogError("TODO:  DElETE");
                     //OpenedElement.Delete();
                 }
                 if (OpenedElement.GetType() == typeof(Zexel))
                 {
-                    GUILayout.Space(30);
-                    GUILayout.Label("Zexel");
-                    // buttons
-
-                    if (GUILayout.Button("Import"))
-                    {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                        ImportZexel();
-#else
-                        Debug.LogError("Platform not supported.");
-#endif
-                    }
+                    DrawZexelGui(OpenedTexture);
                 }
                 else if (OpenedElement.GetType() == typeof(Voxels.VoxelModel))
                 {
                     GUILayout.Space(30);
                     GUILayout.Label("VoxelModel");
-                    if (GUILayout.Button("Import"))
+                    if (GUIButton("Import"))
                     {
                         ImportPolygon(OpenedFileIndex);
                     }
@@ -498,20 +488,20 @@ namespace Zeltex
                 else if (OpenedElement.GetType() == typeof(Voxels.WorldModel))
                 {
                     GUILayout.Space(30);
-                    GUILayout.Label("WorldModel");
-                    if (GUILayout.Button("Import"))
+                    GUILabel("WorldModel");
+                    if (GUIButton("Import"))
                     {
                         UniversalCoroutine.CoroutineManager.StartCoroutine(LoadVoxFile((OpenedElement as Voxels.WorldModel)));
                     }
-                    GUILayout.Label(OpenedElement.Name + " - Size: " + (OpenedElement as Voxels.WorldModel).VoxelData.Length);// + ":" + (OpenedElement as Voxels.WorldModel).VoxelData);
+                    GUILabel(OpenedElement.Name + " - Size: " + (OpenedElement as Voxels.WorldModel).VoxelData.Length);// + ":" + (OpenedElement as Voxels.WorldModel).VoxelData);
                 }
                 else if(OpenedElement.GetType() == typeof(Sound.Zound))
                 {
                     GUILayout.Space(30);
-                    GUILayout.Label("Zound: " + (OpenedElement as Sound.Zound).GetSize());
+                    GUILabel("Zound: " + (OpenedElement as Sound.Zound).GetSize());
                     // buttons
 
-                    if (GUILayout.Button("Import"))
+                    if (GUIButton("Import"))
                     {
 #if UNITY_EDITOR// || UNITY_STANDALONE_WIN
                         ImportZound(OpenedFolderName, OpenedElement as Sound.Zound);
@@ -520,7 +510,7 @@ namespace Zeltex
 #endif
                     }
 
-                    if (GUILayout.Button("Play"))
+                    if (GUIButton("Play"))
                     {
                         LatestPlayed = (OpenedElement as Sound.Zound).GetAudioClip();
                         PlayClip(LatestPlayed);
@@ -530,26 +520,52 @@ namespace Zeltex
                 GUILayout.Space(30);
                 IsDrawAllFields = GUILayout.Toggle(IsDrawAllFields, "IsDrawAllFields");
                 DrawFieldsForObject(OpenedElement as object);
-                if (HasOpenedZexels() == true && OpenedTexture != null)
-                {
-                    GUILayout.Label("Size: " + OpenedTexture.GetWidth() + " : " + OpenedTexture.GetHeight());
-                    GUILayout.Label("IsNull? [" + (OpenedTexture.GetTexture() != null) + "]");
-                    GUILayout.Space(30);
-                    Rect OtherRect = GUILayoutUtility.GetRect(new GUIContent("Blargnugg"), GUI.skin.button);
-                    Rect MyRect = new Rect(0, 0, OpenedTexture.GetWidth() * 4, OpenedTexture.GetHeight() * 4);
-                    MyRect.x = OtherRect.width / 2f - OpenedTexture.GetWidth() * 2f;
-                    MyRect.y = OtherRect.y;
-                    int BorderSize = 20;
-                    Rect BackgroundRect = new Rect(MyRect.x - BorderSize, MyRect.y - BorderSize,
-                        MyRect.width + BorderSize * 2f, MyRect.height + BorderSize * 2f);
-                    GUI.color = Color.gray;
-                    GUI.DrawTexture(BackgroundRect, Texture2D.whiteTexture);
-                    GUI.color = Color.white;
-                    GUI.DrawTexture(MyRect, OpenedTexture.GetTexture());
-                    //GUI.Label(MyRect, OpenedTexture);
-                }
             }
         }
+
+        public void DrawZexelGui(Zexel MyZexel)
+        {
+            //GUILayout.Space(30);
+            //GUILabel("Zexel");
+            //if (HasOpenedZexels() == true && OpenedTexture != null)
+            MyZexel.IsDrawGui = GUIFoldout(MyZexel.IsDrawGui, "[" + MyZexel.Name + "] " + MyZexel.GetType().ToString());
+            {
+                GUILabel("Size: " + MyZexel.GetWidth() + " : " + MyZexel.GetHeight());
+                //GUILabel("IsNull? [" + (MyZexel.GetTexture() != null) + "]");
+                GUILayout.Space(30);
+                Rect OtherRect = GUILayoutUtility.GetRect(new GUIContent("Blargnugg"), GUI.skin.button);
+                Rect MyRect = new Rect(0, 0, MyZexel.GetWidth() * 4, MyZexel.GetHeight() * 4);
+                MyRect.x = GUIIndentPositionX() + MyZexel.GetWidth() * 2;// OtherRect.width / 2f - MyZexel.GetWidth() * 2f;
+                MyRect.y = OtherRect.y;
+                int BorderSize = 20;
+                Rect BackgroundRect = new Rect(MyRect.x - BorderSize, MyRect.y - BorderSize,
+                    MyRect.width + BorderSize * 2f, MyRect.height + BorderSize * 2f);
+                GUI.color = Color.gray;
+                GUI.DrawTexture(BackgroundRect, Texture2D.whiteTexture);
+                GUI.color = Color.white;
+                GUI.DrawTexture(MyRect, MyZexel.GetTexture());
+                GUILayout.Space(MyRect.height);
+            }
+            // buttons
+
+            if (GUIButton("Import"))
+            {
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+                ImportZexel(MyZexel);
+#else
+                        Debug.LogError("Platform not supported.");
+#endif
+            }
+            if (GUIButton("Export"))
+            {
+#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+                ExportZexel(MyZexel);
+#else
+                        Debug.LogError("Platform not supported.");
+#endif
+            }
+        }
+
         public AudioClip LatestPlayed;
 
         public void PlayClip(AudioClip clip)
@@ -593,9 +609,9 @@ namespace Zeltex
             );
 #endif
         }
-        private void ImportZexel()
+        private void ImportZexel(Zexel OpenedZexel)
         {
-            ImportImage(OpenedFolderName, OpenedTexture);
+            ImportImage(OpenedZexel);
         }
 
         public void ImportPolygon(int FileIndex)
@@ -620,7 +636,26 @@ namespace Zeltex
 #endif
         }
 
-#region ImportVox
+        public void ExportZexel(Zexel MyZexel)
+        {
+            if (MyZexel.GetTexture() != null)
+            {
+#if UNITY_EDITOR
+                System.Windows.Forms.SaveFileDialog MySaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                MySaveFileDialog.Filter = "*." + "png" + "| *." + "png";
+                //OpenFileDialog open = new OpenFileDialog();
+                MySaveFileDialog.Title = "Export a Texture";
+                MySaveFileDialog.ShowDialog();
+                if (MySaveFileDialog.FileName != "")
+                {
+                    //byte[] MyBytes = System.Convert.FromBase64String(Data);
+                    FileUtil.SaveBytes(MySaveFileDialog.FileName, (MyZexel.GetTexture()).EncodeToPNG());
+                }
+#endif
+            }
+        }
+
+        #region ImportVox
         private Int3 VoxelIndex = Int3.Zero();
         private int VoxelIndex2 = 0;
         private Int3 VoxelIndex3 = Int3.Zero();
@@ -854,33 +889,25 @@ namespace Zeltex
             Zexel MyZexel = GetElement(FolderName, FileIndex) as Zexel;
             if (MyZexel != null)
             {
-                ImportImage(FolderName, MyZexel);
+                ImportImage(MyZexel);
             }
         }
 
-        public void ImportImage(string FolderName, Zexel MyZexel)
+        public void ImportImage(Zexel MyZexel)
         {
-            ElementFolder MyFolder = GetElementFolder(FolderName);
-            if (MyFolder != null)
-            {
 #if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                if (MyResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-                    MyZexel.LoadImage(bytes);
-                }
-                else
-                {
-                    Debug.LogError("Failure to open file.");
-                }
-#endif
+            System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+            System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+            if (MyResult == System.Windows.Forms.DialogResult.OK)
+            {
+                byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
+                MyZexel.LoadImage(bytes);
             }
             else
             {
-                Debug.LogError("Failed to find folder: " + OpenedFolderName);
+                Debug.LogError("Failure to open file.");
             }
+#endif
         }
 
         public void ImportZound(string FolderName, Sound.Zound MyZound)
@@ -915,40 +942,90 @@ namespace Zeltex
             MyZound.UseAudioClip(LatestPlayed);
         }
 
+        public void GUILabel(string MyLabelText)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorGUILayout.LabelField(MyLabelText);
+#else
+            GUILayout.Label(MyLabelText);
+#endif
+        }
+
+        public string GUIText(string OldValue)
+        {
+#if UNITY_EDITOR
+            return UnityEditor.EditorGUILayout.TextField(OldValue);
+#else
+            return GUILayout.TextField(OldValue);
+#endif
+        }
+
+        public int GUIIndentPositionX()
+        {
+#if UNITY_EDITOR
+            return UnityEditor.EditorGUI.indentLevel * 16;
+#else
+            return 0;
+#endif
+        }
+        public bool GUIButton(string ButtonLabel)
+        {
+#if UNITY_EDITOR
+            Rect MyRect = GUILayoutUtility.GetRect(new GUIContent(ButtonLabel), GUI.skin.GetStyle("button"));
+            //Rect MyRect = UnityEditor.EditorGUILayout.
+            //return UnityEditor.EditorGUILayout.By(OldValue);
+            MyRect.position = new Vector2(GUIIndentPositionX() + MyRect.position.x, MyRect.position.y);
+            return GUI.Button(MyRect, ButtonLabel);
+#else
+            return GUILayout.Button(ButtonLabel);
+#endif
+        }
+
+        public bool GUIFoldout(bool OldValue, string MyLabelText)
+        {
+#if UNITY_EDITOR
+                return UnityEditor.EditorGUILayout.Foldout(OldValue, MyLabelText);
+#else
+                return GUILayout.Toggle(OldValue, MyLabelText);
+#endif
+        }
         public void DrawFieldsForObject(object MyObject)
         {
             var Fields = (MyObject.GetType()).GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-            GUILayout.Space(10);
+           // GUILabel("-=- New Object [" + MyObject.ToString() + "] -=-");
+            //GUILayout.Space(10);
             Element MyElement = MyObject as Element;
             if (MyElement != null)
             {
-                MyElement.IsDrawGui = GUILayout.Toggle(MyElement.IsDrawGui, MyElement.Name);
+                MyElement.IsDrawGui = GUIFoldout(MyElement.IsDrawGui, "[" + MyElement.Name + "] " + MyObject.GetType().ToString());
                 if (MyElement.IsDrawGui == false)
                 {
                     return;
                 }
             }
-            GUILayout.Space(15);
-            GUILayout.Label("-----=====-----");
+#if UNITY_EDITOR
+            UnityEditor.EditorGUI.indentLevel++;
+#endif
+            //GUILayout.Label("-----=====-----");
             if (IsDrawAllFields)
             {
-                GUILayout.Label("Fields: [" + Fields.Length + "]");
+                GUILabel("Fields: [" + Fields.Length + "]");
                 for (int i = 0; i < Fields.Length; i++)
                 {
-                    GUILayout.Label((i + 1) + " [" + Fields[i].Name + "]");
+                    GUILabel((i + 1) + " [" + Fields[i].Name + "]");
                 }
                 var Members = (MyObject.GetType()).GetMembers();
                 GUILayout.Space(30);
-                GUILayout.Label("Members: [" + Members.Length + "]");
+                GUILabel("Members: [" + Members.Length + "]");
                 for (int i = 0; i < Members.Length; i++)
                 {
-                    GUILayout.Label((i + 1) + " [" + Members[i].Name + "]");
+                    GUILabel((i + 1) + " [" + Members[i].Name + "]");
                 }
                 var Properties = (MyObject.GetType()).GetProperties();
-                GUILayout.Label("Properties: [" + Properties.Length + "]");
+                GUILabel("Properties: [" + Properties.Length + "]");
                 for (int i = 0; i < Properties.Length; i++)
                 {
-                    GUILayout.Label((i + 1) + " [" + Properties[i].Name + "]");
+                    GUILabel((i + 1) + " [" + Properties[i].Name + "]");
                 }
             }
             else
@@ -956,7 +1033,7 @@ namespace Zeltex
                 for (int i = Fields.Length - 1; i >= 0; i--)
                 {
                     object value = Fields[i].GetValue(MyObject);
-                    if (Fields[i].FieldType == typeof(Texture))
+                    /*if (Fields[i].FieldType == typeof(Texture))
                     {
                         Texture OldValue = Fields[i].GetValue(MyObject) as Texture;
                         GUILayout.Label(OldValue);
@@ -966,13 +1043,14 @@ namespace Zeltex
                         Texture2D OldValue = Fields[i].GetValue(MyObject) as Texture2D;
                         GUILayout.Label(OldValue);
                     }
-                    else if(HasJsonIgnore(Fields[i]))
+                    else (*/
+                    if (HasJsonIgnore(Fields[i]))
                     {
                         // nothing
                     }
                     else if (value == null)
                     {
-                        if (GUILayout.Button("[" + Fields[i].Name + "]: Null"))
+                        if (GUIButton("[" + Fields[i].Name + "]: Null"))
                         {
 #if NET_4_6
                             ConstructorInfo MyConstructor = Fields[i].FieldType.GetConstructor(System.Type.EmptyTypes);
@@ -996,8 +1074,8 @@ namespace Zeltex
                          || Fields[i].FieldType == typeof(bool))
                         {
                             string OldValue = value.ToString();
-                            GUILayout.Label("[" + Fields[i].Name + "]: " + OldValue);
-                            string NewValue = GUILayout.TextField(OldValue);
+                            GUILabel("[" + Fields[i].Name + "]: " + OldValue);
+                            string NewValue = GUIText(OldValue);
                             if (OldValue != NewValue)
                             {
                                 Fields[i].SetValue(MyObject, NewValue);
@@ -1016,11 +1094,30 @@ namespace Zeltex
                             }
 #endif
                         }
+                        else if (Fields[i].FieldType == typeof(Vector3))
+                        {
+                            Vector3 OldValue = (Vector3)Fields[i].GetValue(MyObject);
+                            //GUILayout.Label(" List<float> [" + Fields[i].Name + "]");
+                            if (OldValue != null)
+                            {
+#if UNITY_EDITOR
+                                Vector3 NewValue = UnityEditor.EditorGUILayout.Vector3Field(Fields[i].Name + ": ", OldValue);
+                                if (OldValue != NewValue)
+                                {
+                                    Fields[i].SetValue(MyObject, NewValue);
+                                }
+#endif
+                            }
+                            else
+                            {
+                                GUILabel("Broken Vector3 Field: " + Fields[i].Name);
+                            }
+                        }
                         else if (Fields[i].FieldType == typeof(List<float>))
                         {
                             bool WasModified;
                             List<float> OldValue = Fields[i].GetValue(MyObject) as List<float>;
-                            GUILayout.Label(" List<float> [" + Fields[i].Name + "]: " + OldValue.Count);
+                            GUILabel(" List<float> [" + Fields[i].Name + "]: " + OldValue.Count);
                             List<float> NewValue = DrawListGui(OldValue, out WasModified);
                             if (WasModified)
                             {
@@ -1031,7 +1128,7 @@ namespace Zeltex
                         {
                             bool WasModified;
                             List<string> OldValue = Fields[i].GetValue(MyObject) as List<string>;
-                            GUILayout.Label(" List<string> [" + Fields[i].Name + "]: " + OldValue.Count);
+                            GUILabel(" List<string> [" + Fields[i].Name + "]: " + OldValue.Count);
                             List<string> NewValue = DrawListGui(OldValue, out WasModified);
                             if (WasModified)
                             {
@@ -1042,7 +1139,7 @@ namespace Zeltex
                         {
                             bool WasModified;
                             List<int> OldValue = Fields[i].GetValue(MyObject) as List<int>;
-                            GUILayout.Label(" List<int> [" + Fields[i].Name + "]: " + OldValue.Count);
+                            GUILabel(" List<int> [" + Fields[i].Name + "]: " + OldValue.Count);
                             List<int> NewValue = DrawListGui(OldValue, out WasModified);
                             if (WasModified)
                             {
@@ -1052,7 +1149,7 @@ namespace Zeltex
                         else if (Fields[i].FieldType == typeof(StatType))
                         {
                             int OldValue = (int)value;
-                            GUILayout.Label("[" + Fields[i].Name + "]: " + OldValue);
+                            GUILabel("[" + Fields[i].Name + "]: " + OldValue);
                             int NewValue = int.Parse(GUILayout.TextField(OldValue.ToString()));
                             if (OldValue != NewValue)
                             {
@@ -1060,24 +1157,35 @@ namespace Zeltex
                                 (MyObject as Element).OnModified();
                             }
                         }
-                        else if (Fields[i].FieldType.BaseType == typeof(Zexel))
+                        else if (Fields[i].FieldType == typeof(Skeletons.Skeleton))
                         {
-                            GUILayout.Label("Element: " + i + ": " + Fields[i].Name);
+                            GUILabel("Element: " + i + ": " + Fields[i].Name);
                             DrawFieldsForObject(value);
+                            if (GUIButton("Pull"))
+                            {
+                                Skeletons.Skeleton OldValue = (Skeletons.Skeleton)Fields[i].GetValue(MyObject);
+                                Fields[i].SetValue(MyObject, GetElement(DataFolderNames.Skeletons, OldValue.Name).Clone<Skeletons.Skeleton>());
+                            }
+                        }
+                        else if (Fields[i].FieldType == typeof(Zexel))
+                        {
+                            GUILabel("Element: " + i + ": " + Fields[i].Name);
                             Zexel MyZexel = Fields[i].GetValue(MyObject) as Zexel;
                             if (MyZexel != null)
                             {
-                                Texture2D OldValue = MyZexel.GetTexture();
-                                GUILayout.Label(OldValue);
+                                DrawZexelGui(MyZexel);
+                                //Texture2D OldValue = MyZexel.GetTexture();
+                                //GUILayout.Label(OldValue);
                             }
                             else
                             {
-                                GUILayout.Label("No Texture.");
+                                GUILabel("=-=Null Zexel.-=-");
                             }
+                            DrawFieldsForObject(value);
                         }
                         else if (Fields[i].FieldType.BaseType == typeof(Element))
                         {
-                            GUILayout.Label("Element: " + i + ": " + Fields[i].Name);
+                            GUILabel("Element: " + i + ": " + Fields[i].Name);
                             DrawFieldsForObject(value);
                         }
                         else if (DrawListGui<Items.Item>(Fields[i], MyObject))
@@ -1092,8 +1200,10 @@ namespace Zeltex
                     //Fields[i].SetValue(GUILayout.TextField(Fields[i].GetValue()));
                 }
             }
-            GUILayout.Label("-----=====-----");
-            GUILayout.Space(15);
+#if UNITY_EDITOR
+            UnityEditor.EditorGUI.indentLevel--;
+#endif
+            //GUILabel("-----=====-----");
         }
 
         /// <summary>
@@ -1105,7 +1215,7 @@ namespace Zeltex
             {
                 bool WasModified;
                 List<T> OldValue = MyField.GetValue(MyObject) as List<T>;
-                GUILayout.Label(" List<" + typeof(T).ToString() + "> [" + MyField.Name + "]: " + OldValue.Count);
+                GUILabel(" List<" + typeof(T).ToString() + "> [" + MyField.Name + "]: " + OldValue.Count);
                 List<T> NewValue = DrawListGui(OldValue, out WasModified);
                 if (WasModified)
                 {
@@ -1137,7 +1247,7 @@ namespace Zeltex
             List<string> ListString = MyList as List<string>;
             List<float> ListFloat = MyList as List<float>;
             List<T> ListElements = MyList as List<T>;
-            if (GUILayout.Button("Add"))
+            if (GUIButton("Add"))
             {
                 if (typeof(T) == typeof(string))
                 {
@@ -1171,7 +1281,7 @@ namespace Zeltex
                 //GUILayout.Label("\t" + (j + 1) + ": [" + MyList[j] + "]");
                 if (typeof(T) == typeof(string))
                 {
-                    string NewValue = GUILayout.TextArea(ListString[j]);
+                    string NewValue = GUIText(ListString[j]);
                     if (ListString[j] != NewValue)
                     {
                         ListString[j] = NewValue;
@@ -1180,7 +1290,7 @@ namespace Zeltex
                 }
                 else if (typeof(T) == typeof(float))
                 {
-                    float NewValue = float.Parse(GUILayout.TextArea(ListFloat[j].ToString()));
+                    float NewValue = float.Parse(GUIText(ListFloat[j].ToString()));
                     if (ListFloat[j] != NewValue)
                     {
                         ListFloat[j] = NewValue;

@@ -214,6 +214,11 @@ namespace Zeltex.Characters
         /// </summary>
         public void OnLoadedInWorld(World MyWorld)
         {
+            if (MyWorld == null)
+            {
+                Debug.LogError(name + " has loaded in a null world.");
+                return;
+            }
             //Debug.LogError("[" + name + "] has been loaded into world of [" + MyWorld.name + "]");
             transform.position = new Vector3(transform.position.x * MyWorld.GetUnit().x, transform.position.y * MyWorld.GetUnit().y, transform.position.z * MyWorld.GetUnit().z);
             if (GetSkeleton() != null && GetSkeleton().GetSkeleton() != null)
@@ -227,7 +232,12 @@ namespace Zeltex.Characters
                     // find new voxel position that is air or non block
                     while (true)
                     {
-                        int VoxelType = MyWorld.GetVoxel(VoxelPosition.ToInt3()).GetVoxelType();
+                        Voxel MyVoxel = MyWorld.GetVoxel(VoxelPosition.ToInt3());
+                        if (MyVoxel == null)
+                        {
+                            break;
+                        }
+                        int VoxelType = MyVoxel.GetVoxelType();
                         if (VoxelType == 0)
                         {
                             break;

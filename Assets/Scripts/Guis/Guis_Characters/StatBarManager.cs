@@ -315,8 +315,8 @@ namespace Zeltex.Guis.Characters
                 GuiListElementData MyGuiListElementData = new GuiListElementData();
                 MyGuiListElementData.LabelText = MyStat.GetToolTipName();
                 MyGuiListElementData.DescriptionText = MyStat.GetToolTipText();
-                NewBar.GetComponent<GuiListElement>().MyGuiListElementData = MyGuiListElementData;
-                NewBar.GetComponent<GuiListElement>().SetTooltip(MyTooltipGui);
+                NewBar.GetComponent<GuiListElement>().SetData(MyGuiListElementData);
+                //NewBar.GetComponent<GuiListElement>().SetTooltip(MyTooltipGui);
 
                 int ColorIndex = SpawnedBars.Count;
                 if (ColorIndex < MyColours.Count)
