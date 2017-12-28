@@ -172,7 +172,7 @@ namespace Zeltex.Guis.Maker
             if (MyDropdown.name == "ModelDropdown")
             {
                 GetSelectedVoxel().ModelID = MyDropdown.options[MyDropdown.value].text;
-                VoxelModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolygonModels, GetSelectedVoxel().ModelID) as VoxelModel;
+                PolyModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, GetSelectedVoxel().ModelID) as PolyModel;
                 if (MyModel == null)
                 {
                     GetSelectedVoxel().SetModelID("Block");
@@ -215,7 +215,7 @@ namespace Zeltex.Guis.Maker
             {
                 ModelName = GetSelectedVoxel().ModelID;
             }
-            VoxelModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolygonModels, ModelName) as VoxelModel;
+            PolyModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, ModelName) as PolyModel;
             if (MyModel == null)
             {
                 Debug.LogError(ModelName + " is null.");

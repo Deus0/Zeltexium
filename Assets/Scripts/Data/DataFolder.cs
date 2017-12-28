@@ -65,7 +65,7 @@ namespace Zeltex
             //Debug.LogError("[DataFolder] Clearing " + FolderName);
             if (VoxelManager.Get())
             {
-                if (FolderName == DataFolderNames.PolygonModels)
+                if (FolderName == DataFolderNames.PolyModels)
                 {
                     VoxelManager.Get().ClearModels();
                 }
@@ -305,51 +305,6 @@ namespace Zeltex
 			return SetName(GetName(FileIndex), NewName);
 		}
 
-        /// <summary>
-        /// Returns the new name
-        ///     - If the old name and new name is the same, return
-        ///     - While the name is in the database, incremenet a number on it
-        /// </summary>
-        public string SetName(string OldName, string NewName)
-        {
-            if (OldName == NewName)
-            {
-                return NewName;
-            }
-            string OriginalName = NewName;
-            int NameTryCount = 1;
-            while (Data.ContainsKey(NewName))
-            {
-                NameTryCount++;
-                NewName = OriginalName + " " + NameTryCount;
-                if (NameTryCount >= 100000)
-                {
-                    return "Wow, you broke the system.";
-                }
-            }
-            // Cannot rename, have to remove and re add!
-            if (Data.ContainsKey(NewName) == false)
-            {
-                string OldFileName = GetFolderPath() + OldName + "." + FileExtension;
-                string NewFileName = GetFolderPath() + NewName + "." + FileExtension;
-                // Delete file if exists
-                if (File.Exists(OldFileName))
-                {
-                    Debug.LogError("Moving file: " + OldFileName + " to " + NewFileName);
-                    File.Move(OldFileName, NewFileName);
-                }
-
-                T MyValue = Data[OldName];
-                Data.Remove(OldName);
-                Data.Add(NewName, MyValue);
-                return NewName;
-            }
-            else
-            {
-                return OldName;
-            }
-        }
-
         public void ReAdd(string ElementName, T MyElement)
         {
             if (Data.ContainsValue(MyElement))
@@ -382,9 +337,9 @@ namespace Zeltex
             }
             if (Data.Keys.Contains(NewName) == false)
             {
-                if (FolderName == DataFolderNames.PolygonModels)
+                if (FolderName == DataFolderNames.PolyModels)
                 {
-                    VoxelManager.Get().AddModelRaw(NewElement as VoxelModel);
+                    VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
                 }
                 else if (FolderName == DataFolderNames.VoxelMeta)
                 {

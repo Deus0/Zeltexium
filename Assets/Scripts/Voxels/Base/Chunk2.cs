@@ -30,7 +30,7 @@ namespace Zeltex.Voxels
         private Voxel VoxelBehind;
         private Voxel VoxelLeft;
         private Voxel VoxelRight;
-        private VoxelModel SidesCalculationModel;
+        private PolyModel SidesCalculationModel;
         private VoxelMeta SidesCalculationMeta;
         // Calculating solidity
         private bool[] MySolids = new bool[27];
@@ -40,11 +40,11 @@ namespace Zeltex.Voxels
         private bool IsSolidBehind = false;
         private bool IsSolidLeft = false;
         private bool IsSolidRight = false;
-        private VoxelModel ModelOther;
+        private PolyModel ModelOther;
         private VoxelMeta MetaOther;
         // calculating the voxel model data
         private Voxel MeshingVoxel;
-        private VoxelMeta CalculateVoxelModelMeta;
+        private VoxelMeta CalculatePolyModelMeta;
         private List<Vector2> NewUVs = new List<Vector2>();
         private MeshData DataBasePartModel;
         private int CalculateSolidsIndex = 0;
@@ -247,7 +247,7 @@ namespace Zeltex.Voxels
                     CalculateSides();
                     CalculateSolids();
                     CalculateLights();
-                    CalculateVoxelModel();
+                    CalculatePolyModel();
                 }
             }
             else
@@ -402,12 +402,12 @@ namespace Zeltex.Voxels
         /// <summary>
         /// For a voxel, create a mesh for it!
         /// </summary>
-        private void CalculateVoxelModel()
+        private void CalculatePolyModel()
         {
-            CalculateVoxelModelMeta = GetWorld().GetVoxelMeta(MeshingVoxel.GetVoxelType());
-            if (CalculateVoxelModelMeta != null && MeshingMaterialIndex == CalculateVoxelModelMeta.MaterialID)
+            CalculatePolyModelMeta = GetWorld().GetVoxelMeta(MeshingVoxel.GetVoxelType());
+            if (CalculatePolyModelMeta != null && MeshingMaterialIndex == CalculatePolyModelMeta.MaterialID)
             {
-                if (CalculateVoxelModelMeta.GetModel() != null)
+                if (CalculatePolyModelMeta.GetModel() != null)
                 {
                     MeshingVoxel.MyMeshData.Clear();
                     for (int SideIndex = 0; SideIndex < MySides.Length; SideIndex++)     // for all 6 sides of the voxel
@@ -415,14 +415,14 @@ namespace Zeltex.Voxels
                         if (MySides[SideIndex])
                         {
                             // first add mesh verticies
-                            DataBasePartModel = GetWorld().MyDataBase.GetMeshData(CalculateVoxelModelMeta.ModelID, SideIndex);
+                            DataBasePartModel = GetWorld().MyDataBase.GetMeshData(CalculatePolyModelMeta.ModelID, SideIndex);
                             MeshingVoxel.MyMeshData.AddDataMesh = DataBasePartModel;
                             MeshingVoxel.MyMeshData.Add();
                             // Add the range of uvs just for the rendered verticies
 
                             NewUVs.Clear();
-                            NewUVs = CalculateVoxelModelMeta.GetModel().GetTextureMapCoordinates(
-                                CalculateVoxelModelMeta.TextureMapID,
+                            NewUVs = CalculatePolyModelMeta.GetModel().GetTextureMapCoordinates(
+                                CalculatePolyModelMeta.TextureMapID,
                                 SideIndex,
                                 MyTilemap);
                             MeshingVoxel.MyMeshData.TextureCoordinates.AddRange(NewUVs);

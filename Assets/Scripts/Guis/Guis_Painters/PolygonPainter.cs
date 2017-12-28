@@ -28,7 +28,7 @@ namespace Zeltex.Guis.Maker
         [SerializeField]
         private IndexController TextureMapController;
         [SerializeField]
-        private VoxelModelHandle SelectedModel;
+        private PolyModelHandle SelectedModel;
         // Raycasting
         private bool DidHitGui;
         private bool DidHitModel;
@@ -75,7 +75,7 @@ namespace Zeltex.Guis.Maker
 
         private void SelectPolygonMakerOne()
         {
-            SelectModel(GuiSpawner.Get().GetGui("PolygonMaker").GetComponent<PolygonMaker>().MyViewer.GetSpawn().GetComponent<VoxelModelHandle>());
+            SelectModel(GuiSpawner.Get().GetGui("PolygonMaker").GetComponent<PolygonMaker>().MyViewer.GetSpawn().GetComponent<PolyModelHandle>());
         }
 
         // link the polygon painter to a mesh or viewer
@@ -84,14 +84,14 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// 
         /// </summary>
-        private void SelectModel(VoxelModelHandle NewModel)
+        private void SelectModel(PolyModelHandle NewModel)
         {
             if (NewModel != SelectedModel)
             {
                 // deselect selected model
                 if (SelectedModel)
                 {
-                    SelectedModel.UpdateHandlerMode(VoxelModelHandleMode.None);
+                    SelectedModel.UpdateHandlerMode(PolyModelHandleMode.None);
                     SelectedModel.GetComponent<MeshCollider>().enabled = true;
                 }
 
@@ -107,7 +107,7 @@ namespace Zeltex.Guis.Maker
                         GetInput("NameInput").text = SelectedModel.name;
                         GetInput("NameInput").interactable = true;
                     }
-                    SelectedModel.UpdateHandlerMode((VoxelModelHandleMode)GetDropdown("HandlerDropdown").value);
+                    SelectedModel.UpdateHandlerMode((PolyModelHandleMode)GetDropdown("HandlerDropdown").value);
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Zeltex.Guis.Maker
                     {
                         if (Input.GetMouseButtonDown(0))
                         {
-                            VoxelModelHandle MyModel = MyHit.collider.gameObject.GetComponent<VoxelModelHandle>();
+                            PolyModelHandle MyModel = MyHit.collider.gameObject.GetComponent<PolyModelHandle>();
                             if (MyModel && HandlerMode == PolygonEditMode.Link)
                             {
                                 SelectModel(MyModel);
@@ -226,7 +226,7 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// 
         /// </summary>
-        private VoxelModel GetSelectedModel()
+        private PolyModel GetSelectedModel()
         {
             if (SelectedModel)
             {
@@ -378,7 +378,7 @@ namespace Zeltex.Guis.Maker
             {
                 if (SelectedModel)
                 {
-                    SelectedModel.UpdateHandlerMode((VoxelModelHandleMode)MyDropdown.value);
+                    SelectedModel.UpdateHandlerMode((PolyModelHandleMode)MyDropdown.value);
                 }
             }
             else if (MyDropdown.name == "PolygonEditModeDropdown")
@@ -441,7 +441,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void GenerateSolidity()
         {
-            VoxelModel MyModel = GetSelectedModel();
+            PolyModel MyModel = GetSelectedModel();
             if (MyModel != null)
             {
                 MyModel.GenerateSolidity();

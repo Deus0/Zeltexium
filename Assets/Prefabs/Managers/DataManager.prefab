@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4862764363874374}
   - component: {fileID: 114221526777607998}
+  - component: {fileID: 114004168651611338}
   - component: {fileID: 82195614852996676}
   m_Layer: 0
   m_Name: DataManager
@@ -235,6 +236,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyModelGenerator: {fileID: 114654669467207146}
+--- !u!114 &114004168651611338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297023910727788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2652cf35fcf46842996d9e806958ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDebugGui: 0
 --- !u!114 &114113488882066000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,8 +287,8 @@ MonoBehaviour:
   OnGenerateMap:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114171499961951008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,8 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6833acd6ff0237741aae081a1a8f63fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDebugGui: 0
-  IsLoad: 0
+  MapName: Zelnugg
   ElementFolders:
   - FolderName: VoxelMeta
     FileExtension: zel
@@ -775,6 +787,31 @@ MonoBehaviour:
     ElementData:
       _keys: []
       _values: []
+  - FolderName: Saves
+    FileExtension: zel
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    ElementData:
+      _keys: []
+      _values: []
   - FolderName: Sounds
     FileExtension: zel
     ModifiedEvent:
@@ -925,46 +962,72 @@ MonoBehaviour:
     ElementData:
       _keys: []
       _values: []
-  StringFolders:
-  - FolderName: Skeletons
-    FileExtension: skl
-    ModifiedEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    SavedEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    RenamedEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    MovedEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    ElementData:
-      _keys: []
-      _values: []
-  OnUpdatedResources:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   ResourcesName: ResourcesName
-  MapName: Zelnugg
-  MapFolderPath: D:/Projects/Zeltexium/Assets/StreamingAssets/
+  MapFolderPath: F:/Projects/Zeltexium/Assets/StreamingAssets/
   PathTypeKey: PathType
   MyFilePathType: 2
   IsJSONFormat: 1
   IsLoaded: 0
-  TestTexture: {fileID: 0}
-  TestTexture2: {fileID: 0}
+  OnUpdatedResources:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBeginLoading:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnEndLoading:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  MyGui: {fileID: 114004168651611338}
   LatestPlayed: {fileID: 0}
 --- !u!114 &114228467036845114
 MonoBehaviour:

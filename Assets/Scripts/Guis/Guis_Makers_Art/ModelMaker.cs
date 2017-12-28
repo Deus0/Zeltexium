@@ -20,7 +20,7 @@ namespace Zeltex.Guis.Maker
 		[SerializeField] private VoxelViewer MyVoxelGui;
 		[SerializeField] private VoxelManager MyVoxelManager;
         [Header("UI")]
-        public VoxelPolygonViewer MyVoxelModelViewer;
+        public VoxelPolygonViewer MyPolyModelViewer;
         //private bool IsGridShown;
         //private float MyPaintSize = 0;
         //public VoxelMetaGenerator MyMetaGenerator;
@@ -28,9 +28,9 @@ namespace Zeltex.Guis.Maker
 
         #region DataManager
 
-        public new WorldModel GetSelected()
+        public new VoxelModel GetSelected()
         {
-            return DataManager.Get().GetElement(DataFolderNames.VoxelModels, GetSelectedIndex()) as WorldModel;
+            return DataManager.Get().GetElement(DataFolderNames.PolyModels, GetSelectedIndex()) as VoxelModel;
         }
 
         private void OnDestroy()
@@ -44,7 +44,7 @@ namespace Zeltex.Guis.Maker
             //string Script = FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript());
             //Debug.LogError(GetSelectedIndex() + ":Saving:\n" + Script);
             DataManager.Get().Set(
-                DataFolderNames.VoxelModels, 
+                DataFolderNames.PolyModels, 
                 GetSelectedIndex(), 
                 Script
                );
@@ -56,7 +56,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected override void SetFilePaths()
         {
-            DataManagerFolder = DataFolderNames.VoxelModels;// "VoxelModels";
+            DataManagerFolder = DataFolderNames.PolyModels;// "PolyModels";
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Zeltex.Guis.Maker
         public void SetVoxelType(int VoxelType_)
         {
             GetDropdown("VoxelDropdown").value = VoxelType_;
-            MyVoxelModelViewer.LoadVoxelMesh(MyVoxelManager.GetMeta(VoxelType_));
+            MyPolyModelViewer.LoadVoxelMesh(MyVoxelManager.GetMeta(VoxelType_));
             VoxelPrimitives.Get().SetVoxelType(VoxelType_);
         }
 		/// <summary>
@@ -162,7 +162,7 @@ namespace Zeltex.Guis.Maker
 		//protected override void AddData()
 		//{
 			//StartCoroutine(CreateNew(NewIndex, ""));
-			//ataManager.Get().Add(DataManagerFolder, "Data " + GetSize(), VoxelModelGenerator.Get().GetComponent<VoxelModelGenerator>().GetSphere());   //GameObject.Find("Generators")
+			//ataManager.Get().Add(DataManagerFolder, "Data " + GetSize(), PolyModelGenerator.Get().GetComponent<PolyModelGenerator>().GetSphere());   //GameObject.Find("Generators")
        // }
 
         private IEnumerator CreateNew(int NewIndex, string NewData)
@@ -223,7 +223,7 @@ namespace Zeltex.Guis.Maker
             {
                 MyVoxelManager = VoxelManager.Get();
             }
-            MyVoxelModelViewer.OnBegin();
+            MyPolyModelViewer.OnBegin();
             MyVoxelGui.OnBegin();
             base.OnBegin();
         }
@@ -236,13 +236,13 @@ namespace Zeltex.Guis.Maker
             {
                 //Set(FileUtil.ConvertToSingle(GetWorld().GetScript()), GetSelectedIndex());
                 /*DataManager.Get().Set(
-                    DataFolderNames.VoxelModels,
+                    DataFolderNames.PolyModels,
                     GetSelectedIndex(),
                     FileUtil.ConvertToSingle(MyVoxelGui.GetSpawn().GetComponent<World>().GetScript()));*/
             }
             base.OnEnd();
             MyVoxelGui.OnEnd();
-            MyVoxelModelViewer.OnEnd();
+            MyPolyModelViewer.OnEnd();
         }
         #endregion
 
@@ -384,7 +384,7 @@ namespace Zeltex.Guis.Maker
         {
             //GameObject MyWorld = GameObject.Find("World");
             /*string FilePath = GetFilePath()
-                + "VoxelModel_" + SelectedIndex + "." + FileExtension;
+                + "PolyModel_" + SelectedIndex + "." + FileExtension;
             Debug.Log("Loading " + FilePath);
             GameObject MyLoader = new GameObject();
             MyLoader.name = "MeshLoader [" + Time.time + "]";

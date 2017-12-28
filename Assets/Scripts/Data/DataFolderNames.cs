@@ -10,7 +10,7 @@ namespace Zeltex
 	public static class DataFolderNames
     {
         public static string VoxelMeta = "VoxelMeta";
-        public static string PolygonModels = "PolygonModels";
+		public static string PolyModels = "PolyModels";
         public static string VoxelModels = "VoxelModels";
         public static string Skeletons = "Skeletons";
         public static string Zanimations = "Zanimations";
@@ -102,11 +102,11 @@ namespace Zeltex
             {
                 return "";
             }
-            else if (FolderName == PolygonModels)
+			else if (FolderName == PolyModels)
             {
                 return "PolygonMaker";
             }
-            else if (FolderName == VoxelModels)
+            else if (FolderName == PolyModels)
             {
                 return "ModelMaker";
             }
@@ -138,17 +138,17 @@ namespace Zeltex
                 DataType = typeof(Combat.Spell);
             }
 
-            else if (FolderName == DataFolderNames.PolygonModels)
+            else if (FolderName == DataFolderNames.PolyModels)
             {
-                DataType = typeof(Voxels.VoxelModel);
+                DataType = typeof(Voxels.PolyModel);
             }
             else if (FolderName == DataFolderNames.VoxelMeta)
             {
                 DataType = typeof(Voxels.VoxelMeta);
             }
-            else if (FolderName == DataFolderNames.VoxelModels)
+            else if (FolderName == DataFolderNames.PolyModels)
             {
-                DataType = typeof(Voxels.WorldModel);
+                DataType = typeof(Voxels.VoxelModel);
             }
             else if (FolderName == DataFolderNames.Skeletons)
             {
@@ -255,17 +255,17 @@ namespace Zeltex
                 return DataFolderNames.Spells;
             }
 
-            else if (DataType == typeof(Voxels.VoxelModel))
+            else if (DataType == typeof(Voxels.PolyModel))
             {
-                return DataFolderNames.PolygonModels;
+                return DataFolderNames.PolyModels;
             }
             else if (DataType == typeof(Voxels.VoxelMeta))
             {
                 return DataFolderNames.VoxelMeta;
             }
-            else if (DataType == typeof(Voxels.WorldModel))
+            else if (DataType == typeof(Voxels.VoxelModel))
             {
-                return DataFolderNames.VoxelModels;
+                return DataFolderNames.PolyModels;
             }
             else if (DataType == typeof(Skeletons.Skeleton))
             {

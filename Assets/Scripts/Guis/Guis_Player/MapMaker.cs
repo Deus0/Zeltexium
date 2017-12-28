@@ -123,7 +123,7 @@ namespace Zeltex.Guis.Maker
             //MyData.Add("Item Textures [" + MyItemManager.MyTextures.Count + "]");
 
             //MyData.Add("[3d art]");
-            MyData.Add("Polygon Models [" + MyPolygonMaker.GetSize() + "]");    // VoxelModelMaker
+            MyData.Add("Polygon Models [" + MyPolygonMaker.GetSize() + "]");    // PolyModelMaker
             TotalFiles += MyPolygonMaker.GetSize();
             MyData.Add("Voxel Models [" + MyModelMaker.GetSize() + "]");  // VoxelEditorManager
             TotalFiles += MyModelMaker.GetSize();

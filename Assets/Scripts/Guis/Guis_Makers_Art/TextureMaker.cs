@@ -270,7 +270,7 @@ namespace Zeltex.Guis.Maker
             {
                 Paste();
             }
-            else if (MyButton.name == "ExportButton")
+            /*else if (MyButton.name == "ExportButton")
             {
                 //byte[] ByteData = MyTextures[i].();
                 //FileUtil.ExportImage(GetSelectedName(), FileExtension, System.Convert.ToBase64String(GetSelected().EncodeToPNG()));
@@ -279,8 +279,7 @@ namespace Zeltex.Guis.Maker
             {
                 DataManager.Get().ImportImage(DataManagerFolder, GetSelectedIndex());
                 MyTextureEditor.texture = GetSelectedTexture();
-
-            }
+            }*/
         }
 
         public override void UseInput(Dropdown MyDropdown)

@@ -22,7 +22,7 @@ namespace MakerGuiSystem
         public World MyWorld;
         //public ClassMaker MyClassMaker;
         public bool IsDownloadingMap = false;
-        bool IsDownloadingVoxelModel;
+        bool IsDownloadingPolyModel;
         bool IsDownloadingVoxelMeta;
         bool IsDownloadingSkeletons;
         bool IsDownloadingClasses;
@@ -85,15 +85,15 @@ namespace MakerGuiSystem
                 yield return null;
             }
 
-            // VoxelModel
-            IsDownloadingVoxelModel = true;
-            DownloadVoxelModels();
-            while (IsDownloadingVoxelModel)
+            // PolyModel
+            IsDownloadingPolyModel = true;
+            DownloadPolyModels();
+            while (IsDownloadingPolyModel)
             {
                 yield return null;
             }
 
-            // VoxelModels
+            // PolyModels
         
             // Now Load Chunks
             yield return new WaitForSeconds(0.1f);
@@ -161,50 +161,50 @@ namespace MakerGuiSystem
 
         // Voxel Models
 
-        void DownloadVoxelModels()
+        void DownloadPolyModels()
         {
             Debug.LogError("Downloading Voxel Models.");
             MyWorld.GetComponent<Zeltex.Voxels.VoxelManager>().MyModels.Clear();
-            gameObject.GetComponent<PhotonView>().RPC("RequestVoxelModel",
+            gameObject.GetComponent<PhotonView>().RPC("RequestPolyModel",
                     PhotonNetwork.masterClient, // just sent to master client for the data
                     PhotonNetwork.player.ID);
         }
         // This is send just to the host
         [PunRPC]
-        public void RequestVoxelModel(int PlayerID)
+        public void RequestPolyModel(int PlayerID)
         {
             //Debug.LogError("Request For Meta Data from: " + PlayerID);
             /*PhotonPlayer MyPlayerRequested = PhotonPlayer.Find(PlayerID);
-            List<VoxelModel> MyData = MyWorld.GetComponent<VoxelManager>().MyModels;
-            //Debug.LogError("Sending VoxelModelData - " + MyData.Count + " - to: " + MyPlayerRequested.name);
+            List<PolyModel> MyData = MyWorld.GetComponent<VoxelManager>().MyModels;
+            //Debug.LogError("Sending PolyModelData - " + MyData.Count + " - to: " + MyPlayerRequested.name);
             for (int i = 0; i < MyData.Count; i++)
             {
                 string MyScript = FileUtil.ConvertToSingle(MyData[i].GetScript());
                 //Debug.LogError("    Sending Data: " + MyScript);
-                gameObject.GetComponent<PhotonView>().RPC("RecieveVoxelModel",
+                gameObject.GetComponent<PhotonView>().RPC("RecievePolyModel",
                     MyPlayerRequested,  // send just to the player that requested the data
                     i,
                     MyScript
                     );
             }
-            gameObject.GetComponent<PhotonView>().RPC("RecieveVoxelModel",
+            gameObject.GetComponent<PhotonView>().RPC("RecievePolyModel",
                 MyPlayerRequested,  // send just to the player that requested the data
                 -1,
                 "End"
                 );
         }
         [PunRPC]
-        public void RecieveVoxelModel(int i, string MyScript)
+        public void RecievePolyModel(int i, string MyScript)
         {
-            //Debug.LogError("Recieve VoxelModelData: " + i);
+            //Debug.LogError("Recieve PolyModelData: " + i);
             if (MyScript == "End")
             {
-                IsDownloadingVoxelModel = false;
+                IsDownloadingPolyModel = false;
             }
             else
             {
                 //Debug.LogError("    Data: " + MyMetaScript);
-                Zeltex.Voxels.VoxelModel MyModel = new Zeltex.Voxels.VoxelModel();
+                Zeltex.Voxels.PolyModel MyModel = new Zeltex.Voxels.PolyModel();
                 MyModel.RunScript(FileUtil.ConvertToList(MyScript));
                 MyModel.GenerateSolidity();
                 MyWorld.GetComponent<Zeltex.Voxels.VoxelManager>().AddModel(MyModel);
@@ -227,7 +227,7 @@ namespace MakerGuiSystem
             //Debug.LogError("Request For Meta Data from: " + PlayerID);
             PhotonPlayer MyPlayerRequested = PhotonPlayer.Find(PlayerID);
             List<Texture2D> MyData = MyMapMaker.MyTextureManager.GetData();
-            //Debug.LogError("Sending VoxelModelData - " + MyData.Count + " - to: " + MyPlayerRequested.name);
+            //Debug.LogError("Sending PolyModelData - " + MyData.Count + " - to: " + MyPlayerRequested.name);
             for (int i = 0; i < MyData.Count; i++)
             {
                 byte[] MyScript = MyData[i].EncodeToPNG();

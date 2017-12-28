@@ -456,7 +456,7 @@ MyFolderPaths.Add("Skeletons/");
 MyFileExtensions.Add(".anm");
 MyFolderPaths.Add("VoxelMeta/");
 MyFileExtensions.Add(".vmt");
-MyFolderPaths.Add("VoxelModel/");
+MyFolderPaths.Add("PolyModel/");
 MyFileExtensions.Add(".vmd");
-MyFolderPaths.Add("VoxelModels/");
+MyFolderPaths.Add("PolyModels/");
 MyFileExtensions.Add(".vxm");*/

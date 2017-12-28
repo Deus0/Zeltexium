@@ -40,25 +40,25 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected override void SetFilePaths()
         {
-            DataManagerFolder = DataFolderNames.PolygonModels;
+            DataManagerFolder = DataFolderNames.PolyModels;
         }
 
         /// <summary>
-        /// Returns the selected VoxelModel
+        /// Returns the selected PolyModel
         /// </summary>
-        public VoxelModel GetSelectedModel()
+        public PolyModel GetSelectedModel()
         {
             //Debug.LogError("Getting model name: " + GetSelectedName() + " at " + GetSelectedIndex() + " out of " + GetSize());
-            return DataManager.Get().GetElement(DataManagerFolder, GetSelectedIndex()) as VoxelModel;
+            return DataManager.Get().GetElement(DataManagerFolder, GetSelectedIndex()) as PolyModel;
             //return VoxelManager.Get().GetModel(GetSelectedName());
         }
 
         /// <summary>
         /// returns the model by a name
         /// </summary>
-        public VoxelModel GetModel(string MyName)
+        public PolyModel GetModel(string MyName)
         {
-            return DataManager.Get().GetElement(DataManagerFolder, GetSelected()) as VoxelModel;
+            return DataManager.Get().GetElement(DataManagerFolder, GetSelected()) as PolyModel;
             //return VoxelManager.Get().GetModel(GetSelectedName());
         }
 
@@ -67,7 +67,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         protected override void AddData()
         {
-            VoxelModel NewModel = new VoxelModel();
+            PolyModel NewModel = new PolyModel();
             NewModel.Name = "M" + Random.Range(1, 10000);
             NewModel.GenerateCubeMesh();
             NewModel.GenerateSolidity();
@@ -88,10 +88,10 @@ namespace Zeltex.Guis.Maker
             Debug.Log("Updating Index in Polygon Maker: " + NewIndex);
             GetInput("NameInput").text = GetSelectedName();
             // Default texture map is 0
-            VoxelModel MyModel = GetSelectedModel();
+            PolyModel MyModel = GetSelectedModel();
             if (MyModel != null)
             {
-                MyViewer.GetSpawn().GetComponent<VoxelModelHandle>().LoadVoxelMesh(MyModel);
+                MyViewer.GetSpawn().GetComponent<PolyModelHandle>().LoadVoxelMesh(MyModel);
                 //MyViewer.LoadVoxelMesh(MyModel, 0);
                 UpdateStatistics();
             }
@@ -159,32 +159,6 @@ namespace Zeltex.Guis.Maker
             base.UseInput(MyButton);
             if (MyButton.name == "ImportButton")
             {
-                /*Dropdown MyDropdown = GetDropdown("ImportDropdown");
-                string FileName = MyDropdown.options[MyDropdown.value].text + "." + "obj";
-                Debug.Log("Loading: " + FileName);*/
-
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                if (MyResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    // VoxelModel SelectedModel = GetSelectedModel();
-                    Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
-                    /*for (int i = 0; i < MyMesh.vertices.Length; i++)
-                    {
-                        Debug.LogError("Before: " + i + ":" + MyMesh.vertices[i].ToString());
-                        MyMesh.vertices[i] = MyMesh.vertices[i] + new Vector3(0.5f, 0.5f, 0.5f);
-                        //MyMesh.vertices[i] += new Vector3(1,1,1);
-                        Debug.LogError("After: " + i + ":" + MyMesh.vertices[i].ToString());
-                    }*/
-                    MyMesh.RecalculateBounds();
-                    MyMesh.RecalculateNormals();
-                    GetSelectedModel().UseMesh(MyMesh);
-                    MyViewer.GetSpawn().GetComponent<MeshFilter>().sharedMesh = MyMesh;
-                    MyViewer.GetSpawn().GetComponent<VoxelModelHandle>().RefreshMesh();
-                    UpdateStatistics();
-                }
-#endif
                 //MyVoxelGui.VoxelType = MyDropdown.value;
 
                 //DataManager.Get().ImportImage(DataManagerFolder, GetSelectedIndex());
@@ -192,8 +166,8 @@ namespace Zeltex.Guis.Maker
             }
             else if (MyButton.name == "ExportButton")
             {
-                //MyViewer.GetSpawn().GetComponent<VoxelModelHandle>().GetMesh()
-                DataManager.Get().ExportPolygon(MyViewer.GetSpawn().GetComponent<MeshFilter>());
+                //MyViewer.GetSpawn().GetComponent<PolyModelHandle>().GetMesh()
+                //DataManager.Get().ExportPolygon(MyViewer.GetSpawn().GetComponent<MeshFilter>());
                 //FileUtil.Export(GetSelectedName(), FileExtension, FileUtil.ConvertToSingle(GetSelected().GetScript()));
             }
         }
@@ -263,7 +237,7 @@ namespace Zeltex.Guis.Maker
                 }
             }
             AddName(MyName);
-            VoxelModel NewModel = new VoxelModel();
+            PolyModel NewModel = new PolyModel();
             NewModel.RunScript(FileUtil.ConvertToList(MyScript));
             VoxelManager.Get().AddModel(NewModel);
             MyIndexController.SetMaxSelected(GetSize());
@@ -295,7 +269,7 @@ namespace Zeltex.Guis.Maker
         // Mesh Starter Functions
         #endregion
 
-        #region VoxelModelHelpers
+        #region PolyModelHelpers
         #endregion
 
         #region Statistics
@@ -324,7 +298,7 @@ namespace Zeltex.Guis.Maker
             // Show texture names used
             if (GetSelectedModel().TextureMaps.Count > 0)
             {
-                VoxelTextureMap MyTextureMap = GetSelectedModel().TextureMaps[GetSelectedTextureMap()];
+                PolyTextureMap MyTextureMap = GetSelectedModel().TextureMaps[GetSelectedTextureMap()];
                 List<string> TileMapNames;
                 List<int> TileMapCounts;
                 MyTextureMap.GetTileMapInfo(out TileMapNames, out TileMapCounts);
@@ -368,7 +342,7 @@ namespace Zeltex.Guis.Maker
             }
             if (IsDebugUVs && GetSelectedModel().TextureMaps.Count > 0)
             {
-                VoxelTextureMap MyTextureMap = GetSelectedModel().TextureMaps[GetSelectedTextureMap()];
+                PolyTextureMap MyTextureMap = GetSelectedModel().TextureMaps[GetSelectedTextureMap()];
                 if (MyTextureMap != null)
                 {
                     for (int i = 0; i < MyTextureMap.Coordinates.Count; i++)
@@ -400,7 +374,7 @@ namespace Zeltex.Guis.Maker
          {
              string MyName = Path.GetFileNameWithoutExtension(MyFiles[i]);
              AddName(MyName);
-             VoxelModel NewModel = new VoxelModel();
+             PolyModel NewModel = new PolyModel();
              NewModel.Clear();
              List<string> MyLines = FileUtil.ConvertToList(FileUtil.Load(MyFiles[i]));
              NewModel.RunScript(MyLines);
@@ -414,7 +388,7 @@ namespace Zeltex.Guis.Maker
          // Wait this needs to be done in data manager!
         for (int i = 0; i < GetSize(); i++)
          {
-             VoxelModel NewModel = new VoxelModel();
+             PolyModel NewModel = new PolyModel();
              NewModel.RunScript(FileUtil.ConvertToList(GetData(i)));
              NewModel.GenerateSolidity();
              NewModel.Name = GetName(i);
@@ -430,7 +404,7 @@ namespace Zeltex.Guis.Maker
      Debug.Log("Saving polygonal models to: " + GetFilePath());
      for (int i = 0; i < GetSize(); i++)
      {
-         VoxelModel MyModel = MyVoxelManager.GetModel(i);
+         PolyModel MyModel = MyVoxelManager.GetModel(i);
          string MyFilePath = GetFilePath() + GetName(i) + "." + FileExtension;
          //Debug.Log("Saving Poly " + i + " to: " + MyFilePath);
          List<string> MyScript = MyModel.GetScript();

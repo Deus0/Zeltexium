@@ -16,22 +16,22 @@ namespace Zeltex.Voxels
     /// Also contains rules needed for placing in the voxel grid
     /// </summary>
     [System.Serializable]
-	public class VoxelModel : Element
+	public class PolyModel : Element
     {
         #region Variables
         //public string Name = "Empty";
         public static int BufferLength = 0; // 1
         public List<MeshData> MyModels = new List<MeshData>();
         // Each model has multiple texture maps
-        public List<VoxelTextureMap> TextureMaps = new List<VoxelTextureMap>();
+		public List<PolyTextureMap> TextureMaps = new List<PolyTextureMap>();
         // Voxel Rules
         public bool[] Solidity = new bool[6];   // determine if its solid on sides
         #endregion
 
         #region Initiation
-        public VoxelModel()
+        public PolyModel()
         {
-            //TextureMaps.Add(new VoxelTextureMap());
+            //TextureMaps.Add(new PolyTextureMap());
             GenerateCubeMesh();
             AllSidesSolid();
             //AddNewTextureMap();
@@ -101,7 +101,7 @@ namespace Zeltex.Voxels
         }
         private void AddNewTextureMap()
         {
-            VoxelTextureMap NewMap = new VoxelTextureMap();
+			PolyTextureMap NewMap = new PolyTextureMap();
             MeshData MyMesh = GetCombinedMesh(0);
             TextureMaps.Add(NewMap);
             OnModified();
@@ -110,10 +110,10 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Generate a new texture map for the model
         /// </summary>
-        private VoxelTextureMap GenerateTextureMap(string TileName)
+		private PolyTextureMap GenerateTextureMap(string TileName)
         {
             //NewMap = GenerateTextureMap(NewMap, "");
-            VoxelTextureMap NewMap = new VoxelTextureMap(); // clear the map
+			PolyTextureMap NewMap = new PolyTextureMap(); // clear the map
             MeshData MyMesh = GetCombinedMesh(0);
             for (int i = 0; i < MyMesh.Verticies.Count; i++)
             {
@@ -255,12 +255,24 @@ namespace Zeltex.Voxels
                 }
             }
             return AllVerts;
-        }
+		}
+		private List<int> AllTriangles = new List<int>();
+		public List<int> GetAllTriangles()
+		{
+			if (AllTriangles.Count == 0)
+			{
+				for (int i = 0; i < MyModels.Count; i++)
+				{
+					AllTriangles.AddRange(MyModels[i].Triangles);
+				}
+			}
+			return AllTriangles;
+		}
         #endregion
 
         #region Files
 
-        public override string GetScript()
+        /*public override string GetScript()
         {
             List<string> MyScript = new List<string>();
             for (int i = 0; i < MyModels.Count; i++)
@@ -321,7 +333,7 @@ namespace Zeltex.Voxels
                         {
                             int EndIndex = j - 1;
                             int RangeCount = EndIndex - BeginIndex + 1;
-                            VoxelTextureMap MyTextureMap = new VoxelTextureMap();
+                            PolyTextureMap MyTextureMap = new PolyTextureMap();
                             if (RangeCount > 0)
                             {
                                 List<string> TextureMapScript = MyScriptList.GetRange(BeginIndex, RangeCount);
@@ -334,7 +346,7 @@ namespace Zeltex.Voxels
                     }
                 }
             }
-        }
+        }*/
         #endregion
 
         public bool UpdateAtPosition(Vector3 OldPosition, Vector3 NewPosition)

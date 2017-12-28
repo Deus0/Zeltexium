@@ -178,10 +178,10 @@ namespace Zeltex.Skeletons
             CreateBoneMesh();
             if (MeshName != "")
             {
-                Element MeshElement = DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName);
+                Element MeshElement = DataManager.Get().GetElement(DataFolderNames.PolyModels, MeshName);
                 if (MeshElement != null)
                 {
-                    yield return CreateMeshRoutine(MeshElement as Voxels.WorldModel);
+                    yield return CreateMeshRoutine(MeshElement as Voxels.VoxelModel);
                 }
                 else
                 {
@@ -351,13 +351,13 @@ namespace Zeltex.Skeletons
 
         public void CreateMesh(string MeshData)
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(new Voxels.WorldModel(MeshData)));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
+            UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(new Voxels.VoxelModel(MeshData)));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
         }
 
         /// <summary>
         /// Used by skeleton manager
         /// </summary>
-        public void CreateMesh(Voxels.WorldModel MeshData)
+        public void CreateMesh(Voxels.VoxelModel MeshData)
         {
             UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(MeshData));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
         }
@@ -365,7 +365,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Create a mesh in the timer
         /// </summary>
-        public IEnumerator CreateMeshRoutine(Voxels.WorldModel MeshData, bool IsMeshVisible = false)    // System.Collections.Generic.List<string>
+        public IEnumerator CreateMeshRoutine(Voxels.VoxelModel MeshData, bool IsMeshVisible = false)    // System.Collections.Generic.List<string>
         {
             if (VoxelMesh != null)
             {

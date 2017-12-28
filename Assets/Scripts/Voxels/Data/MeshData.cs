@@ -442,7 +442,7 @@ namespace Zeltex.Voxels
         {
             float TotalTiles = TileResolution * TileResolution;
             float TileSize = 1f / ((float)TileResolution);
-            //float PixelSize = VoxelModel.BufferLength / (TileResolution * TextureResolution);  // one pixel is the buffer
+            //float PixelSize = PolyModel.BufferLength / (TileResolution * TextureResolution);  // one pixel is the buffer
             float PixelSize = 0;  // one pixel is the buffer
             TileSize += 2 * PixelSize;  // apply our buffer to tile size
             float PosX = 0;

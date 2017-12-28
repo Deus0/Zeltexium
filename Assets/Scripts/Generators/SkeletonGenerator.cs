@@ -11,7 +11,7 @@ namespace Zeltex.Generators
     public class SkeletonGenerator : ManagerBase<SkeletonGenerator>
     {
         //private static SkeletonGenerator instance;
-        public VoxelModelGenerator MyModelGenerator;
+        public PolyModelGenerator MyModelGenerator;
 
         public new static SkeletonGenerator Get()
         {
@@ -88,7 +88,7 @@ namespace Zeltex.Generators
                 MyData.Add("/EndPosition");
             }
             MyData.Add("/VoxelMesh");
-            //int MeshIndex = Random.Range(0, MyVoxelModelMaker.GetSize());
+            //int MeshIndex = Random.Range(0, MyPolyModelMaker.GetSize());
             MyData.AddRange(FileUtil.ConvertToList(MyModelGenerator.GetSphere()));// GetData(MeshIndex)));
             //MyData.Add("0");    // returns body mesh
             MyData.Add("/EndVoxelMesh");

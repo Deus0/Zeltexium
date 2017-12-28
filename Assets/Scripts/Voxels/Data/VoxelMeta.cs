@@ -20,7 +20,7 @@ namespace Zeltex.Voxels
         private string Description = "A cubey type object."; // used in gui on inspection
         public string ModelID;			                    // various models, ie cube, slopes, etc
         [SerializeField, JsonIgnore]
-        private VoxelModel MyModel = null;                          // reference to model
+        private PolyModel MyModel = null;                          // reference to model
         public int TextureMapID;                            // various texture maps, ie grass, etc
         public int MaterialID;		                        // things like animated water, animated power cores, or normal dirt etc
         public List<string> Commands = new List<string>();
@@ -109,7 +109,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Gets the model for the voxel
         /// </summary>
-        public VoxelModel GetModel()
+        public PolyModel GetModel()
         {
 			if (VoxelManager.Get() && Name != "Air")
 			{

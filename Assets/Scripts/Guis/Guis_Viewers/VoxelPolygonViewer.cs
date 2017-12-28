@@ -59,14 +59,14 @@ namespace Zeltex.Guis
         {
             if (GetSpawn())
             {
-                VoxelModelHandle MyModelHandle = GetSpawn().GetComponent<VoxelModelHandle>();
+                PolyModelHandle MyModelHandle = GetSpawn().GetComponent<PolyModelHandle>();
                 if (MyModelHandle)
                 {
-                    GetSpawn().GetComponent<VoxelModelHandle>().LoadVoxelMesh(DataManager.Get().GetElement(DataFolderNames.PolygonModels, ModelName) as VoxelModel, TextureMapIndex);
+                    GetSpawn().GetComponent<PolyModelHandle>().LoadVoxelMesh(DataManager.Get().GetElement(DataFolderNames.PolyModels, ModelName) as PolyModel, TextureMapIndex);
                 }
                 else
                 {
-                    Debug.LogError("Spawn has no VoxelModelHandle: " + name);
+                    Debug.LogError("Spawn has no PolyModelHandle: " + name);
                 }
             }
             else
@@ -81,9 +81,9 @@ namespace Zeltex.Guis
 		/// <summary>
 		/// Load in the voxel mesh, used by polygon maker to edit exact data on the model/texture
 		/// </summary>
-		public void LoadVoxelMesh(VoxelModel MyModel, int TextureMapIndex)
+		public void LoadVoxelMesh(PolyModel MyModel, int TextureMapIndex)
         {
-            GetSpawn().GetComponent<VoxelModelHandle>().LoadVoxelMesh(MyModel, TextureMapIndex);
+            GetSpawn().GetComponent<PolyModelHandle>().LoadVoxelMesh(MyModel, TextureMapIndex);
             /*LoadedModel = MyModel;
 			if (MyModel != null)
 			{
@@ -99,9 +99,9 @@ namespace Zeltex.Guis
 		/// <summary>
 		/// Load in the voxel mesh
 		/// </summary>
-		public void LoadVoxelMesh(VoxelModel MyModel, int TextureMapIndex, bool IsRefreshHandlers)
+		public void LoadVoxelMesh(PolyModel MyModel, int TextureMapIndex, bool IsRefreshHandlers)
 		{
-            GetSpawn().GetComponent<VoxelModelHandle>().LoadVoxelMesh(MyModel, TextureMapIndex);
+            GetSpawn().GetComponent<PolyModelHandle>().LoadVoxelMesh(MyModel, TextureMapIndex);
 			/*LoadedModelName = MyModel.Name;
             //Debug.LogError("PolygonViewer [" + name + "] is loading [" + MyModel.Name + "] with texture map [" + TextureMapIndex + "]");
 			List<string> SelectedHandlerNames = new List<string>();
@@ -143,7 +143,7 @@ namespace Zeltex.Guis
         /// </summary>
         public void ClearMesh()
         {
-            GetSpawn().GetComponent<VoxelModelHandle>().ClearHandlers();
+            GetSpawn().GetComponent<PolyModelHandle>().ClearHandlers();
             if (GetSpawn().GetComponent<MeshFilter>().mesh == null)
             {
                 GetSpawn().GetComponent<MeshFilter>().mesh = new Mesh(); // clear mesh
@@ -193,7 +193,7 @@ private Color32 NormalFaceColor = new Color32(0, 255, 76, 11);
 private Color32 SelectedFaceColor = new Color32(255, 76, 76, 68);
 private float VertSize = 0.03f;
 private string LoadedModelName;
-private VoxelModel LoadedModel;
+private PolyModel LoadedModel;
 private int LoadedTextureMap;
 private List<GameObject> MyHandlers = new List<GameObject>();
 private List<GameObject> SelectedHandlers = new List<GameObject>();

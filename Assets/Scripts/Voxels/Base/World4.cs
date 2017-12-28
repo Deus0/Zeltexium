@@ -74,7 +74,7 @@ namespace Zeltex.Voxels
             }
             MyCollider.convex = true;
             MyMeshRenderer.sharedMaterial = MyMaterials[0];
-            VoxelModelHandle MyModel = NewMoveableVoxel.AddComponent<VoxelModelHandle>();
+            PolyModelHandle MyModel = NewMoveableVoxel.AddComponent<PolyModelHandle>();
             MyModel.UpdateWithSingleVoxelMesh(NewMoveableVoxel, TypeRemoved, MyTint);
             if (IsDropParticles)
             {

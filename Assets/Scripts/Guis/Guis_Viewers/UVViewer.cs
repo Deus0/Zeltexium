@@ -59,13 +59,13 @@ namespace Zeltex.Guis
                 if (MyUVHandler == MyHandlers[i])
                 {
                     Vector2 MyUVPosition = RectPositionToUV(MyUVHandler.GetComponent<RectTransform>().anchoredPosition);    // - UVHandlerSize/2f
-                    MyVoxelViewer.GetSpawn().GetComponent<Zeltex.Voxels.VoxelModelHandle>().UpdateTextureCoordinate(
+                    MyVoxelViewer.GetSpawn().GetComponent<Zeltex.Voxels.PolyModelHandle>().UpdateTextureCoordinate(
                         VertIndexes[i],
                         MyUVPosition);
                     break;
                 }
             }
-            MyVoxelViewer.GetSpawn().GetComponent<Zeltex.Voxels.VoxelModelHandle>().OnMassUpdatedModel();
+            MyVoxelViewer.GetSpawn().GetComponent<Zeltex.Voxels.PolyModelHandle>().OnMassUpdatedModel();
         }
         #endregion
 

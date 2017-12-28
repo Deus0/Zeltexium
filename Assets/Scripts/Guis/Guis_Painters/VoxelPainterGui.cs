@@ -48,7 +48,7 @@ namespace Zeltex.Guis.Maker
         private SkeletonViewer MySkeletonViewer;   // if editing a viewer
         private ObjectViewer MyObjectViewer;   // if editing a viewer
         [Header("References")]
-        public VoxelPolygonViewer MyVoxelModelViewer;
+        public VoxelPolygonViewer MyPolyModelViewer;
        // public VoxelPrimitives MyVoxelPrimitives;
         [Header("Paint Brush")]
         public VoxelPaintType PaintType;
@@ -910,7 +910,7 @@ namespace Zeltex.Guis.Maker
                 VoxelName = MyDropdown.options[MyDropdown.value].text;
                 // Value of the drop down is the position in the entire database, so it will get hte proper voxel meta
                 VoxelMeta MyVoxelMeta = VoxelManager.Get().GetMeta(MyDropdown.value + 1);
-                MyVoxelModelViewer.LoadVoxelMesh(MyVoxelMeta);
+                MyPolyModelViewer.LoadVoxelMesh(MyVoxelMeta);
                 //MyWorld.GetComponent<VoxelPrimitives>().SetVoxelType(MyDropdown.value);
             }
             else if (MyDropdown.name == "PaintTypeDropdown")
@@ -987,7 +987,7 @@ namespace Zeltex.Guis.Maker
             {
                 if (MyButton.name == "ModelLoadButton")
                 {
-                    //MyWorld.RunScript(FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("ModelLoadDropdown").value)));
+                    //MyWorld.RunScript(FileUtil.ConvertToList(DataManager.Get().Get(DataFolderNames.PolyModels, GetDropdown("ModelLoadDropdown").value)));
                 }
                 else if (MyButton.name == "CutToOtherModelButton")
                 {
@@ -1171,12 +1171,12 @@ namespace Zeltex.Guis.Maker
                 if (VoxelManager.Get().MyMetas.Count > 0)
                 {
                     VoxelMeta MyMeta = VoxelManager.Get().GetMeta(MyDropdown.value + 1);
-                    MyVoxelModelViewer.LoadVoxelMesh(MyMeta);
+                    MyPolyModelViewer.LoadVoxelMesh(MyMeta);
                 }
             }
             if (MyDropdown.name == "ModelLoadDropdown")
             {
-                MyNames.AddRange(DataManager.Get().GetNames(DataFolderNames.VoxelModels));
+                MyNames.AddRange(DataManager.Get().GetNames(DataFolderNames.PolyModels));
                 FillDropDownWithList(MyDropdown, MyNames);
             }
         }

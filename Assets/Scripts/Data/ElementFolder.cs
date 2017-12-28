@@ -253,11 +253,11 @@ namespace Zeltex
                         Level MyLevel = NewElement as Level;
                         MyLevel.SetFilePathType(DataManager.Get().MyFilePathType);
                     }
-                    if (FolderName == DataFolderNames.PolygonModels)
+                    if (FolderName == DataFolderNames.PolyModels)
                     {
                         if (VoxelManager.Get())
                         {
-                            VoxelManager.Get().AddModelRaw(NewElement as VoxelModel);
+                            VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
                         }
                     }
                     else if (FolderName == DataFolderNames.VoxelMeta)

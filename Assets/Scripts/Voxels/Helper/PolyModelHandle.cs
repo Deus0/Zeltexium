@@ -8,7 +8,7 @@ namespace Zeltex.Voxels
     /// <summary>
     /// The mode of the voxel model handler
     /// </summary>
-    public enum VoxelModelHandleMode
+    public enum PolyModelHandleMode
     {
         None,
         Verts,
@@ -21,13 +21,13 @@ namespace Zeltex.Voxels
     /// TODO: Move functions from voxelPolygonViewer into this
     /// </summary>
     [ExecuteInEditMode]
-    public class VoxelModelHandle : MonoBehaviour
+    public class PolyModelHandle : MonoBehaviour
     {
-        public VoxelModel MyModel;
+        public PolyModel MyModel;
         // the index of the loaded texture map
         public int TextureMapIndex;
         public UnityEvent OnUpdatedModelEvent;
-        private VoxelModelHandleMode HandlerMode = 0;
+        private PolyModelHandleMode HandlerMode = 0;
 
         //public UVViewer MyUVViewer;
         //public PolygonMaker MyMaker;
@@ -38,7 +38,7 @@ namespace Zeltex.Voxels
         private Color32 SelectedFaceColor = new Color32(255, 76, 76, 68);
         private float VertSize = 0.03f;
         private string LoadedModelName;
-        //private VoxelModel LoadedModel;
+        //private PolyModel LoadedModel;
         private int LoadedTextureMap;
         private List<GameObject> MyHandlers = new List<GameObject>();
         private List<GameObject> SelectedHandlers = new List<GameObject>();
@@ -148,24 +148,24 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Updates the model handling mode
         /// </summary>
-        public void UpdateHandlerMode(VoxelModelHandleMode NewMode)
+        public void UpdateHandlerMode(PolyModelHandleMode NewMode)
         {
             if (HandlerMode != NewMode)
             {
                 HandlerMode = NewMode;
                 ClearHandlers();
-                if (HandlerMode == VoxelModelHandleMode.None)
+                if (HandlerMode == PolyModelHandleMode.None)
                 {
                 }
-                if (HandlerMode == VoxelModelHandleMode.Verts)
+                if (HandlerMode == PolyModelHandleMode.Verts)
                 {
                     GenerateVertHandlers();
                 }
-                if (HandlerMode == VoxelModelHandleMode.Lines)
+                if (HandlerMode == PolyModelHandleMode.Lines)
                 {
                     GenerateLineHandlers();
                 }
-                if (HandlerMode == VoxelModelHandleMode.Faces)
+                if (HandlerMode == PolyModelHandleMode.Faces)
                 {
                     GenerateFaceHandlers();
                 }
@@ -253,7 +253,7 @@ namespace Zeltex.Voxels
         {
             ClearHandlers();
             // SelectedIndex = Mathf.Clamp(SelectedIndex, 0, MyWorld.MyModels.Count-1);
-            //VoxelModel MyModel = MyVoxelManager.GetModel(LoadedModelName);
+            //PolyModel MyModel = MyVoxelManager.GetModel(LoadedModelName);
             List<Vector3> MyVerts = MyModel.GetAllVerts();
             for (int i = 0; i < MyVerts.Count; i += 4)
             {
@@ -307,7 +307,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public bool HasFaceSelected()
         {
-            if (SelectedHandlers.Count > 0 && HandlerMode == VoxelModelHandleMode.Faces)
+            if (SelectedHandlers.Count > 0 && HandlerMode == PolyModelHandleMode.Faces)
             {
                 return true;
             }
@@ -330,11 +330,11 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Load in the voxel mesh
         /// </summary>
-        public void LoadVoxelMesh(VoxelModel MyModel, int NewTextureMapIndex, bool IsRefreshHandlers)
+        public void LoadVoxelMesh(PolyModel MyModel, int NewTextureMapIndex, bool IsRefreshHandlers)
         {
             LoadedModelName = MyModel.Name;
             TextureMapIndex = NewTextureMapIndex;
-            //Debug.LogError("VoxelModelHandle [" + name + "] is loading [" + MyModel.Name + "] with texture map [" + TextureMapIndex + "]");
+            //Debug.LogError("PolyModelHandle [" + name + "] is loading [" + MyModel.Name + "] with texture map [" + TextureMapIndex + "]");
             List<string> SelectedHandlerNames = new List<string>();
             if (IsRefreshHandlers)
             {
@@ -347,7 +347,7 @@ namespace Zeltex.Voxels
             LoadedTextureMap = TextureMapIndex;
             UpdateWithSingleVoxelMesh(gameObject, MyModel.Name, TextureMapIndex);
             // after loaded - check if any handlers are out of bound, and reassign them if they arn't
-            if (IsRefreshHandlers && HandlerMode == VoxelModelHandleMode.Verts)
+            if (IsRefreshHandlers && HandlerMode == PolyModelHandleMode.Verts)
             {
                 OnLoadedVertMode();
             }
@@ -396,7 +396,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Load a new mesh
         /// </summary>
-        public void LoadVoxelMesh(VoxelModel NewModel, int NewTextureMapIndex = 0)
+        public void LoadVoxelMesh(PolyModel NewModel, int NewTextureMapIndex = 0)
         {
             MyModel = NewModel;
             TextureMapIndex = NewTextureMapIndex;
@@ -476,7 +476,7 @@ namespace Zeltex.Voxels
         public Mesh GetSingleVoxelMesh(string ModelName, int TextureIndex, Color32 ColorTint)
         {
             Mesh MyMesh = new Mesh();
-            VoxelModel MyModel = VoxelManager.Get().GetModel(ModelName);
+            PolyModel MyModel = VoxelManager.Get().GetModel(ModelName);
             if (MyModel != null)
             {
                 MeshData MyMeshMyMetas = MyModel.GetCombinedMesh(TextureIndex);
@@ -755,7 +755,7 @@ namespace Zeltex.Voxels
             if (HasFaceSelected()) // Bam!
             {
                 List<int> Triangles = GetSelectedTriangles();
-                VoxelTextureMap MyTextureMap = MyModel.TextureMaps[GetSelectedTextureMap()];
+                PolyTextureMap MyTextureMap = MyModel.TextureMaps[GetSelectedTextureMap()];
                 for (int i = 0; i < Triangles.Count; i += 4)
                 {
                     List<Vector2> MyUVs = new List<Vector2>();

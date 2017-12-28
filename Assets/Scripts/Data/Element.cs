@@ -173,57 +173,6 @@ namespace Zeltex
             }
         }
 
-        public T Clone<T>() where T : Element
-        {
-            T NewElement = JsonConvert.DeserializeObject(GetSerial(), typeof(T)) as T;
-            return NewElement;
-        }
-
-        public Element Clone(System.Type DataType)
-        {
-            Element NewElement = JsonConvert.DeserializeObject(GetSerial(), DataType) as Element;
-            return NewElement;
-        }
-        public Element Clone()
-        {
-            Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetDataType()) as Element;
-            return NewElement;
-        }
-
-        public Element Load(bool IsJSONFormat = true)
-        {
-            string Script = Util.FileUtil.Load(GetFullFilePath());
-            return Load(Script, IsJSONFormat);
-        }
-
-        public Element Load(string Script, System.Type DataType)
-        {
-            return JsonConvert.DeserializeObject(Script, DataType) as Element;
-        }
-        public Element Load(string Script, bool IsJSONFormat = true)
-        {
-            Element NewElement;
-            DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
-            if (IsJSONFormat)
-            {
-                NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-            }
-            else
-            {
-#if NET_4_6
-                System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(Type.EmptyTypes);
-                dynamic NewElement2 = MyConstructor.Invoke(null);
-                NewElement = NewElement2 as Element;
-                NewElement.RunScript(Script);
-#else
-                NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-#endif
-            }
-            NewElement.Name = Name;
-            NewElement.MyFolder = MyFolder;
-            return NewElement;
-        }
-
         public static Element Load(string NewName, ElementFolder NewFolder, string Script)
         {
             Element NewElement = new Element();
@@ -240,6 +189,7 @@ namespace Zeltex
                 NewElement.Name = NewName;
                 NewElement.MyFolder = NewFolder;
             }
+			NewElement.OldName = NewElement.Name;
             return NewElement;
         }
 
@@ -249,13 +199,73 @@ namespace Zeltex
         }
 
         public void Save(bool IsForce = false)
-        {
+		{
+			if (OldName != Name)
+			{
+				Rename(OldName, Name);
+				OldName = Name;
+			}
             if (CanSave() || IsForce)
             {
                 Util.FileUtil.Save(GetFullFilePath(), GetSerial());
                 OnSaved();
             }
         }
+
+
+		/// <summary>
+		/// Returns the new name
+		///     - If the old name and new name is the same, return
+		///     - While the name is in the database, incremenet a number on it
+		/// </summary>
+		public void Rename(string OldName, string NewName)
+		{
+			if (OldName == NewName)
+			{
+				Name = NewName;
+				return;
+			}
+			if (MyFolder == null) 
+			{
+				Name = NewName;
+				return;
+			}
+			string OriginalName = NewName;
+			int NameTryCount = 1;
+			// Search for a new name
+			while (MyFolder.Data.ContainsKey(NewName))
+			{
+				NameTryCount++;
+				NewName = OriginalName + " " + NameTryCount;
+				if (NameTryCount >= 100000)
+				{
+					Name = NewName;
+					return;
+				}
+			}
+			// Cannot rename, have to remove and re add!
+			if (MyFolder.Data.ContainsKey(NewName) == false)
+			{
+				string OldFileName = MyFolder.GetFolderPath() + OldName + "." + MyFolder.FileExtension;
+				string NewFileName = MyFolder.GetFolderPath() + NewName + "." + MyFolder.FileExtension;
+				// Delete file if exists
+				if (System.IO.File.Exists(OldFileName))
+				{
+					Debug.LogError("Moving file: " + OldFileName + " to " + NewFileName);
+					System.IO.File.Move(OldFileName, NewFileName);
+				}
+
+				//T MyValue = MyFolder.Data[OldName];
+				MyFolder.Data.Remove(OldName);
+				MyFolder.Data.Add(NewName, this);
+				Name = NewName;
+				return;
+			}
+			else
+			{
+				Name = OldName;
+			}
+		}
 
         /// <summary>
         /// Called when element is saved
@@ -294,5 +304,59 @@ namespace Zeltex
         {
             HasMoved = false;
         }
+		#region Loading
+
+
+		public T Clone<T>() where T : Element
+		{
+			T NewElement = JsonConvert.DeserializeObject(GetSerial(), typeof(T)) as T;
+			return NewElement;
+		}
+
+		public Element Clone(System.Type DataType)
+		{
+			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), DataType) as Element;
+			return NewElement;
+		}
+		public Element Clone()
+		{
+			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetDataType()) as Element;
+			return NewElement;
+		}
+
+		public Element Load(bool IsJSONFormat = true)
+		{
+			string Script = Util.FileUtil.Load(GetFullFilePath());
+			return Load(Script, IsJSONFormat);
+		}
+
+		public Element Load(string Script, System.Type DataType)
+		{
+			return JsonConvert.DeserializeObject(Script, DataType) as Element;
+		}
+		public Element Load(string Script, bool IsJSONFormat = true)
+		{
+			Element NewElement;
+			DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
+			if (IsJSONFormat)
+			{
+				NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+			}
+			else
+			{
+				#if NET_4_6
+				System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(Type.EmptyTypes);
+				dynamic NewElement2 = MyConstructor.Invoke(null);
+				NewElement = NewElement2 as Element;
+				NewElement.RunScript(Script);
+				#else
+				NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+				#endif
+			}
+			NewElement.Name = Name;
+			NewElement.MyFolder = MyFolder;
+			return NewElement;
+		}
+		#endregion
     }
 }

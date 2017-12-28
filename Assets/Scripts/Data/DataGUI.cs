@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using Zeltex.Generators;
 using Zeltex.Util;
 using Zeltex.Combat;
-using System.Reflection;
 
 namespace Zeltex
 {
 
     /// <summary>
-    /// Generic class to load data from a file
-    /// Initializes in editor too
+    /// GUI Class for data manager
     /// </summary>
-    public partial class DataManager : ManagerBase<DataManager>
+	public class DataGUI : ManagerBase<DataGUI>
     {
-        #region Debug
+		#region Debug
+		public bool IsDebugGui;
         private int MapNameSelected = 0;
         private List<string> MapNames = null;
         private Vector2 scrollPosition;
@@ -25,7 +25,13 @@ namespace Zeltex
         private string OpenedFileName = "";
         private int OpenedFileIndex = -1;
         private Element OpenedElement;
-        private bool IsDrawAllFields;
+		private bool IsDrawAllFields;
+		private string RenameName = "Null";
+		// Folders
+		private Zexel OpenedTexture;
+		private bool IsOpenedElementFolder;
+		private ElementFolder OpenedFolder;
+		private RenderTexture PolyRenderTexture;
         //private bool IsDrawStatistics;
 
         void OnGUI()
@@ -43,16 +49,16 @@ namespace Zeltex
         public void DrawGui()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-            if (IsLoaded)
+			if (DataManager.Get().GetIsLoaded())
             {
-                GUILayout.Label("Loaded [" + MapName + "]");
+				GUILayout.Label("Loaded [" + DataManager.Get().MapName + "]");
             }
             else
             {
-                GUILayout.Label("Selected [" + MapName + "]");
+				GUILayout.Label("Selected [" + DataManager.Get().MapName + "]");
             }
             //IsJSONFormat = GUILayout.Toggle(IsJSONFormat, "JSON");
-            if (IsLoaded)
+			if (DataManager.Get().GetIsLoaded())
             {
                 LoadedDataGui();
             }
@@ -67,40 +73,36 @@ namespace Zeltex
         {
             if (GUILayout.Button("Open Folder"))
             {
-                FileUtil.OpenPathInWindows(GetResourcesPath());
+				FileUtil.OpenPathInWindows(DataManager.Get().GetResourcesPath());
             }
             GUILayout.Label("MapName:");
-            if (MapName == null)
-            {
-                Debug.LogError("MapName is null.");
-                MapName = "";
-            }
             if (GUILayout.Button("Load"))
-            {
-                LoadAll();
+			{
+				DataManager.Get().InitializeFolders();
+				DataManager.Get().LoadAll();
             }
             if (MapNames == null || GUILayout.Button("Refresh List"))
             {
                 RefreshGuiMapNames();
             }
-            GUILayout.Label("PathType: " + MyFilePathType);
+			GUILayout.Label("PathType: " + DataManager.Get().MyFilePathType);
             //MyFilePathType = (FilePathType)int.Parse(GUILayout.TextField(((int)MyFilePathType).ToString()));
-            GUI.enabled = (MyFilePathType != FilePathType.Normal);
+			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.Normal);
             if (GUILayout.Button("Normal"))
             {
-                MyFilePathType = FilePathType.Normal;
+				DataManager.Get().MyFilePathType = FilePathType.Normal;
                 RefreshGuiMapNames();
             }
-            GUI.enabled = (MyFilePathType != FilePathType.PersistentPath);
+			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.PersistentPath);
             if (GUILayout.Button("Persistent"))
             {
-                MyFilePathType = FilePathType.PersistentPath;
+				DataManager.Get().MyFilePathType = FilePathType.PersistentPath;
                 RefreshGuiMapNames();
             }
-            GUI.enabled = (MyFilePathType != FilePathType.StreamingPath);
+			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.StreamingPath);
             if (GUILayout.Button("Streaming"))
             {
-                MyFilePathType = FilePathType.StreamingPath;
+				DataManager.Get().MyFilePathType = FilePathType.StreamingPath;
                 RefreshGuiMapNames();
             }
             GUI.enabled = true;
@@ -110,7 +112,7 @@ namespace Zeltex
             if (MapNameSelected != NewMapNameSelected)
             {
                 MapNameSelected = NewMapNameSelected;
-                MapName = MapNames[MapNameSelected];
+				DataManager.Get().MapName = MapNames[MapNameSelected];
             }
             //MapName = GUILayout.TextField(MapName);
             /*if (GUILayout.Button("Refresh"))
@@ -125,18 +127,23 @@ namespace Zeltex
             if (MapNames.Count == 0)
             {
                 MapNameSelected = 0;
-                MapName = "";
+				DataManager.Get().MapName = "";
             }
             else
             {
                 MapNameSelected = Mathf.Clamp(MapNameSelected, 0, MapNames.Count - 1);
-                MapName = MapNames[MapNameSelected];
+				DataManager.Get().MapName = MapNames[MapNameSelected];
             }
-            OpenedFileName = "";
-            OpenedFileIndex = -1;
-            OpenedFolderIndex = -1;
-            OpenedFolderName = "";
+			CloseAll ();
         }
+
+		private void CloseAll()
+		{
+			OpenedFileName = "";
+			OpenedFileIndex = -1;
+			OpenedFolderIndex = -1;
+			OpenedFolderName = "";
+		}
 
         private void LoadedDataGui()
         {
@@ -144,11 +151,12 @@ namespace Zeltex
             if (GUILayout.Button("Unload"))
             {
                 // go back!
-                UnloadAll();
+				DataManager.Get().UnloadAll();
+				CloseAll();
             }
             if (RenameName == "Null")
             {
-                RenameName = MapName;
+				RenameName = DataManager.Get().MapName;
             }
 
             if (OpenedFileName != "")
@@ -166,7 +174,7 @@ namespace Zeltex
                 RenameName = GUILayout.TextField(RenameName);
                 if (GUILayout.Button("Rename"))
                 {
-                    if (RenameName != MapName)
+					if (RenameName != DataManager.Get().MapName)
                     {
                         RenameResourcesFolder(RenameName);
                     }
@@ -174,15 +182,15 @@ namespace Zeltex
 
                 if (GUILayout.Button("Open Folder"))
                 {
-                    FileUtil.OpenPathInWindows(GetMapPath());
+					FileUtil.OpenPathInWindows(DataManager.Get().GetMapPathNS());
                 }
                 if (GUILayout.Button("Save"))
                 {
-                    SaveAll();
+					DataManager.Get().SaveAll();
                 }
                 if (GUILayout.Button("Erase"))
                 {
-                    DeleteAll();
+					DataManager.Get().DeleteAll();
                 }
                 if (GUILayout.Button("Generate"))
                 {
@@ -211,17 +219,15 @@ namespace Zeltex
         }
 
         #region Folders
-        private Zexel OpenedTexture;
-        private bool IsOpenedElementFolder;
 
         private void DrawSelectedFolder()
         {
             GUILayout.Space(30);
             GUILayout.Label("Opened Folder [" + OpenedFolderName + "] " + DataFolderNames.GetDataType(OpenedFolderName).ToString());
-            ElementFolder TheFolder = GetElementFolder(OpenedFolderName);
+			ElementFolder TheFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
             if (GUILayout.Button("Open " + OpenedFolderName))
             {
-                string FolderPath = GetMapPath() + OpenedFolderName + "/";
+				string FolderPath = DataManager.Get().GetMapPathNS() + OpenedFolderName + "/";
                 if (FileManagement.DirectoryExists(FolderPath, true, true) == false)
                 {
                     FileManagement.CreateDirectory(FolderPath, true);
@@ -244,7 +250,7 @@ namespace Zeltex
                 {
                     if (IsOpenedElementFolder)
                     {
-                        ElementFolder MyFolder = GetElementFolder(OpenedFolderName);
+						ElementFolder MyFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
                         if (MyFolder != null)
                         {
                             MyFolder.SaveAllElements();
@@ -259,7 +265,7 @@ namespace Zeltex
                 {
                     if (IsOpenedElementFolder)
                     {
-                        ElementFolder MyFolder = GetElementFolder(OpenedFolderName);
+						ElementFolder MyFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
                         if (MyFolder != null)
                         {
                             MyFolder.AddNewElement();
@@ -329,7 +335,7 @@ namespace Zeltex
 
         private void RevertFolder(string FolderName)
         {
-            ElementFolder MyFolder = GetElementFolder(FolderName);
+			ElementFolder MyFolder = DataManager.Get().GetElementFolder(FolderName);
             if (MyFolder != null)
             {
                 MyFolder.Revert();
@@ -343,12 +349,12 @@ namespace Zeltex
 
         private void DrawFolderFiles()
         {
-            if (IsOpenedElementFolder)
+			if (IsOpenedElementFolder && OpenedFolder != null)
             {
                 int ElementCount = 0;
                 try
                 {
-                    foreach (KeyValuePair<string, Element> MyKeyValuePair in ElementFolders[OpenedFolderIndex].Data)
+					foreach (KeyValuePair<string, Element> MyKeyValuePair in OpenedFolder.Data)
                     {
                         if (GUILayout.Button(MyKeyValuePair.Key))
                         {
@@ -374,44 +380,18 @@ namespace Zeltex
         private void DrawFolders()
         {
             // Show folders
+			List<ElementFolder> ElementFolders = DataManager.Get().GetFolders();
             GUILayout.Space(30);
             GUILayout.Label("Folders: " + ElementFolders.Count);
             for (int i = 0; i < ElementFolders.Count; i++)
             {
-                if (GUILayout.Button(ElementFolders[i].FolderName + " [" + GetSize(ElementFolders[i].FolderName) + "]"))
+				if (GUILayout.Button(ElementFolders[i].FolderName + " [" + DataManager.Get().GetSize(ElementFolders[i].FolderName) + "]"))
                 {
                     OpenedFolderName = ElementFolders[i].FolderName;
                     OpenedFolderIndex = i;
+					OpenedFolder = ElementFolders[i];
                     IsOpenedElementFolder = true;
                 }
-            }
-        }
-
-        private List<string> GetStatisticsList()
-        {
-            List<string> MyStatistics = new List<string>();
-            int TotalCount = ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count +  TextureFolders.Count + AudioFolders.Count + 
-            MyStatistics.Add("DataManager -:- Element Types: " + TotalCount);
-
-            for (int i = 0; i < ElementFolders.Count; i++)
-            {
-                MyStatistics.Add("[" + (i + 1) + "] " + ElementFolders[i].FolderName + ": " + ElementFolders[i].Data.Count);
-            }
-            return MyStatistics;
-        }
-
-        private void RenameResourcesFolder(string NewName)
-        {
-            string OldFolderPath = GetResourcesPath() + MapName + "/";
-            string NewFolderPath = GetResourcesPath() + NewName + "/";
-            if (FileManagement.DirectoryExists(NewFolderPath, true, true) == false)
-            {
-                System.IO.Directory.Move(OldFolderPath, NewFolderPath);
-                MapName = NewName;
-            }
-            else
-            {
-                Debug.Log("Cannot move to " + NewFolderPath + " as already exists.");
             }
         }
         #endregion
@@ -445,26 +425,31 @@ namespace Zeltex
                 {
                     GUILabel(OpenedElement.Name + " - [" + OpenedElement.CanSave().ToString() + "]");
                 }
-                if (GUIButton("ForceSave"))
+                /*if (GUIButton("ForceSave"))
                 {
                     if (IsOpenedElementFolder)
                     {
                         OpenedElement.OnModified();
                         OpenedElement.Save();
                     }
-                }
+                }*/
+				if (OpenedElement.CanSave() == false) 
+				{
+					GUI.enabled = false;
+				}
                 if (GUIButton("Save"))
                 {
                     if (IsOpenedElementFolder)
                     {
                         OpenedElement.Save();
                     }
-                }
+				}
+				GUI.enabled = true;
                 if (GUIButton("Revert"))
                 {
                     if (IsOpenedElementFolder)
                     {
-                        OpenedElement = RevertElement(OpenedElement);
+						OpenedElement = DataManager.Get().RevertElement(OpenedElement);
                     }
                 }
                 if (GUIButton("Delete"))
@@ -476,52 +461,73 @@ namespace Zeltex
                 {
                     DrawZexelGui(OpenedTexture);
                 }
+                else if (OpenedElement.GetType() == typeof(Voxels.PolyModel))
+                {
+					DrawPolyModel();
+                }
                 else if (OpenedElement.GetType() == typeof(Voxels.VoxelModel))
                 {
-                    GUILayout.Space(30);
-                    GUILayout.Label("VoxelModel");
-                    if (GUIButton("Import"))
-                    {
-                        ImportPolygon(OpenedFileIndex);
-                    }
-                }
-                else if (OpenedElement.GetType() == typeof(Voxels.WorldModel))
-                {
-                    GUILayout.Space(30);
-                    GUILabel("WorldModel");
-                    if (GUIButton("Import"))
-                    {
-                        UniversalCoroutine.CoroutineManager.StartCoroutine(LoadVoxFile((OpenedElement as Voxels.WorldModel)));
-                    }
-                    GUILabel(OpenedElement.Name + " - Size: " + (OpenedElement as Voxels.WorldModel).VoxelData.Length);// + ":" + (OpenedElement as Voxels.WorldModel).VoxelData);
+					DrawVoxelModel();
                 }
                 else if(OpenedElement.GetType() == typeof(Sound.Zound))
                 {
-                    GUILayout.Space(30);
-                    GUILabel("Zound: " + (OpenedElement as Sound.Zound).GetSize());
-                    // buttons
-
-                    if (GUIButton("Import"))
-                    {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                        ImportZound(OpenedFolderName, OpenedElement as Sound.Zound);
-#else
-                        Debug.LogError("Platform not supported.");
-#endif
-                    }
-
-                    if (GUIButton("Play"))
-                    {
-                        LatestPlayed = (OpenedElement as Sound.Zound).GetAudioClip();
-                        PlayClip(LatestPlayed);
-                    }
+					DrawZound();
                 }
 
                 GUILayout.Space(30);
                 IsDrawAllFields = GUILayout.Toggle(IsDrawAllFields, "IsDrawAllFields");
-                DrawFieldsForObject(OpenedElement as object);
+                DrawFieldsForObject(OpenedElement as object, true);
             }
         }
+
+		private void DrawPolyModel() 
+		{
+			GUILayout.Label("PolyModel");
+			if (PolyRenderTexture == null)
+			{
+				PolyRenderTexture = Resources.Load("TestRenderTexture") as RenderTexture;
+			}
+			GUITexture(PolyRenderTexture);
+			if (GUIButton("Import"))
+			{
+				DataManager.Get().ImportPolygon(OpenedFileIndex);
+			}
+			if (GUIButton("Export"))
+			{
+				DataManager.Get().ExportPolygon(OpenedElement as Voxels.PolyModel);
+			}
+		}
+
+		private void DrawZound() 
+		{
+			GUILayout.Space(30);
+			GUILabel("Zound: " + (OpenedElement as Sound.Zound).GetSize());
+			// buttons
+
+			if (GUIButton("Import"))
+			{
+				#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+				DataManager.Get().ImportZound(OpenedFolderName, OpenedElement as Sound.Zound);
+				#else
+				Debug.LogError("Platform not supported.");
+				#endif
+			}
+
+			if (GUIButton("Play"))
+			{
+				DataManager.Get().PlayClip((OpenedElement as Sound.Zound).GetAudioClip());
+			}
+		}
+		private void DrawVoxelModel() 
+		{
+			GUILayout.Space(30);
+			GUILabel("VoxelModel");
+			if (GUIButton("Import"))
+			{
+				UniversalCoroutine.CoroutineManager.StartCoroutine(DataManager.Get().LoadVoxFile((OpenedElement as Voxels.VoxelModel)));
+			}
+			GUILabel(OpenedElement.Name + " - Size: " + (OpenedElement as Voxels.VoxelModel).VoxelData.Length);// + ":" + (OpenedElement as Voxels.VoxelModel).VoxelData);
+		}
 
         public void DrawZexelGui(Zexel MyZexel)
         {
@@ -533,414 +539,52 @@ namespace Zeltex
                 GUILabel("Size: " + MyZexel.GetWidth() + " : " + MyZexel.GetHeight());
                 //GUILabel("IsNull? [" + (MyZexel.GetTexture() != null) + "]");
                 GUILayout.Space(30);
-                Rect OtherRect = GUILayoutUtility.GetRect(new GUIContent("Blargnugg"), GUI.skin.button);
-                Rect MyRect = new Rect(0, 0, MyZexel.GetWidth() * 4, MyZexel.GetHeight() * 4);
-                MyRect.x = GUIIndentPositionX() + MyZexel.GetWidth() * 2;// OtherRect.width / 2f - MyZexel.GetWidth() * 2f;
-                MyRect.y = OtherRect.y;
-                int BorderSize = 20;
-                Rect BackgroundRect = new Rect(MyRect.x - BorderSize, MyRect.y - BorderSize,
-                    MyRect.width + BorderSize * 2f, MyRect.height + BorderSize * 2f);
-                GUI.color = Color.gray;
-                GUI.DrawTexture(BackgroundRect, Texture2D.whiteTexture);
-                GUI.color = Color.white;
-                GUI.DrawTexture(MyRect, MyZexel.GetTexture());
-                GUILayout.Space(MyRect.height);
+				GUITexture(MyZexel.GetTexture(), 4);
             }
             // buttons
 
             if (GUIButton("Import"))
             {
 #if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                ImportZexel(MyZexel);
+				DataManager.Get().ImportImage(MyZexel);
 #else
-                        Debug.LogError("Platform not supported.");
+				Debug.LogError("Platform not supported.");
 #endif
             }
             if (GUIButton("Export"))
             {
 #if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                ExportZexel(MyZexel);
+				DataManager.Get().ExportZexel(MyZexel);
 #else
                         Debug.LogError("Platform not supported.");
 #endif
             }
         }
 
-        public AudioClip LatestPlayed;
-
-        public void PlayClip(AudioClip clip)
-        {
-            if (Application.isEditor && Application.isPlaying == false)
-            {
-                UniversalCoroutine.CoroutineManager.StopAllCoroutines();
-                UniversalCoroutine.CoroutineManager.StartCoroutine(PlayClipInEditor(clip));
-            }
-            else
-            {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
-            }
-        } // PlayClip()
-
-        private System.Collections.IEnumerator PlayClipInEditor(AudioClip clip)
-        {
-            Debug.LogError("Load audio? " + clip.LoadAudioData().ToString()
-               + " : " + clip.loadState.ToString() + " : " + clip.loadType.ToString());
-            while (clip.loadState == AudioDataLoadState.Loading)
-            {
-                yield return null;
-            }
-#if UNITY_EDITOR
-            Assembly unityEditorAssembly = typeof(UnityEditor.AudioImporter).Assembly;
-            System.Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
-            MethodInfo method = audioUtilClass.GetMethod(
-                "PlayClip",
-                BindingFlags.Static | BindingFlags.Public,
-                null,
-                new System.Type[] {
-                typeof(AudioClip)
-                },
-                null
-            );
-            method.Invoke(
-                null,
-                new object[] {
-                clip
-                }
-            );
-#endif
-        }
-        private void ImportZexel(Zexel OpenedZexel)
-        {
-            ImportImage(OpenedZexel);
-        }
-
-        public void ImportPolygon(int FileIndex)
-        {
-            //ElementFolder MyFolder = GetElementFolder(FolderName);
-            //if (MyFolder != null)
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-            {
-                System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                if (MyResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
-                    //byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-                    //MyZexel.LoadImage(bytes);
-                }
-                else
-                {
-                    Debug.LogError("Failure to open file.");
-                }
-            }
-#endif
-        }
-
-        public void ExportZexel(Zexel MyZexel)
-        {
-            if (MyZexel.GetTexture() != null)
-            {
-#if UNITY_EDITOR
-                System.Windows.Forms.SaveFileDialog MySaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-                MySaveFileDialog.Filter = "*." + "png" + "| *." + "png";
-                //OpenFileDialog open = new OpenFileDialog();
-                MySaveFileDialog.Title = "Export a Texture";
-                MySaveFileDialog.ShowDialog();
-                if (MySaveFileDialog.FileName != "")
-                {
-                    //byte[] MyBytes = System.Convert.FromBase64String(Data);
-                    FileUtil.SaveBytes(MySaveFileDialog.FileName, (MyZexel.GetTexture()).EncodeToPNG());
-                }
-#endif
-            }
-        }
-
-        #region ImportVox
-        private Int3 VoxelIndex = Int3.Zero();
-        private int VoxelIndex2 = 0;
-        private Int3 VoxelIndex3 = Int3.Zero();
-        private Color VoxelColor;
-        private string ImportVoxelData = "";
-        
-        public System.Collections.IEnumerator LoadVoxFile(Voxels.WorldModel MyModel)
-        {
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadVoxFile());
-            MyModel.VoxelData = ImportVoxelData;
-            OpenedElement.OnModified();
-        }
-
-        public System.Collections.IEnumerator LoadVoxFile(Voxels.World SpawnedWorld = null)
-        {
-            yield return null;
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-            System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-            System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-            string FilePath = MyDialog.FileName;
-            if (MyResult == System.Windows.Forms.DialogResult.OK
-                && FilePath != null && FilePath.Length > 0)
-            {
-                MVMainChunk MyVoxelMainChunk = MVImporter.LoadVOX(FilePath, null);
-                if (MyVoxelMainChunk != null)
-                {
-                    //if (SpawnedWorld != null)
-                    {
-                        Debug.Log("Loading world from .Vox: " + MyVoxelMainChunk.voxelChunk.sizeX + ", " + MyVoxelMainChunk.voxelChunk.sizeY + ", " + MyVoxelMainChunk.voxelChunk.sizeZ);
-                        Int3 NewWorldSize = new Int3(
-                            Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize) + 1,
-                            Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize) + 1,
-                            Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize) + 1);
-                        Voxels.VoxelData Data = null;
-                        if (SpawnedWorld)
-                        {
-                            SpawnedWorld.IsChunksCentred = false;
-                            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SpawnedWorld.SetWorldSizeRoutine(NewWorldSize));
-                            /*while (SpawnedWorld.IsWorldLoading())
-                            {
-                                yield return null;
-                            }*/
-                        }
-                        else
-                        {
-                            // Create new voxel Data here
-                            Data = new Voxels.VoxelData(
-                                Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float) MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize),
-                                Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize),
-                                Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize));
-                        }
-                        for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; VoxelIndex.x++)
-                        {
-                            for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; VoxelIndex.y++)
-                            {
-                                for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; VoxelIndex.z++)
-                                {
-                                    VoxelIndex2 = (int)MyVoxelMainChunk.voxelChunk.voxels[VoxelIndex.x, VoxelIndex.y, VoxelIndex.z];
-                                    //VoxelIndex3.Set(VoxelIndex.x - MyVoxelMainChunk.voxelChunk.sizeX / 2,
-                                    //    VoxelIndex.y, VoxelIndex.z - MyVoxelMainChunk.voxelChunk.sizeZ / 2);
-                                    if (VoxelIndex2 > 0)
-                                    {
-                                        //Debug.Log(MyVoxelMainChunk.voxelChunk.voxels[x, y, z].ToString());
-                                        // minus 1 off the pallete to get the real index
-                                        VoxelColor = MyVoxelMainChunk.palatte[VoxelIndex2 - 1];
-                                        if (SpawnedWorld)
-                                        {
-                                            //Debug.Log(VoxelIndex.ToString() + " -TO- " + VoxelColor.ToString());
-                                            SpawnedWorld.UpdateBlockTypeMass(
-                                                "Color",
-                                                VoxelIndex,
-                                                VoxelColor);
-                                        }
-                                        else
-                                        {
-                                            Data.SetVoxelTypeColorRaw(VoxelIndex, 1, VoxelColor);
-                                           // Debug.LogError(VoxelColor.ToString());
-                                        }
-                                        /*MassUpdateVoxelIndex = MyBlockType;
-                                        MassUpdateVoxelName = MyWorld.MyLookupTable.GetName(MyBlockType);
-                                        MassUpdateColor = Color.white;
-                                        MassUpdatePosition.Set(LoadingVoxelIndex);
-                                        UpdateBlockTypeLoading();*/
-                                    }
-                                    else
-                                    {
-                                        if (SpawnedWorld)
-                                        {
-                                            //Debug.Log(VoxelIndex.ToString() + " -TO- Air");
-                                            SpawnedWorld.UpdateBlockTypeMass("Air", VoxelIndex);
-                                        }
-                                        /*else
-                                        {
-                                            Data.SetVoxelTypeRaw(VoxelIndex, 0);
-                                        }*/
-                                    }
-                                }
-                            }
-                        }
-                        if (SpawnedWorld)
-                        {
-                            Debug.Log("Vox Import OnMassUpdate for: " + SpawnedWorld.name);
-                            Voxels.WorldUpdater.Get().Clear(SpawnedWorld);
-                            SpawnedWorld.OnMassUpdate();
-                            Voxels.WorldUpdater.Get().IsUpdating = false;
-                            //SpawnedWorld.ForceRefresh();
-                        }
-                        else
-                        {
-                            int VoxelType = 0;
-                            System.Text.StringBuilder ImportVoxelDataBuilder = new System.Text.StringBuilder();
-                            for (VoxelIndex.x = 0; VoxelIndex.x < Data.GetSize().x; ++VoxelIndex.x)
-                            {
-                                for (VoxelIndex.y = 0; VoxelIndex.y < Data.GetSize().y; ++VoxelIndex.y)
-                                {
-                                    for (VoxelIndex.z = 0; VoxelIndex.z < Data.GetSize().z; ++VoxelIndex.z)
-                                    {
-                                        VoxelType = Data.GetVoxelType(VoxelIndex);
-                                        if (VoxelType > 0)
-                                        {
-                                            VoxelColor = Data.GetVoxelColorColor(VoxelIndex);
-                                            //ImportVoxelDataBuilder.AppendLine(1 + " " + VoxelColor.r + " " + VoxelColor.g + " " + VoxelColor.b);
-                                            int Red = (int)(255f * VoxelColor.r);
-                                            int Green = (int)(255f * VoxelColor.g);
-                                            int Blue = (int)(255f * VoxelColor.b);
-                                            ImportVoxelDataBuilder.AppendLine("" + 1 + " " + Red + " " + Green + " " + Blue);
-                                        }
-                                        else
-                                        {
-                                            ImportVoxelDataBuilder.AppendLine(0.ToString());
-                                        }
-                                    }
-                                }
-                            }
-                            ImportVoxelData = ImportVoxelDataBuilder.ToString();
-                            Debug.LogError(Data.GetSize().GetVector().ToString() + " - Imported voxel data:\n" + ImportVoxelData);
-                        }
-
-                        /*if (MyVoxelMainChunk.alphaMaskChunk != null)
-                        {
-                            Debug.Log("Checking Alpha from .Vox: " + MyVoxelMainChunk.alphaMaskChunk.sizeX + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeY + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeZ);
-                            for (int x = 0; x < MyVoxelMainChunk.alphaMaskChunk.sizeX; ++x)
-                            {
-                                for (int y = 0; y < MyVoxelMainChunk.alphaMaskChunk.sizeY; ++y)
-                                {
-                                    for (int z = 0; z < MyVoxelMainChunk.alphaMaskChunk.sizeZ; ++z)
-                                    {
-                                        Debug.Log(MyVoxelMainChunk.alphaMaskChunk.voxels[x, y, z].ToString());
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Debug.Log("Alpha Mask is null");
-                        }*/
-                    }
-                    /*else
-                    {
-                        Debug.LogError("[World in Viewer] is null.");
-                    }**/
-                    // for our voxel data, set it to 
-                }
-                else
-                {
-                    Debug.LogError("[MyVoxelMainChunk] is null.");
-                }
-            }
-            else
-            {
-                Debug.LogError("[MVVoxModel] Invalid file path");
-            }
-            //yield break;
-#endif
-        }
-#endregion
-
-        public void ExportPolygon(MeshFilter MyMeshFilter)//int FileIndex)
-        {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-            System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
-            System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-            if (MyResult == System.Windows.Forms.DialogResult.OK)
-            {
-                string MyMeshString = MeshToString(MyMeshFilter);
-                FileUtil.Save(MyDialog.FileName, MyMeshString);
-            }
-#endif
-        }
-
-        public static string MeshToString(MeshFilter MyMeshFilter)
-        {
-            Mesh mesh = MyMeshFilter.mesh;
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-
-            sb.Append("g ").Append(mesh.name).Append("\n");
-            foreach (Vector3 v in mesh.vertices)
-            {
-                sb.Append(string.Format("v {0} {1} {2}\n", v.x, v.y, v.z));
-            }
-            sb.Append("\n");
-            foreach (Vector3 v in mesh.normals)
-            {
-                sb.Append(string.Format("vn {0} {1} {2}\n", v.x, v.y, v.z));
-            }
-            sb.Append("\n");
-            foreach (Vector3 v in mesh.uv)
-            {
-                sb.Append(string.Format("vt {0} {1}\n", v.x, v.y));
-            }
-            Material[] mats = MyMeshFilter.GetComponent<MeshRenderer>().sharedMaterials;
-            for (int material = 0; material < mesh.subMeshCount; material++)
-            {
-                sb.Append("\n");
-                sb.Append("usemtl ").Append(mats[material].name).Append("\n");
-                sb.Append("usemap ").Append(mats[material].name).Append("\n");
-
-                int[] triangles = mesh.GetTriangles(material);
-                for (int i = 0; i < triangles.Length; i += 3)
-                {
-                    sb.Append(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}\n",
-                        triangles[i] + 1, triangles[i + 1] + 1, triangles[i + 2] + 1));
-                }
-            }
-            return sb.ToString();
-        }
-
-        public void ImportImage(string FolderName, int FileIndex)
-        {
-            Zexel MyZexel = GetElement(FolderName, FileIndex) as Zexel;
-            if (MyZexel != null)
-            {
-                ImportImage(MyZexel);
-            }
-        }
-
-        public void ImportImage(Zexel MyZexel)
-        {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-            System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-            System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-            if (MyResult == System.Windows.Forms.DialogResult.OK)
-            {
-                byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-                MyZexel.LoadImage(bytes);
-            }
-            else
-            {
-                Debug.LogError("Failure to open file.");
-            }
-#endif
-        }
-
-        public void ImportZound(string FolderName, Sound.Zound MyZound)
-        {
-            ElementFolder MyFolder = GetElementFolder(FolderName);
-            if (MyFolder != null)
-            {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                if (MyResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    UniversalCoroutine.CoroutineManager.StartCoroutine(ImportSoundRoutine(MyDialog.FileName, MyZound));
-                }
-                else
-                {
-                    Debug.LogError("Failure to open file.");
-                }
-#endif
-            }
-            else
-            {
-                Debug.LogError("Failed to find folder: " + OpenedFolderName);
-            }
-        }
-
-        private System.Collections.IEnumerator ImportSoundRoutine(string FileName, Sound.Zound MyZound)
-        {
-            WWW MyWavLoader = new WWW("file://" + FileName);
-            yield return MyWavLoader;
-            LatestPlayed = MyWavLoader.GetAudioClip();
-            MyZound.UseAudioClip(LatestPlayed);
-        }
+		private void GUITexture(Texture MyTexture, float Multiple = 1f) 
+		{
+			if (GUI.skin == null)
+			{
+				Debug.LogError("Skin is null in GUITexture DataGUI");
+				return;
+			}
+			if (MyTexture == null) 
+			{
+				MyTexture = Texture2D.blackTexture as Texture;
+			}
+			Rect OtherRect = GUILayoutUtility.GetRect(new GUIContent("Blargnugg"), GUI.skin.button);
+			Rect MyRect = new Rect(0, 0, MyTexture.width * Multiple, MyTexture.height * Multiple);
+			MyRect.x = GUIIndentPositionX() + MyTexture.width * (Multiple / 2f);// OtherRect.width / 2f - MyZexel.GetWidth() * 2f;
+			MyRect.y = OtherRect.y;
+			int BorderSize = 20;
+			Rect BackgroundRect = new Rect(MyRect.x - BorderSize, MyRect.y - BorderSize,
+				MyRect.width + BorderSize * 2f, MyRect.height + BorderSize * 2f);
+			GUI.color = Color.gray;
+			GUI.DrawTexture(BackgroundRect, Texture2D.whiteTexture);
+			GUI.color = Color.white;
+			GUI.DrawTexture(MyRect, MyTexture);
+			GUILayout.Space(MyRect.height);
+		}
 
         public void GUILabel(string MyLabelText)
         {
@@ -989,7 +633,11 @@ namespace Zeltex
                 return GUILayout.Toggle(OldValue, MyLabelText);
 #endif
         }
-        public void DrawFieldsForObject(object MyObject)
+
+		/// <summary>
+		/// Dynamically creates a gui for an object
+		/// </summary>
+		public void DrawFieldsForObject(object MyObject, bool IsFirstField = false)
         {
             var Fields = (MyObject.GetType()).GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
            // GUILabel("-=- New Object [" + MyObject.ToString() + "] -=-");
@@ -1077,9 +725,9 @@ namespace Zeltex
                             GUILabel("[" + Fields[i].Name + "]: " + OldValue);
                             string NewValue = GUIText(OldValue);
                             if (OldValue != NewValue)
-                            {
-                                Fields[i].SetValue(MyObject, NewValue);
-                                (MyObject as Element).OnModified();
+							{
+								Fields[i].SetValue(MyObject, NewValue);
+								(MyObject as Element).OnModified();
                             }
                         }
                         else if (Fields[i].FieldType == typeof(Int3))
@@ -1164,7 +812,7 @@ namespace Zeltex
                             if (GUIButton("Pull"))
                             {
                                 Skeletons.Skeleton OldValue = (Skeletons.Skeleton)Fields[i].GetValue(MyObject);
-                                Fields[i].SetValue(MyObject, GetElement(DataFolderNames.Skeletons, OldValue.Name).Clone<Skeletons.Skeleton>());
+								Fields[i].SetValue(MyObject, DataManager.Get().GetElement(DataFolderNames.Skeletons, OldValue.Name).Clone<Skeletons.Skeleton>());
                             }
                         }
                         else if (Fields[i].FieldType == typeof(Zexel))
@@ -1318,5 +966,21 @@ namespace Zeltex
         }
 #endregion
 #endregion
+
+
+		private void RenameResourcesFolder(string NewName)
+		{
+			string OldFolderPath = DataManager.Get().GetResourcesPath() + DataManager.Get().MapName + "/";
+			string NewFolderPath = DataManager.Get().GetResourcesPath() + NewName + "/";
+			if (FileManagement.DirectoryExists(NewFolderPath, true, true) == false)
+			{
+				System.IO.Directory.Move(OldFolderPath, NewFolderPath);
+				DataManager.Get().MapName = NewName;
+			}
+			else
+			{
+				Debug.Log("Cannot move to " + NewFolderPath + " as already exists.");
+			}
+		}
     }
 }

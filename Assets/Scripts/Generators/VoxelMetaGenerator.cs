@@ -55,8 +55,8 @@ namespace Zeltex.Generators
             }*/
             DataManager.Get().Clear("VoxelMeta");
             DataManager.Get().Clear("VoxelTexturesDiffuse");
-            DataManager.Get().Clear("VoxelModels");
-            GenerateVoxelModels();
+            DataManager.Get().Clear("PolyModels");
+            GeneratePolyModels();
             //MyTexGen.RandomColors();    // all the same colours! or slightly altered
             //int MyColourIndex = Random.Range(0, MyPrimaryColours.Count - 1);
             //MyTexGen.SetColors(MyPrimaryColours[MyColourIndex], MySecondaryColours[MyColourIndex]);
@@ -133,7 +133,7 @@ namespace Zeltex.Generators
                 DataManager.Get().AddElement(DataFolderNames.VoxelMeta, MyMeta);
 				yield return new WaitForSeconds(LoadingDelay);
             }
-            GenerateVoxelModelTextureMap();
+            GeneratePolyModelTextureMap();
             // Generate TileMap
             //MyTextureManager.GenerateTileMap();
             yield return new WaitForSeconds(LoadingDelay);
@@ -143,31 +143,31 @@ namespace Zeltex.Generators
         /// <summary>
         /// Generate various models for the voxels
         /// </summary>
-        public void GenerateVoxelModels()
+        public void GeneratePolyModels()
         {
             Debug.Log("Generating Default Voxel Models at [" + Time.realtimeSinceStartup + "]");
             //Data.Clear ();
             //MyPolygonMaker.Clear();
-            VoxelModel NewModel = new VoxelModel();
+            PolyModel NewModel = new PolyModel();
             NewModel.Name = "Block";
             NewModel.GenerateCubeMesh();
-            DataManager.Get().AddElement(DataFolderNames.PolygonModels, NewModel);
+            DataManager.Get().AddElement(DataFolderNames.PolyModels, NewModel);
 
 			// Second is a squashed model
-			/*VoxelModel NewModel2 = new VoxelModel();
+			/*PolyModel NewModel2 = new PolyModel();
             NewModel2.Clear();
             NewModel2.GenerateSquashedCubeMesh(new Vector3(0.5f, 1f, 0.5f));
             MyModels.Add(NewModel2);
 
             // for door
-            VoxelModel NewModel3 = new VoxelModel();
+            PolyModel NewModel3 = new PolyModel();
             NewModel3.Clear();
             NewModel3.GenerateSquashedCubeMesh(new Vector3(1f, 1f, 0.1f));
             NewModel3.MovePosition(new Vector3(0, 0, 0.2f));   // starts at z = 0.5f, need it to go to 0.9f, so +.4f
             MyModels.Add(NewModel3);
 
             // platform thingy
-            VoxelModel NewModel4 = new VoxelModel();
+            PolyModel NewModel4 = new PolyModel();
             NewModel4.Clear();
             NewModel4.GenerateSquashedCubeMesh(new Vector3(1f, 0.25f, 1f));
             NewModel3.MovePosition(new Vector3(0, 0, 0.25f));   // starts at z = 0.5f, need it to go to 0.9f, so +.4f
@@ -179,14 +179,14 @@ namespace Zeltex.Generators
         /// For each texture, map them to the models - automatically
         /// This will be one texture to one model, or a blend between the two
         /// </summary>
-        private void GenerateVoxelModelTextureMap()
+        private void GeneratePolyModelTextureMap()
         {
 			// Create a texture map for each texture
 			int DiffuseTexturesCount = MyVoxelManager.DiffuseTextures.Count;
 			Debug.LogError("Generating texture map for " + DiffuseTexturesCount + " Textures.");
 			for (int i = 0; i < MyVoxelManager.MyModels.Count; i++)
             {
-				VoxelModel MyModel = MyVoxelManager.GetModel(i);
+				PolyModel MyModel = MyVoxelManager.GetModel(i);
 				for (int j = 0; j < DiffuseTexturesCount; j++)
                 {
 					string TextureName = MyVoxelManager.DiffuseTextures[j].name;

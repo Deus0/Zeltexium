@@ -128,7 +128,7 @@ namespace Zeltex.Voxels
             }
             //string MyScript = FileUtil.ConvertToSingle(MyScriptList);
             //File.WriteAllText(FilePath, MyScript);
-            //DataManager.Get().Set(DataFolderNames.VoxelModels, MyManager.GetSelectedIndex(), MyScript);
+            //DataManager.Get().Set(DataFolderNames.PolyModels, MyManager.GetSelectedIndex(), MyScript);
         }
 
         /// <summary>

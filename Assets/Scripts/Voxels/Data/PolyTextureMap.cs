@@ -38,7 +38,7 @@ namespace Zeltex.Voxels
     /// Each texture map links up to textures and uvs
     /// </summary>
     [System.Serializable]
-    public class VoxelTextureMap
+    public class PolyTextureMap
     {
         public List<VoxelCoordinate> Coordinates = new List<VoxelCoordinate>();
         // functions
@@ -53,7 +53,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Initiate the voxel texturemap, giving it some coordinates
         /// </summary>
-        public VoxelTextureMap()
+        public PolyTextureMap()
         {
         }
 

@@ -886,7 +886,7 @@ namespace Zeltex.Guis.Maker
         {
             if (SelectedBone != null)
             {
-                string MySphereData = VoxelModelGenerator.Get().GetSphere();
+                string MySphereData = PolyModelGenerator.Get().GetSphere();
                 SelectedBone.CreateMesh(MySphereData);
                 //MySkeleton.GetSkeleton().CreateMesh(SelectedBone, MySphereData);
                 GetButton("DeleteSelectedMeshButton").interactable = true;
@@ -897,7 +897,7 @@ namespace Zeltex.Guis.Maker
         {
             if (SelectedBone != null)
             {
-                //string VoxelData = DataManager.Get().Get(DataFolderNames.VoxelModels, GetDropdown("VoxelModelDropdown").value);
+                //string VoxelData = DataManager.Get().Get(DataFolderNames.PolyModels, GetDropdown("PolyModelDropdown").value);
                 //MySkeleton.GetSkeleton().CreateMesh(SelectedBone, VoxelData);
                 //SelectedBone.CreateMesh(VoxelData);
                 //GetButton("DeleteSelectedMeshButton").interactable = true;
@@ -1323,8 +1323,8 @@ namespace Zeltex.Guis.Maker
                     {
                         if (MySkeleton != null && SelectedBone != null)
                         {
-                            int MeshIndex = GetDropdown("VoxelModelDropdown").value;
-                            //SelectedBone.CreateMesh(DataManager.Get().Get(DataFolderNames.VoxelModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
+                            int MeshIndex = GetDropdown("PolyModelDropdown").value;
+                            //SelectedBone.CreateMesh(DataManager.Get().Get(DataFolderNames.PolyModels, MeshIndex));  //MyModelMaker.Get(MeshIndex)
                         }
                     }
                     else if (MyButton.name == "ExplodeButton")
@@ -1414,9 +1414,9 @@ namespace Zeltex.Guis.Maker
         public override void FillDropdown(Dropdown MyDropdown)
         {
             List<string> MyDropdownNames = new List<string>();
-            if (MyDropdown.name == "VoxelModelDropdown")
+            if (MyDropdown.name == "PolyModelDropdown")
             {
-                MyDropdownNames.AddRange(DataManager.Get().GetNames(DataFolderNames.VoxelModels));
+                MyDropdownNames.AddRange(DataManager.Get().GetNames(DataFolderNames.PolyModels));
                 FillDropDownWithList(MyDropdown, MyDropdownNames);
             }
         }

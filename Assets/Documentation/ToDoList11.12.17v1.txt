@@ -243,7 +243,7 @@ Portal -> Teleports player to a new level or old one -> once teleported someone 
 
 Misc:
 Wall Placer
-Edit Transform thing - Select either VoxelModel, Skeleton bone, polygon helper thing, character in map, zone, voxel placer (a group of voxels that have yet to be placed)
+Edit Transform thing - Select either PolyModel, Skeleton bone, polygon helper thing, character in map, zone, voxel placer (a group of voxels that have yet to be placed)
 Edit Level - Edit the game rules - Add timed events - ie spawn x unit at location
 Limit character units , say 100
 if Characters count goes over 32, cull their meshes to half subdivision (make the thing for this)

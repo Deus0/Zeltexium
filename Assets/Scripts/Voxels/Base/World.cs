@@ -125,6 +125,7 @@ namespace Zeltex.Voxels
                 }
             }
         }
+
         private void Update()
         {
             Actions.Update(this);
@@ -144,7 +145,7 @@ namespace Zeltex.Voxels
             }
             if (ActionLoadModel.IsTriggered())
             {
-                WorldModel MyElement = DataManager.Get().GetElement(DataFolderNames.VoxelModels, LoadModelName) as WorldModel;
+                VoxelModel MyElement = DataManager.Get().GetElement(DataFolderNames.VoxelModels, LoadModelName) as VoxelModel;
                 if (MyElement != null)
                 {
                     Debug.LogError("Loading:\n" + MyElement.VoxelData);
@@ -162,7 +163,7 @@ namespace Zeltex.Voxels
             }
             if (ActionPushModel.IsTriggered())
             {
-                WorldModel NewModel = new WorldModel(Util.FileUtil.ConvertToSingle(GetScript()));
+                VoxelModel NewModel = new VoxelModel(Util.FileUtil.ConvertToSingle(GetScript()));
                 NewModel.Name = PushModelName;
                 DataManager.Get().AddElement(DataFolderNames.VoxelModels, NewModel);
             }

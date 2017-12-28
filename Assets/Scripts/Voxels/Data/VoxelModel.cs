@@ -10,11 +10,11 @@ namespace Zeltex.Voxels
     /// Also contains rules needed for placing in the voxel grid
     /// </summary>
     [System.Serializable]
-    public class WorldModel : Element
+    public class VoxelModel : Element
     {
         public string VoxelData = "";
 
-        public WorldModel(string NewData)
+        public VoxelModel(string NewData)
         {
             VoxelData = NewData;
         }

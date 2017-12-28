@@ -32,7 +32,7 @@ namespace Zeltex.Generators
         public DialogueGenerator MyDialogueGenerator;
         public ClassGenerator MyClassGenerator;
         // Art
-        public VoxelModelGenerator MyVoxelModelGenerator;
+        public PolyModelGenerator MyPolyModelGenerator;
         public SkeletonGenerator MySkeletonGenerator;
         public SoundGenerator MySoundGenerator;
         [Header("UI")]
@@ -72,8 +72,8 @@ namespace Zeltex.Generators
             yield return new WaitForSeconds(LoadingDelay);
 
             // generate the voxel models - after voxel meta and polygonal models are done - base it on them
-            SetStatusText("Generating VoxelModels");
-            yield return MyVoxelModelGenerator.GenerateData();
+            SetStatusText("Generating PolyModels");
+            yield return MyPolyModelGenerator.GenerateData();
             yield return new WaitForSeconds(LoadingDelay);
 
             SetStatusText("Generating Voxel Items");

@@ -20,7 +20,7 @@ namespace Zeltex.Voxels
         public EditorAction ActionGenerateTilemap = new EditorAction();
 
 		[Header("MyMetas")]
-        public Dictionary<string, VoxelModel> MyModels = new Dictionary<string, VoxelModel>();
+        public Dictionary<string, PolyModel> MyModels = new Dictionary<string, PolyModel>();
         public Dictionary<string, VoxelMeta> MyMetas = new Dictionary<string, VoxelMeta>();    // this is much faster for getting MyMetas using a string!
         public Texture2D MyTileMap;
         public Texture2D NormalMap;
@@ -102,7 +102,7 @@ namespace Zeltex.Voxels
                 foreach (string ModelName in MyModels.Keys)
                 {
                     GUILayout.Label(ModelName + ":" + MyModels[ModelName].Name);
-					VoxelModel MyModel = MyModels[ModelName];
+					PolyModel MyModel = MyModels[ModelName];
 					for (int i = 0; i < MyModel.TextureMaps.Count; i++)
 					{
 						GUILayout.Label("	TextureMap [" + i + "] :" + MyModel.TextureMaps[i].Coordinates.Count);
@@ -131,7 +131,7 @@ namespace Zeltex.Voxels
         {
             DataManager.Get().Clear("VoxelMeta");
             DataManager.Get().Clear("VoxelTexturesDiffuse");
-            DataManager.Get().Clear("VoxelModels");
+            DataManager.Get().Clear("PolyModels");
         }*/
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Add a Voxel Model to the game
         /// </summary>
-        public void AddModel(VoxelModel NewModel)
+        public void AddModel(PolyModel NewModel)
         {
             if (MyModels.ContainsKey(NewModel.Name) == false)
             {
@@ -227,7 +227,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Add a Voxel Model to the game
         /// </summary>
-        public void AddModelRaw(VoxelModel NewModel)
+        public void AddModelRaw(PolyModel NewModel)
         {
             if (MyModels.ContainsKey(NewModel.Name) == false)
             {
@@ -238,7 +238,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Inefficient, outdated. Try not to use this.
         /// </summary>
-        public VoxelModel GetModel(int Index)
+        public PolyModel GetModel(int Index)
         {
             if (Index >= 0 && Index < MyModels.Values.Count)
             {
@@ -361,7 +361,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Returns the mesh using a model, or returns null if no model
         /// </summary>
-        public VoxelModel GetModel(string ModelName)
+        public PolyModel GetModel(string ModelName)
         {
             if (ModelName != null && MyModels.Count > 0 && MyModels.ContainsKey(ModelName))
             {
@@ -407,9 +407,9 @@ namespace Zeltex.Voxels
         #region Mesh
 
         /// <summary>
-        /// Gets a VoxelModel with a name
+        /// Gets a PolyModel with a name
         /// </summary>
-        public VoxelModel GetVoxelModel(string ModelName)
+        public PolyModel GetPolyModel(string ModelName)
         {
             if (MyModels.ContainsKey(ModelName))
             {
@@ -418,13 +418,13 @@ namespace Zeltex.Voxels
             return null;
         }
 
-        VoxelModel MyModel;
+        PolyModel MyModel;
         /// <summary>
         /// used for chunk models
         /// </summary>
         public MeshData GetMeshData(string ModelIndex, int SideIndex)
         {
-            MyModel = GetVoxelModel(ModelIndex);
+            MyModel = GetPolyModel(ModelIndex);
             if (MyModel != null)
             {
                 return MyModel.GetModel(SideIndex);

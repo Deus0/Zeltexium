@@ -10,15 +10,15 @@ namespace Zeltex.Generators
     /// <summary>
     /// Generate Voxel Models!!
     /// </summary>
-    public class VoxelModelGenerator : MonoBehaviour
+    public class PolyModelGenerator : MonoBehaviour
     {
-        public static VoxelModelGenerator Myself;
+        public static PolyModelGenerator Myself;
 
         private void Start()
         {
             Myself = this;
         }
-        public static VoxelModelGenerator Get()
+        public static PolyModelGenerator Get()
         {
             return Myself;
         }
@@ -26,9 +26,9 @@ namespace Zeltex.Generators
         {
             // First generate a voxel model
             int MyRed = Random.Range(1, 255);
-			//DataManager.Get().Add("VoxelModels", "Model 1", GetSphere());
+			//DataManager.Get().Add("PolyModels", "Model 1", GetSphere());
 
-            /*List<string> MyVoxelModelData2 = new List<string>();
+            /*List<string> MyPolyModelData2 = new List<string>();
             for (int i = 0; i < Chunk.ChunkSize; i++)
             {
                 for (int j = 0; j < Chunk.ChunkSize; j++)
@@ -38,17 +38,17 @@ namespace Zeltex.Generators
                         float MyDistance = Vector3.Distance(new Vector3(i, j, k), new Vector3(7, 7, 7)) + Random.Range(0, 3);
                         if (MyDistance < 8)
                         {
-                            //MyVoxelModelData2.Add("" + 1);
-                            MyVoxelModelData2.Add("" + 1 + " " + Random.Range(1, 155) + " " + Random.Range(1, 55) + " " + Random.Range(1, 55));
+                            //MyPolyModelData2.Add("" + 1);
+                            MyPolyModelData2.Add("" + 1 + " " + Random.Range(1, 155) + " " + Random.Range(1, 55) + " " + Random.Range(1, 55));
                         }
                         else
                         {
-                            MyVoxelModelData2.Add("" + 0);
+                            MyPolyModelData2.Add("" + 0);
                         }
                     }
                 }
             }
-            MyVoxelModelMaker.AddData("Model 2", FileUtil.ConvertToSingle(MyVoxelModelData2));*/
+            MyPolyModelMaker.AddData("Model 2", FileUtil.ConvertToSingle(MyPolyModelData2));*/
             //yield return new WaitForSeconds(0.01f);
             yield break;
         }

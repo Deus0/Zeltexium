@@ -94,7 +94,7 @@ namespace Zeltex
         /// </summary>
         public Texture2D CreateTileMap(List<Texture2D> TiledTextures)
         {
-            int BufferLength = Voxels.VoxelModel.BufferLength;
+            int BufferLength = Voxels.PolyModel.BufferLength;
             if (TiledTextures.Count == 0
                 || TiledTextures[0] == null)
             {
@@ -247,7 +247,7 @@ namespace Zeltex
         /// </summary>
         public static int GetTileIndex(int PixelIndex, Texture2D MyTexture)
         {
-            int BufferLength = Zeltex.Voxels.VoxelModel.BufferLength;
+            int BufferLength = Zeltex.Voxels.PolyModel.BufferLength;
             //int BufferLength = 1;
             int OriginalTileCountX = 8;
             int MaxTextures = (OriginalTileCountX - BufferLength) * (OriginalTileCountX - BufferLength);
@@ -377,7 +377,7 @@ namespace Zeltex
         /// </summary>
         public static Texture2D CreateTileMapMeta(List<Texture2D> TiledTextures, int OriginalTileCountX) // Texture2D NewTileMap, 
         {
-            int BufferLength = Zeltex.Voxels.VoxelModel.BufferLength;
+            int BufferLength = Zeltex.Voxels.PolyModel.BufferLength;
 
             int PixelResolution = TiledTextures[0].width;
             int TileCountX = TiledTextures.Count;

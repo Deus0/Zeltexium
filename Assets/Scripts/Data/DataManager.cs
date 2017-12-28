@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using Zeltex.Generators;
@@ -15,21 +16,20 @@ namespace Zeltex
     public partial class DataManager : ManagerBase<DataManager>
     {
         #region Variables
-        [Header("Debug")]
-        public bool IsDebugGui;
-        private KeyCode DebugOpenKey = KeyCode.F1;
-        public bool IsLoad;     // loads all the data
-        [Header("Data")]
-        [SerializeField]//, HideInInspector]
+		[Header("Data")]
+		public string MapName = "Zelnugg";
+        [SerializeField, HideInInspector]
         private List<ElementFolder> ElementFolders = new List<ElementFolder>();
         //public List<StringFolder> StringFolders = new List<StringFolder>();
-        private string RenameName = "Null";
         //private List<string> MyResourceNames = new List<string>();
 
-        public string ResourcesName = "ResourcesName";
-        public string MapName = "Zelnugg";
-        public string MapFolderPath = "";
-        public string PathTypeKey = "PathType";
+		[SerializeField, HideInInspector]
+		public string ResourcesName = "ResourcesName";
+		[SerializeField, HideInInspector]
+		public string MapFolderPath = "";
+		[SerializeField, HideInInspector]
+		public string PathTypeKey = "PathType";
+		[SerializeField, HideInInspector]
         public FilePathType MyFilePathType = FilePathType.StreamingPath;
         [SerializeField, HideInInspector]
         private bool IsJSONFormat = true;
@@ -43,9 +43,19 @@ namespace Zeltex
         public UnityEvent OnUpdatedResources = new UnityEvent();
         public UnityEvent OnBeginLoading = new UnityEvent();
         public UnityEvent OnEndLoading = new UnityEvent();
+		public DataGUI MyGui;
         #endregion
 
         #region Mono
+
+		public void DrawGui() 
+		{
+			MyGui.DrawGui ();
+		}
+		public List<ElementFolder> GetFolders()
+		{
+			return ElementFolders;
+		}
 
         public new static DataManager Get()
         {
@@ -66,7 +76,11 @@ namespace Zeltex
 
         private void Start()
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine2());
+			MyGui = gameObject.GetComponent<DataGUI>();
+			if (Application.isPlaying)
+			{
+				UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllRoutine2());
+			}
         }
 
         public List<Element> GetElements(string FolderName)
@@ -103,19 +117,6 @@ namespace Zeltex
             }
             OnEndLoading.Invoke();
             yield return null;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(DebugOpenKey))
-            {
-                IsDebugGui = !IsDebugGui;
-            }
-            if (IsLoad)
-            {
-                IsLoad = false;
-                LoadAll();
-            }
         }
         #endregion
 
@@ -284,7 +285,7 @@ namespace Zeltex
             {
                 CreateDirectories();
                 MapName = ResourcesName;
-                RenameName = ResourcesName;
+                //RenameName = ResourcesName;
                 IsLoaded = true;
                 OnUpdatedResources.Invoke();
                 return true;
@@ -362,24 +363,24 @@ namespace Zeltex
 
             FolderNames.Add(DataFolderNames.Sounds);
             FolderNames.Add(DataFolderNames.Skeletons);
-            FolderNames.Add(DataFolderNames.VoxelModels);
+            FolderNames.Add(DataFolderNames.PolyModels);
             FolderNames.Add(DataFolderNames.Voxels);
             FolderNames.Add(DataFolderNames.Dialogues);
-            FolderNames.Add(DataFolderNames.PolygonModels);
+            FolderNames.Add(DataFolderNames.PolyModels);
             return FolderNames;
         }
 
         /// <summary>
-        /// 
+        /// Clears and re adds all the folders
         /// </summary>
-        private void InitializeFolders()
+        public void InitializeFolders()
         {
             ElementFolders.Clear();
 
             // Element Folders
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelMeta, "zel"));
-            ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolygonModels, "zel"));
-            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolyModels, "zel"));
+			ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.Zanimations, "zel"));
 
@@ -409,10 +410,8 @@ namespace Zeltex
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.StatTextures, "zel"));
 
             // level scripts, each level contains a folder full of chunks and characters too
-            RefreshGuiMapNames();
+            //RefreshGuiMapNames();
         }
-        public Texture2D TestTexture;
-        public Texture2D TestTexture2;
 
         /// <summary>
         /// Unloads all data
@@ -537,7 +536,7 @@ namespace Zeltex
         {
             PlayerPrefs.SetString(ResourcesName, MapName);
             Debug.Log("Loading Resources from folder [" + MapName + "]");
-            RenameName = MapName;
+            //RenameName = MapName;
             InitializeFolders();
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllElements());
             IsLoaded = true;
@@ -619,5 +618,776 @@ namespace Zeltex
             return "";  // no name given
         }
         #endregion
+
+
+		private List<string> GetStatisticsList()
+		{
+			List<string> MyStatistics = new List<string>();
+			int TotalCount = ElementFolders.Count;   //SpellFolders.Count + ItemFolders.Count + StatFolders.Count +  TextureFolders.Count + AudioFolders.Count + 
+			MyStatistics.Add("DataManager -:- Element Types: " + TotalCount);
+
+			for (int i = 0; i < ElementFolders.Count; i++)
+			{
+				MyStatistics.Add("[" + (i + 1) + "] " + ElementFolders[i].FolderName + ": " + ElementFolders[i].Data.Count);
+			}
+			return MyStatistics;
+		}
+
+
+		#region ImportVox
+		private Int3 VoxelIndex = Int3.Zero();
+		private int VoxelIndex2 = 0;
+		private Int3 VoxelIndex3 = Int3.Zero();
+		private Color VoxelColor;
+		private string ImportVoxelData = "";
+
+		public System.Collections.IEnumerator LoadVoxFile(Voxels.VoxelModel MyModel)
+		{
+			yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadVoxFile());
+			MyModel.VoxelData = ImportVoxelData;
+			MyModel.OnModified();
+		}
+
+		public System.Collections.IEnumerator LoadVoxFile(Voxels.World SpawnedWorld = null)
+		{
+			yield return null;
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			string FilePath = MyDialog.FileName;
+			if (MyResult == System.Windows.Forms.DialogResult.OK && FilePath != null && FilePath.Length > 0)
+			{
+				MVMainChunk MyVoxelMainChunk = MVImporter.LoadVOX(FilePath, null);
+				if (MyVoxelMainChunk != null)
+				{
+					//if (SpawnedWorld != null)
+					{
+					Debug.Log("Loading world from .Vox: " + MyVoxelMainChunk.voxelChunk.sizeX + ", " + MyVoxelMainChunk.voxelChunk.sizeY + ", " + MyVoxelMainChunk.voxelChunk.sizeZ);
+					Int3 NewWorldSize = new Int3(
+					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize) + 1,
+					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize) + 1,
+					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize) + 1);
+					Voxels.VoxelData Data = null;
+					if (SpawnedWorld)
+					{
+						SpawnedWorld.IsChunksCentred = false;
+						yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SpawnedWorld.SetWorldSizeRoutine(NewWorldSize));
+						/*while (SpawnedWorld.IsWorldLoading())
+						{
+						yield return null;
+						}*/
+					}
+					else
+					{
+						// Create new voxel Data here
+						Data = new Voxels.VoxelData(
+						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float) MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize),
+						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize),
+						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize));
+					}
+					for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; VoxelIndex.x++)
+					{
+						for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; VoxelIndex.y++)
+						{
+							for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; VoxelIndex.z++)
+							{
+								VoxelIndex2 = (int)MyVoxelMainChunk.voxelChunk.voxels[VoxelIndex.x, VoxelIndex.y, VoxelIndex.z];
+								//VoxelIndex3.Set(VoxelIndex.x - MyVoxelMainChunk.voxelChunk.sizeX / 2,
+								//    VoxelIndex.y, VoxelIndex.z - MyVoxelMainChunk.voxelChunk.sizeZ / 2);
+								if (VoxelIndex2 > 0)
+								{
+									//Debug.Log(MyVoxelMainChunk.voxelChunk.voxels[x, y, z].ToString());
+									// minus 1 off the pallete to get the real index
+									VoxelColor = MyVoxelMainChunk.palatte[VoxelIndex2 - 1];
+									if (SpawnedWorld)
+									{
+										//Debug.Log(VoxelIndex.ToString() + " -TO- " + VoxelColor.ToString());
+										SpawnedWorld.UpdateBlockTypeMass(
+										"Color",
+										VoxelIndex,
+										VoxelColor);
+									}
+									else
+									{
+										Data.SetVoxelTypeColorRaw(VoxelIndex, 1, VoxelColor);
+									}
+									/*MassUpdateVoxelIndex = MyBlockType;
+									MassUpdateVoxelName = MyWorld.MyLookupTable.GetName(MyBlockType);
+									MassUpdateColor = Color.white;
+									MassUpdatePosition.Set(LoadingVoxelIndex);
+									UpdateBlockTypeLoading();*/
+								}
+								else
+								{
+									if (SpawnedWorld)
+									{
+										//Debug.Log(VoxelIndex.ToString() + " -TO- Air");
+										SpawnedWorld.UpdateBlockTypeMass("Air", VoxelIndex);
+									}
+					/*else
+					{
+					Data.SetVoxelTypeRaw(VoxelIndex, 0);
+					}*/
+								}
+							}
+						}
+					}
+					if (SpawnedWorld)
+					{
+						Debug.Log("Vox Import OnMassUpdate for: " + SpawnedWorld.name);
+						Voxels.WorldUpdater.Get().Clear(SpawnedWorld);
+						SpawnedWorld.OnMassUpdate();
+						Voxels.WorldUpdater.Get().IsUpdating = false;
+						//SpawnedWorld.ForceRefresh();
+					}
+					else
+					{
+						int VoxelType = 0;
+						System.Text.StringBuilder ImportVoxelDataBuilder = new System.Text.StringBuilder();
+						for (VoxelIndex.x = 0; VoxelIndex.x < Data.GetSize().x; ++VoxelIndex.x)
+						{
+							for (VoxelIndex.y = 0; VoxelIndex.y < Data.GetSize().y; ++VoxelIndex.y)
+							{
+								for (VoxelIndex.z = 0; VoxelIndex.z < Data.GetSize().z; ++VoxelIndex.z)
+								{
+									VoxelType = Data.GetVoxelType(VoxelIndex);
+									if (VoxelType > 0)
+									{
+										VoxelColor = Data.GetVoxelColorColor(VoxelIndex);
+										//ImportVoxelDataBuilder.AppendLine(1 + " " + VoxelColor.r + " " + VoxelColor.g + " " + VoxelColor.b);
+										int Red = (int)(255f * VoxelColor.r);
+										int Green = (int)(255f * VoxelColor.g);
+										int Blue = (int)(255f * VoxelColor.b);
+										ImportVoxelDataBuilder.AppendLine("" + 1 + " " + Red + " " + Green + " " + Blue);
+									}
+									else
+									{
+										ImportVoxelDataBuilder.AppendLine(0.ToString());
+									}
+								}
+							}
+						}
+						ImportVoxelData = ImportVoxelDataBuilder.ToString();
+						Debug.LogError(Data.GetSize().GetVector().ToString() + " - Imported voxel data:\n" + ImportVoxelData);
+					}
+
+					/*if (MyVoxelMainChunk.alphaMaskChunk != null)
+					{
+					Debug.Log("Checking Alpha from .Vox: " + MyVoxelMainChunk.alphaMaskChunk.sizeX + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeY + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeZ);
+					for (int x = 0; x < MyVoxelMainChunk.alphaMaskChunk.sizeX; ++x)
+					{
+					for (int y = 0; y < MyVoxelMainChunk.alphaMaskChunk.sizeY; ++y)
+					{
+					for (int z = 0; z < MyVoxelMainChunk.alphaMaskChunk.sizeZ; ++z)
+					{
+					Debug.Log(MyVoxelMainChunk.alphaMaskChunk.voxels[x, y, z].ToString());
+					}
+					}
+					}
+					}
+					else
+					{
+					Debug.Log("Alpha Mask is null");
+					}*/
+				}
+				/*else
+				{
+				Debug.LogError("[World in Viewer] is null.");
+				}**/
+				// for our voxel data, set it to 
+				}
+				else
+				{
+					Debug.LogError("[MyVoxelMainChunk] is null.");
+				}
+			}
+			else
+			{
+			Debug.LogError("[MVVoxModel] Invalid file path");
+			}
+			//yield break;
+			#endif
+		}
+		#endregion
+
+		#region ImportsExports
+
+		public void ImportPolygon(int FileIndex)
+		{
+			//ElementFolder MyFolder = GetElementFolder(FolderName);
+			//if (MyFolder != null)
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			{
+				System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+				System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+				if (MyResult == System.Windows.Forms.DialogResult.OK)
+				{
+					Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
+					//byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
+					//MyZexel.LoadImage(bytes);
+				}
+				else
+				{
+					Debug.LogError("Failure to open file.");
+				}
+			}
+			#endif
+		}
+
+		public void ImportPolygon2(Voxels.PolyModel MyModel) 
+		{
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			if (MyResult == System.Windows.Forms.DialogResult.OK)
+			{
+				// PolyModel SelectedModel = GetSelectedModel();
+				Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
+				MyMesh.RecalculateBounds();
+				MyMesh.RecalculateNormals();
+				MyModel.UseMesh(MyMesh);
+				//MyViewer.GetSpawn().GetComponent<MeshFilter>().sharedMesh = MyMesh;
+				//MyViewer.GetSpawn().GetComponent<PolyModelHandle>().RefreshMesh();
+				//UpdateStatistics();
+			}
+			#endif
+		}
+
+		public void ExportZexel(Zexel MyZexel)
+		{
+			if (MyZexel.GetTexture() != null)
+			{
+				#if UNITY_EDITOR
+				System.Windows.Forms.SaveFileDialog MySaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+				MySaveFileDialog.Filter = "*." + "png" + "| *." + "png";
+				//OpenFileDialog open = new OpenFileDialog();
+				MySaveFileDialog.Title = "Export a Texture";
+				MySaveFileDialog.ShowDialog();
+				if (MySaveFileDialog.FileName != "")
+				{
+					//byte[] MyBytes = System.Convert.FromBase64String(Data);
+					FileUtil.SaveBytes(MySaveFileDialog.FileName, (MyZexel.GetTexture()).EncodeToPNG());
+				}
+				#endif
+			}
+		}
+
+		public void ExportPolygon(Voxels.PolyModel MyModel)
+		{
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			if (MyResult == System.Windows.Forms.DialogResult.OK)
+			{
+				string MyMeshString = MeshToString(MyModel);
+				FileUtil.Save(MyDialog.FileName, MyMeshString);
+			}
+			#endif
+		}
+
+		public static string MeshToString(Voxels.PolyModel MyModel)
+		{
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			List<Vector3> Verticies = MyModel.GetAllVerts();
+			List<Vector2> UVs = MyModel.GetTextureMapCoordinates(0, new TileMap(8, 8, 16, 16));
+			//List<Vector3> Normals = MyModel.GetAllNormals();
+
+			sb.Append("g ").Append(MyModel.Name).Append("\n");
+			foreach (Vector3 v in Verticies)
+			{
+				sb.Append(string.Format("v {0} {1} {2}\n", v.x, v.y, v.z));
+			}
+			/*b.Append("\n");
+			/foreach (Vector3 v in mesh.normals)
+			{
+				sb.Append(string.Format("vn {0} {1} {2}\n", v.x, v.y, v.z));
+			}
+			sb.Append("\n");*/
+			foreach (Vector3 v in UVs)
+			{
+				sb.Append(string.Format("vt {0} {1}\n", v.x, v.y));
+			}
+			Material[] mats = new Material[1];//MyMeshFilter.GetComponent<MeshRenderer>().sharedMaterials;
+			mats[0] = Voxels.VoxelManager.Get().MyMaterials[0];
+			for (int material = 0; material < mats.Length; material++)
+			{
+				sb.Append("\n");
+				sb.Append("usemtl ").Append(mats[material].name).Append("\n");
+				sb.Append("usemap ").Append(mats[material].name).Append("\n");
+
+				int[] triangles = MyModel.GetAllTriangles().ToArray();
+				for (int i = 0; i < triangles.Length; i += 3)
+				{
+					sb.Append(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}\n",
+						triangles[i] + 1, triangles[i + 1] + 1, triangles[i + 2] + 1));
+				}
+			}
+			return sb.ToString();
+		}
+
+		public void ExportPolygon(MeshFilter MyMeshFilter)//int FileIndex)
+		{
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			if (MyResult == System.Windows.Forms.DialogResult.OK)
+			{
+				string MyMeshString = MeshToString(MyMeshFilter);
+				FileUtil.Save(MyDialog.FileName, MyMeshString);
+			}
+			#endif
+		}
+
+		public static string MeshToString(MeshFilter MyMeshFilter)
+		{
+			Mesh mesh = MyMeshFilter.mesh;
+
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+			sb.Append("g ").Append(mesh.name).Append("\n");
+			foreach (Vector3 v in mesh.vertices)
+			{
+				sb.Append(string.Format("v {0} {1} {2}\n", v.x, v.y, v.z));
+			}
+			sb.Append("\n");
+			foreach (Vector3 v in mesh.normals)
+			{
+				sb.Append(string.Format("vn {0} {1} {2}\n", v.x, v.y, v.z));
+			}
+			sb.Append("\n");
+			foreach (Vector3 v in mesh.uv)
+			{
+				sb.Append(string.Format("vt {0} {1}\n", v.x, v.y));
+			}
+			Material[] mats = MyMeshFilter.GetComponent<MeshRenderer>().sharedMaterials;
+			for (int material = 0; material < mesh.subMeshCount; material++)
+			{
+				sb.Append("\n");
+				sb.Append("usemtl ").Append(mats[material].name).Append("\n");
+				sb.Append("usemap ").Append(mats[material].name).Append("\n");
+
+				int[] triangles = mesh.GetTriangles(material);
+				for (int i = 0; i < triangles.Length; i += 3)
+				{
+					sb.Append(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}\n",
+						triangles[i] + 1, triangles[i + 1] + 1, triangles[i + 2] + 1));
+				}
+			}
+			return sb.ToString();
+		}
+
+		public void ImportImage(string FolderName, int FileIndex)
+		{
+			Zexel MyZexel = GetElement(FolderName, FileIndex) as Zexel;
+			if (MyZexel != null)
+			{
+				ImportImage(MyZexel);
+			}
+		}
+
+		public void ImportImage(Zexel MyZexel)
+		{
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+			System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			if (MyResult == System.Windows.Forms.DialogResult.OK)
+			{
+				byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
+				MyZexel.LoadImage(bytes);
+			}
+			else
+			{
+				Debug.LogError("Failure to open file.");
+			}
+			#endif
+		}
+
+		public void ImportZound(string FolderName, Sound.Zound MyZound)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+				System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+				System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+				if (MyResult == System.Windows.Forms.DialogResult.OK)
+				{
+					UniversalCoroutine.CoroutineManager.StartCoroutine(ImportSoundRoutine(MyDialog.FileName, MyZound));
+				}
+				else
+				{
+					Debug.LogError("Failure to open file.");
+				}
+				#endif
+			}
+			else
+			{
+				Debug.LogError("Failed to find folder: " + FolderName);
+			}
+		}
+
+		private System.Collections.IEnumerator ImportSoundRoutine(string FileName, Sound.Zound MyZound)
+		{
+			WWW MyWavLoader = new WWW("file://" + FileName);
+			yield return MyWavLoader;
+			LatestPlayed = MyWavLoader.GetAudioClip();
+			MyZound.UseAudioClip(LatestPlayed);
+		}
+		#endregion
+
+
+
+
+		public AudioClip LatestPlayed;
+
+		public void PlayClip(AudioClip clip)
+		{
+			gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
+		} // PlayClip()
+
+		public bool GetIsLoaded() 
+		{
+			return IsLoaded;
+		}
+
+
+
+		#region Generic
+
+		/// <summary>
+		/// returns the name of an index
+		/// </summary>
+		public string GetName(string FolderName, int Index)
+		{
+			ElementFolder ElementFolder = GetElementFolder(FolderName);
+			if (ElementFolder != null)
+			{
+				return ElementFolder.GetName(Index);
+			}
+			return "";
+		}
+
+		/// <summary>
+		/// returns the size of a folder
+		/// </summary>
+		public int GetSize(string FolderName)
+		{
+			ElementFolder ElementFolder = GetElementFolder(FolderName);
+			if (ElementFolder != null)
+			{
+				return ElementFolder.Data.Count;
+			}
+			return 0;
+		}
+		#endregion
+
+		#region Elements
+
+		public List<ElementFolder> GetElementFolders()
+		{
+			return ElementFolders;
+		}
+
+		/// <summary>
+		/// returns true if the folder has been modified
+		/// </summary>
+		public bool IsFolderModified(string FolderName)
+		{
+			ElementFolder ElementFolder = GetElementFolder(FolderName);
+			if (ElementFolder != null)
+			{
+				bool IsModified = false;
+				List<Element> MyElements = ElementFolder.GetData();
+				for (int i = 0; i < MyElements.Count; i++)
+				{
+					if (MyElements[i].CanSave())
+					{
+						IsModified = true;
+						break;
+					}
+				}
+				return IsModified;
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Save all the elements in a folder, the ui implementation
+		/// </summary>
+		public void SaveElements(string FolderName)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				List<Element> MyData = MyFolder.GetData();
+				//Debug.LogError(FolderName + " is saving: " + MyData.Count);
+				for (int i = 0; i < MyData.Count; i++)
+				{
+					if (MyData[i].CanSave())
+					{
+						string Script = "";
+						if (IsJSONFormat)
+						{
+							Script = Newtonsoft.Json.JsonConvert.SerializeObject(MyData[i]);//MyData[i].GetScript();
+						}
+						else
+						{
+							Script = MyData[i].GetScript();
+						}
+						MyFolder.SaveFile(i, Script);
+						MyData[i].OnSaved();
+					}
+				}
+			}
+			else
+			{
+				Debug.LogError(FolderName + " was not found.");
+			}
+		}
+
+		/// <summary>
+		/// Get the quest folder
+		/// </summary>
+		public ElementFolder GetElementFolder(string FolderName)
+		{
+			for (int i = 0; i < ElementFolders.Count; i++)
+			{
+				if (ElementFolders[i].FolderName == FolderName)
+				{
+					return ElementFolders[i];
+				}
+			}
+			return null;
+		}
+
+		private void LoadFolder(string FolderName)
+		{
+			//Debug.LogError("Loading: " + FolderName);
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				UniversalCoroutine.CoroutineManager.StartCoroutine(MyFolder.LoadAllElements());
+				//Debug.LogError("Loading SUCCESS: " + FolderName);
+				OnUpdatedResources.Invoke();
+			}
+		}
+
+		/// <summary>
+		/// Loads all the data!
+		/// </summary>
+		private System.Collections.IEnumerator LoadAllElements()
+		{
+			Debug.Log("Loading all elements for [" + MapName + "]");
+			for (int i = 0; i < ElementFolders.Count; i++)
+			{
+				yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ElementFolders[i].LoadAllElements());
+			}
+			OnUpdatedResources.Invoke();
+		}
+
+		public Element RevertElement(Element MyElement)
+		{
+			ElementFolder MyFolder = GetElementFolder(MyElement.GetFolder());
+			if (MyFolder != null)
+			{
+				MyElement = MyElement.Revert();
+				MyFolder.Set(MyElement.Name, MyElement);
+			}
+			return MyElement;
+		}
+
+		public void LoadElement(Element MyElement)
+		{
+			ElementFolder MyFolder = GetElementFolder(MyElement.GetFolder());
+			if (MyFolder != null)
+			{
+				MyFolder.LoadElement(MyElement);
+			}
+		}
+
+		/// <summary>
+		/// Save all the elements!
+		/// </summary>
+		private void SaveAllElements()
+		{
+			for (int i = 0; i < ElementFolders.Count; i++)
+			{
+				ElementFolders[i].SaveAllElements();
+			}
+		}
+
+		public void SaveElement(string ElementFolderName, int ElementIndex)
+		{
+			ElementFolder MyFolder = GetElementFolder(ElementFolderName);
+			if (MyFolder != null)
+			{
+				Element MyElement = MyFolder.Get(ElementIndex);
+				SaveElement(MyElement);
+			}
+		}
+		public void SaveElement(string ElementFolderName, string ElementName)
+		{
+			ElementFolder MyFolder = GetElementFolder(ElementFolderName);
+			if (MyFolder != null)
+			{
+				Element MyElement = MyFolder.Get(ElementName);
+				SaveElement(MyElement);
+			}
+		}
+
+		public void SaveElement(Element MyElement)
+		{
+			ElementFolder MyFolder = GetElementFolder(MyElement.GetFolder());
+			if (MyFolder != null
+				&& MyElement.CanSave())
+			{
+				MyFolder.SaveFile(MyElement.Name, MyElement.GetSerial());
+				MyElement.OnSaved();
+			}
+		}
+
+		/// <summary>
+		/// Get an item  from a folder, using an index
+		/// </summary>
+		public Element GetElement(string FolderName, int Index)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				return MyFolder.Get(Index);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Get an item  from a folder, using an index
+		/// </summary>
+		public Element GetElement(string FolderName, string FileName)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null && MyFolder.Data.ContainsKey(FileName))
+			{
+				return MyFolder.Get(FileName);
+			}
+			else
+			{
+				Debug.LogError("Could not find folder with name: " + FolderName);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// returns the element if its in the folder
+		/// </summary>
+		public int GetElementIndex(string FolderName, Element MyElement)
+		{
+			int MyIndex = -1;
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				List<Element> MyData = MyFolder.GetData();
+				for (int i = 0; i < MyData.Count; i++)
+				{
+					if (MyData[i] == MyElement)
+					{
+						MyIndex = i;
+						break;
+					}
+				}
+			}
+			return MyIndex;
+		}
+
+		public void SetElement(string FolderName, Element NewElement)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null && NewElement != null)
+			{
+				if (MyFolder.SetElement(NewElement.Name, NewElement))
+				{
+					NewElement.MyFolder = MyFolder;
+					OnUpdatedResources.Invoke();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Add a texture
+		/// </summary>
+		public void AddElement(string FolderName, Element NewElement)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null && NewElement != null)
+			{
+				if (MyFolder.Add(NewElement.Name, NewElement))
+				{
+					NewElement.MyFolder = MyFolder;
+					OnUpdatedResources.Invoke();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Removes a particular data
+		/// </summary>
+		public void RemoveElement(string FolderName, int FileIndex)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				MyFolder.Remove(FileIndex);
+				if (FolderName == DataFolderNames.VoxelMeta)
+				{
+					Voxels.VoxelManager.Get().RemoveMeta(FileIndex);
+				}
+				if (FolderName == DataFolderNames.PolyModels)
+				{
+					Voxels.VoxelManager.Get().RemoveModel(FileIndex);
+				}
+				OnUpdatedResources.Invoke();
+			}
+		}
+
+		/// <summary>
+		/// Removes a particular data
+		/// </summary>
+		public void RemoveElement(string FolderName, string FileName)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				int IndexOf = MyFolder.IndexOf(FileName);
+				if (IndexOf != -1)
+				{
+					MyFolder.Remove(IndexOf);
+					if (FolderName == DataFolderNames.VoxelMeta)
+					{
+						Voxels.VoxelManager.Get().RemoveMeta(IndexOf);
+					}
+					if (FolderName == DataFolderNames.PolyModels)
+					{
+						Voxels.VoxelManager.Get().RemoveModel(IndexOf);
+					}
+					OnUpdatedResources.Invoke();
+				}
+			}
+		}
+
+		/// <summary>
+		/// returns the size of a folder
+		/// </summary>
+		public int GetSizeElements(string FolderName)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				return MyFolder.Data.Count;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		#endregion
     }
 }

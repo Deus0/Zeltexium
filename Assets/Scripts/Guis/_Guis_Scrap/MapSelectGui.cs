@@ -125,11 +125,11 @@ namespace Zeltex.Guis.Player
             MyTooltipText += "\n" + "Block Textures " + BlockTexturesCount;
 
             int SkeletonsCount = GetFolderCount(SelectedName, "Skeletons/", "skl");
-            int VoxelModels = GetFolderCount(SelectedName, "VoxelModel/", "vmd");
-            int WorldModels = GetFolderCount(SelectedName, "VoxelModels/", "vxm");
-            MyTooltipText += "\n" + "Block Models " + VoxelModels;
+            int PolyModels = GetFolderCount(SelectedName, "PolyModel/", "vmd");
+            int VoxelModels = GetFolderCount(SelectedName, "PolyModels/", "vxm");
+            MyTooltipText += "\n" + "Block Models " + PolyModels;
             MyTooltipText += "\n" + "Skeletons " + SkeletonsCount;
-            MyTooltipText += "\n" + "Models " + WorldModels;
+            MyTooltipText += "\n" + "Models " + VoxelModels;
             return MyTooltipText;
         }
 
