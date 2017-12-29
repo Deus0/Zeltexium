@@ -12,7 +12,7 @@ namespace Zeltex.Guis.Maker
     /// Handles making blocks 
     /// Meta data saved in alphabetical order as blocks use their id to get meta from the VoxelTileGenerator
     /// </summary>
-    public class SoundMaker : MakerGui
+    public class SoundMaker : ElementMakerGui
     {
         #region Variables
         [Header("SoundMaker")]  // idk why i have 3 references.. lol
@@ -32,42 +32,41 @@ namespace Zeltex.Guis.Maker
 
         public override int GetSize()
         {
-            return DataManager.Get().GetSizeElements(DataManagerFolder);
+            return DataManager.Get().GetSizeElements(DataFolderNames.Sounds);
         }
         #endregion
 
         #region Data
-        /*public static SoundMaker Get()
-        {
-            return GameObject.Find("GameManager").GetComponent<MapMaker>().MySoundMaker;
-        }*/
-        /// <summary>
-        /// Clear the  all the stored data
-        /// </summary>
-        public override void Clear()
-        {
-           // MyNames.Clear();
-            //Data.Clear();
-        }
 
         /// <summary>
         /// Returns the selected script
         /// </summary>
-        public AudioClip GetSelectedAudio()
+        public Zound GetSelectedAudio()
         {
-            return null;
-            //return DataManager.Get().GetSound(DataManagerFolder, GetSelectedIndex());
+            return DataManager.Get().GetElement(DataFolderNames.Sounds, GetSelectedIndex()) as Zound;
+        }
+
+        public AudioClip GetSelectedAudioClip()
+        {
+            if (GetSelectedAudio() != null)
+            {
+                return GetSelectedAudio().GetAudioClip();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public AudioClip GetAudio(string Name)
         {
-            return null;
-            //return DataManager.Get().GetSound(DataManagerFolder, Name);
+            return (DataManager.Get().GetElement(DataFolderNames.Sounds, Name) as Zound).GetAudioClip();
         }
 
 
         public void SetSelected(AudioClip MyAudioClip)
         {
+            (DataManager.Get().GetElement(DataFolderNames.Sounds, GetSelectedIndex()) as Zound).UseAudioClip(MyAudioClip);
             //DataManager.Get().SetSound(DataManagerFolder, GetSelectedIndex(), MyAudioClip);
             //OnUpdatedAudioClip();
         }
@@ -85,21 +84,29 @@ namespace Zeltex.Guis.Maker
             base.OnUpdatedIndex(NewIndex);
             Debug.Log("Updating Index in Polygon Maker: " + NewIndex);
             GetInput("NameInput").text = GetSelectedName();
-            if (GetSelectedAudio() != null)
-            {
-                OnUpdatedAudioClip();
-			}
-			// quick hack fixes dropdown menus!
-			ScrollRect MyScrollRect = GetDropdown("FunctionTypeDropdown").transform.Find("Template").GetComponent<ScrollRect>();	//
+            OnUpdatedAudioClip();
+            // quick hack fixes dropdown menus!
+            ScrollRect MyScrollRect = GetDropdown("FunctionTypeDropdown").transform.Find("Template").GetComponent<ScrollRect>();	//
 			MyScrollRect.content = MyScrollRect.transform.Find("Viewport").Find("Content").GetComponent<RectTransform>();
 		}
 
 		private void OnUpdatedAudioClip()
         {
-            GetInput("TimeInput").text = "" + GetSelectedAudio().length;
-            MyCurveRenderer.UpdateCurve(GetSelectedAudio(), true);
-            GetLabel("SamplesLabel").text = "Samples\n[" + GetSelectedAudio().samples + "]";
-            gameObject.GetComponent<AudioSource>().clip = GetSelectedAudio();
+            if (GetSelectedAudio() != null)
+            {
+                GetButton("PlayButton").interactable = true;
+                GetInput("TimeInput").text = "" + GetSelectedAudio().TimeLength;
+                MyCurveRenderer.UpdateCurve(GetSelectedAudioClip(), true);
+                GetLabel("SamplesLabel").text = "Samples\n[" + GetSelectedAudio().GetSamples() + "]";
+                gameObject.GetComponent<AudioSource>().clip = GetSelectedAudioClip();
+            }
+            else
+            {
+                GetInput("TimeInput").text = "";
+                MyCurveRenderer.UpdateCurve(null, true);
+                GetLabel("SamplesLabel").text = "";
+                GetButton("PlayButton").interactable = false;
+            }
         }
 
         /// <summary>
@@ -108,16 +115,10 @@ namespace Zeltex.Guis.Maker
         protected override void AddData()
         {
 			AudioClip MyClip = AudioClip.Create(Zeltex.NameGenerator.GenerateVoxelName(), 256, 1, 440, false);
-			//DataManager.Get().AddElement(DataManagerFolder, MyClip);
+            Zound NewZound = new Zound();
+            NewZound.UseAudioClip(MyClip);
+	        DataManager.Get().AddElement(DataManagerFolder, NewZound);
 		}
-
-		/// <summary>
-		/// When an index is removed
-		/// </summary>
-		protected override void RemovedData(int Index)
-		{
-            //DataManager.Get().RemoveSound(DataManagerFolder, Index);
-        }
 
         #endregion
 
@@ -138,6 +139,7 @@ namespace Zeltex.Guis.Maker
                 MyCurveRenderer.SetTime(NewTimeLength);
             }
         }
+
         public override void UseInput(Dropdown MyDropdown)
         {
             if (MyDropdown.name == "FunctionTypeDropdown")
@@ -145,19 +147,20 @@ namespace Zeltex.Guis.Maker
                 GetComponent<CurveGenerator>().SetMode(MyDropdown.value);
             }
         }
+
         /// <summary>
         /// Used for generically updating buttons
         /// </summary>
         public override void UseInput(Button MyButton)
         {
-            if (MyButton.name == "ImportButton")
+            if (MyButton.name == "GenerateAudioClip")
             {
-                StartCoroutine(Import());
+                GetSelectedAudio().GenerateAudioClip();
             }
             else if (MyButton.name == "PlayButton")
             {
                 //Debug.LogError("Playing sound: " + GetSelectedAudio().name);
-                GetComponent<AudioSource>().PlayOneShot(GetSelectedAudio());
+                GetComponent<AudioSource>().PlayOneShot(GetSelectedAudioClip());
             }
             else if (MyButton.name == "RecordButton")
             {
@@ -180,34 +183,6 @@ namespace Zeltex.Guis.Maker
             SetSelected(GetSelectedAudio()); // update the things
             MyCurveRenderer.UpdateCurve(GetSelectedAudio(), true);
 #endif
-        }
-
-        IEnumerator Import()
-        {
-            yield break;
-            /*Dropdown MyDropdown = GetDropdown("ImportDropdown");
-            string FileName = FileUtil.GetFolderPath("SoundImports/") + MyDropdown.options[MyDropdown.value].text + "." + FileExtension;
-            WWW MyWavLoader = new WWW("file://" + FileName);
-            yield return MyWavLoader;
-            // Create an audioclip from the path
-            SetSelected(MyWavLoader.audioClip);
-            MyCurveRenderer.UpdateCurve(MyWavLoader.audioClip, true);*/
-        }
-        /// <summary>
-        /// Fill the drop downs with data
-        /// </summary>
-        public override void FillDropdown(Dropdown MyDropdown)
-        {
-            /*List<string> MyDropdownNames = new List<string>();
-            if (MyDropdown.name == "ImportDropdown")
-            {
-                List<string> MyFiles = FileUtil.GetFilesOfType(FileUtil.GetFolderPath("SoundImports/"), FileExtension);
-                for (int i = 0; i < MyFiles.Count; i++)
-                {
-                    MyDropdownNames.Add(Path.GetFileNameWithoutExtension(MyFiles[i]));
-                }
-                FillDropDownWithList(MyDropdown, MyDropdownNames);
-            }*/
         }
 #endregion
     }

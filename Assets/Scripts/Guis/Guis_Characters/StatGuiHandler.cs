@@ -28,9 +28,9 @@ namespace Zeltex.Guis.Characters
                 }
                 else
                 {
-                    for (int i = 0; i < MyCharacter.GetStats().EquipmentStats.GetSize(); i++)
+                    for (int i = 0; i < MyCharacter.GetData().Equipment.GetSize(); i++)
                     {
-                        AddStat(MyCharacter.GetStats().EquipmentStats.GetStat(i));
+                        //AddStat(MyCharacter.GetData().Equipment.GetStat(i));
                     }
                 }
             }

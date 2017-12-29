@@ -48,9 +48,9 @@ namespace Zeltex.Items
         private string Description;
         [Tooltip("Used in activation of the item")]
         [SerializeField, JsonProperty]
-        private List<string> Commands = new List<string>();
+        private List<string> Commands;
         [SerializeField, JsonProperty]
-        private List<string> Tags = new List<string>();
+        private List<string> Tags;
         [Tooltip("How many of that item there is.")]
         [SerializeField, JsonProperty]
         private int Quantity = 1;
@@ -63,7 +63,7 @@ namespace Zeltex.Items
         [Tooltip("The stats the item contains"), JsonProperty]
         public Stats MyStats;
         [JsonProperty]
-        public Zexel MyZexel = new Zexel();
+        public Zexel MyZexel;
 
         // Mesh too!
         public ItemMeshType MeshType;
@@ -89,11 +89,25 @@ namespace Zeltex.Items
         #endregion
 
         #region Initiation
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            MyStats.ParentElement = this;
+            MyStats.OnLoad();
+            MyZexel.ParentElement = this;
+            MyZexel.OnLoad();
+        }
+
         public Item()
         {
             Name = "Empty";
             Description = "Null";
             MyStats = new Stats();
+            MyStats.ParentElement = this;
+            MyZexel = new Zexel();
+            MyZexel.ParentElement = this;
+            Commands = new List<string>();
+            Tags = new List<string>();
         }
         #endregion
 

@@ -26,7 +26,7 @@ namespace Zeltex.Characters
             return Data.CanRespawn;
         }
 
-        public CharacterStats GetStats()
+        public Stats GetStats()
         {
             return Data.MyStats;
         }

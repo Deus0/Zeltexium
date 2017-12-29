@@ -455,7 +455,7 @@ namespace Zeltex.Combat
                         // Add effect like burning
                         if (Data.OnHitEffect != null && Data.OnHitEffect.Name != "")
                         {
-                            HitCharacter.GetStats().AddStat(Data.OnHitEffect);
+                            HitCharacter.GetData().MyStatsHandler.AddStat(Data.OnHitEffect);
                         }
                         
                         if (HitBot && Data.MyCharacter)

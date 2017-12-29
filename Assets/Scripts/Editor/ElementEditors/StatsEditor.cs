@@ -8,17 +8,17 @@ namespace Zeltex.Combat
     /// <summary>
     /// Script for Stats editor
     /// </summary>
-    [CustomPropertyDrawer(typeof(CharacterStats))]
+    [CustomPropertyDrawer(typeof(Stats))]
     public class StatsEditor : ZeltexEditor
     {
         private bool IsAddItems;
         private bool IsShowItems;
-        private CharacterStats MyStats;
+        private Stats MyStats;
 
         public override void OnCustomGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             base.OnCustomGUI(position, property, label);
-            MyStats = GetInstance<CharacterStats>(property);
+            MyStats = GetInstance<Stats>(property);
             ShowStats(property);
             AddStats(property);
         }

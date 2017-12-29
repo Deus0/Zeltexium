@@ -175,10 +175,16 @@ namespace Zeltex.Guis.Characters
             // wait for gui readying object
             for (int i = 0; i < 30; i++)
             {
-                MyGui.SetState(MyGui.GetBeginState());
+                if (MyGui)
+                {
+                    MyGui.SetState(MyGui.GetBeginState());
+                }
                 yield return null;
             }
-            MyGui.SetState(MyGui.GetBeginState());
+            if (MyGui)
+            {
+                MyGui.SetState(MyGui.GetBeginState());
+            }
         }
 
         public void Remove(ZelGui MyZelGui)
@@ -747,7 +753,7 @@ namespace Zeltex.Guis.Characters
         {
             if (MyCharacter)
             {
-                CharacterStats MyStats = MyCharacter.GetData().MyStats;
+                CharacterStats MyStats = MyCharacter.GetData().MyStatsHandler;
                 Inventory MyEquipment = MyCharacter.GetEquipment();
                 // link characterstats to equipment inventory
                 MyStats.SetEquipment(MyEquipment);

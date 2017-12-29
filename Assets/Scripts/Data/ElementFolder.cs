@@ -76,6 +76,28 @@ namespace Zeltex
             }
         }
 
+        public void AddElement(Element NewElement)
+        {
+            Add(NewElement.Name, NewElement);
+            NewElement.MyFolder = this;
+            NewElement.ElementLink = FolderName;
+            NewElement.ResetName();
+            NewElement.OnModified();
+        }
+
+        public bool SetElement(Element NewElement)
+        {
+            bool DidSet = SetElement(NewElement.Name, NewElement);
+            if (DidSet)
+            {
+                NewElement.MyFolder = this;
+                NewElement.ElementLink = FolderName;
+                NewElement.ResetName();
+                NewElement.OnModified();
+            }
+            return DidSet;
+        }
+
         public void AddNewElement()
         {
             //Element NewElement = new Element();

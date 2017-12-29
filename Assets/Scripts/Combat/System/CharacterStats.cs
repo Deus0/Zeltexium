@@ -16,7 +16,7 @@ namespace Zeltex.Combat
     ///     When an attribute is added or decreased - add to the corresponding base stats
     /// </summary>
     [System.Serializable]
-	public class CharacterStats : Stats
+	public class CharacterStats
     {
         #region Variables
         [JsonIgnore]
@@ -46,8 +46,6 @@ namespace Zeltex.Combat
         private BasicController MyBasicController;
 
         [Header("Gameplay")]
-        [SerializeField]
-        private bool IsAlive = true;
         [JsonIgnore, SerializeField]
         private bool IsInflictHeightDamage = true;
         [JsonIgnore, HideInInspector]
@@ -65,6 +63,7 @@ namespace Zeltex.Combat
         public GameObject LevelUpEffectsPrefab;
         [JsonIgnore]
         public Font PopupFont;
+        public Stats MyStats;
         #endregion
 
         #region Mono
@@ -76,26 +75,29 @@ namespace Zeltex.Combat
         /// <summary>
         /// Sets the character and refreshes it
         /// </summary>
-        public void SetCharacter(Transform MyTransform)
+        public void SetCharacter(Character NewCharacter)
         {
-            if (MyCharacter == null || MyCharacter.transform != MyTransform)
+            if (MyCharacter == null || MyCharacter != NewCharacter)
             {
-                for (int i = 0; i < GetSize(); i++)
+                MyCharacter = NewCharacter;
+                if (MyCharacter)
                 {
-                    GetStat(i).ResetTimer();
-                }
-                if (MyTransform != null)
-                {
-                    MySource = MyTransform.GetComponent<AudioSource>();
-                    MyCharacter = MyTransform.GetComponent<Character>();
-                    MyBasicController = MyTransform.GetComponent<BasicController>();
-                    MyPosition = MyTransform.position;
+                    MyStats = MyCharacter.GetData().MyStats;
+                    MySource = MyCharacter.GetComponent<AudioSource>();
+                    MyBasicController = MyCharacter.GetComponent<BasicController>();
+                    MyPosition = MyCharacter.transform.position;
                 }
                 else
                 {
-                    MyCharacter = null;
+                    MyStats = null;
                 }
-                IsAlive = true;
+                if (MyStats != null)
+                {
+                    for (int i = 0; i < MyStats.GetSize(); i++)
+                    {
+                        MyStats.GetStat(i).ResetTimer();
+                    }
+                }
             }
         }
 
@@ -130,15 +132,15 @@ namespace Zeltex.Combat
         public List<string> GetDebugStats()
         {
             List<string> MyStatInfo = new List<string>();
-            MyStatInfo.Add(MyCharacter.name + " has " + GetSize() + " stats.");
-            for (int i = 0; i < GetSize(); i++)
+            MyStatInfo.Add(MyCharacter.name + " has " + MyStats.GetSize() + " stats.");
+            for (int i = 0; i < MyStats.GetSize(); i++)
             {
-                MyStatInfo.Add((i + 1) + " : " + GetStat(i).GuiString());
-                MyStatInfo.Add("\t" + GetStat(i).GetDescription());
+                MyStatInfo.Add((i + 1) + " : " + MyStats.GetStat(i).GuiString());
+                MyStatInfo.Add("\t" + MyStats.GetStat(i).GetDescription());
                 string Values = "";
-                for (int j = 0; j < GetStat(i).GetValues().Count; j++)
+                for (int j = 0; j < MyStats.GetStat(i).GetValues().Count; j++)
                 {
-                    Values += GetStat(i).GetValues()[j] + ", ";
+                    Values += MyStats.GetStat(i).GetValues()[j] + ", ";
                 }
                 MyStatInfo.Add("\t" + Values);
             }
@@ -160,7 +162,7 @@ namespace Zeltex.Combat
                         if (Time.time - LastInflictedDamage >= 1f)
                         {
                             LastInflictedDamage = Time.time;
-                            AddStat("Health", -2f);  // decrease health!
+                            MyStats.AddStat("Health", -2f);  // decrease health!
                         }
                     }
                     else
@@ -180,9 +182,9 @@ namespace Zeltex.Combat
         public void RegenStats()
         {
             bool HasUpdatedStats = false;
-            for (int i = GetSize() - 1; i >= 0; i--)
+            for (int i = MyStats.GetSize() - 1; i >= 0; i--)
             {
-                if (GetStat(i).GetStatType() == StatType.Regen)
+                if (MyStats.GetStat(i).GetStatType() == StatType.Regen)
                 {
                     bool DidRegen = CheckRegen(i);
                     if (DidRegen)
@@ -190,7 +192,7 @@ namespace Zeltex.Combat
                         HasUpdatedStats = true;
                     }
                 }
-                else if (GetStat(i).GetStatType() == StatType.TemporaryRegen)
+                else if (MyStats.GetStat(i).GetStatType() == StatType.TemporaryRegen)
                 {
                     bool DidDot = CheckDot(i);
                     if (DidDot)
@@ -198,7 +200,7 @@ namespace Zeltex.Combat
                         HasUpdatedStats = true;
                     }
                 }
-                else if (GetStat(i).GetStatType() == StatType.TemporaryModifier)
+                else if (MyStats.GetStat(i).GetStatType() == StatType.TemporaryModifier)
                 {
                     bool DidBuff = CheckBuff(i);
                     if (DidBuff)
@@ -209,7 +211,7 @@ namespace Zeltex.Combat
             }
             if (HasUpdatedStats)
             {
-                OnUpdateStats.Invoke();    // update gui of stats
+                MyStats.OnUpdateStats.Invoke();    // update gui of stats
             }
         }
 
@@ -218,10 +220,10 @@ namespace Zeltex.Combat
         /// </summary>
         private bool CheckRegen(int i)
         {
-            Stat RegenStat = GetStat(i);
+            Stat RegenStat = MyStats.GetStat(i);
             if (RegenStat.HasTicked())
             {
-                Stat ModifiedStat = GetStat(RegenStat.GetModifyStatName());
+                Stat ModifiedStat = MyStats.GetStat(RegenStat.GetModifyStatName());
                 if (ModifiedStat != null)
                 {
                     bool DidRegen = ModifiedStat.AddState(RegenStat.GetRegenValueModified());
@@ -243,10 +245,10 @@ namespace Zeltex.Combat
         /// </summary>
         public bool CheckDot(int i)
         {
-            Stat DotStat = GetStat(i);
-            if (GetStat(i).HasTicked())
+            Stat DotStat = MyStats.GetStat(i);
+            if (MyStats.GetStat(i).HasTicked())
             {
-                Stat ModifiedStat = GetStat(DotStat.GetModifyStatName());
+                Stat ModifiedStat = MyStats.GetStat(DotStat.GetModifyStatName());
                 if (ModifiedStat != null)
                 {
                     bool DidRegen = ModifiedStat.AddState(DotStat.GetDotValue());
@@ -259,7 +261,7 @@ namespace Zeltex.Combat
             }
             if (DotStat.HasExpired())
             {
-                Remove(DotStat);
+                MyStats.Remove(DotStat);
                 return true;
             }
             return false;
@@ -270,19 +272,19 @@ namespace Zeltex.Combat
         /// </summary>
         public bool CheckBuff(int i)
         {
-            Stat StatBuffer = GetStat(i);
+            Stat StatBuffer = MyStats.GetStat(i);
             if (StatBuffer.HasExpired())
             {
                 //Debug.LogError("Checking Health: " + GetStat("Health").GetValue());
                 // Reverse modification
-                Stat BuffedStat = GetStat(StatBuffer.GetModifyStatName());
+                Stat BuffedStat = MyStats.GetStat(StatBuffer.GetModifyStatName());
                 if (BuffedStat != null)
                 {
                     float DecreaseModifierValue = -StatBuffer.GetValue();
                     Debug.Log(StatBuffer.Name + " is Debuffing - Modifier stat is: " + BuffedStat.Name + " was reduced by " + DecreaseModifierValue);
                     AddModifier(BuffedStat, DecreaseModifierValue);
                 }
-                Remove(StatBuffer);
+                MyStats.Remove(StatBuffer);
                 return true;
             }
             return false;
@@ -298,7 +300,7 @@ namespace Zeltex.Combat
             // Apply Reverse Modifier - for example if strength was just decreased by 1, remove 5 health
             if (MyModifierStat.GetStatType() == StatType.Modifier)
             {
-                Stat MyBaseStat = GetStat(MyModifierStat.GetModifyStatName());
+                Stat MyBaseStat = MyStats.GetStat(MyModifierStat.GetModifyStatName());
                 if (MyBaseStat != null)
                 {
                     float DecreaseValue = AdditionValue * MyModifierStat.GetModifierValue();
@@ -317,12 +319,12 @@ namespace Zeltex.Combat
         /// </summary>
         public void UpdateStat(string StatName, float State)
         {
-            Stat MyStat = GetStat(StatName);
+            Stat MyStat = MyStats.GetStat(StatName);
             if (MyStat.GetState() != State)
             {
                 MyStat.SetState(State);
                 OnUpdateStat(MyStat);
-                OnUpdateStats.Invoke();
+                MyStats.OnUpdateStats.Invoke();
             }
         }
 
@@ -335,7 +337,7 @@ namespace Zeltex.Combat
             // if they do, take their base value first, then apply modifiers for their temp stats...
             if (MyStat.GetStatType() == StatType.TemporaryModifier)
             {
-                Stat MyModifiedStat = GetStat(MyStat.GetModifyStatName());
+                Stat MyModifiedStat = MyStats.GetStat(MyStat.GetModifyStatName());
                 //Debug.LogError("Adding: " + TempStats.GetStat(i).Name + " to " + MyStat.Name);
                 if (MyModifiedStat != null)
                 {
@@ -346,7 +348,7 @@ namespace Zeltex.Combat
             //Debug.LogError ("State: " + BaseStats.Data [i].GuiString ());
             else if (MyStat.GetStatType() == StatType.Modifier)
             {
-                Stat MyModifiedStat = GetStat(MyStat.GetModifyStatName());
+                Stat MyModifiedStat = MyStats.GetStat(MyStat.GetModifyStatName());
                 if (MyModifiedStat != null)
                 {
                     MyModifiedStat.Add(MyStat.GetValue() * MyStat.GetModifierValue());
@@ -371,11 +373,11 @@ namespace Zeltex.Combat
 
         void OnUpdateTempStats()
         {
-            for (int i = 0; i < GetSize(); i++)
+            for (int i = 0; i < MyStats.GetSize(); i++)
             {
-                OnUpdateStat(GetStat(i));
+                OnUpdateStat(MyStats.GetStat(i));
             }
-            OnNewStats.Invoke();
+            MyStats.OnNewStats.Invoke();
         }
         #endregion
 
@@ -386,9 +388,9 @@ namespace Zeltex.Combat
         /// </summary>
         public void AddStat(Stat NewStat)
         {
-            if (IsAlive)
+            if (MyStats.IsAlive)
             {
-                Stat MyStat = GetStat(NewStat.Name);
+                Stat MyStat = MyStats.GetStat(NewStat.Name);
                 if (MyStat == null)
                 {
                     MyStat = NewStat;
@@ -400,21 +402,21 @@ namespace Zeltex.Combat
                     MyStat.AddState(NewStat.GetState());
                 }
                 OnUpdateStat(MyStat);
-                OnUpdateStats.Invoke();
+                MyStats.OnUpdateStats.Invoke();
             }
         }
 
         /// <summary>
         /// Adds a stat
         /// </summary>
-        public override bool Add(Stat MyStat)
+        public bool Add(Stat MyStat)
         {
-            bool DidAdd = base.Add(MyStat);
+            bool DidAdd = MyStats.Add(MyStat);
             if (DidAdd)
             {
                 OnAddStat(MyStat);
                 OnUpdateStat(MyStat);
-                OnUpdateStats.Invoke();
+                MyStats.OnUpdateStats.Invoke();
             }
             return DidAdd;
         }
@@ -426,9 +428,9 @@ namespace Zeltex.Combat
         /// </summary>
         public bool HasStat(string StatName, float StatNeeded)
         {
-            if (!IsAlive)
+            if (!MyStats.IsAlive)
                 return false;
-            Stat MyStat = GetStat(StatName);
+            Stat MyStat = MyStats.GetStat(StatName);
             if (MyStat != null)
                 return (MyStat.GetState() >= StatNeeded);
             else
@@ -439,7 +441,7 @@ namespace Zeltex.Combat
         /// </summary>
         public float GetStatValue(string StatName)
         {
-            Stat MyStat = GetStat(StatName);
+            Stat MyStat = MyStats.GetStat(StatName);
             if (MyStat != null)
             {
                 return MyStat.GetState();
@@ -455,15 +457,15 @@ namespace Zeltex.Combat
         /// </summary>
         public Stat GetStatBase(string StatName)
         {
-            return GetStat(StatName);
+            return MyStats.GetStat(StatName);
         }
         #endregion
 
         #region File
 
-        public List<string> GetScriptList()
+        /*public List<string> GetScriptList()
         {
-            return GetScriptList(true);
+            return MyStats.GetScriptList(true);
         }
 
         public override void RunScript(List<string> MyData)
@@ -473,7 +475,7 @@ namespace Zeltex.Combat
             {
                 OnUpdateStat(GetStat(i));
             }
-        }
+        }*/
         #endregion
 
         // Stats effecting gameplay
@@ -483,17 +485,17 @@ namespace Zeltex.Combat
         /// </summary>
         public bool Alive()
         {
-            return IsAlive;
+            return MyStats.IsAlive;
         }
 
         public void RestoreFullHealth()
         {
-            IsAlive = true;
-            Stat MyHealth = GetStat("Health");
+            MyStats.IsAlive = true;
+            Stat MyHealth = MyStats.GetStat("Health");
             if (MyHealth != null)
             {
                 MyHealth.SetState(MyHealth.GetMaxState());
-                OnUpdateStats.Invoke();
+                MyStats.OnUpdateStats.Invoke();
             }
         }
         /// <summary>
@@ -501,7 +503,7 @@ namespace Zeltex.Combat
         /// </summary>
         public bool IsDead()
         {
-            Stat MyHealth = GetStat("Health");
+            Stat MyHealth = MyStats.GetStat("Health");
             if (MyHealth != null)
             {
                 if (MyHealth.GetState() <= 0)
@@ -518,7 +520,7 @@ namespace Zeltex.Combat
         /// </summary>
         void CheckForDeath(Stat MyStat)
         {
-            if (IsAlive)
+            if (MyStats.IsAlive)
             {
                 if (MyStat.GetState() <= 0)
                 {
@@ -529,9 +531,9 @@ namespace Zeltex.Combat
 
         private void Die()
         {
-            if (IsAlive)
+            if (MyStats.IsAlive)
             {
-                IsAlive = false;
+                MyStats.IsAlive = false;
                 if (MySource && OnDeathSound)
                 {
                     //MySource.PlayOneShot(OnDeathSound);
@@ -563,7 +565,7 @@ namespace Zeltex.Combat
         public void AddExperience(float NewExperience)
         {
             Stat BaseCurrentExperience = GetStatBase("Experience");
-            Stat CurrentExperience = GetStat("Experience");
+            Stat CurrentExperience = MyStats.GetStat("Experience");
             // Level up hack
             NewExperience = CurrentExperience.GetValue() - CurrentExperience.GetState();
             if (CurrentExperience != null)
@@ -573,14 +575,14 @@ namespace Zeltex.Combat
                 if (CurrentExperience.GetState() + NewExperience >= CurrentExperience.GetValue())
                 {
                     //Debug.LogError ("Leveling UP!");
-                    SetStat("Experience",
+                    MyStats.SetStat("Experience",
                                     (CurrentExperience.GetState() + NewExperience) - CurrentExperience.GetValue(),  // left over experience
                                     CurrentExperience.GetValue() * ExperienceMultiplier);                          // Exponentially rise the max exp
                     OnLevelUp();
                 }
                 else
                 {
-                    AddStat("Experience", NewExperience);
+                    MyStats.AddStat("Experience", NewExperience);
                     //Debug.LogError ("Not Leveling UP! " + (CurrentExperience.GetValue ()-CurrentExperience.GetState ()) + " More to go!");
                 }
 
@@ -595,7 +597,7 @@ namespace Zeltex.Combat
             // for fun
             //transform.localScale *= 1.1f;  // grow bigger! RAWR
             Debug.Log(MyCharacter.name + " is leveling up!");
-            AddStat("Level", 1);           // an indictator of overall power
+            MyStats.AddStat("Level", 1);           // an indictator of overall power
             if (LevelUpEffectsPrefab)
             {
                 GameObject MyLevelingEffects = GameObject.Instantiate(LevelUpEffectsPrefab, MyCharacter.transform.position, MyCharacter.transform.rotation, MyCharacter.transform);
@@ -617,7 +619,7 @@ namespace Zeltex.Combat
             else*/
             {
                 // Give skill point
-                AddStat("SkillPoints", 1);	// to use on attributes
+                MyStats.AddStat("SkillPoints", 1);	// to use on attributes
                 // turn on stats level up gui, turn off all others
                 // refresh stats that i can use skill points on
             }
@@ -629,11 +631,11 @@ namespace Zeltex.Combat
         List<Stat> GetAttributeStats()
         {
             List<Stat> AttributeStats = new List<Stat>();
-            for (int i = 0; i < GetSize(); i++)
+            for (int i = 0; i < MyStats.GetSize(); i++)
             {
-                if (GetStat(i).GetStatType() == StatType.Modifier)
+                if (MyStats.GetStat(i).GetStatType() == StatType.Modifier)
                 {
-                    AttributeStats.Add(GetStat(i));
+                    AttributeStats.Add(MyStats.GetStat(i));
                 }
             }
             return AttributeStats;

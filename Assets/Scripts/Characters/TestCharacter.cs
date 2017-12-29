@@ -42,7 +42,7 @@ namespace Zeltex.Characters
                 IsTest = false;
                 if (MyType == TestCharacterType.LevelUp)
                 {
-                    Stat MyStat = MyCharacter.GetComponent<CharacterStats>().GetStat("Experience");
+                    Stat MyStat = MyCharacter.GetStats().GetStat("Experience");
                     float ExperienceNeeded = MyStat.GetMaxState();
                     //Debug.LogError("Adding Experience: " + ExperienceNeeded + ":" + MyStat.GetState() + ":" + MyStat.StatType + ":" + MyStat.Description);
                     MyCharacter.GetComponent<CharacterStats>().AddExperience(ExperienceNeeded);

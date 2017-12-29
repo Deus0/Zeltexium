@@ -7,8 +7,9 @@ using Zeltex.Quests;
 using Zeltex.Dialogue;
 using Zeltex.Skeletons;
 using Zeltex.Guis.Characters;
-using Newtonsoft.Json;
 using Zeltex.Characters;
+using Zeltex.AI;
+using Newtonsoft.Json;
 
 namespace Zeltex
 {
@@ -23,32 +24,32 @@ namespace Zeltex
     {
         [Header("Data")]
         [JsonProperty]
-        public string Class = "";
+        public string Class;
         [JsonProperty]
-        public string Race = "";
+        public string Race;
 
         [JsonProperty]
-        public CharacterStats MyStats = new CharacterStats();
+        public Stats MyStats;
 
         [JsonProperty]
-        public Inventory Skillbar = new Inventory();
+        public Inventory Skillbar;
         [JsonProperty]
-        public Inventory Equipment = new Inventory();
+        public Inventory Equipment;
         [JsonProperty]
-        public Inventory Backpack = new Inventory();
+        public Inventory Backpack;
 
         [JsonProperty]
-        public QuestLog MyQuestLog = new QuestLog();
+        public QuestLog MyQuestLog;
         [JsonProperty]
-        public DialogueTree MyDialogue = new DialogueTree();
+        public DialogueTree MyDialogue;
         [JsonProperty]
-        public Skeleton MySkeleton = new Skeleton();
+        public Skeleton MySkeleton;
         [JsonProperty]
-        public List<Zanimation> MyAnimations = new List<Zanimation>();
+        public List<Zanimation> MyAnimations;
         [JsonProperty]
-        public CharacterGuis MyGuis = new CharacterGuis();
+        public CharacterGuis MyGuis;
         [JsonProperty]
-        public AI.BotMeta BotData = new AI.BotMeta();
+        public BotMeta BotData;
 
         // respawn data
         [JsonProperty]
@@ -63,6 +64,34 @@ namespace Zeltex
         public Vector3 LevelRotation;
         [JsonIgnore]
         public Character MyCharacter;
+        [JsonIgnore]
+        public CharacterStats MyStatsHandler;
+
+        public CharacterData()
+        {
+            Class = "";
+            Race = "";
+            MyStats = new Stats();
+            MyStatsHandler = new CharacterStats();
+            Skillbar = new Inventory();
+            Equipment = new Inventory();
+            Backpack = new Inventory();
+            MyQuestLog = new QuestLog();
+            MyDialogue = new DialogueTree();
+            MySkeleton = new Skeleton();
+            MyAnimations = new List<Zanimation>();
+            MyGuis = new CharacterGuis();
+            BotData = new BotMeta();
+            MyStats.ParentElement = this;
+            Skillbar.ParentElement = this;
+            Equipment.ParentElement = this;
+            Backpack.ParentElement = this;
+            MyQuestLog.ParentElement = this;
+            MyDialogue.ParentElement = this;
+            MySkeleton.ParentElement = this;
+            //MyGuis.ParentElement = this;
+            BotData.ParentElement = this;
+        }
 
         public void SetCharacter(Character NewCharacter, bool IsSetTransform = true)
         {
@@ -109,11 +138,15 @@ namespace Zeltex
         {
             for (int i = Skillbar.MyItems.Count; i < 5; i++)
             {
-                Skillbar.MyItems.Add(new Item());
+                Item NewItem = new Item();
+                NewItem.ParentElement = Skillbar;
+                Skillbar.MyItems.Add(NewItem);
             }
             for (int i = Backpack.MyItems.Count; i < 20; i++)
             {
-                Backpack.MyItems.Add(new Item());
+                Item NewItem = new Item();
+                NewItem.ParentElement = Skillbar;
+                Backpack.MyItems.Add(NewItem);
             }
         }
     }

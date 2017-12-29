@@ -297,14 +297,6 @@ namespace Zeltex
 			}
         }
 
-		/// <summary>
-		/// Other
-		/// </summary>
-		public string SetName(int FileIndex, string NewName)
-		{
-			return SetName(GetName(FileIndex), NewName);
-		}
-
         public void ReAdd(string ElementName, T MyElement)
         {
             if (Data.ContainsValue(MyElement))
@@ -326,6 +318,7 @@ namespace Zeltex
                 return false;
             }
         }
+
         /// <summary>
         /// Add a file a new file
         /// </summary>
@@ -447,6 +440,19 @@ namespace Zeltex
                     break;
                 }
                 Count++;
+            }
+        }
+
+        public bool Remove(string FileName)
+        {
+            if (Data.ContainsKey(FileName))
+            {
+                Data.Remove(FileName);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         

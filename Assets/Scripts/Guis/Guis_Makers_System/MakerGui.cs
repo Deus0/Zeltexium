@@ -99,16 +99,6 @@ namespace Zeltex.Guis.Maker
             //return DataManager.Get().Get(DataManagerFolder, GetSelectedIndex());
             return "";
         }
-
-        /// <summary>
-        /// Get a file at an index
-        /// </summary>
-        public string Get(int FileIndex)
-        {
-            //return DataManager.Get().Get(DataManagerFolder, FileIndex);
-            return "";
-        }
-
         /// <summary>
         /// Get a data by a name!
         /// </summary>
@@ -122,6 +112,16 @@ namespace Zeltex.Guis.Maker
         {
             //DataManager.Get().Set(DataManagerFolder, Index, MyScript);
         }
+
+        /// <summary>
+        /// Get a file at an index
+        /// </summary>
+        public string Get(int FileIndex)
+        {
+            //return DataManager.Get().Get(DataManagerFolder, FileIndex);
+            return "";
+        }
+
         #endregion
 
         #region DataManagerNaming
@@ -234,7 +234,14 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void Select(int NewIndex)
         {
-            MyIndexController.ForceSelect(NewIndex);
+            if (MyIndexController && MyIndexController.gameObject.activeSelf)
+            {
+                MyIndexController.ForceSelect(NewIndex);
+            }
+            else
+            {
+                OnUpdatedIndex(NewIndex);
+            }
         }
 
         /// <summary>

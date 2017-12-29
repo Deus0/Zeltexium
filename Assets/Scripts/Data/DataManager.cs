@@ -606,13 +606,15 @@ namespace Zeltex
                 Element MyElement = ElementFolder.Get(Index);
                 if (MyElement != null)
                 {
-                    string OldName = ElementFolder.GetName(Index);
-                    string NewName2 = ElementFolder.SetName(Index, NewName);
+                    MyElement.SetName(NewName);
+                    /*string OldName = ElementFolder.GetName(Index);
+                    string NewName2 = ElementFolder.Get(Index).SetName(NewName);
                     if (OldName != NewName2)
                     {
                         MyElement.OnModified();
-                    }
-                    return NewName2;
+                    }*/
+                    //return NewName2;
+                    return MyElement.Name;
                 }
             }
             return "";  // no name given
@@ -631,11 +633,22 @@ namespace Zeltex
 				MyStatistics.Add("[" + (i + 1) + "] " + ElementFolders[i].FolderName + ": " + ElementFolders[i].Data.Count);
 			}
 			return MyStatistics;
-		}
+        }
 
+        public AudioClip LatestPlayed;
 
-		#region ImportVox
-		private Int3 VoxelIndex = Int3.Zero();
+        public void PlayClip(AudioClip clip)
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
+        } // PlayClip()
+
+        public bool GetIsLoaded()
+        {
+            return IsLoaded;
+        }
+
+        #region ImportVox
+        private Int3 VoxelIndex = Int3.Zero();
 		private int VoxelIndex2 = 0;
 		private Int3 VoxelIndex3 = Int3.Zero();
 		private Color VoxelColor;
@@ -867,10 +880,12 @@ namespace Zeltex
 				{
 					//byte[] MyBytes = System.Convert.FromBase64String(Data);
 					FileUtil.SaveBytes(MySaveFileDialog.FileName, (MyZexel.GetTexture()).EncodeToPNG());
-				}
-				#endif
-			}
-		}
+                }
+#else
+            Debug.LogError("Export Image not supported by platform.");
+#endif
+            }
+        }
 
 		public void ExportPolygon(Voxels.PolyModel MyModel)
 		{
@@ -994,13 +1009,15 @@ namespace Zeltex
 			{
 				byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
 				MyZexel.LoadImage(bytes);
-			}
+            }
 			else
 			{
 				Debug.LogError("Failure to open file.");
 			}
-			#endif
-		}
+#else
+            Debug.LogError("Import not supported by platform.");
+#endif
+        }
 
 		public void ImportZound(string FolderName, Sound.Zound MyZound)
 		{
@@ -1034,22 +1051,6 @@ namespace Zeltex
 			MyZound.UseAudioClip(LatestPlayed);
 		}
 		#endregion
-
-
-
-
-		public AudioClip LatestPlayed;
-
-		public void PlayClip(AudioClip clip)
-		{
-			gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
-		} // PlayClip()
-
-		public bool GetIsLoaded() 
-		{
-			return IsLoaded;
-		}
-
 
 
 		#region Generic
@@ -1225,6 +1226,7 @@ namespace Zeltex
 				SaveElement(MyElement);
 			}
 		}
+
 		public void SaveElement(string ElementFolderName, string ElementName)
 		{
 			ElementFolder MyFolder = GetElementFolder(ElementFolderName);
@@ -1303,13 +1305,43 @@ namespace Zeltex
 			ElementFolder MyFolder = GetElementFolder(FolderName);
 			if (MyFolder != null && NewElement != null)
 			{
-				if (MyFolder.SetElement(NewElement.Name, NewElement))
+				if (MyFolder.SetElement(NewElement))
 				{
-					NewElement.MyFolder = MyFolder;
 					OnUpdatedResources.Invoke();
 				}
 			}
 		}
+
+        /// <summary>
+        /// Push the data as a new one!
+        /// </summary>
+        public void PushElement(string FolderName, Element NewElement)
+        {
+            ElementFolder MyFolder = GetElementFolder(FolderName);
+            if (MyFolder != null && NewElement != null)
+            {
+                NewElement = NewElement.Clone();
+                if (MyFolder.Get(NewElement.Name) != null)
+                {
+                    if (MyFolder.SetElement(NewElement))
+                    {
+                        NewElement.MyFolder = MyFolder;
+                        NewElement.OnModified();
+                        OnUpdatedResources.Invoke();
+                        Debug.Log(NewElement.Name + " is overwriting previous value in database folder: " + FolderName);
+                    }
+                    else
+                    {
+                        Debug.LogError(NewElement.Name + " failed to overwrite previous value in database folder: " + FolderName);
+                    }
+                }
+                else
+                {
+                    MyFolder.AddElement(NewElement);
+                    Debug.Log(NewElement.Name + " is being added to the database folder: " + FolderName);
+                }
+            }
+        }
 
 		/// <summary>
 		/// Add a texture

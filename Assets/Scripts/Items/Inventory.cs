@@ -52,6 +52,15 @@ namespace Zeltex.Items
 
         #region Initiation
 
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            for (int i = 0; i < MyItems.Count; i++)
+            {
+                MyItems[i].ParentElement = this;
+                MyItems[i].OnLoad();    // any sub stats will be set as well
+            }
+        }
         /// <summary>
         /// Initiator part!
         /// </summary>
@@ -187,6 +196,7 @@ namespace Zeltex.Items
                 return null;
             }
         }
+
         /// <summary>
         /// Gets an item in the list by a name
         /// </summary>
@@ -206,6 +216,7 @@ namespace Zeltex.Items
             }
             return null;
         }
+
         /// <summary>
         /// Does inventory contain a certain item
         /// </summary>
@@ -220,6 +231,7 @@ namespace Zeltex.Items
             }
             return false;
         }
+
         /// <summary>
         /// Get item quantity, 0 if doesn't exist
         /// </summary>
@@ -401,7 +413,7 @@ namespace Zeltex.Items
                     return true;
                 }
                 //OnExchangeItem.Invoke(OtherInventory2, "Gave " + ItemName);
-                return Inventory.ExchangeItems(this, OtherInventory, ItemName, Quantity, false);
+                return ExchangeItems(this, OtherInventory, ItemName, Quantity, false);
             }
             else
             {
@@ -412,12 +424,12 @@ namespace Zeltex.Items
 
         public bool BuyItem(Inventory OtherInventory, string ItemName, int BuyQuantity)
         {
-            return Inventory.ExchangeItems(OtherInventory, this, ItemName, BuyQuantity, true);
+            return ExchangeItems(OtherInventory, this, ItemName, BuyQuantity, true);
         }
 
         public bool SellItem(Inventory OtherInventory, string ItemName, int BuyQuantity)
         {
-            return Inventory.ExchangeItems(this, OtherInventory, ItemName, BuyQuantity, true);
+            return ExchangeItems(this, OtherInventory, ItemName, BuyQuantity, true);
         }
 
         public static bool GiveValue(Inventory InventoryGive, Inventory InventoryTake, float ExchangeValue)
@@ -439,7 +451,7 @@ namespace Zeltex.Items
         /// If inventories are buying/selling
         ///     Assume A(this) is buying off B(OtherInventory)
         /// </summary>
-        public static bool ExchangeItems(Inventory InventoryGive, Inventory InventoryTake, string ItemName, int ItemQuantity, bool IsValueExchanged)
+        public bool ExchangeItems(Inventory InventoryGive, Inventory InventoryTake, string ItemName, int ItemQuantity, bool IsValueExchanged)
         {
             Debug.LogError(InventoryGive.Name + " is giving value " + ItemName + " to " + InventoryTake.Name);
             // get item by name from each inventory :3
@@ -470,9 +482,9 @@ namespace Zeltex.Items
             Debug.LogError(InventoryGive.Name + " giving " + ItemName + " to " + InventoryTake.Name);
             bool IsRemoveItem = InventoryGive.Remove(MyItem, ItemQuantity);
             if (IsRemoveItem)
+            {
                 InventoryTake.Add(MyItem, ItemQuantity);
-            //InventoryTake.HandleAddItemEvent();
-            //InventoryGive.HandleAddItemEvent();
+            }
             return IsRemoveItem;
         }
         #endregion
@@ -503,7 +515,8 @@ namespace Zeltex.Items
                 {
                     if (MyItem.GetQuantity() == 0)
                     {
-                        MyItems[ItemIndex] = new Item();
+                        MyItems[ItemIndex] = new Item();    // empty
+                        MyItems[ItemIndex].ParentElement = this;
                         OnAddItem.Invoke();
                     }
                     OnUpdateItem.Invoke(ItemIndex);
@@ -520,10 +533,11 @@ namespace Zeltex.Items
             {
                 return;
             }
-			Item NewItem = new Item ();
+			Item NewItem = new Item();
 			NewItem.Name += " " + MyItems.Count;
-			MyItems.Add (NewItem);
-		}
+			MyItems.Add(NewItem);
+            NewItem.ParentElement = this;
+        }
 
 		// Normal list handling
 		public void Add(Item NewItem) 

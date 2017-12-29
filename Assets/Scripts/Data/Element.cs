@@ -53,11 +53,21 @@ namespace Zeltex
         [JsonIgnore, HideInInspector]
         public bool IsDefaultGui;
 #endif
+        [JsonIgnore, HideInInspector]
+        public Element ParentElement;
+        // A link to the elements position in the database
+        [JsonIgnore, HideInInspector]
+        public string ElementLink = "";
 
         public Type GetDataType()
         {
             DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
             return DataType;
+        }
+
+        public void ResetName()
+        {
+            OldName = Name;
         }
 
         public string GetFolder()
@@ -106,6 +116,14 @@ namespace Zeltex
         }
 
         /// <summary>
+        /// Other
+        /// </summary>
+        /*public string SetName(int FileIndex, string NewName)
+        {
+            return SetName(GetName(FileIndex), NewName);
+        }*/
+
+        /// <summary>
         /// Base for getting script
         /// </summary>
         public virtual string GetScript()
@@ -134,13 +152,20 @@ namespace Zeltex
         /// </summary>
         public void OnModified()
         {
-            if (!HasChanged)
+            if (ParentElement != null)
             {
-                HasChanged = true;
-                ModifiedEvent.Invoke(this);
-                if (MyFolder != null)
+                ParentElement.OnModified();
+            }
+            else
+            {
+                if (!HasChanged)
                 {
-                    MyFolder.ModifiedEvent.Invoke(this);
+                    HasChanged = true;
+                    ModifiedEvent.Invoke(this);
+                    if (MyFolder != null)
+                    {
+                        MyFolder.ModifiedEvent.Invoke(this);
+                    }
                 }
             }
         }
@@ -149,48 +174,6 @@ namespace Zeltex
         {
             return DataManager.GetFolderPath(GetFolder() + "/") +
                        Name + "." + GetFileExtention();
-        }
-
-        public Element Revert()
-        {
-            if (HasChanged)
-            {
-                if (OldName != "")
-                {
-                    Name = OldName;
-                }
-                string Script = Util.FileUtil.Load(GetFullFilePath());
-                Debug.Log("Reverting element " + Name + " with script:\n" + Script);
-                DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
-                Element NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-                NewElement.Name = Name;
-                NewElement.MyFolder = MyFolder;
-                return NewElement;
-            }
-            else
-            {
-                return this;
-            }
-        }
-
-        public static Element Load(string NewName, ElementFolder NewFolder, string Script)
-        {
-            Element NewElement = new Element();
-            Type DataType = DataFolderNames.GetDataType(NewFolder.FolderName);
-            NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-            if (NewElement == null)
-            {
-                //System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(new Type[] { DataType });
-                //dynamic NewElement2 = MyConstructor.Invoke(null);
-               // NewElement = NewElement2 as Element;
-            }
-            if (NewElement != null)
-            {
-                NewElement.Name = NewName;
-                NewElement.MyFolder = NewFolder;
-            }
-			NewElement.OldName = NewElement.Name;
-            return NewElement;
         }
 
         public string GetSerial()
@@ -212,13 +195,24 @@ namespace Zeltex
             }
         }
 
+        public void Delete()
+        {
+            if (MyFolder != null)
+            {
+                if (MyFolder.Remove(Name))
+                {
+                    Util.FileUtil.Delete(GetFullFilePath());
+                }
+            }
+        }
 
-		/// <summary>
-		/// Returns the new name
-		///     - If the old name and new name is the same, return
-		///     - While the name is in the database, incremenet a number on it
-		/// </summary>
-		public void Rename(string OldName, string NewName)
+
+        /// <summary>
+        /// Returns the new name
+        ///     - If the old name and new name is the same, return
+        ///     - While the name is in the database, incremenet a number on it
+        /// </summary>
+        public void Rename(string OldName, string NewName)
 		{
 			if (OldName == NewName)
 			{
@@ -304,24 +298,27 @@ namespace Zeltex
         {
             HasMoved = false;
         }
-		#region Loading
 
+		#region Loading
 
 		public T Clone<T>() where T : Element
 		{
 			T NewElement = JsonConvert.DeserializeObject(GetSerial(), typeof(T)) as T;
-			return NewElement;
+            NewElement.OnLoad();
+            return NewElement;
 		}
 
 		public Element Clone(System.Type DataType)
 		{
 			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), DataType) as Element;
-			return NewElement;
+            NewElement.OnLoad();
+            return NewElement;
 		}
 		public Element Clone()
 		{
-			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetDataType()) as Element;
-			return NewElement;
+			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetType()) as Element;   //GetDataType()
+            NewElement.OnLoad();
+            return NewElement;
 		}
 
 		public Element Load(bool IsJSONFormat = true)
@@ -331,8 +328,13 @@ namespace Zeltex
 		}
 
 		public Element Load(string Script, System.Type DataType)
-		{
-			return JsonConvert.DeserializeObject(Script, DataType) as Element;
+        {
+            Element MyElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+            if (MyElement != null)
+            {
+                MyElement.OnLoad();
+            }
+            return MyElement;
 		}
 		public Element Load(string Script, bool IsJSONFormat = true)
 		{
@@ -355,8 +357,61 @@ namespace Zeltex
 			}
 			NewElement.Name = Name;
 			NewElement.MyFolder = MyFolder;
-			return NewElement;
-		}
-		#endregion
+            OnLoad();
+            return NewElement;
+        }
+
+        public Element Revert()
+        {
+            if (HasChanged)
+            {
+                if (OldName != "")
+                {
+                    Name = OldName;
+                }
+                string Script = Util.FileUtil.Load(GetFullFilePath());
+                Debug.Log("Reverting element " + Name + " with script:\n" + Script);
+                DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
+                Element NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+                NewElement.Name = Name;
+                NewElement.MyFolder = MyFolder;
+                OnLoad();
+                return NewElement;
+            }
+            else
+            {
+                return this;
+            }
+        }
+
+        public static Element Load(string NewName, ElementFolder NewFolder, string Script)
+        {
+            Element NewElement = new Element();
+            Type DataType = DataFolderNames.GetDataType(NewFolder.FolderName);
+            NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+            if (NewElement == null)
+            {
+                //System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(new Type[] { DataType });
+                //dynamic NewElement2 = MyConstructor.Invoke(null);
+                // NewElement = NewElement2 as Element;
+            }
+            if (NewElement != null)
+            {
+                NewElement.Name = NewName;
+                NewElement.MyFolder = NewFolder;
+            }
+            NewElement.OldName = NewElement.Name;
+            NewElement.OnLoad();
+            return NewElement;
+        }
+
+        /// <summary>
+        /// When element is loaded, initiate variables
+        /// </summary>
+        public virtual void OnLoad()
+        {
+
+        }
+        #endregion
     }
 }

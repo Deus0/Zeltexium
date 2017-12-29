@@ -139,7 +139,7 @@ namespace Zeltex.Characters
 
         private void OnGUI()
         {
-            Data.MyStats.OnGUI();
+            Data.MyStatsHandler.OnGUI();
         }
 
         /*private void Awake()
@@ -158,20 +158,20 @@ namespace Zeltex.Characters
             }*/
             if (Application.isPlaying)
             {
-                Data.MyStats.SetCharacter(transform);
-                Data.MyStats.UpdateScript();
+                Data.MyStatsHandler.SetCharacter(this);
+                Data.MyStatsHandler.UpdateScript();
             }
             if (ActionLoad.IsTriggered())
             {
 
             }
-            if (Data.MyStats != null && Data.MyStats.ActionLoadStats.IsTriggered())
+            if (Data.MyStats != null && Data.MyStatsHandler.ActionLoadStats.IsTriggered())
             {
-                string LoadStatsName = Data.MyStats.ActionStatsName;
+                string LoadStatsName = Data.MyStatsHandler.ActionStatsName;
                 Stats DataStats = DataManager.Get().GetElement(DataFolderNames.StatGroups, 0) as Stats;
                 if (DataStats != null)
                 {
-                    Data.MyStats = Data.MyStats.Load(DataStats.GetSerial(), typeof(CharacterStats)) as CharacterStats;
+                    Data.MyStats = Data.MyStats.Load(DataStats.GetSerial(), typeof(Stats)) as Stats;
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Zeltex.Characters
                 name = Data.Name;
                 RefreshComponents();
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MySkeleton.GetSkeleton().ActivateRoutine());
-                Data.MyStats.SetCharacter(transform);
+                Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);
                 transform.position = Data.LevelPosition;
                 transform.eulerAngles = Data.LevelRotation;
@@ -329,7 +329,7 @@ namespace Zeltex.Characters
                 //name = Name;
                 LogManager.Get().Log("Initialised character: " + name, "Characters");
                 RefreshComponents();
-                Data.MyStats.SetCharacter(transform);
+                Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);
                 Data.MyGuis.SetCharacter(this);
 
@@ -364,7 +364,7 @@ namespace Zeltex.Characters
         {
             if (Data.MyStats != null)
             {
-                return !Data.MyStats.IsDead();
+                return !Data.MyStatsHandler.IsDead();
             }
             else
             {
@@ -522,7 +522,7 @@ namespace Zeltex.Characters
             yield return null;
             Debug.Log("Reviving Character [" + name + "].");
             Data.MyGuis.RestoreStates();
-            Data.MyStats.RestoreFullHealth();
+            Data.MyStatsHandler.RestoreFullHealth();
             SetMovement(true);
             if (IsPlayer)
             {
@@ -560,7 +560,7 @@ namespace Zeltex.Characters
         {
             Debug.Log(name + " has killed " + DeadCharacter.name);
             AddScore(1);
-            Data.MyStats.AddExperience(1);
+            Data.MyStatsHandler.AddExperience(1);
         }
         #endregion
 

@@ -85,7 +85,7 @@ namespace Zeltex.Combat
         }
         private void CheckEnergy()
         {
-            if (MyCharacter.GetStats().GetStatValue(Data.StatUseName) <= 0)
+            if (MyCharacter.GetData().MyStatsHandler.GetStatValue(Data.StatUseName) <= 0)
             {
                 Deactivate();
             }

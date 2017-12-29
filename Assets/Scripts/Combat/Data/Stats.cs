@@ -11,9 +11,11 @@ namespace Zeltex.Combat
     /// </summary>
 	[System.Serializable]
 	public class Stats : Element
-	{
+    {
+        [JsonProperty, SerializeField]
+        public bool IsAlive = true;
         // List of stats
-		public List<Stat> Data = new List<Stat>();
+        public List<Stat> Data = new List<Stat>();
 
         //[Header("Events")]
         [JsonIgnore, HideInInspector]
