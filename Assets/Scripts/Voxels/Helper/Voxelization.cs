@@ -27,7 +27,7 @@ namespace Zeltex.Voxels
         public Mesh OriginalMesh;
         public Mesh VoxelMesh;
         private MeshFilter MyMeshFilter;
-        private MeshRenderer MyMeshRenderer;
+        //private MeshRenderer MyMeshRenderer;
         private float GridLength = 1f;
         // actions
         [Header("Actions")]
@@ -66,7 +66,7 @@ namespace Zeltex.Voxels
         }
         void Generate()
         {   
-            MyMeshRenderer = gameObject.GetComponent<MeshRenderer>();
+            //MyMeshRenderer = gameObject.GetComponent<MeshRenderer>();
             MyMeshFilter = gameObject.GetComponent<MeshFilter>();
             OriginalMesh = MyMeshFilter.sharedMesh;
             MyBounds = OriginalMesh.bounds;

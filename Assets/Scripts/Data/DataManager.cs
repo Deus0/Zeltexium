@@ -340,33 +340,35 @@ namespace Zeltex
         {
             List<string> FolderNames = new List<string>();
             //FolderNames.Add(DataFolderNames.Classes);
-            FolderNames.Add(DataFolderNames.Items);
-            FolderNames.Add(DataFolderNames.Recipes);
-            FolderNames.Add(DataFolderNames.Quests);
-            FolderNames.Add(DataFolderNames.Spells);
-            FolderNames.Add(DataFolderNames.Stats);
-            FolderNames.Add(DataFolderNames.VoxelMeta);
-            
-            FolderNames.Add(DataFolderNames.Characters);
-            FolderNames.Add(DataFolderNames.StatGroups);
-            FolderNames.Add(DataFolderNames.Inventorys);
-            FolderNames.Add(DataFolderNames.QuestLogs);
-            FolderNames.Add(DataFolderNames.DialogueTrees);
 
             FolderNames.Add(DataFolderNames.VoxelDiffuseTextures);
             FolderNames.Add(DataFolderNames.VoxelNormalTextures);
             FolderNames.Add(DataFolderNames.StatTextures);
             FolderNames.Add(DataFolderNames.ItemTextures);
 
+            FolderNames.Add(DataFolderNames.Sounds);
+            FolderNames.Add(DataFolderNames.Musics);
+            
+            FolderNames.Add(DataFolderNames.Voxels);
+            FolderNames.Add(DataFolderNames.Items);
+            FolderNames.Add(DataFolderNames.Recipes);
+            FolderNames.Add(DataFolderNames.Quests);
+            FolderNames.Add(DataFolderNames.Spells);
+            FolderNames.Add(DataFolderNames.Stats);
+            FolderNames.Add(DataFolderNames.Dialogues);
+
+            FolderNames.Add(DataFolderNames.PolyModels);
+            FolderNames.Add(DataFolderNames.VoxelModels);
+            FolderNames.Add(DataFolderNames.Skeletons);
+
+            FolderNames.Add(DataFolderNames.Characters);
+            FolderNames.Add(DataFolderNames.StatGroups);
+            FolderNames.Add(DataFolderNames.Inventorys);
+            FolderNames.Add(DataFolderNames.QuestLogs);
+            FolderNames.Add(DataFolderNames.DialogueTrees);
+
             FolderNames.Add((DataFolderNames.Levels));
             FolderNames.Add((DataFolderNames.Saves));
-
-            FolderNames.Add(DataFolderNames.Sounds);
-            FolderNames.Add(DataFolderNames.Skeletons);
-            FolderNames.Add(DataFolderNames.PolyModels);
-            FolderNames.Add(DataFolderNames.Voxels);
-            FolderNames.Add(DataFolderNames.Dialogues);
-            FolderNames.Add(DataFolderNames.PolyModels);
             return FolderNames;
         }
 
@@ -378,7 +380,7 @@ namespace Zeltex
             ElementFolders.Clear();
 
             // Element Folders
-            ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelMeta, "zel"));
+            ElementFolders.Add(ElementFolder.Create(DataFolderNames.Voxels, "zel"));
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.PolyModels, "zel"));
 			ElementFolders.Add(ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
             ElementFolders.Add(ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
@@ -1178,7 +1180,7 @@ namespace Zeltex
 		/// </summary>
 		private System.Collections.IEnumerator LoadAllElements()
 		{
-			Debug.Log("Loading all elements for [" + MapName + "]");
+			//Debug.Log("Loading all elements for [" + MapName + "]");
 			for (int i = 0; i < ElementFolders.Count; i++)
 			{
 				yield return UniversalCoroutine.CoroutineManager.StartCoroutine(ElementFolders[i].LoadAllElements());
@@ -1368,7 +1370,7 @@ namespace Zeltex
 			if (MyFolder != null)
 			{
 				MyFolder.Remove(FileIndex);
-				if (FolderName == DataFolderNames.VoxelMeta)
+				if (FolderName == DataFolderNames.Voxels)
 				{
 					Voxels.VoxelManager.Get().RemoveMeta(FileIndex);
 				}
@@ -1392,7 +1394,7 @@ namespace Zeltex
 				if (IndexOf != -1)
 				{
 					MyFolder.Remove(IndexOf);
-					if (FolderName == DataFolderNames.VoxelMeta)
+					if (FolderName == DataFolderNames.Voxels)
 					{
 						Voxels.VoxelManager.Get().RemoveMeta(IndexOf);
 					}

@@ -285,9 +285,9 @@ namespace Zeltex.Voxels
         {
             Clear();
             Debug.Log("Loading World [" + MyWorld.name + "] without LookupTable Tag: Generating Lookup Table");
-            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.Voxels); i++)
             {
-                Add(DataManager.Get().GetName(DataFolderNames.VoxelMeta, i));
+                Add(DataManager.Get().GetName(DataFolderNames.Voxels, i));
             }
             foreach (KeyValuePair<Int3, Chunk> MyPair in MyWorld.MyChunkData)
             {
@@ -298,7 +298,7 @@ namespace Zeltex.Voxels
                     {
                         for (ChunkPosition.z = 0; ChunkPosition.z < Chunk.ChunkSize; ChunkPosition.z++)
                         {
-                            Increase(DataManager.Get().GetName(DataFolderNames.VoxelMeta, MyPair.Value.GetVoxelType(ChunkPosition)));
+                            Increase(DataManager.Get().GetName(DataFolderNames.Voxels, MyPair.Value.GetVoxelType(ChunkPosition)));
                         }
                     }
                 }
@@ -381,10 +381,10 @@ namespace Zeltex.Voxels
                 Debug.Log(" [" + Index + "] ~LookupTable " + MyPair.Key + " [" + MyPair.Value + "]");
                 Index++;
             }
-            Debug.Log("Now printing " + DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta) + " VoxelMetas");
-            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+            Debug.Log("Now printing " + DataManager.Get().GetSizeElements(DataFolderNames.Voxels) + " VoxelMetas");
+            for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.Voxels); i++)
             {
-                Debug.Log(i + ": " + DataManager.Get().GetName(DataFolderNames.VoxelMeta, i));
+                Debug.Log(i + ": " + DataManager.Get().GetName(DataFolderNames.Voxels, i));
             }
         }
         #endregion

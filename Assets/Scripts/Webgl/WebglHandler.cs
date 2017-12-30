@@ -10,15 +10,15 @@ namespace Zeltex.Util
     public class WebglHandler : MonoBehaviour
     {
         bool IsFullScreen;
-        int OriginalWidth;
-        int OriginalHeight;
+       // int OriginalWidth;
+        //int OriginalHeight;
         bool CanToggle = true;
         
         //Application.ExternalCall("SetFullscreen", 1);
         void Start()
         {
-            OriginalWidth = Screen.width;
-            OriginalHeight = Screen.height;
+            //OriginalWidth = Screen.width;
+            //OriginalHeight = Screen.height;
             // if not webgl, hide button
 #if UNITY_WEBGL
 

@@ -490,10 +490,10 @@ namespace Zeltex.Guis.Maker
                     Vector2 PositionBelow = new Vector2(Position.x, Position.y - 1);
                     Vector2 PositionLeft = new Vector2(Position.x - 1, Position.y);
                     Vector2 PositionRight = new Vector2(Position.x + 1, Position.y);
-                    int IndexAbove = TextureEditor.GetPixelIndex(PositionAbove.x, PositionAbove.y, TextureWidth);
-                    int IndexBelow = TextureEditor.GetPixelIndex(PositionBelow.x, PositionBelow.y, TextureWidth);
-                    int IndexLeft = TextureEditor.GetPixelIndex(PositionLeft.x, PositionLeft.y, TextureWidth);
-                    int IndexRight = TextureEditor.GetPixelIndex(PositionRight.x, PositionRight.y, TextureWidth);
+                    //int IndexAbove = TextureEditor.GetPixelIndex(PositionAbove.x, PositionAbove.y, TextureWidth);
+                    //int IndexBelow = TextureEditor.GetPixelIndex(PositionBelow.x, PositionBelow.y, TextureWidth);
+                    //int IndexLeft = TextureEditor.GetPixelIndex(PositionLeft.x, PositionLeft.y, TextureWidth);
+                    //int IndexRight = TextureEditor.GetPixelIndex(PositionRight.x, PositionRight.y, TextureWidth);
                     MyColorData = FloodFillPixels(MyColorData, PositionAbove, ColorToReplace, NewColor);
                     MyColorData = FloodFillPixels(MyColorData, PositionBelow, ColorToReplace, NewColor);
                     MyColorData = FloodFillPixels(MyColorData, PositionLeft, ColorToReplace, NewColor);

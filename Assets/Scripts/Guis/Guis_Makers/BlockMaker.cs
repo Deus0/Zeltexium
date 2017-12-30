@@ -25,7 +25,7 @@ namespace Zeltex.Guis.Maker
         #region Files
         protected override void SetFilePaths()
         {
-            DataManagerFolder = DataFolderNames.VoxelMeta;
+            DataManagerFolder = DataFolderNames.Voxels;
         }
 
         #endregion

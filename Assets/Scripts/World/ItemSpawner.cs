@@ -15,7 +15,7 @@ namespace Zeltex.WorldUtilities
     /// </summary>
 	public class ItemSpawner : MonoBehaviour
     {
-        private bool IsUseArea = true;
+        //private bool IsUseArea = true;
         [Header("Event")]
         public EventObject OnSpawn;
         [Header("Spawn Rate")]

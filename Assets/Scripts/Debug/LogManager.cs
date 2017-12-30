@@ -70,6 +70,8 @@ namespace Zeltex
     {
         public static int MaxLog = 30;
         [SerializeField]
+        private bool IsDebugLog;
+        [SerializeField]
         private bool IsDrawLog = true;
         [SerializeField]
         private int InitialSpacePixels = 100;
@@ -86,7 +88,7 @@ namespace Zeltex
             }
             return MyManager;
         }
-    
+
         public void Log(string NewLine, string Channel = "Default")
         {
             if (LogBooks.ContainsKey(Channel) == false)
@@ -95,7 +97,10 @@ namespace Zeltex
             }
             Logbook MyBook = LogBooks[Channel];
             MyBook.Log(NewLine);
-            Debug.Log(NewLine);
+            if (IsDebugLog)
+            {
+                Debug.Log(NewLine);
+            }
         }
 
         private void OnGUI()

@@ -455,10 +455,10 @@ namespace Zeltex.Combat
         /// <summary>
         /// Gets the base value of a stat
         /// </summary>
-        public Stat GetStatBase(string StatName)
+        /*public Stat GetStatBase(string StatName)
         {
             return MyStats.GetStat(StatName);
-        }
+        }*/
         #endregion
 
         #region File
@@ -564,7 +564,7 @@ namespace Zeltex.Combat
         /// </summary>
         public void AddExperience(float NewExperience)
         {
-            Stat BaseCurrentExperience = GetStatBase("Experience");
+            //Stat BaseCurrentExperience = GetStatBase("Experience");
             Stat CurrentExperience = MyStats.GetStat("Experience");
             // Level up hack
             NewExperience = CurrentExperience.GetValue() - CurrentExperience.GetState();

@@ -136,7 +136,7 @@ namespace Wasabimole.ProceduralTree
         gameObject.isStatic = false;
 
         var originalRotation = transform.localRotation;
-        var originalSeed = Random.seed;
+        var originalSeed = Random.state;
 
         if (vertexList == null) // Create lists for holding generated vertices
         {
@@ -152,13 +152,12 @@ namespace Wasabimole.ProceduralTree
         }
 
         SetTreeRingShape(); // Init shape array for current number of sides
-
-        Random.seed = Seed;
+        Random.InitState(Seed);
 
         // Main recursive call, starts creating the ring of vertices in the trunk's base
         Branch(new Quaternion(), Vector3.zero, -1, BaseRadius, 0f);
             
-        Random.seed = originalSeed;
+        Random.state = originalSeed;
 
         transform.localRotation = originalRotation; // Restore original object rotation
 

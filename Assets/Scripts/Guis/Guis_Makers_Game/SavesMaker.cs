@@ -191,9 +191,9 @@ namespace Zeltex.Saves
                     Debug.LogError("Tried to create a duplicate savegame [" + SaveGameName + "]");
                 }
             }
-            catch (System.IO.DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException e)
             {
-                Debug.LogError("DirectoryNotFoundException at: " + MyDirectory);
+                Debug.LogError("DirectoryNotFoundException at: " + MyDirectory + "\n" + e.ToString());
             }
             SetSaveGameName(SaveGameName);
             // Go to Character Create Screen and Level Select

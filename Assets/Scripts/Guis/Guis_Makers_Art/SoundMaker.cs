@@ -180,8 +180,8 @@ namespace Zeltex.Guis.Maker
             // Find a webgl solution for recording audio
 #else
             Microphone.End("Built-in Microphone");
-            SetSelected(GetSelectedAudio()); // update the things
-            MyCurveRenderer.UpdateCurve(GetSelectedAudio(), true);
+            SetSelected(GetSelectedAudioClip()); // update the things
+            MyCurveRenderer.UpdateCurve(GetSelectedAudioClip(), true);
 #endif
         }
 #endregion

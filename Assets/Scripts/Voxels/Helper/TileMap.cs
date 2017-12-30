@@ -52,7 +52,7 @@ namespace Zeltex
 
         public Vector2 GetTilePosition(int TileIndex)
         {
-            float TotalTiles = TilesLengthX * TilesLengthY;
+            //float TotalTiles = TilesLengthX * TilesLengthY;
             float PosX = 0;
             float PosY = 0;
             if (TilesLengthX != 1)

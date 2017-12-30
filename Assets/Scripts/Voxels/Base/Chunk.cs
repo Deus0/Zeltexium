@@ -141,7 +141,7 @@ namespace Zeltex.Voxels
             {
                 MyMeshFilter = gameObject.GetComponent<MeshFilter>();
             }
-            if (MyMeshRenderer == null)
+            if (MyMeshFilter == null)
             {
                 MyMeshFilter = gameObject.AddComponent<MeshFilter>();
             }

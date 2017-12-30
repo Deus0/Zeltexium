@@ -503,7 +503,10 @@ namespace Zeltex.Characters
                     );
                     //Debug.LogError(MyTransform.name + " Has a new position of " + MyTransform.position.ToString());
                 }
-                catch (System.FormatException e) { }
+                catch (System.FormatException e)
+                {
+                    Debug.LogError("[Character.SetTransformText]: " + e.ToString());
+                }
             }
         }
         #endregion

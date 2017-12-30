@@ -426,8 +426,8 @@ public class DungeonData {
 			if (bIsPathways) 
 			{
 				// this is now up down
-				Vector3 BackPosition = new Vector3(Position.x, Position.y - 1 - PathSize.y, Position.z);
-				Vector3 ForwardPosition = new Vector3(Position.x, Position.y + 1 + PathSize.y, Position.z);
+				//Vector3 BackPosition = new Vector3(Position.x, Position.y - 1 - PathSize.y, Position.z);
+				//Vector3 ForwardPosition = new Vector3(Position.x, Position.y + 1 + PathSize.y, Position.z);
 				if (PathDirection == 3 || PathDirection == 4)
                 {
 					//if (IsStopPath(MyBlocks.GetBlockType(BackPosition)) || MyBlocks.GetBlockType(ForwardPosition) == PathBlockType) {
@@ -446,7 +446,7 @@ public class DungeonData {
 				}
 				// forward, back
 				Vector3 BottomPosition = new Vector3(Position.x, Position.y, Position.z - 1 - PathSize.z);
-				Vector3 TopPosition = new Vector3(Position.x, Position.y, Position.z + 1 + PathSize.z);
+				//Vector3 TopPosition = new Vector3(Position.x, Position.y, Position.z + 1 + PathSize.z);
 				if (PathDirection == 1 || PathDirection == 2)
                 {
 						if (IsStopMaze(GetBlockType(BottomPosition.ToInt3()))  || IsStopMaze(GetBlockType(BottomPosition.ToInt3())))

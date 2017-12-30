@@ -27,8 +27,8 @@ namespace Zeltex
         [SerializeField, JsonProperty]
         private bool IsGenerateTerrain;
 
-        [SerializeField, JsonIgnore]
-        private string MyScript = "";
+        //[SerializeField, JsonIgnore]
+        //private string MyScript = "";
         // The world loaded for the level
         [SerializeField, JsonIgnore]
         private World MyWorld;
@@ -42,10 +42,6 @@ namespace Zeltex
         [SerializeField, JsonIgnore]
         private Zeltex.Util.FilePathType MyFilePathType;
 
-        public void SetFilePathType(Zeltex.Util.FilePathType NewType)
-        {
-            MyFilePathType = NewType;
-        }
         #region Overrides
 
         private void SetDefaults()
@@ -55,7 +51,7 @@ namespace Zeltex
             IsGenerateTerrain = false;
         }
 
-        public override string GetScript()
+        /*public override string GetScript()
         {
             string Script = "";
             if (IsGenerateTerrain)
@@ -91,7 +87,7 @@ namespace Zeltex
             }
             MyScript = Script;
             //Debug.LogError("Run script of level: " + Script);
-        }
+        }*/
 
         #endregion
 
@@ -160,6 +156,23 @@ namespace Zeltex
         }
         #endregion
 
+        #region Spawning
+
+        public void Spawn()
+        {
+            Debug.Log(Name + " Is Spawning in game.");
+            WorldManager.Get().LoadLevel(this);
+        }
+
+        public void DeSpawn()
+        {
+            WorldManager.Get().Destroy(MyWorld);
+        }
+        public bool IsSpawned()
+        {
+            return (MyWorld != null);
+        }
+
         public void SetWorld(World NewWorld)
         {
             MyWorld = NewWorld;
@@ -170,36 +183,33 @@ namespace Zeltex
             return MyWorld;
         }
 
-        public string GetSaveFolderPath(string SaveFolderName)
+        public int GetCharactersCount()
         {
-            //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
-            string FolderPath = DataManager.Get().GetResourcesPath(Util.FilePathType.PersistentPath) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
-            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
-            {
-                Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
-                FileManagement.CreateDirectory(FolderPath, true);
-            }
-            else
-            {
-                Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
-            }
-            return FolderPath;
+            return CharactersCount;
         }
 
-        public string GetFolderPath()
+        public void AddCharacter(Character NewCharacter)
         {
-            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
-            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            if (MyCharacters.Contains(NewCharacter) == false)
             {
-                Debug.LogError("Creating Directory for Level [" + Name + "]: "    + FolderPath);
-                FileManagement.CreateDirectory(FolderPath, true);
+                MyCharacters.Add(NewCharacter);
+                //CharactersCount = MyCharacters.Count;
+                //OnModified();
             }
-            else
-            {
-                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
-            }
-            return FolderPath;
         }
+
+        public int GetRealCharactersCount()
+        {
+            return MyCharacters.Count;
+        }
+
+        public Character GetCharacter(int CharacterIndex)
+        {
+            return MyCharacters[CharacterIndex];
+        }
+        #endregion
+
+        #region Saving
 
         public void SaveOpenCharacters(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
@@ -247,32 +257,15 @@ namespace Zeltex
                 Debug.LogError("    Level has no world.");
             }
         }
-
-        public int GetCharactersCount()
-        {
-            return CharactersCount;
-        }
-
-        public void AddCharacter(Character NewCharacter)
-        {
-            if (MyCharacters.Contains(NewCharacter) == false)
-            {
-                MyCharacters.Add(NewCharacter);
-                //CharactersCount = MyCharacters.Count;
-                //OnModified();
-            }
-        }
-
-        public int GetRealCharactersCount()
-        {
-            return MyCharacters.Count;
-        }
-        public Character GetCharacter(int CharacterIndex)
-        {
-            return MyCharacters[CharacterIndex];
-        }
+        #endregion
 
         #region Paths
+
+        public void SetFilePathType(Zeltex.Util.FilePathType NewType)
+        {
+            MyFilePathType = NewType;
+        }
+
         public string GetFilePath(Chunk MyChunk, string SaveFolderName = "")
         {
             if (SaveFolderName == "")
@@ -307,6 +300,36 @@ namespace Zeltex
             {
                 return GetSaveFolderPath(SaveFolderName) + CharacterName + "." + CharacterFileExtension;
             }
+        }
+        public string GetSaveFolderPath(string SaveFolderName)
+        {
+            //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
+            string FolderPath = DataManager.Get().GetResourcesPath(Util.FilePathType.PersistentPath) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
+            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            {
+                Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
+                FileManagement.CreateDirectory(FolderPath, true);
+            }
+            else
+            {
+                Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+            }
+            return FolderPath;
+        }
+
+        public string GetFolderPath()
+        {
+            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
+            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            {
+                Debug.LogError("Creating Directory for Level [" + Name + "]: " + FolderPath);
+                FileManagement.CreateDirectory(FolderPath, true);
+            }
+            else
+            {
+                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+            }
+            return FolderPath;
         }
         #endregion
     }

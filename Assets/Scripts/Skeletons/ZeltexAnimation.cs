@@ -101,7 +101,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Gets a script from the animation curves
         /// </summary>
-        public List<string> GetScript()
+        public override string GetScript()
         {
             float MicroLimit = 0.01f;
             List<string> Data = new List<string>();
@@ -221,7 +221,7 @@ namespace Zeltex.Skeletons
 
                 }
             }
-            return Data;
+            return FileUtil.ConvertToSingle(Data);
         }
 
         /// <summary>

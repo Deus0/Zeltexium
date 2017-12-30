@@ -492,24 +492,32 @@ namespace Zeltex
             }
             else
             {
-                Debug.Log("Getting Pool Object in Edit mode.");
-                RefreshPoolSpawner();
-                T PoolComponent = SpawnPoolObject(0, PoolIndex);
-                if (PoolComponent != null)
-                {
-                    ReadyMessageData Data = new ReadyMessageData();
-                    Data.SpawnedObject = PoolComponent.gameObject.GetComponent<NetworkIdentity>();
-                    Data.Spawner = gameObject.GetComponent<NetworkIdentity>();
-                    Data.PoolIndex = PoolIndex;
-                    Data.ExtraData = ExtraData;
-                    ReadyObject(Data);
-                }
-                else
-                {
-                    Debug.LogError("Spawned Pool Object is null.");
-                }
-                return PoolComponent;
+                return GetEditorObject(PoolIndex, ExtraData);
             }
+        }
+
+        /// <summary>
+        /// offline version of objects
+        /// </summary>
+        protected virtual T GetEditorObject(int PoolIndex = 0, NetworkIdentity ExtraData = null)
+        {
+            //Debug.Log("Getting Pool Object in Edit mode.");
+            RefreshPoolSpawner();
+            T PoolComponent = SpawnPoolObject(0, PoolIndex);
+            if (PoolComponent != null)
+            {
+                ReadyMessageData Data = new ReadyMessageData();
+                Data.SpawnedObject = PoolComponent.gameObject.GetComponent<NetworkIdentity>();
+                Data.Spawner = gameObject.GetComponent<NetworkIdentity>();
+                Data.PoolIndex = PoolIndex;
+                Data.ExtraData = ExtraData;
+                ReadyObject(Data);
+            }
+            else
+            {
+                Debug.LogError("Spawned Pool Object is null in: " + name);
+            }
+            return PoolComponent;
         }
 
         /// <summary>

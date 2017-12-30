@@ -187,9 +187,12 @@ namespace Zeltex.Guis
 
         private void OnUpdatedTooltip()
         {
-            MyHandle.TooltipNameLabel = MyGuiListElementData.LabelText;
-            MyHandle.TooltipDescriptionLabel = MyGuiListElementData.DescriptionText;
-            MyHandle.enabled = MyHandle.TooltipNameLabel != "";
+            if (MyHandle)
+            {
+                MyHandle.TooltipNameLabel = MyGuiListElementData.LabelText;
+                MyHandle.TooltipDescriptionLabel = MyGuiListElementData.DescriptionText;
+                MyHandle.enabled = MyHandle.TooltipNameLabel != "";
+            }
         }
         /// <summary>
         /// Main function used to set tool tip texts.

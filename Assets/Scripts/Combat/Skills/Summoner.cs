@@ -8,10 +8,15 @@ namespace Zeltex.Combat
     /// </summary>
     public class Summoner : Skill
     {
-        protected new string SkillName = "Summoner";
         public string ClassName = "Minion";
         public string RaceName = "Skeleton_0";
         public GameObject SummoningAnimation;
+
+        public override void Start()
+        {
+            base.Start();
+            SkillName = "Summoner";
+        }
 
         override public void ActivateOnNetwork()   // sheild checks enery and sends negative state on activate
         {

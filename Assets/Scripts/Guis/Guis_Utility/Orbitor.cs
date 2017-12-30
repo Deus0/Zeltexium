@@ -245,7 +245,7 @@ namespace Zeltex.Guis
         {
             //TransformedGuiOffset = Vector3.zero;
             float TimeValue = DeltaTime * MovementSpeed / (MyDisplayDistance + 1);
-            float RotationLerpValue = DeltaTime * RotationSpeed;
+            //float RotationLerpValue = DeltaTime * RotationSpeed;
             if (IsInstant)
             {
                 transform.position = GetTargetWorldPosition();

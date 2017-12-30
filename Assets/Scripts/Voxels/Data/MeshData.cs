@@ -351,7 +351,10 @@ namespace Zeltex.Voxels
                                     float.Parse(MyVertThings[1]),
                                     float.Parse(MyVertThings[2])));
                             }
-                            catch (System.FormatException e) { }
+                            catch (System.FormatException e)
+                            {
+                                Debug.LogError(e.ToString());
+                            }
                         }
                     }
                 }
@@ -370,7 +373,10 @@ namespace Zeltex.Voxels
                         {
                             Triangles.Add(int.Parse(MyScript[j]));
                         }
-                        catch (System.FormatException e) { }
+                        catch (System.FormatException e)
+                        {
+                            Debug.LogError(e.ToString());
+                        }
                     }
                 }
                 if (MyLine == "/BeginCoordinates")
@@ -392,7 +398,10 @@ namespace Zeltex.Voxels
                                     float.Parse(MyVertThings[0]),
                                     float.Parse(MyVertThings[1])));
                             }
-                            catch (System.FormatException e) { }
+                            catch (System.FormatException e)
+                            {
+                                Debug.LogError(e.ToString());
+                            }
                         }
                     }
                 }
@@ -418,7 +427,10 @@ namespace Zeltex.Voxels
                                     255
                                 ));
                             }
-                            catch (System.FormatException e) { }
+                            catch (System.FormatException e)
+                            {
+                                Debug.LogError(e.ToString());
+                            }
                         }
                     }
                 }

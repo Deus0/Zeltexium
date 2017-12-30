@@ -18,9 +18,9 @@ namespace Zeltex.Voxels
         public void SetDefaultVoxelNames()
         {
             MyWorld.MyLookupTable.Clear();
-            for (int i = 0; i < DataManager.Get().GetSize(DataFolderNames.VoxelMeta); i++)
+            for (int i = 0; i < DataManager.Get().GetSize(DataFolderNames.Voxels); i++)
             {
-                MyWorld.MyLookupTable.AddName(DataManager.Get().GetName(DataFolderNames.VoxelMeta, i));
+                MyWorld.MyLookupTable.AddName(DataManager.Get().GetName(DataFolderNames.Voxels, i));
             }
         }
         /// <summary>
@@ -92,11 +92,11 @@ namespace Zeltex.Voxels
                                 }
                                 catch (System.FormatException e)
                                 {
-
+                                    Debug.LogError(e.ToString());
                                 }
                                 catch (System.NullReferenceException e)
                                 {
-
+                                    Debug.LogError(e.ToString());
                                 }
                             }
                             else if (MyInput.Length == 4)
@@ -139,7 +139,7 @@ namespace Zeltex.Voxels
                                 }
                                 catch (System.FormatException e)
                                 {
-                                    //MyChunk.UpdateBlockTypeMass(new Int3(i, j, k), 0);
+                                    Debug.LogError(e.ToString());
                                 }
                             }
                             ScriptLineIndex++;

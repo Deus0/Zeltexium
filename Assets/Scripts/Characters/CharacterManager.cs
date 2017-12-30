@@ -23,7 +23,16 @@ namespace Zeltex.Characters
         private static string DefaultPlayerName = "Prefabs/Character";
         private static string DefaultCharacterName = "New_Character";
 		private bool IsUpdatingCharacter = false;   // is the manager currently updating a character
-        private Vector3 HidePosition = new Vector3(0, -300, 0);
+        //private Vector3 HidePosition = new Vector3(0, -300, 0);
+
+        public new static CharacterManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.Find("CharacterPool").GetComponent<CharacterManager>();
+            }
+            return MyManager as CharacterManager;
+        }
 
         #endregion
 
@@ -65,7 +74,7 @@ namespace Zeltex.Characters
                         if (GUILayout.Button(CharacterName))
                         {
                             // Spawn Character, turn into normal one
-                            Character SpawnedOne = GetPoolObject(PoolIndex, i);
+                            //Character SpawnedOne = GetPoolObject(PoolIndex, i);
                             //SpawnedOne.transform.position = new Vector3(0, 5, 0);
                         }
                     }
@@ -208,9 +217,9 @@ namespace Zeltex.Characters
         }
 
         /// <summary>
-        /// gets the character names
+        /// Gets the spawned Character names
         /// </summary>
-        public List<string> GetNames()
+        public new List<string> GetNames()
 		{
 			List<string> MyNames = new List<string>();
 			for (int i = 0; i < Pools[0].SpawnedObjects.Count; i++)
@@ -480,8 +489,6 @@ namespace Zeltex.Characters
         {
 
         }
-
-        public new static CharacterManager Get() { return MyManager as CharacterManager; }
         #endregion
     }
 }

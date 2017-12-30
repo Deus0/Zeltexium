@@ -36,9 +36,11 @@ namespace Zeltex
     public class PoolSpawner : NetworkBehaviour
     {
         private Component MyPool;
+        private string PoolType;
 
         public void Initialize(string PoolBaseType)
         {
+            PoolType = PoolBaseType;
             MyPool = GetComponent(PoolBaseType);
         }
         
@@ -74,6 +76,10 @@ namespace Zeltex
 
         #region ReturnObjectToPool
 
+        /// <summary>
+        /// This initially sends a message as the server or client
+        /// Then it bounces back and forth to make sure the function is called on every machine
+        /// </summary>
         public void InitialReturnObjectToPool(GameObject SpawnedObject, Component MyPool, int PoolIndex = 0)
         {
             ReadyMessageData Data = new ReadyMessageData();
@@ -84,13 +90,21 @@ namespace Zeltex
             Data.PoolBaseFunctionName = "NetworkReturnObject";
             if (Data.SpawnedObject != null)
             {
-                if (isServer)
+                if (UnityEngine.Application.isPlaying)
                 {
-                    ServerReturnObjectToPool(Data);
+                    if (isServer)
+                    {
+                        ServerReturnObjectToPool(Data);
+                    }
+                    else
+                    {
+                        ClientReturnObjectToPool(Data);
+                    }
                 }
+                // editor only spawning objects
                 else
                 {
-                    ClientReturnObjectToPool(Data);
+                    GetComponent(PoolType).SendMessage("NetworkReturnObject", Data);
                 }
             }
         }

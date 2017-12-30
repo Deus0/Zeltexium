@@ -40,7 +40,7 @@ namespace Zeltex
             return (MyLayer.value == 1 << GameObjectLayer);
         }
 
-        public static LayerManager Get()
+        public new static LayerManager Get()
         {
             if (MyManager == null)
             {

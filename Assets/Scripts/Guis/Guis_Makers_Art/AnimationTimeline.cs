@@ -460,7 +460,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public Vector2 GetTimePosition(float MyTime, Vector2 MySize)
         {
-            float Height = gameObject.GetComponent<RectTransform>().GetSize().y;
+            //float Height = gameObject.GetComponent<RectTransform>().GetSize().y;
             RectTransform MyRectTransform = gameObject.GetComponent<RectTransform>();
             Vector2 MyPosition = MyRectTransform.position;
             float TickWidth = MyRectTransform.GetSize().x / ((float) MyAnimator.TotalTime * TicksPerSecond);
@@ -476,7 +476,7 @@ namespace Zeltex.Guis.Maker
             RectTransform MyRectTransform = gameObject.GetComponent<RectTransform>();
             Vector2 MyPosition = MyRectTransform.position;
             float Width = MyRectTransform.GetSize().x;
-            float Height = MyRectTransform.GetSize().y;
+            //float Height = MyRectTransform.GetSize().y;
             float TickWidth = Width / ((float)MyAnimator.TotalTime * TicksPerSecond);
             //GameObject NewTick = (GameObject)Instantiate(GridLinePrefab, SpawnPosition, Quaternion.identity);
             GameObject NewTick = new GameObject();

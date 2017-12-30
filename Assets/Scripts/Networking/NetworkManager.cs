@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using Zeltex.Characters;
 using Zeltex;
 using System.Reflection;
-using UnityEngine.Networking;
 
 namespace Zeltex.Networking
 {

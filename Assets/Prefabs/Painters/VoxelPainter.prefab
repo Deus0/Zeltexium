@@ -9887,8 +9887,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &114437877667657022
 MonoBehaviour:
@@ -11491,6 +11491,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: -720, y: 0}
   MovementSpeed: 3
+  IsInstantOnStart: 0
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
   MyDisplayDistance: 0.5
@@ -12869,6 +12870,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   MyLightType: 0
+  MyCamera: {fileID: 0}
 --- !u!114 &114649603302990542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14386,8 +14388,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls:
@@ -14413,8 +14415,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &114769614765794048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14493,8 +14498,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &114793846139668016
 MonoBehaviour:
@@ -15639,8 +15644,7 @@ MonoBehaviour:
   - {fileID: 114252803337538948}
   MyLists: []
   IsDebug: 0
-  MyVoxelManager: {fileID: 0}
-  MyVoxelModelViewer: {fileID: 114649548886176778}
+  MyPolyModelViewer: {fileID: 114649548886176778}
   PaintType: 0
   PaintSize: 0
   VoxelName: Air
@@ -15669,6 +15673,7 @@ MonoBehaviour:
       PublicKeyToken=null
   HighlightedMaterial: {fileID: 2100000, guid: b5bc95a9b4040d64c85178b1895a95e8, type: 2}
   SelectedMaterial: {fileID: 2100000, guid: 1c8b3df8b1686c141853d32914bf12d7, type: 2}
+  DidRayHit: 0
   HitNormal: {x: 0, y: 0, z: 0}
   LastHitBlockPosition: {x: 0, y: 0, z: 0}
   SelectionDepth: 0
@@ -16652,8 +16657,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &114996090387088172
 MonoBehaviour:

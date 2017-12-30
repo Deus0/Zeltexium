@@ -109,11 +109,11 @@ namespace Zeltex.Voxels
         public VoxelMeta GetVoxelMeta(int VoxelIndex)
         {
             ChunkGetVoxelName = MyLookupTable.GetName(VoxelIndex);
-            ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.VoxelMeta, ChunkGetVoxelName) as VoxelMeta;
+            ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, ChunkGetVoxelName) as VoxelMeta;
             if (ChunkGetMeta == null)
             {
                 Debug.LogError("Could not find: " + ChunkGetVoxelName + ":" + VoxelIndex);
-                ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.VoxelMeta, "Air") as VoxelMeta;
+                ChunkGetMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, "Air") as VoxelMeta;
             }
             return ChunkGetMeta;
             //return //MyDataBase.GetMeta(VoxelName);

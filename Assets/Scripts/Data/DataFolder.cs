@@ -69,7 +69,7 @@ namespace Zeltex
                 {
                     VoxelManager.Get().ClearModels();
                 }
-                else if (FolderName == DataFolderNames.VoxelMeta)
+                else if (FolderName == DataFolderNames.Voxels)
                 {
                     VoxelManager.Get().ClearMetas();
                 }
@@ -334,7 +334,7 @@ namespace Zeltex
                 {
                     VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
                 }
-                else if (FolderName == DataFolderNames.VoxelMeta)
+                else if (FolderName == DataFolderNames.Voxels)
                 {
                     VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
                 }

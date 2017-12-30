@@ -9,13 +9,13 @@ namespace Zeltex
     /// </summary>
     public class Zone : NetworkBehaviour
     {
-        private MeshRenderer MyMeshRenderer;
+        //private MeshRenderer MyMeshRenderer;
         protected NetworkIdentity MyNetworkIdentity;
 
         // Use this for initialization
         void Awake()
         {
-            MyMeshRenderer = GetComponent<MeshRenderer>();
+            //MyMeshRenderer = GetComponent<MeshRenderer>();
             MyNetworkIdentity = GetComponent<NetworkIdentity>();
         }
 

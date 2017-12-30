@@ -81,7 +81,8 @@ namespace Zeltex.Voxels
             }
             return false;
         }
-        public Color GetColor()
+
+        public override Color GetColor()
         {
             return MyColor;
         }

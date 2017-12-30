@@ -35,13 +35,13 @@ namespace Zeltex
 	    }
 	    public static float GetWidth(this RectTransform trans)
         {
-            if (trans == null || trans.rect == null)
+            if (trans == null)
                 return 0;
 		    return trans.rect.width;
 	    }
 	    public static float GetHeight(this RectTransform trans)
         {
-            if (trans == null || trans.rect == null)
+            if (trans == null)
                 return 0;
             return trans.rect.height;
 	    }

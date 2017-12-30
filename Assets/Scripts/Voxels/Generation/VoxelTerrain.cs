@@ -31,13 +31,13 @@ namespace Zeltex.Voxels
         private TerrainMetaData MyTerrainMetaData = new TerrainMetaData();
         [SerializeField]
         private RawImage MyImage;
-        [SerializeField]
-        private Int3 DefaultMapSize = new Int3(7, 2, 7);
+        //[SerializeField]
+        //private Int3 DefaultMapSize = new Int3(7, 2, 7);
         // terrain generation
         private Int3 MyWorldPosition = Int3.Zero();
         private float HeightMapNoise = 0;
         private float StretchedNoise = 0;
-        private World MyWorld;
+        //private World MyWorld;
         private Chunk TerrainChunk;
         private Int3 ChunkIndex = Int3.Zero();
 
@@ -64,7 +64,7 @@ namespace Zeltex.Voxels
         #region File
         public static string BeginTag = "/BeginTerrain";
         public static string EndTag = "/EndTerrain";
-        private static string SplitterTag = ",";
+        //private static string SplitterTag = ",";
 
         public List<string> GetScript()
         {
@@ -188,7 +188,7 @@ namespace Zeltex.Voxels
         /// </summary>
         private IEnumerator CreateTerrain()
         {
-            MyWorld = TerrainChunk.GetWorld();
+           // MyWorld = TerrainChunk.GetWorld();
             MyTerrainMetaData.SetNames(TerrainChunk.GetWorld().MyDataBase);    // set meta data
             if (TerrainChunk != null)
             {
@@ -466,8 +466,8 @@ namespace Zeltex.Voxels
             }
         }
 
-        string VoxelName;
-        string VoxelName2;
+        //string VoxelName;
+        //string VoxelName2;
         private VoxelData TerrainVoxelData;
         int VoxelIndexX;
         int VoxelIndexY;
@@ -479,13 +479,13 @@ namespace Zeltex.Voxels
         /// </summary>
         public void CreatePlane(Chunk MyChunk, float Height, int MyType)
         {
-            MyWorld = MyChunk.GetWorld();
+            //MyWorld = MyChunk.GetWorld();
             // TODO: GetMetaByType("Dirt") or "Wood" or "Leaf"
             // Create biome datas that players can edit
             int VoxelIndex1 = MyType;
             int VoxelIndex2 = 4;
-            VoxelName = MyWorld.MyDataBase.GetMetaName(VoxelIndex1);
-            VoxelName2 = MyWorld.MyDataBase.GetMetaName(VoxelIndex2);
+            //VoxelName = MyWorld.MyDataBase.GetMetaName(VoxelIndex1);
+            //VoxelName2 = MyWorld.MyDataBase.GetMetaName(VoxelIndex2);
             TerrainVoxelData = MyChunk.GetVoxelData();// new VoxelData();
             for (VoxelIndexX = 0; VoxelIndexX < Chunk.ChunkSize; VoxelIndexX++)
             {

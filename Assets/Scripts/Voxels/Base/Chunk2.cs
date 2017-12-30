@@ -12,7 +12,7 @@ namespace Zeltex.Voxels
     {
         #region MeshBUildingVariables
         private List<MeshData> ChunkMeshes = new List<MeshData>(); // a mesh data per material! This is cleared after the building is done
-        private bool IsCheckingForUpdate = false;
+        //private bool IsCheckingForUpdate = false;
         private TileMap MyTilemap = new TileMap(8, 8, 16, 16);
         public bool IsMeshVisible = true;
 
@@ -66,9 +66,12 @@ namespace Zeltex.Voxels
         private int CreateMeshChunkIndex;
         // Turns the voxels into meshes
         #region MeshUpdates
-        private float TimeBegun;
+        //private float TimeBegun;
         private static string AirName = "Air";
         private Color VoxelColor;
+        // Creating new meshes
+        private MeshData CreateMeshMeshData;
+        private Mesh NewMesh;
         #endregion
 
         #region Utility
@@ -182,7 +185,7 @@ namespace Zeltex.Voxels
         private IEnumerator BuildChunkMeshPerMaterial()
         {
             //int TimesPaused = 0;
-            TimeBegun = Time.realtimeSinceStartup;
+            //TimeBegun = Time.realtimeSinceStartup;
             if (MyWorld && MyWorld.MyDataBase)
             {
                 for (BuildVoxelIndex.x = 0; BuildVoxelIndex.x < ChunkSize; BuildVoxelIndex.x++)
@@ -228,9 +231,9 @@ namespace Zeltex.Voxels
                 Debug.LogError("Lookup table does not have type: " + MeshingType
                     + " - Attempting to auto generate it");
                 string DataManagerVoxelName = "";
-                for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.VoxelMeta); i++)
+                for (int i = 0; i < DataManager.Get().GetSizeElements(DataFolderNames.Voxels); i++)
                 {
-                    DataManagerVoxelName = DataManager.Get().GetName(DataFolderNames.VoxelMeta, i);
+                    DataManagerVoxelName = DataManager.Get().GetName(DataFolderNames.Voxels, i);
                     if (MyWorld.MyLookupTable.ContainsVoxel(DataManagerVoxelName) == false)
                     {
                         MyWorld.MyLookupTable.AddName(DataManagerVoxelName, MeshingType);
@@ -536,9 +539,6 @@ namespace Zeltex.Voxels
                 MyMeshCollider.sharedMesh = MyMeshFilter.sharedMesh;
             }
         }
-
-        private MeshData CreateMeshMeshData;
-        private Mesh NewMesh;
         /// <summary>
         /// Create teh mesh data
         /// </summary>

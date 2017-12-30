@@ -56,7 +56,8 @@ namespace Zeltex.Combat
 					IsActivated = NewState;
 					MyMesh.enabled = NewState;
 					MyCollider.enabled = NewState;
-					MyParticles.enableEmission = NewState;
+                    ParticleSystem.EmissionModule MyEmission = MyParticles.emission;
+                    MyEmission.enabled = NewState;
 					MyThingy.enabled = NewState;
 					if (NewState)
 						UseEnergy ();

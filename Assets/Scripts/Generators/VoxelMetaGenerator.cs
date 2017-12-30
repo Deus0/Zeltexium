@@ -130,7 +130,7 @@ namespace Zeltex.Generators
                 }
                 MyMeta.OnModified();
                 //DataManager.Get().AddTexture(DataFolderNames.VoxelDiffuseTextures, NewTexture);
-                DataManager.Get().AddElement(DataFolderNames.VoxelMeta, MyMeta);
+                DataManager.Get().AddElement(DataFolderNames.Voxels, MyMeta);
 				yield return new WaitForSeconds(LoadingDelay);
             }
             GeneratePolyModelTextureMap();

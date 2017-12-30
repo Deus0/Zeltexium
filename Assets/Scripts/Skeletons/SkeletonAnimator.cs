@@ -468,7 +468,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Get the data for the skeleton animator
         /// </summary>
-        public List<string> GetScript()
+        /*public List<string> GetScript()
         {
             List<string> Data = new List<string>();
             Data.Add("/BeginSkeletonAnimator");
@@ -511,7 +511,7 @@ namespace Zeltex.Skeletons
                     }
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

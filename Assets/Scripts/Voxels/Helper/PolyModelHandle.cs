@@ -731,7 +731,7 @@ namespace Zeltex.Voxels
         {
             List<int> MyUVs = new List<int>();
 
-            List<Vector2> TotalUVs = MyModel.GetTextureMapCoordinates(LoadedTextureMap, new TileMap(1, 1, 16, 16));
+            //List<Vector2> TotalUVs = MyModel.GetTextureMapCoordinates(LoadedTextureMap, new TileMap(1, 1, 16, 16));
             //Debug.Log("Getting uvs with " + SelectedHandlers.Count + " Selected handlers");
             for (int i = 0; i < SelectedHandlers.Count; i++)
             {

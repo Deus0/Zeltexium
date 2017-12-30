@@ -20,6 +20,14 @@ namespace Zeltex
         private bool IsEnding;
         public bool IsAllHaveStatsBar = true;
 
+        public static new GameManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            }
+            return MyManager;
+        }
         // Use this for initialization
         void Start()
         {

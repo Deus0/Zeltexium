@@ -22,7 +22,7 @@ namespace Zeltex.Guis.Characters
 	///	lol rethink of the same solution again..
     /// </summary>
 	[System.Serializable]
-	public class CharacterGuis
+	public class CharacterGuis : Element
 	{
         [Header("Actions")]
         [JsonIgnore]
@@ -734,6 +734,10 @@ namespace Zeltex.Guis.Characters
                 {
                     Debug.LogError("Inventory is null: " + MyCharacter.name);
                 }
+            }
+            else
+            {
+                Debug.LogError("Could not update skillbar as no character set in characterguis.");
             }
         }
 

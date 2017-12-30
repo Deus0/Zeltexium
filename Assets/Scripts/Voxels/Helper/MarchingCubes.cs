@@ -19,9 +19,9 @@ public class MarchingCubes
 	/// <param name="densityNormals">The array that contains density normals</param>
 	public static MeshData BuildMesh(Chunk MyChunk, Vector3 pos, MeshData MyVoxelsMesh)
 	{
-		float size = 1f;
+		//float size = 1f;
 		
-		float[] denses = new float[8];
+		//float[] denses = new float[8];
 		/*denses[0] = MyChunk.GetDensity(pos.x, pos.y, pos.z + 1);
 		denses[1] = MyChunk.GetDensity(pos.x + 1, pos.y, pos.z + 1);
 		denses[2] = MyChunk.GetDensity(pos.x + 1, pos.y, pos.z);

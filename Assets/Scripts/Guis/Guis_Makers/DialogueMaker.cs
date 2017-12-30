@@ -231,7 +231,7 @@ namespace Zeltex.Guis.Maker
             base.OnUpdatedIndex(NewIndex);
             if (MyIndexController.GetOldIndex() != NewIndex && MyIndexController.GetOldIndex() >= 0 && MyIndexController.GetOldIndex() < GetSize())   // will not work when opening for first time
             {
-                string DialogueScript = FileUtil.ConvertToSingle(MyDialogueHandler.MyTree.GetScriptList());
+                //string DialogueScript = FileUtil.ConvertToSingle(MyDialogueHandler.MyTree.GetScriptList());
                 //DataManager.Get().Set(DataManagerFolder, GetSelectedIndex(), DialogueScript);
                 //Debug.Log("Storing Model as script to: " + MyIndexController.GetOldIndex() + " as moving to " + ":\n" + MyData[MyIndexController.GetOldIndex()]);
             }
@@ -581,11 +581,13 @@ namespace Zeltex.Guis.Maker
                 }
             }
         }   
+
         IEnumerator DoTheThen()
         {
             yield return new WaitForSeconds(0.1f);
             GetDropdown("ConditionsDropDown").interactable = true;
         }
+
         public void OnUpdatedCondition(int NewCondition)
         {
             Dropdown NextDropDown = GetDropdown("NextIndexDropDown");

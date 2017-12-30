@@ -75,6 +75,15 @@ namespace Zeltex
 
         #region PossessOverrides
 
+        public override void SetCharacter(Character MyCharacter_)
+        {
+            base.SetCharacter(MyCharacter_);
+            if (MyCharacter)
+            {
+                MyCharacter.GetGuis().Spawn("SkillBar");
+            }
+        }
+
         /// <summary>
         /// Called in start function
         /// </summary>
@@ -171,12 +180,12 @@ namespace Zeltex
             }
             if (MyController == null && MyCharacter)
             {
-                MyController = MyCharacter.GetComponent<AI.BasicController>();
+                MyController = MyCharacter.GetComponent<Mover>();
             }
             if (MyController)
             {
-                MyController.SetRotationVelocity(Vector3.zero);
-                MyController.SetRotationState(IsInput);
+                //MyController.SetRotationVelocity(Vector3.zero);
+                //MyController.SetRotationState(IsInput);
             }
             if (MyCharacter && MyCharacter.GetComponent<Mover>())
             {
@@ -192,8 +201,8 @@ namespace Zeltex
         /// </summary>
         private void HandleIngameInput()
         {
-            HandleControllerInput();
-            RotateCamera();
+            //HandleControllerInput();
+            //RotateCamera();
             HandleActionKeys();
             SwitchSkillsInput();
             ActivateSkillsInput();
@@ -353,7 +362,7 @@ namespace Zeltex
             if (MyController)
             {
 
-                if (Input.GetKeyDown(KeyCode.F))
+                /*if (Input.GetKeyDown(KeyCode.F))
                 {
                     MyController.ToggleFly();
                 }
@@ -412,7 +421,7 @@ namespace Zeltex
                 {
                     Movement.y *= 0.9f;
                 }
-                MyController.InputY(Movement.y);
+                MyController.InputY(Movement.y);*/
             }
         }
         #endregion
@@ -446,7 +455,7 @@ namespace Zeltex
                 TargetRotation.x -= Input.GetAxis("Mouse Y") * sensitivityY;
                 TargetRotation.x = ClampAngle(TargetRotation.x, minimumY, maximumY);
                 CameraBone.eulerAngles = TargetRotation;
-                MyController.InputTargetRotation(TargetRotation);
+                //MyController.InputTargetRotation(TargetRotation);
                 if (MySkeleton && MySkeleton.GetSkeleton().MyBoneHead)
                 {
                     MySkeleton.GetSkeleton().MyBoneHead.rotation = CameraBone.rotation;

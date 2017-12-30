@@ -26,6 +26,8 @@ namespace Zeltex.Voxels
 
         [Header("Actions")]
         [SerializeField]
+        private EditorAction ActionClearAll;
+        [SerializeField]
         private EditorAction IsSpawn;
         [SerializeField]
         private EditorAction IsGenerate;
@@ -69,6 +71,18 @@ namespace Zeltex.Voxels
                 {
                     IsDebugGui = !IsDebugGui;
                 }
+            }
+            if (ActionClearAll.IsTriggered())
+            {
+                // if loading, make sure to cancel it first
+                for (int i = 0; i < MyWorlds.Count; i++)
+                {
+                    if (MyWorlds[i])
+                    {
+                        MyWorlds[i].gameObject.Die();
+                    }
+                }
+                MyWorlds.Clear();
             }
             if (IsSpawn.IsTriggered())
             {
@@ -125,6 +139,10 @@ namespace Zeltex.Voxels
         {
             GameObject NewWorldObject = new GameObject();
             World NewWorld = ConvertToWorld(NewWorldObject);
+            if (NewWorld == null)
+            {
+                Debug.LogError("World Manager failed to spawn new world.");
+            }
             return NewWorld;
         }
 
@@ -311,6 +329,7 @@ namespace Zeltex.Voxels
                     }
                 }
             }
+
             // Load normal level characters
             List<string> CharacterFiles = new List<string>();//FileUtil.GetFilesOfType(FolderPath, CharacterFileExtension);
             for (int i = 0; i < FilesInFolder.Length; i++)
@@ -330,7 +349,6 @@ namespace Zeltex.Voxels
             {
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
                     LoadCharactersFromFiles(MyWorld, CharacterFiles, OnLoadChunk));
-
             }
         }
 
@@ -380,35 +398,24 @@ namespace Zeltex.Voxels
             //Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);
             for (int i = 0; i < CharacterFiles.Count; i++)
             {
-                string CharacterScript = "";
-                string FileName = CharacterFiles[i];
-                // Check for saved game path
-                /*if (SavedGame != null)
+                Character MyCharacter = CharacterManager.Get().GetPoolObject();
+                if (MyCharacter)
                 {
-                    // if chunk in saved game is modified, load it instead
-                    string SavedGameFilePath = NewLevel.GetCharacterFilePath(Path.GetFileNameWithoutExtension(FileName), SavedGame.Name);
-                    if (FileManagement.FileExists(SavedGameFilePath, true, true))
-                    {
-                        Debug.Log("Replacing file name: " + FileName + " with " + SavedGameFilePath);
-                        FileName = SavedGameFilePath;
-                    }
-                }*/
+                    string CharacterFile = "";
+                    string FileName = CharacterFiles[i];
 
-                if (CharacterFiles[i].Contains("://") || CharacterFiles[i].Contains(":///"))
-                {
-                    WWW UrlRequest = new WWW(CharacterFiles[i]);
-                    yield return (UrlRequest);
-                    CharacterScript = UrlRequest.text;
-                }
-                else
-                {
-                    CharacterScript = File.ReadAllText(CharacterFiles[i]);
-                }
-                CharacterData NewData = Newtonsoft.Json.JsonConvert.DeserializeObject(CharacterScript, typeof(CharacterData)) as CharacterData;
-                if (NewData != null)
-                {
-                    Character MyCharacter = CharacterManager.Get().GetPoolObject();
-                    if (MyCharacter)
+                    if (CharacterFiles[i].Contains("://") || CharacterFiles[i].Contains(":///"))
+                    {
+                        WWW UrlRequest = new WWW(CharacterFiles[i]);
+                        yield return (UrlRequest);
+                        CharacterFile = UrlRequest.text;
+                    }
+                    else
+                    {
+                        CharacterFile = File.ReadAllText(CharacterFiles[i]);
+                    }
+                    CharacterData NewData = Newtonsoft.Json.JsonConvert.DeserializeObject(CharacterFile, typeof(CharacterData)) as CharacterData;
+                    if (NewData != null)
                     {
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(NewData));
                         MyCharacter.OnLoadedInWorld(MyWorld);
@@ -418,10 +425,11 @@ namespace Zeltex.Voxels
                             OnLoadChunk.Invoke();
                         }
                     }
-                    else
-                    {
-                        Debug.LogError("Character Pool was empty in WorldManager:LoadChunksInLevel");
-                    }
+                }
+                else
+                {
+                    Debug.LogError("Character Pool was empty in WorldManager:LoadChunksInLevel");
+                    break;
                 }
             }
         }

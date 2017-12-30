@@ -41,11 +41,13 @@ It will then render either an ai line, or a arrow pointing in the way we need to
 			LineObject.transform.eulerAngles = new Vector3 (90f, 0, 0);
 			LineObject.transform.localScale = new Vector3 (CircleRadius,CircleRadius,CircleRadius);
 			MyLine = LineObject.AddComponent<LineRenderer> ();
-			MyLine.SetVertexCount (2);
-			MyLine.SetWidth (LineWidth, LineWidthEnd);
-			MyLine.material = MyLineMaterial;
-			MyLine.SetColors (MyLineColor, MyLineColor);
-			LineDistance = CircleRadius*0.65f/3f;
+			MyLine.positionCount = (2);
+			MyLine.startWidth = (LineWidth);
+            MyLine.endWidth = LineWidthEnd;
+            MyLine.material = MyLineMaterial;
+			MyLine.startColor = (MyLineColor);
+            MyLine.endColor = MyLineColor;
+            LineDistance = CircleRadius*0.65f/3f;
 			SpriteRenderer MySprite = LineObject.AddComponent<SpriteRenderer> ();
 			MySprite.sprite = MyTexture;
 			MySprite.color = MySpriteColor;

@@ -10,11 +10,11 @@ namespace Zeltex.Combat
 	public class Skill : NetworkBehaviour
 	{
         #region Variables
-        //protected new string SkillName = "SkillName";
         protected Character MyCharacter;
         protected NetworkIdentity MyIdentity;
         protected bool IsToggle;	// can turn on and off while switching skills
 		protected bool IsActivated = false;
+        protected string SkillName = "SkillName";
         // for ZelGuiables
         //protected
         [Header("Skill Options")]

@@ -9,14 +9,13 @@ namespace Zeltex
     /// </summary>
 	public static class DataFolderNames
     {
-        public static string VoxelMeta = "VoxelMeta";
+        //public static string VoxelMeta = "VoxelMeta";
 		public static string PolyModels = "PolyModels";
         public static string VoxelModels = "VoxelModels";
         public static string Skeletons = "Skeletons";
         public static string Zanimations = "Zanimations";
 
         public static string Voxels = "VoxelMeta";
-
         public static string Items = "ItemMeta";
         public static string Recipes = "Recipes";
         public static string Inventorys = "Inventorys";
@@ -106,7 +105,7 @@ namespace Zeltex
             {
                 return "PolygonMaker";
             }
-            else if (FolderName == PolyModels)
+            else if (FolderName == VoxelModels)
             {
                 return "ModelMaker";
             }
@@ -142,11 +141,11 @@ namespace Zeltex
             {
                 DataType = typeof(Voxels.PolyModel);
             }
-            else if (FolderName == DataFolderNames.VoxelMeta)
+            else if (FolderName == DataFolderNames.Voxels)
             {
                 DataType = typeof(Voxels.VoxelMeta);
             }
-            else if (FolderName == DataFolderNames.PolyModels)
+            else if (FolderName == DataFolderNames.VoxelModels)
             {
                 DataType = typeof(Voxels.VoxelModel);
             }
@@ -261,11 +260,11 @@ namespace Zeltex
             }
             else if (DataType == typeof(Voxels.VoxelMeta))
             {
-                return DataFolderNames.VoxelMeta;
+                return DataFolderNames.Voxels;
             }
             else if (DataType == typeof(Voxels.VoxelModel))
             {
-                return DataFolderNames.PolyModels;
+                return DataFolderNames.VoxelModels;
             }
             else if (DataType == typeof(Skeletons.Skeleton))
             {

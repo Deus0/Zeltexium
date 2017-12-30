@@ -193,7 +193,7 @@ namespace Zeltex.Skeletons
 
             if (ActionGenerateSkeleton.IsTriggered())
             {
-                RunScript(FileUtil.ConvertToList(Generators.SkeletonGenerator.Get().GenerateBasicSkeleton(NameGenerator.GenerateVoxelName())));
+                //RunScript(FileUtil.ConvertToList(Generators.SkeletonGenerator.Get().GenerateBasicSkeleton(NameGenerator.GenerateVoxelName())));
             }
 
             if (ActionActivateSkeleton.IsTriggered())
@@ -264,13 +264,17 @@ namespace Zeltex.Skeletons
         /// </summary>
         public Bounds GetBounds()
         {
-            if (MyBounds == null)
-            {
-                CalculateBounds();
-            }
+            //if (MyBounds == null)
+            //{
+                //CalculateBounds();
+           // }
             if (MyBounds.size == Vector3.zero)
             {
-                MyBounds.size = new Vector3(0.5f, 0.5f, 0.5f);
+                CalculateBounds();
+                if (MyBounds.size == Vector3.zero)
+                {
+                    MyBounds.size = new Vector3(0.5f, 0.5f, 0.5f);
+                }
             }
             return MyBounds;
         }
@@ -528,10 +532,23 @@ namespace Zeltex.Skeletons
         private void AttachCameraToHead()
         {
             MyCameraBone = GetCameraBone(); // incase i havnt found it yet
-            // Find bone with tag Head
-            float CameraDistanceZ = 0;
             MyBoneHead = SpawnedSkeleton.transform;
-            Bone HeadBone = GetBoneWithTag("Head");
+            //Bone HeadBone = GetBoneWithTag("Head");
+            if (MyBoneHead != null && MyCameraBone != null)
+            {
+                Debug.Log("Moving Camera Bone to: " + MyBoneHead.transform.position.ToString());
+                MyCameraBone.position = MyBoneHead.position;
+                MyCameraBone.rotation = MyBoneHead.rotation;
+                OriginalCameraPosition = MyCameraBone.localPosition;
+                //MyCameraBone.SetParent(MyBoneHead);   // don't move this, just use the position of the bone!
+                //MyCameraBone.localPosition = new Vector3(0, 0, CameraDistanceZ);// 0.35f); // size of head, i should change this!
+                /*if (SpawnedSkeleton.transform.parent.gameObject.GetComponent<Character>().IsPlayer)
+                {
+                    Camera.main.transform.gameObject.GetComponent<Player>().SetCameraBone(MyCameraBone);
+                }*/
+            }
+            // Find bone with tag Head
+            //float CameraDistanceZ = 0;
 
             /*if (HeadBone != null && HeadBone.VoxelMesh != null)
             {
@@ -571,23 +588,6 @@ namespace Zeltex.Skeletons
             }*/
             // Reset camera bone every time its updated, also make sure the player knows its updated!
             // Attach camera to head!
-            if (MyBoneHead != null && MyCameraBone != null)
-            {
-                Debug.Log("Moving Camera Bone to: " + MyBoneHead.transform.position.ToString());
-                MyCameraBone.position = MyBoneHead.position;
-                MyCameraBone.rotation = MyBoneHead.rotation;
-                OriginalCameraPosition = MyCameraBone.localPosition;
-                //MyCameraBone.SetParent(MyBoneHead);   // don't move this, just use the position of the bone!
-                //MyCameraBone.localPosition = new Vector3(0, 0, CameraDistanceZ);// 0.35f); // size of head, i should change this!
-                /*if (SpawnedSkeleton.transform.parent.gameObject.GetComponent<Character>().IsPlayer)
-                {
-                    Camera.main.transform.gameObject.GetComponent<Player>().SetCameraBone(MyCameraBone);
-                }*/
-            }
-            else
-            {
-                //Debug.LogError("No Bonehead found.");
-            }
             /*if (MyBoneHead != null && MyBoneHead.GetComponent<MeshRenderer>())
             {
                 MyBoneHead.GetComponent<MeshRenderer>().enabled = false;
@@ -1252,7 +1252,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Returns a list of strings (commands and data) to read in from a file.
         /// </summary>
-        public List<string> GetScriptList()
+        /*public List<string> GetScriptList()
         {
             List<string> Data = new List<string>();
             Skeleton MySkeleton = SpawnedSkeleton.transform.GetComponent<Skeleton>();
@@ -1354,12 +1354,12 @@ namespace Zeltex.Skeletons
             Data.AddRange(MySkeletonAnimator.GetScript());
             Data.Add("/EndSkeleton");
             return Data;
-        }
+        }*/
 
         /// <summary>
         /// Runs the script
         /// </summary>
-        public void RunScript(List<string> Data)
+        /*public void RunScript(List<string> Data)
         {
             if (SpawnedSkeleton)
             {
@@ -1370,16 +1370,16 @@ namespace Zeltex.Skeletons
                 }
                 LoadRoutine = UniversalCoroutine.CoroutineManager.StartCoroutine(RunScriptRoutine(Data));
             }
-        }
+        }*/
 
         /// <summary>
         /// Loads the skeleton in a routine and gives it a name
         /// </summary>
-        public IEnumerator Load(string RaceName, List<string> Data)
+        /*public IEnumerator Load(string RaceName, List<string> Data)
         {
             SpawnedSkeleton.transform.parent.gameObject.GetComponent<Character>().SetRace(RaceName);
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(RunScriptRoutine(Data));
-        }
+        }*/
 
         /// <summary>
         /// Is loading skeleton
@@ -1404,7 +1404,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Loads the skeleton in a routine
         /// </summary>
-        public IEnumerator RunScriptRoutine(List<string> Data)
+        /*public IEnumerator RunScriptRoutine(List<string> Data)
         {
             if (!IsLoading)
             {
@@ -1491,7 +1491,7 @@ namespace Zeltex.Skeletons
                                     float TimeBegin = Time.realtimeSinceStartup;
                                     if (SpawnedSkeleton.GetAnimator() != null)
                                     {
-                                        SpawnedSkeleton.GetAnimator().RunScript(MyScript);
+                                        //SpawnedSkeleton.GetAnimator().RunScript(MyScript);
                                     }
                                     else
                                     {
@@ -1504,10 +1504,6 @@ namespace Zeltex.Skeletons
                                 }
                             }
                         }
-                        /*else if (Zeltex.Util.ScriptUtil.RemoveWhiteSpace(Data[i]) == "/VoxelMesh")
-                        {
-                            Debug.Log("Creating VoxelMesh");
-                        }*/
                         else if (MyBone.MyTransform)
                         {
                             if (Data[i] == "/Tag")
@@ -1563,10 +1559,6 @@ namespace Zeltex.Skeletons
                                         {
                                             Debug.Log("Loading skeleton Mesh: " + SpawnedSkeleton.transform.name + ":" + MyMeshScript.Count + "\n " + FileUtil.ConvertToSingle(MyMeshScript));
                                             //yield return CoroutineManager.StartCoroutine(MyBone.CreateMeshRoutine(MyMeshScript));
-                                            /*yield return CoroutineManager.StartCoroutine(CreateMeshRoutine(
-                                                MyBone,
-                                                MyMeshScript,
-                                                false));    //CharacterManager.Get().StartCoroutine*/
                                         }
                                         i = j;  // skuo to endVoxelMesh line
                                         break;
@@ -1639,7 +1631,7 @@ namespace Zeltex.Skeletons
                 Debug.LogWarning("Trying to load skeleton while already loading.");
             }
             //Debug.Log("Finished Loading Skeleton: " + (Time.realtimeSinceStartup - LoadSkeletonBeginTime));
-        }
+        }*/
 
         /// <summary>
         /// Creates a new bone for the loading skeleton

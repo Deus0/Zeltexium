@@ -100,7 +100,7 @@ namespace Zeltex.AnimationUtilities
             }
             MyText.color = FontColor;
             MyMeshRenderer.material.color = FontColor;
-            OnHitText MyOnHit = NewText.AddComponent<OnHitText>();
+            NewText.AddComponent<OnHitText>();
         }
     }
 }

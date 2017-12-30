@@ -145,7 +145,7 @@ namespace Zeltex
             Clear();
             List<string> FileNames;
             string ElementFolderPath = GetFolderPath();
-            Debug.Log(ElementFolderPath + " is beginning to load now!");
+            //LogManager.Get().Log(ElementFolderPath + " is beginning to load at [" + Time.realtimeSinceStartup + "]", "DataManager");
             //if (ElementFolderPath.Contains("://") || ElementFolderPath.Contains(":///"))
             //{
             FileNames = new List<string>();
@@ -158,12 +158,12 @@ namespace Zeltex
                     string[] FoundFiles = FileManagement.ListFiles(ElementFolderPath, new string[] { "." + FileExtension }, DataManager.Get().MyFilePathType == FilePathType.StreamingPath, true);//, true, true); // + "/"
                     if (FoundFiles != null)
                     {
-                        Debug.Log(ElementFolderPath + " has found " + FoundFiles.Length + " [" + FileExtension + "] Files.");
+                        //Debug.Log(ElementFolderPath + " has found " + FoundFiles.Length + " [" + FileExtension + "] Files.");
                         for (int i = 0; i < FoundFiles.Length; i++)
                         {
                             if (FoundFiles[i] != null)
                             {
-                                Debug.Log("FoundFiles " + i + " " + FoundFiles[i]);
+                                LogManager.Get().Log("FoundFiles " + i + " " + FoundFiles[i], "DataManagerFiles");
                                 try
                                 {
                                     FileManagement.GetFileName(FoundFiles[i]);
@@ -200,9 +200,8 @@ namespace Zeltex
             {
                 LogManager.Get().Log("Folder is null");
             }
-            string LoadAllElementsDebug = "[LoadAllElements] -=- [" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension;
-            Debug.Log(LoadAllElementsDebug);
-            LogManager.Get().Log(LoadAllElementsDebug, "DataManager");
+            //Debug.Log(LoadAllElementsDebug);
+            LogManager.Get().Log("[LoadAllElements] -=- [" + FolderName + "] Found: " + FileNames.Count + "\nFolderPath: " + ElementFolderPath + " --- " + FileExtension, "DataManager");
 
             /*try
             {
@@ -219,7 +218,7 @@ namespace Zeltex
             {
                 LoadLog = "Loading Element file in : " + FolderName + " of - " + FileNames[i];
                 LogManager.Get().Log(LoadLog, "DataManagerFiles");
-                Debug.Log(LoadLog);
+                //Debug.Log(LoadLog);
                 if (FileNames[i] != null && (FileNames[i].Contains("://") || FileNames[i].Contains(":///")))
                 {
                     WWW UrlRequest = null;
@@ -282,7 +281,7 @@ namespace Zeltex
                             VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
                         }
                     }
-                    else if (FolderName == DataFolderNames.VoxelMeta)
+                    else if (FolderName == DataFolderNames.Voxels)
                     {
                         if (VoxelManager.Get())
                         {

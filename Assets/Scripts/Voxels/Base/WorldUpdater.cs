@@ -121,6 +121,8 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Updating
+        private Zeltine MyHandle;
+
         private void Update()
         {
             InitializeUpdates();
@@ -128,10 +130,11 @@ namespace Zeltex.Voxels
 
         void InitializeUpdates()
         {
-            if (!IsUpdating && MyChunks.Count > 0)
+            if (!IsUpdating && MyChunks.Count > 0 &&
+                (MyHandle == null || MyHandle.IsUpdating() == false))
             {
                 IsUpdating = true;
-                CoroutineManager.StartCoroutine(MainUpdate());
+                MyHandle = RoutineManager.Get().StartCoroutine(MainUpdate());
             }
         }
 
@@ -182,6 +185,7 @@ namespace Zeltex.Voxels
                 System.GC.Collect();    // force collect after remeshed
             }*/
             IsUpdating = false;
+            MyHandle = null;
             //yield return null;
             //	Debug.LogError ("Total Time [" + ((int)LoadTimes[LoadTimes.Count-1]) + "ms]");
         }

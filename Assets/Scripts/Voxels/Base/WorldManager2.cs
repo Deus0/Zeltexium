@@ -15,6 +15,15 @@ namespace Zeltex.Voxels
     {
         private Character MyCharacter;
 
+        public static new WorldManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.Find("WorldPool").GetComponent<WorldManager>();
+            }
+            return MyManager;
+        }
+
         #region LoadSaveGames
 
         public void LoadSaveGame(Action OnLoadChunk = null, SaveGame MyGame = null)//Level MyLevel, string CharacterScript, string StartingLocation = "")

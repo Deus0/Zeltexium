@@ -98,12 +98,12 @@ namespace Zeltex.Combat
         public bool IsPortal;
         #endregion
 
-        public Spell Clone()
+        /*public Spell Clone()
         {
             Spell NewSpell = new Spell();
             NewSpell.RunScript(GetScript());
             return NewSpell;
-        }
+        }*/
 
         #region ElementOverrides
 

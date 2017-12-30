@@ -199,13 +199,13 @@ namespace Zeltex.Combat
 
         private void IncreaseSelectedIcon()
         {
-            int NewItemIndex = IncreaseSelectedIcon(1);
+            IncreaseSelectedIcon(1);
             //OnChangeSelectedItem();
         }
         
         private void DecreaseSelectedIcon()
         {
-            int NewItemIndex = IncreaseSelectedIcon(-1);
+            IncreaseSelectedIcon(-1);
             //OnChangeSelectedItem(MyCharacter.IncreaseSelectedIcon(-1));
         }
 
@@ -263,7 +263,7 @@ namespace Zeltex.Combat
                 RefreshSelectedSpell();
                 if (SelectedIcon != null)
                 {
-                    bool HasCommand = HasAnyCommand(SelectedIcon);
+                    //bool HasCommand = HasAnyCommand(SelectedIcon);
                     // remove any previous command
                     RemoveSkills(SelectedIcon);
                     // Active skills

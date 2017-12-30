@@ -12,13 +12,25 @@ namespace Zeltex
     {
         public UnityEngine.Coroutine UnityRoutine;
         public UniversalCoroutine.Coroutine UniversalRoutine;
+        public bool IsUpdating()
+        {
+            return (UnityRoutine != null || UniversalRoutine != null);
+        }
     }
-
     /// <summary>
     /// Manages routines for Zeltex, interfaces other routine handlers
     /// </summary>
     public class RoutineManager : ManagerBase<RoutineManager>
     {
+
+        public static new RoutineManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.Find("GameManager").GetComponent<RoutineManager>();
+            }
+            return MyManager;
+        }
 
         public void StopCoroutine(Zeltine MyHandle)
         {

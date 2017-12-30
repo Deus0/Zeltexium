@@ -89,7 +89,7 @@ namespace Zeltex
             MyQuestLog.ParentElement = this;
             MyDialogue.ParentElement = this;
             MySkeleton.ParentElement = this;
-            //MyGuis.ParentElement = this;
+            MyGuis.ParentElement = this;
             BotData.ParentElement = this;
         }
 

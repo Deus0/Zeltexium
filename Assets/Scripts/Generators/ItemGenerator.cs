@@ -65,12 +65,12 @@ namespace Zeltex.Generators
 
         public IEnumerator GenerateItemsForVoxels()
         {
-            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.VoxelMeta);
+            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.Voxels);
             Debug.Log("Generating " + MyMetas.Count + " Items!");
             for (int i = 1; i < MyMetas.Count; i++)    // skip air
             {
                 Item MyItem = GenerateItem(i);
-                MyItem.Name = DataManager.Get().GetName(DataFolderNames.VoxelMeta, i);
+                MyItem.Name = DataManager.Get().GetName(DataFolderNames.Voxels, i);
                 //MyItem.MyMesh = MyVoxelManager.GetSingleVoxelMesh(i);
                 //MyItem.MyMaterial = MyVoxelManager.GetMaterial(0);
 
@@ -101,7 +101,7 @@ namespace Zeltex.Generators
         public Item GenerateItem(int VoxelIndex)
         {
             Item NewItem = new Item();
-            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.VoxelMeta);
+            List<Element> MyMetas = DataManager.Get().GetElements(DataFolderNames.Voxels);
             if (MyMetas.Count != 0 && VoxelIndex >= 0 && VoxelIndex < MyMetas.Count)
             {
                 VoxelMeta MyMeta = MyMetas[VoxelIndex] as VoxelMeta;//.GetMeta(VoxelIndex);

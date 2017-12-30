@@ -20,7 +20,7 @@ namespace Zeltex.Guis
         public Vector2[] Points;
         public bool relativeSize;
 
-        public override Texture mainTexture
+        /*public override Texture mainTexture
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Zeltex.Guis
             dir = Quaternion.Euler(angles) * dir; // rotate it
             point = dir + pivot; // calculate rotated point
             return point; // return it
-        }
+        }*/
     }
 
 }

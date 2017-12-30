@@ -34,8 +34,8 @@ namespace Zeltex.WorldUtilities
         private string MyRaceName = "Human";
         [SerializeField]
         private bool IsUseIndexes = false;
-        [SerializeField]
-        private int ClassIndex = 0;
+        //[SerializeField]
+        //private int ClassIndex = 0;
         [SerializeField]
         private int RaceIndex = 0;
         [Header("Positioning")]

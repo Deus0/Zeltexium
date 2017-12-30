@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1899823104185248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.08, y: 1.8, z: 12.55}
+  m_LocalPosition: {x: 8, y: 4, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4004776480823084}
@@ -100,13 +100,14 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 20512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -142,6 +143,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -193,37 +195,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e42fb3417ee4fc2aa1e2fdcf9f7fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  predefinedModel: 2
-  blurSize: 0.7
-  blurStrength: 0.6
-  bleedingSize: 0.75
-  bleedingStrength: 0.5
-  chromaticAberrationOffset: 1.25
-  RGBMaskIntensivity: 0.4
-  RGBMaskStrength: 0.4
-  RGBMaskBleeding: 0.1
+  predefinedModel: 5
+  blurSize: 0.9
+  blurStrength: 0.8
+  bleedingSize: 0.95
+  bleedingStrength: 0.95
+  chromaticAberrationOffset: 1.9
+  RGBMaskIntensivity: 0.7
+  RGBMaskStrength: 0.7
+  RGBMaskBleeding: 0.3
   colorNoiseMode: 0
-  colorNoiseStrength: 0.15
-  whiteNoiseMode: 4
-  whiteNoiseStrength: 0.15
+  colorNoiseStrength: 0.5
+  whiteNoiseMode: 5
+  whiteNoiseStrength: 0.55
   darkestLevel: {r: 0, g: 0, b: 0, a: 1}
   brightestLevel: {r: 0.92156863, g: 0.92156863, b: 0.92156863, a: 1}
-  darkestColor: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
-  brightestColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 0.1
-  contrast: 0.1
+  darkestColor: {r: 0.13725491, g: 0.13725491, b: 0.13725491, a: 1}
+  brightestColor: {r: 0.9607843, g: 1, b: 1, a: 1}
+  brightness: 0
+  contrast: -0.1
   saturation: -0.05
-  interferenceWidth: 25
-  interferenceSpeed: 3
-  interferenceStrength: 0
+  interferenceWidth: 35
+  interferenceSpeed: 2
+  interferenceStrength: 0.075
   interferenceSplit: 0.25
-  maskMode: 1
-  maskStrength: 0.25
-  curvatureX: 0.3
-  curvatureY: 0.3
-  overscan: 0
-  vignetteSize: 0.35
-  vignetteStrength: 0.1
+  maskMode: 0
+  maskStrength: 0.75
+  curvatureX: 0.625
+  curvatureY: 0.625
+  overscan: 0.1
+  vignetteSize: 0.4
+  vignetteStrength: 0.5
   textureScaling: 2
   scalingPolicy: 2
   textureSize: 768
@@ -264,6 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1979da9417fc9f41a98eb9aa4ced606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SinAmplitude: {x: 3, y: 1, z: 1}
-  NoiseAmplitude: {x: 0.5, y: 0.5, z: 0.5}
-  TimeScale: 0.5
+  SinAmplitude: {x: 24, y: 0, z: 0}
+  NoiseAmplitude: {x: 0.25, y: 0.25, z: 0.25}
+  TimeScale: 0.25

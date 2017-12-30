@@ -78,14 +78,22 @@ namespace Zeltex.Guis
 
         private void OpenFile(int FileIndex)
         {
-            MakerGui MyMaker = GuiSpawner.Get().SpawnMakerGui(DataFolderNames.FolderToGuiName(SelectedFolderName)).GetComponent<MakerGui>();
-            TextureMaker MyTextureMaker = MyMaker.GetComponent<TextureMaker>();
-            if (MyTextureMaker)
+            GameObject SpawnMaker = GuiSpawner.Get().SpawnMakerGui(DataFolderNames.FolderToGuiName(SelectedFolderName));
+            if (SpawnMaker)
             {
-                MyTextureMaker.SetFolder(SelectedFolderName);
+                MakerGui MyMaker = SpawnMaker.GetComponent<MakerGui>();
+                TextureMaker MyTextureMaker = MyMaker.GetComponent<TextureMaker>();
+                if (MyTextureMaker)
+                {
+                    MyTextureMaker.SetFolder(SelectedFolderName);
+                }
+                MyMaker.Select(FileIndex - 2);
+                Debug.Log("Spawned maker: " + SelectedFolderName + " to select: " + (FileIndex - 2));
             }
-            MyMaker.Select(FileIndex - 2);
-            Debug.Log("Spawned maker: " + SelectedFolderName + " to select: " + (FileIndex - 2));
+            else
+            {
+                Debug.LogError("Could not spawn maker at: " + SelectedFolderName);
+            }
         }
 
         /// <summary>

@@ -217,7 +217,7 @@ namespace Zeltex.Guis.Maker
             {
                 BeginZ = Mathf.RoundToInt(LastHitBlockPosition.z);
             }
-            int DirectionZ = 1;
+            //int DirectionZ = 1;
 
             bool IsFinishedX = false;
             for (int i = FirstHitBlockPosition.x; IsFinishedX == false; i += DirectionX)
@@ -360,7 +360,14 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private void Raycast()
         {
-            HighLightedCube.SetActive(false);
+            if (HighlightedGrid)
+            {
+                HighLightedCube.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("HighLightedCube is null.");
+            }
 			DidRayHit = false;
 			HighlightedWorld = null;	// default highlighted state
 			DidRayHitGuis = RaycastViewer();
@@ -371,7 +378,10 @@ namespace Zeltex.Guis.Maker
 			if (DidRayHit == false) 
 			{
 				// Hide the grid
-				HighlightedGrid.gameObject.SetActive(false);
+                if (HighlightedGrid)
+                {
+                    HighlightedGrid.gameObject.SetActive(false);
+                }
 			}
         }
 
@@ -495,7 +505,7 @@ namespace Zeltex.Guis.Maker
             }
             else if (PaintType == VoxelPaintType.Erase) // Erase
             {
-                Debug.LogError("Erase:" + LastHitBlockPosition.ToString());
+                Debug.Log("Erase:" + LastHitBlockPosition.ToString());
                 MyWorld.UpdateBlockType("Air", LastHitBlockPosition, PaintSize, Color.white);
             }
             // left click
@@ -909,8 +919,15 @@ namespace Zeltex.Guis.Maker
             {
                 VoxelName = MyDropdown.options[MyDropdown.value].text;
                 // Value of the drop down is the position in the entire database, so it will get hte proper voxel meta
-                VoxelMeta MyVoxelMeta = VoxelManager.Get().GetMeta(MyDropdown.value + 1);
-                MyPolyModelViewer.LoadVoxelMesh(MyVoxelMeta);
+                VoxelMeta MyVoxelMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, MyDropdown.value + 1) as VoxelMeta;
+                if (MyPolyModelViewer)
+                {
+                    MyPolyModelViewer.LoadVoxelMesh(MyVoxelMeta);
+                }
+                else
+                {
+                    Debug.LogError("No MyPolyModelViewer in voxelpainter.");
+                }
                 //MyWorld.GetComponent<VoxelPrimitives>().SetVoxelType(MyDropdown.value);
             }
             else if (MyDropdown.name == "PaintTypeDropdown")
@@ -1171,7 +1188,14 @@ namespace Zeltex.Guis.Maker
                 if (VoxelManager.Get().MyMetas.Count > 0)
                 {
                     VoxelMeta MyMeta = VoxelManager.Get().GetMeta(MyDropdown.value + 1);
-                    MyPolyModelViewer.LoadVoxelMesh(MyMeta);
+                    if (MyPolyModelViewer)
+                    {
+                        MyPolyModelViewer.LoadVoxelMesh(MyMeta);
+                    }
+                    else
+                    {
+                        Debug.LogError("VoxelPainter MyPolyModelViewer is null.");
+                    }
                 }
             }
             if (MyDropdown.name == "ModelLoadDropdown")

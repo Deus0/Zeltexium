@@ -18,9 +18,9 @@ namespace Zeltex.Guis.Maker
         #region Variables
         [Header("References")]
 		[SerializeField] private VoxelViewer MyVoxelGui;
-		[SerializeField] private VoxelManager MyVoxelManager;
-        [Header("UI")]
-        public VoxelPolygonViewer MyPolyModelViewer;
+		//[SerializeField] private VoxelManager MyVoxelManager;
+        //[Header("UI")]
+       // public VoxelPolygonViewer MyPolyModelViewer;
         //private bool IsGridShown;
         //private float MyPaintSize = 0;
         //public VoxelMetaGenerator MyMetaGenerator;
@@ -30,7 +30,7 @@ namespace Zeltex.Guis.Maker
 
         public new VoxelModel GetSelected()
         {
-            return DataManager.Get().GetElement(DataFolderNames.PolyModels, GetSelectedIndex()) as VoxelModel;
+            return DataManager.Get().GetElement(DataFolderNames.VoxelModels, GetSelectedIndex()) as VoxelModel;
         }
 
         private void OnDestroy()
@@ -134,28 +134,32 @@ namespace Zeltex.Guis.Maker
         {
             //Debug.Log(" Model Maker: Updating Index to [" + NewIndex + "]");
             base.OnUpdatedIndex(NewIndex);
-            if (MyIndexController.GetOldIndex() != NewIndex && MyIndexController.GetOldIndex() >= 0 && MyIndexController.GetOldIndex() < GetSize())   // will not work when opening for first time
-            {
-                //Set(FileUtil.ConvertToSingle(GetWorld().GetScript()), MyIndexController.GetOldIndex());
-                //Debug.LogError("Storing Model as script to: " + MyIndexController.GetOldIndex() + " as moving to " + ":\n" + MyData[MyIndexController.GetOldIndex()]);
-            }
-            GetInput("NameInput").text = GetSelectedName();
             CancelInvokes();
-            string MyScript = GetSelected().VoxelData;
-            //Debug.LogError("Loading Model " + GetSelectedIndex() + ":" + MyScript);
-            StartCoroutine(MyVoxelGui.RunScript(FileUtil.ConvertToList(MyScript)));
-            //MyVoxelGui.GetSpawn().GetComponent<
+            if (GetSelected() != null)
+            {
+                GetInput("NameInput").text = GetSelectedName();
+                string MyScript = GetSelected().VoxelData;
+                //Debug.LogError("Loading Model " + GetSelectedIndex() + ":" + MyScript);
+                RoutineManager.Get().StartCoroutine(MyVoxelGui.RunScript(FileUtil.ConvertToList(MyScript)));
+                //MyVoxelGui.GetSpawn().GetComponent<
+            }
+            else
+            {
+                GetInput("NameInput").text = "Null Voxel Model [" + GetSelectedIndex() + "]";
+                RoutineManager.Get().StartCoroutine(MyVoxelGui.RunScript(new List<string>()));
+            }
         }
 
         /// <summary>
         /// Used by VoxelViewer
         /// </summary>
-        public void SetVoxelType(int VoxelType_)
+        /*public void SetVoxelType(int VoxelType_)
         {
             GetDropdown("VoxelDropdown").value = VoxelType_;
-            MyPolyModelViewer.LoadVoxelMesh(MyVoxelManager.GetMeta(VoxelType_));
+            //MyPolyModelViewer.LoadVoxelMesh(MyVoxelManager.GetMeta(VoxelType_));
             VoxelPrimitives.Get().SetVoxelType(VoxelType_);
-        }
+        }*/
+
 		/// <summary>
 		/// Add a new model to our list
 		/// </summary>
@@ -168,13 +172,13 @@ namespace Zeltex.Guis.Maker
         private IEnumerator CreateNew(int NewIndex, string NewData)
         {
             // if meta.count == 0, create a meta for air!
-            if (MyVoxelManager.MyMetas.Count == 0 && MyVoxelManager.MyModels.Count == 0)
+            /*if (MyVoxelManager.MyMetas.Count == 0 && MyVoxelManager.MyModels.Count == 0)
             {
                 Debug.Log("Database Empty. Generating Meta Data for Voxel Models.");
                 // Add 2 blocks
                 //yield return MyMetaGenerator.GenerateData(0.025f);
                 //FillAllContainers();
-            }
+            }*/
             if (GetSize() == 0)
             {
                 Color32 MyColor = MyVoxelGui.GetComponent<RawImage>().color;
@@ -219,11 +223,11 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public override void OnBegin()
         {
-            if (MyVoxelManager == null)
+            /*if (MyVoxelManager == null)
             {
                 MyVoxelManager = VoxelManager.Get();
-            }
-            MyPolyModelViewer.OnBegin();
+            }*/
+            //MyPolyModelViewer.OnBegin();
             MyVoxelGui.OnBegin();
             base.OnBegin();
         }
@@ -242,7 +246,7 @@ namespace Zeltex.Guis.Maker
             }
             base.OnEnd();
             MyVoxelGui.OnEnd();
-            MyPolyModelViewer.OnEnd();
+            //MyPolyModelViewer.OnEnd();
         }
         #endregion
 

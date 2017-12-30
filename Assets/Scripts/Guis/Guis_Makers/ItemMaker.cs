@@ -124,7 +124,7 @@ namespace Zeltex.Guis.Maker
                 if (MyDropdown.value > 1)
                 {
                     // Set new mesh
-                    int ModelIndex = MyDropdown.value - 2;
+                    //int ModelIndex = MyDropdown.value - 2;
                     //GetSelected().SetModel(MyModelMaker.MyNames[ModelIndex], MyModelMaker.GetData(ModelIndex));
                     //StartCoroutine(MyVoxelViewer.RunScript(FileUtil.ConvertToList(GetSelectedItem().MyModel)));
 
@@ -223,8 +223,8 @@ namespace Zeltex.Guis.Maker
         private IEnumerator UpdateTextureDropdown()
         {
             yield return new WaitForSeconds(0.01f);
-            Item SelectedItem = GetSelectedItem();
-            Dropdown TextureDropdown = GetDropdown("TextureDropdown");
+            //Item SelectedItem = GetSelectedItem();
+            //Dropdown TextureDropdown = GetDropdown("TextureDropdown");
             //Debug.LogError("TextureDropdown has " + TextureDropdown.options.Count + " options.");
             //if (SelectedItem.IsUniqueTexture == false)
             /*{

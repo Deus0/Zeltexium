@@ -226,52 +226,45 @@ namespace Zeltex.Characters
                 Bounds MyBounds = GetSkeleton().GetSkeleton().GetBounds();
                 int MaxChecks = 100;
                 int ChecksCount = 0;
-                if (MyBounds != null)
+                Vector3 VoxelPosition = MyWorld.RealToBlockPosition(transform.position).GetVector();
+                // find new voxel position that is air or non block
+                while (true)
                 {
-                    Vector3 VoxelPosition = MyWorld.RealToBlockPosition(transform.position).GetVector();
-                    // find new voxel position that is air or non block
-                    while (true)
+                    Voxel MyVoxel = MyWorld.GetVoxel(VoxelPosition.ToInt3());
+                    if (MyVoxel == null)
                     {
-                        Voxel MyVoxel = MyWorld.GetVoxel(VoxelPosition.ToInt3());
-                        if (MyVoxel == null)
-                        {
-                            break;
-                        }
-                        int VoxelType = MyVoxel.GetVoxelType();
-                        if (VoxelType == 0)
-                        {
-                            break;
-                        }
-                        VoxelMeta MyMeta = MyWorld.GetVoxelMeta(VoxelType);
-                        if (MyMeta == null)
-                        {
-                            break;
-                        }
-                        if (MyMeta.ModelID != "Block")
-                        {
-                            break;
-                        }
-                        VoxelPosition.y++;
-                        ChecksCount++;
-                        if (ChecksCount >= MaxChecks)
-                        {
-                            Debug.LogError("Could not find a new position for " + name);
-                            break;
-                        }
+                        break;
                     }
-                    // Convert position to real world
-                    VoxelPosition = MyWorld.BlockToRealPosition(VoxelPosition);// new Vector3(VoxelPosition.x * MyWorld.GetUnit().x, VoxelPosition.y * MyWorld.GetUnit().y, VoxelPosition.z * MyWorld.GetUnit().z);
-                    Debug.LogError("[" + name + "] has bounds of [" + MyBounds.center.ToString() + " - " + MyBounds.size.ToString() + "] at position [" + VoxelPosition.ToString() + "]");
-                    transform.position = new Vector3(VoxelPosition.x, VoxelPosition.y + MyBounds.extents.y - MyBounds.center.y / 2f - MyWorld.GetUnit().y / 2f, VoxelPosition.z);
+                    int VoxelType = MyVoxel.GetVoxelType();
+                    if (VoxelType == 0)
+                    {
+                        break;
+                    }
+                    VoxelMeta MyMeta = MyWorld.GetVoxelMeta(VoxelType);
+                    if (MyMeta == null)
+                    {
+                        break;
+                    }
+                    if (MyMeta.ModelID != "Block")
+                    {
+                        break;
+                    }
+                    VoxelPosition.y++;
+                    ChecksCount++;
+                    if (ChecksCount >= MaxChecks)
+                    {
+                        Debug.LogError("Could not find a new position for " + name);
+                        break;
+                    }
                 }
-                else
-                {
-                    Debug.LogError("No bounds in skeleton of: " + name);
-                }
+                // Convert position to real world
+                VoxelPosition = MyWorld.BlockToRealPosition(VoxelPosition);// new Vector3(VoxelPosition.x * MyWorld.GetUnit().x, VoxelPosition.y * MyWorld.GetUnit().y, VoxelPosition.z * MyWorld.GetUnit().z);
+                Debug.LogError("[" + name + "] has bounds of [" + MyBounds.center.ToString() + " - " + MyBounds.size.ToString() + "] at position [" + VoxelPosition.ToString() + "]");
+                transform.position = new Vector3(VoxelPosition.x, VoxelPosition.y + MyBounds.extents.y - MyBounds.center.y / 2f - MyWorld.GetUnit().y / 2f, VoxelPosition.z);
             }
             else
             {
-                Debug.LogError("No skeleton in character: " + name);
+                Debug.LogError("No bounds in skeleton of: " + name);
             }
         }
 
@@ -692,7 +685,7 @@ namespace Zeltex.Characters
                     {
                         Debug.Log(name + " Hit a world [" + MyWorld.name + "]");
                         Voxel MyVoxel = MyWorld.GetVoxel(new Int3(BlockPosition));
-                        VoxelManager MetaData = MyWorld.MyDataBase;
+                        //VoxelManager MetaData = MyWorld.MyDataBase;
                         if (MyVoxel != null)// && MyVoxel.GetVoxelType() >= 0 && MyVoxel.GetVoxelType() < MetaData.Data.Count)
                         {
                             // Get the meta data from the index

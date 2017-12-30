@@ -51,20 +51,21 @@ namespace Zeltex.WorldUtilities
                 }
                 if (MyParticles)
                 {
-                    MyParticles.emissionRate = EmmissionRate * TimePercent;
+                    ParticleSystem.EmissionModule MyEmmision = MyParticles.emission;
+                    MyEmmision.rateOverTimeMultiplier = EmmissionRate * TimePercent;
                 }
             }
         }
 
         private void CopyParticles(ParticleSystem ParticlesA, ParticleSystem ParticlesB) 
 		{
-			ParticlesA.startColor = ParticlesB.startColor;
+			/*ParticlesA.startColor = ParticlesB.startColor;
 			ParticlesA.startDelay = ParticlesB.startDelay;
 			ParticlesA.startLifetime = ParticlesB.startLifetime;
 			ParticlesA.startRotation = ParticlesB.startRotation;
-			ParticlesA.startSize = ParticlesB.startSize;
+			ParticlesA.main.startSizeMultiplier = ParticlesB.main.startSizeMultiplier;
 			ParticlesA.startSpeed = ParticlesB.startSpeed;
-			ParticlesA.gravityModifier = ParticlesB.gravityModifier;
+			ParticlesA.gravityModifier = ParticlesB.gravityModifier;*/
 		}
         #endregion
         /// <summary>

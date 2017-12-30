@@ -237,6 +237,7 @@ namespace Zeltex.Voxels
             {
                 if (ChunkObject == null)
                 {
+                    //Debug.Log("Creating new chunk: " + NewObject.name + " at time " + Time.time);
                     ChunkObject = new GameObject();
                     ChunkObject.layer = gameObject.layer;
                     //LayerManager.Get().SetLayerWorld(ChunkObject);
@@ -249,9 +250,8 @@ namespace Zeltex.Voxels
                 Chunk NewChunk = ChunkObject.AddComponent<Chunk>();
                 NewChunk.Position.Set(ChunkPosition);
                 NewChunk.SetWorld(this);
-                MeshFilter MyMeshFilter = NewChunk.GetMeshFilter();
-                MeshRenderer MyMeshRenderer = NewChunk.GetMeshRenderer();
-                //Debug.Log("Creating new chunk: " + NewObject.name + " at time " + Time.time);
+                NewChunk.GetMeshFilter();
+                NewChunk.GetMeshRenderer();
                 MeshCollider MyMeshCollider = NewChunk.GetMeshCollider();
                 NewChunk.SetMeshVisibility(IsMeshVisible);
                 if (MyMeshCollider && IsColliders)

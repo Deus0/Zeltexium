@@ -9,13 +9,13 @@ namespace Zeltex.Skeletons
     /// A skeleton is made up of a collection of bones!
     /// </summary>
     [System.Serializable]
-    public class Bone
+    public class Bone : Element
     {
         [SerializeField, HideInInspector]
         private Skeleton MySkeleton;
         [Header("Names")]
-        [JsonProperty, SerializeField]
-        public string Name = "";
+        //[JsonProperty, SerializeField]
+        //public string Name = "";
         [JsonProperty, SerializeField]
         public string ParentName = "";
         [JsonProperty, SerializeField]
@@ -178,7 +178,7 @@ namespace Zeltex.Skeletons
             CreateBoneMesh();
             if (MeshName != "")
             {
-                Element MeshElement = DataManager.Get().GetElement(DataFolderNames.PolyModels, MeshName);
+                Element MeshElement = DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName);
                 if (MeshElement != null)
                 {
                     yield return CreateMeshRoutine(MeshElement as Voxels.VoxelModel);

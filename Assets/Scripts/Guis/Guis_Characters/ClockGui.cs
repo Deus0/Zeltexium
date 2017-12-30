@@ -65,10 +65,11 @@ namespace Zeltex.Guis.Characters
 			MySecondsLineObject.transform.SetParent (MyParent);
 			MySecondsLineObject.transform.position = MyParent.transform.position;
 			LineRenderer NewLine = MySecondsLineObject.AddComponent<LineRenderer> ();
-			NewLine.SetVertexCount (2);
+			NewLine.positionCount = 2;
 			NewLine.material = MyMaterial;
-			NewLine.SetWidth (MyWidth*transform.lossyScale.x, MyWidth*transform.lossyScale.x/1.1f);
-			NewLine.SetPosition (0, MyStartPoint.position);
+			NewLine.startWidth = MyWidth*transform.lossyScale.x;
+            NewLine.endWidth = MyWidth * transform.lossyScale.x / 1.1f;
+            NewLine.SetPosition (0, MyStartPoint.position);
 			NewLine.SetPosition (1, MyStartPoint.position);
 			return NewLine;
 		}

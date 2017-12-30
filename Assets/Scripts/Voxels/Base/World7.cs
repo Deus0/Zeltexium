@@ -32,7 +32,7 @@ namespace Zeltex.Voxels
        // private List<Vector3> MoveToList = new List<Vector3>();
        // [SerializeField]
        // private List<Chunk> ChunkRepositionList = new List<Chunk>();
-        private Chunk RoamingChunk;
+        //private Chunk RoamingChunk;
         // testing values, default is true
         public static bool TestingIsRefreshOldChunks = true;   // wipes chunks when repositioned
         public static bool TestingRefreshSides = true;         // refreshes chunk sides when reposiioned
@@ -542,13 +542,14 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator OnNewChunkRoam()
         {
+            yield return null;
             if (TestingCreateTerrain)
             {
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyVoxelTerrain.CreateTerrain(RoamingChunk));
+                //yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyVoxelTerrain.CreateTerrain(RoamingChunk));
             }
             else if (TestingCreatePlane)
             {
-                MyVoxelTerrain.CreatePlane(RoamingChunk, 8, 2);
+                //MyVoxelTerrain.CreatePlane(RoamingChunk, 8, 2);
             }
         }
         #endregion

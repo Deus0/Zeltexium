@@ -148,7 +148,7 @@ namespace Zeltex.Guis.Players
                 PreviousRaceIndex = SelectedRaceIndex;
             }*/
         }
-        private IEnumerator ChangeRace()
+       /* private IEnumerator ChangeRace()
         {
             ConfirmButton.interactable = false;
             GameObject MyCharacter = MyCharacterViewer.GetSpawn();
@@ -158,7 +158,7 @@ namespace Zeltex.Guis.Players
                 yield return MySkeleton.RunScriptRoutine((MySkeletonManager.GetData(SelectedRaceIndex)));
             }
             ConfirmButton.interactable = true;
-        }
+        }*/
         #endregion
     }
 }

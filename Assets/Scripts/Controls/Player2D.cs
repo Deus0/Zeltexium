@@ -37,13 +37,13 @@ namespace Zeltex
             // if player is local to this machine!
             if (MyCharacter && IsInput)// && gameObject.GetComponent<PhotonView>().owner == PhotonNetwork.player)
             {
-                float MovementX = Input.GetAxis("Horizontal");
+                /*float MovementX = Input.GetAxis("Horizontal");
                 MyController.Input(MovementX, 0, 
                     Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space) || Input.GetAxis("Jump") != 0);
                 if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space) || Input.GetAxis("Jump") != 0)
                 {
                     Debug.LogError("JUMP");
-                }
+                }*/
             }
         }
 

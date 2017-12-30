@@ -51,7 +51,7 @@ namespace Zeltex
         [SerializeField]
         protected Transform BodyBone = null;            // The body that moves around
         [SerializeField]
-        protected BasicController MyController;
+        protected Mover MyController;
         [SerializeField]
         private bool IsParentOfAllCameras;
         [SerializeField, HideInInspector]
@@ -256,7 +256,7 @@ namespace Zeltex
                 CameraBone = null;
                 if (MyController != null)
                 {
-                    MyController.SetMovementSpeed(MyController.GetMovementSpeed() / 1.2f);
+                    //MyController.SetMovementSpeed(MyController.GetMovementSpeed() / 1.2f);
                 }
                 MyController = null;
                 BodyBone = null;
@@ -315,7 +315,7 @@ namespace Zeltex
         /// <summary>
         /// Set the character - Attaches it to the player
         /// </summary>
-        public void SetCharacter(Character MyCharacter_)
+        public virtual void SetCharacter(Character MyCharacter_)
         {
             if (MyCharacter)
             {
@@ -343,11 +343,7 @@ namespace Zeltex
                     }
                 }
                 MySkillbar = MyCharacter.GetComponent<Skillbar>();
-                MyController = MyCharacter.GetComponent<BasicController>();
-                if (MyController)
-                {
-                    MyController.SetMovementSpeed(MyController.GetMovementSpeed() * 1.2f);
-                }
+                MyController = MyCharacter.GetComponent<Mover>();
                 BodyBone = MyCharacter.transform;
                 if (!IsAttachedToCharacter)
                 {

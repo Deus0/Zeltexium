@@ -16,7 +16,7 @@ namespace Zeltex.Cameras
         public float NormalSpeed = 30;
         public float ViewerSpeed = 10;
         private float MovementSpeed = 20.0f; //regular speed
-	    private float maxShift = 1000.0f; //Maximum speed when holdin gshift
+	    //private float maxShift = 1000.0f; //Maximum speed when holdin gshift
 	    private float camSens = 0.2f; //How sensitive it with mouse
 	    private Vector3 LastMousePosition = new Vector3(0,0,0); //kind of in the middle of the screen, rather than at the top (play)
 	    private float totalRun = 1.0f;

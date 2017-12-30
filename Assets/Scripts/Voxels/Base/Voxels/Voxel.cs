@@ -80,16 +80,9 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Get the color of a voxel
         /// </summary>
-        public Color GetColor()
+        public virtual Color GetColor()
         {
-            if (this.GetType() == typeof(VoxelColor))
-            {
-                return (this as VoxelColor).GetColor();
-            }
-            else
-            {
-                return Color.white;
-            }
+            return Color.white;
         }
         #endregion
 

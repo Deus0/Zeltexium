@@ -55,7 +55,7 @@ namespace Zeltex.Voxels
 
        /* public override string GetFolder()
         {
-            return DataFolderNames.VoxelMeta;
+            return DataFolderNames.Voxels;
         }*/
         #endregion
 

@@ -72,10 +72,10 @@ namespace Zeltex.Util
 
         public static AudioClip TrimSilence(List<float> samples, float min, int channels, int hz)
         {
-            return TrimSilence(samples, min, channels, hz, false, false);
+            return TrimSilence(samples, min, channels, hz, false);
         }
 
-        public static AudioClip TrimSilence(List<float> samples, float min, int channels, int hz, bool _3D, bool stream)
+        public static AudioClip TrimSilence(List<float> samples, float min, int channels, int hz, bool stream)
         {
             int i;
 
@@ -99,7 +99,7 @@ namespace Zeltex.Util
 
             samples.RemoveRange(i, samples.Count - i);
 
-            var clip = AudioClip.Create("TempClip", samples.Count, channels, hz, _3D, stream);
+            var clip = AudioClip.Create("TempClip", samples.Count, channels, hz, stream);
 
             clip.SetData(samples.ToArray(), 0);
 
