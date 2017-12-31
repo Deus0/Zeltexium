@@ -94,8 +94,9 @@ namespace Zeltex.Voxels
                 // GetClass Script
                 CharacterData Data = DataManager.Get().GetElement(DataFolderNames.Characters, 0) as CharacterData;
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(Data));
-                World MyWorld = MyGame.GetLevel().GetWorld();
-                MyCharacter.OnLoadedInWorld(MyWorld);
+                //World MyWorld = MyGame.GetLevel().GetWorld();
+                MyCharacter.transform.position = MyGame.GetLevel().GetSpawnPoint();
+                MyCharacter.OnLoaded(MyGame.GetLevel());
                 if (OnLoadChunk != null)
                 {
                     OnLoadChunk.Invoke();

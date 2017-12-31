@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1012162929855192
 GameObject:
   m_ObjectHideFlags: 1
@@ -1260,7 +1260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1893249535536554
 GameObject:
   m_ObjectHideFlags: 1
@@ -3101,7 +3101,6 @@ MonoBehaviour:
   MyGuis: []
   GuiCellPrefab: {fileID: 1849139630447876}
   MyList: {fileID: 1674004152390824}
-  MyTooltipGui: {fileID: 0}
   MyScrollbar: {fileID: 114868787211509898}
   IsUpdateOnStart: 0
   GridMargin: {x: 0, y: 4}
@@ -4205,6 +4204,7 @@ MonoBehaviour:
           _values: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      ElementLink: 
       Description: Null
       Commands: []
       Tags: []
@@ -4262,6 +4262,8 @@ MonoBehaviour:
             _values: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        ElementLink: 
+        IsAlive: 1
         Data: []
         OnNewStats:
           m_PersistentCalls:
@@ -4324,6 +4326,7 @@ MonoBehaviour:
             _values: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        ElementLink: 
         Pixels: 
         Size: {x: 32, y: 32}
         MyTexture: {fileID: 0}

@@ -42,6 +42,7 @@ namespace Zeltex.Guis
             GameManager.Get().BeginSettings();
         }
 
+#if (UNITY_ANDROID || UNITY_EDITOR)
         public void ShowAds()
         {
             ShowOptions options = new ShowOptions();
@@ -67,6 +68,7 @@ namespace Zeltex.Guis
                 Debug.LogError("Video failed to show");
             }
         }
+#endif
     }
 
 }

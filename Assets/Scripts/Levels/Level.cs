@@ -26,6 +26,8 @@ namespace Zeltex
         private bool IsInfinite;
         [SerializeField, JsonProperty]
         private bool IsGenerateTerrain;
+        [SerializeField, JsonProperty]
+        private Vector3 SpawnPoint;
 
         //[SerializeField, JsonIgnore]
         //private string MyScript = "";
@@ -43,6 +45,20 @@ namespace Zeltex
         private Zeltex.Util.FilePathType MyFilePathType;
 
         #region Overrides
+
+        public Vector3 GetSpawnPoint()
+        {
+            return SpawnPoint;
+        }
+
+        public LevelHandler GetLevelHandler()
+        {
+            if (MyWorld)
+            {
+                return MyWorld.gameObject.GetComponent<LevelHandler>();
+            }
+            return null;
+        }
 
         private void SetDefaults()
         {
@@ -166,8 +182,13 @@ namespace Zeltex
 
         public void DeSpawn()
         {
+            for (int i = 0; i < MyCharacters.Count; i++)
+            {
+                CharacterManager.Get().ReturnObject(MyCharacters[i]);
+            }
             WorldManager.Get().Destroy(MyWorld);
         }
+
         public bool IsSpawned()
         {
             return (MyWorld != null);
@@ -213,24 +234,33 @@ namespace Zeltex
 
         public void SaveOpenCharacters(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
-            for (int i = 0; i < MyCharacters.Count;i++)
+            for (int i = 0; i < MyCharacters.Count; i++)
             {
-                if (MyCharacters[i])
-                {
-                    CharacterData MyData = MyCharacters[i].GetData();
-                    MyData.SetCharacter(MyCharacters[i], false);
-                    MyData.RefreshTransform();
-                    if (MyData.CanSave() || IsForceSaveAll)
-                    {
-                        string SerializedCharacterData = MyData.GetSerial();
-                        string CharacterPath = GetFilePath(MyCharacters[i], SaveFolderName);
-                        Util.FileUtil.Save(CharacterPath, SerializedCharacterData);
-                        MyData.OnSaved();
-                    }
-                }
+                MyCharacters[i].GetData().SetCharacter(MyCharacters[i], false);
+                SaveCharacterToLevel(MyCharacters[i], SaveFolderName, IsForceSaveAll);
             }
         }
 
+        public void SaveCharacterToLevel(Character MyCharacter, string SaveFolderName = "", bool IsForceSaveAll = false)
+        {
+            if (MyCharacter)
+            {
+                CharacterData MyData = MyCharacter.GetData();
+                MyData.SetCharacter(MyCharacter, false);    // just incase doesn't get set earlier
+                MyData.RefreshTransform();
+                if (MyData.CanSave() || IsForceSaveAll)
+                {
+                    string SerializedCharacterData = MyData.GetSerial();
+                    string CharacterPath = GetFilePath(MyCharacter, SaveFolderName);
+                    Util.FileUtil.Save(CharacterPath, SerializedCharacterData);
+                    MyData.OnSaved();
+                }
+                else
+                {
+                    Debug.Log("Cannot save character as it has not been modified: " + MyCharacter.name);
+                }
+            }
+        }
 
         public void SaveOpenChunks(string SaveFolderName = "", bool IsForceSaveAll = false)
         {

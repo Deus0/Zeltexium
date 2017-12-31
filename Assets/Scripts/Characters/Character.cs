@@ -37,11 +37,15 @@ namespace Zeltex.Characters
         #region Variables
         [Header("Actions")]
         [SerializeField]
-        private EditorAction ActionLoad = new EditorAction();
+        private EditorAction ActionSaveToLevel = new EditorAction();
+        //[SerializeField]
+        //private EditorAction ActionLoad = new EditorAction();
 
         [Header("Data")]
         [SerializeField]
         private CharacterData Data = new CharacterData();
+        // The level the character is loaded in
+        private Level LoadedInLevel;
 
         [Header("Character")]
         public bool IsPlayer;
@@ -161,9 +165,9 @@ namespace Zeltex.Characters
                 Data.MyStatsHandler.SetCharacter(this);
                 Data.MyStatsHandler.UpdateScript();
             }
-            if (ActionLoad.IsTriggered())
+            if (ActionSaveToLevel.IsTriggered())
             {
-
+                LoadedInLevel.SaveCharacterToLevel(this);
             }
             if (Data.MyStats != null && Data.MyStatsHandler.ActionLoadStats.IsTriggered())
             {
@@ -212,20 +216,29 @@ namespace Zeltex.Characters
         /// <summary>
         /// Once character is loaded into a world
         /// </summary>
-        public void OnLoadedInWorld(World MyWorld)
+        public void OnLoaded(Level MyLevel)
         {
-            if (MyWorld == null)
+            if (MyLevel == null)
             {
-                Debug.LogError(name + " has loaded in a null world.");
+                Debug.LogError(name + " has loaded in a null Level.");
                 return;
             }
+            World MyWorld = MyLevel.GetWorld();
+            if (MyWorld == null)
+            {
+                Debug.LogError(MyLevel.Name + " has in a null world.");
+                return;
+            }
+            LoadedInLevel = MyLevel;
             //Debug.LogError("[" + name + "] has been loaded into world of [" + MyWorld.name + "]");
-            transform.position = new Vector3(transform.position.x * MyWorld.GetUnit().x, transform.position.y * MyWorld.GetUnit().y, transform.position.z * MyWorld.GetUnit().z);
+            // Scale its position - for now until i fixed the current levels stuff
+            //transform.position = new Vector3(transform.position.x * MyWorld.GetUnit().x, transform.position.y * MyWorld.GetUnit().y, transform.position.z * MyWorld.GetUnit().z);
             if (GetSkeleton() != null && GetSkeleton().GetSkeleton() != null)
             {
                 Bounds MyBounds = GetSkeleton().GetSkeleton().GetBounds();
                 int MaxChecks = 100;
                 int ChecksCount = 0;
+                transform.position = new Vector3(transform.position.x, transform.position.y - MyBounds.extents.y + MyBounds.center.y, transform.position.z);
                 Vector3 VoxelPosition = MyWorld.RealToBlockPosition(transform.position).GetVector();
                 // find new voxel position that is air or non block
                 while (true)
@@ -259,8 +272,8 @@ namespace Zeltex.Characters
                 }
                 // Convert position to real world
                 VoxelPosition = MyWorld.BlockToRealPosition(VoxelPosition);// new Vector3(VoxelPosition.x * MyWorld.GetUnit().x, VoxelPosition.y * MyWorld.GetUnit().y, VoxelPosition.z * MyWorld.GetUnit().z);
-                Debug.LogError("[" + name + "] has bounds of [" + MyBounds.center.ToString() + " - " + MyBounds.size.ToString() + "] at position [" + VoxelPosition.ToString() + "]");
-                transform.position = new Vector3(VoxelPosition.x, VoxelPosition.y + MyBounds.extents.y - MyBounds.center.y / 2f - MyWorld.GetUnit().y / 2f, VoxelPosition.z);
+                LogManager.Get().Log("[" + name + "] has bounds of [" + MyBounds.center.ToString() + " - " + MyBounds.size.ToString() + "] at position [" + VoxelPosition.ToString() + "]", "CharacterLoading");
+                transform.position = new Vector3(VoxelPosition.x, VoxelPosition.y + MyBounds.extents.y - MyBounds.center.y - MyWorld.GetUnit().y / 2f, VoxelPosition.z);
             }
             else
             {
@@ -276,6 +289,7 @@ namespace Zeltex.Characters
                 Data.OnInitialized();
                 name = Data.Name;
                 RefreshComponents();
+                NewData.SetCharacter(this);
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MySkeleton.GetSkeleton().ActivateRoutine());
                 Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);

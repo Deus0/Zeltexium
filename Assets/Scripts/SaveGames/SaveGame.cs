@@ -31,6 +31,19 @@ namespace Zeltex
             }
         }
 
+        public void SetLevel(string NewLevelName)
+        {
+            if (DataManager.Get().GetNames(DataFolderNames.Levels).Contains(NewLevelName))
+            {
+                LevelName = NewLevelName;
+                Debug.Log("Setting Level of " + Name + " to level: " + LevelName);
+            }
+            else
+            {
+                Debug.LogError("Could not set save game level to: " + NewLevelName);
+            }
+        }
+
         public Level GetLevel()
         {
             if (LevelName == "")

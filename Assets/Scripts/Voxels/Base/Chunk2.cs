@@ -155,7 +155,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator BuildChunkMesh()
         {
-            Debug.Log("Building " + name);
+            //Debug.Log("Building " + name);
             OnBuildingMesh();
             int i = 0;
             if (ChunkMeshes.Count != MyWorld.MyMaterials.Count)
@@ -175,7 +175,7 @@ namespace Zeltex.Voxels
             IsUpdatingRender = true;
             IsBuildingMesh = false; // tell updater it has finished building chunk mesh!
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(UpdateChunk());
-            Debug.Log("Finished Building " + name);
+            //Debug.Log("Finished Building " + name);
         }
         
         /// <summary>

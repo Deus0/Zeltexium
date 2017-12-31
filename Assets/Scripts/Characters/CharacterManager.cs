@@ -428,13 +428,20 @@ namespace Zeltex.Characters
 
         public override void ReturnObject(Character PoolObject, int PoolIndex = 0)
         {
-            PoolObject.OnReturnToPool.Invoke(PoolObject.gameObject);
-            Ragdoll MyRagdoll = PoolObject.GetSkeleton().GetComponent<Ragdoll>();
-            if (MyRagdoll)
+            if (PoolObject)
             {
-                MyRagdoll.ReverseRagdoll();
+                PoolObject.OnReturnToPool.Invoke(PoolObject.gameObject);
+                Ragdoll MyRagdoll = PoolObject.GetSkeleton().GetComponent<Ragdoll>();
+                if (MyRagdoll)
+                {
+                    MyRagdoll.ReverseRagdoll();
+                }
+                if (UnityEngine.Application.isPlaying == false)
+                {
+                    PoolObject.GetGuis().DespawnAllGuis();
+                }
+                base.ReturnObject(PoolObject);
             }
-            base.ReturnObject(PoolObject);
         }
 
         public override void ReadyObject(ReadyMessageData Data)

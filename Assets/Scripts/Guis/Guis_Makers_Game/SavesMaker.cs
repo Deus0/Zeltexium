@@ -147,25 +147,39 @@ namespace Zeltex.Saves
         /// </summary>
         private void BeginCreatingNewGame()
         {
-            MyTabManager.EnableTab("CreationTab");
+            // Name of save game
             NewGame = new SaveGame();
             NewGame.SetName(NameGenerator.GenerateVoxelName());
             GetInput("NameInput").text = NewGame.Name;
+
+            Dropdown LevelsDropdown = GetDropdown("LevelSelectionDropdown");
+            if (LevelsDropdown)
+            {
+                FillDropDownWithList(LevelsDropdown, DataManager.Get().GetNames(DataFolderNames.Levels));
+                if (LevelsDropdown.options.Count > 0)
+                {
+                    StartingLocation = LevelsDropdown.options[LevelsDropdown.value].text;
+                }
+            }
+            NewGame.SetLevel(StartingLocation);
+
+            MyTabManager.EnableTab("CreationTab");
         }
 
         /// <summary>
         /// Used when loading a saved game
         /// </summary>
-        private void SetSaveGameName(string NewName)
-        {
-            Voxels.WorldManager.SaveGameName = NewName;
-        }
+       // private void SetSaveGameName(string NewName)
+        //{
+        //    Voxels.WorldManager.SaveGameName = NewName;
+        //}
 
         /// <summary>
         /// Creates a new game save file!
         /// </summary>
         private IEnumerator CreateNewGame()
         {
+            NewGame.SetLevel(StartingLocation);
             GuiSpawner.Get().DestroySpawn("MainMenu");
             OnConfirm.Invoke();
             GetComponent<ZelGui>().TurnOff();
@@ -195,7 +209,7 @@ namespace Zeltex.Saves
             {
                 Debug.LogError("DirectoryNotFoundException at: " + MyDirectory + "\n" + e.ToString());
             }
-            SetSaveGameName(SaveGameName);
+            //SetSaveGameName(SaveGameName);
             // Go to Character Create Screen and Level Select
             // wait just pick first one for now...!
             float ChunksLoaded = 0;
@@ -222,16 +236,16 @@ namespace Zeltex.Saves
                 yield return null;
             }
             // Camera and possession
-            Camera MyCamera = CameraManager.Get().SpawnGameCamera();
-            if (NewGame.MyCharacter)
-            {
-                MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
-            }
-            MyCamera.transform.localPosition = Vector3.zero;
-            MyCamera.transform.localEulerAngles = Vector3.zero;
-            CameraManager.Get().EnableGameCamera();
-            Possess.PossessCharacter(NewGame.MyCharacter, MyCamera);
-            LoadingGui.Get().MyZel.TurnOff();
+            /* Camera MyCamera = CameraManager.Get().SpawnGameCamera();
+             if (NewGame.MyCharacter)
+             {
+                 MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
+             }
+             MyCamera.transform.localPosition = Vector3.zero;
+             MyCamera.transform.localEulerAngles = Vector3.zero;
+             CameraManager.Get().EnableGameCamera();
+             Possess.PossessCharacter(NewGame.MyCharacter, MyCamera);*/
+            OnLoadedGame(NewGame);
             DataManager.Get().SaveElement(NewGame);
         }
 
@@ -292,7 +306,7 @@ namespace Zeltex.Saves
                             MaxLoading++;
                         }
                         MaxLoading += MyGame.GetLevel().GetCharactersCount();
-                        SetSaveGameName(SaveGameName);   // set the SaveGameName somewhere for when saving
+                       // SetSaveGameName(SaveGameName);   // set the SaveGameName somewhere for when saving
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
                             Voxels.WorldManager.Get().LoadSaveGameRoutine(
                                 MyGame,
@@ -303,64 +317,70 @@ namespace Zeltex.Saves
                         LoadingGui.Get().SetPercentage(1f);
 
                         yield return null;
+                        OnLoadedGame(MyGame);
                         /*for (int i = 0; i < 120; i++)
                         {
                             yield return null;
                         }*/
-                        // Camera and possession
-                        if (MyGame.MyCharacter)
-                        {
-                            Camera MyCamera = CameraManager.Get().SpawnGameCamera();
-                            MyCamera.transform.SetParent(MyGame.MyCharacter.GetCameraBone());
-                            MyCamera.transform.localPosition = Vector3.zero;
-                            MyCamera.transform.localEulerAngles = Vector3.zero;
-                            CameraManager.Get().EnableGameCamera();
-                            Possess.PossessCharacter(MyGame.MyCharacter, MyCamera);
-                        }
-                        else
-                        {
-                            Debug.LogError("Save Game [" + MyGame.Name + "] has no character: " + MyGame.CharacterName);
-                        }
-
-                        List<Characters.Character> MyCharacters = Characters.CharacterManager.Get().GetSpawned();
-                        Debug.Log("Allowing all [" + MyCharacters.Count + "] bots to wander.");
-                        for (int i = 0; i < Characters.CharacterManager.Get().GetSize(); i++)
-                        {
-                            Characters.Character MyCharacter = MyCharacters[i];
-                            if (MyCharacter)
-                            {
-                                AI.Bot MyBot = MyCharacter.gameObject.GetComponent<AI.Bot>();
-                                if (MyBot == null && MyCharacter.IsPlayer == false)
-                                {
-                                    MyBot = MyCharacter.gameObject.AddComponent<AI.Bot>();
-                                }
-                                if (MyBot)
-                                {
-                                    MyBot.OnBeginGame();
-                                }
-                                else
-                                {
-                                    Debug.LogError("Could not begin game for bot: " + MyCharacter.name);
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError("Could not begin game for bot: " + i);
-                            }
-                        }
                     }
                     else
                     {
                         Debug.LogError("Failure to find level: " + MyGame.LevelName);
                         // go to default level now with character
+                        LoadingGui.Get().MyZel.TurnOff();
                     }
-                    LoadingGui.Get().MyZel.TurnOff();
                 }
                 else
                 {
                     Debug.LogError("Could not find save game with name: " + SaveGameName);
                 }
             }
+        }
+
+        public void OnLoadedGame(SaveGame MyGame)
+        {
+            // Camera and possession
+            if (MyGame.MyCharacter)
+            {
+                Camera MyCamera = CameraManager.Get().SpawnGameCamera();
+                MyCamera.transform.SetParent(MyGame.MyCharacter.GetCameraBone());
+                MyCamera.transform.localPosition = Vector3.zero;
+                MyCamera.transform.localEulerAngles = Vector3.zero;
+                CameraManager.Get().EnableGameCamera();
+                Possess.PossessCharacter(MyGame.MyCharacter, MyCamera);
+            }
+            else
+            {
+                Debug.LogError("Save Game [" + MyGame.Name + "] has no character: " + MyGame.CharacterName);
+            }
+
+            List<Characters.Character> MyCharacters = Characters.CharacterManager.Get().GetSpawned();
+            Debug.Log("Allowing all [" + MyCharacters.Count + "] bots to wander.");
+            for (int i = 0; i < Characters.CharacterManager.Get().GetSize(); i++)
+            {
+                Characters.Character MyCharacter = MyCharacters[i];
+                if (MyCharacter)
+                {
+                    AI.Bot MyBot = MyCharacter.gameObject.GetComponent<AI.Bot>();
+                    if (MyBot == null && MyCharacter.IsPlayer == false)
+                    {
+                        MyBot = MyCharacter.gameObject.AddComponent<AI.Bot>();
+                    }
+                    if (MyBot)
+                    {
+                        MyBot.OnBeginGame();
+                    }
+                    else
+                    {
+                        Debug.LogError("Could not begin game for bot: " + MyCharacter.name);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Could not begin game for bot: " + i);
+                }
+            }
+            LoadingGui.Get().MyZel.TurnOff();
         }
 
 

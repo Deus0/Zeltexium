@@ -19,7 +19,7 @@ namespace Zeltex.Voxels
         #region Variables++
         public static string ChunkFileExtention = "chn";
         public static string CharacterFileExtension = "chr";
-        public static string SaveGameName = "";
+        //public static string SaveGameName = "";
 
         [Header("Settings")]
         public Vector3 SpawnedWorldScale = 0.5f * (new Vector3(1, 1, 1));
@@ -180,7 +180,7 @@ namespace Zeltex.Voxels
                 {
                     MyWorlds.Remove(DoomedWorld);
                 }
-                Destroy(DoomedWorld.gameObject);
+                DoomedWorld.gameObject.Die();
             }
         }
         #endregion
@@ -223,11 +223,11 @@ namespace Zeltex.Voxels
                         MyLevelHandler = MyWorld.gameObject.AddComponent<LevelHandler>();
                     }
                     MyLevelHandler.MyLevel = NewLevel;
+                    NewLevel.SetWorld(MyWorld);
                     Debug.Log("Loading Level: " + NewLevel.Name);
                     yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.LoadLevelRoutine(NewLevel, PositionOffset));
                     MyWorld.name = NewLevel.Name;
                     yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadChunksInLevel(MyWorld, NewLevel, OnLoadChunk, SavedGame));
-                    NewLevel.SetWorld(MyWorld);
                 }
                 else
                 {
@@ -258,7 +258,7 @@ namespace Zeltex.Voxels
                 }
             }
             //Debug.Log("Loading Level from path: " + FolderPath + " - With files count of " + ChunkFiles.Count);
-            string ChunkData = "";
+            //string ChunkData = "";
             Int3 ChunkPosition = Int3.Zero();
             Chunk MyChunk = null;
             string[] ChunkPositionStrings = null;
@@ -348,7 +348,7 @@ namespace Zeltex.Voxels
             else
             {
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
-                    LoadCharactersFromFiles(MyWorld, CharacterFiles, OnLoadChunk));
+                    LoadCharactersFromFiles(NewLevel, CharacterFiles, OnLoadChunk));
             }
         }
 
@@ -389,12 +389,12 @@ namespace Zeltex.Voxels
                 Debug.Log("Save game path does not exist: " + SaveGameFolderPath);
                 // no need to add changes
             }
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadCharactersFromFiles(MyWorld, CharacterFiles, OnLoadChunk));
+            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadCharactersFromFiles(NewLevel, CharacterFiles, OnLoadChunk));
         }
 
-        private IEnumerator LoadCharactersFromFiles(World MyWorld, List<string> CharacterFiles, System.Action OnLoadChunk = null)
+        private IEnumerator LoadCharactersFromFiles(Level NewLevel, List<string> CharacterFiles, System.Action OnLoadChunk = null)  //World MyWorld, 
         {
-            LevelHandler MyLevelHandler = MyWorld.gameObject.GetComponent<LevelHandler>();
+            //LevelHandler MyLevelHandler = NewLevel.GetLevelHandler();//.gameObject.GetComponent<LevelHandler>();
             //Debug.Log("Loading level from path: " + FolderPath + " - with characters of count: " + CharacterFiles.Count);
             for (int i = 0; i < CharacterFiles.Count; i++)
             {
@@ -418,8 +418,8 @@ namespace Zeltex.Voxels
                     if (NewData != null)
                     {
                         yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyCharacter.SetDataRoutine(NewData));
-                        MyCharacter.OnLoadedInWorld(MyWorld);
-                        MyLevelHandler.MyLevel.AddCharacter(MyCharacter);
+                        MyCharacter.OnLoaded(NewLevel);
+                        NewLevel.AddCharacter(MyCharacter);
                         if (OnLoadChunk != null)
                         {
                             OnLoadChunk.Invoke();

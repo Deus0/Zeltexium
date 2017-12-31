@@ -33,7 +33,7 @@ namespace Zeltex
 		private RenderTexture PolyRenderTexture;
 
         #region Main
-
+#if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
@@ -41,7 +41,7 @@ namespace Zeltex
             DataManager.Get().UnloadAll();
             DataGUI.Get().CloseAll();
         }
-
+#endif
         public new static DataGUI Get()
         {
             if (MyManager == null)
@@ -648,7 +648,7 @@ namespace Zeltex
 #if UNITY_EDITOR
             return UnityEditor.EditorGUILayout.Toggle(Label, OldValue);
 #else
-            return GUILayout.Toggle(Label, OldValue);
+            return GUILayout.Toggle(OldValue, Label);
 #endif
         }
 

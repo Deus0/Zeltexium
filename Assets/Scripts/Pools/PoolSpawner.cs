@@ -36,9 +36,9 @@ namespace Zeltex
     public class PoolSpawner : NetworkBehaviour
     {
         private Component MyPool;
-        private string PoolType;
+        private System.Type PoolType;
 
-        public void Initialize(string PoolBaseType)
+        public void Initialize(System.Type PoolBaseType)
         {
             PoolType = PoolBaseType;
             MyPool = GetComponent(PoolBaseType);
@@ -64,7 +64,14 @@ namespace Zeltex
                 {
                     UnityEngine.Networking.NetworkServer.Spawn(PoolObject);
                 }
-                InitialReturnObjectToPool(PoolObject, MyPool, PoolIndex);
+                if (Application.isPlaying)  // in editor, there are no pools just spawning
+                {
+                    InitialReturnObjectToPool(PoolObject, MyPool, PoolIndex);
+                }
+                else
+                {
+                    GetComponent(PoolType).SendMessage("EditorOnlyAddToPool", PoolObject.GetComponent<NetworkIdentity>());
+                }
                 return PoolComponent;
             }
             else

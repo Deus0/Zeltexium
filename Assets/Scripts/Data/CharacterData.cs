@@ -93,13 +93,31 @@ namespace Zeltex
             BotData.ParentElement = this;
         }
 
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            if (MyCharacter)
+            {
+                LevelPosition = MyCharacter.transform.position;
+                LevelRotation = MyCharacter.transform.eulerAngles;
+            }
+        }
+
         public void SetCharacter(Character NewCharacter, bool IsSetTransform = true)
         {
             MyCharacter = NewCharacter;
             if (MyCharacter && IsSetTransform)
             {
-                MyCharacter.transform.position = LevelPosition;
-                MyCharacter.transform.eulerAngles = LevelRotation;
+                if (IsSetTransform)
+                {
+                    MyCharacter.transform.position = LevelPosition;
+                    MyCharacter.transform.eulerAngles = LevelRotation;
+                }
+                else
+                {
+                    LevelPosition = MyCharacter.transform.position;
+                    LevelRotation = MyCharacter.transform.eulerAngles;
+                }
             }
         }
 
@@ -121,6 +139,10 @@ namespace Zeltex
                     LevelRotation = MyCharacter.transform.eulerAngles;
                     OnModified();
                 }
+            }
+            else
+            {
+                Debug.LogError(Name + " Has no set character.");
             }
         }
 

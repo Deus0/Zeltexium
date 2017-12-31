@@ -116,7 +116,10 @@ namespace Zeltex.Guis.Characters
             }
         }
 
-        private void DespawnAllGuis()
+        /// <summary>
+        /// Despawns all active guis
+        /// </summary>
+        public void DespawnAllGuis()
         {
             for (int i = 0; i < MyGuis.Count; i++)
             {

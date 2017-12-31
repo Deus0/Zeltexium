@@ -52,10 +52,10 @@ namespace Zeltex
 
         private void RefreshPoolSpawner()
         {
-            if (MyPoolSpawner == null)
+            //if (MyPoolSpawner == null)
             {
                 MyPoolSpawner = GetComponent<PoolSpawner>();
-                MyPoolSpawner.Initialize(this.GetType().ToString());
+                MyPoolSpawner.Initialize(this.GetType());
             }
         }
 
@@ -265,6 +265,7 @@ namespace Zeltex
             }
             else
             {
+                Debug.LogError("Prefabs Count is zero or " + PoolIndex + " has a null prefab inside [" + name + "]");
                 return null;
             }
         }
@@ -458,6 +459,10 @@ namespace Zeltex
 
         public T GetPoolObject(int PoolIndex = 0, int ObjectIndex = -1, NetworkIdentity ExtraData = null)// GetPoolObjectDelgate<T> OnGetPoolObject = null)
         {
+            if (Application.isPlaying == false)
+            {
+                RefreshPoolSpawner();
+            }
             if (Application.isPlaying)
             {
                 if (Pools.Count > 0)
@@ -543,6 +548,16 @@ namespace Zeltex
             }
         }
         #endregion
+
+        /// <summary>
+        /// Editor only adding objects to pool
+        /// </summary>
+        public void EditorOnlyAddToPool(NetworkIdentity PoolObject)
+        {
+            PoolObject.transform.SetParent(transform);
+            CreatePoolObjects();
+            MyPools[0].SpawnedObjects.Add(PoolObject.GetComponent<T>());
+        }
     }
 
     [System.Serializable]
@@ -618,22 +633,36 @@ namespace Zeltex
             }
         }
 
-
         public void ReturnObject(T PoolObject)
         {
-            if (CanReturnObject(PoolObject))
+            if (UnityEngine.Application.isPlaying)
             {
-                if (SpawnedObjects.Contains(PoolObject))
+                if (CanReturnObject(PoolObject))
                 {
-                    SpawnedObjects.Remove(PoolObject);
+                    if (SpawnedObjects.Contains(PoolObject))
+                    {
+                        SpawnedObjects.Remove(PoolObject);
+                    }
+                    PoolObject.gameObject.SetActive(false);
+                    PoolObject.name = "PoolObject [" + (PoolObjects.Count - 1) + "]";
+                    if (IsHidePoolObjects)
+                    {
+                        PoolObject.gameObject.hideFlags = HideFlags.HideInHierarchy;
+                    }
+                    PoolObjects.Add(PoolObject);
                 }
-                PoolObject.gameObject.SetActive(false);
-                PoolObject.name = "PoolObject [" + (PoolObjects.Count - 1) + "]";
-                if (IsHidePoolObjects)
+            }
+            else
+            {
+                // In editor mode just kill it!
+                if (PoolObject)
                 {
-                    PoolObject.gameObject.hideFlags = HideFlags.HideInHierarchy;
+                    if (SpawnedObjects.Contains(PoolObject))
+                    {
+                        SpawnedObjects.Remove(PoolObject);
+                    }
+                    PoolObject.gameObject.Die();
                 }
-                PoolObjects.Add(PoolObject);
             }
         }
 

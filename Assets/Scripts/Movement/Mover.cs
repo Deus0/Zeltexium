@@ -92,6 +92,19 @@ namespace Zeltex
             {
                 m_Jump = true;
             }
+            GroundCheck();
+            if (IsPlayer)
+            {
+                MovementInput = GetInput();
+            }
+            else
+            {
+                if (MyBot)
+                {
+                    MovementInput = MyBot.GetInput();
+                }
+            }
+            movementSettings.UpdateDesiredTargetSpeed(MovementInput);
         }
 
 
@@ -108,65 +121,49 @@ namespace Zeltex
 
         private void FixedUpdate()
         {
-            if (m_Capsule == null)
+            if (m_Capsule != null)
             {
-                return;
-            }
-            GroundCheck();
-            if (IsPlayer)
-            {
-                MovementInput = GetInput();
-            }
-            else
-            {
-                if (MyBot)
+                if ((Mathf.Abs(MovementInput.x) > float.Epsilon || Mathf.Abs(MovementInput.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
                 {
-                    MovementInput = MyBot.GetInput();
+                    // always move along the camera forward as it is the direction that it being aimed at
+                    Vector3 desiredMove = transform.forward * MovementInput.y + transform.right * MovementInput.x;
+                    //desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
+                    desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
+                    desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
+                    desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
+                    if (m_RigidBody.velocity.sqrMagnitude <
+                       (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
+                    {
+                        m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
+                    }
                 }
-                movementSettings.UpdateDesiredTargetSpeed(MovementInput);
-            }
-
-            if ((Mathf.Abs(MovementInput.x) > float.Epsilon || Mathf.Abs(MovementInput.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
-            {
-                // always move along the camera forward as it is the direction that it being aimed at
-                Vector3 desiredMove = CameraTransform.forward * MovementInput.y + CameraTransform.right * MovementInput.x;
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
-
-                desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
-                desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
-                desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
-                if (m_RigidBody.velocity.sqrMagnitude <
-                    (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
+                if (m_IsGrounded)
                 {
-                    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
-                }
-            }
-            if (m_IsGrounded)
-            {
-                m_RigidBody.drag = OriginalDrag;
+                    m_RigidBody.drag = OriginalDrag;
 
-                if (m_Jump)
+                    if (m_Jump)
+                    {
+                        m_RigidBody.drag = 0f;
+                        m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
+                        m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
+                        m_Jumping = true;
+                    }
+
+                    if (!m_Jumping && Mathf.Abs(MovementInput.x) < float.Epsilon && Mathf.Abs(MovementInput.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
+                    {
+                        m_RigidBody.Sleep();
+                    }
+                }
+                else
                 {
                     m_RigidBody.drag = 0f;
-                    m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
-                    m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
-                    m_Jumping = true;
+                    if (m_PreviouslyGrounded && !m_Jumping)
+                    {
+                        //StickToGroundHelper();
+                    }
                 }
-
-                if (!m_Jumping && Mathf.Abs(MovementInput.x) < float.Epsilon && Mathf.Abs(MovementInput.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
-                {
-                    m_RigidBody.Sleep();
-                }
+                m_Jump = false;
             }
-            else
-            {
-                m_RigidBody.drag = 0f;
-                if (m_PreviouslyGrounded && !m_Jumping)
-                {
-                    //StickToGroundHelper();
-                }
-            }
-            m_Jump = false;
         }
 
 
@@ -293,7 +290,7 @@ namespace Zeltex
                 }
                 if (input.y < 0)
                 {
-                    //backwards
+                    //backwardsw
                     CurrentTargetSpeed = BackwardSpeed;
                 }
                 if (input.y > 0)
