@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114788748654151560}
   - component: {fileID: 114341061690345964}
   - component: {fileID: 114744114969261060}
+  - component: {fileID: 114721083741890722}
   m_Layer: 10
   m_Name: FpsCamera
   m_TagString: Untagged
@@ -101,6 +102,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalSpeed: 30
   ViewerSpeed: 10
+--- !u!114 &114721083741890722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051870445208286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4251e5d2cb407174ebcad408126a815a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 4193762903247914}
+  motionBob:
+    HorizontalBobRange: 0.005
+    VerticalBobRange: 0.02
+    Bobcurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 34
+      - serializedVersion: 2
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1.5
+        value: -1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 2
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 34
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    VerticaltoHorizontalRatio: 4
+  jumpAndLandingBob:
+    BobDuration: 0.2
+    BobAmount: 0.05
+  StrideInterval: 4
+  RunningStrideLengthen: 0.722
 --- !u!114 &114744114969261060
 MonoBehaviour:
   m_ObjectHideFlags: 1

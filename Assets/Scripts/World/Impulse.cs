@@ -44,7 +44,7 @@ namespace Zeltex.WorldUtilities
 			}
 			if (OnImpulse != null)
             {
-				OnImpulse.Invoke(WhereFrom);	// remember to link it to the ItemObject to reset the pickup!
+				OnImpulse.Invoke(WhereFrom);	// remember to link it to the ItemHandler to reset the pickup!
 			}
 		}
 

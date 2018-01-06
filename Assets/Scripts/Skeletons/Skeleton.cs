@@ -24,61 +24,36 @@ namespace Zeltex.Skeletons
     [System.Serializable]
     public class Skeleton : Element
     {
-        #region Variables
-        [Header("EditorActions")]
-        [SerializeField, JsonIgnore]
-        private EditorAction ActionLoad = new EditorAction();
-        [SerializeField, JsonIgnore]
-        private EditorAction ActionClear = new EditorAction();
-        [SerializeField, JsonIgnore]
-        private EditorAction ActionExportAsFBX = new EditorAction();
-        [SerializeField, JsonIgnore]
-        private EditorAction ActionRestoreDefaultPose = new EditorAction();
-        [SerializeField, JsonIgnore]
-        private EditorAction ActionSetDefaultPose = new EditorAction();
-        [SerializeField, JsonIgnore]
-        public EditorAction ActionGenerateSkeleton = new EditorAction();
-
-        [SerializeField, JsonIgnore]
-        public EditorAction ActionActivateSkeleton = new EditorAction();
-        [SerializeField, JsonIgnore]
-        public EditorAction ActionDeactivateSkeleton = new EditorAction();
-        [SerializeField, JsonIgnore]
-        public EditorAction ActionRipSkeleton = new EditorAction();
-
-        [Header("Data")]
-        //[SerializeField, JsonProperty]
-        //public string SkeletonName = "Skeleton_0";
-        [SerializeField, JsonProperty]
-        public List<Bone> MyBones = new List<Bone>();
-        [SerializeField, JsonIgnore, HideInInspector]
-        private Bounds MyBounds;
-        [SerializeField, JsonIgnore, HideInInspector]    // object spawned in world
-        private SkeletonHandler SpawnedSkeleton;
+		#region Variables
+		[Header("Data")]
+		[SerializeField, JsonProperty]
+		public List<Bone> MyBones = new List<Bone>();
+		[SerializeField, JsonIgnore, HideInInspector]
+		private Bounds MyBounds;
+		[SerializeField, JsonIgnore, HideInInspector]    // object spawned in world
+		private SkeletonHandler SpawnedSkeleton;
 
         [Header("Bones")]
         [SerializeField, JsonIgnore]
         public Material BoneMaterial;
-        [SerializeField, JsonIgnore]
+		[JsonIgnore, HideInInspector]
         public float BoneSize = 0.02f;   // cube meshes
-        [SerializeField, JsonIgnore]
+		[JsonIgnore, HideInInspector]
         public Color32 BoneColor = new Color32(53, 83, 83, 255);
 
         [Header("Visibility")]
-        [SerializeField, JsonIgnore]
-        public bool IsShowJoints = true;
-        [SerializeField, JsonIgnore]
-        public bool IsShowBones = true;
-        [SerializeField, JsonIgnore]
-        public bool IsShowMeshes = true;
-        [SerializeField, JsonIgnore]
-        public bool IsAnimating = true;
-        [SerializeField, JsonIgnore]
-        public bool IsJointsColliders = true;
-        [SerializeField, JsonIgnore]
+		[JsonIgnore, HideInInspector]
+		public bool IsShowJoints = true;
+		[JsonIgnore, HideInInspector]
+		public bool IsShowBones = true;
+		[JsonIgnore, HideInInspector]
+		public bool IsShowMeshes = true;
+		[JsonIgnore, HideInInspector]
+		public bool IsAnimating = true;
+		[JsonIgnore, HideInInspector]
+		public bool IsJointsColliders = false;
+		[JsonIgnore, HideInInspector]
         public bool IsMeshColliders = true;
-        //[SerializeField, JsonIgnore]
-        //public bool IsConvexMeshes = true;
 
         [Header("Events")]
         [SerializeField, JsonIgnore]
@@ -90,33 +65,47 @@ namespace Zeltex.Skeletons
         [SerializeField, JsonIgnore]
         public Transform MyBoneHead;
 
-        /*[Header("Joints")]
-        [SerializeField, JsonIgnore]
-        private Material JointMaterial;
-        [SerializeField, JsonIgnore]
-        private Color32 JointColor = new Color32(48, 90, 59, 255);
-        [SerializeField, JsonIgnore]
-        private float JointSize = 0.15f;
-
-        // Generation - Move this to SkeletonMutator Script
-        [JsonIgnore]
-        private int BoneColorMutation = 20;*/
-        [JsonIgnore]
-        private Vector3 OriginalCameraPosition;
-        [JsonIgnore]
+		[JsonIgnore, HideInInspector]
+		private Vector3 OriginalCameraPosition;
+		[JsonIgnore, HideInInspector]
         private bool IsLoading = false;
 
-        [JsonIgnore]
+		[JsonIgnore, HideInInspector]
         public bool IsReCalculateBounds;
         [JsonIgnore]
-        private GameObject DefaultBody;
-        [JsonIgnore]
+		private GameObject DefaultBody;
+		[JsonIgnore, HideInInspector]
         private bool IsRenderCapsule = false;
         [JsonIgnore]
-        private UniversalCoroutine.Coroutine LoadRoutine;
-        [JsonIgnore]
-        static float SkeletonLoadDelay = 0.0f;
+		private Zeltine LoadRoutine = null;
+
+		private Zeltine ActivateCoroutine;
+		private Zeltine RestoratingPoseHandle;
+		private CapsuleCollider CapsuleCollider;
+		private MeshRenderer CapsuleRenderer;
         #endregion
+
+        public override void OnLoad() 
+        {
+            base.OnLoad();
+            for (int i = 0; i < MyBones.Count; i++)
+            {
+                MyBones[i].ParentElement = this;
+                MyBones[i].OnLoad();
+            }
+        }
+
+		public Bone GetBone(Transform BoneTransform)
+		{
+			for (int i = 0; i < MyBones.Count; i++)
+			{
+				if (MyBones[i].MyTransform == BoneTransform)
+				{
+					return MyBones[i];
+				}
+			}
+			return null;
+		}
 
         public SkeletonAnimator GetAnimator()
         {
@@ -131,6 +120,17 @@ namespace Zeltex.Skeletons
             SpawnedSkeleton = MySkeletonHandler;
         }
         #region Mono
+
+		public void CheckTransforms()
+		{
+			if (HasSpawned())
+			{
+				for (int i = 0; i < MyBones.Count; i++)
+				{
+					MyBones[i].CheckForChange();
+				}
+			}
+		}
 
         /// <summary>
         /// Resets the bone colour back to the original
@@ -152,64 +152,22 @@ namespace Zeltex.Skeletons
                 IsReCalculateBounds = false;
                 CalculateBounds();
             }
-            if (ActionLoad.IsTriggered())
-            {
-                /*string Script = DataManager.Get().GetElement(DataFolderNames.Skeletons, 0);
-                IsLoading = false;
-                if (LoadRoutine != null)
-                {
-                    UniversalCoroutine.CoroutineManager.StopCoroutine(LoadRoutine);
-                }
-                LoadRoutine = CoroutineManager.StartCoroutine(RunScriptRoutine(FileUtil.ConvertToList(Script)));*/
-                //Load();
-            }
-            if (ActionClear.IsTriggered())
-            {
-                CoroutineManager.StartCoroutine(Clear());
-            }
-            if (ActionExportAsFBX.IsTriggered())
-            {
-#if UNITY_EDITOR //|| UNITY_STANDALONE_WIN
-                System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
-                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                if (MyResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    //Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
-                    UnityFBXExporter.FBXExporter.ExportGameObjToFBX(SpawnedSkeleton.gameObject, MyDialog.FileName);
-                    //byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-                    //MyZexel.LoadImage(bytes);
-                }
-#endif
-            }
-
-            if (ActionRestoreDefaultPose.IsTriggered())
-            {
-                RestoreDefaultPose();
-            }
-            if (ActionSetDefaultPose.IsTriggered())
-            {
-                SetDefaultPose();
-            }
-
-            if (ActionGenerateSkeleton.IsTriggered())
-            {
-                //RunScript(FileUtil.ConvertToList(Generators.SkeletonGenerator.Get().GenerateBasicSkeleton(NameGenerator.GenerateVoxelName())));
-            }
-
-            if (ActionActivateSkeleton.IsTriggered())
-            {
-                Activate();
-            }
-            if (ActionDeactivateSkeleton.IsTriggered())
-            {
-                Deactivate();
-            }
-            if (ActionRipSkeleton.IsTriggered())
-            {
-                RipSkeleton();
-            }
-            
         }
+
+		public void ExportAsFBX() 
+		{
+			#if UNITY_EDITOR //|| UNITY_STANDALONE_WIN
+			System.Windows.Forms.SaveFileDialog MyDialog = new System.Windows.Forms.SaveFileDialog();
+			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+			if (MyResult == System.Windows.Forms.DialogResult.OK)
+			{
+			//Mesh MyMesh = ObjImport.ImportFile(MyDialog.FileName);
+			UnityFBXExporter.FBXExporter.ExportGameObjToFBX(SpawnedSkeleton.gameObject, MyDialog.FileName);
+			//byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
+			//MyZexel.LoadImage(bytes);
+			}
+			#endif
+		}
 
         public void RipSkeleton()
         {
@@ -220,22 +178,22 @@ namespace Zeltex.Skeletons
             }
         }
 
-        private UniversalCoroutine.Coroutine ActivateCoroutine;
         public void Activate()
         {
             if (ActivateCoroutine != null)
             {
-                UniversalCoroutine.CoroutineManager.StopCoroutine(ActivateCoroutine);
+				RoutineManager.Get().StopCoroutine(ActivateCoroutine);
             }
-            ActivateCoroutine = UniversalCoroutine.CoroutineManager.StartCoroutine(ActivateRoutine());
+			ActivateCoroutine = RoutineManager.Get().StartCoroutine(ActivateRoutine());
         }
 
         public IEnumerator ActivateRoutine()
         {
+			//Debug.Log("Skeleton " + Name + " Is activating the bones: " + MyBones.Count);
             for (int i = 0; i < MyBones.Count; i++)
             {
-                MyBones[i].SetSkeleton(this);
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyBones[i].ActivateRoutine());
+				MyBones[i].SetSkeleton(this);	//RoutineManager.Get().StartRoutine
+				yield return (MyBones[i].ActivateRoutine());
             }
         }
 
@@ -245,6 +203,12 @@ namespace Zeltex.Skeletons
             {
                 MyBones[i].Deactivate();
             }
+        }
+
+        public void Reactivate() 
+        {
+            Deactivate();
+            Activate();
         }
 
 
@@ -316,13 +280,13 @@ namespace Zeltex.Skeletons
         {
             if (SpawnedSkeleton)
             {
-                Bounds MyBounds = new Bounds(SpawnedSkeleton.transform.position, Vector3.zero);
+                MyBounds = new Bounds(SpawnedSkeleton.transform.position, Vector3.zero);
                 for (int i = 0; i < MyBones.Count; i++)
                 {
                     if (MyBones[i].VoxelMesh)
                     {
                         World MyWorld = MyBones[i].VoxelMesh.GetComponent<World>();
-                        MyBounds = AddWorldToBounds(MyWorld, MyBounds);
+						MyBounds = AddWorldToBounds(MyWorld, MyBounds);
                     }
                     if (MyBones[i].MyJointCube)
                     {
@@ -330,8 +294,8 @@ namespace Zeltex.Skeletons
                         MeshFilter MyMeshFilter = MyBones[i].MyJointCube.GetComponent<MeshFilter>();
                         if (MyRenderer && MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
                         {
-                            MyBounds.Encapsulate(MyRenderer.bounds.min);
-                            MyBounds.Encapsulate(MyRenderer.bounds.max);
+							MyBounds.Encapsulate(MyRenderer.bounds.min);
+							MyBounds.Encapsulate(MyRenderer.bounds.max);
                         }
                     }
                     if (MyBones[i].VoxelMesh)
@@ -340,16 +304,16 @@ namespace Zeltex.Skeletons
                         MeshFilter MyMeshFilter = MyBones[i].VoxelMesh.GetComponent<MeshFilter>();
                         if (MyMeshFilter && MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
                         {
-                            MyBounds.Encapsulate(MyRenderer.bounds.min);
-                            MyBounds.Encapsulate(MyRenderer.bounds.max);
+							MyBounds.Encapsulate(MyRenderer.bounds.min);
+							MyBounds.Encapsulate(MyRenderer.bounds.max);
                         }
                     }
                 }
-                MyBounds.center -= SpawnedSkeleton.transform.position;
-                MyBounds.center = new Vector3(0.008549809f, 0.1749992f, 0.008110046f);
-                MyBounds.size = new Vector3(0.1282765f, 0.4583321f, 0.1282749f);
+				MyBounds.center -= SpawnedSkeleton.transform.position;
+				MyBounds.center = new Vector3(0.008549809f, 0.1749992f, 0.008110046f);
+				MyBounds.size = new Vector3(0.1282765f, 0.4583321f, 0.1282749f);
             }
-            return MyBounds;
+			return MyBounds;
         }
 
         /// <summary>
@@ -597,10 +561,14 @@ namespace Zeltex.Skeletons
 
         #region Bones
         
+		public void Clear()
+		{
+			RoutineManager.Get().StartCoroutine(ClearRoutine());
+		}
         /// <summary>
         /// Clears the skeleton in a routine
         /// </summary>
-        public IEnumerator Clear()
+        public IEnumerator ClearRoutine()
         {
             if (MyCameraBone != null)
             {
@@ -662,28 +630,32 @@ namespace Zeltex.Skeletons
             }
             return PossibleName;
         }
-
-        /// <summary>
-        /// Spawns a bone attached to the skeleton
-        /// </summary>
-        public Bone CreateBone()
-        {
-            return CreateBone(SpawnedSkeleton.transform);
-        }
-
+        
         /// <summary>
         /// Create A Bone, with a joint and a line
         /// </summary>
         public Bone CreateBone(Transform BoneParent = null)
-        {
-            if (BoneParent == null)
-            {
-                BoneParent = SpawnedSkeleton.transform;
-            }
-            Bone NewBone = new Bone(this, GenerateUniqiueBoneName());
-            //Debug.LogError("Creating bone: " + MyBones.Count);
-            MyBones.Add(NewBone);
-            return NewBone;
+		{
+			if (SpawnedSkeleton)
+			{
+				if (BoneParent == null)
+				{
+					BoneParent = SpawnedSkeleton.transform;
+				}
+				Bone NewBone = new Bone(this, GenerateUniqiueBoneName());
+				if (BoneParent)
+				{
+					NewBone.ParentName = BoneParent.name;
+				}
+				//Debug.LogError("Creating bone: " + MyBones.Count);
+				MyBones.Add(NewBone);
+				return NewBone;
+			}
+			else
+			{
+				Debug.LogError("No Skeleton is spawned for: " + Name);
+				return null;
+			}
         }
 
         public void ShowJoints()
@@ -795,7 +767,6 @@ namespace Zeltex.Skeletons
             }
         }
 
-        private Zeltine RestoratingPoseHandle;
         public void RestoreDefaultPose(float TimeTaken)
         {
             RestoratingPoseHandle = RoutineManager.Get().StartCoroutine(RestoratingPoseHandle, RestoreDefaultPoseRoutine(TimeTaken));
@@ -940,33 +911,33 @@ namespace Zeltex.Skeletons
 
         #region Util
 
-        private CapsuleCollider CapsuleCollider;
-        private MeshRenderer CapsuleRenderer;
-
         /// <summary>
         /// Gets a capsule, if a character exists it gets it off that, otherwise gets it off the skeleton
         /// </summary>
         public CapsuleCollider GetCapsule()
         {
-            if (SpawnedSkeleton.transform.parent && SpawnedSkeleton.transform.parent.GetComponent<Character>())
-            {
-                CapsuleCollider = SpawnedSkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
-            }
-            else
-            {
-                if (CapsuleCollider == null)
-                {
-                    GameObject CapsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                    CapsuleObject.name = SpawnedSkeleton.name + "_Capsule";
-                    CapsuleObject.layer = SpawnedSkeleton.gameObject.layer;
-                    CapsuleObject.transform.SetParent(SpawnedSkeleton.transform);
-                    CapsuleObject.transform.position = SpawnedSkeleton.transform.position;
-                    CapsuleCollider = CapsuleObject.GetComponent<CapsuleCollider>();
-                    MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshRenderer>());
-                    MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshFilter>());
-                    GetCapsuleRenderer();
-                }
-            }
+			if (SpawnedSkeleton)
+			{
+				if (SpawnedSkeleton.transform.parent && SpawnedSkeleton.transform.parent.GetComponent<Character>())
+				{
+					CapsuleCollider = SpawnedSkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
+				}
+				else
+				{
+					if (CapsuleCollider == null)
+					{
+						GameObject CapsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+						CapsuleObject.name = SpawnedSkeleton.name + "_Capsule";
+						CapsuleObject.layer = SpawnedSkeleton.gameObject.layer;
+						CapsuleObject.transform.SetParent(SpawnedSkeleton.transform);
+						CapsuleObject.transform.position = SpawnedSkeleton.transform.position;
+						CapsuleCollider = CapsuleObject.GetComponent<CapsuleCollider>();
+						MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshRenderer>());
+						MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshFilter>());
+						GetCapsuleRenderer();
+					}
+				}
+			}
             return CapsuleCollider;
         }
         /// <summary>
@@ -1215,6 +1186,31 @@ namespace Zeltex.Skeletons
         }
         #endregion
 
+		#region EditorSpawning
+		public override void Spawn() 
+		{
+			GameObject NewSkeleton = new GameObject();
+			NewSkeleton.name = Name;
+			SpawnedSkeleton = NewSkeleton.AddComponent<SkeletonHandler>();
+			SpawnedSkeleton.SetSkeletonData(this);
+			Activate();
+		}
+
+		public override void DeSpawn() 
+		{
+			if (SpawnedSkeleton)
+			{
+				Deactivate();
+				SpawnedSkeleton.Die();
+			}
+		}
+
+		public override bool HasSpawned() 
+		{
+			return (SpawnedSkeleton != null);
+		}
+		#endregion
+
 
 
         #region File
@@ -1248,139 +1244,6 @@ namespace Zeltex.Skeletons
             Debug.LogError("Could not find skeleton section:\n" + FileUtil.ConvertToSingle(MyLines));
             return MySkeletonScript;
         }
-
-        /// <summary>
-        /// Returns a list of strings (commands and data) to read in from a file.
-        /// </summary>
-        /*public List<string> GetScriptList()
-        {
-            List<string> Data = new List<string>();
-            Skeleton MySkeleton = SpawnedSkeleton.transform.GetComponent<Skeleton>();
-            // for each bone, save its index, and the index of its parent bone
-            // save its position, rotation, scale
-            Data.Add("/BeginSkeleton " + Name);
-            GetCapsule();
-            if (CapsuleCollider)
-            {
-                Data.Add("/Capsule");
-                Data.Add(CapsuleCollider.height + "");
-                Data.Add(CapsuleCollider.radius + "");
-                Data.Add(CapsuleCollider.center.x + "");
-                Data.Add(CapsuleCollider.center.y + "");
-                Data.Add(CapsuleCollider.center.z + "");
-            }
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
-            { // - MySkeletonPosition.x
-                Bone MyBone = MySkeleton.MyBones[i];
-                Transform ThisJoint = MyBone.MyTransform;
-                if (ThisJoint)
-                {
-                    Data.Add("/Bone");
-                    Data.Add("" + GetParentIndex(MySkeleton.MyBones[i]));
-                    if (MyBone.Name != "")
-                    {
-                        Data.Add("/Name");
-                        Data.Add(MyBone.Name);
-                    }
-                    if (MyBone.Tag != "")
-                    {
-                        Data.Add("/Tag");
-                        Data.Add(MyBone.Tag);
-                    }
-                    if (ThisJoint.localPosition != new Vector3(0, 0, 0))
-                    {
-                        Data.Add("/Position");
-                        Data.Add("" + (ThisJoint.localPosition.x));  // position
-                        Data.Add("" + (ThisJoint.localPosition.y));  // position
-                        Data.Add("" + (ThisJoint.localPosition.z));  // position
-                        Data.Add("/EndPosition");
-                    }
-                    if (ThisJoint.localRotation != Quaternion.identity)
-                    {
-                        Data.Add("/Rotation");
-                        Data.Add("" + ThisJoint.localRotation.x);  // rotation
-                        Data.Add("" + ThisJoint.localRotation.y);  // rotation
-                        Data.Add("" + ThisJoint.localRotation.z);  // rotation
-                        Data.Add("" + ThisJoint.localRotation.w);  // rotation
-                        Data.Add("/EndRotation");
-                    }
-                    if (ThisJoint.localScale != new Vector3(1, 1, 1))
-                    {
-                        Data.Add("/Scale");
-                        Data.Add("" + ThisJoint.localScale.x);  // scale
-                        Data.Add("" + ThisJoint.localScale.y);  // scale
-                        Data.Add("" + ThisJoint.localScale.z);  // scale
-                        Data.Add("/EndScale");
-                    }
-                    if (MyBone.VoxelMesh)
-                    {
-                        Data.Add("/VoxelMesh");
-                        // World script
-                        List<string> MyMeshScript = MyBone.VoxelMesh.GetComponent<World>().GetScript();
-                        Data.AddRange(MyMeshScript);
-                        // Mesh Name
-                        Data.Add("/EndVoxelMesh");
-                        if (MyBone.VoxelMesh.localPosition != new Vector3(0, 0, 0))
-                        {
-                            Data.Add("/MeshPosition");
-                            Data.Add("" + (MyBone.VoxelMesh.localPosition.x));  // position
-                            Data.Add("" + (MyBone.VoxelMesh.localPosition.y));  // position
-                            Data.Add("" + (MyBone.VoxelMesh.localPosition.z));  // position
-                            Data.Add("/EndMeshPosition");
-                        }
-                        if (MyBone.VoxelMesh.localRotation != Quaternion.identity)
-                        {
-                            Data.Add("/MeshRotation");
-                            Data.Add("" + (MyBone.VoxelMesh.localRotation.x));
-                            Data.Add("" + (MyBone.VoxelMesh.localRotation.y));
-                            Data.Add("" + (MyBone.VoxelMesh.localRotation.z));
-                            Data.Add("" + (MyBone.VoxelMesh.localRotation.w));
-                            Data.Add("/EndMeshRotation");
-                        }
-                        if (MyBone.VoxelMesh.localScale != new Vector3(1, 1, 1))
-                        {
-                            Data.Add("/MeshScale");
-                            Data.Add("" + (MyBone.VoxelMesh.localScale.x));  // position
-                            Data.Add("" + (MyBone.VoxelMesh.localScale.y));  // position
-                            Data.Add("" + (MyBone.VoxelMesh.localScale.z));  // position
-                            Data.Add("/EndMeshScale");
-                        }
-                    }
-                    Data.Add("/EndBone");
-                }
-            }
-            // Skeleton Data, save all these things as default pose!
-            SkeletonAnimator MySkeletonAnimator = SpawnedSkeleton.GetComponent<SkeletonAnimator>();
-            Data.AddRange(MySkeletonAnimator.GetScript());
-            Data.Add("/EndSkeleton");
-            return Data;
-        }*/
-
-        /// <summary>
-        /// Runs the script
-        /// </summary>
-        /*public void RunScript(List<string> Data)
-        {
-            if (SpawnedSkeleton)
-            {
-                if (LoadRoutine != null)
-                {
-                    UniversalCoroutine.CoroutineManager.StopCoroutine(LoadRoutine);
-                    IsLoading = false;
-                }
-                LoadRoutine = UniversalCoroutine.CoroutineManager.StartCoroutine(RunScriptRoutine(Data));
-            }
-        }*/
-
-        /// <summary>
-        /// Loads the skeleton in a routine and gives it a name
-        /// </summary>
-        /*public IEnumerator Load(string RaceName, List<string> Data)
-        {
-            SpawnedSkeleton.transform.parent.gameObject.GetComponent<Character>().SetRace(RaceName);
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(RunScriptRoutine(Data));
-        }*/
-
         /// <summary>
         /// Is loading skeleton
         /// </summary>
@@ -1396,272 +1259,10 @@ namespace Zeltex.Skeletons
                 IsLoading = false;
                 if (LoadRoutine != null)
                 {
-                    UniversalCoroutine.CoroutineManager.StopCoroutine(LoadRoutine);
+					RoutineManager.Get().StopCoroutine(LoadRoutine);
                 }
             }
         }
-
-        /// <summary>
-        /// Loads the skeleton in a routine
-        /// </summary>
-        /*public IEnumerator RunScriptRoutine(List<string> Data)
-        {
-            if (!IsLoading)
-            {
-                IsLoading = true;
-                float LoadSkeletonBeginTime = Time.realtimeSinceStartup;
-                yield return (Clear()); //CharacterManager.Get().StartCoroutine
-                MyBones.Clear();
-                Bone MyBone = new Bone();
-                bool IsReading = false;
-                Debug.Log("Loading skeleton : " + SpawnedSkeleton.transform.name + "\n " + FileUtil.ConvertToSingle(Data));
-
-                #region SkeletonData
-                for (int i = 0; i < Data.Count; i++)
-                {
-                    if (!IsReading)   // nothing
-                    {
-                        //SkeletonName = name;
-                        if (Data[i].Contains("/BeginSkeleton"))
-                        {
-                            string NewSkeletonName = ScriptUtil.RemoveCommand(Data[i]);
-                            if (NewSkeletonName != "/BeginSkeleton" && NewSkeletonName != "")
-                            {
-                                Name = NewSkeletonName;
-                                IsReading = true;
-                            }
-                            else
-                            {
-                                Debug.LogError("Line: " + Data[i] + " contains /BeginSkeleton with no skeleton name");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (Data[i] == "/EndSkeleton")
-                        {
-                            IsReading = false;
-                            //Debug.LogError("Ending skeleton on line: " + i);
-                            break;
-                        }
-                        else if (Data[i] == "/Name")
-                        {
-                            MyBone.Name = Data[i + 1];
-                            i += 1;
-                        }
-                        else if (Data[i] == "/Bone")
-                        {
-                            int ParentIndex = int.Parse(Data[i + 1]);
-                            MyBone = CreateBone();
-                            //MyBone = CreateBoneLoading(ParentIndex);
-                            Debug.Log("Loading skeleton Bone: " + SpawnedSkeleton.transform.name + ":" + ParentIndex);
-                            //yield return new WaitForSeconds(SkeletonLoadDelay);
-                            i += 1;
-                        }
-                        else if (Data[i] == "/Capsule")
-                        {
-                            float CapsuleHeight = float.Parse(Data[i + 1]);
-                            float CapsuleRadius = float.Parse(Data[i + 2]);
-                            Vector3 CapsuleCenter = Vector3.zero;
-                            CapsuleCenter.x = float.Parse(Data[i + 3]);
-                            CapsuleCenter.y = float.Parse(Data[i + 4]);
-                            CapsuleCenter.z = float.Parse(Data[i + 5]);
-                            GetCapsule();
-                            if (CapsuleCollider)
-                            {
-                                CapsuleCollider.height = CapsuleHeight;
-                                CapsuleCollider.radius = CapsuleRadius;
-                                CapsuleCollider.center = CapsuleCenter;
-                            }
-                            i += 5;
-                        }
-                        else if (Data[i].Contains("/BeginSkeletonAnimator"))
-                        {
-                            //Debug.LogError("Loading Skeleton Animator " + i);
-                            for (int j = i; j < Data.Count; j++)
-                            {
-                                if (Data[j].Contains("/EndSkeletonAnimator"))
-                                {
-                                    //Debug.LogError("End Skeleton Animator " + j);
-                                    int Index1 = i + 1;
-                                    int Index2 = j - 1;
-                                    int ElementCount = (Index2 - Index1) + 1;
-                                    List<string> MyScript = Data.GetRange(Index1, ElementCount);
-                                    //Debug.LogError("Script:\n" + FileUtil.ConvertToSingle(MyScript));
-                                    float TimeBegin = Time.realtimeSinceStartup;
-                                    if (SpawnedSkeleton.GetAnimator() != null)
-                                    {
-                                        //SpawnedSkeleton.GetAnimator().RunScript(MyScript);
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError(SpawnedSkeleton.name + " does not have an animator.");
-                                    }
-                                    //Debug.Log("Time taken to load animation: " + (Time.realtimeSinceStartup - TimeBegin));
-                                    i = j;
-                                    //yield return new WaitForSeconds(SkeletonLoadDelay);
-                                    break;
-                                }
-                            }
-                        }
-                        else if (MyBone.MyTransform)
-                        {
-                            if (Data[i] == "/Tag")
-                            {
-                                MyBone.Tag = Data[i + 1];
-                                i += 1;
-                            }
-                            else if (Data[i] == "/Position")
-                            {
-                                float PositionX = float.Parse(Data[i + 1]);
-                                float PositionY = float.Parse(Data[i + 2]);
-                                float PositionZ = float.Parse(Data[i + 3]);
-                                MyBone.MyTransform.localPosition = new Vector3(PositionX, PositionY, PositionZ);
-                                i += 3;
-                                //Debug.LogError("Setting new position for bone " + (MyBones.Count-1) + " - " + MyBones[MyBones.Count - 1].position.ToString());
-                            }
-                            else if (Data[i] == "/Rotation")
-                            {
-                                float RotationX = float.Parse(Data[i + 1]);
-                                float RotationY = float.Parse(Data[i + 2]);
-                                float RotationZ = float.Parse(Data[i + 3]);
-                                float RotationW = float.Parse(Data[i + 4]);
-                                MyBone.MyTransform.localRotation = new Quaternion(RotationX, RotationY, RotationZ, RotationW);
-                                i += 4;
-                            }
-                            else if (Data[i] == "/Scale")
-                            {
-                                try
-                                {
-                                    MyBone.MyTransform.localScale.Set(
-                                        float.Parse(Data[i + 1]),
-                                        float.Parse(Data[i + 2]),
-                                        float.Parse(Data[i + 3]));
-                                }
-                                catch (System.Exception e)
-                                {
-                                    Debug.LogError(e.ToString());
-                                }
-                                i += 3;
-                            }
-                            else if (ScriptUtil.RemoveWhiteSpace(Data[i]) == "/VoxelMesh")
-                            {
-                                Debug.Log("Loading VoxelMesh: " + SpawnedSkeleton.transform.name + ":" + i);
-                                for (int j = i + 1; j < Data.Count; j++)
-                                {
-                                    if (Data[j] == "/EndVoxelMesh")
-                                    {
-                                        int Index1 = i + 1;
-                                        int Index2 = j - 1;
-                                        int ElementCount = (Index2 - Index1) + 1; // from i to j-1
-                                        List<string> MyMeshScript = Data.GetRange(Index1, ElementCount);
-                                        if (MyBones.Count > 0)
-                                        {
-                                            Debug.Log("Loading skeleton Mesh: " + SpawnedSkeleton.transform.name + ":" + MyMeshScript.Count + "\n " + FileUtil.ConvertToSingle(MyMeshScript));
-                                            //yield return CoroutineManager.StartCoroutine(MyBone.CreateMeshRoutine(MyMeshScript));
-                                        }
-                                        i = j;  // skuo to endVoxelMesh line
-                                        break;
-                                    }
-                                }
-                                //yield return new WaitForSeconds(SkeletonLoadDelay);
-                            }
-                            else if (Data[i] == "/MeshPosition")
-                            {
-                                float PositionX = float.Parse(Data[i + 1]);
-                                float PositionY = float.Parse(Data[i + 2]);
-                                float PositionZ = float.Parse(Data[i + 3]);
-                                if (MyBone.VoxelMesh != null)
-                                {
-                                    MyBone.VoxelMesh.transform.localPosition = new Vector3(PositionX, PositionY, PositionZ);
-                                }
-                                i += 3;
-                            }
-                            else if (Data[i] == "/MeshRotation")
-                            {
-                                float RotationX = float.Parse(Data[i + 1]);
-                                float RotationY = float.Parse(Data[i + 2]);
-                                float RotationZ = float.Parse(Data[i + 3]);
-                                float RotationW = float.Parse(Data[i + 4]);
-                                if (MyBone.VoxelMesh != null)
-                                {
-                                    MyBone.VoxelMesh.transform.localRotation =
-                                        new Quaternion(RotationX, RotationY, RotationZ, RotationW);
-                                }
-                                i += 4;
-                            }
-                            else if (Data[i] == "/MeshScale")
-                            {
-                                float PositionX = float.Parse(Data[i + 1]);
-                                float PositionY = float.Parse(Data[i + 2]);
-                                float PositionZ = float.Parse(Data[i + 3]);
-                                if (MyBone.VoxelMesh != null)
-                                {
-                                    MyBone.VoxelMesh.transform.localScale = new Vector3(PositionX, PositionY, PositionZ);
-                                }
-                                i += 3;
-                            }
-                            else if (Data[i] == "/EndBone")
-                            {
-                                MyBone = new Bone();    // empty is
-                            }
-                        }
-                    }
-                }
-                #endregion
-                SetDefaultPose();
-                RefreshCapsule();
-                if (MyBones.Count == 0)
-                {
-                    // Create default mesh or something? a transparent cube?
-                    CreateBone(); // a default bone
-                    // Create a default mesh too - a cube
-                }
-                SetMeshColliders(IsMeshColliders);
-                SetMeshVisibility(true);
-                UpdateBounds();
-                if (DefaultBody)
-                {
-                    DefaultBody.SetActive(MyBones.Count == 0);
-                }
-                IsLoading = false;
-            }
-            else
-            {
-                Debug.LogWarning("Trying to load skeleton while already loading.");
-            }
-            //Debug.Log("Finished Loading Skeleton: " + (Time.realtimeSinceStartup - LoadSkeletonBeginTime));
-        }*/
-
-        /// <summary>
-        /// Creates a new bone for the loading skeleton
-        /// </summary>
-        /*private Bone CreateBoneLoading(int ParentIndex)
-        {
-            GameObject NewBone = new GameObject();
-            LayerManager.Get().SetLayerSkeleton(NewBone);
-            NewBone.name = "Bone " + MyBones.Count;
-            NewBone.tag = "Bone";
-            if (ParentIndex >= 0 && ParentIndex < MyBones.Count &&
-                MyBones[ParentIndex] != null && MyBones[ParentIndex].MyTransform != null)
-            {
-                NewBone.transform.SetParent(MyBones[ParentIndex].MyTransform, false);
-            }
-            else
-            {
-                NewBone.transform.SetParent(SpawnedSkeleton.transform, false);
-            }
-            NewBone.transform.position = NewBone.transform.parent.position;
-            NewBone.transform.rotation = NewBone.transform.parent.rotation;
-            NewBone.transform.localScale = new Vector3(1, 1, 1);
-            // Lists
-            Bone MyBone = CreateBoneData(NewBone.transform.parent, NewBone.transform, MyBones.Count - 1);
-            MyBone.MyTransform = NewBone.transform;
-            MyBone.ParentTransform = NewBone.transform.parent;
-            MyBones.Add(MyBone);  //ParentBone
-            return MyBone;
-        }*/
-
         #endregion
 
 

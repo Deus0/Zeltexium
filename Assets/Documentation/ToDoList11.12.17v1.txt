@@ -67,8 +67,8 @@ Load Level - Chunks
 Load Level - Characters -> Transforms etc
 Save Level - Zones etc
 Put an item on the ground - E to pick it up
-Put ItemObject in Level
-Save/Load ItemObjects in Level
+Put ItemHandler in Level
+Save/Load ItemHandlers in Level
 Fix Spawn Zones to spawn characters
 
 Fix Quest log

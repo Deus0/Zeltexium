@@ -68,7 +68,15 @@ namespace Zeltex.Voxels
                             {
                                 try
                                 {
-                                    MyBlockType = int.Parse(MyLines[ScriptLineIndex]);
+                                    try
+                                    {
+                                        MyBlockType = int.Parse(MyLines[ScriptLineIndex]);
+                                    } 
+                                    catch (System.FormatException e) 
+                                    {
+                                        Debug.LogError("Chunk line is in wrong format at line: " + ScriptLineIndex + " - " + MyLines[ScriptLineIndex]);
+                                        MyBlockType = 0;
+                                    }
                                     //if (MyBlockType != 0)
                                     {
                                         MassUpdateVoxelIndex = MyBlockType;
@@ -158,7 +166,7 @@ namespace Zeltex.Voxels
             //Debug.LogError("Finished loading script on chunk: " + name + ":" + MyLines.Count + "\n" + FileUtil.ConvertToSingle(MyLines));
             if (DidUpdateChunk)
             {
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BuildChunkMesh());
+                yield return (BuildChunkMesh());
             }
 
             /*if (UnityEngine.Application.isEditor && UnityEngine.Application.isPlaying == false)

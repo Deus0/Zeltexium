@@ -618,11 +618,10 @@ MonoBehaviour:
   MyGuis: []
   GuiCellPrefab: {fileID: 100796, guid: 2bfef3da37086ea47ae2cbecbf458e66, type: 2}
   MyList: {fileID: 193444}
-  MyTooltipGui: {fileID: 0}
   MyScrollbar: {fileID: 0}
   IsUpdateOnStart: 1
-  GridMargin: {x: 5, y: 5}
-  CellMargin: {x: 25, y: 25}
+  GridMargin: {x: 20, y: 20}
+  CellMargin: {x: 20, y: 20}
   LimitGrid: {x: 0, y: 0}
   IsSelectable: 0
   MaxCells: 0
@@ -639,30 +638,6 @@ MonoBehaviour:
   isDeselectOnActivate: 0
   ActionRefresh:
     IsTrigger: 0
-  IsSpellbook: 0
-  MyGuiPositions:
-  - {x: 0, y: 220}
-  - {x: 0, y: 146}
-  - {x: 0, y: 48}
-  - {x: 0, y: -40}
-  - {x: 70, y: 140}
-  - {x: -70, y: 140}
-  - {x: 85, y: 70}
-  - {x: -85, y: 70}
-  - {x: 100, y: 0}
-  - {x: -100, y: 0}
-  - {x: 65, y: -70}
-  - {x: -65, y: -70}
-  - {x: 70, y: -145}
-  - {x: -70, y: -145}
-  - {x: 70, y: -220}
-  - {x: -70, y: -220}
-  MyOnClickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MyCharacter: {fileID: 0}
   MyInventory:
     Name: Empty
     HasChanged: 0
@@ -692,33 +667,31 @@ MonoBehaviour:
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       SavedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       RenamedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       MovedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      HasChanged: 0
       ElementData:
         _keys: []
         _values: []
     IsDrawGui: 0
     IsDefaultGui: 0
+    ElementLink: 
     MyItems: []
-    MaxItems: 20
-    Value: 0
-    CanBuyAllItems: 0
-    CanSellAllItems: 0
     OnAddItem:
       m_PersistentCalls:
         m_Calls: []
@@ -744,25 +717,17 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    OnItemUpdate:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
     OnLoadEvent:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  MyAudioSource: {fileID: 8229968}
-  MyDraggedItem: {fileID: 0}
-  HighlightedIcon: {fileID: 0}
-  OnBuyItemSound: {fileID: 8300000, guid: ff5f559f4e60882489ad4d66b3740cd0, type: 3}
-  OnNonBuyItemSound: {fileID: 8300000, guid: 75c71aabec4120d4aaadb159ab1cf1e7, type: 3}
-  OnNotSellingSound: {fileID: 8300000, guid: fc74d1d2acc830947bc7fca90a6e0d03, type: 3}
-  OnSellItemSound: {fileID: 8300000, guid: 476a9f0650851b54587d45db023ddeb4, type: 3}
-  RefreshInventory:
-    IsTrigger: 0
+  MyOnClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  SkillSelectedIcon: {fileID: 0}
 --- !u!114 &11470128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -842,7 +807,6 @@ MonoBehaviour:
   MyGuis: []
   GuiCellPrefab: {fileID: 100796, guid: d7e35c30ec12ad24280122b624d62b93, type: 2}
   MyList: {fileID: 121108}
-  MyTooltipGui: {fileID: 0}
   MyScrollbar: {fileID: 0}
   IsUpdateOnStart: 0
   GridMargin: {x: 5, y: 5}
@@ -929,7 +893,7 @@ MonoBehaviour:
   IsTargetMainCamera: 0
   TargetObject: {fileID: 0}
   TargetSkeleton: {fileID: 0}
-  ScreenPosition: {x: 0, y: 0}
+  ScreenPosition: {x: -700, y: 0}
   MovementSpeed: 3
   IsInstantOnStart: 1
   IsInstant: 0
@@ -962,6 +926,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   IsKeepCamera: 0
   FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &11499094
 MonoBehaviour:
   m_ObjectHideFlags: 1

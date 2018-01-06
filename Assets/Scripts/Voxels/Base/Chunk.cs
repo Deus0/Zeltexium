@@ -690,7 +690,7 @@ namespace Zeltex.Voxels
             WasMassUpdated = true;  // make sure it updates
             IsUpdatingRender = true;
             //HasUpdated = false;
-            GetWorld().MyUpdater.Add(this);
+            WorldUpdater.Get().Add(this);
         }
         #endregion
 

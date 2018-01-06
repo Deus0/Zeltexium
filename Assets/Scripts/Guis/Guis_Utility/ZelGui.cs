@@ -100,10 +100,6 @@ namespace Zeltex.Guis
                 if (IsEnabled)
                 {
                     OnToggledOn.Invoke();
-                    //if (MyOrbitor != null)
-                    //{
-                    //    ''MyOrbitor.Ini();
-                    //}
                 }
                 else
                 {

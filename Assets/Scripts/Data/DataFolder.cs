@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Zeltex.Items;
 using Zeltex.Combat;
 using Zeltex.Util;
@@ -7,9 +8,12 @@ using System.IO;
 using Zeltex.Voxels;
 using System.Linq;
 using Zeltex.Quests;
+using Newtonsoft.Json;
 
 namespace Zeltex
 {
+	[System.Serializable]
+	public class ElementFolderEvent : UnityEvent<ElementFolder> { }
 
     [System.Serializable()]
     public class DataDictionary<T> : SerializableDictionaryBase<string, T>
@@ -37,13 +41,13 @@ namespace Zeltex
 
         [Header("Events")]
         [Tooltip("When the file has modified - Update any connected UI to indicate a file change"), HideInInspector]
-        public ElementEvent ModifiedEvent = new ElementEvent();
+		public ElementFolderEvent ModifiedEvent = new ElementFolderEvent();
         [Tooltip("When the file has saved - Update any connected UI to indicate a file change"), HideInInspector]
-        public ElementEvent SavedEvent = new ElementEvent();
+		public ElementFolderEvent SavedEvent = new ElementFolderEvent();
         [Tooltip("When the file has been renamed - Update any connected UI to indicate a file change"), HideInInspector]
-        public ElementEvent RenamedEvent = new ElementEvent();
+		public ElementFolderEvent RenamedEvent = new ElementFolderEvent();
         [Tooltip("When the file has been renamed - Update any connected UI to indicate a file change"), HideInInspector]
-        public ElementEvent MovedEvent = new ElementEvent();
+		public ElementFolderEvent MovedEvent = new ElementFolderEvent();
 
         public void Set(string NewFolderName, string NewFileExtension)
         {
@@ -131,7 +135,7 @@ namespace Zeltex
 			return MyScripts;
 		}
 
-        public List<Texture2D> LoadAllTextures()
+        /*public List<Texture2D> LoadAllTextures()
         {
             LoadAllNames();
             List<Texture2D> MyTextures = new List<Texture2D>();
@@ -185,7 +189,7 @@ namespace Zeltex
                 }
             }
             return MySounds;
-        }
+        }*/
 
         public void SaveFile(int FileIndex, string Data)
         {
@@ -471,5 +475,44 @@ namespace Zeltex
             }
         }
         #endregion
+
+
+		[JsonIgnore, HideInInspector]
+		[Tooltip("Set to true when the element has been changed from the saved file")]
+		public bool HasChanged = false;
+
+		public bool CanSave() 
+		{
+			return HasChanged;
+		}
+
+		public void OnSaved()
+		{
+			if (HasChanged)
+			{
+				// if finished saving all, check if any still dirty
+				foreach (KeyValuePair<string, T> MyValuePair in Data)
+				{
+					Element MyElement = MyValuePair.Value as Element;
+					if (MyElement == null || MyElement.CanSave())
+					{
+						// Folder still dirty
+						return;
+					}
+				}
+				HasChanged = false;
+				SavedEvent.Invoke(this as ElementFolder);
+			}
+		}
+
+		public void OnModified() 
+		{
+			if (!HasChanged)
+			{
+				HasChanged = true;
+				ModifiedEvent.Invoke(this as ElementFolder);
+			}
+		}
+
     }
 }

@@ -37,9 +37,13 @@ namespace Zeltex.Characters
         #region Variables
         [Header("Actions")]
         [SerializeField]
-        private EditorAction ActionSaveToLevel = new EditorAction();
-        //[SerializeField]
-        //private EditorAction ActionLoad = new EditorAction();
+		private EditorAction ActionSaveToLevel = new EditorAction();
+		[SerializeField]
+		private EditorAction ActionImportVox = new EditorAction();
+		[SerializeField]
+		private EditorAction PushVoxToDataManager = new EditorAction();
+		[SerializeField]
+		private Transform ActionBone = null;
 
         [Header("Data")]
         [SerializeField]
@@ -75,9 +79,6 @@ namespace Zeltex.Characters
         // Saving?
         private bool HasInitialized;
         private Zeltine DeathHandle;
-        //public static string FolderPath = "Characters/";
-        //private Vector3 LastSavedPosition = new Vector3(0, 0, 0);
-        //private string LastSavedFileName = "";
 
         [HideInInspector]
         public Chunk MyChunk;
@@ -108,7 +109,7 @@ namespace Zeltex.Characters
             {
                 Data = NewData;
                 Initialize();
-                MySkeleton.GetSkeleton().ActionActivateSkeleton.Trigger();
+				MySkeleton.GetSkeleton().Activate();
                 transform.position = Data.LevelPosition;
                 transform.eulerAngles = Data.LevelRotation;
             }
@@ -156,10 +157,6 @@ namespace Zeltex.Characters
 
         private void Update()
         {
-            /*if (HasInitialized == false)
-            {
-                Initialize();
-            }*/
             if (Application.isPlaying)
             {
                 Data.MyStatsHandler.SetCharacter(this);
@@ -169,6 +166,14 @@ namespace Zeltex.Characters
             {
                 LoadedInLevel.SaveCharacterToLevel(this);
             }
+			if (ActionImportVox.IsTriggered()) 
+			{
+				ImportVoxToBone(ActionBone);
+			}
+			if (PushVoxToDataManager.IsTriggered())
+			{
+				PushBoneVoxelModel(ActionBone);
+			}
             if (Data.MyStats != null && Data.MyStatsHandler.ActionLoadStats.IsTriggered())
             {
                 string LoadStatsName = Data.MyStatsHandler.ActionStatsName;
@@ -190,7 +195,66 @@ namespace Zeltex.Characters
                 }
                 Data.MyGuis.Update();
             }
-        }
+		}
+
+		private void PushBoneVoxelModel(Transform ActionBone) 
+		{
+			ActionBone = GetActionBone(ActionBone);
+			if (ActionBone != null)
+			{
+				Bone MyBone = MySkeleton.GetSkeleton().GetBone(ActionBone);
+				if (MyBone != null)
+				{
+					VoxelModel MyModel = MyBone.GetVoxelModel();
+					if (MyModel != null)
+					{
+						DataManager.Get().PushElement(DataFolderNames.VoxelModels, MyModel);
+					}
+					else
+					{
+						Debug.LogError("Model is null. Bone has no mesh: " + MyBone.Name);
+					}
+				}
+			}
+		}
+
+		private Transform GetActionBone(Transform ActionBone) 
+		{
+			if (ActionBone == null && GetSkeleton().GetSkeleton().MyBones.Count > 0)
+			{
+				ActionBone = GetSkeleton().GetSkeleton().MyBones[0].MyTransform;
+			}
+			return ActionBone;
+		}
+
+		private void ImportVoxToBone(Transform ActionBone) 
+		{
+			ActionBone = GetActionBone(ActionBone);
+			if (ActionBone != null)
+			{
+				Bone MyBone = MySkeleton.GetSkeleton().GetBone(ActionBone);
+				if (MyBone != null)
+				{
+					World BoneWorld = MyBone.VoxelMesh.gameObject.GetComponent<World>();
+					RoutineManager.Get().StartCoroutine(DataManager.Get().LoadVoxFile(BoneWorld));
+					MyBone.MeshName = BoneWorld.name;
+					MyBone.OnModified();
+					GetSkeleton().GetSkeleton().OnModified();
+					GetData().OnModified();
+					// Also push to datamanager, to make sure it can be reloaded again
+					VoxelModel MyModel = MyBone.GetVoxelModel();
+					DataManager.Get().PushElement(DataFolderNames.VoxelModels, MyModel);
+				}
+				else
+				{
+					Debug.LogError(name + " bone is null.");
+				}
+			}
+			else
+			{
+				Debug.LogError(name + " Has no bones.");
+			}
+		}
 
         public void ForceInitialize()
         {
@@ -611,7 +675,7 @@ namespace Zeltex.Characters
         /// </summary>
         void OnTriggerEnter(Collider MyCollider)
         {
-            ItemObject MyItem = MyCollider.gameObject.GetComponent<ItemObject>();
+            ItemHandler MyItem = MyCollider.gameObject.GetComponent<ItemHandler>();
             if (MyItem)
             {
                 MyItem.OnContact(gameObject);
@@ -649,20 +713,20 @@ namespace Zeltex.Characters
 
                 if (LayerManager.AreLayersEqual(LayerManager.Get().GetItemsLayer(), MyHit.collider.gameObject.layer))
                 {
-                    ItemObject HitItemObject = MyHit.collider.gameObject.GetComponent<ItemObject>();
-                    if (HitItemObject != null)
+                    ItemHandler HitItemHandler = MyHit.collider.gameObject.GetComponent<ItemHandler>();
+                    if (HitItemHandler != null)
                     {
-                        Debug.Log(name + " has picked up item: " + HitItemObject.name);
-                        return PickupItem(HitItemObject, SelectionType);
+                        Debug.Log(name + " has picked up item: " + HitItemHandler.name);
+                        return PickupItem(HitItemHandler, SelectionType);
                     }
                     Chunk ItemChunk = MyHit.collider.gameObject.GetComponent<Chunk>();
                     if (ItemChunk)
                     {
-                        ItemObject HitItemObject2 = ItemChunk.transform.parent.gameObject.GetComponent<ItemObject>();
-                        if (HitItemObject2 != null)
+                        ItemHandler HitItemHandler2 = ItemChunk.transform.parent.gameObject.GetComponent<ItemHandler>();
+                        if (HitItemHandler2 != null)
                         {
-                            Debug.Log(name + " has picked up Voxel Item: " + HitItemObject2.name);
-                            return PickupItem(HitItemObject2, SelectionType);
+                            Debug.Log(name + " has picked up Voxel Item: " + HitItemHandler2.name);
+                            return PickupItem(HitItemHandler2, SelectionType);
                         }
                     }
                     Debug.Log(name + " Hit a items layer without item object");
@@ -844,17 +908,17 @@ namespace Zeltex.Characters
         /// <summary>
         /// When activate button pressed on item object
         /// </summary>
-		public bool PickupItem(ItemObject HitItemObject, int InteractType) 
+		public bool PickupItem(ItemHandler HitItemHandler, int InteractType) 
 		{
 			if (InteractType == 0)
 			{
                     // passes in a ray object for any kind of picking action
                     // does things like destroy, activates the special function
-                    HitItemObject.CharacterPickup(this);
+                    HitItemHandler.CharacterPickup(this);
 			}
             else if (InteractType == 1)
             {
-                HitItemObject.ToggleGui();
+                HitItemHandler.ToggleGui();
             }
 			return true;
         }

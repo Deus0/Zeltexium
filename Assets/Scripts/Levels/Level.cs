@@ -174,13 +174,13 @@ namespace Zeltex
 
         #region Spawning
 
-        public void Spawn()
+        public override void Spawn()
         {
             Debug.Log(Name + " Is Spawning in game.");
             WorldManager.Get().LoadLevel(this);
         }
 
-        public void DeSpawn()
+        public override void DeSpawn()
         {
             for (int i = 0; i < MyCharacters.Count; i++)
             {
@@ -189,7 +189,7 @@ namespace Zeltex
             WorldManager.Get().Destroy(MyWorld);
         }
 
-        public bool IsSpawned()
+        public override bool HasSpawned()
         {
             return (MyWorld != null);
         }
@@ -340,9 +340,9 @@ namespace Zeltex
                 Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
                 FileManagement.CreateDirectory(FolderPath, true);
             }
-            else
+            //else
             {
-                Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                //Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
             }
             return FolderPath;
         }
@@ -352,12 +352,12 @@ namespace Zeltex
             string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
             if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
             {
-                Debug.LogError("Creating Directory for Level [" + Name + "]: " + FolderPath);
+                Debug.Log("Creating Directory for Level [" + Name + "]: " + FolderPath);
                 FileManagement.CreateDirectory(FolderPath, true);
             }
-            else
+            //else
             {
-                Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+               // Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
             }
             return FolderPath;
         }

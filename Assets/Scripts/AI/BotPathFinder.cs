@@ -18,13 +18,17 @@ namespace Zeltex.AI
     {
         #region Variables
         static int MaxChecks = 512;
-        Dictionary<Int3, PathNode> Mynodes = new Dictionary<Int3, PathNode>();
-        List<Int3> OpenNodes = new List<Int3>();                // points in the path we can move from
-        List<float> OpenNodeDistances = new List<float>();
-        List<Int3> OpenNodesPreviousPositions = new List<Int3>();        // Points to the previous position 
-        List<Int3> ClosedNodes = new List<Int3>();              // points in the path we cannot move from
-        List<Int3> ClosedNodesPreviousPositions = new List<Int3>();        // Points to the previous position 
-        float PathRandomness = 0;
+		private Dictionary<Int3, PathNode> Mynodes = new Dictionary<Int3, PathNode>();
+		private List<Int3> OpenNodes = new List<Int3>();                // points in the path we can move from
+		private List<float> OpenNodeDistances = new List<float>();
+		private List<Int3> OpenNodesPreviousPositions = new List<Int3>();        // Points to the previous position 
+		private List<Int3> ClosedNodes = new List<Int3>();              // points in the path we cannot move from
+		private List<Int3> ClosedNodesPreviousPositions = new List<Int3>();        // Points to the previous position 
+		private float PathRandomness = 0;
+
+		private List<Int3> MyPath = new List<Int3>();
+		// Stores the main path found in world
+		public List<Vector3> MyPathWorld = new List<Vector3>();
         #endregion
 
         // initiate
@@ -49,9 +53,9 @@ namespace Zeltex.AI
         /// <summary>
         /// Finds a path within a voxel world
         /// </summary>
-        public List<Vector3> FindPath(World MyWorld, Vector3 MyPosition, Vector3 TargetPosition, Bounds MyBounds)
+        public IEnumerator FindPath(World MyWorld, Vector3 MyPosition, Vector3 TargetPosition, Bounds MyBounds)
         {
-            List<Vector3> MyPathWorld = new List<Vector3>();
+			MyPathWorld.Clear();
             if (MyWorld)
             {
                 Int3 StartPosition = new Int3(MyWorld.RealToBlockPosition(MyPosition));
@@ -62,7 +66,7 @@ namespace Zeltex.AI
                 Int3 PathPosition = StartPosition;
 
                 //List<Int3> MyPath = GetPathBasic(PathPosition, EndPosition);
-                List<Int3> MyPath = GetPathDistance(MyWorld, PathPosition, EndPosition);
+				yield return GameManager.Get().StartCoroutine(GetPathDistance(MyWorld, PathPosition, EndPosition));
 
                 Vector3 VoxelUnit = MyWorld.GetUnit();
                 VoxelUnit.y = MyBounds.extents.y;
@@ -78,7 +82,6 @@ namespace Zeltex.AI
                 MyPathWorld.Insert(0, MyPosition);
             }
             // convert ints back to world positions
-            return MyPathWorld;
         }
 
         /// <summary>
@@ -129,10 +132,10 @@ namespace Zeltex.AI
         /// <summary>
         /// Gets a basic path
         /// </summary>
-        private List<Int3> GetPathDistance(World MyWorld, Int3 PathPosition, Int3 EndPosition)
+        private IEnumerator GetPathDistance(World MyWorld, Int3 PathPosition, Int3 EndPosition)
         {
             Clear();
-            List<Int3> MyPath = new List<Int3>();
+			MyPath.Clear();
             // initial variables
             Int3 BeginPosition = PathPosition;
             //MyPath.Add(PathPosition);
@@ -147,7 +150,7 @@ namespace Zeltex.AI
                 if (CheckCount >= MaxChecks)
                 {
                     //Debug.LogError("Path Checks Maxxed pass: " + MaxChecks);
-                    return MyPath;
+					yield break;
                 }
                 // Create open nodes around our path position (which was previously open)
                 // Move path position next to positions
@@ -173,7 +176,7 @@ namespace Zeltex.AI
                 if (ClosestIndex == -1)
                 {
                     Debug.LogError("Closest Index not found.");
-                    return MyPath;
+					yield break;
                 } 
                 else
                 {
@@ -195,12 +198,11 @@ namespace Zeltex.AI
                     // Finally set position
                     PathPosition = NewPathPosition;
                 }
+				yield return null;
             }
 
             MyPath = TraceBackPath(MyWorld, BeginPosition, EndPosition, MyPath);
             Clear();
-            // now reverse check from path?
-            return MyPath;
         }
 
         /// <summary>

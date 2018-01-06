@@ -158,16 +158,16 @@ namespace Zeltex.Voxels
             //Debug.Log("Building " + name);
             OnBuildingMesh();
             int i = 0;
-            if (ChunkMeshes.Count != MyWorld.MyMaterials.Count)
+            if (ChunkMeshes.Count != VoxelManager.Get().MyMaterials.Count)
             {
                 ChunkMeshes.Clear();
-                for (i = 0; i < MyWorld.MyMaterials.Count; i++)
+                for (i = 0; i < VoxelManager.Get().MyMaterials.Count; i++)
                 {
                     ChunkMeshes.Add(new MeshData());    // create a place where we can store our voxel mesh
                 }
             }
             //Debug.LogError("Updated Mesh:[" + name + "] BuildChunkMesh Function " + MyWorld.MyMaterials.Count);
-            for (i = 0; i < MyWorld.MyMaterials.Count; i++)     // for each material, build the mesh of each chunk
+            for (i = 0; i < VoxelManager.Get().MyMaterials.Count; i++)     // for each material, build the mesh of each chunk
             {
                 MeshingMaterialIndex = i;
                 yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BuildChunkMeshPerMaterial());
@@ -186,7 +186,7 @@ namespace Zeltex.Voxels
         {
             //int TimesPaused = 0;
             //TimeBegun = Time.realtimeSinceStartup;
-            if (MyWorld && MyWorld.MyDataBase)
+            if (MyWorld)
             {
                 for (BuildVoxelIndex.x = 0; BuildVoxelIndex.x < ChunkSize; BuildVoxelIndex.x++)
                 {
@@ -418,7 +418,7 @@ namespace Zeltex.Voxels
                         if (MySides[SideIndex])
                         {
                             // first add mesh verticies
-                            DataBasePartModel = GetWorld().MyDataBase.GetMeshData(CalculatePolyModelMeta.ModelID, SideIndex);
+                            DataBasePartModel = VoxelManager.Get().GetMeshData(CalculatePolyModelMeta.ModelID, SideIndex);
                             MeshingVoxel.MyMeshData.AddDataMesh = DataBasePartModel;
                             MeshingVoxel.MyMeshData.Add();
                             // Add the range of uvs just for the rendered verticies
@@ -531,7 +531,7 @@ namespace Zeltex.Voxels
             float TimeStarted = Time.realtimeSinceStartup;
             RefreshComponentLinks();
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMesh(MyMeshFilter));
-            MyMeshRenderer.materials = MyWorld.MyMaterials.ToArray();
+            MyMeshRenderer.materials = VoxelManager.Get().MyMaterials.ToArray();
             // colliders
             if (MyMeshCollider)
             {
@@ -579,7 +579,7 @@ namespace Zeltex.Voxels
                 VertCount = 0;
                 CombiningMeshList.Clear();
                 // Combine all the materials together
-                for (MaterialIndex = 0; MaterialIndex < GetWorld().MyMaterials.Count; MaterialIndex++)
+                for (MaterialIndex = 0; MaterialIndex < VoxelManager.Get().MyMaterials.Count; MaterialIndex++)
                 {
                     CreateMeshMeshData = ChunkMeshes[MaterialIndex];
                     if (CreateMeshMeshData != null)

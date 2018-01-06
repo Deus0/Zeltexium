@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using Zeltex.Util;
+using Zeltex.Guis.Maker;
 
 namespace Zeltex.Voxels
 {
@@ -46,12 +48,10 @@ namespace Zeltex.Voxels
         public string PushModelName = "Body";
 
         [Header("Needed References")]
-        public WorldUpdater MyUpdater;
-        public VoxelManager MyDataBase;
         public GameObject MyVoxelDestroyParticles;
 
         [Header("Data")]
-        public List<Material> MyMaterials = new List<Material>();
+        //public List<Material> MyMaterials = new List<Material>();
         public VoxelLookupTable MyLookupTable = new VoxelLookupTable(); // lookup table used for voxel indexes
         [SerializeField]    //, HideInInspector
         public ChunkDictionary MyChunkData = new ChunkDictionary();
@@ -91,6 +91,7 @@ namespace Zeltex.Voxels
 
         [HideInInspector]
         public bool IsAddOutline = true;
+        private UnityEvent OnLoadWorld = new UnityEvent();
         #endregion
 
         #region Mono
@@ -159,7 +160,7 @@ namespace Zeltex.Voxels
             }
             if (Actions.ImportVox.IsTriggered())
             {
-                UniversalCoroutine.CoroutineManager.StartCoroutine(DataManager.Get().LoadVoxFile(this));
+                RoutineManager.Get().StartCoroutine(DataManager.Get().LoadVoxFile(false, this));
             }
             if (ActionPushModel.IsTriggered())
             {
@@ -547,28 +548,314 @@ namespace Zeltex.Voxels
             }
         }
         #endregion
-    }
-}
 
-/// <summary>
-/// Load world chunks in a routine.
-/// Assuming world is already cleared
-/// </summary>
-/*public IEnumerator RefreshRoutine(float TimeDelay)
-{
-    if (IsSingleChunk() == false)   // single chunks don't get refreshed
-    {
-        // load the chunks
-        for (int i = 0; i < WorldSize.x; i++)
+        #region FileUtility
+
+        /// <summary>
+        /// Resets chunks to use for loading
+        /// </summary>
+        private void Reset()
         {
-            for (int j = 0; j < WorldSize.y; j++)
+            foreach (Int3 Key in MyChunkData.Keys)
             {
-                for (int k = 0; k < WorldSize.z; k++)
+                if (MyChunkData.ContainsKey(Key))
                 {
-                    CreateChunk(new Int3(i, j, k));
-                    yield return new WaitForSeconds(TimeDelay);
+                    Chunk MyChunk = MyChunkData[Key];
+                    if (MyChunk)
+                    {
+                        MyChunk.Reset(); // set them all to air since i've updated them
+                    }
                 }
             }
         }
+
+        /// <summary>
+        /// Set all the chunks voxels to 0 Air without triggering updates!
+        /// </summary>
+        public void SetAllVoxelsRaw()
+        {
+            foreach (Int3 Key in MyChunkData.Keys)
+            {
+                if (MyChunkData.ContainsKey(Key))
+                {
+                    Chunk MyChunk = MyChunkData[Key];
+                    if (MyChunk)
+                    {
+                        MyChunk.SetAllVoxelsRaw(0);
+                    }
+                }
+            }
+        }
+
+
+        public void SetAllVoxelsUpdated()
+        {
+            foreach (Int3 Key in MyChunkData.Keys)
+            {
+                if (MyChunkData.ContainsKey(Key))
+                {
+                    Chunk MyChunk = MyChunkData[Key];
+                    if (MyChunk)
+                    {
+                        MyChunk.SetAllUpdated(true);
+                    }
+                }
+            }
+        }
+
+
+        private void HideChunks()
+        {
+            SetChunksVisibility(false);
+        }
+
+        /// <summary>
+        /// Turn all the renders off! Used when loading in new world
+        /// </summary>
+        private void SetChunksVisibility(bool NewState)
+        {
+            // first hide the chunks
+            foreach (Int3 Key in MyChunkData.Keys)
+            {
+                if (MyChunkData.ContainsKey(Key))
+                {
+                    Chunk MyChunk = MyChunkData[Key];
+                    if (MyChunk)
+                    {
+                        if (MyChunk != null)
+                        {
+                            MyChunk.GetComponent<MeshRenderer>().enabled = NewState;
+                        }
+                    }
+                }
+            }
+        }
+
+        public int GetMaxVoxelCount()
+        {
+            int VoxelCount = Mathf.RoundToInt(WorldSize.x * WorldSize.y * WorldSize.z);    // total world size
+            VoxelCount *= Chunk.ChunkSize * Chunk.ChunkSize * Chunk.ChunkSize;
+            return VoxelCount;
+        }
+        #endregion
+
+        #region Saving
+
+        /// <summary>
+        /// Saves all the chunks for a model maker
+        /// </summary>
+        public IEnumerator SaveRoutine(string FilePath, ModelMaker MyManager)
+        {
+            List<string> MyScriptList = new List<string>();
+            if (IsSingleChunk())
+            {
+                MyScriptList.AddRange(GetChunk(new Int3()).GetScript());
+                yield return null;
+            }
+            else
+            {
+                MyScriptList.Add("/World " + WorldSize.x + " " + WorldSize.y + " " + WorldSize.z);
+                foreach (Int3 MyKey in MyChunkData.Keys)
+                {
+                    Chunk MyChunk = MyChunkData[MyKey];
+                    MyScriptList.Add("/Chunk " + MyKey.x + " " + MyKey.y + " " + MyKey.z);
+                    MyScriptList.AddRange(MyChunk.GetScript());
+                    yield return null;
+                }
+            }
+            //string MyScript = FileUtil.ConvertToSingle(MyScriptList);
+            //File.WriteAllText(FilePath, MyScript);
+            //DataManager.Get().Set(DataFolderNames.PolyModels, MyManager.GetSelectedIndex(), MyScript);
+        }
+
+        /// <summary>
+        /// Gets an entire world script.
+        /// </summary>
+        public List<string> GetScript()
+        {
+            return GetScriptList();
+        }
+
+        /// <summary>
+        /// Returns a list of data for a world
+        /// </summary>
+        public List<string> GetScriptList()
+        {
+            List<string> MyData = new List<string>();
+            MyData.AddRange(MyLookupTable.GetScript());
+            if (IsSingleChunk())
+            {
+                MyData.AddRange(GetChunk(new Int3()).GetScript());
+            }
+            else
+            {
+                MyData.Add("/World " + WorldSize.x + " " + WorldSize.y + " " + WorldSize.z);
+                foreach (Int3 MyKey in MyChunkData.Keys)
+                {
+                    Chunk MyChunk = MyChunkData[MyKey];
+                    MyData.Add("/Chunk " + MyKey.x + " " + MyKey.y + " " + MyKey.z);
+                    MyData.AddRange(MyChunk.GetScript());
+                }
+            }
+            return MyData;
+        }
+
+
+        #endregion
+
+        #region Loading
+
+
+        public void AddOnLoad(UnityEngine.Events.UnityAction OnLoadAction)
+        {
+            OnLoadWorld.RemoveListener(OnLoadAction);
+            OnLoadWorld.AddEvent(OnLoadAction);
+        }
+        public void RemoveOnLoad(UnityEngine.Events.UnityAction OnLoadAction)
+        {
+            OnLoadWorld.RemoveListener(OnLoadAction);
+        }
+
+        /// <summary>
+        /// Loads the world script on a seperate routine
+        /// </summary>
+        public void RunScript(List<string> MyData)
+        {
+            RoutineManager.Get().StartCoroutine(RunScriptRoutine(MyData));
+        }
+
+        /// <summary>
+        /// Run the script, loading the world including its meta data
+        /// Voxel Chunk Data
+        /// Lookup table
+        /// The size of the chunks
+        /// Any modifiers on the chunk - ie noise grid
+        /// </summary>
+        public IEnumerator RunScriptRoutine(List<string> MyData)
+        {
+            //Debug.LogError("Begun World RunScriptRoutine " + name);
+            if (MyData.Count > 0)
+            {
+                HideChunks();
+                SetAllVoxelsRaw();  // clear the voxel indexes
+                List<string> LookupData = new List<string>();
+                bool HasLookupTable = (MyData[0] == VoxelLookupTable.BeginTag);
+                if (HasLookupTable)
+                {
+                    // Use lookup table data at start of world
+                    for (int i = 0; i < MyData.Count; i++)
+                    {
+                        if (MyData[i] == VoxelLookupTable.EndTag)
+                        {
+                            LookupData = MyData.GetRange(0, i + 1);
+                            MyData.RemoveRange(0, i + 1);
+                            break;
+                        }
+                    }
+                    // Remove lookup table from list
+                }
+                Reset();
+                bool IsMultiChunk = (MyData[0].Contains("/World"));
+                Int3 NewWorldSize;
+                if (IsMultiChunk)   // if multiple chunks
+                {
+                    //Debug.LogError("Loading Multi-Chunk with: " + MyData[0]);
+                    string[] MyWorldMeta = MyData[0].Split(' ');
+                    if (MyWorldMeta.Length == 4)
+                    {
+                        NewWorldSize = new Int3(int.Parse(MyWorldMeta[1]), int.Parse(MyWorldMeta[2]), int.Parse(MyWorldMeta[3]));
+                    }
+                    else
+                    {
+                        NewWorldSize = Int3.Zero();
+                    }
+                }
+                else
+                {
+                    NewWorldSize = new Int3(1, 1, 1);
+                }
+                yield return (SetWorldSizeRoutine(NewWorldSize)); // this will refresh it
+                MyLookupTable.RunScript(GetMaxVoxelCount(), LookupData);
+                if (IsMultiChunk)   // if multiple chunks
+                {
+                    yield return (RunScriptMultiWorldRoutine(MyData));
+                    // TODO: Fix this!
+                    GetChunk(Int3.Zero()).SetAllUpdated(true);
+                    GetChunk(Int3.Zero()).OnMassUpdate();
+                }
+                else
+                {
+                    Chunk WorldChunk = gameObject.GetComponent<Chunk>();
+                    if (WorldChunk)
+                    {
+                        //Debug.LogError("Begun WorldChunk RunScript " + name);
+                        yield return null;
+                        //Debug.LogError("Loading chunkworld script from world: " + name);
+                        yield return (WorldChunk.RunScript(MyData));
+                        //Debug.LogError("Ended WorldChunk RunScript " + name);
+                    }
+                    else
+                    {
+                        Debug.LogError(name + " has no chunk.");
+                    }
+                }
+                if (!HasLookupTable)
+                {
+                    MyLookupTable.Generate(this);
+                }
+            }
+            else
+            {
+                //Debug.LogError("Loading world with no data");
+                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SetWorldSizeRoutine(Int3.Zero())); // refresh! No more things!
+            }
+            OnLoadWorld.Invoke();
+            // Debug.LogError("Ended World RunScriptRoutine " + name);
+        }
+
+        /// <summary>
+        /// Runs the script in a routine
+        /// </summary>
+        private IEnumerator RunScriptMultiWorldRoutine(List<string> MyData)
+        {
+            IsUseUpdater = false;
+            // Debug.LogError("Loading World on routine.");
+            //List<Chunk> MyChunks = new List<Chunk>();
+            for (int i = 1; i < MyData.Count; i++)
+            {
+                if (MyData[i].Contains("/Chunk"))
+                {
+                    string[] MyChunkMeta = MyData[i].Split(' ');
+                    Chunk MyChunk = GetChunk(new Int3(int.Parse(MyChunkMeta[1]), int.Parse(MyChunkMeta[2]), int.Parse(MyChunkMeta[3])));
+                    //i += Chunk.ChunkSize * Chunk.ChunkSize * Chunk.ChunkSize;
+                    int NextIndex = i + 1;
+                    // Find Next Chunk In Data
+                    for (int j = i + 1; j < MyData.Count; j++)
+                    {
+                        if (MyData[j].Contains("/Chunk"))
+                        {
+                            NextIndex = j - 1;
+                            break;
+                        }
+                        if (j == MyData.Count - 1)
+                        {
+                            NextIndex = MyData.Count - 1;
+                        }
+                    }
+                    // now we have next index
+                    List<string> MyChunkData = MyData.GetRange(i + 1, NextIndex - i);
+                    //Debug.LogError(i + " Loading chunk: " + MyChunk.Position.GetVector().ToString() + " - " + MyChunkData.Count);
+                    yield return (MyChunk.RunScript(MyChunkData));  //UniversalCoroutine.CoroutineManager.StartCoroutine
+                    //MyChunks.Add(MyChunk);
+                    i = NextIndex;
+                    yield return null;
+                }
+            }
+            //yield return MyUpdater.UpdateChunks(MyChunks);
+            //Debug.LogError("Resizing World to 3:" + GetComponent<World>().WorldSize.ToString());
+            IsUseUpdater = true;
+        }
+
+        #endregion
     }
-}*/
+}

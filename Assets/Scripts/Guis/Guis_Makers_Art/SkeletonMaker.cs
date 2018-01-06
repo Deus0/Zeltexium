@@ -206,7 +206,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         private IEnumerator OnRemoveRoutine(int NewIndex)
         {
-            yield return MyViewer.MySpawnedSkeleton.GetSkeleton().Clear();
+			yield return MyViewer.MySpawnedSkeleton.GetSkeleton().ClearRoutine();
         }
 
         /// <summary>

@@ -5,6 +5,9 @@ using UnityEngine.Events;
 using Zeltex.Generators;
 using Zeltex.Util;
 using Zeltex.Combat;
+using Zeltex.Voxels;
+using Zeltex.Items;
+using Zeltex.Skeletons;
 
 namespace Zeltex
 {
@@ -16,7 +19,7 @@ namespace Zeltex
     {
 		public bool IsDebugGui;
         private int MapNameSelected = 0;
-        private List<string> MapNames = null;
+		private List<string> MapNames = new List<string>();
         private Vector2 scrollPosition;
         private string OpenedFolderName = "";
         private int OpenedFolderIndex = -1;
@@ -37,9 +40,21 @@ namespace Zeltex
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            Debug.Log("Scripts have reloaded. Unloading DataManager.");
-            DataManager.Get().UnloadAll();
-            DataGUI.Get().CloseAll();
+			if (DataManager.Get()) 
+			{
+                if (DataManager.Get().GetIsLoaded())
+                {
+                    Debug.Log ("Scripts have reloaded. Unloading DataManager.");
+                    DataManager.Get().UnloadAll();
+                    DataGUI.Get().CloseAll();
+                    DataManager.Get().InitializeFolders();
+                    DataManager.Get().LoadAll();
+                }
+			} 
+			else
+			{
+				Debug.Log("Scripts have reloaded. No DataManager in scene.");
+			}
         }
 #endif
         public new static DataGUI Get()
@@ -67,76 +82,104 @@ namespace Zeltex
         public void DrawGui()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-			if (DataManager.Get().GetIsLoaded())
-            {
-				GUILayout.Label("Loaded [" + DataManager.Get().MapName + "]");
-            }
-            else
-            {
-				GUILayout.Label("Selected [" + DataManager.Get().MapName + "]");
-            }
-            //IsJSONFormat = GUILayout.Toggle(IsJSONFormat, "JSON");
-			if (DataManager.Get().GetIsLoaded())
-            {
-                LoadedDataGui();
-            }
-            else
-            {
-                NotLoadedGui();
-            }
+			if (DataManager.Get().IsLoading())
+			{
+				GUILayout.Label("==================");
+				GUILayout.Label("Loading [" + DataManager.Get().MapName + "]");
+				GUILayout.Label("==================");
+			}
+			else
+			{
+				//IsJSONFormat = GUILayout.Toggle(IsJSONFormat, "JSON");
+				if (DataManager.Get().GetIsLoaded())
+				{
+					LoadedDataGui();
+				}
+				else
+				{
+					NotLoadedGui();
+				}
+			}
             GUILayout.EndScrollView();
         }
 
         public void NotLoadedGui()
-        {
-            if (GUILayout.Button("Open Folder"))
-            {
-				FileUtil.OpenPathInWindows(DataManager.Get().GetResourcesPath());
-            }
-            GUILayout.Label("MapName:");
-            if (GUILayout.Button("Load"))
+		{
+			//GUILayout.Label("Selected [" + DataManager.Get().MapName + "]");
+			//GUILabel("MapName:");
+			string MapName = "None";
+			if (MapNames.Count > 0)
+			{
+				MapName = MapNames[MapNameSelected];
+			}
+			if (GUIButton("Load [" + MapName + "]"))
 			{
 				DataManager.Get().InitializeFolders();
 				DataManager.Get().LoadAll();
             }
-            if (MapNames == null || GUILayout.Button("Refresh List"))
-            {
-                RefreshGuiMapNames();
-            }
-			GUILayout.Label("PathType: " + DataManager.Get().MyFilePathType);
-            //MyFilePathType = (FilePathType)int.Parse(GUILayout.TextField(((int)MyFilePathType).ToString()));
-			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.Normal);
-            if (GUILayout.Button("Normal"))
-            {
-				DataManager.Get().MyFilePathType = FilePathType.Normal;
-                RefreshGuiMapNames();
-            }
-			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.PersistentPath);
-            if (GUILayout.Button("Persistent"))
-            {
-				DataManager.Get().MyFilePathType = FilePathType.PersistentPath;
-                RefreshGuiMapNames();
-            }
-			GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.StreamingPath);
-            if (GUILayout.Button("Streaming"))
-            {
-				DataManager.Get().MyFilePathType = FilePathType.StreamingPath;
-                RefreshGuiMapNames();
-            }
-            GUI.enabled = true;
 
-            GUILayout.Space(10);
-            int NewMapNameSelected = GUILayout.SelectionGrid(MapNameSelected, MapNames.ToArray(), 1);
+			// List of map names!
+            //GUILayout.Space(30);
+			GUILabel("Select from " + MapNames.Count + " different Resources.");
+			IncreaseIndent();
+            //int NewMapNameSelected = GUILayout.SelectionGrid(MapNameSelected, MapNames.ToArray(), 1);
+			int NewMapNameSelected = MapNameSelected;
+			for (int i = 0; i < MapNames.Count; i++)
+			{
+				if (MapNames[i] == MapName)
+				{
+					GUI.enabled = false;
+				}
+				if (GUIButton(MapNames[i]))
+				{
+					NewMapNameSelected = i;
+				}
+				GUI.enabled = true;
+			}
             if (MapNameSelected != NewMapNameSelected)
             {
                 MapNameSelected = NewMapNameSelected;
 				DataManager.Get().MapName = MapNames[MapNameSelected];
-            }
-            //MapName = GUILayout.TextField(MapName);
-            /*if (GUILayout.Button("Refresh"))
-            {
-                MyResourceNames = Guis.Maker.ResourcesMaker.GetResourceNames();
-            }*/
+			}
+			DecreaseIndent();
+
+			// Extra Options
+			//GUILabel("Extra Options");
+			GUILayout.Space(30);
+			IsExtraOptions = GUIToggle("Extra Options", IsExtraOptions);
+			if (IsExtraOptions)
+			{
+				if (GUIButton("Open Resources Folder"))
+				{
+					FileUtil.OpenPathInWindows(DataManager.Get().GetResourcesPath());
+				}
+
+				if (MapNames == null || GUILayout.Button("Refresh List"))
+				{
+					RefreshGuiMapNames();
+				}
+				GUILabel("PathType: " + DataManager.Get().MyFilePathType);
+				//MyFilePathType = (FilePathType)int.Parse(GUILayout.TextField(((int)MyFilePathType).ToString()));
+				GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.Normal);
+				if (GUILayout.Button("Normal"))
+				{
+					DataManager.Get().MyFilePathType = FilePathType.Normal;
+					RefreshGuiMapNames();
+				}
+				GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.PersistentPath);
+				if (GUILayout.Button("Persistent"))
+				{
+					DataManager.Get().MyFilePathType = FilePathType.PersistentPath;
+					RefreshGuiMapNames();
+				}
+				GUI.enabled = (DataManager.Get().MyFilePathType != FilePathType.StreamingPath);
+				if (GUILayout.Button("Streaming"))
+				{
+					DataManager.Get().MyFilePathType = FilePathType.StreamingPath;
+					RefreshGuiMapNames();
+				}
+				GUI.enabled = true;
+			}
         }
 
         private void RefreshGuiMapNames()
@@ -164,77 +207,75 @@ namespace Zeltex
 		}
 
         private void LoadedDataGui()
-        {
-            // Info for current map
-            if (GUILayout.Button("Unload"))
-            {
-                // go back!
-				DataManager.Get().UnloadAll();
-				CloseAll();
-            }
-            if (RenameName == "Null")
-            {
-				RenameName = DataManager.Get().MapName;
-            }
-
+		{
+			GUILayout.Label("Loaded [" + RenameName + "]");
             if (OpenedFileName != "")
             {
-                GUILayout.Label("Loaded [" + RenameName + "]");
                 DrawFile();
             }
             else if (OpenedFolderIndex != -1)
             {
-                GUILayout.Label("Loaded [" + RenameName + "]");
                 DrawSelectedFolder();
             }
             else
-            {
-                RenameName = GUILayout.TextField(RenameName);
-                if (GUILayout.Button("Rename"))
-                {
-					if (RenameName != DataManager.Get().MapName)
-                    {
-                        RenameResourcesFolder(RenameName);
-                    }
-                }
-
-                if (GUILayout.Button("Open Folder"))
-                {
-					FileUtil.OpenPathInWindows(DataManager.Get().GetMapPathNS());
-                }
-                if (GUILayout.Button("Save"))
-                {
-					DataManager.Get().SaveAll();
-                }
-                if (GUILayout.Button("Erase"))
-                {
-					DataManager.Get().DeleteAll();
-                }
-                if (GUILayout.Button("Generate"))
-                {
-                    GameObject.Find("Generators").GetComponent<MapGenerator>().GenerateMap();
-                }
-                if (GUILayout.Button("Generate TileMap"))
-                {
-                    Voxels.VoxelManager.Get().GenerateTileMap();
-                }
-
-                DrawFolders();
-                /*IsDrawStatistics = GUILayout.Toggle(IsDrawStatistics, "Statistics");
-                if (IsDrawStatistics)
-                {
-                    List<string> MyStatistics = GetStatisticsList();
-                    for (int i = 0; i < MyStatistics.Count; i++)
-                    {
-                        GUILayout.Label(MyStatistics[i]);
-                    }
-                    if (MyStatistics.Count == 0)
-                    {
-                        GUILayout.Label("Error, no stats.");
-                    }
-                }*/
+			{
+				DrawResourcesMainGui();
             }
         }
+
+		private bool IsExtraOptions;
+		private void DrawResourcesMainGui() 
+		{
+			if (GUILayout.Button("UnLoad"))
+			{
+				// go back!
+				DataManager.Get().UnloadAll();
+				CloseAll();
+			}
+
+			DrawFolders();
+
+			GUILayout.Space(30);
+			IsExtraOptions = GUIToggle("Extra Options", IsExtraOptions);
+			if (IsExtraOptions)
+			{
+				IncreaseIndent();
+				if (GUIButton("Open Folder"))
+				{
+					FileUtil.OpenPathInWindows(DataManager.Get().GetMapPathNS());
+				}
+				if (GUIButton("Save All"))
+				{
+					DataManager.Get().SaveAll();
+				}
+				if (GUIButton("Erase"))
+				{
+					DataManager.Get().DeleteAll();
+				}
+				if (GUIButton("Generate"))
+				{
+					GameObject.Find("Generators").GetComponent<MapGenerator>().GenerateMap();
+				}
+				if (GUIButton("Generate TileMap"))
+				{
+					Voxels.VoxelManager.Get().GenerateTileMap();
+				}
+
+				if (RenameName == "Null")
+				{
+					RenameName = DataManager.Get().MapName;
+				}
+				RenameName = GUIText(RenameName);
+				if (GUIButton("Rename"))
+				{
+					if (RenameName != DataManager.Get().MapName)
+					{
+						RenameResourcesFolder(RenameName);
+					}
+				}
+				DecreaseIndent();
+			}
+		}
 
         /// <summary>
         /// Rename the entire resources directory
@@ -259,116 +300,60 @@ namespace Zeltex
         #region Folders
 
         private void DrawSelectedFolder()
-        {
-            GUILayout.Space(30);
-            GUILayout.Label("Opened Folder [" + OpenedFolderName + "] " + DataFolderNames.GetDataType(OpenedFolderName).ToString());
-			ElementFolder TheFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
-            if (GUILayout.Button("Open " + OpenedFolderName))
-            {
-				string FolderPath = DataManager.Get().GetMapPathNS() + OpenedFolderName + "/";
-                if (FileManagement.DirectoryExists(FolderPath, true, true) == false)
-                {
-                    FileManagement.CreateDirectory(FolderPath, true);
-                }
-                FileUtil.OpenPathInWindows(FolderPath);
-            }
-            // Show folder files
-            if (GUILayout.Button("Close"))
-            {
-                OpenedFolderIndex = -1;
-                OpenedFolderName = "";
-            }
-            else
-            {
-                if (GUILayout.Button("Revert"))
-                {
-                    RevertFolder(OpenedFolderName);
-                }
-                if (GUILayout.Button("Save"))
-                {
-                    if (IsOpenedElementFolder)
-                    {
-						ElementFolder MyFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
-                        if (MyFolder != null)
-                        {
-                            MyFolder.SaveAllElements();
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("TODO: Save Textures");
-                    }
-                }
-                if (GUILayout.Button("New"))
-                {
-                    if (IsOpenedElementFolder)
-                    {
-						ElementFolder MyFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
-                        if (MyFolder != null)
-                        {
-                            MyFolder.AddNewElement();
-                        }
-                    }
-                    else
-                    {
-                        /*DataFolder<Texture2D> MyFolder = GetTextureFolder(OpenedFolderName);
-                        if (MyFolder != null)
-                        {
-                            Texture2D NewTexture = new Texture2D(
-                                (int)Voxels.VoxelManager.Get().GetTextureSize().x,
-                                (int)Voxels.VoxelManager.Get().GetTextureSize().y,
-                                TextureFormat.RGBA32, false);
-                            NewTexture.filterMode = FilterMode.Point;
-                            NewTexture.wrapMode = TextureWrapMode.Clamp;
-                            NewTexture.name = NameGenerator.GenerateVoxelName();
-                            MyFolder.Add(NewTexture.name, NewTexture);
-                        }*/
-                    }
-                }
-                if (!IsOpenedElementFolder)
-                {
-                    //if (GUILayout.Button("Import"))
-                    {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-                       // if (HasOpenedZexels())
-                        {
-                            //ImportZexel();
-                        }
-#else
-                        Debug.LogError("Platform not supported.");
-#endif
-                        /*#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-                                DataFolder<Element> MyFolder = GetElementFolder(OpenedFolderName);
-                                if (MyFolder != null)
-                                {
-                                    System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-                                    System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-                                    if (MyResult == System.Windows.Forms.DialogResult.OK)
-                                    {
-                                        byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-                                        Texture2D NewTexture = new Texture2D(
-                                        (int)Voxels.VoxelManager.Get().GetTextureSize().x,
-                                        (int)Voxels.VoxelManager.Get().GetTextureSize().y,
-                                        TextureFormat.RGBA32, false);
-                                        NewTexture.filterMode = FilterMode.Point;
-                                        NewTexture.wrapMode = TextureWrapMode.Clamp;
-                                        NewTexture.LoadImage(bytes);// as Texture2D;
-                                        NewTexture.name = System.IO.Path.GetFileNameWithoutExtension(MyDialog.FileName);
-                                        MyFolder.Add(NewTexture.name, NewTexture);
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError("Failure to open file.");
-                                    }
-                                }
-                        #else
-                                Debug.LogError("Platform not supported.");
-                        #endif*/
-                    }
-                }
-                GUILayout.Space(30);
-                DrawFolderFiles();
-            }
+		{
+			if (GUIButton("Back"))
+			{
+				OpenedFolderIndex = -1;
+				OpenedFolderName = "";
+			}
+			GUILayout.Label("Opened Folder [" + OpenedFolderName + "] of Type: " + DataFolderNames.GetDataType(OpenedFolderName).ToString());
+
+			// Show folder files
+			if (OpenedFolder.CanSave() == false) 
+			{
+				GUI.enabled = false;
+			}
+			if (GUIButton("Save"))
+			{
+				OpenedFolder.SaveAllElements();
+			}
+			GUI.enabled = true;
+			GUILayout.Space(30);
+
+			DrawFolderFiles();
+
+			GUILayout.Space(30);
+			IsExtraOptions = GUIToggle("Extra Options", IsExtraOptions);
+			if (IsExtraOptions)
+			{
+				if (GUIButton("New File"))
+				{
+					DataManager.Get().AddNew(OpenedFolderName);
+				}
+
+				if (GUIButton("Revert Folder To Last Saved"))
+				{
+					RevertFolder(OpenedFolderName);
+				}
+
+				if (GUIButton("Open Folder [" + OpenedFolderName + "] In Windows"))
+				{
+					string FolderPath = DataManager.Get().GetMapPathNS() + OpenedFolderName + "/";
+					if (FileManagement.DirectoryExists(FolderPath, true, true) == false)
+					{
+						FileManagement.CreateDirectory(FolderPath, true);
+					}
+					FileUtil.OpenPathInWindows(FolderPath);
+				}
+			}
+			/*if (GUILayout.Button("New " + DataFolderNames.GetDataType(OpenedFolderName).ToString()))
+			{
+				ElementFolder MyFolder = DataManager.Get().GetElementFolder(OpenedFolderName);
+				if (MyFolder != null)
+				{
+					MyFolder.AddNewElement();
+				}
+            }*/
         }
 
         private void RevertFolder(string FolderName)
@@ -386,7 +371,8 @@ namespace Zeltex
         }
 
         private void DrawFolderFiles()
-        {
+		{
+			IncreaseIndent();
 			if (IsOpenedElementFolder && OpenedFolder != null)
             {
                 int ElementCount = 0;
@@ -394,7 +380,7 @@ namespace Zeltex
                 {
 					foreach (KeyValuePair<string, Element> MyKeyValuePair in OpenedFolder.Data)
                     {
-                        if (GUILayout.Button(MyKeyValuePair.Key))
+						if (GUIButton(MyKeyValuePair.Key))
                         {
                             // open file
                             OpenedElement = MyKeyValuePair.Value;
@@ -404,6 +390,7 @@ namespace Zeltex
                             {
                                 OpenedTexture = MyKeyValuePair.Value as Zexel;
                             }
+							OpenedElement.IsDrawGui = true;
                         }
                         ElementCount++;
                     }
@@ -412,18 +399,23 @@ namespace Zeltex
                 {
 
                 }
-            }
+			}
+			DecreaseIndent();
         }
 
+		/// <summary>
+		/// Draws the folders.
+		/// </summary>
         private void DrawFolders()
         {
-            // Show folders
+			// Show folders
 			List<ElementFolder> ElementFolders = DataManager.Get().GetFolders();
-            GUILayout.Space(30);
-            GUILayout.Label("Folders: " + ElementFolders.Count);
+			GUILayout.Space(20);
+			GUILabel("Resource Folders: " + ElementFolders.Count);
+			IncreaseIndent();
             for (int i = 0; i < ElementFolders.Count; i++)
             {
-				if (GUILayout.Button(ElementFolders[i].FolderName + " [" + DataManager.Get().GetSize(ElementFolders[i].FolderName) + "]"))
+				if (GUIButton(ElementFolders[i].FolderName + " [" + DataManager.Get().GetSize(ElementFolders[i].FolderName) + "]"))
                 {
                     OpenedFolderName = ElementFolders[i].FolderName;
                     OpenedFolderIndex = i;
@@ -431,6 +423,7 @@ namespace Zeltex
                     IsOpenedElementFolder = true;
                 }
             }
+			DecreaseIndent();
         }
         #endregion
 
@@ -441,82 +434,132 @@ namespace Zeltex
             return DataFolderNames.GetDataType(OpenedFolderName) == typeof(Zexel);
         }
 
-        private void DrawFile()
+        private void CloseFile()
         {
-            GUILabel("Opened Folder [" + OpenedFolderName + "]");
-            GUILayout.Space(30);
-            if (IsOpenedElementFolder)
-            {
-                GUILabel("Opened File [" + OpenedFileName + "] - Type [" + OpenedElement.GetType() + "]");
-            }
-            else
-            {
-                GUILabel("Opened File [" + OpenedFileName + "] - Type [" + OpenedTexture.GetType() + "]");
-            }
-            if (GUIButton("Close"))
-            {
-                OpenedFileName = "";
-            }
-            else
+            OpenedFileName = "";
+            OpenedElement.IsDrawGui = true;
+            OpenedElement = null;
+        }
+        private void DrawFile()
+		{
+			if (GUIButton("Back"))
+			{
+                CloseFile();
+			}
+			if (OpenedElement == null)
+			{
+				GUILabel("Null Element");
+				return;
+			}
+			GUILabel("File [" + OpenedFileName + "]"
+				+ " Of Type [" + OpenedElement.GetType() + "] "
+				+ " In Folder [" + OpenedFolderName + "]");
+			if (OpenedElement.CanSave() == false) 
+			{
+				GUI.enabled = false;
+			}
+			if (GUIButton("Save"))
+			{
+				if (IsOpenedElementFolder)
+				{
+					OpenedElement.Save();
+				}
+			}
+			GUI.enabled = true;
+			GUILayout.Space(10);
+
+			IsDrawAllFields = GUILayout.Toggle(IsDrawAllFields, "IsDrawAllFields");
+			try
+			{
+				DrawFieldsForObject(OpenedElement as object, null, null, true);
+			} 
+			catch (System.StackOverflowException e) 
+			{
+				Debug.LogError("Overflow inside element: " + OpenedElement.Name + " - " + e.ToString());
+			}
+			if (OpenedElement.GetType() == typeof(Voxels.PolyModel))
+			{
+				DrawPolyModel();
+			}
+			else if (OpenedElement.GetType() == typeof(Voxels.VoxelModel))
+			{
+				DrawVoxelModel();
+			}
+			else if(OpenedElement.GetType() == typeof(Sound.Zound))
+			{
+				DrawZound();
+			}
+
+			GUILayout.Space(30);
+			IsExtraOptions = GUIToggle("Extra Options", IsExtraOptions);
+			if (IsExtraOptions)
+			{
+
+				if (IsOpenedElementFolder)
+				{
+					GUILabel(OpenedElement.Name + " - [" + OpenedElement.CanSave().ToString() + "]");
+				}
+				/*if (GUIButton("ForceSave"))
             {
                 if (IsOpenedElementFolder)
                 {
-                    GUILabel(OpenedElement.Name + " - [" + OpenedElement.CanSave().ToString() + "]");
+                    OpenedElement.OnModified();
+                    OpenedElement.Save();
                 }
-                /*if (GUIButton("ForceSave"))
-                {
-                    if (IsOpenedElementFolder)
-                    {
-                        OpenedElement.OnModified();
-                        OpenedElement.Save();
-                    }
-                }*/
-				if (OpenedElement.CanSave() == false) 
+            }*/
+				if (GUIButton("Reload From File"))
 				{
-					GUI.enabled = false;
-				}
-                if (GUIButton("Save"))
-                {
-                    if (IsOpenedElementFolder)
-                    {
-                        OpenedElement.Save();
-                    }
-				}
-				GUI.enabled = true;
-                if (GUIButton("Revert"))
-                {
-                    if (IsOpenedElementFolder)
-                    {
+					if (IsOpenedElementFolder)
+					{
 						OpenedElement = DataManager.Get().RevertElement(OpenedElement);
-                    }
-                }
-                if (GUIButton("Delete"))
-                {
-                    OpenedElement.Delete();
-                }
-                /*if (OpenedElement.GetType() == typeof(Zexel))
-                {
-                    DrawZexelGui(OpenedTexture);
-                }
-                else*/
-                if (OpenedElement.GetType() == typeof(Voxels.PolyModel))
-                {
-					DrawPolyModel();
-                }
-                else if (OpenedElement.GetType() == typeof(Voxels.VoxelModel))
-                {
-					DrawVoxelModel();
-                }
-                else if(OpenedElement.GetType() == typeof(Sound.Zound))
-                {
-					DrawZound();
-                }
+					}
+				}
+				if (GUIButton("Delete"))
+				{
+					OpenedElement.Delete();
+				}
 
-                GUILayout.Space(30);
-                IsDrawAllFields = GUILayout.Toggle(IsDrawAllFields, "IsDrawAllFields");
-                DrawFieldsForObject(OpenedElement as object, null, null, true);
-            }
+				if (GUIButton("Check Size"))
+				{
+					long StopBytes = 0;
+					long StartBytes = System.GC.GetTotalMemory(true);
+					Element ClonedElement = OpenedElement.Clone();
+					StopBytes = System.GC.GetTotalMemory(true);
+					//System.GC.KeepAlive (ClonedElement); // This ensure a reference to object keeps object in memory
+					#if UNITY_EDITOR
+					int TotalBytes = (int)(StopBytes - StartBytes);
+					int KiloBytes = TotalBytes / 1024;
+					TotalBytes = TotalBytes % 1024;
+					int MegaBytes = KiloBytes / 1024;
+					KiloBytes = KiloBytes % 1024;
+
+					UnityEditor.EditorUtility.DisplayDialog(OpenedElement.GetType().ToString() + " Size Check", 
+						"Your element is "
+						+ MegaBytes.ToString() + " Megabytes, "
+						+ KiloBytes.ToString() + " Kilobytes, "
+						+ TotalBytes.ToString() + " Bytes in Size.",
+						"Thanks");
+					#endif
+				}
+
+                if (GUIButton("Clone"))
+                {
+                    string NewName = CloneName;
+                    if (NewName == "")
+                    {
+                        NewName = NameGenerator.GenerateVoxelName();
+                    }
+                    Element Clone = OpenedElement.Clone();
+                    Clone.SetNameOfClone(NewName);
+                    OpenedFolder.AddElement(Clone);
+                    CloseFile();
+                }
+                GUILabel("Clone As:");
+                CloneName = GUIText(CloneName);
+			}
         }
+
+        private string CloneName = "";
 
 		private void DrawPolyModel() 
 		{
@@ -566,38 +609,6 @@ namespace Zeltex
 			}
 			GUILabel(OpenedElement.Name + " - Size: " + (OpenedElement as Voxels.VoxelModel).VoxelData.Length);// + ":" + (OpenedElement as Voxels.VoxelModel).VoxelData);
 		}
-
-        /*public void DrawZexelGui(Zexel MyZexel)
-        {
-            //GUILayout.Space(30);
-            //GUILabel("Zexel");
-            //if (HasOpenedZexels() == true && OpenedTexture != null)
-            MyZexel.IsDrawGui = GUIFoldout(MyZexel.IsDrawGui, "[" + MyZexel.Name + "] " + MyZexel.GetType().ToString());
-            {
-                GUILabel("Size: " + MyZexel.GetWidth() + " : " + MyZexel.GetHeight());
-                //GUILabel("IsNull? [" + (MyZexel.GetTexture() != null) + "]");
-                GUILayout.Space(30);
-				GUITexture(MyZexel.GetTexture(), 4);
-            }
-            // buttons
-
-            if (GUIButton("Import"))
-            {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-				DataManager.Get().ImportImage(MyZexel);
-#else
-				Debug.LogError("Platform not supported.");
-#endif
-            }
-            if (GUIButton("Export"))
-            {
-#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-				DataManager.Get().ExportZexel(MyZexel);
-#else
-                        Debug.LogError("Platform not supported.");
-#endif
-            }
-        }*/
 
 		private void GUITexture(Texture MyTexture, float Multiple = 1f) 
 		{
@@ -682,6 +693,20 @@ namespace Zeltex
 #endif
         }
 
+		public void IncreaseIndent() 
+		{
+			#if UNITY_EDITOR
+				UnityEditor.EditorGUI.indentLevel++;
+			#endif
+		}
+
+		public void DecreaseIndent()
+		{
+			#if UNITY_EDITOR
+			UnityEditor.EditorGUI.indentLevel--;
+			#endif
+		}
+
 		/// <summary>
 		/// Dynamically creates a gui for an object
 		/// </summary>
@@ -692,7 +717,7 @@ namespace Zeltex
             Element MyElement = MyObject as Element;
             if (MyElement != null)
             {
-                MyElement.IsDrawGui = GUIFoldout(MyElement.IsDrawGui, "[" + MyElement.Name + "] " + MyObject.GetType().ToString());
+                MyElement.IsDrawGui = GUIFoldout(MyElement.IsDrawGui, "[" + MyElement.Name + "] " + MyObject.GetType().ToString() + " -Parent? " + (MyElement.ParentElement != null).ToString());
                 if (MyElement.IsDrawGui == false)
                 {
                     return null;
@@ -702,10 +727,13 @@ namespace Zeltex
             {
                 GUILabel("Object: " + MyObject.ToString());
             }
-#if UNITY_EDITOR
-            UnityEditor.EditorGUI.indentLevel++;
-#endif
-            //GUILayout.Label("-----=====-----");
+			#if UNITY_EDITOR
+			if (UnityEditor.EditorGUI.indentLevel > 5)
+			{
+				return ReturnObject;
+			}
+			#endif
+			IncreaseIndent();
             if (IsDrawAllFields)
             {
                 GUILabel("Fields: [" + Fields.Length + "]");
@@ -748,7 +776,8 @@ namespace Zeltex
                         GUILabel(Fields[i].Name + " is null? " + (value == null).ToString() + " has json ignore? " + (HasJsonIgnore(Fields[i])).ToString()
                              + " is value null? " + ((value == null)).ToString() + " is static? " + Fields[i].IsStatic.ToString());
                     }*/
-                    if (HasJsonIgnore(Fields[i]))
+					bool IsIgnoreJson = HasJsonIgnore(Fields[i]);
+					if (IsIgnoreJson)
                     {
                         // nothing
                     }
@@ -768,6 +797,11 @@ namespace Zeltex
                             //Debug.LogError("Function not defined in this type.");
                             object NewValue = System.Activator.CreateInstance(Fields[i].FieldType);
                             Fields[i].SetValue(MyObject, NewValue);
+                            MyElement = NewValue as Element;
+                            if (MyElement != null)
+                            {
+                                MyElement.OnModified();
+                            }
                             //ListElements.Add((T)NewValue);
 #endif
                         }
@@ -776,15 +810,26 @@ namespace Zeltex
                     else if (Fields[i] != null && Fields[i].IsStatic == false)
                     {
                         if (Fields[i].FieldType == typeof(string)
-                         || Fields[i].FieldType == typeof(float)
-                         || Fields[i].FieldType == typeof(int))
+                            || Fields[i].FieldType == typeof(float)
+                            || Fields[i].FieldType == typeof(int))
                         {
                             string OldValue = value.ToString();
                             GUILabel("[" + Fields[i].Name + "]: " + OldValue);
                             string NewValue = GUIText(OldValue);
                             if (OldValue != NewValue)
-							{
-								Fields[i].SetValue(MyObject, NewValue);
+                            {
+                                if (Fields[i].FieldType == typeof(float))
+                                {
+                                    Fields[i].SetValue(MyObject, float.Parse(NewValue));
+                                }
+                                else if (Fields[i].FieldType == typeof(int))
+                                {
+                                    Fields[i].SetValue(MyObject, int.Parse(NewValue));
+                                }
+                                else
+                                {
+                                    Fields[i].SetValue(MyObject, NewValue);
+                                }
                                 if (MyElement != null)
                                 {
                                     MyElement.OnModified();
@@ -813,6 +858,10 @@ namespace Zeltex
                             if (OldValue != NewValue)
                             {
                                 Fields[i].SetValue(MyObject, NewValue);
+                                if (MyElement != null)
+                                {
+                                    MyElement.OnModified();
+                                }
                             }
 #endif
                         }
@@ -827,6 +876,10 @@ namespace Zeltex
                                 if (OldValue != NewValue)
                                 {
                                     Fields[i].SetValue(MyObject, NewValue);
+                                    if (MyElement != null)
+                                    {
+                                        MyElement.OnModified();
+                                    }
                                 }
 #endif
                             }
@@ -895,6 +948,28 @@ namespace Zeltex
                                 }
                             }
                         }
+                        else if (Fields[i].FieldType == typeof(IntDictionary))
+                        {
+                            bool WasModified;
+                            IntDictionary OldValue = Fields[i].GetValue(MyObject) as IntDictionary;
+                            if (OldValue != null)
+                            {
+                                GUILabel(" IntDictionary [" + Fields[i].Name + "]: " + OldValue.Count);
+                                IntDictionary NewValue = DrawIntDictionary(OldValue, MyObject, Fields[i], out WasModified);
+                                if (WasModified)
+                                {
+                                    Fields[i].SetValue(MyObject, NewValue);
+                                    if (MyElement != null)
+                                    {
+                                        MyElement.OnModified();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                GUILabel(" IntDictionary [" + Fields[i].Name + "] null!");
+                            }
+                        }
                         else if (Fields[i].FieldType == typeof(StatType))
                         {
                             int OldValue = (int)value;
@@ -934,8 +1009,8 @@ namespace Zeltex
 
                         }
                         // Draw for elements!
-                        if (Fields[i].FieldType.BaseType == typeof(Element))
-                        {
+						if (!IsIgnoreJson && Fields[i].FieldType.BaseType == typeof(Element))
+						{
                             //GUILabel(Fields[i].FieldType.ToString() + ": " + i + ": " + Fields[i].Name);
                             DrawFieldsForObject(value, MyObject, Fields[i]);
                         }
@@ -952,74 +1027,106 @@ namespace Zeltex
                 {
                     ReturnObject = DrawElementGui(MyElement, IsFirstField, ParentObject, MyField, ReturnObject);
                     DrawZexelGui(MyElement);
-                    DrawLevelGui(MyElement);
+					DrawSpawnGUI<Level>(MyElement);
+                    DrawSpawnGUI<Skeletons.Skeleton>(MyElement);
+                    DrawSpawnGUI<Item>(MyElement);
+                    DrawVoxelGUI(MyElement);
+                    DrawSpawnGUI<Voxels.PolyModel>(MyElement);
+                }
+                if (MyElement.ParentElement != null)
+                {
+                    GUILayout.Space(8);
+                    if (GUIButton("Set [" + MyElement.Name + "] to Null"))
+                    {
+                        MyField.SetValue(MyObject, null);
+                    }
+                    GUILayout.Space(7);
                 }
             }
-#if UNITY_EDITOR
-            UnityEditor.EditorGUI.indentLevel--;
-#endif
-            //GUILabel("-----=====-----");
+			DecreaseIndent();
             return ReturnObject;
         }
         
         private object DrawElementGui(Element MyElement, bool IsFirstField, object ParentObject, FieldInfo MyField, object ReturnObject)
         {
-            GUILabel("Data Moving");
-            // At the moment this only supports single positioning, but later on it will support more
-            MyElement.ElementLink = GUIText(MyElement.ElementLink);
-            if (MyElement.ElementLink == "")
+            if (MyElement.ParentElement != null)
             {
-                if (IsFirstField)
+                GUILabel("Push/Pull To/From New Position:");
+                // At the moment this only supports single positioning, but later on it will support more
+                MyElement.ElementLink = GUIText(MyElement.ElementLink);
+                if (MyElement.ElementLink == "")
                 {
-                    MyElement.ElementLink = MyElement.GetFolder();
-                }
-                else
-                {
-                    MyElement.ElementLink = DataFolderNames.DataTypeToFolderName(MyElement.GetType());
-                }
-            }
-            if (GUIButton("Pull From [" + MyElement.ElementLink + "]"))
-            {
-                //Element OldValue = Fields[i].GetValue(MyObject) as Element;
-                Debug.Log(MyElement.Name + " is being overwritten from an element in database folder: " + MyElement.ElementLink);
-                Element NewElement = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name).Clone();
-                NewElement.IsDrawGui = MyElement.IsDrawGui;
-                NewElement.MyFolder = MyElement.MyFolder;
-                NewElement.ElementLink = MyElement.ElementLink;
-                NewElement.ParentElement = MyElement.ParentElement;
-                NewElement.ResetName();
-                if (MyField != null)
-                {
-                    try
+                    if (IsFirstField)
                     {
-                        MyField.SetValue(ParentObject, NewElement);
-                        Debug.Log(MyElement.Name + " is using MyField.SetValue");
+                        MyElement.ElementLink = MyElement.GetFolder();
                     }
-                    catch (System.ArgumentException e)
+                    else
                     {
-                        // From a list of elements
-                        Debug.LogError(e.ToString());
-                        Debug.LogError(NewElement.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
-                        ReturnObject = NewElement as object;
-                        Debug.Log(MyElement.Name + " is using ReturnObject to a list");
+                        MyElement.ElementLink = DataFolderNames.DataTypeToFolderName(MyElement.GetType());
                     }
-                    NewElement.OnModified();
                 }
-                else if (IsFirstField)
+                if (GUIButton("Pull From [" + MyElement.ElementLink + "]"))
                 {
-                    OpenedFolder.SetElement(NewElement);
+                    //Element OldValue = Fields[i].GetValue(MyObject) as Element;
+                    //Debug.Log(MyElement.Name + " is being overwritten from an element in database folder: " + MyElement.ElementLink);
+                    Element NewElement = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name).Clone();
+                    NewElement.IsDrawGui = MyElement.IsDrawGui;
+                    NewElement.MyFolder = MyElement.MyFolder;
+                    NewElement.ElementLink = MyElement.ElementLink;
+                    NewElement.ParentElement = MyElement.ParentElement;
+                    NewElement.ResetName();
+                    if (MyField != null)
+                    {
+                        try
+                        {
+                            MyField.SetValue(ParentObject, NewElement);
+                            Debug.Log(MyElement.Name + " is using MyField.SetValue");
+                        }
+                        catch (System.ArgumentException e)
+                        {
+                            // From a list of elements
+                            Debug.LogError(e.ToString());
+                            Debug.LogError(NewElement.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
+                            ReturnObject = NewElement as object;
+                            Debug.Log(MyElement.Name + " is using ReturnObject to a list");
+                        }
+                        NewElement.OnModified();
+                    }
+                    else if (IsFirstField)
+                    {
+                        OpenedFolder.SetElement(NewElement);
+                    }
+                    else
+                    {
+                        Debug.LogError("Could not pull element.");
+                    }
                 }
-                else
+                if (GUIButton("Push To [" + MyElement.ElementLink + "]"))
                 {
-                    Debug.LogError("Could not pull element.");
+                    //Element MyValue = Fields[i].GetValue(MyObject) as Element;
+                    DataManager.Get().PushElement(MyElement.ElementLink, MyElement);
                 }
-            }
-            if (GUIButton("Push To [" + MyElement.ElementLink + "]"))
-            {
-                //Element MyValue = Fields[i].GetValue(MyObject) as Element;
-                DataManager.Get().PushElement(MyElement.ElementLink, MyElement);
             }
             return ReturnObject;
+        }
+
+        private void DrawVoxelGUI(Element MyElement)
+        {
+            if (MyElement.GetType() == typeof(Voxels.VoxelModel))
+            {
+                Voxels.VoxelModel MyVoxelModel = MyElement as Voxels.VoxelModel;
+                if (MyVoxelModel != null)
+                {
+                    if (GUIButton("Import"))
+                    {
+                        DataManager.Get().ImportVox(MyVoxelModel);
+                    }
+                }
+                if (MyElement.ParentElement == null) 
+                {
+                    DrawSpawnGUI<Voxels.VoxelModel>(MyElement);
+                }
+            }
         }
 
         private void DrawZexelGui(Element MyElement)
@@ -1047,7 +1154,7 @@ namespace Zeltex
             if (MyElement.GetType() == typeof(Level))
             {
                 Level MyLevel = MyElement as Level;
-                if (!MyLevel.IsSpawned())
+				if (!MyLevel.HasSpawned())
                 {
                     if (GUIButton("Spawn"))
                     {
@@ -1063,6 +1170,51 @@ namespace Zeltex
                 }
             }
         }
+
+		private void DrawSkeletonGui(Element MyElement)
+		{
+			if (MyElement.GetType() == typeof(Skeletons.Skeleton))
+			{
+				Skeletons.Skeleton MySkeleton = MyElement as Skeletons.Skeleton;
+				if (!MySkeleton.HasSpawned())
+				{
+					if (GUIButton("Spawn"))
+					{
+						MySkeleton.Spawn();
+					}
+				}
+				else
+				{
+					if (GUIButton("DeSpawn"))
+					{
+						MySkeleton.DeSpawn();
+					}
+				}
+			}
+		}
+
+		private void DrawSpawnGUI<T>(Element MyElement) where T : Element
+		{
+			if (MyElement.GetType() == typeof(T))
+			{
+				T MyElementConverted = MyElement as T;
+				if (!MyElementConverted.HasSpawned())
+				{
+					if (GUIButton("Spawn"))
+					{
+						MyElementConverted.Spawn();
+					}
+				}
+				else
+				{
+					if (GUIButton("DeSpawn"))
+					{
+						MyElementConverted.DeSpawn();
+					}
+				}
+			}
+		}
+
         /// <summary>
         /// Draws for a list of type T
         /// </summary>
@@ -1085,14 +1237,14 @@ namespace Zeltex
 
         public bool HasJsonIgnore(FieldInfo MyField)
         {
-            object[] attributes = MyField.GetCustomAttributes(false);
+            object[] attributes = MyField.GetCustomAttributes(true);	// false
 
             for (int i = 0; i < attributes.Length; i++)
             {
                 if (attributes[i].GetType() == typeof(Newtonsoft.Json.JsonIgnoreAttribute))
                 {
                     return true;
-                }
+				}
             }
             return false;
         }
@@ -1196,6 +1348,79 @@ namespace Zeltex
                 MyList = ListElements as List<T>;
             }
             return MyList;
+        }
+
+        Int3 GUIInt3(Int3 OldInt3)
+        {
+            Rect OldRect = GUILayoutUtility.GetRect(new GUIContent("Blargnugg"), GUI.skin.button);
+            OldRect.position = new Vector2(OldRect.position.x + GUIIndentPositionX(), OldRect.position.y);
+            OldRect.width -= GUIIndentPositionX();
+            Rect PartA = new Rect(OldRect.x + OldRect.width * 1f / 4f, OldRect.y, OldRect.width / 4f, OldRect.height);
+            Rect PartB = new Rect(OldRect.x + OldRect.width * 2f / 4f, OldRect.y, OldRect.width / 4f, OldRect.height);
+            Rect PartC = new Rect(OldRect.x + OldRect.width * 3f / 4f, OldRect.y, OldRect.width / 4f, OldRect.height);
+            Int3 NewInt3 = new Int3();
+            NewInt3.x = int.Parse(GUI.TextField(PartA, OldInt3.x.ToString()));
+            NewInt3.y = int.Parse(GUI.TextField(PartB, OldInt3.y.ToString()));
+            NewInt3.z = int.Parse(GUI.TextField(PartC, OldInt3.z.ToString()));
+            return NewInt3;
+        }
+
+        string GUIInt3Text(string OldText) 
+        {
+            Rect OldRect = GUILayoutUtility.GetLastRect();//(new GUIContent("Blargnugg"), GUI.skin.button);
+            OldRect.position = new Vector2(OldRect.position.x + GUIIndentPositionX(), OldRect.position.y);
+            OldRect.width -= GUIIndentPositionX();
+            Rect PartA = new Rect(OldRect.x, OldRect.y, OldRect.width / 4f, OldRect.height);
+            return GUI.TextField(OldRect, OldText);
+        }
+
+        public IntDictionary DrawIntDictionary(IntDictionary MyDictionary, object MyObject, FieldInfo MyField, out bool WasModified) 
+        {
+            WasModified = false;
+            MyDictionary.IsEditing = GUIToggle("Is Editing?", MyDictionary.IsEditing);
+            if (GUIButton("Add"))
+            {
+                MyDictionary.Add(new Int3(0, 0, Random.Range(-100, -1)), "Empty");
+                WasModified = true;
+            }
+
+            if (MyDictionary != null)
+            {
+                try
+                {
+                    foreach (KeyValuePair<Int3, string> MyPair in MyDictionary)
+                    {
+                        if (MyDictionary.IsEditing == false)
+                        {
+                            GUILabel(MyPair.Key + ":" + MyPair.Value);
+                        }
+                        else
+                        {
+                            Int3 NewKey = GUIInt3(MyPair.Key);
+                            if (MyPair.Key != NewKey)
+                            {
+                                MyDictionary.Remove(MyPair.Key);
+                                MyDictionary.Add(NewKey, MyPair.Value);
+                                WasModified = true;
+                            }
+                            else
+                            {
+                                string NewValue = GUIInt3Text(MyPair.Value);
+                                if (MyPair.Value != NewValue)
+                                {
+                                    MyDictionary[MyPair.Key] = NewValue;
+                                    WasModified = true;
+                                }
+                            }
+                        }
+                    }
+                } 
+                catch (System.ObjectDisposedException e)
+                {
+                    //Debug.LogError("DrawIntDictionary: " + e.ToString());
+                }
+            }
+            return MyDictionary;
         }
 #endregion
     }

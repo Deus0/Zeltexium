@@ -34,6 +34,7 @@ namespace Zeltex.Combat
         public Material PopupMaterialHeal;
         private bool HasExploded = false;
         private Vector3 OriginalForce;
+		public MeshRenderer MyMeshRenderer;
         #endregion
 
         #region Mono
@@ -87,27 +88,30 @@ namespace Zeltex.Combat
                // if (MyShooter)
                 {
                     Data = MyCharacter.GetComponent<Character>().GetSkillbar().GetSelectedSpell();
-                    transform.SetParent(BulletManager.Get().transform);
-                    LayerManager.Get().SetLayerBullet(gameObject);
-                    gameObject.name = "Bullet" + Random.Range(1, 100000);
-                    Rigidbody MyRigid = GetComponent<Rigidbody>();
-                    OriginalForce = (new Vector3(transform.forward.x,
-                                                    transform.forward.y + Random.Range(-Data.Randomness, Data.Randomness),
-                                                    transform.forward.z + Random.Range(-Data.Randomness, Data.Randomness)
-                                                    ) * Data.BulletForce);
-                    MyRigid.AddForce(OriginalForce);
-                    //MyRigid.isKinematic = true;
-                    transform.localScale = ConvertSize(Data.Size);
-                    gameObject.GetComponent<MeshRenderer>().material.color = Data.ColorTint;
-                    gameObject.GetComponent<TrailRenderer>().material.color = Data.ColorTint;
-                    Zeltex.Sounds.SoundManager.CreateNewSound(transform.position, Data.GetSpawnSound(), Data.GetSoundVolume());
-                    StartCoroutine(FindTarget());
-                    StartCoroutine(ImplodeInTime(Data.LifeTime));
-                }
-               // else
-                {
-                    //Debug.LogError(MyCharacter.name + " does not have a shooter script");
-                   // Destroy(gameObject);
+                    if (Data != null)
+                    {
+                        transform.SetParent(BulletManager.Get().transform);
+                        LayerManager.Get().SetLayerBullet(gameObject);
+                        gameObject.name = "Bullet" + Random.Range(1, 100000);
+                        Rigidbody MyRigid = GetComponent<Rigidbody>();
+                        OriginalForce = (new Vector3(transform.forward.x,
+                            transform.forward.y + Random.Range(-Data.Randomness, Data.Randomness),
+                            transform.forward.z + Random.Range(-Data.Randomness, Data.Randomness)
+                        ) * Data.BulletForce);
+                        MyRigid.AddForce(OriginalForce);
+                        //MyRigid.isKinematic = true;
+                        transform.localScale = ConvertSize(Data.Size);
+                        MyMeshRenderer.material.color = Data.ColorTint;
+                        gameObject.GetComponent<TrailRenderer>().material.color = Data.ColorTint;
+                        Zeltex.Sounds.SoundManager.CreateNewSound(transform.position, Data.GetSpawnSound(), Data.GetSoundVolume());
+                        StartCoroutine(FindTarget());
+                        StartCoroutine(ImplodeInTime(Data.LifeTime));
+                    }
+                    else
+                    {
+                        Debug.LogError(MyCharacter.name + " does not have a Spell Data");
+                        gameObject.Die();
+                    }
                 }
             }
             else
@@ -192,6 +196,7 @@ namespace Zeltex.Combat
             }
         }
 
+		public float ImplodeExplosionScale = 1.5f;
         /// <summary>
         /// Implosion is like explosion except it just goes inwards
         /// </summary>
@@ -202,7 +207,7 @@ namespace Zeltex.Combat
                 HasExploded = true;
                 DestroyInTime(DissapearingTime);
                 Zeltex.Sounds.SoundManager.CreateNewSound(transform.position, Data.GetImplodeSound(), Data.GetSoundVolume());
-                CreateExplosionEffect(null, transform.localScale);
+				CreateExplosionEffect(null, transform.localScale * ImplodeExplosionScale);
             }
         }
 
@@ -227,7 +232,7 @@ namespace Zeltex.Combat
                 MyExplosion.transform.SetParent(BulletManager.Get().transform);
                 MyExplosion.transform.localScale = transform.localScale;
                 MyExplosion.GetComponent<AnimateSize>().Begin(ExplosionSize);
-                MyExplosion.GetComponent<MeshRenderer>().material.color = Data.ColorTint;
+				MyExplosion.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = Data.ColorTint;
 
                 //Debug.LogError("ExplosionSize:" + MyExplosion.GetComponent<AnimateSize>().MaxSize.ToString());
                 if (Data.IsDestroyTerrainOnHit)
@@ -256,8 +261,8 @@ namespace Zeltex.Combat
 		IEnumerator DestroyInTime2(float LifeTime)
         {
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<MeshCollider>().enabled = false;
+			MyMeshRenderer.enabled = false;
+			gameObject.GetComponent<BoxCollider>().enabled = false;
             yield return new WaitForSeconds(LifeTime);
             Destroy(gameObject);
         }

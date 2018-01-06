@@ -12,10 +12,23 @@ namespace Zeltex
     {
         public UnityEngine.Coroutine UnityRoutine;
         public UniversalCoroutine.Coroutine UniversalRoutine;
+
         public bool IsUpdating()
         {
             return (UnityRoutine != null || UniversalRoutine != null);
         }
+
+		/*public IEnumerator WaitFor() 
+		{
+			if (UnityRoutine)
+			{
+				yield return RoutineManager.Get().StartCoroutine(UnityRoutine);
+			}
+			else if (UniversalRoutine)
+			{
+				yield return UniversalCoroutine.CoroutineManager.StartCoroutine(UniversalRoutine);
+			}
+		}*/
     }
     /// <summary>
     /// Manages routines for Zeltex, interfaces other routine handlers
@@ -72,5 +85,19 @@ namespace Zeltex
             }
             return NewRoutine;
         }
+
+		/*public new Coroutine StartRoutine(IEnumerator NewAction) 
+		{
+			Coroutine NewRoutine = new Coroutine();
+			if (Application.isPlaying)
+			{
+				NewRoutine = base.StartCoroutine(NewAction);
+			}
+			else
+			{
+				NewRoutine = UniversalCoroutine.CoroutineManager.StartCoroutine(NewAction);
+			}
+			return NewRoutine;
+		}*/
     }
 }

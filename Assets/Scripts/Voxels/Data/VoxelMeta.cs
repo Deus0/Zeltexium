@@ -456,9 +456,8 @@ namespace Zeltex.Voxels
         private void OnActivateDoor(Chunk MyChunk, Vector3 BlockPosition2)
         {
             Int3 BlockPosition = new Int3(BlockPosition2);
-            VoxelManager DataBase = MyChunk.GetWorld().MyDataBase;
             List<Door> MyDoors = new List<Door>();
-            Door MyDoor = CreateDoorAtLocation(MyChunk.GetWorld(), DataBase, BlockPosition.GetVector());
+            Door MyDoor = CreateDoorAtLocation(MyChunk.GetWorld(), VoxelManager.Get(), BlockPosition.GetVector());
             if (MyDoor != null)
             {
                 MyDoors.Add(MyDoor);
@@ -468,7 +467,7 @@ namespace Zeltex.Voxels
                 {
                     Door MyDoor2 = CreateDoorAtLocation(
                         MyChunk.GetWorld(),
-                        DataBase,
+                        VoxelManager.Get(),
                         BlockPosition.Above().GetVector());
                     MyDoors.Add(MyDoor2);
                 }
@@ -478,7 +477,7 @@ namespace Zeltex.Voxels
                 {
                     Door MyDoor3 = CreateDoorAtLocation(
                         MyChunk.GetWorld(), 
-                        DataBase, 
+                        VoxelManager.Get(), 
                         BlockPosition.Below().GetVector());
                     MyDoors.Add(MyDoor3);
                 }
@@ -536,11 +535,11 @@ namespace Zeltex.Voxels
             {
                 MyMeshRenderer = NewMoveableVoxel.AddComponent<MeshRenderer>();
             }
-            MyMeshRenderer.sharedMaterial = MyWorld.MyMaterials[0];
+            MyMeshRenderer.sharedMaterial = VoxelManager.Get().MyMaterials[0];
             //MyDataBase.UpdateWithSingleVoxelMesh(NewMoveableVoxel, VoxelType, Color.white);
-            if (NewMoveableVoxel.GetComponent<Zeltex.Items.ItemObject>())
+            if (NewMoveableVoxel.GetComponent<Zeltex.Items.ItemHandler>())
             {
-                GameObject.Destroy(NewMoveableVoxel.GetComponent<Zeltex.Items.ItemObject>());
+                GameObject.Destroy(NewMoveableVoxel.GetComponent<Zeltex.Items.ItemHandler>());
             }
             if (NewMoveableVoxel.GetComponent<ParticleSystem>())
             {

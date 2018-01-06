@@ -8,7 +8,7 @@ namespace Zeltex.Quests
 	/*
 This class will look for either:
 	Character
-	ItemObject
+	ItemHandler
 	Zone
 And use it as a target
 It will then render either an ai line, or a arrow pointing in the way we need to go.
@@ -140,14 +140,14 @@ It will then render either an ai line, or a arrow pointing in the way we need to
 				if (MyQuest.GetCurrentCondition ().IsInventory ())
                 {   // for all the item objects in the world, search for the item needed in the quest
                     //Debug.LogError ("\t ConditionType " + MyQuest.GetCurrentCondition ().ObjectName);
-                    List<ItemObject> MyItems = ItemManager.Get().MyItemObjects;
+                    List<ItemHandler> MyItems = ItemManager.Get().MyItemHandlers;
 					//Debug.LogError("Found a total of " + MyItems.Count + " Item Objects.");
 					for (int i = 0; i < MyItems.Count; i++)
                     {
-						//ItemObject MyItemObject = MyItems [i].GetComponent<ItemObject> ();
+						//ItemHandler MyItemHandler = MyItems [i].GetComponent<ItemHandler> ();
 						if (!MyItems[i].HasUsed ())
                         {
-							//Debug.LogError("Checking " + MyItemObject.MyItem.Name);
+							//Debug.LogError("Checking " + MyItemHandler.MyItem.Name);
 							if (MyQuest.GetCurrentCondition ().ObjectName == MyItems[i].GetItem().Name)
                             {
 								MyTarget = MyItems [i].gameObject;
@@ -161,11 +161,11 @@ It will then render either an ai line, or a arrow pointing in the way we need to
                 {
 					/*if (MyQuest.GetCurrentCondition ().IsLeaveZone ())
 						IsTowardsTarget = false;
-					List<GameObject> MyItems = ItemManager.GatherAllItemObjects ("Zeltex.WorldUtilities.ZoneTrigger");
+					List<GameObject> MyItems = ItemManager.GatherAllItemHandlers ("Zeltex.WorldUtilities.ZoneTrigger");
 					for (int i = 0; i < MyItems.Count; i++)
                     {
-						Zeltex.WorldUtilities.ZoneTrigger MyItemObject = MyItems[i].GetComponent<Zeltex.WorldUtilities.ZoneTrigger> ();
-						if (MyQuest.GetCurrentCondition ().ObjectName == MyItemObject.name)
+						Zeltex.WorldUtilities.ZoneTrigger MyItemHandler = MyItems[i].GetComponent<Zeltex.WorldUtilities.ZoneTrigger> ();
+						if (MyQuest.GetCurrentCondition ().ObjectName == MyItemHandler.name)
                         {
 							MyTarget = MyItems [i];
 							return;
@@ -175,10 +175,10 @@ It will then render either an ai line, or a arrow pointing in the way we need to
 			}
 			if (MyQuest.GetCurrentCondition ().IsTalkTo () || MyQuest.HasCompleted()) 
 			{
-				/*List<GameObject> MyItems = Zeltex.Items.ItemManager.GatherAllItemObjects("Zeltex.Characters.Character");
+				/*List<GameObject> MyItems = Zeltex.Items.ItemManager.GatherAllItemHandlers("Zeltex.Characters.Character");
 				for (int i = 0; i < MyItems.Count; i++) 
 				{
-					Zeltex.Characters.Character MyItemObject = MyItems[i].GetComponent<Zeltex.Characters.Character>();
+					Zeltex.Characters.Character MyItemHandler = MyItems[i].GetComponent<Zeltex.Characters.Character>();
 					string NpcName = "";
 					if (MyQuest.HasCompleted()) 
 					{
@@ -186,7 +186,7 @@ It will then render either an ai line, or a arrow pointing in the way we need to
 					} else {
 						NpcName = MyQuest.GetCurrentCondition().ObjectName;
 					}
-					if (NpcName == MyItemObject.name) 
+					if (NpcName == MyItemHandler.name) 
 					{
 						MyTarget = MyItems[i];
 						return;

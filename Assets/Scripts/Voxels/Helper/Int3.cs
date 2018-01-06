@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using Zeltex.Voxels;
+using Newtonsoft.Json;
 
 namespace Zeltex
 {
+
+
     public static class VectorExtentions
     {
         public static Int3 ToInt3(this Vector3 MyVector3)
@@ -25,14 +28,18 @@ namespace Zeltex
     [System.Serializable]
     public class Int3
     {
+        [JsonProperty]
         public int x = 0;
+        [JsonProperty]
         public int y = 0;
+        [JsonProperty]
         public int z = 0;
 
         public Int3()
         {
 
         }
+
         public Int3(Int3 OldInt3)
         {
             x = OldInt3.x;
@@ -111,6 +118,34 @@ namespace Zeltex
         {
             return "[" + x + ":" + y + ":" + z + "]";
         }
+
+        public static explicit operator Int3(string Data) 
+        {
+            Int3 NewInt3 = new Int3();
+            Data = Data.Substring(1, Data.Length - 2);
+            string[] Input = Data.Split(':');
+            if (Input.Length == 3)
+            {
+                try 
+                {
+                    NewInt3.x = int.Parse(Input[0]);
+                    NewInt3.y = int.Parse(Input[1]);
+                    NewInt3.z = int.Parse(Input[2]);
+                }
+                catch (System.FormatException e) 
+                {
+                    Debug.LogError("Int3 Conversion: " + e.ToString());
+                }
+            }
+            return NewInt3;
+        }
+
+        /*
+
+        public override void FromString(string OldString) 
+        {
+
+        }*/
 
         #region Operators
         /// <summary>

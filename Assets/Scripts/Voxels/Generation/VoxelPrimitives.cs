@@ -129,7 +129,7 @@ namespace Zeltex.Voxels
         }
         public void CreateSphere(Vector3 Position, Vector3 Size)
         {
-            string VoxelName = MyWorld.MyDataBase.GetMeta(VoxelType).Name;
+            string VoxelName = VoxelManager.Get().GetMeta(VoxelType).Name;
             Debug.Log("Creating Sphere at: " + Position.ToString() + ":" + Size.ToString() + " with type [" + VoxelName + "]");
             foreach (var MyChunk in MyWorld.MyChunkData)
             {

@@ -12,6 +12,7 @@ namespace Zeltex.Guis
 	public class Orbitor : MonoBehaviour 
 	{
         #region Variables
+        private static int InitiateStickTime = 25;
         [Header("Target")]
         [Tooltip("Sets the target to the main camera")]
         [SerializeField]
@@ -93,11 +94,10 @@ namespace Zeltex.Guis
             }
             if (TargetObject != null)
             {
-                CheckOrbitPosition();
-                Vector3 StartPosition = GetTargetWorldPosition();
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < InitiateStickTime; i++)
                 {
-                    transform.position = StartPosition;
+                    CheckOrbitPosition();
+                    transform.position = GetTargetWorldPosition();
                     transform.rotation = TargetRotation;
                     yield return null;
                 }
@@ -145,6 +145,7 @@ namespace Zeltex.Guis
         {
             ScreenPosition = ScreenPosition_;
         }
+
         /// <summary>
         /// Get screen position
         /// </summary>

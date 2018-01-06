@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Zeltex.Dialogue;
@@ -157,13 +158,7 @@ namespace Zeltex.Guis.Characters
                     GuiName,
                     MyCharacter.GetComponent<UnityEngine.Networking.NetworkIdentity>());
                 Debug.Log("Spawned " + GuiName + ":" + (MyGui != null));
-                AttachGui(MyGui);
-                if (GuisEnabled.Contains(GuiName) == false)
-                {
-                    GuisEnabled.Add(GuiName);
-                    GuisEnabledStates.Add(MyGui.GetBeginState());
-                }
-                RoutineManager.Get().StartCoroutine(FreezeGuiState(MyGui));
+                RoutineManager.Get().StartCoroutine(AttachGuiRoutine(MyGui, GuiName));
                 return MyGui;
             }
             else
@@ -173,14 +168,21 @@ namespace Zeltex.Guis.Characters
             }
         }
 
-        public System.Collections.IEnumerator FreezeGuiState(ZelGui MyGui)
+        public IEnumerator AttachGuiRoutine(ZelGui MyGui, string GuiName)
         {
             // wait for gui readying object
-            for (int i = 0; i < 30; i++)
+            Orbitor MyOrbitor = MyGui.GetComponent<Orbitor>();
+            for (int i = 0; i < 20; i++)
             {
                 if (MyGui)
                 {
                     MyGui.SetState(MyGui.GetBeginState());
+                    // Teleport
+                    if (MyOrbitor)
+                    {
+                        MyOrbitor.SetTarget(MyCharacter.transform);
+                        MyOrbitor.TeleportToTarget();
+                    }
                 }
                 yield return null;
             }
@@ -188,6 +190,7 @@ namespace Zeltex.Guis.Characters
             {
                 MyGui.SetState(MyGui.GetBeginState());
             }
+            AttachGui(MyGui, GuiName);
         }
 
         public void Remove(ZelGui MyZelGui)
@@ -528,6 +531,11 @@ namespace Zeltex.Guis.Characters
                 return;
             }
 
+            if (GuisEnabled.Contains(Name) == false)
+            {
+                GuisEnabled.Add(Name);
+                GuisEnabledStates.Add(GuiObject.GetBeginState());
+            }
             if (LayerManager.Get())
             {
                 LayerManager.Get().SetLayerGui(GuiObject.gameObject);
@@ -613,6 +621,10 @@ namespace Zeltex.Guis.Characters
             {
                 UpdateSkillbar(GuiObject.gameObject);
             }
+            else if (GuiObject.name.Contains("Equipment"))
+            {
+                UpdateEquipment(GuiObject);
+            }
             else if (GuiObject.name.Contains("Dialogue"))    // link up texts to the dialogue handler
             {
                 UpdateDialogue(GuiObject.gameObject);
@@ -628,10 +640,6 @@ namespace Zeltex.Guis.Characters
             else if (GuiObject.name.Contains("Log"))
             {
                 UpdateLog(GuiObject.gameObject);
-            }
-            else if (GuiObject.name.Contains("Equipment"))
-            {
-                UpdateEquipment(GuiObject.gameObject);
             }
             else if (GuiObject.name.Contains("ItemPickup"))
             {
@@ -699,15 +707,13 @@ namespace Zeltex.Guis.Characters
             {
                 InventoryGuiHandler MyInventoryGuiHandler = GuiObject.GetComponent<InventoryGuiHandler>();
                 Inventory MyInventory = MyCharacter.GetBackpackItems();
-                MyInventoryGuiHandler.MyCharacter = MyCharacter;
-                MyInventoryGuiHandler.MyInventory = MyInventory;
+                MyInventoryGuiHandler.SetCharacter(MyCharacter);
+                MyInventoryGuiHandler.SetInventory(MyInventory);
+                // Link Quest Log to inventory
                 QuestLog MyQuestLog = MyCharacter.GetData().MyQuestLog;
                 if (MyInventory != null)
                 {
-                    MyInventory.OnExchangeCurrency = new UnityEvent();
-                    MyInventory.OnAddItem.AddEvent(MyInventoryGuiHandler.RefreshList);
                     MyInventory.OnAddItem.AddEvent(MyQuestLog.OnAddItem);
-                    MyInventory.OnUpdateItem.AddEvent(MyInventoryGuiHandler.RefreshAt);
                 }
                 else
                 {
@@ -728,10 +734,8 @@ namespace Zeltex.Guis.Characters
                 if (MyInventory != null)
                 {
                     MyInventory.OnUpdateItem.AddEvent(MySkillbar.SetItem);
-                    MyInventoryGuiHandler.MyCharacter = MyCharacter;
-                    MyInventoryGuiHandler.MyInventory = MyInventory;
-                    MyInventory.OnAddItem.AddEvent(MyInventoryGuiHandler.RefreshList);
-                    MyInventory.OnUpdateItem.AddEvent(MyInventoryGuiHandler.RefreshAt);
+                    MyInventoryGuiHandler.SetCharacter(MyCharacter);
+                    MyInventoryGuiHandler.SetInventory(MyInventory);
                 }
                 else
                 {
@@ -756,23 +760,30 @@ namespace Zeltex.Guis.Characters
             }
         }
 
-        private void UpdateEquipment(GameObject GuiObject)
+        private void UpdateEquipment(ZelGui GuiObject)
         {
             if (MyCharacter)
             {
-                CharacterStats MyStats = MyCharacter.GetData().MyStatsHandler;
-                Inventory MyEquipment = MyCharacter.GetEquipment();
+                InventoryGuiHandler MyInventoryGui = GuiObject.GetComponent<InventoryGuiHandler>();
+                MyInventoryGui.SetCharacter(MyCharacter);
+                MyInventoryGui.SetInventory(MyCharacter.GetEquipment());
+
                 // link characterstats to equipment inventory
-                MyStats.SetEquipment(MyEquipment);
+                //CharacterStats MyStats = MyCharacter.GetData().MyStatsHandler;
+                //MyStats.SetEquipment(MyEquipment);
                 // link characterStats to StatsGui
-                GuiObject.GetComponent<StatGuiHandler>().MyCharacter = MyCharacter;
-                MyEquipment.OnAddItem.AddEvent(GuiObject.GetComponent<StatGuiHandler>().OnNewGuiStats);
+                //GuiObject.GetComponent<StatGuiHandler>().MyCharacter = MyCharacter;
+                //MyEquipment.OnAddItem.AddEvent(GuiObject.GetComponent<StatGuiHandler>().OnNewGuiStats);
+            }
+            else
+            {
+                Debug.LogError("Character is null when attaching equipment.");
             }
         }
 
         private void UpdateItemPickup(GameObject GuiObject)
         {
-            GameObject MyDraggedItem = GuiObject.transform.GetChild(0).gameObject;
+            GameObject MyItemPickup = GuiObject;
             for (int i = 0; i < MyGuis.Count; i++)
             {
                 if (MyGuis[i])
@@ -780,7 +791,7 @@ namespace Zeltex.Guis.Characters
                     InventoryGuiHandler MyInventoryGui = MyGuis[i].gameObject.GetComponent<InventoryGuiHandler>();
                     if (MyInventoryGui)
                     {
-                        MyInventoryGui.MyDraggedItem = MyDraggedItem;
+                        MyInventoryGui.SetItemPickup(MyItemPickup);
                     }
                 }
             }

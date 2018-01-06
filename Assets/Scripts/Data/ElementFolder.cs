@@ -20,7 +20,8 @@ namespace Zeltex
     [System.Serializable]
     public class ElementFolder : DataFolder<Element>
     {
-        public ElementDictionary ElementData = new ElementDictionary();
+		public ElementDictionary ElementData = new ElementDictionary();
+
         public override DataDictionary<Element> Data
         {
             get { return ElementData as DataDictionary<Element>; }
@@ -50,7 +51,6 @@ namespace Zeltex
             }
             return -1;
         }
-
         public void Revert()
         {
             Clear();
@@ -114,7 +114,7 @@ namespace Zeltex
             System.Type type = DataFolderNames.GetDataType(FolderName);// System.Type.GetType("Foo.MyClass");
             object ElementObject = System.Activator.CreateInstance(type);
             Element NewElement = ElementObject as Element;
-            NewElement.Name = "Element" + Random.Range(1, 10000);
+            NewElement.SetNameOfClone("Element" + Random.Range(1, 10000));
             NewElement.MyFolder = this as ElementFolder;
             NewElement.MyFolder.Data.Add(NewElement.Name, NewElement);
 #endif

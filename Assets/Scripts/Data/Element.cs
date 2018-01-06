@@ -115,6 +115,12 @@ namespace Zeltex
             }
         }
 
+        public void SetNameOfClone(string NewName)
+        {
+            Name = NewName;
+            OldName = NewName;
+        }
+
         /// <summary>
         /// Other
         /// </summary>
@@ -164,7 +170,7 @@ namespace Zeltex
                     ModifiedEvent.Invoke(this);
                     if (MyFolder != null)
                     {
-                        MyFolder.ModifiedEvent.Invoke(this);
+						MyFolder.OnModified();
                     }
                 }
             }
@@ -276,16 +282,16 @@ namespace Zeltex
                     HasMoved = false;
                     // Move File Here
                     MovedEvent.Invoke(this);
-                    if (MyFolder != null)
+                    /*if (MyFolder != null)
                     {
                         MyFolder.MovedEvent.Invoke(this);
-                    }
+                    }*/
                 }
-                SavedEvent.Invoke(this);    // finish modifying
-                if (MyFolder != null)
-                {
-                    MyFolder.SavedEvent.Invoke(this);
-                }
+				SavedEvent.Invoke(this);    // finish modifying
+				if (MyFolder != null)
+				{
+					MyFolder.OnSaved();
+				}
             }
         }
 
@@ -329,7 +335,16 @@ namespace Zeltex
 
 		public Element Load(string Script, System.Type DataType)
         {
-            Element MyElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+            Element MyElement;
+            try 
+            {
+                MyElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+            }
+            catch (System.ArgumentException e) 
+            {
+                Debug.LogError("Element.Load: " + e.ToString());
+                MyElement = null;
+            }
             if (MyElement != null)
             {
                 MyElement.OnLoad();
@@ -413,5 +428,24 @@ namespace Zeltex
 
         }
         #endregion
+
+		#region WorldSpawning
+
+		public virtual void Spawn()
+		{
+			
+		}
+
+		public virtual void DeSpawn()
+		{
+
+
+		}
+
+		public virtual bool HasSpawned()
+		{
+			return false;
+		}
+		#endregion
     }
 }

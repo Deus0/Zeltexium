@@ -33,7 +33,7 @@ namespace Zeltex.Voxels
                 return;
             }
             NewMoveableVoxel.layer = gameObject.layer;
-            NewMoveableVoxel.name = MyDataBase.GetMeta(TypeRemoved).Name;
+            NewMoveableVoxel.name = VoxelManager.Get().GetMeta(TypeRemoved).Name;
             // Transform
             NewMoveableVoxel.transform.position = BlockToRealPosition(Position + (new Vector3(1, 1, 1)) / 2f);    // transform.TransformPoint(Position + VoxelScale/2f);
             NewMoveableVoxel.transform.rotation = transform.rotation;
@@ -73,13 +73,13 @@ namespace Zeltex.Voxels
                 MyMeshRenderer = NewMoveableVoxel.AddComponent<MeshRenderer>();
             }
             MyCollider.convex = true;
-            MyMeshRenderer.sharedMaterial = MyMaterials[0];
+            MyMeshRenderer.sharedMaterial = VoxelManager.Get().MyMaterials[0];
             PolyModelHandle MyModel = NewMoveableVoxel.AddComponent<PolyModelHandle>();
             MyModel.UpdateWithSingleVoxelMesh(NewMoveableVoxel, TypeRemoved, MyTint);
             if (IsDropParticles)
             {
                 Destroy(NewMoveableVoxel.GetComponent<ParticleSystem>());
-                Destroy(NewMoveableVoxel.GetComponent<ItemObject>());
+                Destroy(NewMoveableVoxel.GetComponent<ItemHandler>());
                 Destroy(NewMoveableVoxel, UnityEngine.Random.Range(1, 15));
                 if (NewMoveableVoxel.GetComponent<Rigidbody>() != null)
                 {

@@ -49,7 +49,7 @@ namespace Zeltex
 
         public bool HasPixels()
         {
-            return Pixels != null;
+            return Pixels != null && Pixels.Length > 0;
         }
 
         /// <summary>

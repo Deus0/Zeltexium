@@ -122,11 +122,11 @@ namespace Zeltex.Guis
                     GuiListElementFile ListElement = ListElementObject.GetComponent<GuiListElementFile>();
 
                     UnityAction<Element> ModifiedAction = ListElement.OnModified;
-                    MyFolder.ModifiedEvent.AddEvent(ModifiedAction);
+                    //MyFolder.ModifiedEvent.AddEvent(ModifiedAction);
                     FileActionsModified.Add(ModifiedAction);
 
                     UnityAction<Element> SavedAction = ListElement.OnSaved;
-                    MyFolder.SavedEvent.AddEvent(SavedAction);
+                    //MyFolder.SavedEvent.AddEvent(SavedAction);
                     FileActionsSaved.Add(SavedAction);
                 }
             }
@@ -146,8 +146,8 @@ namespace Zeltex.Guis
                 ElementFolder MyFolder = ElementFolders[i];
                 if (MyFolder != null && i < FileActionsModified.Count)
                 {
-                    MyFolder.ModifiedEvent.RemoveListener(FileActionsModified[i]);
-                    MyFolder.SavedEvent.RemoveListener(FileActionsSaved[i]);
+                    //MyFolder.ModifiedEvent.RemoveListener(FileActionsModified[i]);
+                    //MyFolder.SavedEvent.RemoveListener(FileActionsSaved[i]);
                 }
             }
             // Clear actions

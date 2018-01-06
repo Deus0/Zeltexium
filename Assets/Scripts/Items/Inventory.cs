@@ -20,34 +20,27 @@ namespace Zeltex.Items
     public class Inventory : Element 
 	{
         #region Variables
+        [ JsonIgnore]
+        private static string EmptyItemName = "Empty";
         [JsonProperty]
         public List<Item> MyItems = new List<Item>();
-        [Header("Options")]
-        [SerializeField]
-        private int MaxItems = 0;
-        [SerializeField]
-        private float Value;	// money player has
-		[SerializeField]
-        private bool CanBuyAllItems;	// for player
-		[SerializeField]
-        private bool CanSellAllItems;  // for merchants
-        private string EmptyItemName = "Empty";
-        private bool IsFillWithEmptySlots = true;
+        [HideInInspector, JsonIgnore]
+        private bool IsFillWithEmptySlots = false;
         //[Header("Events")]
-        [HideInInspector]
+        [HideInInspector, JsonIgnore]
         public UnityEvent OnAddItem = new UnityEvent();
-        [HideInInspector]
+        [HideInInspector, JsonIgnore]
         public MyEventInt OnUpdateItem = new MyEventInt();
-        [HideInInspector]
+        [HideInInspector, JsonIgnore]
         public EventObjectString OnPickupItem = new EventObjectString();
-        [HideInInspector]
+        [HideInInspector, JsonIgnore]
         public EventObjectString OnExchangeItem = new EventObjectString();
-        [HideInInspector]
-        public UnityEvent OnExchangeCurrency;
-        [HideInInspector]
-        public MyEventInt OnItemUpdate;
-        [HideInInspector]
-        public UnityEvent OnLoadEvent;
+        [HideInInspector, JsonIgnore]
+        public UnityEvent OnExchangeCurrency = new UnityEvent();
+        //[HideInInspector, JsonIgnore]
+        //public MyEventInt OnItemUpdate = new MyEventInt();
+        [HideInInspector, JsonIgnore]
+        public UnityEvent OnLoadEvent = new UnityEvent();
         #endregion
 
         #region Initiation
@@ -57,36 +50,31 @@ namespace Zeltex.Items
             base.OnLoad();
             for (int i = 0; i < MyItems.Count; i++)
             {
-                MyItems[i].ParentElement = this;
+                MyItems[i].SetParentInventory(this);
                 MyItems[i].OnLoad();    // any sub stats will be set as well
             }
         }
+
         /// <summary>
         /// Initiator part!
         /// </summary>
         public Inventory()
         {
-            //Debug.Log("StartUp [" + Time.realtimeSinceStartup + "] Setting Inventory Items in " + Name);
-            if (MyItems.Count == 0)
-            {
-                Clear();    // add empty items
-            }
         }
         #endregion
 
-        #region ItemObject
+        #region ItemHandler
 
         /// <summary>
         /// 
         /// </summary>
-        public void PickupItem(GameObject MyObject)
+        public void PickupItem(ItemHandler MyItemHandler)
         {
-            ItemObject MyItemObject = MyObject.GetComponent<ItemObject>();
-            if (MyItemObject)
+            if (MyItemHandler)
             {
-                //Debug.LogError("Adding " + MyItemObject.name + " to inventory");
-                Add(MyItemObject.GetItem());
-                OnPickupItem.Invoke(MyObject, "Picked Up");
+                //Debug.LogError("Adding " + MyItemHandler.name + " to inventory");
+                Add(MyItemHandler.GetItem());
+                OnPickupItem.Invoke(MyItemHandler.gameObject, "Picked Up");
             }
         }
 
@@ -264,6 +252,20 @@ namespace Zeltex.Items
             return false;
         }
 
+        public void Remove(string ItemName)
+        {
+            for (int i = 0; i < MyItems.Count; i++)
+            {
+                if (MyItems[i].Name == ItemName)
+                {
+                    MyItems[i] = new Item();
+                    MyItems[i].SetParentInventory(this);
+                    OnUpdateItem.Invoke(i);
+                    return;
+                }
+            }
+        }
+
         public bool Remove(Item MyItem)
         {
             return Remove(MyItem, MyItem.GetQuantity());
@@ -317,29 +319,6 @@ namespace Zeltex.Items
 
         #region Trading
 
-        /// <summary>
-        /// Returns true if removes item
-        /// </summary>
-        public Item SwitchItems(int ItemIndex, Item ItemB)
-        {
-            Item MyItem1 = MyItems[ItemIndex].Clone<Item>();
-            Item MyItem2 = ItemB.Clone<Item>();
-            MyItems[ItemIndex] = MyItem2;
-            ItemB = MyItem1;
-            if (OnAddItem != null)
-            {
-                OnAddItem.Invoke();    // refresh gui
-            }
-            if (OnUpdateItem != null)
-            {
-                OnUpdateItem.Invoke(ItemIndex);
-            }
-            if (OnItemUpdate != null)
-            {
-                OnItemUpdate.Invoke(ItemIndex);
-            }
-            return ItemB;
-        }
 
         public void SwitchItems(int ItemIndex, int ItemIndex2)
         {
@@ -358,44 +337,21 @@ namespace Zeltex.Items
         /// </summary>
         public bool CanBuy(Item MyItem)
         {
-            if (CanBuyAllItems)
-                return true;
-
-            Item MyItemFound = GetItem(MyItem.Name);
-            if (MyItemFound == null)
-            {
-                return false;
-            }
-            return MyItemFound.IsBuyable();
+            return false;
         }
 
         public bool CanSell(Item MyItem)
         {
-            if (CanSellAllItems)
-                return true;
-            Item MyItemFound = GetItem(MyItem.Name);
-            if (MyItemFound == null)
-                return false;
-            return MyItemFound.IsSellable();
+            return false;
         }
 
         public float GetAverageValue(Item Item1, Item Item2)
         {
-            float AverageValue = 0f;
-            if (Item2 != null && Item1 != null)
-                AverageValue = (Item1.GetMidValue() + Item2.GetMidValue()) / 2f;
-            else if (Item1 != null && Item2 == null)
-                AverageValue = Item1.GetMidValue();
-            else if (Item1 == null && Item2 != null)
-                AverageValue = Item2.GetMidValue();
-            return AverageValue;
+            return 0;
         }
 
         public void IncreaseValue(float AdditionValue)
         {
-            Value += AdditionValue;
-            if (OnExchangeCurrency != null)
-                OnExchangeCurrency.Invoke();
         }
 
         public void GiveItem(Inventory OtherInventory2, string ItemName)
@@ -434,16 +390,6 @@ namespace Zeltex.Items
 
         public static bool GiveValue(Inventory InventoryGive, Inventory InventoryTake, float ExchangeValue)
         {
-            //Debug.LogError(InventoryA.Name + " is giving value " + ExchangeValue + " to " + MyCharacterTaker.name);
-            if (InventoryTake != null && InventoryGive != null)
-            {
-                if (InventoryGive.Value >= ExchangeValue)
-                {
-                    InventoryGive.IncreaseValue(-ExchangeValue);
-                    InventoryTake.IncreaseValue(ExchangeValue);
-                    return true;
-                }
-            }
             return false;
         }
 
@@ -453,57 +399,23 @@ namespace Zeltex.Items
         /// </summary>
         public bool ExchangeItems(Inventory InventoryGive, Inventory InventoryTake, string ItemName, int ItemQuantity, bool IsValueExchanged)
         {
-            Debug.LogError(InventoryGive.Name + " is giving value " + ItemName + " to " + InventoryTake.Name);
-            // get item by name from each inventory :3
-            Item MyItem = InventoryGive.GetItem(ItemName);
-            Item MyItem2 = InventoryTake.GetItem(ItemName);
-            if (MyItem == null)
-            {
-                Debug.LogError(InventoryGive.Name + " Does not have: " + ItemName + " to give to " + InventoryTake.Name);
-                return false;
-            }
-            else if (MyItem.GetQuantity() < ItemQuantity)
-            {
-                Debug.Log(InventoryGive.Name + "has " + ItemName + " to give to " + InventoryTake.Name + " but not enough quantity.");
-                return false;
-            }
-            // haggling step here!
-            float BuyValue = InventoryGive.GetAverageValue(MyItem, MyItem2) * ItemQuantity;
-            if (InventoryTake.Value < BuyValue)
-                return false;
-            // exchange currency
-            if (IsValueExchanged)
-            {
-                bool IsExchangeValue = GiveValue(InventoryGive, InventoryTake, BuyValue);
-                if (!IsExchangeValue)
-                    return false;
-            }
-            // the item switching here!
-            Debug.LogError(InventoryGive.Name + " giving " + ItemName + " to " + InventoryTake.Name);
-            bool IsRemoveItem = InventoryGive.Remove(MyItem, ItemQuantity);
-            if (IsRemoveItem)
-            {
-                InventoryTake.Add(MyItem, ItemQuantity);
-            }
-            return IsRemoveItem;
+            return false;
         }
         #endregion
 
         #region Adding
+
+        public void AddRaw(Item NewItem)
+        {
+            MyItems.Add(NewItem);
+        }
 
         /// <summary>
         /// Is there an empty slot free?
         /// </summary>
         public bool CanAddItem()
         {
-            if (MyItems.Count < MaxItems)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public void IncreaseQuantity(int ItemIndex, int Addition)
@@ -540,20 +452,21 @@ namespace Zeltex.Items
         }
 
 		// Normal list handling
-		public void Add(Item NewItem) 
+        public bool Add(Item NewItem) 
 		{
-			Add(NewItem, -1);
+			return Add(NewItem, -1);
 		}
 
         /// <summary>
         /// The main function to add an item
+        /// When decreasing quantity of item, clone it
         /// </summary>
-        public void Add(Item NewItem, int Quantity)
+        public bool Add(Item NewItem, int Quantity)
 		{
             if (NewItem == null)
             {
                 Debug.LogError("Trying to add null item.");
-                return;
+                return false;
             }
 			if (Quantity == -1)
             {
@@ -569,27 +482,16 @@ namespace Zeltex.Items
                         //Debug.LogError ("Stacking Item " + NewItem.Name);
                         MyItems[i].IncreaseQuantity(Quantity);
                         OnAddItem.Invoke();
-                        return;
+                        return true;
                     }
                 }
-                /*if (MySkillbar != null)
-                {
-                    for (int i = 0; i < MySkillbar.MyItems.Count; i++)
-                    {
-                        if (MySkillbar.MyItems[i].Name == NewItem.Name) // Empty Does not stack
-                        {
-                            //Debug.LogError ("Stacking Item " + NewItem.Name);
-                            MySkillbar.MyItems[i].IncreaseQuantity(Quantity);
-                            MySkillbar.OnAddItem.Invoke();
-                            return;
-                        }
-                    }
-                }*/
             }
             bool DoesHaveEmpty = HasEmptyItem();
             // if no item of type, add to list
             if (!CanAddItem() && !DoesHaveEmpty)
-                return; // cannot add 
+            {
+                return false;   // cannot add as no slots
+            }
             // remove an empty to add the item
             int InsertIndex = MyItems.Count;
             if (DoesHaveEmpty)
@@ -604,15 +506,18 @@ namespace Zeltex.Items
                     }
                 }
             }
-			Item NewItem2 = NewItem.Clone<Item>();
+			//Item NewItem2 = NewItem.Clone<Item>();
 			if (Quantity != -1)
             {
-                NewItem2.SetQuantity(Quantity);
+                NewItem.SetQuantity(Quantity);
             }
 
-			MyItems.Insert (InsertIndex, NewItem2);
+            MyItems.Insert(InsertIndex, NewItem);
+            NewItem.SetParentInventory(this);
+            NewItem.OnUpdate.Invoke();
             OnAddItem.Invoke();
             OnUpdateItem.Invoke(InsertIndex);
+            return true;
         }
 
         bool HasItem(string ItemName)
@@ -628,123 +533,8 @@ namespace Zeltex.Items
         /// </summary>
         private bool HasEmptyItem()
         {
-            /*for (int i = 0; i < MyItems.Count; i++)
-            {
-                if (MyItems[i].Name == EmptyItemName)
-                {
-                    return true;
-                }
-            }
-            return false;*/
             return true;
         }
         #endregion
-
-        #region File
-
-        /// <summary>
-        /// Adds an item to inventory
-        /// </summary>
-        /*public void AddItemScript(List<string> MyData)
-        {
-            if (MyData.Count > 2 && MyData[0].Contains("/item") && MyData[MyData.Count - 1] == "/EndItem")
-            {
-                Add(new Item(MyData));
-            }
-        }
-        /// <summary>
-        /// Runs a list of scripts and creates items for them
-        /// </summary>
-        public void RunScript(List<string> MyData)
-        {
-            Clear();    // add empty items
-                        //Debug.LogError ("Running Inventory Script");
-                        //Clear ();
-                        // now go through data and set items
-            for (int i = 0; i < MyData.Count; i++)
-            {
-                if (MyData[i].Contains("/item"))
-                {
-                    for (int j = i + 1; j < MyData.Count; j++)
-                    {
-                        if (MyData[j] == "/EndItem")
-                        {
-                            List<string> MyItemData = MyData.GetRange(i, j - i + 1);
-                            //Debug.LogError(name + " - New Item at " + i + "\n" + FileUtil.ConvertToSingle(MyItemData));
-                            Add(new Item(MyItemData));
-                            i = j;
-                            break;
-                        }
-                    }
-                }
-            }
-            Debug.Log("Loaded Inventory");
-            OnLoadEvent.Invoke();
-        }
-
-        /// <summary>
-        /// Called when another script loads inventory
-        /// </summary>
-        public void OnRunScript()
-        {
-            OnLoadEvent.Invoke();
-        }
-
-        /// <summary>
-        /// Gets a list of the items scripts
-        /// </summary>
-        /// <returns></returns>
-		public List<string> GetScriptList()
-        {
-            List<string> MyScript = new List<string>();
-            for (int i = 0; i < MyItems.Count; i++)
-            {
-                MyScript.AddRange(MyItems[i].GetScript2());
-            }
-            return MyScript;
-        }*/
-        #endregion
     }
 }
-
-/*public float GetValue()
-{
-    return Value;
-}
-public string GetValueText()
-{
-    return "#" + Value;
-}*/
-
-/*public void RunScript(string[] MyData) 
-{
-    List<string> MyDataList = new List<string> ();
-    for (int i = 0; i < MyData.Length; i++)
-        MyDataList.Add (MyData [i]);
-    RunScript (MyDataList);
-}*/
-
-/*void OnGUI()
-{
-    if (DebugMode || DebugCommands || DebugTextures)
-    {
-        GUILayout.Label("Inventory of [" + gameObject.name + "]");
-        GUILayout.Label("Cash [" + Value + "]");
-        GUILayout.Label("Number of Items [" + MyItems.Count + "]");
-        for (int i = 0; i < MyItems.Count; i++)
-        {
-            GUILayout.Label("\t" + i + " - Item[" + MyItems[i].Name + "]");
-            if (DebugCommands)
-            {
-                GUILayout.Label("\t" + " - Commands [" + MyItems[i].GetCommands() + "]");
-            }
-            if (DebugTextures)
-            {
-                if (MyItems[i].GetTexture() != null)
-                    GUILayout.Label("\t" + " - Texture [" + MyItems[i].GetTexture().name + "]");
-                else
-                    GUILayout.Label("\t" + " - TextureName [" + MyItems[i].TextureName + "]");
-            }
-        }
-    }
-}*/

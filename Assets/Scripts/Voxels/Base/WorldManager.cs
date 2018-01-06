@@ -160,9 +160,6 @@ namespace Zeltex.Voxels
             }
             MyWorld.transform.SetParent(WorldsParent);
             MyWorld.transform.localScale = SpawnWorldScale;
-            MyWorld.MyUpdater = WorldUpdater;
-            MyWorld.MyDataBase = MyVoxelManager;
-            MyWorld.MyMaterials = MyVoxelManager.MyMaterials;
             MyWorld.MyVoxelTerrain = MyTerrainGenerator;
             MyWorld.VoxelScale = SpawnedWorldScale;
             MyWorlds.Add(MyWorld);

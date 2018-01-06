@@ -64,9 +64,9 @@ namespace Zeltex.WorldUtilities
             if (MySpawns.Count < MaximumSpawns && Time.time - LastSpawned >= SpawnRate)
             {
                 LastSpawned = Time.time;
-                GameObject MyItemObject = Instantiate(MyPrefab, transform.position, Quaternion.identity);
-                MyItemObject.GetComponent<ItemObject>().OnDestroyed.AddEvent(Remove);
-                MySpawns.Add(MyItemObject);
+                GameObject MyItemHandler = Instantiate(MyPrefab, transform.position, Quaternion.identity);
+                MyItemHandler.GetComponent<ItemHandler>().OnDestroyed.AddEvent(Remove);
+                MySpawns.Add(MyItemHandler);
                 /*else
                 {
                 }*/

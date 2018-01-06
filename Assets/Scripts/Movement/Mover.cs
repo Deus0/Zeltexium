@@ -25,7 +25,8 @@ namespace Zeltex
         public LayerMask GroundLayer;
         private Vector2 MovementInput = Vector2.zero;
         private Vector2 RotationInput = Vector2.zero;
-        private float OriginalDrag;
+		//private float OriginalDrag;
+		private CameraBob MyBob;
 
         public void SetCameraBone(Transform NewCameraBone)
         {
@@ -71,7 +72,26 @@ namespace Zeltex
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             MyBot = GetComponent<AI.Bot>();
-            OriginalDrag = m_RigidBody.drag;
+        }
+
+        private void Update()
+        {
+            if (m_Capsule != null)
+            {
+                CheckCameraBob();
+                RotateView();
+                UpdateInput();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (m_Capsule != null)
+            {
+                GroundCheck();
+                UpdateMovementForce();
+                UpdateGroundMovement();
+            }
         }
 
         public void SetBot(AI.Bot NewBot)
@@ -79,34 +99,22 @@ namespace Zeltex
             MyBot = NewBot;
         }
 
-
-        private void Update()
+        private void CheckCameraBob() 
         {
-            if (m_Capsule == null)
+            if (IsPlayer && MyBob == null)
             {
-                return;
-            }
-            RotateView();
-
-            if (IsPlayer && CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
-            {
-                m_Jump = true;
-            }
-            GroundCheck();
-            if (IsPlayer)
-            {
-                MovementInput = GetInput();
-            }
-            else
-            {
-                if (MyBot)
+                //Camera MyCamera = NewCameraBone.GetComponentInChildren<Camera>();
+                Camera MyCamera = CameraManager.Get().GetMainCamera();
+                if (MyCamera)
                 {
-                    MovementInput = MyBot.GetInput();
+                    MyBob = MyCamera.transform.gameObject.GetComponent<CameraBob>();
+                    if (MyBob)
+                    {
+                        MyBob.Initialise(this);
+                    }
                 }
             }
-            movementSettings.UpdateDesiredTargetSpeed(MovementInput);
         }
-
 
         private Vector2 GetInput()
         {
@@ -119,51 +127,74 @@ namespace Zeltex
             return input;
         }
 
-        private void FixedUpdate()
+		private void UpdateInput() 
+		{
+			if (IsPlayer && CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
+			{
+				m_Jump = true;
+			}
+		}
+
+        private void UpdateMovementForce() 
         {
-            if (m_Capsule != null)
+            if (IsPlayer)
             {
-                if ((Mathf.Abs(MovementInput.x) > float.Epsilon || Mathf.Abs(MovementInput.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
+                MovementInput = GetInput();
+            }
+            else
+            {
+                if (MyBot)
                 {
-                    // always move along the camera forward as it is the direction that it being aimed at
-                    Vector3 desiredMove = transform.forward * MovementInput.y + transform.right * MovementInput.x;
-                    //desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
-                    desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
-                    desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
-                    desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
-                    if (m_RigidBody.velocity.sqrMagnitude <
-                       (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
-                    {
-                        m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
-                    }
+                    MovementInput = MyBot.GetInput();
                 }
-                if (m_IsGrounded)
+            }
+            movementSettings.UpdateDesiredTargetSpeed(MovementInput);
+            if ((Mathf.Abs(MovementInput.x) > float.Epsilon || Mathf.Abs(MovementInput.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
+            {
+                // always move along the camera forward as it is the direction that it being aimed at
+                //Vector3 desiredMove = transform.forward * MovementInput.y + transform.right * MovementInput.x;
+                Vector3 desiredMove = CameraTransform.transform.forward*MovementInput.y + CameraTransform.transform.right*MovementInput.x;
+                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
+
+                desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
+                desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
+                desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
+                if (m_RigidBody.velocity.sqrMagnitude <
+                    (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
                 {
-                    m_RigidBody.drag = OriginalDrag;
-
-                    if (m_Jump)
-                    {
-                        m_RigidBody.drag = 0f;
-                        m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
-                        m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
-                        m_Jumping = true;
-                    }
-
-                    if (!m_Jumping && Mathf.Abs(MovementInput.x) < float.Epsilon && Mathf.Abs(MovementInput.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
-                    {
-                        m_RigidBody.Sleep();
-                    }
+                    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
                 }
-                else
+            }
+        }
+
+        private void UpdateGroundMovement()
+        {
+            if (m_IsGrounded)
+            {
+                m_RigidBody.drag = 5f;
+
+                if (m_Jump)
                 {
                     m_RigidBody.drag = 0f;
-                    if (m_PreviouslyGrounded && !m_Jumping)
-                    {
-                        //StickToGroundHelper();
-                    }
+                    m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
+                    m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
+                    m_Jumping = true;
                 }
-                m_Jump = false;
+
+                if (!m_Jumping && Mathf.Abs(MovementInput.x) < float.Epsilon && Mathf.Abs(MovementInput.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
+                {
+                    m_RigidBody.Sleep();
+                }
             }
+            else
+            {
+                m_RigidBody.drag = 0f;
+                if (m_PreviouslyGrounded && !m_Jumping)
+                {
+                    StickToGroundHelper();
+                }
+            }
+            m_Jump = false;
         }
 
 

@@ -284,7 +284,7 @@ namespace Zeltex.Guis.Maker
                 GetDropdown("MeshDropdown").value = 0;
             }*/
             GetDropdown("MeshDropdown").onValueChanged = new Dropdown.DropdownEvent();
-            if (GetSelectedItem().MeshType == ItemMeshType.VoxelReference)
+            //if (GetSelectedItem().MeshType == ItemMeshType.VoxelReference)
             {
                 /*StartCoroutine(MyVoxelViewer.RunScript(FileUtil.ConvertToList(GetSelected().MyModel)));
                 for (int i = 0; i < MyModelMaker.MyNames.Count; i++)
@@ -296,18 +296,18 @@ namespace Zeltex.Guis.Maker
                     }
                 }*/
             }
-            else if (GetSelectedItem().MeshType == ItemMeshType.Voxel)
+            //else if (GetSelectedItem().MeshType == ItemMeshType.Voxel)
             {
                 //StartCoroutine(MyVoxelViewer.RunScript(FileUtil.ConvertToList(GetSelectedItem().MyModel)));
-                GetDropdown("MeshDropdown").value = 1;
+                //GetDropdown("MeshDropdown").value = 1;
             }
-            else if (GetSelectedItem().MeshType == ItemMeshType.None)
+            //else if (GetSelectedItem().MeshType == ItemMeshType.None)
             {
-                GetDropdown("MeshDropdown").value = 0;
+                /*GetDropdown("MeshDropdown").value = 0;
                 if (MyVoxelViewer.GetSpawn())
                 {
                     MyVoxelViewer.GetSpawn().GetComponent<Zeltex.Voxels.World>().Clear();
-                }
+                }*/
             }
             GetDropdown("MeshDropdown").onValueChanged.AddEvent(delegate { UseInput(GetDropdown("MeshDropdown")); });
         }

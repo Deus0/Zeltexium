@@ -1,43 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Newtonsoft.Json;
+using Zeltex.Voxels;
+using Zeltex.Items;
 
 namespace Zeltex.Skeletons
 {
 
     /// <summary>
     /// A skeleton is made up of a collection of bones!
+    /// Bones also have meshes added on them
     /// </summary>
     [System.Serializable]
     public class Bone : Element
     {
-        [SerializeField, HideInInspector]
-        private Skeleton MySkeleton;
+        #region JsonVariables
         [Header("Names")]
-        //[JsonProperty, SerializeField]
-        //public string Name = "";
+        // The link to the bones parent
         [JsonProperty, SerializeField]
         public string ParentName = "";
+        // Obsolete, soon to be removed - replace with item name for quickloading
         [JsonProperty, SerializeField]
         public string MeshName = "";
+        // Item has polymodel or voxelmodel inside it
+        [JsonProperty, SerializeField]
+        public Item MyItem = new Item();
+        // Tag is used for sorting bones or something
         [JsonProperty, SerializeField]
         public string Tag = "";
 
         [Header("Defaults")]
         // Default Pose
         [JsonProperty, SerializeField]
-        private Vector3 DefaultPosition;
+		private Vector3 DefaultPosition = Vector3.zero;
         [JsonProperty, SerializeField]
-        private Vector3 DefaultScale;
+		private Vector3 DefaultScale = new Vector3(1, 1, 1);
         [JsonProperty, SerializeField]
-        private Vector3 DefaultRotation;
+		private Vector3 DefaultRotation = Vector3.zero;
         [JsonProperty, SerializeField]
-        private Vector3 MeshDefaultPosition;
+		private Vector3 MeshDefaultPosition = Vector3.zero;
+        [JsonProperty, SerializeField]  
+		private Vector3 MeshDefaultScale = new Vector3(0.2f, 0.2f, 0.2f);
         [JsonProperty, SerializeField]
-        private Vector3 MeshDefaultScale;
-        [JsonProperty, SerializeField]
-        private Vector3 MeshDefaultRotation;
+        private Vector3 MeshDefaultRotation = Vector3.zero;
+        // Set size limit to the maxiumum size an item can be inside it
+        [JsonProperty]
+        public Vector3 SizeLimit = new Vector3(0.1f, 0.1f, 0.1f);
+        #endregion
 
+        #region Spawned
         [Header("Spawned")]
         [JsonIgnore]
         public Transform MyTransform;
@@ -77,12 +88,119 @@ namespace Zeltex.Skeletons
         private static float BoneColorMutation = 15;
         [JsonIgnore]
         private static Vector3 VoxelScale = new Vector3(0.05f, 0.05f, 0.05f);
+        [JsonIgnore]
+        private Zeltine ActivateCoroutine;
+        #endregion
+
+        public override void OnLoad() 
+        {
+            base.OnLoad();
+            if (MyItem != null)
+            {
+                MyItem.ParentElement = this;
+                MyItem.OnLoad();
+            }
+        }
+
+		public void CheckForChange()
+		{
+			if (MyTransform)
+			{
+				// Check parent
+				if (ParentName != ParentTransform.name)
+				{
+					ParentName = ParentTransform.name;
+					OnMoved();
+				}
+
+				// Check Transform
+				if (MyTransform.localPosition != DefaultPosition)
+				{
+					DefaultPosition = MyTransform.localPosition;
+					OnModified();
+				}
+				if (MyTransform.localEulerAngles != DefaultRotation)
+				{
+					DefaultRotation = MyTransform.localEulerAngles;
+					OnModified();
+				}
+				if (MyTransform.localScale != DefaultScale)
+				{
+					DefaultScale = MyTransform.localScale;
+					OnModified();
+				}
+
+				// Check mesh
+				if (VoxelMesh)
+				{
+					if (VoxelMesh.localPosition != MeshDefaultPosition)
+					{
+						MeshDefaultPosition = VoxelMesh.localPosition;
+						OnModified();
+					}
+					if (VoxelMesh.localEulerAngles != MeshDefaultRotation)
+					{
+						MeshDefaultRotation = VoxelMesh.localEulerAngles;
+						OnModified();
+					}
+					if (VoxelMesh.localScale != MeshDefaultScale)
+					{
+						MeshDefaultScale = VoxelMesh.localScale;
+						OnModified();
+					}
+				}
+			}
+		}
 
         public Bone(Skeleton NewSkeleton, string BoneName)
         {
-            MySkeleton = NewSkeleton;
+			ParentElement = NewSkeleton;
             Name = BoneName;
             //Activate();
+        }
+
+		public VoxelModel GetVoxelModel()
+		{
+            if (MyItem != null && MyItem.MyModel != null)
+			{
+                if (MyItem.MyModel.Name != "Empty" && MyItem.MyModel.Name != "")
+				{
+                    return MyItem.MyModel;
+				}
+			}
+			if (MeshName != "")
+			{
+				return DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName) as Voxels.VoxelModel;
+			}
+			return null;
+		}
+
+        public PolyModel GetPolyModel() 
+        {
+            if (MyItem != null && MyItem.MyPolyModel != null)
+            {
+                if (MyItem.MyPolyModel.Name != "Empty" && MyItem.MyPolyModel.Name != "")
+                {
+                    return MyItem.MyPolyModel;
+                }
+            }
+            return null;
+        }
+
+        public VoxelModel GetSpawnedVoxelModel() 
+        {
+            if (VoxelMesh)
+            {
+                // Generate voxel model off world
+                Voxels.World MyWorld = VoxelMesh.transform.gameObject.GetComponent<Voxels.World>();
+                if (MyWorld)
+                {
+                    Voxels.VoxelModel WorldModel = new Voxels.VoxelModel();
+                    WorldModel.UseWorld(MyWorld);
+                    return WorldModel;
+                }
+            }
+            return null;
         }
 
         public void Rip()
@@ -121,8 +239,12 @@ namespace Zeltex.Skeletons
             }
         }
 
+        public void Reactivate() 
+        {
+            Deactivate();
+            ActivateSingle();
+        }
 
-        private UniversalCoroutine.Coroutine ActivateCoroutine;
         /// <summary>
         /// Create the Scene representation
         /// </summary>
@@ -130,10 +252,37 @@ namespace Zeltex.Skeletons
         {
             if (ActivateCoroutine != null)
             {
-                UniversalCoroutine.CoroutineManager.StopCoroutine(ActivateCoroutine);
+				RoutineManager.Get().StopCoroutine(ActivateCoroutine);
             }
-            ActivateCoroutine = UniversalCoroutine.CoroutineManager.StartCoroutine(ActivateRoutine());
+			ActivateCoroutine = RoutineManager.Get().StartCoroutine(ActivateRoutine());
         }
+
+		public void SetMesh(VoxelModel NewModel)
+		{
+            if (MyItem == null || MyItem.Name == "" || MyItem.Name == "Empty")
+            {
+                MyItem = new Item();
+                MyItem.SetName(NewModel.Name);
+            }
+            if (MyItem != null)
+            {
+                MyItem.MyModel = NewModel;
+                if (MyItem.MyModel != null)
+                {
+                    NewModel.ParentElement = this;
+                    MyItem.MyModel.OnModified();
+                }
+            }
+		}
+
+		public void SetMeshName(string NewMeshName)
+		{
+			if (NewMeshName != MeshName)
+			{
+				MeshName = NewMeshName;
+				OnModified();
+			}
+		}
 
         public IEnumerator ActivateRoutine()
         {
@@ -158,13 +307,13 @@ namespace Zeltex.Skeletons
                 }
                 else
                 {
-                    NewBoneObject.transform.SetParent(MySkeleton.GetTransform(), false);
-                    UniversalCoroutine.CoroutineManager.StartCoroutine(ParentBoneWhenSpawned());
+					NewBoneObject.transform.SetParent((ParentElement as Skeleton).GetTransform(), false);
+					yield return (ParentBoneWhenSpawned());	//RoutineManager.Get().StartRoutine
                 }
             }
             else
             {
-                NewBoneObject.transform.SetParent(MySkeleton.GetTransform(), false);
+				NewBoneObject.transform.SetParent((ParentElement as Skeleton).GetTransform(), false);
             }
             //NewBoneObject.transform.SetParent(FindParentBone(MySkeleton.GetTransform()), false);
             NewBoneObject.transform.localPosition = DefaultPosition;
@@ -176,36 +325,66 @@ namespace Zeltex.Skeletons
 
             CreateJointMesh();
             CreateBoneMesh();
-            if (MeshName != "")
+			VoxelModel Model = GetVoxelModel();
+            if (Model != null)
             {
-                Element MeshElement = DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName);
-                if (MeshElement != null)
-                {
-                    yield return CreateMeshRoutine(MeshElement as Voxels.VoxelModel);
-                }
-                else
-                {
-                    Debug.LogError("DataManager does not possess: " + MeshName);
-                }
+                yield return CreateMeshRoutine(Model); //RoutineManager.Get().StartRoutine
+                OnSpawnedMesh();
                 if (VoxelMesh)
                 {
-                    VoxelMesh.localPosition = MeshDefaultPosition;
-                    VoxelMesh.localEulerAngles = MeshDefaultRotation;
-                    VoxelMesh.localScale = MeshDefaultScale;
-                    /*MeshRenderer VoxelRender = VoxelMesh.GetComponent<MeshRenderer>();
-                    if (VoxelRender)
-                    {
-                        VoxelRender.enabled = true;
-                    }*/
-                    Voxels.World VoxelWorld = VoxelMesh.GetComponent<Voxels.World>();
+                    World VoxelWorld = VoxelMesh.GetComponent<World>();
                     if (VoxelWorld)
                     {
-                        VoxelWorld.SetColliders(MySkeleton.IsMeshColliders);
+                        VoxelWorld.SetColliders((ParentElement as Skeleton).IsMeshColliders);
                         VoxelWorld.SetMeshVisibility(true);
                     }
                 }
+                else
+                {
+                    Debug.LogError("Failure Creating Voxel world for bone: " + Name);
+                }
+            }
+            else if (GetPolyModel() != null)
+            {
+                // Spawn poly model!
+                PolyModel MyPolyModel = GetPolyModel();
+                yield return CreateMeshRoutine(MyPolyModel);
+                OnSpawnedMesh();
             }
         }
+
+        private void OnSpawnedMesh() 
+        {
+            if (VoxelMesh)
+            {
+                VoxelMesh.localPosition = MeshDefaultPosition;
+                VoxelMesh.localEulerAngles = MeshDefaultRotation;
+                VoxelMesh.localScale = MeshDefaultScale;
+            }
+        }
+
+		public void ShowMesh()
+		{
+			if (VoxelMesh)
+            {
+				Voxels.World VoxelWorld = VoxelMesh.GetComponent<Voxels.World> ();
+				if (VoxelWorld) {
+					VoxelWorld.SetMeshVisibility (true);
+				}
+			}
+		}
+
+		public void HideMesh()
+		{
+			if (VoxelMesh)
+			{
+				Voxels.World VoxelWorld = VoxelMesh.GetComponent<Voxels.World>();
+				if (VoxelWorld)
+				{
+					VoxelWorld.SetMeshVisibility(false);
+				}
+			}
+		}
 
         private IEnumerator ParentBoneWhenSpawned()
         {
@@ -226,11 +405,11 @@ namespace Zeltex.Skeletons
         
         private void FindParentBone()
         {
-            for (int i = 0; i < MySkeleton.MyBones.Count; i++)
+			for (int i = 0; i < (ParentElement as Skeleton).MyBones.Count; i++)
             {
-                if (MySkeleton.MyBones[i].Name == ParentName)
+				if ((ParentElement as Skeleton).MyBones[i].Name == ParentName)
                 {
-                    ParentBone = MySkeleton.MyBones[i];
+					ParentBone = (ParentElement as Skeleton).MyBones[i];
                     break;
                 }
             }
@@ -265,7 +444,7 @@ namespace Zeltex.Skeletons
         
         public void SetSkeleton(Skeleton NewSkeleton)
         {
-            MySkeleton = NewSkeleton;
+			ParentElement = NewSkeleton;
         }
 
         public void CreateJointMesh()
@@ -293,7 +472,7 @@ namespace Zeltex.Skeletons
 
         public void CreateBoneMesh()
         {
-            if (BodyCube == null && ParentTransform != MySkeleton.GetTransform())
+			if (BodyCube == null && ParentTransform != (ParentElement as Skeleton).GetTransform())
             {
                 GameObject BoneMesh = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 LayerManager.Get().SetLayerSkeleton(BoneMesh);
@@ -357,71 +536,73 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Used by skeleton manager
         /// </summary>
-        public void CreateMesh(Voxels.VoxelModel MeshData)
+        public void CreateMesh(VoxelModel MeshData)
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(MeshData));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
+			RoutineManager.Get().StartCoroutine(CreateMeshRoutine(MeshData));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
         }
 
-        /// <summary>
-        /// Create a mesh in the timer
-        /// </summary>
-        public IEnumerator CreateMeshRoutine(Voxels.VoxelModel MeshData, bool IsMeshVisible = false)    // System.Collections.Generic.List<string>
+        public IEnumerator CreateMeshRoutine(PolyModel MyPolyModel)
+        {
+            if (MyPolyModel == null)
+            {
+                //Debug.LogError("MyPolyModel was null.");
+                yield break;
+            }
+
+            GameObject NewMeshObject = CreateMeshPart();
+            PolyModelHandle NewPolyHandle = NewMeshObject.AddComponent<PolyModelHandle>();
+            NewPolyHandle.LoadVoxelMesh(MyPolyModel, MyItem.TextureMapIndex);
+            yield return null;
+        }
+
+        private GameObject CreateMeshPart() 
         {
             if (VoxelMesh != null)
             {
-                MonoBehaviourExtension.Kill(VoxelMesh.gameObject);
+                VoxelMesh.gameObject.Die();
                 VoxelMesh = null;
             }
-            // TODO - Make this pooled skeleton meshes
             GameObject NewMeshObject = new GameObject();
             LayerManager.Get().SetLayerSkeleton(NewMeshObject);
             NewMeshObject.name = MeshName;//"VoxelMesh [" + Name + "]";
             NewMeshObject.tag = "BonePart";
-            // World Stuff
-            Voxels.World MyWorld = NewMeshObject.GetComponent<Voxels.World>();
-            if (MyWorld == null)
-            {
-                MyWorld = NewMeshObject.AddComponent<Voxels.World>();
-                MyWorld.IsChunksCentred = false;
-            }
-            Voxels.WorldUpdater WorldUpdater = Voxels.WorldUpdater.Get();
-            if (WorldUpdater)
-            {
-                MyWorld.MyUpdater = WorldUpdater;
-            }
-            else
-            {
-                Debug.LogError("WorldUpdater object not found.");
-            }
-
-            if (Voxels.VoxelManager.Get())
-            {
-                MyWorld.MyDataBase = Voxels.VoxelManager.Get();
-                MyWorld.MyMaterials = Voxels.VoxelManager.Get().MyMaterials;
-            }
-            else
-            {
-                Debug.LogError("Voxel Manager is null");
-            }
-
-            MyWorld.SetColliders(false);
-            MyWorld.SetConvex(true);
-            MyWorld.SetMeshVisibility(IsMeshVisible);
-
-            MyWorld.VoxelScale = VoxelScale;
-            MyWorld.IsCentreWorld = true;
-            MyWorld.IsDropParticles = true;
 
             NewMeshObject.transform.SetParent(MyTransform);
             NewMeshObject.transform.position = MyTransform.position;
             NewMeshObject.transform.rotation = MyTransform.rotation;
             NewMeshObject.transform.localScale.Set(1, 1, 1);
             VoxelMesh = NewMeshObject.transform;
+            return NewMeshObject;
+        }
+        /// <summary>
+		/// Create a mesh in the timer
+		/// TODO - Make this pooled skeleton meshes
+        /// </summary>
+        public IEnumerator CreateMeshRoutine(VoxelModel MeshData, bool IsMeshVisible = false)    // System.Collections.Generic.List<string>
+        {
+			if (MeshData == null)
+			{
+				Debug.LogError("MeshData was null.");
+				yield break;
+			}
+			//MeshName = MeshData.Name;
+            GameObject NewMeshObject = CreateMeshPart();
 
-            //yield return null;
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyWorld.RunScriptRoutine(Zeltex.Util.FileUtil.ConvertToList(MeshData.VoxelData)));
-            //Debug.LogError("-----------------------------------");
-            //Debug.LogError("Waited : " + WaitCount + " for mesh to load.");
+            // Add World parts
+            World MyWorld = NewMeshObject.GetComponent<World>();
+            if (MyWorld == null)
+            {
+                MyWorld = NewMeshObject.AddComponent<World>();
+            }
+
+            MyWorld.IsChunksCentred = false;
+            MyWorld.VoxelScale = VoxelScale;
+            MyWorld.SetColliders(false);
+            MyWorld.SetConvex(true);
+            MyWorld.SetMeshVisibility(IsMeshVisible);
+            MyWorld.IsCentreWorld = true;
+            MyWorld.IsDropParticles = true;
+			yield return MyWorld.RunScriptRoutine(Zeltex.Util.FileUtil.ConvertToList(MeshData.VoxelData));
         }
 
         /// <summary>
@@ -602,6 +783,11 @@ namespace Zeltex.Skeletons
             return new Vector3(BoneThickness * BoneTransform.lossyScale.x,   // * ParentTransform.localScale.x
                                GetBoneLength(),
                                BoneThickness * BoneTransform.lossyScale.z);  // * ParentTransform.localScale.z
+        }
+
+        public bool HasItem() 
+        {
+            return (SizeLimit != Vector3.zero);
         }
     }
 }

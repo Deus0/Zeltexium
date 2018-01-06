@@ -23,8 +23,8 @@ namespace Zeltex.Guis
         public EventString OnSelectEventString = new EventString();
         [HideInInspector]
         public MyEventInt OnSelectEventInt = new MyEventInt();
-        [HideInInspector]
-        public Item MyItem;
+        //[HideInInspector]
+        //public Item MyItem = new Item();
         //public int InventoryIndex = -1;
 
         public GuiListElementData()

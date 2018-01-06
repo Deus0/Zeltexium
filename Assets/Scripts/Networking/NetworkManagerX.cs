@@ -13,7 +13,7 @@ namespace Zeltex
     ///         -Skeletons, Meshes, Animatiions
     ///         -Quests, Dialogues, etc
     ///         -Sounds,Musics
-    ///         -Zones, ItemObjects, Lights
+    ///         -Zones, ItemHandlers, Lights
     /// </summary>
     //public class NetworkManager : MonoBehaviour
     //{

@@ -159,7 +159,7 @@ Can Revert these changes too -> will clear the world and reload the data
 Polygon Painter
 	-> Decouple the functions out of the viewer
 	-> The polygon editor will attach itself onto a gameObject with a mesh renderer -> and Create the Vertex Handlers on this
-	-> These handlers can be raycasted, whether inside a viewer or in the level editor (going to place and edit rocks in the level, as ItemObjects)
+	-> These handlers can be raycasted, whether inside a viewer or in the level editor (going to place and edit rocks in the level, as ItemHandlers)
 
 ----
 Done:

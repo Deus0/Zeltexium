@@ -16,10 +16,12 @@ namespace Zeltex.Voxels
 	public class WorldUpdater : ManagerBase<WorldUpdater>
     {
         #region Variables
+		public EditorAction ActionReset = new EditorAction();
         [Header("Options")]
         public bool IsCollectOnUpdate = false;
         public static bool IsReversed = false;
-        public List<Chunk> MyChunks = new List<Chunk>();
+		public List<Chunk> MyChunks = new List<Chunk>();
+		private Zeltine MyHandle;
         [Header("Debug")]
         public bool IsUpdating = false;
         public bool IsUpdatingMesh = false;
@@ -41,7 +43,16 @@ namespace Zeltex.Voxels
             }
             return MyManager;
         }
-        #endregion
+		#endregion
+
+		private void Update()
+		{
+			InitializeUpdates();
+			if (ActionReset.IsTriggered())
+			{
+				MyHandle = null;
+			}
+		}
 
         #region Misc
 
@@ -121,16 +132,10 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Updating
-        private Zeltine MyHandle;
-
-        private void Update()
-        {
-            InitializeUpdates();
-        }
 
         void InitializeUpdates()
         {
-            if (!IsUpdating && MyChunks.Count > 0 &&
+            if (MyChunks.Count > 0 &&
                 (MyHandle == null || MyHandle.IsUpdating() == false))
             {
                 IsUpdating = true;

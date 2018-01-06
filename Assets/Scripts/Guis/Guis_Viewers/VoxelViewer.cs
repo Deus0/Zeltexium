@@ -26,17 +26,15 @@ namespace Zeltex.Guis
         public override void OnBegin()
         {
             base.OnBegin();
-            GetSpawn().GetComponent<World>().MyDataBase = VoxelManager.Get();
-            GetSpawn().GetComponent<World>().MyUpdater = WorldUpdater.Get();
         }
 
         public IEnumerator RunScript(List<string> MyScript)
         {
             //Debug.LogError("Loading new script of size: " + MyScript.Count);
             yield return GetSpawn().GetComponent<World>().RunScriptRoutine(MyScript);
-            if (GetSpawn().GetComponent<World>().MyDataBase.GetMaterial(0) && TextureViewer)
+            if (VoxelManager.Get().GetMaterial(0) && TextureViewer)
             {//GetImage("TextureViewer")
-                TextureViewer.texture = GetSpawn().GetComponent<World>().MyDataBase.GetMaterial(0).mainTexture;
+                TextureViewer.texture = VoxelManager.Get().GetMaterial(0).mainTexture;
             }
             Int3 MySize = GetSpawn().GetComponent<World>().GetWorldSizeChunks();
             MySize.x++;

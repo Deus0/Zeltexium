@@ -314,22 +314,52 @@ namespace Zeltex.AI
         }
         #endregion
 
-        #region TargetPosition
+		#region TargetPosition
 
-        private void RefreshPath(Vector3 TargetPosition)
+		/// <summary>
+		/// Refreshes the path if the bot has moved
+		/// </summary>
+		private System.Collections.IEnumerator RefreshPathTargetObject()
+		{
+			if (TargetObject != null)
+			{
+				if (Time.time - LastRefreshedPath >= 0.5f)
+				{
+					LastRefreshedPath = Time.time;
+					if (MyWorld)
+					{
+						Int3 CurrentObjectPosition = new Int3(MyWorld.RealToBlockPosition(TargetObject.transform.position));
+						if (LastObjectPosition != CurrentObjectPosition)
+						{
+							LastObjectPosition = CurrentObjectPosition;
+							Vector3 TargetWorldPosition = MyWorld.BlockToRealPosition(LastObjectPosition.GetVector()) + MyWorld.GetUnit() / 2f;
+							yield return StartCoroutine(RefreshPath(TargetWorldPosition));
+							LoadTargetObjectMaterial();
+						}
+					}
+				}
+			}
+		}
+
+		private System.Collections.IEnumerator RefreshPath(Vector3 TargetPosition)
         {
             TargetPositions.Clear();
             TargetPositionIndex = 0;
             if (MyWorld != null)
             {
-                TargetPositions = PathFinder.FindPath(MyWorld, transform.position, TargetPosition, MyCharacter.GetData().MySkeleton.GetBounds());
+				yield return StartCoroutine(PathFinder.FindPath(MyWorld, transform.position, 
+					TargetPosition, 
+					MyCharacter.GetData().MySkeleton.GetBounds()));
+				TargetPositions = PathFinder.MyPathWorld;
             }
             else
             {
                 TargetPositions.Clear();
                 TargetPositions.Add(TargetPosition);
+				yield return null;
             }
-            CreatePositionIcons();
+			CreatePositionIcons();
+			LoadTargetPositionMaterial();
         }
 
         /// <summary>
@@ -350,8 +380,7 @@ namespace Zeltex.AI
             IsMoveTo = true;
             IsLookTowards = false;
             LookAtPosition = TargetPosition;
-            RefreshPath(TargetPosition);
-            LoadTargetPositionMaterial();
+			StartCoroutine(RefreshPath(TargetPosition));
         }
 
         public void MoveToPositionRaw(Vector3 TargetPosition)
@@ -396,30 +425,6 @@ namespace Zeltex.AI
         #endregion
 
         #region TargetObject
-
-        /// <summary>
-        /// Refreshes the path if the bot has moved
-        /// </summary>
-        private void RefreshPathTargetObject()
-        {
-            if (TargetObject != null)
-            {
-                if (Time.time - LastRefreshedPath >= 0.5f)
-                {
-                    LastRefreshedPath = Time.time;
-					if (MyWorld)
-					{
-						Int3 CurrentObjectPosition = new Int3(MyWorld.RealToBlockPosition(TargetObject.transform.position));
-						if (LastObjectPosition != CurrentObjectPosition)
-						{
-							LastObjectPosition = CurrentObjectPosition;
-							RefreshPath(MyWorld.BlockToRealPosition(LastObjectPosition.GetVector()) + MyWorld.GetUnit() / 2f);
-							LoadTargetObjectMaterial();
-						}
-					}
-				}
-            }
-        }
 
         /// <summary>
         /// Follow a target - friendly

@@ -113,7 +113,25 @@ namespace Zeltex.Guis
             OnSelect.Invoke();
             WindowRect.transform.SetAsLastSibling();
             // for all guis, change sort order
-            if (WindowRect.transform.parent)
+            Guis.Characters.CharacterGuiHandle MyHandle = WindowRect.gameObject.GetComponent<Guis.Characters.CharacterGuiHandle>();
+            if (MyHandle)
+            {
+                for (int i = 0; i < MyHandle.GetCharacter().GetGuis().GetSize(); i++)
+                {
+                    ZelGui MyGui = MyHandle.GetCharacter().GetGuis().GetZelGui(i);
+                    if (MyGui && MyGui.name != "ItemPickup")
+                    {
+                        Canvas MyCanvas = MyGui.gameObject.GetComponent<Canvas>();
+                        MyCanvas.sortingOrder = i;
+                    }
+                }
+                Canvas WindowCanvas = WindowRect.gameObject.GetComponent<Canvas>();
+                if (WindowCanvas)
+                {
+                    WindowCanvas.sortingOrder = MyHandle.GetCharacter().GetGuis().GetSize();
+                }
+            }
+            else if (WindowRect.transform.parent)
             {
                 for (int i = 0; i < WindowRect.transform.parent.childCount; i++)
                 {

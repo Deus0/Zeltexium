@@ -44,7 +44,7 @@ namespace Zeltex.Voxels
         [Tooltip("Models won't be centred, but worlds will.")]
         //[SerializeField]
         public bool IsChunksCentred = false;
-        private bool IsResizingWorld;
+        //private bool IsResizingWorld;
 
         Vector3 WorldTotalSize = Vector3.zero;
         Vector3 OldCentreOffset = Vector3.zero;
@@ -103,11 +103,11 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator SetWorldSizeRoutine(Int3 NewSize, Int3 NewPositionOffset, OnSizeFinishedEvent OnResized = null)
         {
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SetPositionOffset(NewPositionOffset));
+            yield return (SetPositionOffset(NewPositionOffset));
             Int3 OldLimit = Int3.Zero();
             OldLimit.Set(WorldSize);
             float TimeBegun = Time.realtimeSinceStartup;
-            MyUpdater.Clear(this);  // Stop Updating if Resizing!
+            WorldUpdater.Get().Clear(this);  // Stop Updating if Resizing!
             if (NewSize != null && NewSize != OldLimit)
             {
                 Debug.Log("Resizing [" + name + "] from: " + OldLimit.ToString() + " to " + NewSize.ToString());    // it's nice to know this
@@ -166,7 +166,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public IEnumerator OnResizeRoutine()
         {
-            IsResizingWorld = true;
+            //IsResizingWorld = true;
             // For all chunks, if position outside of limit remove
             List<Int3> MyChunkKeys = new List<Int3>();
 
@@ -237,7 +237,7 @@ namespace Zeltex.Voxels
                 }
             }
             yield return null;
-            IsResizingWorld = false;
+            //IsResizingWorld = false;
         }
 
         /// <summary>

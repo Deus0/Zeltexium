@@ -334,13 +334,27 @@ namespace Zeltex
                 if (MySkeleton)
                 {
                     CameraBone = MySkeleton.GetSkeleton().GetCameraBone();
-                    if (CameraBone)
-                    {
-                        transform.position = CameraBone.transform.position;  // MyPlayerSpawn.transform.position + MyPlayerSpawn.transform.TransformDirection (CameraOffset);
-                        transform.rotation = CameraBone.transform.rotation;
-                        // assuming player is on camera
-                        transform.SetParent(CameraBone);
-                    }
+					if (CameraBone) 
+					{
+						transform.position = CameraBone.transform.position;  // MyPlayerSpawn.transform.position + MyPlayerSpawn.transform.TransformDirection (CameraOffset);
+						transform.rotation = CameraBone.transform.rotation;
+						// assuming player is on camera
+						transform.SetParent (CameraBone);
+						// Disable bone meshes aroud camera
+						for (int i = 0; i < MySkeleton.GetBones ().Count; i++)
+						{
+							Bone MyBone = MySkeleton.GetBones () [i];
+							float DistanceToHead = Vector3.Distance (MyBone.MyTransform.position, transform.position);
+							if (DistanceToHead <= 0.1f) {
+								MyBone.HideMesh ();
+								//Debug.LogError(MyBone.Name + " Is being disabled.");
+							}
+						}
+					}
+					else 
+					{
+						Debug.LogError (MySkeleton.name + " needs a camera bone.");
+					}
                 }
                 MySkillbar = MyCharacter.GetComponent<Skillbar>();
                 MyController = MyCharacter.GetComponent<Mover>();

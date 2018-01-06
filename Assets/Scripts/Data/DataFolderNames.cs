@@ -15,8 +15,8 @@ namespace Zeltex
         public static string Skeletons = "Skeletons";
         public static string Zanimations = "Zanimations";
 
-        public static string Voxels = "VoxelMeta";
-        public static string Items = "ItemMeta";
+        public static string Voxels = "Voxels";
+        public static string Items = "Items";
         public static string Recipes = "Recipes";
         public static string Inventorys = "Inventorys";
 

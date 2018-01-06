@@ -12,7 +12,7 @@ namespace Zeltex.Items
 	public class ItemManager : ManagerBase<ItemManager> 
 	{
         #region Variables
-        public List<ItemObject> MyItemObjects = new List<ItemObject>();
+        public List<ItemHandler> MyItemHandlers = new List<ItemHandler>();
         //[Header("References")]
         //public TextureMaker MyTextureManager;
 		//[Tooltip("A list of the items that will be used in the game")]
@@ -21,7 +21,7 @@ namespace Zeltex.Items
         public Texture EmptyTexture;
         public List<Mesh> MyMeshes;
         public List<Material> MyMaterials;
-        public GameObject ItemObjectPrefab;
+        public GameObject ItemHandlerPrefab;
         #endregion
 
         #region Static
@@ -86,44 +86,44 @@ namespace Zeltex.Items
         }
         #endregion
 
-        #region ItemObjects
+        #region ItemHandlers
 
         /// <summary>
         /// Spawns an item from a drop transform
         /// </summary>
         public GameObject SpawnItem(Transform DropTransform, Item MyItem)
         {
-            if (ItemObjectPrefab == null)
+            if (ItemHandlerPrefab == null)
             {
                 return null;
             }
             GameObject ItemWorld;
             if (DropTransform)
             {
-                ItemWorld = (GameObject)Instantiate(ItemObjectPrefab, 
+                ItemWorld = (GameObject)Instantiate(ItemHandlerPrefab, 
                     DropTransform.TransformPoint(new Vector3(0, 0, 0.5f)),
                     DropTransform.rotation);
             }
             else
             {
-                ItemWorld = (GameObject)Instantiate(ItemObjectPrefab, Vector3.zero, Quaternion.identity);
+                ItemWorld = (GameObject)Instantiate(ItemHandlerPrefab, Vector3.zero, Quaternion.identity);
             }
-            ItemWorld.transform.SetParent(GameObject.Find("ItemObjects").transform);
+            ItemWorld.transform.SetParent(GameObject.Find("ItemHandlers").transform);
             ItemWorld.name = MyItem.Name;
             ItemWorld.transform.eulerAngles += new Vector3(0, 180, 0);
-            if (MyItem.MeshType == ItemMeshType.VoxelReference || MyItem.MeshType == ItemMeshType.Voxel)
+            //if (MyItem.MeshType == ItemMeshType.VoxelReference || MyItem.MeshType == ItemMeshType.Voxel)
             {
-                World MyItemWorld = ItemWorld.AddComponent<World>();
+                /*World MyItemWorld = ItemWorld.AddComponent<World>();
                 MyItemWorld.IsConvex = true;
                 MyItemWorld.MyDataBase = GameObject.Find("World").GetComponent<World>().MyDataBase;
                 MyItemWorld.MyUpdater = GameObject.Find("World").GetComponent<World>().MyUpdater;
-                MyItemWorld.MyMaterials = GameObject.Find("World").GetComponent<World>().MyMaterials;
+                MyItemWorld.MyMaterials = GameObject.Find("World").GetComponent<World>().MyMaterials;*/
                 //StartCoroutine(LoadItemInWorld(MyItemWorld, Zeltex.Util.FileUtil.ConvertToList(MyItem.MyModel)));
             }
-            else
+            //else
             {
                 // Make into mesh
-                MeshFilter MyFilter = ItemWorld.AddComponent<MeshFilter>();
+                /*MeshFilter MyFilter = ItemWorld.AddComponent<MeshFilter>();
                 MeshCollider MyMeshCollider = ItemWorld.AddComponent<MeshCollider>();
                 MeshRenderer MyRenderer = ItemWorld.AddComponent<MeshRenderer>();
                 if (MyFilter)
@@ -140,12 +140,12 @@ namespace Zeltex.Items
                 {
                     MyRenderer.material = GameObject.Find("World").GetComponent<Zeltex.Voxels.World>().MyMaterials[0];
                     //MyRenderer.material = MyItem.GetMaterial();
-                }
+                }*/
             }
-            ItemObject MyItemObject = ItemWorld.GetComponent<ItemObject>();
-            MyItemObject.SetItem(MyItem.Clone<Item>());
-            MyItemObject.DestroyInTime(60 + Random.Range(-30, 30));
-            Add(MyItemObject);
+            ItemHandler MyItemHandler = ItemWorld.GetComponent<ItemHandler>();
+            MyItemHandler.SetItem(MyItem.Clone<Item>());
+            MyItemHandler.DestroyInTime(60 + Random.Range(-30, 30));
+            Add(MyItemHandler);
             return ItemWorld;
         }
 
@@ -159,22 +159,22 @@ namespace Zeltex.Items
         /// <summary>
         /// Add to list when an item is spawned to world
         /// </summary>
-        public void Add(ItemObject NewItemObject)
+        public void Add(ItemHandler NewItemHandler)
         {
-            if (MyItemObjects.Contains(NewItemObject) == false)
+            if (MyItemHandlers.Contains(NewItemHandler) == false)
             {
-                MyItemObjects.Add(NewItemObject);
+                MyItemHandlers.Add(NewItemHandler);
             }
         }
 
         /// <summary>
         /// Remove from list when an item is removed from world
         /// </summary>
-        public void Remove(ItemObject MyItemObject) 
+        public void Remove(ItemHandler MyItemHandler) 
 		{
-            if (MyItemObjects.Contains(MyItemObject))
+            if (MyItemHandlers.Contains(MyItemHandler))
             {
-                MyItemObjects.Remove(MyItemObject);
+                MyItemHandlers.Remove(MyItemHandler);
             }
 		}
 
@@ -183,14 +183,14 @@ namespace Zeltex.Items
         /// </summary>
 		public void Clear() 
 		{
-			for (int i = 0; i < MyItemObjects.Count; i++) 
+			for (int i = 0; i < MyItemHandlers.Count; i++) 
 			{
-				if (MyItemObjects [i])
+				if (MyItemHandlers [i])
                 {
-                    MyItemObjects[i].Destroy();
+                    MyItemHandlers[i].Destroy();
                 }
 			}
-			MyItemObjects.Clear ();
+			MyItemHandlers.Clear ();
 		}
         #endregion
     }
@@ -204,8 +204,8 @@ namespace Zeltex.Items
     foreach (GameObject MyObject in AllObjects) {
         //if (UnityEditor.PrefabUtility.GetPrefabType(MyObject) == UnityEditor.PrefabType.None) 
         {
-            if (MyObject.GetComponent<ItemObject> ()) {
-                CheckForItemAdds (MyObject.GetComponent<ItemObject> ().GetItem());	
+            if (MyObject.GetComponent<ItemHandler> ()) {
+                CheckForItemAdds (MyObject.GetComponent<ItemHandler> ().GetItem());	
             } else if (MyObject.GetComponent<Inventory> ()) {
                 Inventory MyInventory = MyObject.GetComponent<Inventory> ();
                 for (int j = 0; j < MyInventory.MyItems.Count; j++) {
@@ -235,8 +235,8 @@ namespace Zeltex.Items
     {
         //if (UnityEditor.PrefabUtility.GetPrefabType(MyObject) == UnityEditor.PrefabType.None) 
         {
-            if (MyObject.GetComponent<ItemObject> ()) {
-                Item MyItem = MyObject.GetComponent<ItemObject> ().GetItem();
+            if (MyObject.GetComponent<ItemHandler> ()) {
+                Item MyItem = MyObject.GetComponent<ItemHandler> ().GetItem();
                 CheckItemForReplace (MyItem);	
             } else if (MyObject.GetComponent<Inventory> ()) {
                 Inventory MyInventory = MyObject.GetComponent<Inventory> ();
@@ -292,8 +292,8 @@ namespace Zeltex.Items
 {
     GameObject[] AllObjects = (GameObject[])Resources.FindObjectsOfTypeAll (typeof(UnityEngine.GameObject));
     foreach (GameObject MyObject in AllObjects) {
-        if (MyObject.GetComponent<ItemObject> ()) {
-            CheckForStatsAdd (MyObject.GetComponent<ItemObject> ().GetItem());	
+        if (MyObject.GetComponent<ItemHandler> ()) {
+            CheckForStatsAdd (MyObject.GetComponent<ItemHandler> ().GetItem());	
         } else if (MyObject.GetComponent<Inventory> ()) {
             Inventory MyInventory = MyObject.GetComponent<Inventory> ();
             for (int j = 0; j < MyInventory.MyItems.Count; j++) {
@@ -314,7 +314,7 @@ private void CheckForStatsAdd(Item MyItem)
     }
 }*/
 
-/*public static List<GameObject> GatherAllItemObjects(string ComponentName)
+/*public static List<GameObject> GatherAllItemHandlers(string ComponentName)
 {
     List<GameObject> MyItems = new List<GameObject> ();
     GameObject[] AllObjects = (GameObject[])Resources.FindObjectsOfTypeAll (typeof(UnityEngine.GameObject));

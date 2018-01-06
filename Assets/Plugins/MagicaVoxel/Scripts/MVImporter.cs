@@ -322,7 +322,8 @@ public static class MVImporter
 		}
 	}
 
-	public static MVMainChunk LoadVOXFromData(byte[] data, MVVoxelChunk alphaMask = null, bool generateFaces = true) {
+	public static MVMainChunk LoadVOXFromData(byte[] data, MVVoxelChunk alphaMask = null, bool generateFaces = false) 
+	{
 		using (MemoryStream ms = new MemoryStream (data)) {
 			using (BinaryReader br = new BinaryReader (ms)) {
 				MVMainChunk mainChunk = new MVMainChunk ();
@@ -373,9 +374,10 @@ public static class MVImporter
 						readSize += ReadPalattee (br, mainChunk.palatte);
 
 					}
-					else {
+					else 
+					{
 						Debug.LogError ("[MVImport] Chunk ID not recognized, got " + System.Text.Encoding.ASCII.GetString(chunkId));
-						return null;
+						break;
 					}
 				}
 
@@ -392,7 +394,7 @@ public static class MVImporter
 		}
 	}
 
-	public static MVMainChunk LoadVOX(string path, MVVoxelChunk alphaMask = null, bool generateFaces = true)
+	public static MVMainChunk LoadVOX(string path, MVVoxelChunk alphaMask = null, bool generateFaces = false)
 	{
 		byte[] bytes = File.ReadAllBytes (path);
 		if (bytes [0] != 'V' ||

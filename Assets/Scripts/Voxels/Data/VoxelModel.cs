@@ -1,7 +1,7 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zeltex.Util;
 
 namespace Zeltex.Voxels
 {
@@ -13,10 +13,23 @@ namespace Zeltex.Voxels
     public class VoxelModel : Element
     {
         public string VoxelData = "";
+		[Newtonsoft.Json.JsonIgnore]
+		public bool IsLoadingFromFile;
+
+		public VoxelModel() 
+		{
+
+		}
 
         public VoxelModel(string NewData)
         {
             VoxelData = NewData;
         }
+
+		public void UseWorld(World MyWorld) 
+		{
+			VoxelData = FileUtil.ConvertToSingle(MyWorld.GetScript());
+			Name = MyWorld.name;
+		}
     }
 }

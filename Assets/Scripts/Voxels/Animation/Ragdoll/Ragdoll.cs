@@ -715,10 +715,10 @@ MyBodyPart.IsRigidBody = true;*/
  {
      //if (IsBodyPartsItems)
      {
-         Zeltex.Items.ItemObject MyItemObject = MyChild.gameObject.AddComponent<Zeltex.Items.ItemObject>();
+         Zeltex.Items.ItemHandler MyItemHandler = MyChild.gameObject.AddComponent<Zeltex.Items.ItemHandler>();
          Item NewItem = new Zeltex.Items.Item();
          NewItem.SetQuantity(1);
-         MyItemObject.SetItem(NewItem);
+         MyItemHandler.SetItem(NewItem);
      }
  }*/
 //}

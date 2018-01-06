@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿/// <summary>
+/// Data manager. Holds all of the games assets in one place.
+/// </summary>
+using System.IO;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Zeltex.Generators;
 using Zeltex.Util;
+using Zeltex.Voxels;
+using Zeltex.Skeletons;
 using Zeltex.Combat;
 
 namespace Zeltex
@@ -50,7 +57,7 @@ namespace Zeltex
 
 		public void DrawGui() 
 		{
-			MyGui.DrawGui ();
+			MyGui.DrawGui();
 		}
 		public List<ElementFolder> GetFolders()
 		{
@@ -208,14 +215,16 @@ namespace Zeltex
                 // mac or OS
 #if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
                 MapFolderPath = Application.dataPath + "/StreamingAssets/";
-
-#elif UNITY_ANDROID
+#endif
+#if UNITY_ANDROID
                 //On Android, use:
-                 MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
-#elif UNITY_IOS
-                //On iOS, use:
-                 MapFolderPath = Application.dataPath + "/Raw";
-#elif UNITY_WEBGL
+				MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
+#endif
+#if UNITY_IOS
+		                //On iOS, use:
+				MapFolderPath = Application.dataPath + "/Raw";
+#endif
+#if UNITY_WEBGL
                 MapFolderPath = Application.streamingAssetsPath + "/";
 #endif
             }
@@ -235,7 +244,6 @@ namespace Zeltex
             return MapFolderPath;
         }
         #endregion
-
 
         #region Initialize
 
@@ -536,6 +544,7 @@ namespace Zeltex
 
         private System.Collections.IEnumerator LoadAllRoutine()
         {
+			DataIsLoading = true;
             PlayerPrefs.SetString(ResourcesName, MapName);
             Debug.Log("Loading Resources from folder [" + MapName + "]");
             //RenameName = MapName;
@@ -543,7 +552,14 @@ namespace Zeltex
             yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadAllElements());
             IsLoaded = true;
             yield return null;
+			DataIsLoading = false;
         }
+		
+		public bool DataIsLoading;
+		public bool IsLoading() 
+		{
+			return DataIsLoading;
+		}
 
         /// <summary>
         /// Save all the folders
@@ -622,7 +638,8 @@ namespace Zeltex
             return "";  // no name given
         }
         #endregion
-
+		
+		#region Other
 
 		private List<string> GetStatisticsList()
 		{
@@ -636,193 +653,305 @@ namespace Zeltex
 			}
 			return MyStatistics;
         }
-
+		
         public AudioClip LatestPlayed;
-
+		
         public void PlayClip(AudioClip clip)
         {
             gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
-        } // PlayClip()
-
+        }
+		
         public bool GetIsLoaded()
         {
             return IsLoaded;
         }
 
-        #region ImportVox
+       // #region ImportVox
         private Int3 VoxelIndex = Int3.Zero();
 		private int VoxelIndex2 = 0;
 		private Int3 VoxelIndex3 = Int3.Zero();
 		private Color VoxelColor;
-		private string ImportVoxelData = "";
+		private List<string> ImportedVoxelNames = new List<string>();
+		private List<string> ImportVoxelDatas = new List<string>();
+		public List<VoxelModel> ImportedModels = new List<VoxelModel>();
 
-		public System.Collections.IEnumerator LoadVoxFile(Voxels.VoxelModel MyModel)
+		public List<VoxelModel> GetImportedVoxelModels() 
 		{
-			yield return UniversalCoroutine.CoroutineManager.StartCoroutine(LoadVoxFile());
-			MyModel.VoxelData = ImportVoxelData;
-			MyModel.OnModified();
+			List<VoxelModel> ImportedModels2 = new List<VoxelModel>();
+			ImportedModels2.AddRange(ImportedModels);
+			ImportedModels.Clear();
+			return ImportedModels2;
 		}
-
-		public System.Collections.IEnumerator LoadVoxFile(Voxels.World SpawnedWorld = null)
+		
+		public IEnumerator LoadVoxFiles()
 		{
-			yield return null;
-			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-			System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-			string FilePath = MyDialog.FileName;
-			if (MyResult == System.Windows.Forms.DialogResult.OK && FilePath != null && FilePath.Length > 0)
+			ImportedModels.Clear();
+			VoxelModel MyModel = new VoxelModel();
+			MyModel.IsLoadingFromFile = true;
+			ImportedModels.Add(MyModel);
+			yield return (LoadVoxFile(true));
+			if (ImportVoxelDatas.Count > 0)
 			{
-				MVMainChunk MyVoxelMainChunk = MVImporter.LoadVOX(FilePath, null);
-				if (MyVoxelMainChunk != null)
+				MyModel.VoxelData = ImportVoxelDatas[ImportVoxelDatas.Count - 1];
+				for (int i = 0; i < ImportVoxelDatas.Count; i++) 
 				{
-					//if (SpawnedWorld != null)
+					if (ImportedModels.Count -1 < i)
 					{
-					Debug.Log("Loading world from .Vox: " + MyVoxelMainChunk.voxelChunk.sizeX + ", " + MyVoxelMainChunk.voxelChunk.sizeY + ", " + MyVoxelMainChunk.voxelChunk.sizeZ);
-					Int3 NewWorldSize = new Int3(
-					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize) + 1,
-					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize) + 1,
-					Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize) + 1);
-					Voxels.VoxelData Data = null;
-					if (SpawnedWorld)
-					{
-						SpawnedWorld.IsChunksCentred = false;
-						yield return UniversalCoroutine.CoroutineManager.StartCoroutine(SpawnedWorld.SetWorldSizeRoutine(NewWorldSize));
-						/*while (SpawnedWorld.IsWorldLoading())
-						{
-						yield return null;
-						}*/
+						ImportedModels.Add(new Voxels.VoxelModel());
 					}
-					else
-					{
-						// Create new voxel Data here
-						Data = new Voxels.VoxelData(
-						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float) MyVoxelMainChunk.voxelChunk.sizeX / Voxels.Chunk.ChunkSize),
-						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeY / Voxels.Chunk.ChunkSize),
-						Voxels.Chunk.ChunkSize * Mathf.CeilToInt((float)MyVoxelMainChunk.voxelChunk.sizeZ / Voxels.Chunk.ChunkSize));
-					}
-					for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; VoxelIndex.x++)
-					{
-						for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; VoxelIndex.y++)
-						{
-							for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; VoxelIndex.z++)
-							{
-								VoxelIndex2 = (int)MyVoxelMainChunk.voxelChunk.voxels[VoxelIndex.x, VoxelIndex.y, VoxelIndex.z];
-								//VoxelIndex3.Set(VoxelIndex.x - MyVoxelMainChunk.voxelChunk.sizeX / 2,
-								//    VoxelIndex.y, VoxelIndex.z - MyVoxelMainChunk.voxelChunk.sizeZ / 2);
-								if (VoxelIndex2 > 0)
-								{
-									//Debug.Log(MyVoxelMainChunk.voxelChunk.voxels[x, y, z].ToString());
-									// minus 1 off the pallete to get the real index
-									VoxelColor = MyVoxelMainChunk.palatte[VoxelIndex2 - 1];
-									if (SpawnedWorld)
-									{
-										//Debug.Log(VoxelIndex.ToString() + " -TO- " + VoxelColor.ToString());
-										SpawnedWorld.UpdateBlockTypeMass(
-										"Color",
-										VoxelIndex,
-										VoxelColor);
-									}
-									else
-									{
-										Data.SetVoxelTypeColorRaw(VoxelIndex, 1, VoxelColor);
-									}
-									/*MassUpdateVoxelIndex = MyBlockType;
-									MassUpdateVoxelName = MyWorld.MyLookupTable.GetName(MyBlockType);
-									MassUpdateColor = Color.white;
-									MassUpdatePosition.Set(LoadingVoxelIndex);
-									UpdateBlockTypeLoading();*/
-								}
-								else
-								{
-									if (SpawnedWorld)
-									{
-										//Debug.Log(VoxelIndex.ToString() + " -TO- Air");
-										SpawnedWorld.UpdateBlockTypeMass("Air", VoxelIndex);
-									}
-					/*else
-					{
-					Data.SetVoxelTypeRaw(VoxelIndex, 0);
-					}*/
-								}
-							}
-						}
-					}
-					if (SpawnedWorld)
-					{
-						Debug.Log("Vox Import OnMassUpdate for: " + SpawnedWorld.name);
-						Voxels.WorldUpdater.Get().Clear(SpawnedWorld);
-						SpawnedWorld.OnMassUpdate();
-						Voxels.WorldUpdater.Get().IsUpdating = false;
-						//SpawnedWorld.ForceRefresh();
-					}
-					else
-					{
-						int VoxelType = 0;
-						System.Text.StringBuilder ImportVoxelDataBuilder = new System.Text.StringBuilder();
-						for (VoxelIndex.x = 0; VoxelIndex.x < Data.GetSize().x; ++VoxelIndex.x)
-						{
-							for (VoxelIndex.y = 0; VoxelIndex.y < Data.GetSize().y; ++VoxelIndex.y)
-							{
-								for (VoxelIndex.z = 0; VoxelIndex.z < Data.GetSize().z; ++VoxelIndex.z)
-								{
-									VoxelType = Data.GetVoxelType(VoxelIndex);
-									if (VoxelType > 0)
-									{
-										VoxelColor = Data.GetVoxelColorColor(VoxelIndex);
-										//ImportVoxelDataBuilder.AppendLine(1 + " " + VoxelColor.r + " " + VoxelColor.g + " " + VoxelColor.b);
-										int Red = (int)(255f * VoxelColor.r);
-										int Green = (int)(255f * VoxelColor.g);
-										int Blue = (int)(255f * VoxelColor.b);
-										ImportVoxelDataBuilder.AppendLine("" + 1 + " " + Red + " " + Green + " " + Blue);
-									}
-									else
-									{
-										ImportVoxelDataBuilder.AppendLine(0.ToString());
-									}
-								}
-							}
-						}
-						ImportVoxelData = ImportVoxelDataBuilder.ToString();
-						Debug.LogError(Data.GetSize().GetVector().ToString() + " - Imported voxel data:\n" + ImportVoxelData);
-					}
-
-					/*if (MyVoxelMainChunk.alphaMaskChunk != null)
-					{
-					Debug.Log("Checking Alpha from .Vox: " + MyVoxelMainChunk.alphaMaskChunk.sizeX + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeY + ", " + MyVoxelMainChunk.alphaMaskChunk.sizeZ);
-					for (int x = 0; x < MyVoxelMainChunk.alphaMaskChunk.sizeX; ++x)
-					{
-					for (int y = 0; y < MyVoxelMainChunk.alphaMaskChunk.sizeY; ++y)
-					{
-					for (int z = 0; z < MyVoxelMainChunk.alphaMaskChunk.sizeZ; ++z)
-					{
-					Debug.Log(MyVoxelMainChunk.alphaMaskChunk.voxels[x, y, z].ToString());
-					}
-					}
-					}
-					}
-					else
-					{
-					Debug.Log("Alpha Mask is null");
-					}*/
-				}
-				/*else
-				{
-				Debug.LogError("[World in Viewer] is null.");
-				}**/
-				// for our voxel data, set it to 
-				}
-				else
-				{
-					Debug.LogError("[MyVoxelMainChunk] is null.");
+					ImportedModels[i].VoxelData = ImportVoxelDatas[i];
+					ImportedModels[i].SetName(ImportedVoxelNames[i]);
 				}
 			}
 			else
 			{
-			Debug.LogError("[MVVoxModel] Invalid file path");
+				MyModel.VoxelData = "";
+				MyModel.SetName("");
 			}
-			//yield break;
+			for (int i = 0; i < ImportedModels.Count; i++) 
+			{
+				ImportedModels[i].IsLoadingFromFile = false;
+			}
+		}
+
+		/// <summary>
+		/// Imports a vox file as a new voxel model
+		/// </summary>
+		/// <returns>The vox.</returns>
+		public VoxelModel ImportVox()
+		{
+			Voxels.VoxelModel NewModel = new Voxels.VoxelModel();
+			RoutineManager.Get().StartCoroutine(LoadVoxFile(NewModel));
+			return NewModel;
+        }
+
+        public void ImportVox(VoxelModel MyModel)
+        {
+            RoutineManager.Get().StartCoroutine(LoadVoxFile(MyModel));
+        }
+
+		public IEnumerator LoadVoxFile(VoxelModel MyModel)
+		{
+			MyModel.IsLoadingFromFile = true;
+			yield return LoadVoxFile(false);
+			if (ImportVoxelDatas.Count > 0)
+			{
+                MyModel.VoxelData = ImportVoxelDatas[ImportVoxelDatas.Count - 1];
+                MyModel.SetName(ImportedVoxelNames[ImportedVoxelNames.Count - 1]);
+			}
+			else
+			{
+				MyModel.VoxelData = "";
+                Debug.LogError("Could not get data for importing model: " + MyModel.Name);
+			}
+			MyModel.IsLoadingFromFile = false;
+            MyModel.OnModified();
+		}
+
+		public IEnumerator LoadVoxFile(bool IsMultiFiles = true, Voxels.World SpawnedWorld = null)
+		{
+			ImportVoxelDatas.Clear();
+            ImportedVoxelNames.Clear();
+			yield return null;
+			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
+				System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+				if (MyDialog == null) 
+				{
+					yield break;
+				}
+				MyDialog.Multiselect = IsMultiFiles;
+                if (IsMultiFiles)
+                {
+                    MyDialog.Title = "Import Vox Files";
+                }
+                else
+                {
+                    MyDialog.Title = "Import Vox";
+                }
+
+				System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+				//string FilePath = MyDialog.FileName;
+				string [] FilePaths = MyDialog.FileNames;
+				if (MyResult == System.Windows.Forms.DialogResult.OK)
+				{
+                    if (FilePaths.Length > 0) 
+                    {
+                        for (int i = 0; i < FilePaths.Length; i++) 
+                        {
+                            yield return ImportVoxFileSingle(FilePaths[i], SpawnedWorld);
+                        }
+                    }
+                    else if (MyDialog.FileName != null) 
+                    {
+                        yield return ImportVoxFileSingle(MyDialog.FileName, SpawnedWorld);
+                    }
+                    else 
+                    {
+                        Debug.LogError("[MVVoxModel] Invalid file path");
+                    }
+				}
+				else
+				{
+					Debug.LogError("[MVVoxModel] Invalid file path");
+				}
+				MyDialog.Dispose();
 			#endif
 		}
+		
+		public IEnumerator ImportVoxFileSingle(string FilePath, Voxels.World SpawnedWorld) 
+		{
+            Debug.Log("Importing Vox File at: " + FilePath + " with Spawned World? " + (SpawnedWorld != null).ToString());
+			string VoxelModelName = Path.GetFileNameWithoutExtension(FilePath);
+			ImportedVoxelNames.Add(VoxelModelName);
+			MVMainChunk MyVoxelMainChunk = MVImporter.LoadVOX(FilePath, null);
+			if (MyVoxelMainChunk == null && MyVoxelMainChunk.voxelChunk == null)
+			{
+				Debug.LogError(FilePath + " Has an invalid vox file.");
+				yield break;
+			}
+
+			Voxels.VoxelData Data = null;
+			// First get the size of the voxels
+			Int3 NewWorldSize = new Int3(
+                Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeX / (float)Voxels.Chunk.ChunkSize),
+                Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeY / (float)Voxels.Chunk.ChunkSize),
+                Mathf.CeilToInt(MyVoxelMainChunk.voxelChunk.sizeZ / (float)Voxels.Chunk.ChunkSize));
+            Debug.Log("Loading world from .Vox: " + MyVoxelMainChunk.voxelChunk.sizeX + ", " + MyVoxelMainChunk.voxelChunk.sizeY + ", " + MyVoxelMainChunk.voxelChunk.sizeZ 
+                + " --- " + NewWorldSize.GetVector().ToString());
+			if (SpawnedWorld)
+			{
+				if (SpawnedWorld)
+				{
+					SpawnedWorld.IsChunksCentred = false;
+					yield return SpawnedWorld.SetWorldSizeRoutine(NewWorldSize);
+					SpawnedWorld.name = VoxelModelName;
+				}
+			}
+			else
+			{
+				// Create new voxel Data here
+				Data = new Voxels.VoxelData(Voxels.Chunk.ChunkSize * NewWorldSize.x, Voxels.Chunk.ChunkSize * NewWorldSize.y, Voxels.Chunk.ChunkSize * NewWorldSize.z);
+			}
+
+			// Read the data
+			for (VoxelIndex.x = 0; VoxelIndex.x < MyVoxelMainChunk.voxelChunk.sizeX; VoxelIndex.x++)
+			{
+				for (VoxelIndex.y = 0; VoxelIndex.y < MyVoxelMainChunk.voxelChunk.sizeY; VoxelIndex.y++)
+				{
+					for (VoxelIndex.z = 0; VoxelIndex.z < MyVoxelMainChunk.voxelChunk.sizeZ; VoxelIndex.z++)
+					{
+						VoxelIndex2 = (int)MyVoxelMainChunk.voxelChunk.voxels[VoxelIndex.x, VoxelIndex.y, VoxelIndex.z];
+						//VoxelIndex3.Set(VoxelIndex.x - MyVoxelMainChunk.voxelChunk.sizeX / 2,
+						//    VoxelIndex.y, VoxelIndex.z - MyVoxelMainChunk.voxelChunk.sizeZ / 2);
+						if (VoxelIndex2 > 0)
+						{
+							//Debug.Log(MyVoxelMainChunk.voxelChunk.voxels[x, y, z].ToString());
+							// minus 1 off the pallete to get the real index
+							VoxelColor = MyVoxelMainChunk.palatte[VoxelIndex2 - 1];
+							if (SpawnedWorld)
+							{
+    							//Debug.Log(VoxelIndex.ToString() + " -TO- " + VoxelColor.ToString());
+    							SpawnedWorld.UpdateBlockTypeMass("Color", VoxelIndex, VoxelColor);
+							}
+							else
+							{
+							    Data.SetVoxelTypeColorRaw(VoxelIndex, 1, VoxelColor);
+							}
+						}
+						else
+						{
+							if (SpawnedWorld)
+							{
+								SpawnedWorld.UpdateBlockTypeMass("Air", VoxelIndex);
+							}
+						}
+					}
+				}
+			}
+			// if was loading to a world, update the meshes
+			if (SpawnedWorld)
+			{
+				SpawnedWorld.OnMassUpdate();
+			}
+			else
+			{
+				int VoxelType = 0;
+				System.Text.StringBuilder ImportVoxelDataBuilder = new System.Text.StringBuilder();
+                if (!(NewWorldSize.x == 1 && NewWorldSize.y == 1 && NewWorldSize.z == 1))
+                {
+                    //Debug.Log("Importing voxel model of size: " + NewWorldSize.GetVector().ToString());
+                    Int3 VoxelWorldIndex = Int3.Zero();
+                    Int3 VoxelChunkPosition = Int3.Zero();
+                    ImportVoxelDataBuilder.AppendLine("/World" + ' ' + NewWorldSize.x.ToString() + ' ' + NewWorldSize.y.ToString() + ' ' + NewWorldSize.z.ToString());
+                    // break up data into chunks of 16x16x16
+                    for (int i = 0; i < NewWorldSize.x; i++) 
+                    {
+                        for (int j = 0; j < NewWorldSize.y; j++) 
+                        {
+                            for (int k = 0; k < NewWorldSize.z; k++) 
+                            {
+                                VoxelChunkPosition.Set(i, j, k);
+                                ImportVoxelDataBuilder.AppendLine("/Chunk" + ' ' + VoxelChunkPosition.x.ToString() + ' ' + VoxelChunkPosition.y.ToString() + ' ' + VoxelChunkPosition.z.ToString());
+                                for (VoxelIndex.x = 0; VoxelIndex.x < Chunk.ChunkSize; VoxelIndex.x++)
+                                {
+                                    for (VoxelIndex.y = 0; VoxelIndex.y < Chunk.ChunkSize; VoxelIndex.y++)
+                                    {
+                                        for (VoxelIndex.z = 0; VoxelIndex.z < Chunk.ChunkSize; VoxelIndex.z++)
+                                        {
+                                            VoxelWorldIndex.Set(
+                                                VoxelIndex.x + VoxelChunkPosition.x * Chunk.ChunkSize, 
+                                                VoxelIndex.y + VoxelChunkPosition.y * Chunk.ChunkSize, 
+                                                VoxelIndex.z + VoxelChunkPosition.z * Chunk.ChunkSize);
+                                            VoxelType = Data.GetVoxelType(VoxelWorldIndex);
+                                            if (VoxelType > 0)
+                                            {
+                                                VoxelColor = Data.GetVoxelColorColor(VoxelWorldIndex);
+                                                int Red = (int)(255f * VoxelColor.r);
+                                                int Green = (int)(255f * VoxelColor.g);
+                                                int Blue = (int)(255f * VoxelColor.b);
+                                                ImportVoxelDataBuilder.AppendLine("" + 1 + " " + Red + " " + Green + " " + Blue);
+                                            }
+                                            else
+                                            {
+                                                ImportVoxelDataBuilder.AppendLine(0.ToString());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else 
+                {
+
+                    for (VoxelIndex.x = 0; VoxelIndex.x < Data.GetSize().x; ++VoxelIndex.x)
+                    {
+                        for (VoxelIndex.y = 0; VoxelIndex.y < Data.GetSize().y; ++VoxelIndex.y)
+                        {
+                            for (VoxelIndex.z = 0; VoxelIndex.z < Data.GetSize().z; ++VoxelIndex.z)
+                            {
+                                VoxelType = Data.GetVoxelType(VoxelIndex);
+                                if (VoxelType > 0)
+                                {
+                                    VoxelColor = Data.GetVoxelColorColor(VoxelIndex);
+                                    int Red = (int)(255f * VoxelColor.r);
+                                    int Green = (int)(255f * VoxelColor.g);
+                                    int Blue = (int)(255f * VoxelColor.b);
+                                    ImportVoxelDataBuilder.AppendLine("" + 1 + " " + Red + " " + Green + " " + Blue);
+                                }
+                                else
+                                {
+                                    ImportVoxelDataBuilder.AppendLine(0.ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+				ImportVoxelDatas.Add(ImportVoxelDataBuilder.ToString());
+			}
+		}
+
 		#endregion
 
 		#region ImportsExports
@@ -1005,20 +1134,31 @@ namespace Zeltex
 		public void ImportImage(Zexel MyZexel)
 		{
 			#if UNITY_EDITOR// || UNITY_STANDALONE_WIN
-			System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
-			System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
-			if (MyResult == System.Windows.Forms.DialogResult.OK)
+            string FilePath = OpenFile("png");
+            if (FilePath != "")
 			{
-				byte[] bytes = FileUtil.LoadBytes(MyDialog.FileName);
-				MyZexel.LoadImage(bytes);
+                MyZexel.LoadImage(FileUtil.LoadBytes(FilePath));
             }
-			else
-			{
-				Debug.LogError("Failure to open file.");
-			}
-#else
-            Debug.LogError("Import not supported by platform.");
-#endif
+            #endif
+        }
+
+        /// <summary>
+        /// Opens a file of type
+        /// </summary>
+        public string OpenFile(string FileTypeExtension) 
+        {
+            #if UNITY_EDITOR
+                return UnityEditor.EditorUtility.OpenFilePanel("Open a []", "", FileTypeExtension);
+            #endif
+            #if UNITY_STANDALONE_WIN
+                System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
+                System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
+                if (MyResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    return MyDialog.FileName;
+                }
+            #endif
+            return "";
         }
 
 		public void ImportZound(string FolderName, Sound.Zound MyZound)
@@ -1178,7 +1318,7 @@ namespace Zeltex
 		/// <summary>
 		/// Loads all the data!
 		/// </summary>
-		private System.Collections.IEnumerator LoadAllElements()
+		private IEnumerator LoadAllElements()
 		{
 			//Debug.Log("Loading all elements for [" + MapName + "]");
 			for (int i = 0; i < ElementFolders.Count; i++)
@@ -1344,6 +1484,15 @@ namespace Zeltex
                 }
             }
         }
+
+		public void AddNew(string FolderName)
+		{
+			ElementFolder MyFolder = GetElementFolder(FolderName);
+			if (MyFolder != null)
+			{
+				MyFolder.AddNewElement();
+			}
+		}
 
 		/// <summary>
 		/// Add a texture

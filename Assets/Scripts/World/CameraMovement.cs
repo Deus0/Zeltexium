@@ -193,8 +193,8 @@ namespace Zeltex.Cameras
             if (IsLerp)
             {
                 //TargetPosition = TargetPosition + MyCamera.transform.TransformDirection(0.5f * (BaseInput + MouseScrollInput));
-                Vector3 Input = 0.5f * (BaseInput + MouseScrollInput);
-                Vector3 Velocity = MyCamera.transform.TransformDirection(Input);
+                //Vector3 Input = ;
+				Vector3 Velocity = MyCamera.transform.TransformDirection(0.5f * (BaseInput + MouseScrollInput));
                 /*Velocity.x = Mathf.RoundToInt(Velocity.x * 10f) / 10f;
                 Velocity.y = Mathf.RoundToInt(Velocity.y * 10f) / 10f;
                 Velocity.z = Mathf.RoundToInt(Velocity.z * 10f) / 10f;*/

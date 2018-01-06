@@ -10,22 +10,23 @@ namespace Zeltex.Guis
         public Orbitor MyPositioner;
         private Vector2 MousePosition;
 
-        private void OnEnable()
-        {
-            Debug.LogError("Item Pickup enabled..");
-        }
+        //private void OnEnable()
+        //{
+            //Debug.LogError("Item Pickup enabled..");
+        //}
 
         void Update ()
         {
             FollowMouse();
         }
+
         /// <summary>
         /// Using Orbitor to position the gui, it makes the gui follow the mouse.
         /// </summary>
-        private void FollowMouse()
+        public void FollowMouse(bool IsForce = false)
         {
             Vector2 NewMousePosition = new Vector2(Mathf.RoundToInt(Input.mousePosition.x), Mathf.RoundToInt(Input.mousePosition.y));
-            if (MousePosition.x != NewMousePosition.x || MousePosition.y != NewMousePosition.y)
+            if (IsForce || (MousePosition.x != NewMousePosition.x || MousePosition.y != NewMousePosition.y))
             {
                 MyPositioner.SetScreenPosition(RectUpdater.MousePositionToScaledScreenPosition(NewMousePosition));
                 MousePosition = NewMousePosition;

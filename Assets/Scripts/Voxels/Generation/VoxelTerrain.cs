@@ -120,7 +120,7 @@ namespace Zeltex.Voxels
 
         private IEnumerator CreateFlatlandRoutine(World MyWorld)
 		{
-			MyTerrainMetaData.SetNames(MyWorld.MyDataBase);    // set meta data
+            MyTerrainMetaData.SetNames(VoxelManager.Get());    // set meta data
 			Debug.Log("Creating Flatland of height: " + MyTerrainMetaData.BaseHeight + " with block: " + MyTerrainMetaData.DirtName);
             if (MyWorld.GetWorldSizeChunks() == Int3.Zero())
             {
@@ -189,7 +189,7 @@ namespace Zeltex.Voxels
         private IEnumerator CreateTerrain()
         {
            // MyWorld = TerrainChunk.GetWorld();
-            MyTerrainMetaData.SetNames(TerrainChunk.GetWorld().MyDataBase);    // set meta data
+            MyTerrainMetaData.SetNames(VoxelManager.Get());    // set meta data
             if (TerrainChunk != null)
             {
                 /*for (int i = 0; i < Chunk.ChunkSize; i++)
@@ -352,7 +352,7 @@ namespace Zeltex.Voxels
         public void CreateTerrainFromTextureMap(World MyWorld)
         {
             Debug.Log("Building Terrain from texture map.");
-            MyTerrainMetaData.SetNames(MyWorld.MyDataBase);    // set meta data
+            MyTerrainMetaData.SetNames(VoxelManager.Get());    // set meta data
             Color[] MyColors = (MyImage.texture as Texture2D).GetPixels(0);
             for (int i = 0; i < MyImage.texture.width; i++)
             {

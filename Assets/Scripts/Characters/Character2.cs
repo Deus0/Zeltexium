@@ -160,7 +160,7 @@ namespace Zeltex.Characters
 
         public Inventory GetEquipment()
         {
-            return Data.Equipment;
+            return Data.GetEquipment();
         }
 
         public QuestLog GetQuestLog()

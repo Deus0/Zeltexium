@@ -116,7 +116,7 @@ namespace Zeltex.WorldUtilities
                 {
 				    Use();
 				    Teleporter MyTeleporter2 = TeleportLocation.GetComponent<Teleporter>();
-				    //if (CollideWithItem.GetComponent<Zeltex.Items.ItemObject>())
+				    //if (CollideWithItem.GetComponent<Zeltex.Items.ItemHandler>())
                     {
 					    Vector3 Difference = (TeleportLocation.transform.position-transform.position);	// difference between teleport locations
 					    if (IsUseDifference)
