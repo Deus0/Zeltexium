@@ -246,6 +246,13 @@ namespace Zeltex.Physics
                     Gravity MyGrav = MyBoneTransform.gameObject.AddComponent<Gravity>();
                     MyGrav.GravityForce = new Vector3(0, -0.5f, 0);
                 }
+
+                Items.ItemHandler MyItemInstance = MyBoneTransform.gameObject.GetComponent<Items.ItemHandler>();
+                if (MyItemInstance == null)
+                {
+                    MyItemInstance = MyBone.MyTransform.gameObject.AddComponent<Items.ItemHandler>();
+                    MyItemInstance.SetItem(MyBone.MyItem);
+                }
             }
         }
 
@@ -276,6 +283,12 @@ namespace Zeltex.Physics
                     Destroy(MyGrav);
                 }
                 Destroy(MyRigid);
+            }
+
+            Items.ItemHandler MyItemInstance = MyBone.MyTransform.gameObject.GetComponent<Items.ItemHandler>();
+            if (MyItemInstance != null)
+            {
+                Destroy(MyItemInstance);
             }
         }
 

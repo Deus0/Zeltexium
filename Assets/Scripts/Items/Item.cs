@@ -87,6 +87,14 @@ namespace Zeltex.Items
 
         #region Initiation
 
+        public void EmptyZexel()
+        {
+            if (MyZexel != null)
+            {
+                MyZexel.SetTexture(null);
+            }
+        }
+
         public override void OnLoad()
         {
             base.OnLoad();
@@ -512,74 +520,101 @@ namespace Zeltex.Items
                 Debug.LogError("ItemB is null.");
                 return ReturnItem;
             }
-            // Set Bones
-            Skeletons.Bone BoneA = ItemA.ParentElement as Skeletons.Bone;
-            Skeletons.Bone BoneB = ItemB.ParentElement as Skeletons.Bone;
-            if (BoneA != null)
+
+            if (ItemA.ParentInventory == null && ItemB.ParentInventory == null)
             {
-                BoneA.MyItem = ItemB;
+                // nothing i guess
+                Debug.LogError("Both Parents are null.");
             }
-            if (BoneB != null)
-            {
-                BoneB.MyItem = ItemA;
-            }
-            // Switch Parent Elements
-            Element TemporaryElement = ItemA.ParentElement;
-            ItemA.ParentElement = ItemB.ParentElement;
-            ItemB.ParentElement = TemporaryElement;
             // If same Element
-            if (ItemA.ParentInventory != null && ItemB.ParentInventory != null)
+            //if (ItemA.ParentInventory != null && ItemB.ParentInventory != null)
             {
-                if (ItemA.ParentInventory == ItemB.ParentInventory)
+                Inventory InventoryA = ItemA.ParentInventory;
+                Inventory InventoryB = ItemB.ParentInventory;
+                if (ItemA.Name != "Empty" && ItemA.Name == ItemB.Name)
                 {
-                    Inventory InventoryA = ItemA.ParentInventory;
-                    if (!(InventoryA.MyItems.Contains(ItemA) && InventoryA.MyItems.Contains(ItemB))) 
+                    // increase itemA instead
+                    //Debug.LogError("Increase Quantity of ItemA: " + ItemA.Name + " " + ItemA.GetQuantity());
+                    ItemA.IncreaseQuantity(ItemB.GetQuantity());
+                    ItemB.SetQuantity(0);
+                    ItemB.SetName("Empty");
+                    ItemB.EmptyZexel();
+                    ItemA.OnUpdate.Invoke();
+                    ItemB.OnUpdate.Invoke();
+                    if (InventoryA != null)
                     {
-                        Debug.LogError("Inventory A does not contain both items");
-                        return null;
+                        InventoryA.OnUpdateItem.Invoke(InventoryA.MyItems.IndexOf(ItemA));
                     }
-                    int IndexA = InventoryA.MyItems.IndexOf(ItemA);
+                    return ItemB;
+                }
+                else
+                {
+                    // Set Bones
+                    Skeletons.Bone BoneA = ItemA.ParentElement as Skeletons.Bone;
+                    Skeletons.Bone BoneB = ItemB.ParentElement as Skeletons.Bone;
+                    if (BoneA != null)
+                    {
+                        BoneA.MyItem = ItemB;
+                    }
+                    if (BoneB != null)
+                    {
+                        BoneB.MyItem = ItemA;
+                    }
+                    // Switch Parent Elements
+                    Element TemporaryElement = ItemA.ParentElement;
+                    ItemA.ParentElement = ItemB.ParentElement;
+                    ItemB.ParentElement = TemporaryElement;
+
+                    // Swap items
+                    if (InventoryA != null && InventoryA.MyItems.Contains(ItemA))
+                    {
+                        int IndexA = InventoryA.MyItems.IndexOf(ItemA);
+                        InventoryA.MyItems[IndexA] = ItemB;
+                        ItemB.SetParentInventory(InventoryA);
+                        InventoryA.OnUpdateItem.Invoke(IndexA);
+                    }
+                    else
+                    {
+                        ItemB.SetParentInventory(null);
+                    }
+                    if (InventoryB != null && InventoryB.MyItems.Contains(ItemB))
+                    {
+                        int IndexB = InventoryB.MyItems.IndexOf(ItemB);
+                        InventoryB.MyItems[IndexB] = ItemA;
+                        ItemA.SetParentInventory(InventoryB);
+                        InventoryB.OnUpdateItem.Invoke(IndexB);
+                    }
+                    else
+                    {
+                        ItemA.SetParentInventory(null);
+                    }
+                }
+            }
+            // if either is null
+            ItemA.OnUpdate.Invoke();
+            ItemB.OnUpdate.Invoke();
+            return ItemA;
+        }
+    }
+
+}
+// maybe make item action as well, ie (open a door)
+
+// give worldItem, a function, so i can have other scripts activate when they are selected - ie flip a car, open a door
+
+
+/*int IndexA = InventoryA.MyItems.IndexOf(ItemA);
                     int IndexB = InventoryA.MyItems.IndexOf(ItemB);
                     InventoryA.MyItems[IndexA] = ItemB;
                     InventoryA.OnUpdateItem.Invoke(IndexA);
                     InventoryA.MyItems[IndexB] = ItemA;
-                    InventoryA.OnUpdateItem.Invoke(IndexB);
-                    //Debug.Log(IndexA + " Has switched with " + IndexB + " of Inventory: " + InventoryA.Name);
-                }
-                else
-                {
-                    Inventory InventoryA = ItemA.ParentInventory;
-                    Inventory InventoryB = ItemB.ParentInventory;
-                    if (!InventoryA.MyItems.Contains(ItemA)) 
-                    {
-                        Debug.LogError("Inventory A [" + InventoryA.Name + "] does not contain " + ItemA.Name);
-                        Debug.LogError("Inventory B [" + InventoryB.Name + "] does not contain " + ItemB.Name + " ? " + (InventoryB.MyItems.Contains(ItemB)).ToString());
-                        return null;
-                    }
-                    if (!InventoryB.MyItems.Contains(ItemB)) 
-                    {
-                        Debug.LogError("Inventory B [" + InventoryB.Name + "] does not contain " + ItemB.Name);
-                        return null;
-                    }
-                    int IndexA = InventoryA.MyItems.IndexOf(ItemA);
-                    int IndexB = InventoryB.MyItems.IndexOf(ItemB);
-                    InventoryA.MyItems[IndexA] = ItemB;
-                    ItemB.SetParentInventory(InventoryA);
-                    InventoryB.MyItems[IndexB] = ItemA;
-                    ItemA.SetParentInventory(InventoryB);
-                    InventoryA.OnUpdateItem.Invoke(IndexA);
-                    InventoryB.OnUpdateItem.Invoke(IndexB);
-                    //Debug.Log("ItemA: " + IndexA + " Has switched with ItemB: " + IndexB + " of InventoryA: " + InventoryA.Name + " and InventoryB: " +  InventoryB.Name);
-                }
-            }
-            // if either is null
-            else
+                    InventoryA.OnUpdateItem.Invoke(IndexB);*/
+//Debug.Log(IndexA + " Has switched with " + IndexB + " of Inventory: " + InventoryA.Name);
+//Debug.Log("ItemA: " + IndexA + " Has switched with ItemB: " + IndexB + " of InventoryA: " + InventoryA.Name + " and InventoryB: " +  InventoryB.Name);
+
+
+/*else
             {
-                if (ItemA.ParentInventory == null && ItemB.ParentInventory == null)
-                {
-                    // nothing i guess
-                    Debug.LogError("Both Parents are null.");
-                }
                 else if (ItemA.ParentInventory == null && ItemB.ParentInventory != null)
                 {
                     Inventory InventoryB = ItemB.ParentInventory;
@@ -612,14 +647,4 @@ namespace Zeltex.Items
                     //Debug.Log(IndexA + " Has switched with an individual item of Inventory: " + InventoryA.Name);
                     ReturnItem = ItemA;
                 }
-            }
-            ItemA.OnUpdate.Invoke();
-            ItemB.OnUpdate.Invoke();
-            return ItemA;
-        }
-    }
-
-}
-// maybe make item action as well, ie (open a door)
-
-// give worldItem, a function, so i can have other scripts activate when they are selected - ie flip a car, open a door
+            }*/

@@ -27,9 +27,7 @@ namespace Zeltex.Guis
             }
             CraftingBench.OnLoad(); // set parents etc
             MyIngredients.SetInventory(CraftingBench);
-            Item CraftedItem = new Item();
-            CraftedItem.SetParentInventory(CraftingBench);
-            CraftedItemGui.SetItem(CraftedItem);
+            SetCraftedItemToNull();
             // Events
             MyIngredients.OnSwapItems.AddEvent(OnSwapItems);
             CraftedItemGui.OnSwapItems.AddEvent(OnPickupCraftingItem);
@@ -44,7 +42,6 @@ namespace Zeltex.Guis
                 return;
             }
             int RecipesCount = DataManager.Get().GetSize(DataFolderNames.Recipes);
-            CraftingWithRecipe = null;
            // Debug.LogError("Checking recipes for Inventory: " + RecipesCount
             //    + "\n of items: " + ItemA.Name + " And " + ItemB.Name);
             for (int i = 0; i < RecipesCount; i++)
@@ -57,9 +54,21 @@ namespace Zeltex.Guis
                     CraftedItemGui.SetItem(CraftedItem);
                     Debug.Log("Crafted new item!");
                     CraftingWithRecipe = MyRecipe;
-                    break;
+                    return;
                 }
             }
+            if (CraftingWithRecipe != null)
+            {
+                SetCraftedItemToNull();
+            }
+        }
+
+        private void SetCraftedItemToNull()
+        {
+            CraftingWithRecipe = null;
+            Item CraftedItem = new Item();
+            CraftedItem.SetParentInventory(CraftingBench);
+            CraftedItemGui.SetItem(CraftedItem);
         }
 
         public void OnPickupCraftingItem(Item ItemA, Item ItemB)
@@ -67,11 +76,7 @@ namespace Zeltex.Guis
             if (CraftingWithRecipe != null)
             {
                 Debug.Log("Taking awake items from crafting inventory");
-                // Take away recipe items from crafting inventory!
-                foreach (KeyValuePair<Int3, string> MyPair in CraftingWithRecipe.Ingredients)
-                {
-                    CraftingBench.Remove(MyPair.Value);
-                }
+                CraftingWithRecipe.RemoveItems(CraftingBench);
             }
             else
             {

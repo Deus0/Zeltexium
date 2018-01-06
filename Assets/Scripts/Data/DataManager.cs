@@ -1150,14 +1150,14 @@ namespace Zeltex
             #if UNITY_EDITOR
                 return UnityEditor.EditorUtility.OpenFilePanel("Open a []", "", FileTypeExtension);
             #endif
-            #if UNITY_STANDALONE_WIN
+            /*#if UNITY_EDITOR
                 System.Windows.Forms.OpenFileDialog MyDialog = new System.Windows.Forms.OpenFileDialog();
                 System.Windows.Forms.DialogResult MyResult = MyDialog.ShowDialog();
                 if (MyResult == System.Windows.Forms.DialogResult.OK)
                 {
                     return MyDialog.FileName;
                 }
-            #endif
+            #endif*/
             return "";
         }
 

@@ -29,6 +29,7 @@ namespace Zeltex.Items
         public IntDictionary Ingredients = new IntDictionary();  // the items needed to begin crafting
         [JsonProperty]
         public string Crafted = "";     // the items created by the crafting process
+        private List<int> ItemSlots = new List<int>();
 
         /// <summary>
         /// Gets the max size of a recipe
@@ -74,22 +75,36 @@ namespace Zeltex.Items
             }
             if (MyInventory.GetSize() == 9 && (MySize == (new Int3(3, 3, 0)) || MySize == (new Int3(2, 2, 0))))
             {
-                foreach (KeyValuePair<Int3, string> MyValuePair in Ingredients)
+                for (int i = 0; i < InventorySize.x - MySize.x + 1; i++)
                 {
-                    int InventoryIndex = MyValuePair.Key.x + MyValuePair.Key.y * (InventorySize.x);
-                    if (MyInventory.GetItem(InventoryIndex).Name != MyValuePair.Value)
+                    for (int j = 0; j < InventorySize.y - MySize.y + 1; j++)
                     {
-                        //Debug.LogError("Inventory doesn't match recipe: " + MyInventory.Name + " at " + MyValuePair.Value + " : " 
-                        //    + MyInventory.GetItem(InventoryIndex).Name + "\n" + InventoryIndex + " - at position: " + MyValuePair.Key.ToString());
-                        return "";
+                        bool IsCrafted = true;
+                        ItemSlots.Clear();
+                        foreach (KeyValuePair<Int3, string> MyValuePair in Ingredients)
+                        {
+                            int InventoryIndex = (i + MyValuePair.Key.x) +(MyValuePair.Key.y + j) * (InventorySize.x);
+                            if (MyInventory.GetItem(InventoryIndex).Name != MyValuePair.Value)
+                            {
+                                //Debug.LogError("Inventory doesn't match recipe: " + MyInventory.Name + " at " + MyValuePair.Value + " : " 
+                                //    + MyInventory.GetItem(InventoryIndex).Name + "\n" + InventoryIndex + " - at position: " + MyValuePair.Key.ToString());
+                                ItemSlots.Add(InventoryIndex);
+                                IsCrafted = false;
+                                break;
+                            }
+                        }
+                        if (IsCrafted)
+                        {
+                            return Crafted; // returns
+                        }
                     }
                 }
-                return Crafted; // returns
             }
             else
             {
                 Debug.LogError("Not checking! Size Invalid for recipe " + Name + " at " + MySize.ToString());
             }
+            ItemSlots.Clear();
             return "";
         }
 
@@ -101,6 +116,17 @@ namespace Zeltex.Items
                 return DataManager.Get().GetElement(DataFolderNames.Items, MyCrafted).Clone() as Item;
             }
             return new Item();
+        }
+
+        /// <summary>
+        /// Take away recipe items from crafting inventory!
+        /// </summary>
+        public void RemoveItems(Inventory MyCraftingBench) 
+        {
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                MyCraftingBench.Decrease(ItemSlots[i]);
+            }
         }
     }
 

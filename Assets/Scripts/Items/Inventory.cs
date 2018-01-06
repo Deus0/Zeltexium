@@ -240,16 +240,27 @@ namespace Zeltex.Items
             return 0;
         }
 
-        public bool Remove(int ItemIndex)
+        public void Decrease(int ItemIndex)
         {
             if (ItemIndex >= 0 && ItemIndex < MyItems.Count)
             {
-                MyItems.RemoveAt(ItemIndex);
-                OnModified();
-                Refresh();
-                return true;
+                MyItems[ItemIndex].IncreaseQuantity(-1);
+                OnUpdateItem.Invoke(ItemIndex);
+                if (MyItems[ItemIndex].GetQuantity() == 0)
+                {
+                    SetItemToEmpty(ItemIndex);
+                }
             }
-            return false;
+        }
+
+        public void SetItemToEmpty(int ItemIndex)
+        {
+            if (ItemIndex >= 0 && ItemIndex < MyItems.Count)
+            {
+                MyItems[ItemIndex] = new Item();
+                MyItems[ItemIndex].SetParentInventory(this);
+                OnUpdateItem.Invoke(ItemIndex);
+            }
         }
 
         public void Remove(string ItemName)

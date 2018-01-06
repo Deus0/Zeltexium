@@ -46,7 +46,7 @@ namespace Zeltex.Items
                     if (GUI.Button(ButtonRect, "-"))
                     {
                         // remove item
-                        MyInventory.Remove(i);
+                        MyInventory.Decrease(i);
                     }
                 }
             }

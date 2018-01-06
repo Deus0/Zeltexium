@@ -52,11 +52,24 @@ namespace Zeltex.Guis
         public void OnPointerEnter(PointerEventData eventData)
         {
             MyOutline.enabled = true;
+            if (MyItem.Name != "Empty")
+            {
+                TooltipGui.Get().gameObject.SetActive(true);
+                if (MyItem.GetQuantity() == 1)
+                {
+                    TooltipGui.Get().SetTexts(MyItem.Name, MyItem.GetDescription());
+                }
+                else
+                {
+                    TooltipGui.Get().SetTexts(MyItem.Name + " [x" + MyItem.GetQuantity() + "]", MyItem.GetDescription());
+                }
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             MyOutline.enabled = false;
+            TooltipGui.Get().gameObject.SetActive(false);
         }
 
         void OnDisable() 
@@ -147,8 +160,12 @@ namespace Zeltex.Guis
                     }
                 }
                 Item TemporaryItem = ItemPickupGui.GetItem();
-                ItemPickupGui.SetItem(MyItem.SwitchItems(ItemPickupGui.GetItem()));
-                MyItem = TemporaryItem;
+                Item ItemToSet = MyItem.SwitchItems(ItemPickupGui.GetItem());
+                if (ItemToSet != TemporaryItem)
+                {
+                    ItemPickupGui.SetItem(ItemToSet);
+                    MyItem = TemporaryItem;
+                }
                 if (MyItem != null) 
                 {
                     Skeletons.Bone MyBone = MyItem.ParentElement as Skeletons.Bone;
