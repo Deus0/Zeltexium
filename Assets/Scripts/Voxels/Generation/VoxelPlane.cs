@@ -9,13 +9,13 @@ namespace Zeltex.Voxels
         // Plane
         [Header("Plane Generation")]
         [SerializeField] private bool IsCreatePlane;
-        [SerializeField] private int CreatePlaneWidth = 5;
-        [SerializeField] private int CreatePlaneDepth = 5;
-        [SerializeField] private int PlanePosition = 0;
+        //[SerializeField] private int CreatePlaneWidth = 5;
+        //[SerializeField] private int CreatePlaneDepth = 5;
+        //[SerializeField] private int PlanePosition = 0;
         // Cube
         [Header("Cube Generation")]
         [SerializeField] private bool IsCreateCube;
-        [SerializeField] private int CreateCubeHeight = 5;
+        //[SerializeField] private int CreateCubeHeight = 5;
         public float PillarSpawnChance = 90;
         public void CreateRoom(World MyWorld, float PlaneHeight, int PillarType, int GroundType, int WallType)
         {

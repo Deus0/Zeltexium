@@ -10,7 +10,7 @@ namespace Zeltex.Guis.Blueprints
     /// </summary>
     public class BlueprintNode : MonoBehaviour
     {
-        private static bool IsDebugGizmos;
+       // private static bool IsDebugGizmos;
         public string Instruction = "";
         public Blueprint MyBlueprint;
         public List<BlueprintLink> MyLinks;       // each node contains many links
@@ -20,9 +20,9 @@ namespace Zeltex.Guis.Blueprints
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (IsDebugGizmos)
+            //if (IsDebugGizmos)
             {
-                Gizmos.color = Color.red;
+                //Gizmos.color = Color.red;
                 /*for (int i = 0; i < MyLinks.Count; i++)
                 {
                     if (MyLinks[i].Outputpin)

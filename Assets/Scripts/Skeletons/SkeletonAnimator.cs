@@ -413,25 +413,25 @@ namespace Zeltex.Skeletons
         #region Blending
         // if BlendedIndex != -1, add the positions together instead of just using one, 
         //  lerp their percentage using the time values
-        int BlendedIndex;
-        float BlendTimeStarted;
-        float BlendTimeLength = 1;  // not sure here
+        //int BlendedIndex;
+        //float BlendTimeStarted;
+        //float BlendTimeLength = 1;  // not sure here
 
         private void BeginBlending()
         {
-            BlendTimeStarted = Time.time;
-            BlendedIndex = SelectedIndex;   // this will be called in select
+           // BlendTimeStarted = Time.time;
+            //BlendedIndex = SelectedIndex;   // this will be called in select
         }
         #endregion
 
         #region RestoringPose
         private bool IsRestoringPose;       // Pose Lerping back to default
-        float TimeBeginRestoring;
+        //float TimeBeginRestoring;
 
         private void BeginPoseRestoration()
         {
             IsRestoringPose = true;
-            TimeBeginRestoring = Time.time;
+            //TimeBeginRestoring = Time.time;
             MySkeleton.GetSkeleton().RestoreDefaultPose();    // for now
         }
         /// <summary>

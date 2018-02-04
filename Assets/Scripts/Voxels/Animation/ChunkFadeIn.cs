@@ -9,27 +9,27 @@ namespace Zeltex.Voxels
     /// </summary>
     public class ChunkFadeIn : MonoBehaviour
     {
-        MeshRenderer MyMeshRenderer;
-        float TimeBegun;
-        float FadeTime = 2.8f;
+        //MeshRenderer MyMeshRenderer;
+        //float TimeBegun;
+        //float FadeTime = 2.8f;
 
         void Start()
         {
-            MyMeshRenderer = GetComponent<MeshRenderer>();
-            TimeBegun = Time.time;
+            //MyMeshRenderer = GetComponent<MeshRenderer>();
+            //TimeBegun = Time.time;
             //Debug.Log("Chunk [" + name + "] Has begun to fade in at " + TimeBegun);
         }
         public void Begin()
         {
-            enabled = true;
-            TimeBegun = Time.time;
+            //enabled = true;
+            //TimeBegun = Time.time;
             //Debug.Log("Chunk [" + name + "] Has begun to fade in at " + TimeBegun);
         }
 
         // Update is called once per frame
-        void Update()
-        {
-            enabled = false;
+        //void Update()
+        //{
+            //enabled = false;
             /*float TimePassed = Time.time - TimeBegun;
             float LerpValue = TimePassed / FadeTime;
             MyMeshRenderer.material.color = Color32.Lerp(
@@ -40,7 +40,7 @@ namespace Zeltex.Voxels
             {
                 enabled = false;
             }*/
-        }
+        //}
     }
 
 }

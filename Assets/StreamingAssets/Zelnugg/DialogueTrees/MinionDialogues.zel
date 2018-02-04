@@ -1,1 +1,6 @@
-{"MyDialogues":[],"ChattedCount":0,"OnEndTree":{},"Name":"MinionDialogues"}
+{
+  "MyDialogues": [],
+  "ChattedCount": 0,
+  "OnEndTree": {},
+  "Name": "MinionDialogues"
+}

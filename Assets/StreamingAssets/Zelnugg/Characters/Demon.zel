@@ -1,1 +1,216 @@
-{"Class":"","Race":"","Skillbar":{"MyItems":[{"Description":"Null","Commands":["/Spell Fayfay"],"Tags":[],"Quantity":1,"MyStats":{"Data":[],"Name":"Empty"},"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"MeshType":0,"ModelName":"","Name":"Fayfay"},{"Description":"Null","Commands":[],"Tags":[],"Quantity":1,"MyStats":{"Data":[],"Name":"Empty"},"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"MeshType":0,"ModelName":"","Name":"Fayzagzi Bricks"}],"OnAddItem":{},"OnUpdateItem":{},"OnPickupItem":{},"OnExchangeItem":{},"OnExchangeCurrency":{},"OnItemUpdate":{},"OnLoadEvent":{},"Name":"Empty"},"Equipment":{"MyItems":[],"OnAddItem":{},"OnUpdateItem":{},"OnPickupItem":{},"OnExchangeItem":{},"OnExchangeCurrency":{},"OnItemUpdate":{},"OnLoadEvent":{},"Name":"Empty"},"MyStats":{"DebugGui":false,"Data":[{"Description":"An overall indication of power","MyType":0,"Value":[1.0],"Modifiers":[],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"Level"},{"Description":"It grows larger with every monster you slay","MyType":0,"Value":[0.0],"Modifiers":[],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"Experience"},{"Description":"Heals you! !2","MyType":1,"Value":[10.0,10.0],"Modifiers":[],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"Health"},{"Description":"-------","MyType":0,"Value":[0.0],"Modifiers":[],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"HealthRegen"},{"Description":"-------!","MyType":1,"Value":[10.0,10.0],"Modifiers":[],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"Mana"},{"Description":"!","MyType":2,"Value":[1.0,1.0,325.984833],"Modifiers":["Mana"],"MyZexel":{"Pixels":null,"Size":{"x":32.0,"y":32.0},"Name":"Empty"},"Name":"ManaRegen"}],"Name":"Empty"},"MyQuestLog":{"DebugGui":false,"QuestLimit":-1,"MyQuests":[],"Name":"Empty"},"MyDialogue":{"MyDialogues":[],"ChattedCount":0,"OnEndTree":{},"Name":"Empty"},"CanRespawn":true,"Name":"Demon"}
+{
+  "Class": "",
+  "Race": "",
+  "MyStats": {
+    "IsAlive": true,
+    "Data": [
+      {
+        "Description": "An overall indication of power",
+        "MyType": 0,
+        "Value": [
+          1.0
+        ],
+        "Modifiers": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "Level"
+      },
+      {
+        "Description": "It grows larger with every monster you slay",
+        "MyType": 0,
+        "Value": [
+          0.0
+        ],
+        "Modifiers": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "Experience"
+      },
+      {
+        "Description": "Heals you! !2",
+        "MyType": 1,
+        "Value": [
+          10.0,
+          10.0
+        ],
+        "Modifiers": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "Health"
+      },
+      {
+        "Description": "-------",
+        "MyType": 0,
+        "Value": [
+          0.0
+        ],
+        "Modifiers": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "HealthRegen"
+      },
+      {
+        "Description": "-------!",
+        "MyType": 1,
+        "Value": [
+          10.0,
+          10.0
+        ],
+        "Modifiers": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "Mana"
+      },
+      {
+        "Description": "!",
+        "MyType": 2,
+        "Value": [
+          1.0,
+          1.0,
+          325.984833
+        ],
+        "Modifiers": [
+          "Mana"
+        ],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "Name": "ManaRegen"
+      }
+    ],
+    "Name": "Empty"
+  },
+  "Skillbar": {
+    "MyItems": [
+      {
+        "Description": "Null",
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Name": "Empty"
+        },
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "MyModel": null,
+        "MyPolyModel": null,
+        "TextureMapIndex": 0,
+        "Commands": [
+          "/Spell Fayfay"
+        ],
+        "Tags": [],
+        "Quantity": 1,
+        "Name": "Fayfay"
+      },
+      {
+        "Description": "Null",
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Name": "Empty"
+        },
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Name": "Empty"
+        },
+        "MyModel": null,
+        "MyPolyModel": null,
+        "TextureMapIndex": 0,
+        "Commands": [],
+        "Tags": [],
+        "Quantity": 1,
+        "Name": "Fayzagzi Bricks"
+      }
+    ],
+    "Name": "Empty"
+  },
+  "Backpack": {
+    "MyItems": [],
+    "Name": "Empty"
+  },
+  "MyQuestLog": {
+    "DebugGui": false,
+    "QuestLimit": -1,
+    "MyQuests": [],
+    "Name": "Empty"
+  },
+  "MyDialogue": {
+    "MyDialogues": [],
+    "ChattedCount": 0,
+    "OnEndTree": {},
+    "Name": "Empty"
+  },
+  "MySkeleton": {
+    "MyBones": [],
+    "Name": "Empty"
+  },
+  "MyAnimations": [],
+  "MyGuis": {
+    "GuisEnabled": [],
+    "GuisEnabledStates": [],
+    "IsHiddenLabel": false,
+    "Name": "Empty"
+  },
+  "BotData": {
+    "IsAggressive": false,
+    "CanWander": true,
+    "Name": "Empty"
+  },
+  "CanRespawn": true,
+  "LevelInsideOf": "",
+  "LevelPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "LevelRotation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "Name": "Demon"
+}

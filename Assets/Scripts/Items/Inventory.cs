@@ -24,8 +24,8 @@ namespace Zeltex.Items
         private static string EmptyItemName = "Empty";
         [JsonProperty]
         public List<Item> MyItems = new List<Item>();
-        [HideInInspector, JsonIgnore]
-        private bool IsFillWithEmptySlots = false;
+        //[HideInInspector, JsonIgnore]
+        //private bool IsFillWithEmptySlots = false;
         //[Header("Events")]
         [HideInInspector, JsonIgnore]
         public UnityEvent OnAddItem = new UnityEvent();
@@ -53,6 +53,34 @@ namespace Zeltex.Items
                 MyItems[i].SetParentInventory(this);
                 MyItems[i].OnLoad();    // any sub stats will be set as well
             }
+        }
+
+        public Item GetDropItem(int ItemIndex) 
+        {
+            if (ItemIndex >= 0 && ItemIndex < MyItems.Count)
+            {
+                Item MyItem = MyItems[ItemIndex];
+                Debug.Log("Dropping Item " + MyItem.Name);
+                Item SpawnedItem = MyItem.Clone<Item>();
+                MyItem.SetToEmptyItem();
+                return SpawnedItem;
+            }
+            Debug.LogError("Cannot drop item: " + ItemIndex);
+            return null;
+        }
+
+        public ItemHandler DropItem(Item SpawnedItem, System.Action OnFinishLoading = null) 
+        {
+            OnFinishLoading += () =>
+            {
+                    Rigidbody ItemRigid = SpawnedItem.GetSpawn().gameObject.AddComponent<Rigidbody>();
+                    ItemRigid.mass = 0.5f;
+                    ItemRigid.AddForce(SpawnedItem.GetSpawn().transform.forward * 4f);
+                    SpawnedItem.GetSpawn().gameObject.GetComponent<MeshCollider>().convex = true;
+
+            };
+            SpawnedItem.SpawnE(OnFinishLoading);
+            return SpawnedItem.GetSpawn();
         }
 
         /// <summary>
@@ -240,11 +268,11 @@ namespace Zeltex.Items
             return 0;
         }
 
-        public void Decrease(int ItemIndex)
+        public void Decrease(int ItemIndex, int ItemQuantity = 1)
         {
             if (ItemIndex >= 0 && ItemIndex < MyItems.Count)
             {
-                MyItems[ItemIndex].IncreaseQuantity(-1);
+                MyItems[ItemIndex].IncreaseQuantity(-ItemQuantity);
                 OnUpdateItem.Invoke(ItemIndex);
                 if (MyItems[ItemIndex].GetQuantity() == 0)
                 {

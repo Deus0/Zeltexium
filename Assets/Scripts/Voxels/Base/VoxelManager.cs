@@ -182,28 +182,11 @@ namespace Zeltex.Voxels
         }
 
         /// <summary>
-        /// Add a Voxel Meta to the game
-        /// </summary>
-        public void AddMeta(VoxelMeta NewMeta)
-        {
-			if (MyMetas.ContainsKey(NewMeta.Name) == false)
-			{
-				// add to MyMetasbase
-				MyMetas.Add(NewMeta.Name, NewMeta);
-				// alsoo add to MyMetasmanager
-				//MyMyMetasManager.AddEmptyString("VoxelMeta", NewMeta.Name);
-			}
-			else
-			{
-				Debug.LogError("Cannot add duplicate meta: " + NewMeta.Name);
-			}
-        }
-        /// <summary>
         /// Add a Voxel Model to the game
         /// </summary>
         public void AddMetaRaw(VoxelMeta NewMeta)
         {
-            if (MyMetas.ContainsKey(NewMeta.Name) == false)
+            if (NewMeta != null && MyMetas.ContainsKey(NewMeta.Name) == false)
             {
                 MyMetas.Add(NewMeta.Name, NewMeta);
             }
@@ -212,24 +195,9 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Add a Voxel Model to the game
         /// </summary>
-        public void AddModel(PolyModel NewModel)
-        {
-            if (MyModels.ContainsKey(NewModel.Name) == false)
-            {
-                //MyModels.Add(NewModel.Name, NewModel);
-                //DataManager.Get().AddEmptyString("PolygonModels", NewModel.Name);
-            }
-            else
-            {
-                Debug.LogError("Models already contains: " + NewModel.Name);
-            }
-        }
-        /// <summary>
-        /// Add a Voxel Model to the game
-        /// </summary>
         public void AddModelRaw(PolyModel NewModel)
         {
-            if (MyModels.ContainsKey(NewModel.Name) == false)
+            if (NewModel != null && MyModels.ContainsKey(NewModel.Name) == false)
             {
                 MyModels.Add(NewModel.Name, NewModel);
             }

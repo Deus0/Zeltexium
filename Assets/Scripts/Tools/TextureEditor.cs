@@ -372,7 +372,7 @@ namespace Zeltex.Guis.Maker
                 // Debug.LogError("Filling position: " + PaintPosition.ToString());
                 //PaintPosition = FixPosition(PaintPosition);
                 Color[] MyColorData = GetTexture().GetPixels(0);
-                int Index = GetPixelIndex(PaintPosition.x, PaintPosition.y, GetTexture().width);
+                //int Index = GetPixelIndex(PaintPosition.x, PaintPosition.y, GetTexture().width);
                 Vector2 Direction = (LineBeginPosition - PaintPosition).normalized;
                 for (int i = 0; i <= Vector2.Distance(PaintPosition, LineBeginPosition); i++)
                 {
@@ -421,10 +421,10 @@ namespace Zeltex.Guis.Maker
                     Vector2 PositionBelow = new Vector2(Position.x, Position.y - 1);
                     Vector2 PositionLeft = new Vector2(Position.x - 1, Position.y);
                     Vector2 PositionRight = new Vector2(Position.x + 1, Position.y);
-                    int IndexAbove = GetPixelIndex(PositionAbove.x, PositionAbove.y, GetTexture().width);
-                    int IndexBelow = GetPixelIndex(PositionBelow.x, PositionBelow.y, GetTexture().width);
-                    int IndexLeft = GetPixelIndex(PositionLeft.x, PositionLeft.y, GetTexture().width);
-                    int IndexRight = GetPixelIndex(PositionRight.x, PositionRight.y, GetTexture().width);
+                   // int IndexAbove = GetPixelIndex(PositionAbove.x, PositionAbove.y, GetTexture().width);
+                    //int IndexBelow = GetPixelIndex(PositionBelow.x, PositionBelow.y, GetTexture().width);
+                    //int IndexLeft = GetPixelIndex(PositionLeft.x, PositionLeft.y, GetTexture().width);
+                    //int IndexRight = GetPixelIndex(PositionRight.x, PositionRight.y, GetTexture().width);
                     MyColorData = FloodFillPixels(MyColorData, PositionAbove, ColorToReplace, MyColor);
                     MyColorData = FloodFillPixels(MyColorData, PositionBelow, ColorToReplace, MyColor);
                     MyColorData = FloodFillPixels(MyColorData, PositionLeft, ColorToReplace, MyColor);

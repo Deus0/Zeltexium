@@ -74,7 +74,7 @@ namespace Zeltex.AnimationUtilities
                 if (!IsDecrease)
                 {
                     if (IsDestroyOnFinish)
-                        Destroy(gameObject);
+                        gameObject.Die();
                     else
                         this.enabled = false;
                 }
@@ -83,7 +83,7 @@ namespace Zeltex.AnimationUtilities
                     if (Time.time - TimeStartedDecreasing >= TimeToDecrease)
                     {
                         if (IsDestroyOnFinish)
-                            Destroy(gameObject);
+                            gameObject.Die();
                         else
                             this.enabled = false;
                     }

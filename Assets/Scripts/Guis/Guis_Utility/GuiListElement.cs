@@ -255,7 +255,7 @@ namespace Zeltex.Guis
                     IsMouseFollow = true;
                     //Debug.Log ("Pointering entering a gui element: " + name);
                     MyTooltipGui.GetComponent<ZelGui>().TurnOn();
-                    RectTransform MyRect = MyTooltipGui.GetComponent<RectTransform>();
+                    //RectTransform MyRect = MyTooltipGui.GetComponent<RectTransform>();
                     if (TooltipLabelText)
                     {
                         TooltipLabelText.text = MyGuiListElementData.LabelText;

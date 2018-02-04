@@ -145,6 +145,52 @@ namespace Zeltex.Combat
             Value.Clear();
             Modifiers.Clear();
         }
+        
+        public void SetValuesAsType(StatType NewType)
+        {
+            MyType = NewType;
+            Clear();
+            if (MyType == StatType.Base)
+            {
+                Value.Add(1);
+            }
+            else if (MyType == StatType.State)
+            {
+                Value.Add(10);    // state first!
+                Value.Add(10);  // max second!
+            }
+            else if (MyType == StatType.Regen)
+            {
+                Value.Add(1);
+                Value.Add(1);
+                Value.Add(Time.time);   // last ticked
+                Modifiers.Add("");
+            }
+            else if (MyType == StatType.Modifier)
+            {
+                Value.Add(1);
+                Value.Add(1);
+                Modifiers.Add("");
+            }
+            else if (MyType == StatType.TemporaryModifier)
+            {
+                Value.Add(1);       // value
+                Value.Add(12);          // time lasting for
+                Value.Add(Time.time);           // Time Begun
+                Modifiers.Add("");
+            }
+            else if (MyType == StatType.TemporaryRegen)
+            {
+                Modifiers.Add("");    // stat modified per tick
+                Value.Add(1);              // value addition
+                Value.Add(15);          // time lasting for
+                Value.Add(Time.time);           // Time Begun
+                Value.Add(1);            // TickTime
+                Value.Add(Time.time);           // Time Last Ticked
+            }
+            OnModified();
+        }
+
         /// <summary>
         /// Creates a base value stat.
         /// </summary>
@@ -152,10 +198,9 @@ namespace Zeltex.Combat
         {
             if (MyType != StatType.Base)
             {
-                Clear();
-                MyType = StatType.Base;
                 Name = NewName;
-                Value.Add(NewValue);
+                SetValuesAsType(StatType.Base);
+                Value[0] = (NewValue);
                 OnModified();
             }
             else
@@ -171,12 +216,11 @@ namespace Zeltex.Combat
         {
             if (MyType != StatType.Modifier)
             {
-                Clear();
-                MyType = StatType.Modifier;
                 Name = NewName;
-                Value.Add(NewValue);
-                Modifiers.Add(ModifierType);
-                Value.Add(MultiplierValue);
+                SetValuesAsType(StatType.Modifier);
+                Value[0] = (NewValue);
+                Modifiers[0] = (ModifierType);
+                Value[1] = (MultiplierValue);
                 OnModified();
             }
             else
@@ -192,13 +236,12 @@ namespace Zeltex.Combat
         {
             if (MyType != StatType.TemporaryModifier)
             {
-                Clear();
-                MyType = StatType.TemporaryModifier;
                 Name = NewName;
-                Modifiers.Add(ModifierType);
-                Value.Add(AdditionValue);       // value
-                Value.Add(TimeLength);          // time lasting for
-                Value.Add(Time.time);           // Time Begun
+                SetValuesAsType(StatType.TemporaryModifier);
+                Value[0] = (AdditionValue);       // value
+                Value[1] = (TimeLength);          // time lasting for
+                Value[2] = (Time.time);           // Time Begun
+                Modifiers[0] = (ModifierType);
                 OnModified();
             }
             else
@@ -210,19 +253,18 @@ namespace Zeltex.Combat
         /// Creates a dot type.
         ///      - [string] [value]  [string] [timeTick] [timeMax] - Burn, 5dmg, Health, 4s, 20s
         /// </summary>
-        public void CreateDot(string Name_, float Damage, string ModifierType, float TimeTick, float TimeLength)
+        public void CreateDot(string NewName, float Damage, string ModifierType, float TimeTick, float TimeLength)
         {
             if (MyType != StatType.TemporaryRegen)
             {
-                Clear();
-                MyType = StatType.TemporaryRegen;
-                Name = Name_;
-                Modifiers.Add(ModifierType);    // stat modified per tick
-                Value.Add(Damage);              // value addition
-                Value.Add(TimeLength);          // time lasting for
-                Value.Add(Time.time);           // Time Begun
-                Value.Add(TimeTick);            // TickTime
-                Value.Add(Time.time);           // Time Last Ticked
+                Name = NewName;
+                SetValuesAsType(StatType.TemporaryRegen);
+                Value[0] = (Damage);              // value addition
+                Value[1] = (TimeLength);          // time lasting for
+                Value[2] = (Time.time);           // Time Begun
+                Value[3] = (TimeTick);            // TickTime
+                Value[4] = (Time.time);           // Time Last Ticked
+                Modifiers[0] = (ModifierType);    // stat modified per tick
                 OnModified();
             }
             else
@@ -374,11 +416,10 @@ namespace Zeltex.Combat
         {
             if (MyType != StatType.Modifier)
             {
-                Clear();
-                MyType = StatType.State;
+                SetValuesAsType(StatType.State);
                 Name = NewName;
-                Value.Add(NewState);    // state first!
-                Value.Add(NewMax);  // max second!
+                Value[0] = (NewState);    // state first!
+                Value[1] = (NewMax);  // max second!
                 OnModified();
             }
             else
@@ -520,13 +561,12 @@ namespace Zeltex.Combat
         /// </summary>
         public void CreateRegen(string NewName, string RegenStatName, float RegenRate, float RegenCoolDown)
         {
-            Clear();
-            MyType = StatType.Regen;
             Name = NewName;
-            Value.Add(RegenRate);
-            Value.Add(RegenCoolDown);
-            Value.Add(Time.time);   // last ticked
-            Modifiers.Add(RegenStatName);
+            SetValuesAsType(StatType.Regen);
+            Value[0] = (RegenRate);
+            Value[1] = (RegenCoolDown);
+            Value[2] = (Time.time);   // last ticked
+            Modifiers[0] = (RegenStatName);
         }
 
 
@@ -832,23 +872,6 @@ namespace Zeltex.Combat
         #endregion
 
         #region File
-
-        /// <summary>
-        /// Loads the script
-        /// </summary>
-        public override void RunScript(string Script)
-        {
-            RunScript(FileUtil.ConvertToList(Script));
-        }
-
-        /// <summary>
-        /// Returns the script in single form.
-        /// </summary>
-        public override string GetScript()
-        {
-            return FileUtil.ConvertToSingle(GetScriptList());
-        }
-
         /// <summary>
         /// Returns true if it is a stat creator command
         /// </summary>
@@ -877,25 +900,6 @@ namespace Zeltex.Combat
             else if (Command.Contains("/LoadTexture"))
             {
                 LoadTexture(MyInput);
-            }
-        }
-
-        /// <summary>
-        /// Runs the script! Loads back in memory!
-        /// </summary>
-        public void RunScript(List<string> MyData)
-        {
-            //Debug.Log("Creating new Stat: \n" + Zeltex.Util.FileUtil.ConvertToSingle(MyData));
-            for (int i = 0; i < MyData.Count; i++)
-            {
-                if (IsBeginTag(MyData[i]))
-                {
-                    Initiate(MyData[i]);
-                }
-                else
-                {
-                    ActivateCommand(MyData[i]);
-                }
             }
         }
 
@@ -941,80 +945,6 @@ namespace Zeltex.Combat
             {   // string, float, string, float
                 CreateDot(MyStrings[0], float.Parse(MyStrings[1]), MyStrings[2], float.Parse(MyStrings[3]), float.Parse(MyStrings[4]));
             }
-        }
-
-        /// <summary>
-        /// Returns a list of the class to be loaded again later.
-        /// </summary>
-		public List<string> GetScriptList()
-        {
-            List<string> MyScript = new List<string>();
-
-			if (Value.Count == 0)
-			{
-				Debug.LogError("Error with stat " + Name + " with no values.");
-				return MyScript;
-			}
-            if (MyType == StatType.Base)
-            {
-                MyScript.Add("/Base " + Name + ", " + Value[0]);
-            }
-            else if (MyType == StatType.State)
-            {
-                MyScript.Add("/State " + Name + "," + GetState() + "," + GetMaxState());
-            }
-            else if (MyType == StatType.Regen)
-            {
-                if (Modifiers[0] == "")
-                {
-                    Modifiers[0] = "Stat";  // just incase
-                }
-                MyScript.Add("/Regen " + Name + "," +
-                            Modifiers[0] + "," +
-                            Value[0] + "," +
-                            Value[1]);
-            }
-            else if (MyType == StatType.Modifier)
-            {
-                MyScript.Add("/Modifier " + Name + "," +
-                            Value[0] + "," +
-                            Modifiers[0] + "," +
-                    Value[1]);
-            }
-            else if (MyType == StatType.TemporaryModifier)
-            {
-                MyScript.Add(
-                            "/Buff " +
-                            Name + "," +
-                            Value[0] + "," +
-                            Modifiers[0] + "," +
-                            Value[1]
-                            );
-            }
-            else if (MyType == StatType.TemporaryRegen)
-            {
-                MyScript.Add(
-                            "/Dot " +
-                            Name + "," +            // name - burn
-                            Value[0] + "," +        // damage - 5
-                            Modifiers[0] + "," +    // modified value - Health
-                            Value[1] + "," +        // Tick Time - 3 seconds
-                            Value[2]                // Time Length - 30 seconds - ie 10 ticks
-                    );
-            }
-            else
-            {
-                MyScript.Add(Name);
-            }
-            if (Description != "")
-            {
-                MyScript.Add("/Description " + Description);
-            }
-            if (MyTexture != null)
-            {
-                MyScript.Add("/LoadTexture " + MyTexture.name);
-            }
-            return MyScript;
         }
         #endregion
 
@@ -1098,7 +1028,7 @@ namespace Zeltex.Combat
             }
             else if (MyType == StatType.Modifier)
             {
-                return (Name + " [" + Mathf.RoundToInt(Value[0]) + "]");
+                return (Name + " [" + Mathf.RoundToInt(Value[0]) + "]" + " Modifies " + GetModifyStatName() + " with a multiplier of " + Mathf.RoundToInt(Value[1]));
             }
             else if (MyType == StatType.TemporaryRegen)
             {

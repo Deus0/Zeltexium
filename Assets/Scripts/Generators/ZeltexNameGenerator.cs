@@ -17,10 +17,10 @@ namespace Zeltex
         {
             string MyVoxelName = "";
             List<string> MySyla = GetSyllabells();
-            int SylabelCount = (int)Random.RandomRange(2, 4);
+            int SylabelCount = (int)Random.Range(2, 4);
             for (int i = 0; i < SylabelCount; i++)
             {
-                MyVoxelName += MySyla[(int)Random.RandomRange(0, MySyla.Count - 1)];
+                MyVoxelName += MySyla[(int)Random.Range(0, MySyla.Count - 1)];
             }
             MyVoxelName = MyVoxelName.Substring(0, 1).ToUpper() + MyVoxelName.Substring(1, MyVoxelName.Length - 1);
             return MyVoxelName;

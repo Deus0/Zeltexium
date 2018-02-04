@@ -26,7 +26,7 @@ namespace Zeltex.Guis
         List<Vector2> MyUVs = new List<Vector2>();
         List<GameObject> MyHandlers = new List<GameObject>();
         List<GameObject> SelectedHandlers = new List<GameObject>();
-        int SelectedUV = 0;
+        //int SelectedUV = 0;
         List<int> VertIndexes = new List<int>();
         [Header("Colours")]
         public Color32 NormalColor = Color.white;
@@ -77,7 +77,7 @@ namespace Zeltex.Guis
         {
             for (int i = 0; i < MyHandlers.Count; i++)
             {
-                Destroy(MyHandlers[i]);
+                MyHandlers[i].Die();
             }
             MyHandlers.Clear();
             SelectedHandlers.Clear();

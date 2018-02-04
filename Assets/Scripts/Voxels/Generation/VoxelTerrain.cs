@@ -160,13 +160,16 @@ namespace Zeltex.Voxels
             CoroutineManager.StartCoroutine(CreateTerrainWorldRoutine(MyWorld));
         }
 
-        public IEnumerator CreateTerrainWorldRoutine(World MyWorld)
+        public IEnumerator CreateTerrainWorldRoutine(World MyWorld, bool IsBuildMeshes = true)
         {
             foreach (Int3 MyKey in MyWorld.MyChunkData.Keys)
             {
                 TerrainChunk = MyWorld.MyChunkData[MyKey];
-                yield return CoroutineManager.StartCoroutine(CreateTerrain());
-                yield return TerrainChunk.BuildChunkMesh();
+                yield return (CreateTerrain());
+                if (IsBuildMeshes)
+                {
+                    yield return TerrainChunk.BuildChunkMesh();
+                }
             }
             yield return null;
         }

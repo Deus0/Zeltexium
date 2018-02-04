@@ -13,7 +13,7 @@ namespace Zeltex.AI
 	    [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
 	    [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 
-	    [SerializeField] private Vector3 GravityForce = new Vector3(0,-5,0);
+	    //[SerializeField] private Vector3 GravityForce = new Vector3(0,-5,0);
 	    //private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
 	    [SerializeField] private float k_GroundedRadius = 1f; // Radius of the overlap circle to determine if grounded
 	    public bool m_Grounded;            // Whether or not the player is grounded.
@@ -82,7 +82,7 @@ namespace Zeltex.AI
 		    //m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
 
 		    // Read the inputs.
-		    bool crouch = Input.GetKey(KeyCode.LeftControl);
+		    //bool crouch = Input.GetKey(KeyCode.LeftControl);
 		    //float h = CrossPlatformInputManager.GetAxis("Horizontal");
 		    //Debug.LogError ("Moving: " + h);
 		    // Pass all parameters to the character control script.

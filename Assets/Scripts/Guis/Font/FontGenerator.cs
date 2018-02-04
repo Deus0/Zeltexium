@@ -14,7 +14,7 @@ namespace Zeltex.Generators
     [ExecuteInEditMode]
     public class FontGenerator : MonoBehaviour
     {
-        Text MyText;
+        //Text MyText;
         public Font MyFont;
         public Texture2D MyTexture;
         public bool IsDoThing;
@@ -28,7 +28,7 @@ namespace Zeltex.Generators
 
         private void Start()
         {
-            MyText = GetComponent<Text>();
+            //MyText = GetComponent<Text>();
             //Font MyFont = MyText.font;
             MyTexture = MyFont.material.mainTexture as Texture2D;
             //File.WriteAllBytes("Output.png", MyTexture.EncodeToPNG());

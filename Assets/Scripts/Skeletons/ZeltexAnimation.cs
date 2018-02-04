@@ -101,7 +101,7 @@ namespace Zeltex.Skeletons
         /// <summary>
         /// Gets a script from the animation curves
         /// </summary>
-        public override string GetScript()
+        /*public override string GetScript()
         {
             float MicroLimit = 0.01f;
             List<string> Data = new List<string>();
@@ -178,15 +178,6 @@ namespace Zeltex.Skeletons
                         }
                         Data.Add("/EndRotationZ");
                     }
-                    /*if (MyKeyFrames[i].AnimationCurveRotationW.keys.Length > 0)
-                    {
-                        Data.Add("/RotationW");
-                        for (int j = 0; j < MyKeyFrames[i].AnimationCurveRotationW.keys.Length; j++)
-                        {
-                            Data.Add(MyKeyFrames[i].AnimationCurveRotationW.keys[j].time + " " + MyKeyFrames[i].AnimationCurveRotationW.keys[j].value);
-                        }
-                        Data.Add("/EndRotationW");
-                    }*/
                     //Scale
                     if (MyKeyFrames[i].AnimationCurveScaleX.keys.Length > 0)
                     {
@@ -222,12 +213,12 @@ namespace Zeltex.Skeletons
                 }
             }
             return FileUtil.ConvertToSingle(Data);
-        }
+        }*/
 
         /// <summary>
         /// Loads the animation from the string data
         /// </summary>
-        public void RunScript(Transform MyTransform, List<string> Data)
+        /*public void RunScript(Transform MyTransform, List<string> Data)
         {
             bool IsReadKeys = false;
             Transform MyAnimatedObject = null;
@@ -271,13 +262,13 @@ namespace Zeltex.Skeletons
                     }
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Reads a line of the animation
         /// note: myframe is passed in using reference
         /// </summary>
-        private void ReadLine(string MyLine, string VariableType, AnimationCurve MyAnimationCurve)
+        /*private void ReadLine(string MyLine, string VariableType, AnimationCurve MyAnimationCurve)
         {
             if (MyLine == "/" + VariableType)
             {
@@ -297,7 +288,7 @@ namespace Zeltex.Skeletons
                     MyAnimationCurve.AddKey(new Keyframe(SkeletonAnimator.FixTime(TimeValue), Value));
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

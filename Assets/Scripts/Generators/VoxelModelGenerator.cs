@@ -25,7 +25,7 @@ namespace Zeltex.Generators
         public IEnumerator GenerateData()
         {
             // First generate a voxel model
-            int MyRed = Random.Range(1, 255);
+            //int MyRed = Random.Range(1, 255);
 			//DataManager.Get().Add("PolyModels", "Model 1", GetSphere());
 
             /*List<string> MyPolyModelData2 = new List<string>();

@@ -67,7 +67,7 @@ namespace Zeltex.Generators
             NewStat.OnModified();
             DataManager.Get().AddElement("Stats", NewStat);
 			//  Generate a texture for the stat
-			int TextureIndex = DataManager.Get().GetSize("StatTextures");//MyTextureManager.ItemTextures.Count;
+			//int TextureIndex = DataManager.Get().GetSize("StatTextures");//MyTextureManager.ItemTextures.Count;
 			Texture2D NewTexture = new Texture2D(TextureResolution, TextureResolution, TextureFormat.ARGB32, false);
 			NewTexture.name = NewStat.Name + "_Texture";
 			NewTexture.filterMode = FilterMode.Point;

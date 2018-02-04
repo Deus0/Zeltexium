@@ -18,7 +18,7 @@ namespace Zeltex.Guis.Characters
         public bool IsCreateMap;
         public bool IsDestroyMap;
         private List<RawImage> MapPieces = new List<RawImage>();    // all the pieces of the maps
-        private Character MyCharacter;
+        //private Character MyCharacter;
         private World MyWorld;
         public RectTransform MapParent;
         public Material MapPieceMaterial;
@@ -151,10 +151,10 @@ namespace Zeltex.Guis.Characters
             //Generators.TextureGenerator.Get().IsNoiseCutoff = false;
         }
 
-        public void SetCharacter(Character NewCharacter)
-        {
-            MyCharacter = NewCharacter;
-        }
+        //public void SetCharacter(Character NewCharacter)
+        //{
+            //MyCharacter = NewCharacter;
+        //}
 
         /// <summary>
         /// Scans the characters current surroundings

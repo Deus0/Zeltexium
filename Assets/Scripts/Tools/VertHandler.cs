@@ -20,7 +20,7 @@ namespace ZeltexTools
 	
 	    void OnEnable()
 	    {
-		    mesh = GetComponent<MeshFilter>().mesh;
+		    mesh = GetComponent<MeshFilter>().sharedMesh;
 		    verts = mesh.vertices;
 		    foreach(Vector3 vert in verts)
 		    {

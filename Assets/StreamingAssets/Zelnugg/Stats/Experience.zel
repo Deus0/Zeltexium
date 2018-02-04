@@ -1,1 +1,17 @@
-{"Description":"It grows larger with every monster you slay","MyType":0,"Value":[0.0],"Modifiers":[],"MyZexels":null,"Name":"Experience"}
+{
+  "Description": "It grows larger with every monster you slay",
+  "MyType": 0,
+  "Value": [
+    0.0
+  ],
+  "Modifiers": [],
+  "MyZexel": {
+    "Pixels": null,
+    "Size": {
+      "x": 32.0,
+      "y": 32.0
+    },
+    "Name": "Empty"
+  },
+  "Name": "Experience"
+}

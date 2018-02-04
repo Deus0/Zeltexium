@@ -167,7 +167,7 @@ namespace Zeltex.Guis
 					SelectedIndex = -1;
 					SelectedName = "";
 				}
-                Destroy(MyGuis[Index].gameObject);
+                MyGuis[Index].gameObject.Die();
                 MyGuis.RemoveAt(Index);
 				// reset tooltip indexes
 				for (int i = Index; i < MyGuis.Count; i++)

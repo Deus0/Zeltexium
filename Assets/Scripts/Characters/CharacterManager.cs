@@ -20,16 +20,13 @@ namespace Zeltex.Characters
     {
         #region Variables
         public static bool IsAutoSave = true;
-        private static string DefaultPlayerName = "Prefabs/Character";
-        private static string DefaultCharacterName = "New_Character";
-		private bool IsUpdatingCharacter = false;   // is the manager currently updating a character
-        //private Vector3 HidePosition = new Vector3(0, -300, 0);
 
         public new static CharacterManager Get()
         {
             if (MyManager == null)
             {
-                MyManager = GameObject.Find("CharacterPool").GetComponent<CharacterManager>();
+                // Removing all Finds, use ManagerManager.GetManager(CharacterManager)
+                MyManager = ManagersManager.Get().GetManager<CharacterManager>(ManagerNames.CharacterManager);
             }
             return MyManager as CharacterManager;
         }
@@ -39,10 +36,10 @@ namespace Zeltex.Characters
         public void DrawDebug()
         {
             GUILayout.Label("Character Pools: " + GetSize());
-            if (GUILayout.Button("Spawn Pools"))
+            /*if (GUILayout.Button("Spawn Pools"))
             {
                 SpawnPools();
-            }
+            }*/
             if (GUILayout.Button("Synch Pool"))
             {
                 SynchPool();
@@ -430,16 +427,13 @@ namespace Zeltex.Characters
         {
             if (PoolObject)
             {
-                PoolObject.OnReturnToPool.Invoke(PoolObject.gameObject);
                 Ragdoll MyRagdoll = PoolObject.GetSkeleton().GetComponent<Ragdoll>();
                 if (MyRagdoll)
                 {
                     MyRagdoll.ReverseRagdoll();
-                }
-                if (UnityEngine.Application.isPlaying == false)
-                {
-                    PoolObject.GetGuis().DespawnAllGuis();
-                }
+                } 
+                PoolObject.GetGuis().DespawnAllGuis();
+                PoolObject.OnReturnToPool.Invoke(PoolObject.gameObject);
                 base.ReturnObject(PoolObject);
             }
         }

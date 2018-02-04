@@ -1,1 +1,11 @@
-{"Ingredients":{"[0:0:0]":"Dirt","[0:1:0]":"Dirt","[1:0:0]":"Dirt","[1:1:0]":"Dirt"},"Crafted":"StrongDirt","Name":"StrongDirt"}
+{
+  "Ingredients": {
+    "[0:0:0]": "Dirt",
+    "[0:1:0]": "Dirt",
+    "[1:0:0]": "Dirt",
+    "[1:1:0]": "Dirt"
+  },
+  "IngredientsQuantity": {},
+  "Crafted": "StrongDirt",
+  "Name": "StrongDirt"
+}

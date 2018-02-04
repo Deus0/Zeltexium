@@ -14,7 +14,7 @@ namespace Zeltex.Voxels
 	public class VoxelDataK
     {
 		[SerializeField]
-        public Voxel Data = new Voxel();
+        public Voxel Data;// = new Voxel();
 	}
 
 	[System.Serializable]
@@ -25,7 +25,7 @@ namespace Zeltex.Voxels
 
 		public VoxelDataJ()
         {
-            Data = new VoxelDataK[Chunk.ChunkSize]; // k
+            /*Data = new VoxelDataK[Chunk.ChunkSize]; // k
             for (int i = 0; i < Chunk.ChunkSize; i++)
             {
 				Data[i] = new VoxelDataK();
@@ -37,7 +37,7 @@ namespace Zeltex.Voxels
             for (int i = 0; i < SizeZ; i++)
             {
                 Data[i] = new VoxelDataK();
-            }
+            }*/
         }
     }
 
@@ -49,20 +49,15 @@ namespace Zeltex.Voxels
 
 		public VoxelDataI()
         {
-            Data = new VoxelDataJ[Chunk.ChunkSize];
+            /*Data = new VoxelDataJ[Chunk.ChunkSize];
             for (int i = 0; i < Chunk.ChunkSize; i++)
             {
 				Data[i] = new VoxelDataJ();
-			}
+			}*/
         }
-        public VoxelDataI(int SizeY, int SizeZ)
+        /*public VoxelDataI(int SizeY, int SizeZ)
         {
-            Data = new VoxelDataJ[SizeY];
-            for (int i = 0; i < SizeY; i++)
-            {
-                Data[i] = new VoxelDataJ(SizeZ);
-            }
-        }
+        }*/
     }
 
     /// <summary>
@@ -101,19 +96,6 @@ namespace Zeltex.Voxels
 
         #region Init
 
-        public VoxelData()
-        {
-            SizeX = Chunk.ChunkSize;
-            SizeY = Chunk.ChunkSize;
-            SizeZ = Chunk.ChunkSize;
-            Data = new VoxelDataI[Chunk.ChunkSize]; // i
-            Size.Set(SizeX, SizeY, SizeZ);
-            for (int i = 0; i < Chunk.ChunkSize; i++)
-            {
-                Data[i] = new VoxelDataI();
-            }
-        }
-
         public VoxelData(int SizeX_, int SizeY_, int SizeZ_)
         {
             SizeX = SizeX_;
@@ -121,9 +103,22 @@ namespace Zeltex.Voxels
             SizeZ = SizeZ_;
             Data = new VoxelDataI[SizeX]; // i
             Size.Set(SizeX, SizeY, SizeZ);
-            for (int i = 0; i < SizeX; i++)
+            Int3 CreatePosition = Int3.Zero();
+            for (CreatePosition.x = 0; CreatePosition.x < SizeX; CreatePosition.x++)
             {
-				Data[i] = new VoxelDataI(SizeY, SizeZ);
+                Data[CreatePosition.x] = new VoxelDataI(); //SizeY, SizeZ
+                // Initialize data for Y
+                Data[CreatePosition.x].Data = new VoxelDataJ[SizeY];
+                for (CreatePosition.y = 0; CreatePosition.y < SizeY; CreatePosition.y++)
+                {
+                    Data[CreatePosition.x].Data[CreatePosition.y] = new VoxelDataJ();
+                    Data[CreatePosition.x].Data[CreatePosition.y].Data = new VoxelDataK[SizeZ];
+                    for (CreatePosition.z = 0; CreatePosition.z < SizeZ; CreatePosition.z++)
+                    {
+                        Data[CreatePosition.x].Data[CreatePosition.y].Data[CreatePosition.z] = new VoxelDataK();
+                        Data[CreatePosition.x].Data[CreatePosition.y].Data[CreatePosition.z].Data = null;//new Voxel();
+                    }
+                }
             }
         }
         #endregion
@@ -149,7 +144,7 @@ namespace Zeltex.Voxels
         {
             return (Position.x >= 0 && Position.x < SizeX
                 && Position.y >= 0 && Position.y < SizeY
-                && Position.z >= 0 && Position.z < SizeZ) ;
+                && Position.z >= 0 && Position.z < SizeZ);
         }
 
         public void Reset(int i, int j, int k)
@@ -163,25 +158,21 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Converts to a normal voxel from a mutated one
         /// </summary>
-        public void ConvertToNormal(int i, int j, int k)
+        public void ConvertToNormal(Int3 Position)
         {
-            Voxel MyVoxel = GetVoxel(i, j, k);
+            Voxel MyVoxel = GetVoxel(Position);
             if (MyVoxel != null)
             {
                 VoxelColor MyVoxelTinted = MyVoxel as VoxelColor;
                 if (MyVoxelTinted != null)
                 {
-                    Data[i].Data[j].Data[k].Data = new Voxel(MyVoxelTinted);
+                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new Voxel(MyVoxelTinted);
                 }
             }
         }
         #endregion
 
         #region Setters
-        public void SetVoxelRaw(int i, int j, int k, Voxel MyVoxel)
-        {
-            SetVoxelRaw(new Int3(i, j, k), MyVoxel);
-        }
         /// <summary>
         /// Set the voxel raw
         /// </summary>
@@ -193,28 +184,22 @@ namespace Zeltex.Voxels
             }
         }
 
-        /// <summary>
-        /// Sets the vvoxel type raw without triggering updates
-        /// </summary>
-        public void SetVoxelTypeRaw(int i, int j, int k, int NewIndex)
-        {
-            //if (IsInRangeX(i) && IsInRangeY(j) && IsInRangeZ(k))
-           // {
-                //if (Data[i].Data[j].Data[k].Data.GetVoxelType() != NewIndex)
-                //{
-                    Data[i].Data[j].Data[k].Data.SetTypeRaw(NewIndex);
-            /*if (NewIndex == 0)
-            {
-                Data[i].Data[j].Data[k].Data.MyMeshData.Clear();
-            }*/
-            //}
-            // }
-        }
-
         public void SetVoxelTypeRaw(Int3 Position, int NewIndex)
         {
-            Data[Position.x].Data[Position.y].Data[Position.z].Data.SetTypeRaw(NewIndex);
+            if (NewIndex != 0)
+            {
+                if (Data[Position.x].Data[Position.y].Data[Position.z].Data == null)
+                {
+                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new Voxel();
+                }
+                Data[Position.x].Data[Position.y].Data[Position.z].Data.SetTypeRaw(NewIndex);
+            }
+            else
+            {
+                Data[Position.x].Data[Position.y].Data[Position.z].Data = null;
+            }
         }
+
         public void SetVoxelTypeColorRaw(Int3 Position, int NewIndex, Color VoxelColor)
         {
             Data[Position.x].Data[Position.y].Data[Position.z].Data.SetTypeRaw(NewIndex);
@@ -253,41 +238,48 @@ namespace Zeltex.Voxels
             }
         }
 
-        public bool SetVoxelType(Chunk MyChunk, int i, int j, int k, int Type, Color MyTint)
+        /// <summary>
+        /// If Setting a voxel to a tinted color voxel
+        /// </summary>
+        public bool SetVoxelColor(Chunk MyChunk, Int3 Position, Color32 NewColor) 
         {
-            return SetVoxelType(MyChunk, new Int3(i, j, k), Type, MyTint);
+            if (IsInRange(Position))
+            {
+                if (Data[Position.x].Data[Position.y].Data[Position.z].Data == null
+                    || Data[Position.x].Data[Position.y].Data[Position.z].Data.GetType() != typeof(VoxelColor))
+                {
+                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new VoxelColor(1, NewColor);
+                    HasColorChanged = true;
+                }
+                else
+                {
+                    HasColorChanged = false;
+                }
+                return HasColorChanged;
+            }
+            return false;
         }
 
-        // don't use Voxel for this, as it gets confused
         /// <summary>
         /// The main function used to replace voxel data
         /// </summary>
-        public bool SetVoxelType(Chunk MyChunk, Int3 Position, int Type, Color MyTint) 
+        public bool SetVoxelType(Chunk MyChunk, Int3 Position, int Type) 
 		{
-            if (Type == 0)  // air is always white
-            {
-                MyTint = Color.white;
-            }
             if (IsInRange(Position))
             {
-                MyVoxelColor = Data[Position.x].Data[Position.y].Data[Position.z].Data as VoxelColor; // switch between tinted and non tinted
-                HasColorChanged = false;
-                if (MyVoxelColor == null && MyTint != Color.white) // if needs to be a tinted voxel but is not!
+                if (Data[Position.x].Data[Position.y].Data[Position.z].Data == null)
                 {
-                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new VoxelColor(Data[Position.x].Data[Position.y].Data[Position.z].Data);
-                    MyVoxelColor = Data[Position.x].Data[Position.y].Data[Position.z].Data as VoxelColor;    // convert to tinted voxel
-                }
-                else if (MyTint == Color.white && MyVoxelColor != null)    // if tinted voxel but colour is just white switch back!
-                {
-                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new Voxel(MyVoxelColor);    // convert to normal!
-                    Data[Position.x].Data[Position.y].Data[Position.z].Data.OnUpdated();
+                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new Voxel();
                     HasColorChanged = true;
                 }
-                if (MyTint != Color.white && MyTint != MyVoxelColor.GetColor())  // assuming tinted voxel has been site now!
+                else if (Data[Position.x].Data[Position.y].Data[Position.z].Data.GetType() == typeof(VoxelColor))
                 {
-                    MyVoxelColor.SetColor(MyTint);
-                    Data[Position.x].Data[Position.y].Data[Position.z].Data.OnUpdated();
+                    Data[Position.x].Data[Position.y].Data[Position.z].Data = new Voxel(Data[Position.x].Data[Position.y].Data[Position.z].Data);
                     HasColorChanged = true;
+                }
+                else
+                {
+                    HasColorChanged = false;
                 }
                 PreviousType = Data[Position.x].Data[Position.y].Data[Position.z].Data.GetVoxelType();
                 HasTypeChanged = Data[Position.x].Data[Position.y].Data[Position.z].Data.SetType(Type);
@@ -300,27 +292,11 @@ namespace Zeltex.Voxels
                 }
                 return (HasColorChanged || HasTypeChanged);
             }
-            else
-            {
-                return false;
-            }
-		}
+            return false;
+        }
         #endregion
 
         #region Getters
-       /* public Color GetVoxelColor(Int3 Position)
-        {
-            if (IsInRangeX(Position.x) && IsInRangeY(Position.y) && IsInRangeZ(Position.z))
-            {
-                Voxel MyVoxel = Data[Position.x].Data[Position.y].Data[Position.z].Data;
-                VoxelColor MyVoxelColor = MyVoxel as VoxelColor; // switch between tinted and non tinted
-                if (MyVoxelColor != null)
-                {
-                    return MyVoxelColor.GetColor();
-                }
-            }
-            return Color.white;
-        }*/
         /// <summary>
         /// used in colour picking
         /// </summary>
@@ -378,27 +354,6 @@ namespace Zeltex.Voxels
             }
         }
 
-        public Voxel GetVoxel(int i, int j, int k)
-        {
-            if (IsInRangeX(i) && IsInRangeY(j) && IsInRangeZ(k))
-                return Data[i].Data[j].Data[k].Data;
-            else
-                return null;
-        }
-
-        [System.Obsolete]
-        public int GetVoxelType(int i, int j, int k)
-        {
-            if (IsInRangeX(i) && IsInRangeY(j) && IsInRangeZ(k))
-            {
-                return Data[i].Data[j].Data[k].Data.GetVoxelType();
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
         /// <summary>
         /// Get the voxel type from a position
         /// </summary>
@@ -406,12 +361,19 @@ namespace Zeltex.Voxels
         {
             if (IsInRange(Position))
             {
-                return Data[Position.x].Data[Position.y].Data[Position.z].Data.GetVoxelType();
+                try
+                {
+                    if (Data[Position.x].Data[Position.y].Data[Position.z].Data != null)
+                    {
+                        return Data[Position.x].Data[Position.y].Data[Position.z].Data.GetVoxelType();
+                    }
+                }
+                catch (System.NullReferenceException)
+                {
+
+                }
             }
-            else
-            {
-                return 0;
-            }
+            return 0;
         }
         #endregion
 
@@ -464,8 +426,10 @@ namespace Zeltex.Voxels
                                 VoxelIndexY == 0 || VoxelIndexY == SizeY - 1 ||
                                 VoxelIndexZ == 0 || VoxelIndexZ == SizeZ - 1)
                             {
-                                Data[VoxelIndexX].Data[VoxelIndexY].Data[VoxelIndexZ].Data.OnUpdated();
-                                // Data[VoxelIndexX].Data[VoxelIndexY].Data[VoxelIndexZ].Data.OnBuiltMesh();
+                                if (Data[VoxelIndexX].Data[VoxelIndexY].Data[VoxelIndexZ].Data != null)
+                                {
+                                    Data[VoxelIndexX].Data[VoxelIndexY].Data[VoxelIndexZ].Data.OnUpdated();
+                                }
                             }
                         }
                     }

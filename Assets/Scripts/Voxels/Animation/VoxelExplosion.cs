@@ -114,7 +114,7 @@ namespace Zeltex.Skeletons
                     WorldsUpdated[k].OnMassUpdate();
                 }
                 WorldsUpdated.Clear();
-                yield return new WaitForSeconds(Random.RandomRange(MinimumDelay, MaximumDelay));
+                yield return new WaitForSeconds(Random.Range(MinimumDelay, MaximumDelay));
             }
         }
     }

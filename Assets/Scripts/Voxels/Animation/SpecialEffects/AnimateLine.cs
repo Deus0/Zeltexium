@@ -14,7 +14,7 @@ namespace Zeltex.AnimationUtilities
 		protected List<Vector3> MyTargetPositions = new List<Vector3>();
 		public Material MyLineMaterial;
         private float LineSize = 0.01f;
-		private int VertsCount = 30;
+		//private int VertsCount = 30;
 		private float LineSinAmplitudeX = 0.2f;
 		private float LineSinAmplitudeZ = 0.1f;
 		private float Speed = 3f;
@@ -52,12 +52,10 @@ namespace Zeltex.AnimationUtilities
             MyLineObject.transform.SetParent(transform, false);
             MyLineObject.transform.position = transform.position;
             MyLineObject.name = "ItemInspectLine " + MyLines.Count;
-			LineRenderer MyLine = MyLineObject.AddComponent<LineRenderer> ();	//LineRenderer ();
+			LineRenderer MyLine = MyLineObject.AddComponent<LineRenderer>();
 			MyLine.material = MyLineMaterial;
-            MyLine.SetWidth(LineSize, LineSize);
-            // This causes  IsFinite(outDistanceForSort)
-            //MyLine.SetVertexCount (30);
-            //MyLine.transform.SetParent (transform.GetChild(0));	// so the first object in the list holds the lines!
+            MyLine.startWidth = (LineSize);
+            MyLine.endWidth = LineSize;
 			return MyLine;
 		}
 
@@ -84,7 +82,7 @@ namespace Zeltex.AnimationUtilities
 				TargetPosition};
 
 			points = Curver.MakeSmoothCurve(points, 3.0f);
-			MyLine.SetVertexCount (points.Length);
+			MyLine.positionCount = (points.Length);
 			for (int i = 0; i < points.Length; i++)
             {
 				MyLine.SetPosition(i, points[i]);

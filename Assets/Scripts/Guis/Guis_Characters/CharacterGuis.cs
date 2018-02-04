@@ -79,7 +79,7 @@ namespace Zeltex.Guis.Characters
         /// <summary>
         /// Spawns all guis listed in the strings
         /// </summary>
-        private void SpawnAllGuis()
+        public void SpawnAllGuis()
         {
             DespawnAllGuis();
             if (GameManager.Get().IsAllHaveStatsBar)
@@ -157,7 +157,7 @@ namespace Zeltex.Guis.Characters
                 MyGui = CharacterGuiManager.Get().GetPoolObject(
                     GuiName,
                     MyCharacter.GetComponent<UnityEngine.Networking.NetworkIdentity>());
-                Debug.Log("Spawned " + GuiName + ":" + (MyGui != null));
+                //Debug.Log("Spawned " + GuiName + ":" + (MyGui != null));
                 RoutineManager.Get().StartCoroutine(AttachGuiRoutine(MyGui, GuiName));
                 return MyGui;
             }
@@ -170,6 +170,11 @@ namespace Zeltex.Guis.Characters
 
         public IEnumerator AttachGuiRoutine(ZelGui MyGui, string GuiName)
         {
+            if (MyGui == null)
+            {
+                //Debug.LogError(GuiName + " is null inside AttachGuiRoutine");
+                yield break;
+            }
             // wait for gui readying object
             Orbitor MyOrbitor = MyGui.GetComponent<Orbitor>();
             for (int i = 0; i < 20; i++)
@@ -202,7 +207,6 @@ namespace Zeltex.Guis.Characters
                     MyGuis.Remove(MyZelGui);
                 }
                 CharacterGuiManager.Get().ReturnObject(MyZelGui, MyZelGui.name);
-                //GameObject.Destroy(MyZelGui.gameObject);
             }
         }
         /// <summary>
@@ -506,12 +510,15 @@ namespace Zeltex.Guis.Characters
 		/// Spawns all the guis that are prefabbed.
 		///     - To Do: make this part of the save file for enabling/disabling
 		/// </summary>
-		public void SetCharacter(Character MyCharacter2)
+		public void SetCharacter(Character MyCharacter2, bool IsSpawnAllGuis = true)
         {
             if (MyCharacter != MyCharacter2)
             {
                 MyCharacter = MyCharacter2;
-                SpawnAllGuis();
+                if (IsSpawnAllGuis)
+                {
+                    SpawnAllGuis();
+                }
             }
         }
 

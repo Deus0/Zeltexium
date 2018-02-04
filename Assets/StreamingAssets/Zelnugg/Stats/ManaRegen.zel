@@ -1,1 +1,21 @@
-{"Description":"!","MyType":2,"Value":[1.0,1.0,325.984833],"Modifiers":["Mana"],"MyZexels":null,"Name":"ManaRegen"}
+{
+  "Description": "!",
+  "MyType": 2,
+  "Value": [
+    1.0,
+    1.0,
+    325.984833
+  ],
+  "Modifiers": [
+    "Mana"
+  ],
+  "MyZexel": {
+    "Pixels": null,
+    "Size": {
+      "x": 32.0,
+      "y": 32.0
+    },
+    "Name": "Empty"
+  },
+  "Name": "ManaRegen"
+}

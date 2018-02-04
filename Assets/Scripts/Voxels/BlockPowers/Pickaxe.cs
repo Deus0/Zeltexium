@@ -10,21 +10,16 @@ namespace Zeltex.Voxels
     /// </summary>
     public class Pickaxe : MonoBehaviour
     {
-        private Character MyCharacter;
+        //private Character MyCharacter;
         private bool IsPicking;
         private float PickTime = 1f;
         private float TimeStartedPicking;
         private bool WasMouseUsed;
 
-        private void Awake()
-        {
-            MyCharacter = GetComponent<Characters.Character>();
-        }
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        //private void Awake()
+        //{
+            //MyCharacter = GetComponent<Character>();
+        //}
 
         // Update is called once per frame
         void Update()

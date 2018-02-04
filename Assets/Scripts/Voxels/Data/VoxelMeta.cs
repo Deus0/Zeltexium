@@ -29,25 +29,36 @@ namespace Zeltex.Voxels
         public Stats MyStats;
         public string DropItem; // which item to drop
         #endregion
+        
+        #region Spawning
+        public VoxelHandle MyVoxelHandle;
 
-        #region Initiation
-
-        /*public VoxelMeta()
+        public override void Spawn()
         {
-            if (VoxelManager.Get())
+            if (MyVoxelHandle == null)
             {
-                MyModel = VoxelManager.Get().GetModel(ModelID);
+                GameObject NewVoxelHandle = new GameObject();
+                NewVoxelHandle.name = Name + "-Handler";
+                MyVoxelHandle = NewVoxelHandle.AddComponent<VoxelHandle>();
+                MyVoxelHandle.Load(this);
             }
-        }*/
-
-        public VoxelMeta()
-        {
-
+            else
+            {
+                Debug.LogError("Trying to spawn when handler already exists for: " + Name);
+            }
         }
 
-        public VoxelMeta(string Data)
+        public override void DeSpawn()
         {
-            RunScript(Data);
+            if (MyVoxelHandle)
+            {
+                MyVoxelHandle.gameObject.Die();
+            }
+        }
+
+        public override bool HasSpawned()
+        {
+            return (MyVoxelHandle != null);
         }
         #endregion
         
@@ -135,7 +146,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Loads the voxel meta data
         /// </summary>
-        public override void RunScript(string Data)
+        /*public override void RunScript(string Data)
         {
             string[] MyLines = Data.Split('\n');
             if (MyLines.Length < 5)
@@ -188,7 +199,7 @@ namespace Zeltex.Voxels
                 MyData += "/EndCommands" + "\n";
             }
             return MyData;
-        }
+        }*/
         #endregion
 
         #region GettersAndSetters
@@ -335,7 +346,7 @@ namespace Zeltex.Voxels
             Transform MyUniqueVoxel = MyChunk.transform.Find(GetTeleporterName(BlockPosition));
             if (MyUniqueVoxel)
             {
-                GameObject.Destroy(MyUniqueVoxel.gameObject);
+                MyUniqueVoxel.gameObject.Die();
             }
         }
         private void OnActivateTeleporter(Chunk MyChunk, Vector3 BlockPosition)
@@ -388,7 +399,7 @@ namespace Zeltex.Voxels
             Transform MyTorch = MyChunk.transform.Find(GetTorchName(BlockPosition));
             if (MyTorch)
             {
-                GameObject.Destroy(MyTorch.gameObject);
+                MyTorch.gameObject.Die();
             }
         }
         string GetTorchName(Vector3 BlockPosition)
@@ -447,7 +458,7 @@ namespace Zeltex.Voxels
             Transform MySpawner = MyChunk.transform.Find(MyName);
             if (MySpawner)
             {
-                GameObject.Destroy(MySpawner.gameObject);
+                MySpawner.gameObject.Die();
             }
         }
         #endregion
@@ -518,7 +529,7 @@ namespace Zeltex.Voxels
             // Destroy any previous colliders
             if (NewMoveableVoxel.GetComponent<SphereCollider>())
             {
-                GameObject.Destroy(NewMoveableVoxel.GetComponent<SphereCollider>());
+                NewMoveableVoxel.GetComponent<SphereCollider>().Die();
             }
             MeshCollider MyCollider = NewMoveableVoxel.GetComponent<MeshCollider>();
             if (MyCollider == null)
@@ -528,7 +539,7 @@ namespace Zeltex.Voxels
             MyCollider.convex = true;
             if (NewMoveableVoxel.GetComponent<Rigidbody>() != null)
             {
-                GameObject.Destroy(NewMoveableVoxel.GetComponent<Rigidbody>());
+                NewMoveableVoxel.GetComponent<Rigidbody>().Die();
             }
             MeshRenderer MyMeshRenderer = NewMoveableVoxel.GetComponent<MeshRenderer>();
             if (MyMeshRenderer == null)
@@ -537,13 +548,13 @@ namespace Zeltex.Voxels
             }
             MyMeshRenderer.sharedMaterial = VoxelManager.Get().MyMaterials[0];
             //MyDataBase.UpdateWithSingleVoxelMesh(NewMoveableVoxel, VoxelType, Color.white);
-            if (NewMoveableVoxel.GetComponent<Zeltex.Items.ItemHandler>())
+            if (NewMoveableVoxel.GetComponent<ItemHandler>())
             {
-                GameObject.Destroy(NewMoveableVoxel.GetComponent<Zeltex.Items.ItemHandler>());
+                NewMoveableVoxel.GetComponent<ItemHandler>().Die();
             }
             if (NewMoveableVoxel.GetComponent<ParticleSystem>())
             {
-                GameObject.Destroy(NewMoveableVoxel.GetComponent<ParticleSystem>());
+                NewMoveableVoxel.GetComponent<ParticleSystem>().Die();
             }
             Door MyDoor = NewMoveableVoxel.AddComponent<Door>();
             return MyDoor;

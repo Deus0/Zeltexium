@@ -9,7 +9,8 @@ namespace PlayerGuiSystem
     //[ExecuteInEditMode]
     public class ClassMaker : MonoBehaviour
     {
-        [Header("Debug")]
+        
+    ("Debug")]
         public bool DebugLog;
         public bool DebugMode;
         [Header("Actions")]

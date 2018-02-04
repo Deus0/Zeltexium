@@ -303,7 +303,7 @@ namespace Zeltex.Voxels
                     }
                 }
             }
-            DebugLog();
+            //DebugLog();
         }
 
         /// <summary>

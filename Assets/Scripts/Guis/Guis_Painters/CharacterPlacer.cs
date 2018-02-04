@@ -48,12 +48,13 @@ namespace Zeltex.Guis.Maker
         [SerializeField] private Character SelectedCharacter;
         private World LastHitWorld;
         private bool DidRayHitGui;
-        private Vector3 LastHitBlockPosition;
-        private Vector3 LastHitWorldPosition;
+        //private Vector3 LastHitBlockPosition;
+        //private Vector3 LastHitWorldPosition;
         private Vector3 LastHitWorldPosition2;
         private Vector3 VoxelUnit;  // one unit of voxel space
-        [SerializeField] private Vector3 HighlightedCenter;
-        private Vector3 Normal;
+        [SerializeField]
+        private Vector3 HighlightedCenter;
+        //private Vector3 Normal;
         private Vector3 CharacterSize;  // one unit of voxel space
         private Vector3 SelectedCenter;
         private bool IsVisible = true;
@@ -637,9 +638,9 @@ namespace Zeltex.Guis.Maker
 		{
 			World MyWorld = MyChunk.GetWorld();
 			LastHitWorld = MyWorld;
-			LastHitBlockPosition = MyWorld.RayHitToBlockPosition(MyHit.point, MyHit.normal);
-			Normal = MyHit.normal;
-			LastHitWorldPosition = MyWorld.BlockToRealPosition(LastHitBlockPosition);
+			//LastHitBlockPosition = MyWorld.RayHitToBlockPosition(MyHit.point, MyHit.normal);
+			//Normal = MyHit.normal;
+			//LastHitWorldPosition = MyWorld.BlockToRealPosition(LastHitBlockPosition);
 			LastHitWorldPosition2 = MyHit.point;//WorldExtra.GetWorldPosition(MyWorld, LastHitBlockPosition + Normal/2f);
 			VoxelUnit = new Vector3(
 				MyWorld.VoxelScale.x * MyWorld.transform.lossyScale.x,

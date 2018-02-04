@@ -59,7 +59,7 @@ namespace Zeltex.AI
         [SerializeField]
         public BotBehaviour MyWaiting;
 
-        private float TimeStartedWaiting = 0;
+        //private float TimeStartedWaiting = 0;
         [SerializeField]
         private EditorAction ActionAddWander = new EditorAction();
         [SerializeField]

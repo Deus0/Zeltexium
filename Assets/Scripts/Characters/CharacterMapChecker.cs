@@ -52,7 +52,7 @@ namespace Zeltex.Characters
             }*/
             if (MyChunk == null)
             {
-                MyChunk = MyCharacter.GetChunkInsideOfRaw();
+                MyChunk = MyCharacter.GetInChunk();
                 if (MyCharacter)
                 {
                     BeginPosition = transform.position;

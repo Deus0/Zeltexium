@@ -28,9 +28,9 @@ namespace Zeltex.AnimationUtilities
 		private List<Color32> BeginColors = new List<Color32>();
 		private float BeginFadingTime;
 
-		List<GameObject> MyBones = null;
+		//List<GameObject> MyBones = null;
 		public List<GameObject> MyChildren;
-		float IncreaseRate = 0.075f;
+		//float IncreaseRate = 0.075f;
 
 		/*void OnGUI()
 		{

@@ -16,14 +16,14 @@ namespace Zeltex.Guis.Characters
         {
             if (MyManager == null)
             {
-                GameObject ManagerObject = GameObject.Find("GuiPool");
+                GameObject ManagerObject = GameObject.Find(ManagerNames.CharacterGuiManager);
                 if (ManagerObject)
                 {
                     MyManager = ManagerObject.GetComponent<CharacterGuiManager>();
                 }
                 else
                 {
-                    Debug.LogError("Could not find CharacterGuiManager [GuiPool].");
+                    Debug.LogError("Could not find CharacterGuiManager [" + ManagerNames.CharacterGuiManager + "].");
                 }
             }
             return MyManager as CharacterGuiManager;

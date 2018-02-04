@@ -17,7 +17,7 @@ namespace Zeltex.AI
 {
 	public class BotGroup : MonoBehaviour
     {
-		List<Bot> MyBots = new List<Bot>();
+		//List<Bot> MyBots = new List<Bot>();
 
 	}
 }

@@ -10,6 +10,7 @@ namespace Zeltex
     public class Mover : MonoBehaviour
     {
         public bool IsPlayer;
+        public float GroundedDrag = 5;
         [SerializeField]
         private Transform CameraTransform;
         public MovementSettings movementSettings = new MovementSettings();
@@ -27,12 +28,6 @@ namespace Zeltex
         private Vector2 RotationInput = Vector2.zero;
 		//private float OriginalDrag;
 		private CameraBob MyBob;
-
-        public void SetCameraBone(Transform NewCameraBone)
-        {
-            CameraTransform = NewCameraBone;
-            mouseLook.Init(transform, CameraTransform);
-        }
 
         public void RefreshRigidbody()
         {
@@ -74,20 +69,16 @@ namespace Zeltex
             MyBot = GetComponent<AI.Bot>();
         }
 
-        private void Update()
+        /// <summary>
+        /// Rigidbody updates with Fixed Update, so movement needs to as well
+        /// </summary>
+        private void FixedUpdate()
         {
             if (m_Capsule != null)
             {
                 CheckCameraBob();
                 RotateView();
                 UpdateInput();
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if (m_Capsule != null)
-            {
                 GroundCheck();
                 UpdateMovementForce();
                 UpdateGroundMovement();
@@ -114,6 +105,19 @@ namespace Zeltex
                     }
                 }
             }
+        }
+
+        public void SetCameraBone(Transform NewCameraBone)
+        {
+            CameraTransform = NewCameraBone;
+            mouseLook.Init(transform, CameraTransform);
+            MyBob = null;
+            CheckCameraBob();
+        }
+
+        public Transform GetCameraBone() 
+        {
+            return CameraTransform;
         }
 
         private Vector2 GetInput()
@@ -153,8 +157,16 @@ namespace Zeltex
             {
                 // always move along the camera forward as it is the direction that it being aimed at
                 //Vector3 desiredMove = transform.forward * MovementInput.y + transform.right * MovementInput.x;
-                Vector3 desiredMove = CameraTransform.transform.forward*MovementInput.y + CameraTransform.transform.right*MovementInput.x;
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
+                Vector3 desiredMove;
+                if (CameraTransform)
+                {
+                    desiredMove = transform.forward * MovementInput.y + transform.right*MovementInput.x;
+                }
+                else
+                {
+                    desiredMove = CameraTransform.transform.forward*MovementInput.y + CameraTransform.transform.right*MovementInput.x;
+                }
+                desiredMove = Vector3.ProjectOnPlane(desiredMove, Vector3.down).normalized;   //m_GroundContactNormal
 
                 desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
                 desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
@@ -171,7 +183,7 @@ namespace Zeltex
         {
             if (m_IsGrounded)
             {
-                m_RigidBody.drag = 5f;
+                m_RigidBody.drag = GroundedDrag;
 
                 if (m_Jump)
                 {
@@ -227,7 +239,14 @@ namespace Zeltex
 
         public void RotateCamera(Vector3 TargetRotation)
         {
-            CameraTransform.eulerAngles = TargetRotation;
+            if (CameraTransform)
+            {
+                CameraTransform.eulerAngles = TargetRotation;
+            }
+            else
+            {
+                transform.eulerAngles = TargetRotation;
+            }
         }
         
         private void RotateView()
@@ -243,7 +262,14 @@ namespace Zeltex
                 RotationInput.Set(
                     CrossPlatformInputManager.GetAxis("Mouse Y") * mouseLook.YSensitivity, 
                     CrossPlatformInputManager.GetAxis("Mouse X") * mouseLook.XSensitivity);
-                mouseLook.LookRotation(transform, CameraTransform, RotationInput);
+                if (CameraTransform)
+                {
+                    mouseLook.LookRotation(transform, CameraTransform, RotationInput);
+                }
+                else
+                {
+                    mouseLook.LookRotation(transform, transform, RotationInput);
+                }
                 mouseLook.UpdateCursorLock();
             }
             else if (MyBot)

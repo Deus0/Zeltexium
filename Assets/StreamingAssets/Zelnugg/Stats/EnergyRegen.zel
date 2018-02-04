@@ -1,1 +1,21 @@
-{"Description":"-------","MyType":2,"Value":[1.0,1.0,32.6842041],"Modifiers":["Energy"],"MyZexels":null,"Name":"EnergyRegen"}
+{
+  "Description": "-------",
+  "MyType": 2,
+  "Value": [
+    1.0,
+    1.0,
+    32.6842041
+  ],
+  "Modifiers": [
+    "Energy"
+  ],
+  "MyZexel": {
+    "Pixels": null,
+    "Size": {
+      "x": 32.0,
+      "y": 32.0
+    },
+    "Name": "Empty"
+  },
+  "Name": "EnergyRegen"
+}

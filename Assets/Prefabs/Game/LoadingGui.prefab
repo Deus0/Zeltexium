@@ -142,7 +142,7 @@ MonoBehaviour:
   IsInstantOnStart: 0
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
-  MyDisplayDistance: 0.542
+  MyDisplayDistance: 0.5
   IsFollowUserAngle: 1
   IsFollowUserAngleAddition: 1
   SpinSpeed: 0.5
@@ -169,7 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838c03676d31f3c40bdab0d60b339070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HeaderText: {fileID: 0}
   PercentText: {fileID: 114869663816857212}
+  IsTurnOffOnStart: 1
   MyZel: {fileID: 0}
 --- !u!114 &114347558046511640
 MonoBehaviour:
@@ -194,6 +196,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   IsKeepCamera: 1
   FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &114360484197289676
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Zeltex.Dialogue;
 using Zeltex.Util;
+using Newtonsoft.Json;
 
 namespace Zeltex.Quests
 {
@@ -11,27 +12,21 @@ namespace Zeltex.Quests
 	[System.Serializable]
 	public class Condition 
 	{
+        [JsonIgnore]
 		public static string ObjectNameColor = "#d1d9e1";
+        [JsonProperty]
 		private bool IsCompleted;
-		public string ConditionType = "";	//
-		public string ObjectName = "";
-		public bool bIsTakeItems;
-		public int ItemQuantity;
-		public int ItemQuantityState = 0;
-		//public string ItemName;
-
-        public List<string> GetScriptList()
-        {
-            List<string> MyScript = new List<string>();
-            MyScript.Add("/" + ConditionType + " " + ObjectName + " " + ItemQuantity);
-            //MyScript.Add();
-            //MyScript.Add(ItemQuantity + "");
-            return MyScript;
-        }
-        public void RunScript(List<string> MyScript)
-        {
-
-        }
+        [JsonProperty]
+        public string ConditionType = "";	//
+        [JsonProperty]
+        public string ObjectName = "";
+        [JsonProperty]
+        public bool bIsTakeItems;
+        [JsonProperty]
+        public int ItemQuantity;
+        [JsonProperty]
+        public int ItemQuantityState = 0;
+        
 		public void Complete()
         {
 			IsCompleted = true;

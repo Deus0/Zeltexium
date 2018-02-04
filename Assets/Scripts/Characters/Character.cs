@@ -32,7 +32,7 @@ namespace Zeltex.Characters
     ///     
     /// </summary>
     [ExecuteInEditMode]
-	public partial class Character : NetworkBehaviour
+	public class Character : NetworkBehaviour
     {
         #region Variables
         [Header("Actions")]
@@ -49,7 +49,7 @@ namespace Zeltex.Characters
         [SerializeField]
         private CharacterData Data = new CharacterData();
         // The level the character is loaded in
-        private Level LoadedInLevel;
+        private Level InLevel;
 
         [Header("Character")]
         public bool IsPlayer;
@@ -72,18 +72,13 @@ namespace Zeltex.Characters
         private SkeletonHandler MySkeleton;
         private Bot MyBot;
         private Rigidbody MyRigidbody;
-        private BasicController MyController;
-        //private CharacterMapChecker MyCharacterMapChecker;
+        //private BasicController MyController;
+        private Mover MyMover;
         private CapsuleCollider MyCollider;
 
         // Saving?
         private bool HasInitialized;
         private Zeltine DeathHandle;
-
-        [HideInInspector]
-        public Chunk MyChunk;
-        [HideInInspector]
-        public World InWorld;
         #endregion
 
         #region Mono
@@ -101,18 +96,6 @@ namespace Zeltex.Characters
         public CharacterData GetData()
         {
             return Data;
-        }
-
-        public void SetData(CharacterData NewData)
-        {
-            if (Data != NewData)
-            {
-                Data = NewData;
-                Initialize();
-				MySkeleton.GetSkeleton().Activate();
-                transform.position = Data.LevelPosition;
-                transform.eulerAngles = Data.LevelRotation;
-            }
         }
 
         public void SetGuisActive(bool NewState)
@@ -164,7 +147,7 @@ namespace Zeltex.Characters
             }
             if (ActionSaveToLevel.IsTriggered())
             {
-                LoadedInLevel.SaveCharacterToLevel(this);
+                InLevel.SaveCharacterToLevel(this);
             }
 			if (ActionImportVox.IsTriggered()) 
 			{
@@ -266,11 +249,7 @@ namespace Zeltex.Characters
         public void SetPlayer(bool NewState)
         {
             IsPlayer = NewState;
-            GetComponent<Mover>().IsPlayer = NewState;
-            if (MyBot == null)
-            {
-                MyBot = GetComponent<Bot>();
-            }
+            MyMover.IsPlayer = NewState;
             if (MyBot)
             {
                 MyBot.enabled = !IsPlayer;
@@ -280,20 +259,14 @@ namespace Zeltex.Characters
         /// <summary>
         /// Once character is loaded into a world
         /// </summary>
-        public void OnLoaded(Level MyLevel)
+        public void OnActivated()
         {
-            if (MyLevel == null)
-            {
-                Debug.LogError(name + " has loaded in a null Level.");
-                return;
-            }
-            World MyWorld = MyLevel.GetWorld();
+            World MyWorld = Data.GetInWorld();
             if (MyWorld == null)
             {
-                Debug.LogError(MyLevel.Name + " has in a null world.");
+                Debug.LogError(InLevel.Name + " has in a null world.");
                 return;
             }
-            LoadedInLevel = MyLevel;
             //Debug.LogError("[" + name + "] has been loaded into world of [" + MyWorld.name + "]");
             // Scale its position - for now until i fixed the current levels stuff
             //transform.position = new Vector3(transform.position.x * MyWorld.GetUnit().x, transform.position.y * MyWorld.GetUnit().y, transform.position.z * MyWorld.GetUnit().z);
@@ -345,42 +318,96 @@ namespace Zeltex.Characters
             }
         }
 
-        public IEnumerator SetDataRoutine(CharacterData NewData)
+
+        public void SetData(CharacterData NewData, Level MyLevel = null, bool IsClone = true, bool IsSpawnGuis = true)
         {
-            if (Data != NewData)
+            RoutineManager.Get().StartCoroutine(SetDataRoutine(NewData, MyLevel, IsClone, IsSpawnGuis));
+        }
+
+        public IEnumerator SetDataRoutine(CharacterData NewData, Level MyLevel = null, bool IsClone = true, bool IsSpawnGuis = true, bool IsActivateSkeleton = true)
+        {
+            if (Data != NewData && NewData != null)
             {
-                Data = NewData.Clone<CharacterData>();
+                if (IsClone)
+                {
+                    Data = NewData.Clone<CharacterData>();
+                }
+                else
+                {
+                    Data = NewData;
+                }
                 Data.OnInitialized();
                 name = Data.Name;
                 RefreshComponents();
                 NewData.SetCharacter(this);
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MySkeleton.GetSkeleton().ActivateRoutine());
                 Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);
                 transform.position = Data.LevelPosition;
                 transform.eulerAngles = Data.LevelRotation;
-                GetComponent<Mover>().SetCameraBone(GetCameraBone());
-                GetComponent<Mover>().IsPlayer = IsPlayer;
+                MyMover.IsPlayer = IsPlayer;
+                //MySkeleton.gameObject.SetActive(false);
+                MySkeleton.GetSkeleton().SetSkeletonHandler(MySkeleton);    // incase it messsed up?!
+                if (IsActivateSkeleton)
+                {
+                    yield return MySkeleton.GetSkeleton().ActivateRoutine();
+                    MyMover.SetCameraBone(GetCameraBone());
+                }
                 if (GetComponent<Shooter>())
                 {
                     GetComponent<Shooter>().SetCameraBone(GetCameraBone());
                 }
-                Data.MyGuis.SetCharacter(this);
                 if (IsPlayer == false)
                 {
-                    MySkeleton.GetSkeleton().CalculateCapsule();
                     if (MyBot == null)
                     {
                         MyBot = gameObject.AddComponent<Bot>();
                         GetComponent<Mover>().SetBot(MyBot);
                     }
                 }
-                for (int i = 0; i < 300; i++)
+                Data.MyGuis.SetCharacter(this, IsSpawnGuis);
+                if (IsSpawnGuis)
                 {
-                    yield return null;
+                    RoutineManager.Get().StartCoroutine(SetGuiStatesAfter());
                 }
-                Data.MyGuis.SetGuiStates();
+                InLevel = MyLevel;
+                Data.SetWorld(InLevel.GetWorld());
+                if (InLevel != null)
+                {
+                    InLevel.AddCharacter(this);
+                }
+                // Set in chunk
+                Data.RefreshTransform();
+                // Unhide Skeleton
+                //MySkeleton.gameObject.SetActive(true);
             }
+            else if (NewData == null)
+            {
+                Debug.LogError("New Data is null inside " + name);
+            }
+        }
+
+        /// <summary>
+        /// Activates a character after a chunk finishes building
+        /// </summary>
+        public IEnumerator ActivateCharacter()
+        {
+            yield return MySkeleton.GetSkeleton().ActivateRoutine();
+            MyMover.SetCameraBone(GetCameraBone());
+            Data.MyGuis.SpawnAllGuis();
+            OnActivated();  // Fix position
+            RoutineManager.Get().StartCoroutine(SetGuiStatesAfter());
+        }
+
+        /// <summary>
+        /// Has to wait for spawning of guis before i set them
+        /// </summary>
+        private IEnumerator SetGuiStatesAfter() 
+        {
+            for (int i = 0; i < 300; i++)
+            {
+                yield return null;
+            }
+            Data.MyGuis.SetGuiStates();
         }
         /// <summary>
         ///  Called after spawning a character by CharacterManager
@@ -483,7 +510,7 @@ namespace Zeltex.Characters
 
         public IEnumerator DeathRoutine()
         {
-            Debug.LogError(name + " Has started dying.");
+            //Debug.LogError(name + " Has started dying.");
             float DeathTime = 6 + Random.Range(0,8);
             /*if (IsPlayer)
             {
@@ -500,7 +527,7 @@ namespace Zeltex.Characters
             }
             Data.MyGuis.SaveStates();
             Data.MyGuis.HideAll();
-            MySkillbar.RemoveSkills();
+            MySkillbar.OnDeath();
 
             if (MyBot)
             {
@@ -661,10 +688,6 @@ namespace Zeltex.Characters
             {
                 GameMode.Get().CheckKillCondition(GetScore());
             }
-            else
-            {
-                Debug.LogError("No GameMode for scoring.");
-            }
         }
         #endregion
         
@@ -797,10 +820,15 @@ namespace Zeltex.Characters
         public static World RayHitToWorld(RaycastHit MyHit)
         {
             World MyWorld;
-            if (MyHit.collider.GetComponent<Chunk>())
-                MyWorld = MyHit.collider.GetComponent<Chunk>().GetWorld();
+            Chunk HitChunk = MyHit.collider.GetComponent<Chunk>();
+            if (HitChunk)
+            {
+                MyWorld = HitChunk.GetWorld();
+            }
             else
+            {
                 MyWorld = MyHit.collider.GetComponent<World>();
+            }
             return MyWorld;
         }
 
@@ -926,42 +954,256 @@ namespace Zeltex.Characters
 
         #region Controls
 
-        private void RefreshComponents2()
-        {
-            if (MyBot == null)
-            {
-                MyBot = GetComponent<Bot>();
-            }
-            if (MyRigidbody == null)
-            {
-                MyRigidbody = GetComponent<Rigidbody>();
-            }
-            if (MyController == null)
-            {
-                MyController = GetComponent<BasicController>();
-            }
-        }
-
         /// <summary>
         /// Enable and disable movement
         /// </summary>
         public void SetMovement(bool NewState)
         {
-            RefreshComponents2();
-            if (MyController)
-            {
-                MyController.enabled = NewState;
-            }
             if (MyRigidbody)
             {
                 MyRigidbody.isKinematic = !NewState;
             }
-            if (GetComponent<Mover>())
+            if (MyMover)
             {
-                GetComponent<Mover>().enabled = NewState;
+                MyMover.enabled = NewState;
             }
             enabled = NewState;
         }
-		#endregion
+        #endregion
+
+
+        #region Utility
+
+        public bool CanRespawn()
+        {
+            return Data.CanRespawn;
+        }
+
+        public Stats GetStats()
+        {
+            return Data.MyStats;
+        }
+        public Guis.Characters.CharacterGuis GetGuis()
+        {
+            return Data.MyGuis;
+        }
+        /// <summary>
+        /// Sets new race name and sets it to nonunique
+        /// </summary>
+        public void SetRace(string NewRaceName)
+        {
+            Data.Race = NewRaceName;
+            //IsStaticRace = !string.IsNullOrEmpty(Data.Race);    // sets true if not null string
+        }
+        /// <summary>
+        /// A race name used for cosmetic purposes
+        /// Saves the characters race uniquelly
+        /// </summary>
+        public void SetRaceUnique(string NewRaceName)
+        {
+            Data.Race = NewRaceName;
+            //IsStaticRace = false;
+        }
+
+        private void SetClass(string NewClassName)
+        {
+            Data.Class = NewClassName;
+            //IsStaticClass = !string.IsNullOrEmpty(Data.Class);
+        }
+
+        /// <summary>
+        /// Sets the guis target
+        /// </summary>
+        public void SetGuisTarget(Transform NewTarget)
+        {
+            for (int i = 0; i < Data.MyGuis.GetSize(); i++)
+            {
+                Transform MyGui = Data.MyGuis.GetZelGui(i).transform;
+                if (MyGui.GetComponent<Orbitor>())
+                {
+                    MyGui.GetComponent<Orbitor>().SetTarget(NewTarget);
+                }
+                if (MyGui.GetComponent<Billboard>())
+                {
+                    MyGui.GetComponent<Billboard>().SetTarget(NewTarget);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns players inventory
+        /// </summary>
+        public Inventory GetSkillbarItems()
+        {
+            return Data.Skillbar;
+        }
+
+        public Inventory GetBackpackItems()
+        {
+            return Data.Backpack;
+        }
+
+        public Inventory GetEquipment()
+        {
+            return Data.GetEquipment();
+        }
+
+        public QuestLog GetQuestLog()
+        {
+            return Data.MyQuestLog;
+        }
+
+        /// <summary>
+        /// Gets a characters skeleton
+        /// </summary>
+        public SkeletonHandler GetSkeleton()
+        {
+            if (MySkeleton == null)
+            {
+                Debug.LogError("Set Skeleton Handler in Editor: " + name);
+            }
+            return MySkeleton;
+        }
+
+        public Transform GetCameraBone()
+        {
+            if (MySkeleton)
+            {
+                return Data.MySkeleton.GetCameraBone();
+            }
+            else
+            {
+                return transform;
+            }
+        }
+
+        /// <summary>
+        ///  Refresh all the references to components and datamanager
+        /// </summary>
+        private void RefreshComponents()
+        {
+            if (MyBot == null)
+            {
+                MyBot = GetComponent<AI.Bot>();
+                if (MyBot == null)
+                {
+                    MyBot = gameObject.AddComponent<AI.Bot>();
+                }
+            }
+            if (MyRigidbody == null)
+            {
+                MyRigidbody = GetComponent<Rigidbody>();
+                if (MyRigidbody == null)
+                {
+                    MyRigidbody = gameObject.AddComponent<Rigidbody>();
+                }
+            }
+            if (MyMover == null)
+            {
+                MyMover = GetComponent<Mover>();
+                if (MyMover == null)
+                {
+                    MyMover = gameObject.AddComponent<Mover>();
+                }
+            }
+            if (MyDialogueHandler == null)
+            {
+                MyDialogueHandler = gameObject.GetComponent<DialogueHandler>();
+            }
+            if (MyCollider == null)
+            {
+                MyCollider = GetComponent<CapsuleCollider>();
+                if (MyCollider == null)
+                {
+                    MyCollider = gameObject.AddComponent<CapsuleCollider>();
+                }
+            }
+            if (MySkillbar == null)
+            {
+                MySkillbar = GetComponent<Skillbar>();
+                if (MySkillbar == null)
+                {
+                    MySkillbar = gameObject.AddComponent<Skillbar>();
+                }
+            }
+            if (MySkeleton == null)
+            {
+                Transform BodyTransform = null;
+                if (BodyTransform == null)
+                {
+                    Debug.Log("Creating body for character: " + name);
+                    GameObject NewBody = new GameObject();
+                    NewBody.transform.SetParent(transform);
+                    NewBody.transform.localPosition = Vector3.zero;
+                    NewBody.transform.eulerAngles = Vector3.zero;
+                    NewBody.name = "Body";
+                    MySkeleton = NewBody.AddComponent<SkeletonHandler>();
+                }
+            }
+        }
+
+        public Skillbar GetSkillbar()
+        {
+            return MySkillbar;
+        }
+        #endregion
+
+        #region Naming
+
+        public void UpdateName(string NewName)
+        {
+            transform.name = NewName;
+        }
+        #endregion
+
+        /// <summary>
+        /// Clears character data
+        /// </summary>
+        private void Clear()
+        {
+            Data.Clear();
+        }
+
+        public List<string> GetStatistics()
+        {
+            List<string> MyData = new List<string>();
+            MyData.Add("Character [" + name + "]\n" +
+                "   Stats: " + Data.MyStats.GetSize() + "\n" +
+                "   Skillbar Items: " + GetSkillbarItems().GetSize() + "\n" +
+                "   Backpack Items: " + GetBackpackItems().GetSize() + "\n" +
+                "   Quests: " + Data.MyQuestLog.GetSize() + "\n" +
+                "   Dialogue: " + MyDialogueHandler.MyTree.GetSize() + "\n" +
+                "   Skeleton: " + Data.MySkeleton.MyBones.Count + "\n");
+
+            MyData.Add("   Equipment: " + Data.Equipment.GetSize() + "\n");
+            return MyData;
+        }
+
+        #region Positioning 
+        public World GetInWorld()
+        {
+            return Data.GetInWorld();
+        }
+
+        public Int3 GetChunkPosition()
+        {
+            return Data.GetChunkPosition();
+        }
+
+        public Chunk GetInChunk()
+        {
+            return Data.GetInChunk();
+        }
+
+        /// <summary>
+        /// Sets a new world for a character
+        /// </summary>
+        public void SetWorld(World NewWorld)
+        {
+            Data.SetWorld(NewWorld);
+        }
+
+        #endregion
+
     }
 }

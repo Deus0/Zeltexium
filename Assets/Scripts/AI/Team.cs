@@ -18,7 +18,7 @@ namespace Zeltex
         /// </summary>
         public class Team : MonoBehaviour
         {
-            private bool IsDebug;
+            public KeyCode DebugKey = KeyCode.B;
             public string Name;
             public List<Character> PartyMembers = new List<Character>();
             private Character MyCharacter;
@@ -31,7 +31,7 @@ namespace Zeltex
             // Update is called once per frame
             void Update ()
             {
-		        if (IsDebug && Input.GetKeyDown(KeyCode.B))
+		        if (DebugKey != KeyCode.None && Input.GetKeyDown(DebugKey))
                 {
                     // spawn team around me
                     //CharacterManager.Get().SpawnCharactersOnCharacter(transform, 5);  // spawns a random unit aroun this one

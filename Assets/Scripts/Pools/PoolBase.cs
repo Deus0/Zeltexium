@@ -25,8 +25,8 @@ namespace Zeltex
         [SerializeField]
         private List<GameObject> PoolPrefabs = new List<GameObject>();
         [Header("PoolDebug")]
-        [SerializeField]
-        private int DebugChildCount;
+        //[SerializeField]
+        //private int DebugChildCount;
         [SerializeField]
         protected List<SpawnedPool<T>> MyPools = new List<SpawnedPool<T>>();
         protected PoolSpawner MyPoolSpawner;
@@ -73,7 +73,7 @@ namespace Zeltex
         protected virtual void Start()
         {
             CreatePoolObjects();
-            StartCoroutine(WaitForGameManager());
+            StartCoroutine(StartAfterGameManagerStart());
         }
 
         public GameObject GetPrefab(int PoolIndex)
@@ -88,17 +88,14 @@ namespace Zeltex
             }
         }
 
-        IEnumerator WaitForGameManager()
+        IEnumerator StartAfterGameManagerStart()
         {
             yield return null;
             yield return null;
             yield return null;
-            // Just do this once
-            //GameManager.Get().OnBeginGame.AddEvent(SpawnPools);
-            //GameManager.Get().OnEndGame.AddEvent(ClearPools);
-            PoolsManager.Get().SpawnPools.AddEvent(SpawnPools);
             PoolsManager.Get().ClearPools.AddEvent(ClearPools);
             PoolsManager.Get().SynchPools.AddEvent(SynchPools);
+            PoolsManager.Get().MyPools.Add(this);
         }
 
         #region Getters
@@ -176,6 +173,30 @@ namespace Zeltex
             return -1;
         }
         #endregion
+        
+        /// <summary>
+        /// Returns all spawned objects to the pools
+        /// </summary>
+        public void ReturnAllObjects()
+        {
+            if (Pools.Count > 0)
+            {
+                for (int j = 0; j < Pools.Count; j++)
+                {
+                    for (int i = Pools[j].PoolObjects.Count - 1; i >= 0; i--)
+                    {
+                        if (Pools[j].PoolObjects[i] == null)
+                        {
+                            Pools[j].PoolObjects.RemoveAt(i);
+                        }
+                        else
+                        {
+                            ReturnObject(Pools[j].PoolObjects[i]);
+                        }
+                    }
+                }
+            }
+        }
 
         protected virtual void CreatePoolObject()
         {
@@ -191,7 +212,15 @@ namespace Zeltex
             }
         }
 
-        public void SpawnPools()
+        public void SpawnPools(System.Action OnFinishedSpawning) 
+        {
+            //Debug.LogError("Spawning Pools for " + name);
+            RoutineManager.Get().StartCoroutine(SpawnPoolsRoutine(OnFinishedSpawning));
+        }
+
+        float LastYield;
+        float YieldRate =  (1f / 1000f);
+        private IEnumerator SpawnPoolsRoutine(System.Action OnFinishedSpawning)
         {
             if (!IsPoolsSpawned)
             {
@@ -200,42 +229,47 @@ namespace Zeltex
                 {
                     MyPoolSpawner = GetComponent<PoolSpawner>();
                 }
-                //Debug.LogError("Pool: Spawning " + PoolPrefabs.Count + " in " + name);
-                // Check Map if already exists?
-                /*T[] SceneCharacters = GameObject.FindObjectsOfType<T>();
-                if (SceneCharacters.Length > 0)
-                {
-                    for (int i = 0; i < SceneCharacters.Length; i++)
-                    {
-                        if (SceneCharacters[i])
-                        {
-                            MyPoolSpawner.InitialiRegisterNewObject(SceneCharacters[i].gameObject, this);
-                        }
-                    }
-                }*/
                 CreatePoolObjects();
+                LastYield = Time.realtimeSinceStartup;
                 for (int i = 0; i < PoolPrefabs.Count; i++)
                 {
-                    SpawnPool(i);
+                    yield return SpawnPool(i);
+                    if (Time.realtimeSinceStartup - LastYield >= YieldRate)
+                    {
+                        LastYield = Time.realtimeSinceStartup;
+                        yield return null;
+                    }
                 }
+            }
+            if (OnFinishedSpawning != null)
+            {
+                OnFinishedSpawning.Invoke();
             }
         }
 
         /// <summary>
         /// Spawn a pool of characters at start of game
         /// </summary>
-        private void SpawnPool(int PoolIndex = 0)
+        public IEnumerator SpawnPool(int PoolIndex = 0) 
         {
             int PoolMax = 1;
             if (PoolIndex < MaxPools.Count)
             {
                 PoolMax = MaxPools[PoolIndex];
             }
+            //Debug.Log("Spawning Pool[" + PoolIndex + "] at: " + Time.time);
             for (int i = 0; i < PoolMax; i++)
             {
+                //Debug.Log("Spawning Pool Object [" + i + "] at: " + Time.time);
                 SpawnPoolObject(i, PoolIndex);
+                if (Time.realtimeSinceStartup - LastYield >= YieldRate)
+                {
+                    //Debug.Log("Yielding at Pool Object [" + i + "] at: " + Time.time);
+                    LastYield = Time.realtimeSinceStartup;
+                    yield return null;
+                }
             }
-            DebugChildCount = transform.childCount;
+            //DebugChildCount = transform.childCount;
         }
 
         public List<string> GetNames()
@@ -432,7 +466,7 @@ namespace Zeltex
         public virtual void ReturnObject(T PoolObject, int PoolIndex = 0)
         {
             //for (int i = 0; i < Pools.Count; i++)
-            if (PoolIndex >= 0 && PoolIndex < Pools.Count)
+            if (PoolObject != null && PoolIndex >= 0 && PoolIndex < Pools.Count)
             {
                 //if (Pools[PoolIndex].SpawnedObjects.Contains(PoolObject))
                 PoolObject.transform.SetParent(transform);
@@ -555,6 +589,10 @@ namespace Zeltex
         public void EditorOnlyAddToPool(NetworkIdentity PoolObject)
         {
             PoolObject.transform.SetParent(transform);
+            if (MyPools.Count == 0)
+            {
+                CreatePoolObjects();
+            }
             CreatePoolObjects();
             MyPools[0].SpawnedObjects.Add(PoolObject.GetComponent<T>());
         }
@@ -595,7 +633,7 @@ namespace Zeltex
             {
                 if (PoolObjects[i] != null)
                 {
-                    GameObject.Destroy(PoolObjects[i].gameObject);
+                    PoolObjects[i].gameObject.Die();
                 }
             }
             PoolObjects.Clear();
@@ -676,83 +714,3 @@ namespace Zeltex
         }
     }
 }
-/* if (PoolPrefabs[PoolIndex])// && PoolPrefabs[PoolIndex].GetComponent<T>() != null)
- {
-     bool IsNetworkPrefab = PoolPrefabs[PoolIndex].GetComponent<UnityEngine.Networking.NetworkIdentity>();
-     if (IsNetworkPrefab)
-     {
-         UnityEngine.Networking.ClientScene.RegisterPrefab(PoolPrefabs[PoolIndex].gameObject);
-     }
-     MyPoolSpawner.();
-     GameObject PoolObject = Instantiate(PoolPrefabs[PoolIndex].gameObject);
-     T PoolComponent = PoolObject.GetComponent<T>();
-     if (IsNetworkPrefab)
-     {
-         UnityEngine.Networking.NetworkServer.Spawn(PoolObject);
-     }
-
-     if (Network.isServer)
-     {
-         ServerRegisterNewObject(PoolIndex, PoolObject.GetComponent<NetworkIdentity>());
-     }
-     else
-     {
-         ClientRegisterNewObject(PoolIndex, PoolObject.GetComponent<NetworkIdentity>());
-     }
-     return PoolComponent;
- }
- else
- {
-     return null;
- }*/
-//private Dictionary<int, GetPoolObjectDelgate<T>> DelegatesGetPoolObject = new Dictionary<int, GetPoolObjectDelgate<T>>();
-
-/*private void AddDelegate(int NetworkID, GetPoolObjectDelgate<T> OnGetPoolObject)
-{
-    if (OnGetPoolObject != null)
-    {
-        if (DelegatesGetPoolObject.ContainsKey(NetworkID))
-        {
-            DelegatesGetPoolObject[NetworkID] = OnGetPoolObject;
-        }
-        else
-        {
-            DelegatesGetPoolObject.Add(NetworkID, OnGetPoolObject);
-    }
-    }
-}
-
-private void ActivateDelegate(T PoolObject)
-{
-    int NetworkID = (int)PoolObject.GetComponent<NetworkIdentity>().netId.Value;
-    if (DelegatesGetPoolObject.ContainsKey(NetworkID))
-    {
-        if (DelegatesGetPoolObject[NetworkID] != null)
-        {
-            DelegatesGetPoolObject[NetworkID].Invoke(PoolObject);
-        }
-        DelegatesGetPoolObject.Remove(NetworkID);
-    }
-}*/
-
-
-
-/*public T GetPoolObject(int PoolIndex = 0)
-{
-    // check for nulls until found non null
-    RemoveNullCharacters();
-    if (PoolObjects.Count > 0)
-    {
-        int Index = PoolObjects.Count - 1;
-        GameObject PoolObject = PoolObjects[Index].gameObject;
-        PoolObjects.RemoveAt(Index);
-        T PoolComponent = PoolObject.GetComponent<T>();
-        SpawnedObjects.Add(PoolComponent);
-        return PoolComponent;
-    }
-    else
-    {
-        // if increase pool, increase it
-        return null;
-    }
-}*/

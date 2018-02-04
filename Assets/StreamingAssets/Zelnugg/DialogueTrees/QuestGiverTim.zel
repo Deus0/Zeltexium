@@ -1,1 +1,75 @@
-{"MyDialogues":[{"Name":"Talk","InputString":"","Actions":[],"MyConditions":[{"Command":"default","NextIndex":"Quest","NextIndexes":[]}],"SpeechLines":[{"Speaker":"Character","Speech":"Good Evening Sir"},{"Speaker":"Player","Speech":"Good evening"}]},{"Name":"Quest","InputString":"","Actions":[],"MyConditions":[{"Command":"options","NextIndex":null,"NextIndexes":["QuestBye","QuestBye"]}],"SpeechLines":[{"Speaker":"Character","Speech":"Would you like a quest?"},{"Speaker":"Player","Speech":"Yes"},{"Speaker":"Player","Speech":"No"}]},{"Name":"QuestBye","InputString":"","Actions":[{"Name":"GiveQuest","Input1":"Collect the Eggs"}],"MyConditions":[],"SpeechLines":[{"Speaker":"Character","Speech":"Well here you go then"}]}],"ChattedCount":0,"OnEndTree":{},"Name":"QuestGiverTim"}
+{
+  "MyDialogues": [
+    {
+      "Name": "Talk",
+      "InputString": "",
+      "Actions": [],
+      "MyConditions": [
+        {
+          "Command": "default",
+          "NextIndex": "Quest",
+          "NextIndexes": []
+        }
+      ],
+      "SpeechLines": [
+        {
+          "Speaker": "Character",
+          "Speech": "Good Evening Sir"
+        },
+        {
+          "Speaker": "Player",
+          "Speech": "Good evening"
+        }
+      ]
+    },
+    {
+      "Name": "Quest",
+      "InputString": "",
+      "Actions": [],
+      "MyConditions": [
+        {
+          "Command": "options",
+          "NextIndex": null,
+          "NextIndexes": [
+            "QuestBye",
+            "QuestBye"
+          ]
+        }
+      ],
+      "SpeechLines": [
+        {
+          "Speaker": "Character",
+          "Speech": "Would you like a quest?"
+        },
+        {
+          "Speaker": "Player",
+          "Speech": "Yes"
+        },
+        {
+          "Speaker": "Player",
+          "Speech": "No"
+        }
+      ]
+    },
+    {
+      "Name": "QuestBye",
+      "InputString": "",
+      "Actions": [
+        {
+          "Name": "GiveQuest",
+          "Input1": "Collect the Eggs"
+        }
+      ],
+      "MyConditions": [],
+      "SpeechLines": [
+        {
+          "Speaker": "Character",
+          "Speech": "Well here you go then"
+        }
+      ]
+    }
+  ],
+  "ChattedCount": 0,
+  "OnEndTree": {},
+  "Name": "QuestGiverTim"
+}

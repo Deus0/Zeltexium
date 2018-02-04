@@ -1,0 +1,12 @@
+{
+  "Description": "The quest of awesome.",
+  "ConditionIndex": 0,
+  "MyConditions": [],
+  "MyRewards": [],
+  "MyQuestBlock": null,
+  "TimeCompleted": 0.0,
+  "IsOrderedConditions": false,
+  "IsHandedIn": false,
+  "TimeHandedIn": 0.0,
+  "Name": "Hand Out Flyers"
+}

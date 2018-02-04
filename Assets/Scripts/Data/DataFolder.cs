@@ -23,21 +23,27 @@ namespace Zeltex
             return Values.Contains(MyElement);
         }
     }
+
+    [System.Serializable()]
+    public class ElementDictionary : SerializableDictionaryBase<string, Element>
+    {
+        public bool ContainsValue(Element MyElement)
+        {
+            return Values.Contains(MyElement);
+        }
+    }
     /// <summary>
     /// A reference to a folder
     /// </summary>
     [System.Serializable]
-	public class DataFolder<T>
+	public partial class ElementFolder : object, ISerializationCallbackReceiver
 	{
 		[Header("Data")]
 		public string FolderName = "None";                              // The name of the folder, used to save a list of files
 		public string FileExtension = "err";                            // the particular type of file used to save the data
-        public DataDictionary<T> RealData = new DataDictionary<T>();
-        public virtual DataDictionary<T> Data
-        {
-            get { return RealData; }
-            set { RealData = value; }
-        }
+        [HideInInspector]
+        public ElementDictionary Data = new ElementDictionary();
+        public List<Element> CachedData = new List<Element>();
 
         [Header("Events")]
         [Tooltip("When the file has modified - Update any connected UI to indicate a file change"), HideInInspector]
@@ -49,15 +55,126 @@ namespace Zeltex
         [Tooltip("When the file has been renamed - Update any connected UI to indicate a file change"), HideInInspector]
 		public ElementFolderEvent MovedEvent = new ElementFolderEvent();
 
+
+        public void OnBeforeSerialize()
+        {
+            Serialize();
+        }
+
+        public void OnAfterDeserialize()
+        {
+            Deserialize();
+        }
+        List<string> SerializdData = new List<string>();
+        List<string> SerializedNames = new List<string>();
+        public void Serialize()
+        {
+            SerializdData.Clear();
+            SerializedNames.Clear();
+            List<Element> MyElements = GetData();
+            List<string> MyNames = GetNames();
+            if (MyElements == null)
+            {
+                Debug.LogError(FolderName + " has null elements!");
+                return;
+            }
+            int Size = MyElements.Count;
+            for (int i = 0; i < Size; i++)
+            {
+                if (MyElements[i] != null)
+                    SerializdData.Add(MyElements[i].GetSerial());
+            }
+            for (int i = 0; i < Size; i++)
+            {
+                if (MyNames[i] != null)
+                   SerializedNames.Add(MyNames[i]);
+            }
+        }
+
+        public void Deserialize()
+        {
+            Clear();
+            RoutineManager.Get().StartCoroutine(DeserializeRoutine(SerializedNames, SerializdData));
+        }
+
+        public System.Collections.IEnumerator DeserializeRoutine(List<string> Names, List<string> Scripts)
+        {
+            float LastYield = Time.realtimeSinceStartup;
+            string Script = "";
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            for (int i = 0; i < Scripts.Count; i++)
+            {
+                Script = Scripts[i];
+                Element NewElement = null;// = new Element();
+                bool IsThreading = true;
+                System.Threading.Thread LoadThread = new System.Threading.Thread(
+                    () =>
+                    {
+                        NewElement = Element.Load(Names[i], this as ElementFolder, Script);
+                        IsThreading = false;
+                    });
+                LoadThread.Start();
+                while (IsThreading)
+                {
+                    yield return null;
+                }
+                if (NewElement != null)
+                {
+                    NewElement.Name = Names[i];
+                    NewElement.MyFolder = this;
+                    NewElement.ResetName();
+                    NewElement.OnLoad();
+                    if (DataFolderNames.GetDataType(FolderName) == typeof(Level))
+                    {
+                        // Do the thing!
+                        Level MyLevel = NewElement as Level;
+                        MyLevel.SetFilePathType(DataManager.Get().MyFilePathType);
+                    }
+                    if (FolderName == DataFolderNames.PolyModels)
+                    {
+                        if (VoxelManager.Get())
+                        {
+                            VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
+                        }
+                    }
+                    else if (FolderName == DataFolderNames.Voxels)
+                    {
+                        if (VoxelManager.Get())
+                        {
+                            VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
+                        }
+                    }
+                    if (Data.ContainsKey(NewElement.Name) == false)
+                    {
+                        Data.Add(NewElement.Name, NewElement);
+                        CachedData.Add(NewElement);
+                        NewElement.MyFolder = (this as ElementFolder);
+                    }
+                    else
+                    {
+                        Debug.LogError("Attempting to add duplicate element: " + NewElement.Name + " to folder " + FolderName);
+                    }
+                }
+                if (Time.realtimeSinceStartup - LastYield >= (16f / 1000f))
+                {
+                    LastYield = Time.realtimeSinceStartup;
+                    yield return null;
+                }
+            }
+            SerializdData.Clear();
+            SerializedNames.Clear();
+        }
+
         public void Set(string NewFolderName, string NewFileExtension)
         {
             FolderName = NewFolderName;
             FileExtension = NewFileExtension;
         }
 
-        public static DataFolder<T> Create(string NewFolderName, string NewFileExtension)
+        public static ElementFolder Create(string NewFolderName, string NewFileExtension)
         {
-            DataFolder<T> NewFolder = new DataFolder<T>();
+            ElementFolder NewFolder = new ElementFolder();
             NewFolder.Set(NewFolderName, NewFileExtension);
             return NewFolder;
         }
@@ -104,7 +221,7 @@ namespace Zeltex
 			return DataManager.GetFolderPath(FolderName + "/");
 		}
 
-        private void LoadAllNames()
+        /*private void LoadAllNames()
         {
             Clear();
             List<string> MyFiles = FileUtil.GetFilesOfType(GetFolderPath(), FileExtension);
@@ -114,7 +231,7 @@ namespace Zeltex
             for (int i = 0; i < MyFiles.Count; i++)
             {
                 MyNames.Add(Path.GetFileNameWithoutExtension(MyFiles[i]));
-                Data.Add(MyNames[i], default(T));
+                Data.Add(MyNames[i], default(Element));
             }
             Debug.Log("[" + FolderName + "] Found " + MyNames.Count + ". ~~" + MyFiles.Count + "\nFolderPath: " + GetFolderPath());
         }
@@ -133,7 +250,7 @@ namespace Zeltex
                 }
 			}
 			return MyScripts;
-		}
+		}*/
 
         /*public List<Texture2D> LoadAllTextures()
         {
@@ -250,37 +367,48 @@ namespace Zeltex
 
 		#region Get
 
-		public List<T> GetData()
+		public List<Element> GetData()
         {
-            List<T> MyData = new List<T>();
-            try
+            if (Data != null)
             {
-                if (Data != null)
+                return Data.GetValues();
+            }
+            else
+            {
+                Debug.LogError("Data is null inside " + FolderName);
+                return new List<Element>();
+            }
+        }
+
+        public List<T> GetData<T>() where T : Element
+        {
+            if (Data != null)
+            {
+                List<T> MyT = new List<T>();
+                foreach (KeyValuePair<string, Element> MyValuePair in Data)
                 {
-                    foreach (var KeyVarPair in Data)
-                    {
-                        if (KeyVarPair.Value != null)
-                        {
-                            MyData.Add(KeyVarPair.Value);
-                        }
-                    }
+                    MyT.Add(MyValuePair.Value as T);
                 }
+                return MyT;
             }
-            catch (System.ObjectDisposedException e)
+            else
             {
-                Debug.LogError("Bug Found in DataFolder: " + e.ToString());
+                Debug.LogError("Data is null inside " + FolderName);
+                return new List<T>();
             }
-            return MyData;
         }
 
         public List<string> GetNames()
         {
-            List<string> MyNames = new List<string>();
-            foreach (var Key in Data.Keys)
+            if (Data != null)
             {
-                MyNames.Add(Key);
+                return Data.GetKeys();
             }
-            return MyNames;
+            else
+            {
+                Debug.LogError("Data is null inside " + FolderName);
+                return new List<string>();
+            }
         }
         #endregion
 
@@ -293,7 +421,8 @@ namespace Zeltex
         {
 			if (Data.ContainsKey(NewName) == false)
 			{
-				Data.Add(NewName, default(T));
+				Data.Add(NewName, default(Element));
+
 			}
 			else
 			{
@@ -301,7 +430,7 @@ namespace Zeltex
 			}
         }
 
-        public void ReAdd(string ElementName, T MyElement)
+        public void ReAdd(string ElementName, Element MyElement)
         {
             if (Data.ContainsValue(MyElement))
             {
@@ -310,7 +439,7 @@ namespace Zeltex
             }
         }
 
-        public bool SetElement(string NewName, T NewElement)
+        public bool SetElement(string NewName, Element NewElement)
         {
             if (Data.Keys.Contains(NewName))
             {
@@ -326,7 +455,7 @@ namespace Zeltex
         /// <summary>
         /// Add a file a new file
         /// </summary>
-        public bool Add(string NewName, T NewElement)
+        public bool Add(string NewName, Element NewElement)
         {
             if (Data.Keys.Contains(NewName) == true)
             {
@@ -343,6 +472,7 @@ namespace Zeltex
                     VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
                 }
                 Data.Add(NewName, NewElement);
+                CachedData.Add(NewElement);
                 return true;
             }
             else
@@ -355,7 +485,7 @@ namespace Zeltex
         /// <summary>
         /// Get a value by file name
         /// </summary>
-        public T Get(string FileName)
+        public Element Get(string FileName)
         {
             if (Data.ContainsKey(FileName))
             {
@@ -363,7 +493,7 @@ namespace Zeltex
             }
             else
             {
-                return default(T);
+                return default(Element);
             }
         }
 
@@ -386,7 +516,7 @@ namespace Zeltex
         /// <summary>
         /// Get a value by file name
         /// </summary>
-        public T Get(int FileIndex)
+        public Element Get(int FileIndex)
         {
             int Count = 0;
             foreach (var KeyVarPair in Data)
@@ -397,14 +527,13 @@ namespace Zeltex
                 }
                 Count++;
             }
-            Debug.LogError("Could not find file " + FileIndex + " inside of " + FolderName);
-            return default(T);
+            return default(Element);
         }
 
         /// <summary>
         /// Set a value by file name
         /// </summary>
-        public void Set(string FileName, T NewData)
+        public void Set(string FileName, Element NewData)
         {
             if (Data.ContainsKey(FileName))
             {
@@ -415,7 +544,7 @@ namespace Zeltex
         /// <summary>
         /// set a generic value by index
         /// </summary>
-        public void Set(int FileIndex, T NewData)
+        public void Set(int FileIndex, Element NewData)
         {
             int Count = 0;
             foreach (var KeyVarPair in Data)
@@ -440,6 +569,7 @@ namespace Zeltex
                 if (Count == FileIndex)
                 {
                     Data.Remove(KeyVarPair.Key);
+                    CachedData.Remove(KeyVarPair.Value);
                     DeleteFile(KeyVarPair.Key);
                     break;
                 }
@@ -451,6 +581,7 @@ namespace Zeltex
         {
             if (Data.ContainsKey(FileName))
             {
+                CachedData.Remove(Data[FileName]);
                 Data.Remove(FileName);
                 return true;
             }
@@ -491,7 +622,7 @@ namespace Zeltex
 			if (HasChanged)
 			{
 				// if finished saving all, check if any still dirty
-				foreach (KeyValuePair<string, T> MyValuePair in Data)
+				foreach (KeyValuePair<string, Element> MyValuePair in Data)
 				{
 					Element MyElement = MyValuePair.Value as Element;
 					if (MyElement == null || MyElement.CanSave())

@@ -20,7 +20,7 @@ namespace Zeltex.Combat
     {
         #region Variables
         // Summoning Data
-        private GameObject MySummonerCharacter;
+        //private GameObject MySummonerCharacter;
         private string MySummonedName = "";
         private string MyClassName = "Minion";
         private string MyRaceName = "Human";
@@ -39,13 +39,13 @@ namespace Zeltex.Combat
         public float AnimationTimeStage2 = 1.8f;
 
         private bool HasLoaded = false;
-        private SkeletonHandler MySkeleton;
+        //private SkeletonHandler MySkeleton;
         // portal animation
         private float PortalDelayTime = 0.8f;
-        private float PortalBottomEmissionRate = 100;
-        private Vector3 PositionEnd;
-        private Vector3 PortalScaleBegin;
-        private Vector3 PortalBigScale;
+        //private float PortalBottomEmissionRate = 100;
+        //private Vector3 PositionEnd;
+        private Vector3 PortalScaleBegin = Vector3.zero;
+        private Vector3 PortalBigScale = Vector3.zero;
         // time references
         private float TimeBeginStage0 = -1;
         private float TimeBeginStage1 = -1;
@@ -108,7 +108,7 @@ namespace Zeltex.Combat
         }
         public void SpawnClass(string ClassName, string RaceName, string CharacterName = "", GameObject MyCharacter = null)
         {
-            MySummonerCharacter = MyCharacter;
+            //MySummonerCharacter = MyCharacter;
             MySummonedName = CharacterName;
             if (MySummonedName == "")
             {
@@ -165,10 +165,10 @@ namespace Zeltex.Combat
 					MyPortal.GetComponent<ParticleSystem>().Play();
 					TimeBeginStage0 = Time.time;
 					HasLoaded = false;
-                    MySkeleton = SummonedCharacter.GetSkeleton();
-                    SummonedCharacter.SetRace(MyRaceName);
+                    //MySkeleton = SummonedCharacter.GetSkeleton();
+                    //SummonedCharacter.SetRace(MyRaceName);
                     //yield return MySkeleton.RunScriptRoutine(MySkeletonScript);
-                    SummonedCharacter.SetClassName(MyClassName);
+                    //SummonedCharacter.SetClassName(MyClassName);
                     //yield return SummonedCharacter.RunScriptRoutine(MyClassScript);
 					//SetRenderQue(MySummonedObject, true);
 					Initiate();
@@ -330,7 +330,7 @@ namespace Zeltex.Combat
         private void OpenPortal(float TimePassed)
         {
             MyPortal.transform.localScale = Vector3.Lerp(new Vector3(0, 0, 0), PortalScaleBegin, TimePassed / AnimationTimeStage0);
-            MyPortal.GetComponent<ParticleSystem>().emissionRate = PortalBottomEmissionRate * (TimePassed / AnimationTimeStage0);
+            //MyPortal.GetComponent<ParticleSystem>().emissionRate = PortalBottomEmissionRate * (TimePassed / AnimationTimeStage0);
             if (TimePassed >= AnimationTimeStage0)
             {
                 TimeBeginStage0 = -1;
@@ -372,17 +372,17 @@ namespace Zeltex.Combat
         {
             if (!MyParticlesTop.isPlaying)
                 MyParticlesTop.Play();
-            float AnimationTime = TimePassed / AnimationTimeStage1; // between 0 and 1
-            MySummonedObject.transform.position = Vector3.Lerp(MyDepthMask.transform.position, PositionEnd, AnimationTime);
-            MyPortal.GetComponent<ParticleSystem>().emissionRate = PortalBottomEmissionRate - PortalBottomEmissionRate * AnimationTime;
-            MyParticlesTop.emissionRate = PortalBottomEmissionRate - PortalBottomEmissionRate * AnimationTime;
+            //float AnimationTime = TimePassed / AnimationTimeStage1; // between 0 and 1
+            //MySummonedObject.transform.position = Vector3.Lerp(MyDepthMask.transform.position, PositionEnd, AnimationTime);
+            //MyPortal.GetComponent<ParticleSystem>().emissionRate = PortalBottomEmissionRate - PortalBottomEmissionRate * AnimationTime;
+            //MyParticlesTop.emissionRate = PortalBottomEmissionRate - PortalBottomEmissionRate * AnimationTime;
             if (TimePassed >= AnimationTimeStage1)
             {
                 //if (MyDepthMask)
                 //    Destroy(MyDepthMask);
                 TimeBeginStage1 = -1;
                 TimeBeginStage2 = Time.time + PortalDelayTime;
-                MyParticlesTop.emissionRate = 0;
+                //MyParticlesTop.emissionRate = 0;
                 MyPortal.GetComponent<ParticleSystem>().Stop();
                 MyParticlesTop.Stop();
             }

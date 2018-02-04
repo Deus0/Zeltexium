@@ -9,7 +9,7 @@ namespace Zeltex.AI
     public class PathNode
     {
         Int3 PreviousPosition;          // Points to previous node in the list
-        float DistanceToTarget = 1000;  // need to calculate this
+        //float DistanceToTarget = 1000;  // need to calculate this
         bool IsPath;                    // Is this the path we have walked
         bool IsClosed;                  // Is this an obstacle
     }

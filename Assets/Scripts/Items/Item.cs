@@ -17,52 +17,60 @@ namespace Zeltex.Items
     public class Item : Element
     {
         #region Variables
-        [Tooltip("Used in the tooltip to describe the item")]
-        [SerializeField, JsonProperty]
-		private string Description;
-		[Tooltip("The stats the item contains"), JsonProperty]
-		public Stats MyStats;
-		[JsonProperty]
-		public Zexel MyZexel;
-		[JsonProperty]
-        public VoxelModel MyModel = null;
-        [JsonProperty]
-        public PolyModel MyPolyModel = null;
-        [JsonProperty]
-        public int TextureMapIndex = 0;
-
-        [Tooltip("Used in activation of the item")]
-        [SerializeField, JsonProperty]
-        private List<string> Commands;
-        [SerializeField, JsonProperty]
-        private List<string> Tags;
-        [Tooltip("How many of that item there is.")]
-        [SerializeField, JsonProperty]
-        private int Quantity = 1;
-
+        #region Statics
         [JsonIgnore]
         static private string EndingColor = "</color>";
-        [JsonIgnore]
-        static private string CommandColor = "<color=#989a33>";
+        //[JsonIgnore]
+        //static private string CommandColor = "<color=#989a33>";
         [JsonIgnore]
         static private string TagColor = "<color=#779b33>";
         [JsonIgnore]
         static private string QuantityColor = "<color=#00cca4>";
         [JsonIgnore]
         static private string DescriptionColor = "<color=#474785>";
-        [JsonIgnore]
-        public Mesh MyMesh;
-        [JsonIgnore]
-        public Material MyMaterial;
+        #endregion
+
+        [Tooltip("Used in the tooltip to describe the item")]
+        [SerializeField, JsonProperty]
+		private string Description;
+        [Tooltip("Used by the game to describe the item")]
+        [SerializeField, JsonProperty]
+        private List<string> MetaTags;
+
+        [JsonProperty]
+        public Zexel MyZexel;
+        [Tooltip("The stats the item contains"), JsonProperty]
+		public Stats MyStats;
+
+		[JsonProperty]
+        public VoxelModel MyModel = null;
+        [JsonProperty]
+        public int TextureMapIndex = 0;
+        [JsonProperty]
+        public PolyModel MyPolyModel = null;
+
+        [JsonProperty]
+        public Spell MySpell;
+
+        [Tooltip("How many of that item there is.")]
+        [SerializeField, JsonProperty]
+        private int Quantity = 1;
+
         [HideInInspector, JsonIgnore]
         private Inventory ParentInventory = null;
         [HideInInspector, JsonIgnore]
         public UnityEngine.Events.UnityEvent OnUpdate = new UnityEngine.Events.UnityEvent();
+        [JsonIgnore]
+        public Guis.ItemGui MyGui;
+        [JsonIgnore]
+        private ItemHandler MyItemHandler;
+        [JsonIgnore]
+        System.Action MyOnFinishLoading = null;
 
-		/// <summary>
-		/// The meshes used for items
-		/// </summary>
-		[System.Serializable]
+        /// <summary>
+        /// The meshes used for items
+        /// </summary>
+        [System.Serializable]
 		public enum ItemMeshType
 		{
 			None,               // default cube will be used
@@ -98,13 +106,17 @@ namespace Zeltex.Items
         public override void OnLoad()
         {
             base.OnLoad();
-            if (MyStats != null)
-            {
-                MyStats.ParentElement = this;
-            }
             if (MyZexel != null)
             {
                 MyZexel.ParentElement = this;
+            }
+            if (MySpell != null)
+            {
+                MySpell.ParentElement = this;
+            }
+            if (MyStats != null)
+            {
+                MyStats.ParentElement = this;
             }
             if (MyModel != null)
             {
@@ -130,50 +142,14 @@ namespace Zeltex.Items
         {
             Name = "Empty";
             Description = "Null";
-            MyStats = new Stats();
-            MyStats.ParentElement = this;
-            MyZexel = new Zexel();
-            MyZexel.ParentElement = this;
-            Commands = new List<string>();
-            Tags = new List<string>();
+            MetaTags = new List<string>();
+            MyStats = null;
+            MyZexel = null;
         }
         #endregion
 
         #region Getters
-        public string GetInput(string Command)
-        {
-            for (int i = 0; i < Commands.Count; i++)
-            {
-                string ThisCommand = ScriptUtil.GetCommand(Commands[i]);
-                if (Command == ThisCommand)
-                {
-                    return ScriptUtil.RemoveCommand(Commands[i]);
-                }
-            }
-            return "";
-        }
-        public int GetInputInt(string Command)
-        {
-            for (int i = 0; i < Commands.Count; i++)
-            {
-                if (Commands[i].Contains(Command))
-                {
-                    string Input = ScriptUtil.RemoveCommand(Commands[i]);
-                    if (Input == "")
-                        return 1;
-                    try
-                    {
-                        int IntInput = int.Parse(Input);
-                        return IntInput;
-                    }
-                    catch
-                    {
-                        break;
-                    }
-                }
-            }
-            return 1;
-        }
+
         public string GetDescription()
         {
             return Description;
@@ -203,58 +179,20 @@ namespace Zeltex.Items
                     DescriptionText += ": -" + Mathf.Abs(MyStat.GetValue()).ToString();
                 }
             }
-            for (int i = 0; i < Tags.Count; i++)
+            for (int i = 0; i < MetaTags.Count; i++)
             {
-                DescriptionText += TagColor + "\n[" + Tags[i] + "]" + EndingColor;
+                DescriptionText += TagColor + "\n[" + MetaTags[i] + "]" + EndingColor;
             }
-            if (Tags.Count == 0)
+            if (MetaTags.Count == 0)
                 DescriptionText += TagColor + "\n[No Tags]" + EndingColor;
-            for (int i = 0; i < Commands.Count; i++)
-            {
-                DescriptionText += CommandColor + "\n[" + Commands[i] + "]" + EndingColor;
-            }
-            if (Commands.Count == 0)
-                DescriptionText += CommandColor + "\n[No Commands]" + EndingColor;
             return DescriptionText;
         }
         public string GetTags()
         {
             string MyTags = "";
-            for (int i = 0; i < Tags.Count; i++)
-                MyTags += Tags[i] + "\n";
+            for (int i = 0; i < MetaTags.Count; i++)
+                MyTags += MetaTags[i] + "\n";
             return MyTags;
-        }
-
-        public string GetCommands()
-        {
-            string MyCommands = "";
-            for (int i = 0; i < Commands.Count; i++)
-                MyCommands += Commands[i] + "\n";
-            return MyCommands;
-        }
-        public string GetCommand(string Data)
-        {
-            if (Data.Length == 0)
-            {
-                return "";
-            }
-            for (int i = 0; i < Data.Length; i++)
-            {
-                if (Data[i] == '/')
-                {
-                    Data = Data.Substring(i);
-                    i = Data.Length;
-                }
-            }
-            if (Data[0] == '/')
-            {
-                string[] New = Data.Split(' ');
-                return New[0];
-            }
-            else
-            {
-                return "";
-            }
         }
 
         // buy-sell stuff
@@ -298,29 +236,14 @@ namespace Zeltex.Items
 
         #region Has
 
-        public bool HasCommand()
-        {
-            return (Commands.Count > 0);
-        }
-
-        public bool HasCommand(string Command)
-        {
-            for (int i = 0; i < Commands.Count; i++)
-            {
-                if (Commands[i].Contains(Command))
-                    return true;
-            }
-            return false;
-        }
-
         /// <summary>
         /// Has item got a tag?
         /// </summary>
         public bool HasTag(string MyTag)
         {
-            for (int i = 0; i < Tags.Count; i++)
+            for (int i = 0; i < MetaTags.Count; i++)
             {
-                if (ScriptUtil.RemoveWhiteSpace(Tags[i]) == (ScriptUtil.RemoveWhiteSpace(MyTag)))
+                if (ScriptUtil.RemoveWhiteSpace(MetaTags[i]) == (ScriptUtil.RemoveWhiteSpace(MyTag)))
                 {
                     return true;
                 }
@@ -343,29 +266,10 @@ namespace Zeltex.Items
             {
                 NewTags.Add(SeperatedTags[i]);
             }
-            if (!AreListsTheSame(Tags, NewTags))
+            if (!AreListsTheSame(MetaTags, NewTags))
             {
-                Tags.Clear();
-                Tags.AddRange(NewTags);
-                OnModified();
-            }
-        }
-
-        /// <summary>
-        /// Sets the commands of the item
-        /// </summary>
-        public void SetCommands(string CommandsCombined)
-        {
-            List<string> NewCommands = new List<string>();
-            string[] SeperatedCommands = CommandsCombined.Split('\n');
-            for (int i = 0; i < SeperatedCommands.Length; i++)
-            {
-                NewCommands.Add(SeperatedCommands[i]);
-            }
-            if (!AreListsTheSame(Commands, NewCommands))
-            {
-                Commands.Clear();
-                Commands.AddRange(NewCommands);
+                MetaTags.Clear();
+                MetaTags.AddRange(NewTags);
                 OnModified();
             }
         }
@@ -409,6 +313,14 @@ namespace Zeltex.Items
                 OnModified();
             }
         }
+
+        public void SetToEmptyItem() 
+        {
+            SetQuantity(0);
+            SetName("Empty");
+            EmptyZexel();
+            OnUpdate.Invoke();
+        }
         /// <summary>
         /// Returns true if changed
         /// </summary>
@@ -425,6 +337,14 @@ namespace Zeltex.Items
                 if (OldQuantity != Quantity)
                 {
                     OnModified();
+                    if (Quantity == 0)
+                    {
+                        SetToEmptyItem();
+                    }
+                    else
+                    {
+                        OnUpdate.Invoke();
+                    }
                     return true;
                 }
             }
@@ -433,20 +353,6 @@ namespace Zeltex.Items
         #endregion
 
 		#region Art
-
-
-		/// <summary>
-		/// Set a polygonal mesh for the item
-		/// </summary>
-		public void SetMesh(Mesh MyMesh_)
-		{
-			if (MyMesh != MyMesh_)
-			{
-				//M//eshType = ItemMeshType.Polygonal;
-				MyMesh = MyMesh_;
-				OnModified();
-			}
-		}
 
 		/// <summary>
 		/// Sets the item texture
@@ -461,34 +367,42 @@ namespace Zeltex.Items
 				OnModified();
 			}
 		}
-		public Mesh GetMesh()
-		{
-			return MyMesh;
-		}
-
-		public Material GetMaterial()
-		{
-			return MyMaterial;
-		}
 
 		public Texture2D GetTexture()
 		{
 			return MyZexel.GetTexture();
 		}
 
-		#endregion
+        #endregion
 
-		private ItemHandler MyItemHandler;
+        public ItemHandler GetSpawn() 
+        {
+            return MyItemHandler;
+        }
+        public void SpawnE(System.Action OnFinishLoading = null)
+        {
+            MyOnFinishLoading = OnFinishLoading;
+            Spawn();
+        }
 
-		public override void Spawn() 
-		{
-			if (MyItemHandler == null)
-			{
-				GameObject NewItem = new GameObject();
-				NewItem.name = Name + "-Handler";
-				MyItemHandler = NewItem.AddComponent<ItemHandler>();
-				MyItemHandler.SetItem(this);
-			}
+        public override void Spawn()
+        {
+            if (MyItemHandler == null)
+            {
+                GameObject NewItem = new GameObject();
+                NewItem.name = Name + "-Handler";
+                MyItemHandler = NewItem.AddComponent<ItemHandler>();
+                MyOnFinishLoading += () =>
+                {
+                    NewItem.SetLayerRecursive(LayerManager.Get().GetItemsLayer());
+                };
+                MyItemHandler.SetItem(this, MyOnFinishLoading);
+                MyOnFinishLoading = null;   // make sure to not use this again
+            }
+            else
+            {
+                Debug.LogError("Trying to spawn when handler already exists for: " + Name);
+            }
 		}
 
         public override void DeSpawn() 
@@ -508,10 +422,111 @@ namespace Zeltex.Items
         {
             return ParentInventory;
         }
+
         /// <summary>
         /// Returns the dragged Item
+        /// ItemB is the mouse pickup item
         /// </summary>
-        public Item SwitchItems(Item ItemB)
+        public void RightClickItem(Item ItemB)
+        {
+            //Item ReturnItem = null;
+            Item ItemA = this;
+            if (ItemB == null)
+            {
+                Debug.LogError("ItemB is null.");
+                return;
+            }
+            if (ItemA.ParentInventory == null && ItemB.ParentInventory == null)
+            {
+                // nothing i guess
+                Debug.LogError("Both Parents are null, Something wrong happened with swapping. again...");
+            }
+            // If same Element
+            //if (ItemA.ParentInventory != null && ItemB.ParentInventory != null)
+            Inventory InventoryA = ItemA.ParentInventory;
+            //Inventory InventoryB = ItemB.ParentInventory;
+            // If same items, that arn't empty, are clicked
+            // if placing item in empty place and right click
+            if (CanPlaceSingle(ItemB))
+            {
+                if ((ItemA.Name == "Empty" && ItemB.Name != "Empty"))
+                {
+                    Item PlacedItem = ItemB.Clone() as Item;
+                    PlacedItem.SetParentInventory(InventoryA);
+                    int IndexA = InventoryA.MyItems.IndexOf(ItemA);
+                    InventoryA.MyItems[IndexA] = PlacedItem;
+                    PlacedItem.SetBoneParentsFrom(ItemA);
+                    // Cloning ItemB data into ItemA, so have to reset links to A
+                    PlacedItem.SetQuantity(1);
+                    ItemA.MyGui.SetItem(PlacedItem);    // refreshes ui after
+                }
+                else
+                {
+                    ItemA.IncreaseQuantity(1);
+                    ItemA.OnUpdate.Invoke();
+                    //Debug.LogError("Place only one item! On Same Item~!");
+                }
+                ItemB.IncreaseQuantity(-1);
+                //Debug.LogError("Place only one item! On Empty Item~! ParentA: " + (ItemA.ParentElement != null).ToString()
+                //    + " and b: " + (ItemB.ParentElement != null).ToString());
+            }
+            // Half the item
+            else if (CanHalve(ItemB))
+            {
+                //Debug.LogError("Halving item: " + ItemA.Name);
+                Item PickedUpItem = ItemA.Clone() as Item;
+                PickedUpItem.SetParentInventory(null);
+                int QuantityGrabbing;
+                if (ItemA.GetQuantity() == 1)
+                {
+                    QuantityGrabbing = 1;
+                }
+                else
+                {
+                    QuantityGrabbing = ItemA.GetQuantity() / 2;
+                }
+                // Cloning ItemB data into ItemA, so have to reset links to A
+                PickedUpItem.SetQuantity(QuantityGrabbing);
+                ItemB.MyGui.SetItem(PickedUpItem);    // refreshes ui after
+                ItemA.IncreaseQuantity(-QuantityGrabbing);
+            }
+            else
+            {
+                Debug.LogError("Right Clicking Item, under unknown circumstances. " + Name + ", " + ItemB.Name);
+            }
+            // if either is null
+            //Debug.LogError("After switching items, new parents are A: " + (ItemA.ParentElement != null).ToString() + " And B: " + (ItemB.ParentElement != null).ToString());
+        }
+
+        public bool CanPlaceSingle(Item ItemB)
+        {
+            return ((Name == "Empty" && ItemB.Name != "Empty") || (Name != "Empty" && Name == ItemB.Name));
+        }
+        public bool CanHalve(Item ItemB) 
+        {
+            return (Name != "Empty" && GetQuantity() >= 1 && ItemB.Name == "Empty");
+        }
+
+        public bool CanStack(Item ItemB) 
+        {
+            return (Name != "Empty" && Name == ItemB.Name);
+        }
+
+        public void StackItem(Item ItemB) 
+        {
+            // increase itemA instead
+            //Debug.LogError("Increase Quantity of ItemA: " + ItemA.Name + " " + ItemA.GetQuantity());
+            IncreaseQuantity(ItemB.GetQuantity());
+            OnUpdate.Invoke();
+            ItemB.SetToEmptyItem();
+            if (ParentInventory != null)
+            {
+                int ItemIndex = ParentInventory.MyItems.IndexOf(this);
+                ParentInventory.OnUpdateItem.Invoke(ItemIndex);
+            }
+        }
+
+        public Item SwapItems(Item ItemB) 
         {
             Item ReturnItem = null;
             Item ItemA = this;
@@ -520,80 +535,59 @@ namespace Zeltex.Items
                 Debug.LogError("ItemB is null.");
                 return ReturnItem;
             }
-
             if (ItemA.ParentInventory == null && ItemB.ParentInventory == null)
             {
                 // nothing i guess
-                Debug.LogError("Both Parents are null.");
+                Debug.LogError("Both Parents are null, Something wrong happened with swapping. again...");
             }
             // If same Element
             //if (ItemA.ParentInventory != null && ItemB.ParentInventory != null)
-            {
-                Inventory InventoryA = ItemA.ParentInventory;
-                Inventory InventoryB = ItemB.ParentInventory;
-                if (ItemA.Name != "Empty" && ItemA.Name == ItemB.Name)
-                {
-                    // increase itemA instead
-                    //Debug.LogError("Increase Quantity of ItemA: " + ItemA.Name + " " + ItemA.GetQuantity());
-                    ItemA.IncreaseQuantity(ItemB.GetQuantity());
-                    ItemB.SetQuantity(0);
-                    ItemB.SetName("Empty");
-                    ItemB.EmptyZexel();
-                    ItemA.OnUpdate.Invoke();
-                    ItemB.OnUpdate.Invoke();
-                    if (InventoryA != null)
-                    {
-                        InventoryA.OnUpdateItem.Invoke(InventoryA.MyItems.IndexOf(ItemA));
-                    }
-                    return ItemB;
-                }
-                else
-                {
-                    // Set Bones
-                    Skeletons.Bone BoneA = ItemA.ParentElement as Skeletons.Bone;
-                    Skeletons.Bone BoneB = ItemB.ParentElement as Skeletons.Bone;
-                    if (BoneA != null)
-                    {
-                        BoneA.MyItem = ItemB;
-                    }
-                    if (BoneB != null)
-                    {
-                        BoneB.MyItem = ItemA;
-                    }
-                    // Switch Parent Elements
-                    Element TemporaryElement = ItemA.ParentElement;
-                    ItemA.ParentElement = ItemB.ParentElement;
-                    ItemB.ParentElement = TemporaryElement;
+            Inventory InventoryA = ItemA.ParentInventory;
+            Inventory InventoryB = ItemB.ParentInventory;
+            // Set Bones
+            ItemB.SetBoneParentsFrom(ItemA);
+            ItemA.SetBoneParentsFrom(ItemB);
+            // Switch Parent Elements
+            Element TemporaryElement = ItemA.ParentElement;
+            ItemA.ParentElement = ItemB.ParentElement;
+            ItemB.ParentElement = TemporaryElement;
 
-                    // Swap items
-                    if (InventoryA != null && InventoryA.MyItems.Contains(ItemA))
-                    {
-                        int IndexA = InventoryA.MyItems.IndexOf(ItemA);
-                        InventoryA.MyItems[IndexA] = ItemB;
-                        ItemB.SetParentInventory(InventoryA);
-                        InventoryA.OnUpdateItem.Invoke(IndexA);
-                    }
-                    else
-                    {
-                        ItemB.SetParentInventory(null);
-                    }
-                    if (InventoryB != null && InventoryB.MyItems.Contains(ItemB))
-                    {
-                        int IndexB = InventoryB.MyItems.IndexOf(ItemB);
-                        InventoryB.MyItems[IndexB] = ItemA;
-                        ItemA.SetParentInventory(InventoryB);
-                        InventoryB.OnUpdateItem.Invoke(IndexB);
-                    }
-                    else
-                    {
-                        ItemA.SetParentInventory(null);
-                    }
-                }
+            // Swap items
+            if (InventoryA != null && InventoryA.MyItems.Contains(ItemA))
+            {
+                int IndexA = InventoryA.MyItems.IndexOf(ItemA);
+                InventoryA.MyItems[IndexA] = ItemB;
+                ItemB.SetParentInventory(InventoryA);
+                InventoryA.OnUpdateItem.Invoke(IndexA);
             }
-            // if either is null
+            else
+            {
+                ItemB.SetParentInventory(null);
+            }
+            if (InventoryB != null && InventoryB.MyItems.Contains(ItemB))
+            {
+                int IndexB = InventoryB.MyItems.IndexOf(ItemB);
+                InventoryB.MyItems[IndexB] = ItemA;
+                ItemA.SetParentInventory(InventoryB);
+                InventoryB.OnUpdateItem.Invoke(IndexB);
+            }
+            else
+            {
+                ItemA.SetParentInventory(null);
+            }
             ItemA.OnUpdate.Invoke();
             ItemB.OnUpdate.Invoke();
             return ItemA;
+        }
+
+        public void SetBoneParentsFrom(Item OldItem) 
+        {
+            Skeletons.Bone ParentBone = OldItem.ParentElement as Skeletons.Bone;
+            if (ParentBone != null)
+            {
+                ParentBone.MyItem = this;
+            }
+
         }
     }
 

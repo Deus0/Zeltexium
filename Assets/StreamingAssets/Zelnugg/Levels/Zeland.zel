@@ -1,0 +1,17 @@
+{
+  "MyWorldSize": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "IsInfinite": false,
+  "IsGenerateTerrain": true,
+  "SpawnPoint": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "CharactersCount": 0,
+  "IsSpawning": false,
+  "Name": "Zeland"
+}

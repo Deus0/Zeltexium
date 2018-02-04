@@ -1,0 +1,20 @@
+{
+  "Description": "The quest of awesome.2",
+  "ConditionIndex": 0,
+  "MyConditions": [
+    {
+      "ConditionType": "",
+      "ObjectName": "",
+      "bIsTakeItems": false,
+      "ItemQuantity": 0,
+      "ItemQuantityState": 0
+    }
+  ],
+  "MyRewards": [],
+  "MyQuestBlock": null,
+  "TimeCompleted": 0.0,
+  "IsOrderedConditions": false,
+  "IsHandedIn": false,
+  "TimeHandedIn": 0.0,
+  "Name": "Deliver Letter"
+}

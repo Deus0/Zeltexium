@@ -81,8 +81,10 @@ namespace Zeltex.Skeletons
 
 		private Zeltine ActivateCoroutine;
 		private Zeltine RestoratingPoseHandle;
-		private CapsuleCollider CapsuleCollider;
+		private CapsuleCollider MyCapsuleCollider;
 		private MeshRenderer CapsuleRenderer;
+        [JsonIgnore]
+        private static float MinimumHeight = 0.4f;
         #endregion
 
         public override void OnLoad() 
@@ -111,10 +113,12 @@ namespace Zeltex.Skeletons
         {
             return SpawnedSkeleton.GetAnimator();
         }
+
         public Transform GetTransform()
         {
             return SpawnedSkeleton.transform;
         }
+
         public void SetSkeletonHandler(SkeletonHandler MySkeletonHandler)
         {
             SpawnedSkeleton = MySkeletonHandler;
@@ -187,13 +191,17 @@ namespace Zeltex.Skeletons
 			ActivateCoroutine = RoutineManager.Get().StartCoroutine(ActivateRoutine());
         }
 
-        public IEnumerator ActivateRoutine()
+        public IEnumerator ActivateRoutine(bool IsCalculateCapsule = true)
         {
 			//Debug.Log("Skeleton " + Name + " Is activating the bones: " + MyBones.Count);
             for (int i = 0; i < MyBones.Count; i++)
             {
 				MyBones[i].SetSkeleton(this);	//RoutineManager.Get().StartRoutine
-				yield return (MyBones[i].ActivateRoutine());
+				yield return MyBones[i].ActivateRoutine();
+            }
+            if (IsCalculateCapsule)
+            {
+                CalculateCapsule();
             }
         }
 
@@ -210,15 +218,6 @@ namespace Zeltex.Skeletons
             Deactivate();
             Activate();
         }
-
-
-        /// <summary>
-        /// Gets the layer mask the skeleton is using
-        /// </summary>
-       /* private void SetLayerMask(GameObject MyObject)
-        {
-            LayerManager.Get().SetLayerSkeleton(MyObject);
-        }*/
         #endregion
 
         #region Bounds
@@ -228,10 +227,6 @@ namespace Zeltex.Skeletons
         /// </summary>
         public Bounds GetBounds()
         {
-            //if (MyBounds == null)
-            //{
-                //CalculateBounds();
-           // }
             if (MyBounds.size == Vector3.zero)
             {
                 CalculateBounds();
@@ -250,10 +245,6 @@ namespace Zeltex.Skeletons
         {
             if (SpawnedSkeleton)
             {
-                Debug.Log("Calculating bounds for: " + SpawnedSkeleton.name + " with " + MyBones.Count + " bones.");
-                //Vector3 MyPosition = SpawnedSkeleton.transform.position;
-                //transform.position += new Vector3(30, 30, 30);
-                //Debug.LogError("Moving position to " + SpawnedSkeleton.transform.position.ToString());
                 MyBounds = new Bounds(SpawnedSkeleton.transform.position, Vector3.zero);
                 for (int i = 0; i < MyBones.Count; i++)
                 {
@@ -262,58 +253,10 @@ namespace Zeltex.Skeletons
                         World MyWorld = MyBones[i].VoxelMesh.GetComponent<World>();
                         MyBounds = AddWorldToBounds(MyWorld, MyBounds);
                     }
-                    else
-                    {
-                        Debug.Log(i + " has no mesh.");
-                    }
                 }
                 MyBounds.center -= SpawnedSkeleton.transform.position;
-                Debug.Log("MyBounds: " + MyBounds.extents.ToString() + ":" + MyBounds.center.ToString());
-                //transform.position = MyPosition;
-                //MyBounds.center = new Vector3(0.009f, 0.174f, 0.009f);
-                //MyBounds.size = new Vector3(0.26f, 0.91f, 0.26f);
             }
             return MyBounds;
-        }
-
-        public Bounds GetEditorBounds()
-        {
-            if (SpawnedSkeleton)
-            {
-                MyBounds = new Bounds(SpawnedSkeleton.transform.position, Vector3.zero);
-                for (int i = 0; i < MyBones.Count; i++)
-                {
-                    if (MyBones[i].VoxelMesh)
-                    {
-                        World MyWorld = MyBones[i].VoxelMesh.GetComponent<World>();
-						MyBounds = AddWorldToBounds(MyWorld, MyBounds);
-                    }
-                    if (MyBones[i].MyJointCube)
-                    {
-                        MeshRenderer MyRenderer = MyBones[i].MyJointCube.GetComponent<MeshRenderer>();
-                        MeshFilter MyMeshFilter = MyBones[i].MyJointCube.GetComponent<MeshFilter>();
-                        if (MyRenderer && MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
-                        {
-							MyBounds.Encapsulate(MyRenderer.bounds.min);
-							MyBounds.Encapsulate(MyRenderer.bounds.max);
-                        }
-                    }
-                    if (MyBones[i].VoxelMesh)
-                    {
-                        MeshRenderer MyRenderer = MyBones[i].VoxelMesh.GetComponent<MeshRenderer>();
-                        MeshFilter MyMeshFilter = MyBones[i].VoxelMesh.GetComponent<MeshFilter>();
-                        if (MyMeshFilter && MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
-                        {
-							MyBounds.Encapsulate(MyRenderer.bounds.min);
-							MyBounds.Encapsulate(MyRenderer.bounds.max);
-                        }
-                    }
-                }
-				MyBounds.center -= SpawnedSkeleton.transform.position;
-				MyBounds.center = new Vector3(0.008549809f, 0.1749992f, 0.008110046f);
-				MyBounds.size = new Vector3(0.1282765f, 0.4583321f, 0.1282749f);
-            }
-			return MyBounds;
         }
 
         /// <summary>
@@ -325,17 +268,9 @@ namespace Zeltex.Skeletons
             {
                 MeshRenderer MyBodyRenderer = MyWorld.gameObject.GetComponent<MeshRenderer>();
                 MeshFilter MyMeshFilter = MyWorld.gameObject.GetComponent<MeshFilter>();
-                if (MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
+                if (MyMeshFilter.sharedMesh && MyMeshFilter.sharedMesh.vertexCount > 0)
                 {
-                    Debug.Log(MyWorld.name + " has " + MyMeshFilter.mesh.vertexCount + " verts. MyBodyRenderer.bounds.size: " 
-                        + MyBodyRenderer.bounds.size.ToString() + " - and position: " + MyBodyRenderer.bounds.center.ToString());
                     MyBounds.Encapsulate(MyBodyRenderer.bounds);
-                    //MyBounds.Encapsulate(MyBodyRenderer.bounds.min);
-                    //MyBounds.Encapsulate(MyBodyRenderer.bounds.max);
-                }
-                else
-                {
-                    Debug.Log(MyWorld.name + " has no mesh.");
                 }
             }
             else
@@ -345,16 +280,10 @@ namespace Zeltex.Skeletons
                     Chunk MyChunk = MyWorld.MyChunkData[MyKey];
                     MeshRenderer MyBodyRenderer = MyChunk.GetComponent<MeshRenderer>();
                     MeshFilter MyMeshFilter = MyChunk.GetComponent<MeshFilter>();
-                    if (MyMeshFilter.mesh && MyMeshFilter.mesh.vertexCount > 0)
+                    if (MyMeshFilter.sharedMesh && MyMeshFilter.sharedMesh.vertexCount > 0)
                     {
                         MyBounds.Encapsulate(MyBodyRenderer.bounds);
-                        // MyBounds.Encapsulate(MyBodyRenderer.bounds.min);
-                        //MyBounds.Encapsulate(MyBodyRenderer.bounds.max);
                     }
-                    /*else if (MyMeshFilter.mesh.vertexCount == 0)
-                    {
-                        Debug.LogError(MyChunk.name + " has no verticies");
-                    }*/
                 }
             }
             return MyBounds;
@@ -367,9 +296,9 @@ namespace Zeltex.Skeletons
             if (MyCapsule)
             {
                 float MyHeight = MyBounds.size.y;// * 0.98f;
-                if (MyHeight == 0)
+                if (MyHeight < MinimumHeight)
                 {
-                    MyHeight = 0.1f;
+                    MyHeight = MinimumHeight;
                 }
                 MyCapsule.height = MyHeight;// MyBounds.extents.y * 2;
                 float MyRadius = (MyBounds.extents.x + MyBounds.size.z) / 4f;//3.6f;
@@ -500,7 +429,7 @@ namespace Zeltex.Skeletons
             //Bone HeadBone = GetBoneWithTag("Head");
             if (MyBoneHead != null && MyCameraBone != null)
             {
-                Debug.Log("Moving Camera Bone to: " + MyBoneHead.transform.position.ToString());
+                //Debug.Log("Moving Camera Bone to: " + MyBoneHead.transform.position.ToString());
                 MyCameraBone.position = MyBoneHead.position;
                 MyCameraBone.rotation = MyBoneHead.rotation;
                 OriginalCameraPosition = MyCameraBone.localPosition;
@@ -580,7 +509,7 @@ namespace Zeltex.Skeletons
             {
                 if (MyBones[i] != null && MyBones[i].MyTransform != null)
                 {
-                    MonoBehaviourExtension.Kill(MyBones[i].MyTransform.gameObject);
+                    MyBones[i].MyTransform.gameObject.Die();
                     yield return null;
                     //yield return new WaitForSeconds(SkeletonLoadDelay);
                 }
@@ -647,7 +576,6 @@ namespace Zeltex.Skeletons
 				{
 					NewBone.ParentName = BoneParent.name;
 				}
-				//Debug.LogError("Creating bone: " + MyBones.Count);
 				MyBones.Add(NewBone);
 				return NewBone;
 			}
@@ -668,35 +596,13 @@ namespace Zeltex.Skeletons
                 if (IsShowJoints && MyBones[i].MyJointCube == null)
                 {
                     MyBones[i].CreateJointMesh();
-                    /*MyBones[i].MyJointCube = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-                    SetLayerMask(MyBones[i].MyJointCube.gameObject);
-                    // Destroy collider if no joint shown
-                    if (!IsJointsColliders && MyBones[i].MyJointCube.GetComponent<BoxCollider>())
-                    {
-                        MonoBehaviourExtension.Kill(MyBones[i].MyJointCube.GetComponent<BoxCollider>());
-                    }
-                    MyBones[i].MyJointCube.name = "Joint " + i;
-                    MyBones[i].MyJointCube.tag = "BonePart";
-                    MyBones[i].MyJointCube.transform.localScale = new Vector3(JointSize, JointSize, JointSize);
-                    MyBones[i].MyJointCube.transform.SetParent(MyBones[i].MyTransform, false);*/
                 }
                 if (IsShowBones && MyBones[i].BodyCube == null && MyBones[i].ParentTransform != SpawnedSkeleton.transform)
                 {
                     MyBones[i].CreateBoneMesh();
-                    /*MyBones[i].BodyCube = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-                    SetLayerMask(MyBones[i].BodyCube.gameObject);
-                    if (MyBones[i].BodyCube.GetComponent<BoxCollider>())
-                    {
-                        MonoBehaviourExtension.Kill(MyBones[i].BodyCube.GetComponent<BoxCollider>());
-                    }
-                    MyBones[i].BodyCube.name = "BoneMesh " + i;
-                    MyBones[i].BodyCube.tag = "BonePart";
-                    MyBones[i].BodyCube.transform.localScale = new Vector3(BoneSize, BoneSize, BoneSize);
-                    MyBones[i].BodyCube.transform.SetParent(MyBones[i].MyTransform, false);*/
                 }
                 if (MyBones[i].MyJointCube != null)
                 {
-                    Debug.Log("Created Box Collider");
                     BoxCollider MyBoxCollider = MyBones[i].MyJointCube.GetComponent<BoxCollider>();
                     if (!IsJointsColliders && MyBoxCollider)
                     {
@@ -721,7 +627,7 @@ namespace Zeltex.Skeletons
                 {
                     if (MyBones[i].MyTransform == MyBone)
                     {
-                        Debug.Log("Removing bone: " + MyBone.name + " - at index: " + i);
+                        //Debug.Log("Removing bone: " + MyBone.name + " - at index: " + i);
                         MyBones.RemoveAt(i);
                         // also delete all the keyframes for this
                         SpawnedSkeleton.GetAnimator().DeleteAllKeysFromAllAnimations(MyBone);
@@ -734,7 +640,7 @@ namespace Zeltex.Skeletons
                         break;
                     }
                 }
-                MonoBehaviourExtension.Kill(MyBone.gameObject); // after removing all children/grandchildren, will destroy the object
+                MyBone.gameObject.Die(); // after removing all children/grandchildren, will destroy the object
             }
         }
 
@@ -785,7 +691,7 @@ namespace Zeltex.Skeletons
                 NewPositions.Add(MyBones[i].GetDefaultPosition());
                 OldRotations.Add(MyBones[i].MyTransform.localRotation);
                 NewRotations.Add(MyBones[i].GetDefaultRotationQ());
-                Debug.LogError("Bone " + i + " going from " + OldPositions[i].ToString() + " TO " + NewPositions[i].ToString());
+                //Debug.LogError("Bone " + i + " going from " + OldPositions[i].ToString() + " TO " + NewPositions[i].ToString());
             }
             while (Time.time - TimeStarted <= TimeTaken)
             {
@@ -920,25 +826,25 @@ namespace Zeltex.Skeletons
 			{
 				if (SpawnedSkeleton.transform.parent && SpawnedSkeleton.transform.parent.GetComponent<Character>())
 				{
-					CapsuleCollider = SpawnedSkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
+                    MyCapsuleCollider = SpawnedSkeleton.transform.parent.gameObject.GetComponent<CapsuleCollider>();
 				}
 				else
 				{
-					if (CapsuleCollider == null)
+					if (MyCapsuleCollider == null)
 					{
 						GameObject CapsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
 						CapsuleObject.name = SpawnedSkeleton.name + "_Capsule";
 						CapsuleObject.layer = SpawnedSkeleton.gameObject.layer;
 						CapsuleObject.transform.SetParent(SpawnedSkeleton.transform);
 						CapsuleObject.transform.position = SpawnedSkeleton.transform.position;
-						CapsuleCollider = CapsuleObject.GetComponent<CapsuleCollider>();
-						MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshRenderer>());
-						MonoBehaviourExtension.Kill(CapsuleObject.GetComponent<MeshFilter>());
-						GetCapsuleRenderer();
+                        MyCapsuleCollider = CapsuleObject.GetComponent<CapsuleCollider>();
+                        CapsuleObject.GetComponent<MeshRenderer>().Die();
+						CapsuleObject.GetComponent<MeshFilter>().Die();
+                        GetCapsuleRenderer();
 					}
 				}
 			}
-            return CapsuleCollider;
+            return MyCapsuleCollider;
         }
         /// <summary>
         /// Gets a capsule, if a character exists it gets it off that, otherwise gets it off the skeleton
@@ -948,14 +854,14 @@ namespace Zeltex.Skeletons
             if (CapsuleRenderer == null)
             {
                 GameObject CapsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                CapsuleObject.GetComponent<CapsuleCollider>().Die();    // Destroy the naturally created object
                 CapsuleObject.name = SpawnedSkeleton.name + "_CapsuleRenderer";
                 CapsuleObject.layer = SpawnedSkeleton.gameObject.layer;
                 CapsuleObject.transform.SetParent(SpawnedSkeleton.transform);
                 CapsuleObject.transform.position = SpawnedSkeleton.transform.position;
-                GameObject.Destroy(CapsuleObject.GetComponent<CapsuleCollider>());
                 CapsuleRenderer = CapsuleObject.GetComponent<MeshRenderer>();
                 Material JointMaterial = new Material(Shader.Find("Standard"));
-                CapsuleRenderer.material = JointMaterial;
+                CapsuleRenderer.sharedMaterial = JointMaterial;
                 CapsuleRenderer.enabled = IsRenderCapsule;
             }
             return CapsuleRenderer;
@@ -964,19 +870,19 @@ namespace Zeltex.Skeletons
         private void RefreshCapsule()
         {
             GetCapsule();
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                SetCapsuleRadius(CapsuleCollider.radius);
-                SetCapsuleHeight(CapsuleCollider.height);
-                SetCapsuleCenter(CapsuleCollider.center);
+                SetCapsuleRadius(MyCapsuleCollider.radius);
+                SetCapsuleHeight(MyCapsuleCollider.height);
+                SetCapsuleCenter(MyCapsuleCollider.center);
             }
         }
 
         public void SetCapsuleHeight(float NewHeight)
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                CapsuleCollider.height = NewHeight;
+                MyCapsuleCollider.height = NewHeight;
                 if (CapsuleRenderer)
                 {
                     CapsuleRenderer.transform.localScale =
@@ -989,9 +895,9 @@ namespace Zeltex.Skeletons
         }
         public void SetCapsuleRadius(float NewRadius)
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                CapsuleCollider.radius = NewRadius;
+                MyCapsuleCollider.radius = NewRadius;
                 if (CapsuleRenderer)
                 {
                     CapsuleRenderer.transform.localScale =
@@ -1004,9 +910,9 @@ namespace Zeltex.Skeletons
         }
         public void SetCapsuleCenter(Vector3 NewCenterPosition)
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                CapsuleCollider.center = NewCenterPosition;
+                MyCapsuleCollider.center = NewCenterPosition;
                 if (CapsuleRenderer)
                 {
                     CapsuleRenderer.transform.localPosition = NewCenterPosition;
@@ -1015,9 +921,9 @@ namespace Zeltex.Skeletons
         }
         public Vector3 GetCapsuleCenter()
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                return CapsuleCollider.center;
+                return MyCapsuleCollider.center;
             }
             else
             {
@@ -1027,9 +933,9 @@ namespace Zeltex.Skeletons
 
         public float GetCapsuleHeight()
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                return CapsuleCollider.height;
+                return MyCapsuleCollider.height;
             }
             else
             {
@@ -1038,9 +944,9 @@ namespace Zeltex.Skeletons
         }
         public float GetCapsuleRadius()
         {
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                return CapsuleCollider.radius;
+                return MyCapsuleCollider.radius;
             }
             else
             {
@@ -1051,9 +957,9 @@ namespace Zeltex.Skeletons
         public void SetCapsuleCollider(bool NewState)
         {
             GetCapsule();
-            if (CapsuleCollider)
+            if (MyCapsuleCollider)
             {
-                CapsuleCollider.enabled = NewState;
+                MyCapsuleCollider.enabled = NewState;
             }
             IsRenderCapsule = NewState;
             if (CapsuleRenderer)
@@ -1083,7 +989,7 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void SetMeshColliders(bool IsColliders)
         {
-            Debug.Log("Setting SKeleton [" + SpawnedSkeleton.name + "]'s Mesh Colliders: " + IsColliders);
+            //Debug.Log("Setting SKeleton [" + SpawnedSkeleton.name + "]'s Mesh Colliders: " + IsColliders);
             for (int i = 0; i < MyBones.Count; i++)
             {
                 if (MyBones[i].VoxelMesh)
@@ -1093,9 +999,9 @@ namespace Zeltex.Skeletons
                     {
                         MyWorld.SetColliders(IsColliders);
                     }
-                    else
+                    //else
                     {
-                        Debug.LogError(MyBones[i].Name + " has no world on its mesh object.");
+                        //Debug.LogError(MyBones[i].Name + " has no world on its mesh object.");
                     }
                 }
             }
@@ -1106,9 +1012,9 @@ namespace Zeltex.Skeletons
         /// </summary>
         public void SetJointColliders(bool IsColliders)
         {
-            if (SpawnedSkeleton.transform.parent)
+            //if (SpawnedSkeleton.transform.parent)
             {
-                Debug.LogError("Setting Joint Colliders of " + SpawnedSkeleton.transform.parent.name + " to " + IsColliders);
+                //Debug.LogError("Setting Joint Colliders of " + SpawnedSkeleton.transform.parent.name + " to " + IsColliders);
             }
             for (int i = 0; i < MyBones.Count; i++)
             {
@@ -1145,11 +1051,11 @@ namespace Zeltex.Skeletons
             {
                 if (MyBones[i].MyJointCube)
                 {
-                    MyBones[i].MyJointCube.gameObject.GetComponent<MeshRenderer>().material.shader = MyShader;
+                    MyBones[i].MyJointCube.gameObject.GetComponent<MeshRenderer>().sharedMaterial.shader = MyShader;
                 }
                 if (MyBones[i].BodyCube)
                 {
-                    MyBones[i].BodyCube.gameObject.GetComponent<MeshRenderer>().material.shader = MyShader;
+                    MyBones[i].BodyCube.gameObject.GetComponent<MeshRenderer>().sharedMaterial.shader = MyShader;
                 }
             }
         }
@@ -1210,9 +1116,7 @@ namespace Zeltex.Skeletons
 			return (SpawnedSkeleton != null);
 		}
 		#endregion
-
-
-
+        
         #region File
 
         /// <summary>
@@ -1235,13 +1139,13 @@ namespace Zeltex.Skeletons
                     {
                         MySkeletonScript = MyLines.GetRange(BeginIndex, i - BeginIndex + 1);
                         //Debug.LogError("SkeletonScript: " + MySkeletonScript.Count + ":" + MySkeletonScript[MySkeletonScript.Count-1]);
-                        Debug.LogError("Skeleton Section: \n" + FileUtil.ConvertToSingle(MySkeletonScript));
+                        //Debug.LogError("Skeleton Section: \n" + FileUtil.ConvertToSingle(MySkeletonScript));
                         return MySkeletonScript;
                     }
                     break;  // end search here
                 }
             }
-            Debug.LogError("Could not find skeleton section:\n" + FileUtil.ConvertToSingle(MyLines));
+            //Debug.LogError("Could not find skeleton section:\n" + FileUtil.ConvertToSingle(MyLines));
             return MySkeletonScript;
         }
         /// <summary>

@@ -90,7 +90,7 @@ public class CoroutineTester: MonoBehaviour
 		yield return null;
 		Debug.LogFormat(BLUE_TEXT_FORMAT, "Gonna break");
 		yield break;
-		Debug.LogFormat(BLUE_TEXT_FORMAT, "End BreakTest()"); //This shouldn't be called, because of yield break
+		//Debug.LogFormat(BLUE_TEXT_FORMAT, "End BreakTest()"); //This shouldn't be called, because of yield break
 	}
 
 	/// <summary>Coroutine method to test the WWW option</summary>

@@ -52,9 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDebugGui: 0
+  ActionScanMap:
+    IsTrigger: 0
   IsLoadOnStart: 0
-  LoadGui: 
-  MyDataManager: {fileID: 0}
   ButtonHeight: 32
   ButtonWidth: 180
   GuiPrefabs:
@@ -82,4 +82,13 @@ MonoBehaviour:
   - {fileID: 1235308383101568, guid: 5d97f737070588e4ea7dde8033ece50c, type: 2}
   - {fileID: 1914817963647066, guid: b50ba6d3a4bb33b478b18b6ffb8b22db, type: 2}
   MainPrefabs:
-  - {fileID: 1501482079077062, guid: 7e95e9c9380f381459240a13bd31be4e, type: 2}
+  - {fileID: 1999314484949002, guid: b8671c704ba46914f91770f229729ae6, type: 2}
+  - {fileID: 1452143079834616, guid: a4dab7687f6ebde41b87b358193d63a2, type: 2}
+  - {fileID: 1841155001587248, guid: 0279caa08072d334e9c21fbc35569404, type: 2}
+  - {fileID: 1054404890632162, guid: 65ceccc7499327a47a5408537939865d, type: 2}
+  - {fileID: 1488809297614536, guid: 9824e332e687393439761ab739ac75cc, type: 2}
+  GuiSpawns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  GuisParent: {fileID: 0}

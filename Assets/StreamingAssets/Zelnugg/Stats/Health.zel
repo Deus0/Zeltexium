@@ -1,1 +1,18 @@
-{"Description":"Heals you! !2","MyType":1,"Value":[10.0,10.0],"Modifiers":[],"MyZexels":null,"Name":"Health"}
+{
+  "Description": "Heals you! !2",
+  "MyType": 1,
+  "Value": [
+    10.0,
+    10.0
+  ],
+  "Modifiers": [],
+  "MyZexel": {
+    "Pixels": null,
+    "Size": {
+      "x": 32.0,
+      "y": 32.0
+    },
+    "Name": "Empty"
+  },
+  "Name": "Health"
+}

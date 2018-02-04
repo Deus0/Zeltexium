@@ -68,7 +68,7 @@ namespace Zeltex.Guis
         {
             if (SpawnedNeedsToSaveIcon != null)
             {
-                Destroy(SpawnedNeedsToSaveIcon);
+                SpawnedNeedsToSaveIcon.Die();
             }
         }
 

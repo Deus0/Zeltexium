@@ -53,7 +53,7 @@ namespace Zeltex.AnimationUtilities
 			float AlphaLerp = Mathf.Lerp(1.0f, 0.0f, (Time.time-TimeToStartFade) / FadeDuration);
 			OriginalColor.a = (byte)Mathf.RoundToInt(255*AlphaLerp);
 			gameObject.GetComponent<TextMesh>().color = NewColor;
-			gameObject.GetComponent<MeshRenderer> ().materials[0].SetColor("_Color", NewColor);
+			gameObject.GetComponent<MeshRenderer>().sharedMaterials[0].SetColor("_Color", NewColor);
 
             if (CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
@@ -96,10 +96,10 @@ namespace Zeltex.AnimationUtilities
             //MyMeshRenderer.material = FontMaterial;
             if (MyFont)
             {
-                MyMeshRenderer.material = new Material(MyFont.material);
+                MyMeshRenderer.sharedMaterial = new Material(MyFont.material);
             }
             MyText.color = FontColor;
-            MyMeshRenderer.material.color = FontColor;
+            MyMeshRenderer.sharedMaterial.color = FontColor;
             NewText.AddComponent<OnHitText>();
         }
     }

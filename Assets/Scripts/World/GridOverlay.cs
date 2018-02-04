@@ -181,11 +181,13 @@ namespace Zeltex.AnimationUtilities
             MyLineRender.SetPosition(1, Position2);
             if (IsScaleSize)
             {
-                MyLineRender.SetWidth(Thickness, Thickness);
+                MyLineRender.startWidth = Thickness;
+                MyLineRender.endWidth = Thickness;
             }
             else
             {
-                MyLineRender.SetWidth(Thickness * transform.lossyScale.x, Thickness * transform.lossyScale.x);
+                MyLineRender.startWidth = Thickness * transform.lossyScale.x;
+                MyLineRender.endWidth = MyLineRender.startWidth;
             }
             MyLines.Add(new GridOverlayLine(MyLineRender, Position1, Position2));
         }

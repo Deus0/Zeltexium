@@ -155,9 +155,9 @@ namespace Zeltex.Combat
             if (IsInflictHeightDamage && MyPosition != MyCharacter.transform.position)
             {
                 MyPosition = MyCharacter.transform.position;
-                if (MyCharacter.GetWorldInsideOf())
+                if (MyCharacter.GetInWorld())
                 {
-                    if (MyPosition.y <= MyCharacter.GetWorldInsideOf().transform.position.y - 4)
+                    if (MyPosition.y <= MyCharacter.GetInWorld().transform.position.y - 4)
                     {
                         if (Time.time - LastInflictedDamage >= 1f)
                         {
@@ -601,7 +601,8 @@ namespace Zeltex.Combat
             if (LevelUpEffectsPrefab)
             {
                 GameObject MyLevelingEffects = GameObject.Instantiate(LevelUpEffectsPrefab, MyCharacter.transform.position, MyCharacter.transform.rotation, MyCharacter.transform);
-                GameObject.Destroy(MyLevelingEffects, 3);
+                MyLevelingEffects.Die(3);
+                //GameObject.Destroy(MyLevelingEffects, 3);
             }
             // auto spend skill points if bot
             /*if (MyCharacter.IsPlayer == false)

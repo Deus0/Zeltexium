@@ -1,0 +1,9 @@
+{
+  "ModelID": "Block",
+  "TextureMapID": 2,
+  "MaterialID": 0,
+  "Commands": [],
+  "MyStats": null,
+  "DropItem": null,
+  "Name": "Dirt"
+}

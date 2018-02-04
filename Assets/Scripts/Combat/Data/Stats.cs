@@ -24,21 +24,16 @@ namespace Zeltex.Combat
         public UnityEvent OnUpdateStats = new UnityEvent();
 
         #region Init
-        /// <summary>
-        /// Clones a stat?
-        /// </summary>
-        public void ReplaceStatData(Stat NewStat)
-		{
-			for (int i = 0; i < Data.Count; i++)
-            {	
-				if (Data[i].Name == NewStat.Name) // if in list, increase the value of the stat
-                {
-                    Data[i].RunScript(NewStat.GetScriptList());
-                    Data[i].SetTexture(NewStat.GetTexture());   // later encode this into the script list
-                    return;
-				}
-			}
-		}
+
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            for (int i = 0; i < Data.Count; i++)
+            {
+                Data[i].ParentElement = (this);
+                Data[i].OnLoad();    // any sub stats will be set as well
+            }
+        }
         #endregion
 
         #region List
@@ -178,10 +173,6 @@ namespace Zeltex.Combat
                     return Data[i];
                 }
             }
-            if (StatName != "Empty" && ScriptUtil.RemoveWhiteSpace(StatName) != "")
-            {
-                //Debug.LogError("Could not find stat: " + StatName);
-            }
             return null;
         }
 
@@ -206,7 +197,7 @@ namespace Zeltex.Combat
         /// <summary>
         /// Returns the script list.
         /// </summary>
-        public virtual List<string> GetScriptList(bool IsCharacterStats)
+       /* public virtual List<string> GetScriptList(bool IsCharacterStats)
         {
             List<string> MyScript = new List<string>();
             if (GetSize() == 0)
@@ -286,7 +277,7 @@ namespace Zeltex.Combat
                     IsReadingStats = true;  // begin reading in stat data
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

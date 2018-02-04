@@ -168,30 +168,6 @@ namespace Zeltex.Guis.Maker
             //FileUtil.Import(name, "Upload", FileExtension);
         }
         /// <summary>
-        /// Called from javascript, uploading a model data
-        /// </summary>
-        public void Upload(string MyScript)
-        {
-            string UploadFileName = "";
-            for (int i = 0; i < MyScript.Length; i++)
-            {
-                if (MyScript[i] == '\n')
-                {
-                    UploadFileName = MyScript.Substring(0, i);
-                    UploadFileName = Path.GetFileNameWithoutExtension(UploadFileName);
-                    MyScript = MyScript.Substring(i + 1);
-                    break;
-                }
-            }
-            if (UploadFileName != "")
-            {
-                Debug.Log("Uploading new voxel:" + UploadFileName + ":" + MyScript.Length);
-                Quest NewData = new Quest();
-                NewData.RunScript(FileUtil.ConvertToList(MyScript));
-                AddData(UploadFileName, NewData);
-            }
-        }
-        /// <summary>
         /// Add a new voxel to the game!
         /// </summary>
         public void AddData(string MyName, Quest NewData)

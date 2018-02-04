@@ -75,7 +75,7 @@ namespace Zeltex.Guis.Maker
         // public ModelMaker MyModelMaker;
         // Internal Options
         private bool IsEditDefaultPose;             // also effects teh default bone positions
-        private bool IsGridSnap;                    // grid snap starts off
+        //private bool IsGridSnap;                    // grid snap starts off
         // internal states
         private bool IsIndependentMode;
         // -Ray Casting-
@@ -98,7 +98,7 @@ namespace Zeltex.Guis.Maker
         // -Scale-
         private bool IsUniformScale = true;
         private bool IsScaling;     // is scaling depending on mouse position difference
-        private Vector3 OriginalScale = new Vector3(1, 1, 1);
+        //private Vector3 OriginalScale = new Vector3(1, 1, 1);
         private Vector3 LastMousePosition;
         static float FloatingPointRounder = 100000f;
         // Copy Paste
@@ -434,15 +434,15 @@ namespace Zeltex.Guis.Maker
                 }
                 else if (PaintType == SkeletonPaintType.Rotate)
                 {
-                    Camera MyCamera = GetCamera();
+                    GetCamera();
                     SelectedDistance = Vector3.Distance(MyRay.origin, MyHit.collider.transform.position);
                     IsRotating = true;    // until mouse press up
                 }
                 else if (PaintType == SkeletonPaintType.Scale)
                 {
-                    Camera MyCamera = GetCamera();
+                    GetCamera();
                     SelectedDistance = Vector3.Distance(MyRay.origin, MyHit.collider.transform.position);
-                    OriginalScale = SelectedTransform.localScale;
+                    //OriginalScale = SelectedTransform.localScale;
                     IsScaling = true;
                 }
             }
@@ -844,12 +844,7 @@ namespace Zeltex.Guis.Maker
             {
                 MyObject = MyObject.GetComponent<Chunk>().GetWorld().gameObject;
             }
-            World MyWorld = null;
-            if (MyObject.GetComponent<World>())
-            {
-                MyWorld = MyObject.GetComponent<World>();
-                //MyWorld.Tint(SelectedMeshColor);
-            }
+           // World MyWorld = MyObject.GetComponent<World>();
             bool WasFound = false;
             for (int i = 0; i < MySkeleton.GetBones().Count; i++)
             {
@@ -1238,7 +1233,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyToggle.name == "GridSnapToggle")
             {
-                IsGridSnap = MyToggle.isOn;
+                //IsGridSnap = MyToggle.isOn;
             }
             else
             {

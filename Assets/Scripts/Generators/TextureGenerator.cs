@@ -25,7 +25,7 @@ namespace Zeltex.Generators
         // Biomeish type maps
         //[Header("Biomeish")]
         //public int MaxPoints = 8;
-        Color32 VoroniLineColor = Color.black;
+        //Color32 VoroniLineColor = Color.black;
         public bool IsReduceBrightness = false;
         public bool IsVoroniLines;
         public float ReductionRate = 0.9f;
@@ -206,7 +206,7 @@ namespace Zeltex.Generators
         }
         public void Bricks(Texture2D MyTexture)
         {
-            Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
+            //Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
             Color32[] PixelColors = MyTexture.GetPixels32(0);
             // Divide with boxes
             int DivisionsX = 3;  // alternative offset
@@ -490,7 +490,7 @@ namespace Zeltex.Generators
 
         public void NoiseMap(Texture2D MyTexture)
         {
-            Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
+            //Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
             Color32[] PixelColors = MyTexture.GetPixels32(0);
 
             for (int i = 0; i < MyTexture.width; i++)
@@ -521,7 +521,7 @@ namespace Zeltex.Generators
         public void Circle(Texture2D MyTexture)
         {
             NewInstruction("Circle");
-            Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
+           // Vector2 NoiseOffset = new Vector2(Random.Range(0, 10000), Random.Range(0, 10000));
             GetColours();
             Color32[] PixelColors = MyTexture.GetPixels32(0);
             for (int i = 0; i < MyTexture.width; i++)

@@ -10,6 +10,7 @@ using Zeltex.Guis.Characters;
 using Zeltex.Characters;
 using Zeltex.AI;
 using Newtonsoft.Json;
+using Zeltex.Voxels;
 
 namespace Zeltex
 {
@@ -28,6 +29,8 @@ namespace Zeltex
         [JsonProperty]
         public string Race;
 
+        [JsonProperty]
+        public Zexel MyZexel;
         [JsonProperty]
         public Stats MyStats;
 
@@ -67,6 +70,9 @@ namespace Zeltex
         public Character MyCharacter;
         [JsonIgnore]
         public CharacterStats MyStatsHandler;
+        // The path loaded file from disc
+        [JsonIgnore]
+        public string LoadPath = "";
 
         public CharacterData()
         {
@@ -92,6 +98,7 @@ namespace Zeltex
             MySkeleton.ParentElement = this;
             MyGuis.ParentElement = this;
             BotData.ParentElement = this;
+            MyZexel = null;
         }
 
         public override void OnLoad()
@@ -115,6 +122,11 @@ namespace Zeltex
             MySkeleton.OnLoad();
             MyGuis.OnLoad();
             BotData.OnLoad();
+            if (MyZexel != null)
+            {
+                MyZexel.ParentElement = this;
+                MyZexel.OnLoad();
+            }
             if (MyCharacter)
             {
                 LevelPosition = MyCharacter.transform.position;
@@ -140,6 +152,14 @@ namespace Zeltex
             }
         }
 
+        #region Positioning
+        [JsonIgnore]
+        public Chunk InChunk;
+        [JsonIgnore]
+        public World InWorld;
+        [JsonProperty]
+        public Int3 InChunkPosition;
+
         public void RefreshTransform()
         {
             if (MyCharacter)
@@ -158,12 +178,66 @@ namespace Zeltex
                     LevelRotation = MyCharacter.transform.eulerAngles;
                     OnModified();
                 }
+                // If chunk position changes
+                if (InWorld)
+                {
+                    Int3 NewChunkPosition = InWorld.GetChunkPosition(MyCharacter.transform);
+                    if (InChunkPosition != NewChunkPosition)
+                    {
+                        InChunkPosition = NewChunkPosition;
+                        Chunk NewChunk = InWorld.GetChunk(InChunkPosition);
+                        SetInChunk(NewChunk);
+                        OnModified();
+                    }
+                }
             }
             else
             {
                 Debug.LogError(Name + " Has no set character.");
             }
         }
+
+        private void SetInChunk(Chunk NewInChunk)
+        {
+            if (NewInChunk != InChunk)
+            {
+                // First remove character from old chunk
+                if (InChunk)
+                {
+                    NewInChunk.RemoveCharacter(MyCharacter);
+                }
+                InChunk = NewInChunk;
+                if (NewInChunk)
+                {
+                    NewInChunk.AddCharacter(MyCharacter);
+                }
+            }
+        }
+
+        public Chunk GetInChunk()
+        {
+            return InChunk;
+        }
+
+        public void SetWorld(World NewWorld)
+        {
+            if (InWorld != NewWorld)
+            {
+                InWorld = NewWorld;
+            }
+        }
+
+        public World GetInWorld()
+        {
+            return InWorld;
+        }
+
+        public Int3 GetChunkPosition()
+        {
+            return InChunkPosition;
+        }
+        #endregion
+
 
         public void Clear()
         {
@@ -205,6 +279,30 @@ namespace Zeltex
             }
             return Equipment;
         }
+
+
+        #region EditorSpawning
+        public override void Spawn()
+        {
+            GameObject NewCharacter = new GameObject();
+            NewCharacter.name = Name;
+            MyCharacter = NewCharacter.AddComponent<Character>();
+            MyCharacter.SetData(this, null, false, false);
+        }
+
+        public override void DeSpawn()
+        {
+            if (MyCharacter)
+            {
+                MyCharacter.Die();
+            }
+        }
+
+        public override bool HasSpawned()
+        {
+            return (MyCharacter != null);
+        }
+        #endregion
     }
 
 }

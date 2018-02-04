@@ -56,7 +56,14 @@ namespace Zeltex.Guis.Characters
                 {
                     MyItemPickupGui = MyCharacter.GetGuis().Spawn("ItemPickup");
                 }
-                ItemPickupItemGui = MyItemPickupGui.GetComponent<ItemGui>();
+                if (MyItemPickupGui)
+                {
+                    ItemPickupItemGui = MyItemPickupGui.GetComponent<ItemGui>();
+                }
+                else
+                {
+                    Debug.LogError("Need to add Item Pickup Prefab to Character Gui Manager");
+                }
             }
         }
 
@@ -145,7 +152,7 @@ namespace Zeltex.Guis.Characters
                 GameObject CreatedItem = MyGuis[ItemIndex].gameObject;
                 ItemGui MyItemGui = CreatedItem.GetComponent<ItemGui>();
                 MyItemGui.SetItem(MyItem);
-                MyItemGui.OnSwapItems.AddEvent(OnSwapItemsFunction);
+                MyItemGui.OnSwapItems.AddListener(OnSwapItemsFunction);
             }
             else
             {
@@ -153,7 +160,7 @@ namespace Zeltex.Guis.Characters
             }
         }
 
-        private void OnSwapItemsFunction(Item ItemA, Item ItemB) 
+        private void OnSwapItemsFunction(Item ItemA, Item ItemB, int ItemQuantity) 
         {
             OnSwapItems.Invoke(ItemA, ItemB);
         }

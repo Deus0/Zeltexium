@@ -68,15 +68,15 @@ namespace Zeltex.AI
         private bool IsMoveTo = false;
         //[SerializeField]
         //private bool CanAttack;
-        [SerializeField]
-        private bool CanRam = false;
+        //[SerializeField]
+        //private bool CanRam = false;
         [SerializeField]
         private bool IsSlowDown = true;
-        private bool IsJump;
+        //private bool IsJump;
         private bool IsLookTowards = false;
         [Header("Events")]
         public UnityEvent OnReachTarget = new UnityEvent();
-        private float DesiredDirectionOffset = 0;
+        //private float DesiredDirectionOffset = 0;
         // Icon
         [SerializeField]
         private List<GameObject> PositionIcons = new List<GameObject>();
@@ -95,22 +95,17 @@ namespace Zeltex.AI
         private Material TargetObjectMaterial;
         private Character MyCharacter;
        // private BasicController MyController;
-        private Mover MyController;
+        //private Mover MyController;
         private SkeletonHandler MySkeleton;
         // a little bit of whiskers
         private bool IsWhiskers = true;
         public float RotationSpeed = 360f;
-        private float SlowRotationDistance = 1f;
+        //private float SlowRotationDistance = 1f;
         private bool IsMovementDisplayed = false;
         private Transform WaypointParent;
         #endregion
 
         #region Mono
-
-        private void Awake()
-        {
-            MyController = GetComponent<Mover>();
-        }
 
         public void RefreshRigidbody()
         {
@@ -138,7 +133,7 @@ namespace Zeltex.AI
             {
 				if (MyCharacter)
 				{
-					MyWorld = MyCharacter.InWorld;
+                    MyWorld = MyCharacter.GetInWorld();
 				}
 				else
 				{
@@ -171,13 +166,13 @@ namespace Zeltex.AI
                 }
                 //MovementUpdate();
             }
-            if (GetTargetPosition().y - 0.2f > transform.position.y)
+            //if (GetTargetPosition().y - 0.2f > transform.position.y)
             {
-                IsJump = true;
+                //IsJump = true;
             }
-            else
+            //else
             {
-                IsJump = false;
+                //IsJump = false;
             }
             RefreshPathTargetObject();
             UpdatePositionIcon();
@@ -256,21 +251,17 @@ namespace Zeltex.AI
                 for (int i = 0; i < TargetPositions.Count; i++)
                 {
                     GameObject PositionIcon = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    PositionIcon.GetComponent<BoxCollider>().Die();
                     PositionIcon.layer = LayerManager.Get().GetWaypointLayer();
                     PositionIcon.transform.SetParent(WayPoints);
                     PositionIcon.name = (i + 1) + ": " + gameObject.name + " [" + TargetPositions[i].x + ", " + TargetPositions[i].y + ", " + TargetPositions[i].z + "]";
                     PositionIcon.transform.localScale = 0.1f * (new Vector3(1, 1, 1));
-                    // change layer to gameobjects
-                    //ObjectViewer.SetLayerRecursive(PositionIcon, 1 << gameObject.layer);
-                    Destroy(PositionIcon.GetComponent<BoxCollider>());
                     PositionIcons.Add(PositionIcon);
                     if (i != 0)
                     {
                         LineRenderer MyLineRenderer = PositionIcon.AddComponent<LineRenderer>();
                         MyLineRenderer.startWidth = 0.1f;
                         MyLineRenderer.endWidth = 0.1f;
-                        //MyLineRenderer.positionCount = 2;
-                        //MyLineRenderer.SetPositions(2);
                         MyLineRenderer.SetPosition(0, TargetPositions[i - 1]);
                         MyLineRenderer.SetPosition(1, TargetPositions[i]);
                     }
@@ -286,7 +277,7 @@ namespace Zeltex.AI
         {
             for (int i = 0; i < PositionIcons.Count; i++)
             {
-                Destroy(PositionIcons[i]);
+                PositionIcons[i].Die();
             }
             PositionIcons.Clear();
         }
@@ -295,10 +286,10 @@ namespace Zeltex.AI
         {
             for (int i = 0; i < PositionIcons.Count; i++)
             {
-                PositionIcons[i].GetComponent<MeshRenderer>().material = MyMaterial;
+                PositionIcons[i].GetComponent<MeshRenderer>().sharedMaterial = MyMaterial;
                 if (PositionIcons[i].GetComponent<LineRenderer>())
                 {
-                    PositionIcons[i].GetComponent<LineRenderer>().material = MyMaterial;
+                    PositionIcons[i].GetComponent<LineRenderer>().sharedMaterial = MyMaterial;
                 }
             }
         }
@@ -633,8 +624,8 @@ namespace Zeltex.AI
             //Vector3 MyVelocity = gameObject.GetComponent<Rigidbody>().velocity;
             float DistanceToTarget = Vector3.Distance(Position, transform.position);
 
-            Vector3 DesiredDirection = (Position - transform.position).normalized;
-            DesiredDirectionOffset = Vector3.Angle(DesiredDirection, transform.forward);
+            //Vector3 DesiredDirection = (Position - transform.position).normalized;
+            //DesiredDirectionOffset = Vector3.Angle(DesiredDirection, transform.forward);
 
             float DesiredForce = 1f;
             if (IsSlowDown)

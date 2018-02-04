@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Zeltex
 {
-    public abstract class DrawableDictionary
+    public class DrawableDictionary
     {
 
     }
 
     [System.Serializable()]
-    public class SerializableDictionaryBase<TKey, TValue> : DrawableDictionary, IDictionary<TKey, TValue>, UnityEngine.ISerializationCallbackReceiver
+    public class SerializableDictionaryBase<TKey, TValue> : DrawableDictionary, IDictionary<TKey, TValue>, ISerializationCallbackReceiver    // 
     {
 
         #region Fields
@@ -31,6 +32,11 @@ namespace Zeltex
         {
             if (_dict == null) _dict = new Dictionary<TKey, TValue>();
             _dict.Add(key, value);
+            if (MyKeys != null && MyValues != null)
+            {
+                MyKeys.Add(key);
+                MyValues.Add(value);
+            }
         }
 
         public bool ContainsKey(TKey key)
@@ -51,6 +57,13 @@ namespace Zeltex
         public bool Remove(TKey key)
         {
             if (_dict == null) return false;
+            if (MyKeys != null && MyValues != null
+                && MyKeys.Contains(key))
+            {
+                int Index = MyKeys.IndexOf(key);
+                MyValues.RemoveAt(Index);
+                MyKeys.RemoveAt(Index);
+            }
             return _dict.Remove(key);
         }
 
@@ -90,12 +103,24 @@ namespace Zeltex
         public void Clear()
         {
             if (_dict != null) _dict.Clear();
+
+            if (MyKeys != null && MyValues != null)
+            {
+                MyKeys.Clear();
+                MyValues.Clear();
+            }
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
         {
             if (_dict == null) _dict = new Dictionary<TKey, TValue>();
             (_dict as ICollection<KeyValuePair<TKey, TValue>>).Add(item);
+            if (MyKeys != null && MyValues != null
+                && MyKeys.Contains(item.Key) == false)
+            {
+                MyKeys.Add(item.Key);
+                MyValues.Add(item.Value);
+            }
         }
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
@@ -113,6 +138,13 @@ namespace Zeltex
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
             if (_dict == null) return false;
+            if (MyKeys != null && MyValues != null
+                && MyKeys.Contains(item.Key) == false)
+            {
+                int Index = MyKeys.IndexOf(item.Key);
+                MyValues.RemoveAt(Index);
+                MyKeys.RemoveAt(Index);
+            }
             return (_dict as ICollection<KeyValuePair<TKey, TValue>>).Remove(item);
         }
 
@@ -143,48 +175,104 @@ namespace Zeltex
 
         #region ISerializationCallbackReceiver
 
-        [UnityEngine.SerializeField(), JsonProperty]
-        private TKey[] _keys;
-        [UnityEngine.SerializeField(), JsonProperty]
-        private TValue[] _values;
+        [SerializeField(), JsonProperty]
+        private List<TKey> MyKeys;
+        [SerializeField(), JsonProperty]
+        private List<TValue> MyValues;
 
-        void UnityEngine.ISerializationCallbackReceiver.OnAfterDeserialize()
+        public TValue GetValue(int Index)
         {
-            if (_keys != null && _values != null)
+            if (MyValues != null && Index < MyValues.Count)
             {
-                if (_dict == null) _dict = new Dictionary<TKey, TValue>(_keys.Length);
-                else _dict.Clear();
-                for (int i = 0; i < _keys.Length; i++)
+                return MyValues[Index];
+            }
+            return default(TValue);
+        }
+
+        public List<TKey> GetKeys()
+        {
+            if (MyKeys == null || _dict != null)
+            { 
+                AddToSerializedLists();
+            }
+            return MyKeys;
+        }
+        public List<TValue> GetValues()
+        {
+            if (MyValues == null || _dict != null)
+            { 
+                AddToSerializedLists();
+            }
+            return MyValues;
+        }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            //UnityEngine.Debug.LogError("Deserializing Dictionary! " + this.ToString());
+            if (MyKeys != null && MyValues != null)
+            {
+                if (_dict == null)
                 {
-                    if (i < _values.Length)
-                        _dict[_keys[i]] = _values[i];
+                    _dict = new Dictionary<TKey, TValue>(MyKeys.Count);
+                }
+                else
+                {
+                    _dict.Clear();
+                }
+                for (int i = 0; i < MyKeys.Count; i++)
+                {
+                    if (i < MyValues.Count)
+                    {
+                        _dict[MyKeys[i]] = MyValues[i];
+                    }
                     else
-                        _dict[_keys[i]] = default(TValue);
+                    {
+                        _dict[MyKeys[i]] = default(TValue);
+                    }
                 }
             }
 
-            _keys = null;
-            _values = null;
+            //MyKeys = null;
+            //MyValues = null;
+
+            //if (MyValues != null && MyValues.Count > 0)
+           // {
+            //    UnityEngine.Debug.LogError("After Serialize Dictionary! : " + MyValues[0].ToString());
+           // }
         }
 
-        void UnityEngine.ISerializationCallbackReceiver.OnBeforeSerialize()
+        void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             if (_dict == null || _dict.Count == 0)
             {
-                _keys = null;
-                _values = null;
+                MyKeys = null;
+                MyValues = null;
             }
             else
             {
-                int cnt = _dict.Count;
-                _keys = new TKey[cnt];
-                _values = new TValue[cnt];
-                int i = 0;
+                AddToSerializedLists();
+            }
+            /*if (MyValues != null && MyValues.Count > 0)
+            {
+                UnityEngine.Debug.LogError("Before Serialize Dictionary! " + this.ToString()
+                    + " Dict?: " + (_dict == null || _dict.Count == 0).ToString()
+                     + " : " + MyValues[0].ToString());
+            }*/
+        }
+
+        private void AddToSerializedLists() 
+        {
+            MyKeys = new List<TKey>();
+            MyValues = new List<TValue>();
+            int i = 0;
+            if (_dict != null)
+            {
+                int cnt = _dict.Count;  
                 var e = _dict.GetEnumerator();
                 while (e.MoveNext())
                 {
-                    _keys[i] = e.Current.Key;
-                    _values[i] = e.Current.Value;
+                    MyKeys.Add(e.Current.Key);
+                    MyValues.Add(e.Current.Value);
                     i++;
                 }
             }

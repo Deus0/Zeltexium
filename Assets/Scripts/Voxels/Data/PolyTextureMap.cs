@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MakerGuiSystem;
 using Zeltex;
+using Newtonsoft.Json;
 
 namespace Zeltex.Voxels
 {
@@ -19,9 +20,9 @@ namespace Zeltex.Voxels
     [System.Serializable]
     public class VoxelCoordinate
     {
-        //public List<RawVoxelCoordinate> MyTextureCoordinates = new List<RawVoxelCoordinate>();
-        //public int VertexIndex;   // this is just done by index of the list
+        [JsonProperty]
         public Vector2 MyCoordinate = new Vector2();
+        [JsonProperty]
         public string TileName = "";
 
         public VoxelCoordinate()
@@ -34,21 +35,35 @@ namespace Zeltex.Voxels
             TileName = TileName_;
         }
     }
+
     /// <summary>
     /// Each texture map links up to textures and uvs
     /// </summary>
     [System.Serializable]
     public class PolyTextureMap
     {
+        [JsonProperty]
         public List<VoxelCoordinate> Coordinates = new List<VoxelCoordinate>();
-        // functions
+        [JsonProperty]
         private List<string> TilemapNames = new List<string>();
-        private List<Vector2> MyCoordinates = new List<Vector2>();
+        //[JsonIgnore]
+        //private List<Vector2> MyCoordinates = new List<Vector2>();
+        [JsonIgnore]
         private List<Vector2> MyTextureCoords = new List<Vector2>();
+        [JsonIgnore]
         private string TileMapName = "";
+        [JsonIgnore]
         private int TileIndex = 0;
+        [JsonIgnore]
         private Vector2 MyUV;
+        [JsonIgnore]
         private Vector2 TilePosition;
+        [JsonIgnore]
+        private int TextureCoordinateIndex = 0;
+        [JsonIgnore]
+        private int TextureNameIndex = 0;
+        [JsonIgnore]
+        private List<string> Names;
 
         /// <summary>
         /// Initiate the voxel texturemap, giving it some coordinates
@@ -66,6 +81,7 @@ namespace Zeltex.Voxels
             }
             return TilemapNames;
         }
+
         public void GetTileMapInfo(out List<string> TilemapNames, out List<int> TileMapCounts)
         {
             TilemapNames = new List<string>();
@@ -83,10 +99,12 @@ namespace Zeltex.Voxels
                 }
             }
         }
+
         public void Add(Vector2 NewCoordinate, string TileName)
         {
             Coordinates.Add(new VoxelCoordinate(NewCoordinate, TileName));
         }
+
         public void Set(int Index, Vector2 NewCoordinate)
         {
             if (Index >= 0 && Index < Coordinates.Count)
@@ -102,6 +120,7 @@ namespace Zeltex.Voxels
                 Coordinates[i].TileName = NewName;
             }
         }
+            
         public void SetName(string NewName, int Index)
         {
             if (Index >= 0 && Index <  Coordinates.Count)
@@ -109,7 +128,8 @@ namespace Zeltex.Voxels
                 Coordinates[Index].TileName = NewName;
             }
         }
-        public List<Vector2> GetCoordinates(string TileName)
+
+        /*public List<Vector2> GetCoordinates(string TileName)
         {
             MyCoordinates.Clear();
             for (int i = 0; i < Coordinates.Count; i++)
@@ -125,10 +145,8 @@ namespace Zeltex.Voxels
         public List<Vector2> GetCoordinates()
         {
             return GetCoordinates(new TileMap());
-        }
+        }*/
 
-        private int TextureCoordinateIndex = 0;
-        private int TextureNameIndex = 0;
         /// <summary>
         /// Gets coordinates per side index to add onto the mesh
         /// Need to know the textures position in the TileMap and Add it to the UVs
@@ -140,6 +158,7 @@ namespace Zeltex.Voxels
             //TextureMaker MyTextureMaker = MyData.MyTextureMaker;// TextureMaker.Get();
             TileMapName = "";
             TileIndex = 0;
+            Names = DataManager.Get().GetNames(DataFolderNames.VoxelDiffuseTextures);
             for (TextureCoordinateIndex = 0; TextureCoordinateIndex < Coordinates.Count; TextureCoordinateIndex++)
             {
                 // For each coordinate, check if texture name changes
@@ -148,9 +167,9 @@ namespace Zeltex.Voxels
                 {
                     TileMapName = Coordinates[TextureCoordinateIndex].TileName;
                     TileIndex = -1;
-                    for (TextureNameIndex = 0; TextureNameIndex < DataManager.Get().GetSizeElements(DataFolderNames.VoxelDiffuseTextures); TextureNameIndex++)
+                    for (TextureNameIndex = 0; TextureNameIndex < Names.Count; TextureNameIndex++)
                     {
-                        if (DataManager.Get().GetName(DataFolderNames.VoxelDiffuseTextures, TextureNameIndex) == Coordinates[TextureCoordinateIndex].TileName)//.DiffuseTextures[j].name == Coordinates[i].TileName)
+                        if (Names[TextureNameIndex] == Coordinates[TextureCoordinateIndex].TileName)//.DiffuseTextures[j].name == Coordinates[i].TileName)
                         {
                             TileIndex = TextureNameIndex;
                             break;
@@ -173,6 +192,7 @@ namespace Zeltex.Voxels
         }
 
         #region Files
+
         /// <summary>
         /// Gets the script for a texture map
         /// </summary>
@@ -192,6 +212,7 @@ namespace Zeltex.Voxels
             }
             return Data;
         }
+
         /// <summary>
         /// Loads a texture map
         /// </summary>

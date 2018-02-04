@@ -64,13 +64,13 @@ namespace Zeltex.Guis
         public void RefreshCamera()
         {
             // now zoom in properly on camera
-            Bounds SkeletonBounds = MySpawnedSkeleton.GetSkeleton().GetEditorBounds();
+            /*Bounds SkeletonBounds = MySpawnedSkeleton.GetSkeleton().GetEditorBounds();
             Vector3 NewPosition = new Vector3(
                 0,
                 0,
                 GetDistanceToCamera(MyCamera, SkeletonBounds) * 1.5f);  //GetSpawn().transform.lossyScale.z * 
             MyCamera.transform.position = MySpawnedSkeleton.GetSkeleton().GetTransform().TransformPoint(SkeletonBounds.center + NewPosition);
-            MyCamera.transform.LookAt(MySpawnedSkeleton.GetSkeleton().GetTransform());
+            MyCamera.transform.LookAt(MySpawnedSkeleton.GetSkeleton().GetTransform());*/
         }
 
         public float GetDistanceToCamera(Camera MyCamera, Bounds MyBounds)

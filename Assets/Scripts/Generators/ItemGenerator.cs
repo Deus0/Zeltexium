@@ -44,9 +44,9 @@ namespace Zeltex.Generators
 				// Create an item for the spell											 
 				Item MyItem = new Item();// GenerateItem(i);
 				MyItem.Name = MySpell.Name;
-				MyItem.SetCommands("/Spell " + MySpell.Name);
+				//MyItem.SetCommands("/Spell " + MySpell.Name);
 				// Generate an item texture
-				int TextureIndex = DataManager.Get().GetSize("ItemTextures");//MyTextureManager.ItemTextures.Count;
+				//int TextureIndex = DataManager.Get().GetSize("ItemTextures");//MyTextureManager.ItemTextures.Count;
                 Texture2D NewTexture = new Texture2D(TextureResolution, TextureResolution, TextureFormat.ARGB32, false);
                 NewTexture.name = MySpell.Name + "_Texture";
                 NewTexture.filterMode = FilterMode.Point;
@@ -107,7 +107,7 @@ namespace Zeltex.Generators
                 VoxelMeta MyMeta = MyMetas[VoxelIndex] as VoxelMeta;//.GetMeta(VoxelIndex);
                 NewItem.Name = MyMeta.Name;
                 NewItem.SetDescription(MyMeta.GetDescription());
-                NewItem.SetCommands("/Block " + MyMeta.Name);  // make command /Block[MetaIndex] work!
+                //NewItem.SetCommands("/Block " + MyMeta.Name);  // make command /Block[MetaIndex] work!
                 //NewItem.MeshName = MyMeta.Name;
                 //if (MyTextureManager)
                 {

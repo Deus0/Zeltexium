@@ -30,31 +30,42 @@ namespace Zeltex
 		private bool IsDrawAllFields;
 		private string RenameName = "Null";
 		// Folders
-		private Zexel OpenedTexture;
+		//private Zexel OpenedTexture;
 		private bool IsOpenedElementFolder;
 		private ElementFolder OpenedFolder;
 		private RenderTexture PolyRenderTexture;
+        private Level MyLevel;
+        private bool IsExtraOptions;
 
         #region Main
+
 #if UNITY_EDITOR
+
+        public static void PrepareDataForReload()
+        {
+            Debug.Log("Custom Serializing DataManager Data as manual refresh of code detected.");
+            if (DataManager.Get())
+            {
+                for (int i = 0; i < DataManager.Get().GetSize(); i++)
+                {
+                    DataManager.Get().GetFolder(i).Serialize();
+                }
+            }
+        }
+
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-			if (DataManager.Get()) 
-			{
-                if (DataManager.Get().GetIsLoaded())
+            Debug.Log("Reloaded scripts, so custom deserialized the DataManager Data.");
+            // bum!
+            if (DataManager.Get() != null && DataManager.Get().GetIsLoaded())
+            {
+                for (int i = 0; i < DataManager.Get().GetFolders().Count; i++)
                 {
-                    Debug.Log ("Scripts have reloaded. Unloading DataManager.");
-                    DataManager.Get().UnloadAll();
-                    DataGUI.Get().CloseAll();
-                    DataManager.Get().InitializeFolders();
-                    DataManager.Get().LoadAll();
+                    DataManager.Get().GetFolder(i).Deserialize();
                 }
-			} 
-			else
-			{
-				Debug.Log("Scripts have reloaded. No DataManager in scene.");
-			}
+            }   
+            DataGUI.Get().Repaint();
         }
 #endif
         public new static DataGUI Get()
@@ -79,15 +90,52 @@ namespace Zeltex
             }
         }
 
-        public void DrawGui()
+#if UNITY_EDITOR
+        UnityEditor.EditorWindow MyWindow = null;
+
+        public void Repaint()
         {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-			if (DataManager.Get().IsLoading())
+            MyWindow.Repaint();
+        }
+#else
+        public void Repaint() { }
+#endif
+        public void DrawGui(object NewWindow = null)
+        {
+#if UNITY_EDITOR
+            MyWindow = NewWindow as UnityEditor.EditorWindow;
+#endif
+            try
+            {
+                scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+            }
+            catch (System.ArgumentException)
+            {
+                return;
+            }
+            MyLevel = OpenedElement as Level;
+
+            if (DataManager.Get().IsLoading())
 			{
-				GUILayout.Label("==================");
-				GUILayout.Label("Loading [" + DataManager.Get().MapName + "]");
-				GUILayout.Label("==================");
-			}
+                GUILabel("==================");
+                IncreaseIndent();
+                GUILabel("Loading [" + DataManager.Get().MapName + "]");
+                DecreaseIndent();
+				GUILabel("==================");
+                IncreaseIndent();
+                if (GUIButton("===== Cancel ( ===== "))
+                {
+                    DataManager.Get().CancelLoading();
+                }
+                DecreaseIndent();
+                GUILayout.Label("==================");
+            }
+            else if (MyLevel != null && MyLevel.IsSpawning)
+            {
+                GUILayout.Label("==================");
+                GUILayout.Label("Loading Level [" + MyLevel.Name + "]");
+                GUILayout.Label("==================");
+            }
 			else
 			{
 				//IsJSONFormat = GUILayout.Toggle(IsJSONFormat, "JSON");
@@ -115,7 +163,12 @@ namespace Zeltex
 			if (GUIButton("Load [" + MapName + "]"))
 			{
 				DataManager.Get().InitializeFolders();
-				DataManager.Get().LoadAll();
+				DataManager.Get().LoadAll(
+                    () =>
+                    {
+                        Repaint();
+                    });
+                DataManager.Get().WasPlayingOnLoad = false;
             }
 
 			// List of map names!
@@ -223,7 +276,6 @@ namespace Zeltex
             }
         }
 
-		private bool IsExtraOptions;
 		private void DrawResourcesMainGui() 
 		{
 			if (GUILayout.Button("UnLoad"))
@@ -258,7 +310,7 @@ namespace Zeltex
 				}
 				if (GUIButton("Generate TileMap"))
 				{
-					Voxels.VoxelManager.Get().GenerateTileMap();
+					VoxelManager.Get().GenerateTileMap();
 				}
 
 				if (RenameName == "Null")
@@ -345,6 +397,10 @@ namespace Zeltex
 					}
 					FileUtil.OpenPathInWindows(FolderPath);
 				}
+                if (GUIButton("Force Save All Files"))
+                {
+                    OpenedFolder.ForceSaveAllElements();
+                }
 			}
 			/*if (GUILayout.Button("New " + DataFolderNames.GetDataType(OpenedFolderName).ToString()))
 			{
@@ -386,16 +442,16 @@ namespace Zeltex
                             OpenedElement = MyKeyValuePair.Value;
                             OpenedFileName = MyKeyValuePair.Key;
                             OpenedFileIndex = ElementCount;
-                            if (HasOpenedZexels())
+                            /*if (HasOpenedZexels())
                             {
                                 OpenedTexture = MyKeyValuePair.Value as Zexel;
-                            }
+                            }*/
 							OpenedElement.IsDrawGui = true;
                         }
                         ElementCount++;
                     }
                 }
-                catch (System.ObjectDisposedException e)
+                catch (System.ObjectDisposedException)
                 {
 
                 }
@@ -534,7 +590,7 @@ namespace Zeltex
 					KiloBytes = KiloBytes % 1024;
 
 					UnityEditor.EditorUtility.DisplayDialog(OpenedElement.GetType().ToString() + " Size Check", 
-						"Your element is "
+						"Your element [" + ClonedElement.Name + "] is "
 						+ MegaBytes.ToString() + " Megabytes, "
 						+ KiloBytes.ToString() + " Kilobytes, "
 						+ TotalBytes.ToString() + " Bytes in Size.",
@@ -734,6 +790,20 @@ namespace Zeltex
 			}
 			#endif
 			IncreaseIndent();
+
+            // If has header
+            if (MyField != null)
+            {
+                object[] MyAttributes = MyField.GetCustomAttributes(true);    // false
+                for (int j = 0; j < MyAttributes.Length; j++)
+                {
+                    if (MyAttributes[j].GetType() == typeof(HeaderAttribute))
+                    {
+                        GUILabel(MyAttributes[j].ToString());
+                        break;
+                    }
+                }
+            }
             if (IsDrawAllFields)
             {
                 GUILabel("Fields: [" + Fields.Length + "]");
@@ -757,7 +827,8 @@ namespace Zeltex
             }
             else
             {
-                for (int i = Fields.Length - 1; i >= 0; i--)
+                //for (int i = Fields.Length - 1; i >= 0; i--)
+                for (int i = 0; i < Fields.Length; i++)
                 {
                     object value = Fields[i].GetValue(MyObject);
                     /*if (Fields[i].FieldType == typeof(Texture))
@@ -783,27 +854,16 @@ namespace Zeltex
                     }
                     else if (value == null)
                     {
-                        if (GUIButton("[" + Fields[i].Name + "]: Null"))
+                        if (GUIButton("Spawn [" + Fields[i].Name + "]?"))
                         {
-#if NET_4_6
-                            ConstructorInfo MyConstructor = Fields[i].FieldType.GetConstructor(System.Type.EmptyTypes);
-                            dynamic NewValue = MyConstructor.Invoke(null);
-                            //if (NewValue != null)
-                            {
-                                Fields[i].SetValue(MyObject, NewValue);
-                                (MyObject as Element).OnModified();
-                            }
-#else
-                            //Debug.LogError("Function not defined in this type.");
                             object NewValue = System.Activator.CreateInstance(Fields[i].FieldType);
                             Fields[i].SetValue(MyObject, NewValue);
                             MyElement = NewValue as Element;
                             if (MyElement != null)
                             {
                                 MyElement.OnModified();
+                                MyElement.ParentElement = ParentObject as Element;
                             }
-                            //ListElements.Add((T)NewValue);
-#endif
                         }
                     }
                     // For normal fields!
@@ -868,9 +928,6 @@ namespace Zeltex
                         else if (Fields[i].FieldType == typeof(Vector3))
                         {
                             Vector3 OldValue = (Vector3)Fields[i].GetValue(MyObject);
-                            //GUILayout.Label(" List<float> [" + Fields[i].Name + "]");
-                            if (OldValue != null)
-                            {
 #if UNITY_EDITOR
                                 Vector3 NewValue = UnityEditor.EditorGUILayout.Vector3Field(Fields[i].Name + ": ", OldValue);
                                 if (OldValue != NewValue)
@@ -882,11 +939,6 @@ namespace Zeltex
                                     }
                                 }
 #endif
-                            }
-                            else
-                            {
-                                GUILabel("Broken Vector3 Field: " + Fields[i].Name);
-                            }
                         }
                         else if (Fields[i].FieldType == typeof(List<float>))
                         {
@@ -981,35 +1033,20 @@ namespace Zeltex
                                 (MyObject as Element).OnModified();
                             }
                         }
-                        /*else if (Fields[i].FieldType == typeof(Skeletons.Skeleton))
-                        {
-                            GUILabel("Element: " + i + ": " + Fields[i].Name);
-                            DrawFieldsForObject(value);
-                            if (GUIButton("Pull"))
-                            {
-                                Skeletons.Skeleton OldValue = (Skeletons.Skeleton)Fields[i].GetValue(MyObject);
-								Fields[i].SetValue(MyObject, DataManager.Get().GetElement(DataFolderNames.Skeletons, OldValue.Name).Clone<Skeletons.Skeleton>());
-                            }
-                        }*/
-                        /*else if (Fields[i].FieldType.BaseType == typeof(Element))
-                        {
-                            GUILabel("Element: " + i + ": " + Fields[i].Name);
-                            DrawFieldsForObject(value);
-                        }*/
-                        else if (DrawListGui<Items.Item>(Fields[i], MyObject))
+                        else if (DrawListGui<Item>(Fields[i], MyObject))
                         {
 
                         }
-                        else if (DrawListGui<Combat.Stat>(Fields[i], MyObject))
+                        else if (DrawListGui<Stat>(Fields[i], MyObject))
                         {
 
                         }
-                        else if (DrawListGui<Skeletons.Bone>(Fields[i], MyObject))
+                        else if (DrawListGui<Bone>(Fields[i], MyObject))
                         {
 
                         }
                         // Draw for elements!
-						if (!IsIgnoreJson && Fields[i].FieldType.BaseType == typeof(Element))
+                        if (!IsIgnoreJson && Fields[i].FieldType.BaseType == typeof(Element))
 						{
                             //GUILabel(Fields[i].FieldType.ToString() + ": " + i + ": " + Fields[i].Name);
                             DrawFieldsForObject(value, MyObject, Fields[i]);
@@ -1027,20 +1064,63 @@ namespace Zeltex
                 {
                     ReturnObject = DrawElementGui(MyElement, IsFirstField, ParentObject, MyField, ReturnObject);
                     DrawZexelGui(MyElement);
-					DrawSpawnGUI<Level>(MyElement);
-                    DrawSpawnGUI<Skeletons.Skeleton>(MyElement);
+                    DrawSpawnGUI<VoxelMeta>(MyElement);
+                    DrawSpawnGUI<PolyModel>(MyElement);
+                    DrawVoxelModelGUI(MyElement);
                     DrawSpawnGUI<Item>(MyElement);
-                    DrawVoxelGUI(MyElement);
-                    DrawSpawnGUI<Voxels.PolyModel>(MyElement);
+                    DrawSpawnGUI<Spell>(MyElement);
+                    DrawSpawnGUI<Skeleton>(MyElement);
+                    DrawSpawnGUI<Zanimation>(MyElement);
+                    DrawSpawnGUI<CharacterData>(MyElement);
+                    DrawSpawnGUI<Level>(MyElement);
+                    DrawSpawnGUI<SaveGame>(MyElement);
+                    DrawSpawnGUI<Dialogue.DialogueTree>(MyElement);
+                    if (MyElement.GetType() == typeof(Stat))
+                    {
+                        Stat MyStat = MyElement as Stat;
+                        GUILabel("-----");
+                        GUILabel(MyStat.GetGuiString());
+                        GUILabel("-----");
+                        if (MyStat.GetStatType() != StatType.Base
+                            && GUIButton("Change To Type [" + StatType.Base + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.Base);
+                        }
+                        if (MyStat.GetStatType() != StatType.Modifier
+                            && GUIButton("Change To Type [" + StatType.Modifier + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.Modifier);
+                        }
+                        if (MyStat.GetStatType() != StatType.Regen
+                            && GUIButton("Change To Type [" + StatType.Regen + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.Regen);
+                        }
+                        if (MyStat.GetStatType() != StatType.State
+                            && GUIButton("Change To Type [" + StatType.State + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.State);
+                        }
+                        if (MyStat.GetStatType() != StatType.TemporaryModifier
+                            && GUIButton("Change To Type [" + StatType.TemporaryModifier + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.TemporaryModifier);
+                        }
+                        if (MyStat.GetStatType() != StatType.TemporaryRegen
+                            && GUIButton("Change To Type [" + StatType.TemporaryRegen + "]"))
+                        {
+                            MyStat.SetValuesAsType(StatType.TemporaryRegen);
+                        }
+                    }
                 }
-                if (MyElement.ParentElement != null)
+                if (MyElement != null && MyElement.ParentElement != null)
                 {
-                    GUILayout.Space(8);
+                    GUILayout.Space(12);
                     if (GUIButton("Set [" + MyElement.Name + "] to Null"))
                     {
-                        MyField.SetValue(MyObject, null);
+                        MyField.SetValue(ParentObject, null);
                     }
-                    GUILayout.Space(7);
+                    GUILayout.Space(23);
                 }
             }
 			DecreaseIndent();
@@ -1069,36 +1149,44 @@ namespace Zeltex
                 {
                     //Element OldValue = Fields[i].GetValue(MyObject) as Element;
                     //Debug.Log(MyElement.Name + " is being overwritten from an element in database folder: " + MyElement.ElementLink);
-                    Element NewElement = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name).Clone();
-                    NewElement.IsDrawGui = MyElement.IsDrawGui;
-                    NewElement.MyFolder = MyElement.MyFolder;
-                    NewElement.ElementLink = MyElement.ElementLink;
-                    NewElement.ParentElement = MyElement.ParentElement;
-                    NewElement.ResetName();
-                    if (MyField != null)
+                    Element DataClone = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name);
+                    if (DataClone != null)
                     {
-                        try
+                        Element NewElement = DataClone.Clone();
+                        NewElement.IsDrawGui = MyElement.IsDrawGui;
+                        NewElement.MyFolder = MyElement.MyFolder;
+                        NewElement.ElementLink = MyElement.ElementLink;
+                        NewElement.ParentElement = MyElement.ParentElement;
+                        NewElement.ResetName();
+                        if (MyField != null)
                         {
-                            MyField.SetValue(ParentObject, NewElement);
-                            Debug.Log(MyElement.Name + " is using MyField.SetValue");
+                            try
+                            {
+                                MyField.SetValue(ParentObject, NewElement);
+                                Debug.Log(MyElement.Name + " is using MyField.SetValue");
+                            }
+                            catch (System.ArgumentException e)
+                            {
+                                // From a list of elements
+                                Debug.LogError(e.ToString());
+                                Debug.LogError(NewElement.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
+                                ReturnObject = NewElement as object;
+                                Debug.Log(MyElement.Name + " is using ReturnObject to a list");
+                            }
+                            NewElement.OnModified();
                         }
-                        catch (System.ArgumentException e)
+                        else if (IsFirstField)
                         {
-                            // From a list of elements
-                            Debug.LogError(e.ToString());
-                            Debug.LogError(NewElement.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
-                            ReturnObject = NewElement as object;
-                            Debug.Log(MyElement.Name + " is using ReturnObject to a list");
+                            OpenedFolder.SetElement(NewElement);
                         }
-                        NewElement.OnModified();
-                    }
-                    else if (IsFirstField)
-                    {
-                        OpenedFolder.SetElement(NewElement);
+                        else
+                        {
+                            Debug.LogError("Could not pull element.");
+                        }
                     }
                     else
                     {
-                        Debug.LogError("Could not pull element.");
+                        Debug.LogError("Could not find file " + MyElement.Name + " in folder " + MyElement.ElementLink);
                     }
                 }
                 if (GUIButton("Push To [" + MyElement.ElementLink + "]"))
@@ -1110,11 +1198,11 @@ namespace Zeltex
             return ReturnObject;
         }
 
-        private void DrawVoxelGUI(Element MyElement)
+        private void DrawVoxelModelGUI(Element MyElement)
         {
-            if (MyElement.GetType() == typeof(Voxels.VoxelModel))
+            if (MyElement.GetType() == typeof(VoxelModel))
             {
-                Voxels.VoxelModel MyVoxelModel = MyElement as Voxels.VoxelModel;
+                VoxelModel MyVoxelModel = MyElement as VoxelModel;
                 if (MyVoxelModel != null)
                 {
                     if (GUIButton("Import"))
@@ -1124,7 +1212,7 @@ namespace Zeltex
                 }
                 if (MyElement.ParentElement == null) 
                 {
-                    DrawSpawnGUI<Voxels.VoxelModel>(MyElement);
+                    DrawSpawnGUI<VoxelModel>(MyElement);
                 }
             }
         }
@@ -1237,14 +1325,19 @@ namespace Zeltex
 
         public bool HasJsonIgnore(FieldInfo MyField)
         {
+            return HasAttribute(MyField, typeof(Newtonsoft.Json.JsonIgnoreAttribute));
+        }
+
+        public bool HasAttribute(FieldInfo MyField, System.Type AttributeType)
+        {
             object[] attributes = MyField.GetCustomAttributes(true);	// false
 
             for (int i = 0; i < attributes.Length; i++)
             {
-                if (attributes[i].GetType() == typeof(Newtonsoft.Json.JsonIgnoreAttribute))
+                if (attributes[i].GetType() == AttributeType)
                 {
                     return true;
-				}
+                }
             }
             return false;
         }
@@ -1370,7 +1463,7 @@ namespace Zeltex
             Rect OldRect = GUILayoutUtility.GetLastRect();//(new GUIContent("Blargnugg"), GUI.skin.button);
             OldRect.position = new Vector2(OldRect.position.x + GUIIndentPositionX(), OldRect.position.y);
             OldRect.width -= GUIIndentPositionX();
-            Rect PartA = new Rect(OldRect.x, OldRect.y, OldRect.width / 4f, OldRect.height);
+            //Rect PartA = new Rect(OldRect.x, OldRect.y, OldRect.width / 4f, OldRect.height);
             return GUI.TextField(OldRect, OldText);
         }
 
@@ -1415,7 +1508,7 @@ namespace Zeltex
                         }
                     }
                 } 
-                catch (System.ObjectDisposedException e)
+                catch (System.ObjectDisposedException)
                 {
                     //Debug.LogError("DrawIntDictionary: " + e.ToString());
                 }

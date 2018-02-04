@@ -295,7 +295,7 @@ namespace Zeltex.Util
                                 NewInts.Add(IsInt);
                             }
                         }
-                        catch (System.FormatException e)
+                        catch (System.FormatException)
                         {
 
                         }

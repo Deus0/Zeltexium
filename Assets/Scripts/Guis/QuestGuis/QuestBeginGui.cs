@@ -16,11 +16,16 @@ namespace Zeltex.Guis
         [SerializeField]
         private Text QuestRewardText;
 
-        public void Initialize(Quest MyQuest)
+        public void SetQuest(Quest MyQuest)
         {
             TargetQuest = MyQuest;
-            QuestNameText.text = MyQuest.GetName();
-            QuestDescriptionText.text = MyQuest.GetDescriptionText();
+            FillGui();
+        }
+
+        private void FillGui()
+        {
+            QuestNameText.text = TargetQuest.GetName();
+            QuestDescriptionText.text = TargetQuest.GetDescriptionText();
             QuestRewardText.text = "";
         }
     }

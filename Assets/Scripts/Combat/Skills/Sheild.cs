@@ -11,9 +11,9 @@ namespace Zeltex.Combat
         //private bool IsInput = true;
         //public bool IsActivated = false;
 
-        [Header("Spell Stats")]
-		private bool IsExplodeOnImpact = false;	// if so, it won't repel just explode bullets
-		private float RepelForce = 40;
+        //[Header("Spell Stats")]
+		//private bool IsExplodeOnImpact = false;	// if so, it won't repel just explode bullets
+		//private float RepelForce = 40;
 
 		private MeshRenderer MyMesh;
 		private SphereCollider MyCollider;

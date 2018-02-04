@@ -249,30 +249,7 @@ namespace Zeltex.Guis.Maker
         {
             //FileUtil.Import(name, "Upload", FileExtension);
         }
-        /// <summary>
-        /// Called from javascript, uploading a model data
-        /// </summary>
-        public void Upload(string MyData)
-        {
-            string UploadFileName = "";
-            for (int i = 0; i < MyData.Length; i++)
-            {
-                if (MyData[i] == '\n')
-                {
-                    UploadFileName = MyData.Substring(0, i);
-                    UploadFileName = Path.GetFileNameWithoutExtension(UploadFileName);
-                    MyData = MyData.Substring(i + 1);
-                    break;
-                }
-            }
-            if (UploadFileName != "")
-            {
-                Debug.Log("Uploading new voxel:" + UploadFileName + ":" + MyData.Length);
-                VoxelMeta NewMeta = new VoxelMeta();
-                NewMeta.RunScript(MyData);
-                AddData(UploadFileName, NewMeta);
-            }
-        }
+
         /// <summary>
         /// Add a new voxel to the game!
         /// </summary>

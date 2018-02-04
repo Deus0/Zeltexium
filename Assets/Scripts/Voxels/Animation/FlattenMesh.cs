@@ -21,66 +21,73 @@ namespace Zeltex.AnimationUtilities
 	    private Vector3 OriginalScale;
 	    private Vector3 OriginalPosition;
 	    public AudioClip MyJumpOnSound;
-	    Vector3 OriginalBounds;
+	    //Vector3 OriginalBounds;
 
 	    // oscillation
 	    public bool[] IsOscilateScale =  new bool[]{false, false, false};
 	    public Vector3 SinAmplitude = new Vector3(1,1,1);
 	    public float RandomWavePhase = 0f;
+        public bool IsGrowX = false;
+        public bool IsGrowY = false;
+        public bool IsGrowZ = false;
+        public bool IsSpecialX = false; // used for z path
+        public bool IsSpecialZ = false; // used for z path
 
-	    // Use this for initialization
-	    void Start () {
-
-	    }
-	    void Awake() {
+	    void Awake()
+        {
 		    if (gameObject.GetComponent<MeshFilter> ())
-			    MyMesh = gameObject.GetComponent<MeshFilter> ().mesh;
+			    MyMesh = gameObject.GetComponent<MeshFilter>().mesh;
 		    if (gameObject.GetComponent<SkinnedMeshRenderer> ())
-			    MyMesh = gameObject.GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+			    MyMesh = gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh;
 		    gameObject.AddComponent<AudioSource> ();
 		    OriginalScale = transform.localScale;	//MyMesh.bounds.size.y;
-		    OriginalBounds = MyMesh.bounds.size;
+		    //OriginalBounds = MyMesh.bounds.size;
 		    OriginalPosition = transform.position;
 		    //for (int i = 0; i <= 2; i++)
 		    //	TimeStart[i] = Time.time;
 
-		    for (int i = 0; i < MyMesh.vertices.Length; i++) {
+		    for (int i = 0; i < MyMesh.vertices.Length; i++)
+            {
 			    MyOriginalVerts.Add (MyMesh.vertices[i]);
 		    }
 		    RandomWavePhase = Random.Range (0f, 9999f);
 	    }
-	    public void ToggleAnimation(int Type) {
+
+	    public void ToggleAnimation(int Type)
+        {
 		    Direction[Type] = !Direction[Type];
 		    BeginAnimation (Type);
 	    }
 
 	    // Update is called once per frame
-	    void Update () {
+	    void Update ()
+        {
 		    if (GetComponent<Rigidbody> ().isKinematic)
 			    transform.position = OriginalPosition;
-		    for (int i = 0; i <= 2; i++) {
+		    for (int i = 0; i <= 2; i++)
+            {
 			    //Debug.LogError("IsAnimating" + i + " : " + IsAnimating[i].ToString());
-			    if (IsAnimating[i]) {
-				    if (IsAnimateVerticies) {
+			    if (IsAnimating[i])
+                {
+				    if (IsAnimateVerticies)
+                    {
 					    AnimateVerticies(i);
 				    } else {
 					    AnimateScale(i);
 				    }
 			    }
-			    if (IsOscilateScale[i]) {
+			    if (IsOscilateScale[i])
+                {
 				    OscilateScale(i);
 			    }	
 		    }
 		    ReAdjustPositionFromScale ();
 	    }
 	
-	    public bool IsGrowX = false;
-	    public bool IsGrowY = false;
-	    public bool IsGrowZ = false;
-	    public bool IsSpecialX = false;	// used for z path
-	    public bool IsSpecialZ = false;	// used for z path
-	    public void BeginAnimation(int Type) {
-		    if ((Type == 0 && IsGrowY) || (Type == 1 && IsGrowX) || (Type == 2 && IsGrowZ)) {
+	    public void BeginAnimation(int Type)
+        {
+		    if ((Type == 0 && IsGrowY) || (Type == 1 && IsGrowX) || (Type == 2 && IsGrowZ))
+            {
 			    //Debug.LogError ("Starting of animation: " + Type);
 			    TimeStart[Type] = Time.time;
 			    IsAnimating[Type] = true;
@@ -88,7 +95,9 @@ namespace Zeltex.AnimationUtilities
 			    gameObject.GetComponent<AudioSource> ().PlayOneShot(MyJumpOnSound);
 		    }
 	    }
-	    public void ContinueAnimation(int Type) {
+
+	    public void ContinueAnimation(int Type)
+        {
 		    if (!Direction[Type]) {	// if has not animated yet
 			    if (!IsAnimating[Type]) {
 				    //Debug.LogError (gameObject.name + " - taking hit: " + Time.time);
@@ -98,7 +107,8 @@ namespace Zeltex.AnimationUtilities
 	    }
 
 
-	    public void OscilateScale(int Type) {
+	    public void OscilateScale(int Type)
+        {
 		    //float SinAmplitude = 1f;
 		    float MyWaveAddition;
 		
@@ -133,17 +143,20 @@ namespace Zeltex.AnimationUtilities
 		    return (1 / AnimationSpeed) * (Time.time - TimeStart[Type]);
 	    }
 
-	    public float GetNewY(int Type, float OriginalY, float TempY, float TimeValue) {
+	    public float GetNewY(int Type, float OriginalY, float TempY, float TimeValue)
+        {
 		    if (!Direction[Type])
 			    return Mathf.Lerp(OriginalY, TempY,TimeValue);
 		    else
 			    return Mathf.Lerp(TempY, OriginalY,TimeValue);
 	    }
 
-	    public void AnimateScale(int Type) {
+	    public void AnimateScale(int Type)
+        {
 		    float TimeValue = GetTimeValue (Type);
 		    float NewY;
-		    switch(Type) {
+		    switch(Type)
+            {
 		    case(0):
 			    NewY = GetNewY(Type, OriginalScale.y, TargetSize.y, TimeValue);
 			    transform.localScale = new Vector3 (transform.localScale.x, NewY, transform.localScale.z);
@@ -158,7 +171,8 @@ namespace Zeltex.AnimationUtilities
 			    break;
 		    }
 	    }
-	    public void ReAdjustPositionFromScale() {
+	    public void ReAdjustPositionFromScale()
+        {
 		    if (GetComponent<Rigidbody> ().isKinematic)
 		    {
 			    Vector3 NewPosition = OriginalPosition;
@@ -172,11 +186,13 @@ namespace Zeltex.AnimationUtilities
 		    }
 	    }
 
-	    public void AnimateVerticies(int Type) {
+	    public void AnimateVerticies(int Type)
+        {
 		    Vector3[] vertices = MyMesh.vertices;
 		    float BoundsY = OriginalScale.y;
 		    float TimeValue = GetTimeValue (Type);
-		    for (int i = 0; i < MyMesh.vertices.Length; i++) {
+		    for (int i = 0; i < MyMesh.vertices.Length; i++)
+            {
 			    float TempY = TargetSize.y;
 			    if (MyOriginalVerts[i].y >= TargetSize.y)
 				    TempY = TargetSize.y;
@@ -194,12 +210,14 @@ namespace Zeltex.AnimationUtilities
 		    if (GetComponent<Rigidbody> ().isKinematic)
 			    transform.position = OriginalPosition + new Vector3 (0, MyMesh.bounds.size.y/2f, 0);
 
-		    if (gameObject.GetComponent<MeshCollider>()) {
+		    if (gameObject.GetComponent<MeshCollider>())
+            {
 			    gameObject.GetComponent<MeshCollider>().sharedMesh = null;
 			    gameObject.GetComponent<MeshCollider>().sharedMesh = MyMesh;
 		    }
 	    }
-	    public void TakeHit(Collider MyCollision, Vector3 MyCollisionNormal) {
+	    public void TakeHit(Collider MyCollision, Vector3 MyCollisionNormal)
+        {
 		    //Debug.LogError("Taking hit at " + Time.time + " : " + MyCollisionNormal.ToString());
 		    if (MyCollisionNormal == new Vector3 (0, -1, 0)) {
 			    ContinueAnimation(0);
@@ -208,10 +226,12 @@ namespace Zeltex.AnimationUtilities
 			    if (IsSpecialX)
 				    ContinueAnimation(1);
 		    }
-		    else if (MyCollisionNormal == new Vector3 (1, 0, 0) || MyCollisionNormal == new Vector3 (-1, 0, 0)) {
+		    else if (MyCollisionNormal == new Vector3 (1, 0, 0) || MyCollisionNormal == new Vector3 (-1, 0, 0))
+            {
 			    ContinueAnimation(1);
 		    }
-		    else if (MyCollisionNormal == new Vector3 (0, 0, 1) || MyCollisionNormal == new Vector3 (0, 0, -1)) {
+		    else if (MyCollisionNormal == new Vector3 (0, 0, 1) || MyCollisionNormal == new Vector3 (0, 0, -1))
+            {
 			    ContinueAnimation(2);
 		    }
 	    }

@@ -69,27 +69,27 @@ namespace Zeltex.Guis
         // Interaction
         //private bool IsMovingObject;    // if true, the object follows the mouse in update
        // protected GameObject SelectedObject;    // gets set to null when clicking on nothing
-        private bool IsGridSnap; // uses setter
+        //private bool IsGridSnap; // uses setter
         // Auto Rotation
-        private float GridSnapLength = 10;
+        //private float GridSnapLength = 10;
         private bool IsMoveObjects ;
 
         // Camera
         private float ZoomPosition = 1.2f;
         private float RotationSpeed = 1f;
-        private float CameraLerpSpeed = 3f;
-        private float ZoomSpeed = 0.25f;
+        //private float CameraLerpSpeed = 3f;
+        //private float ZoomSpeed = 0.25f;
         private float CameraClipValue = 0.01f;
-        private Quaternion TargetRotation = Quaternion.identity;
+        //private Quaternion TargetRotation = Quaternion.identity;
         protected bool IsAutoRotate = false;
         protected Vector2 AutoRotateInput = new Vector2(1, 0);
 
         private float CameraPanSpeed = 4;
         protected Vector2 PanPosition = new Vector2(0, 0);
-        //[Header("Shaders")]
-        private bool IsEdgeDetection;
         private Material MyEdgeMaterial;
         private Shader MyEdgeShader;
+        private Vector2 RenderTextureSize = new Vector2(1024, 1024);
+        private float FieldOfView = 90;
         #endregion
 
         #region Mono
@@ -168,7 +168,7 @@ namespace Zeltex.Guis
         {
             if (MySpawn != null)
             {
-                Destroy(MySpawn);
+                MySpawn.Die();
             }
             ClearOthers();
         }
@@ -179,11 +179,11 @@ namespace Zeltex.Guis
         {
             if (MyCamera != null)
             {
-                Destroy(MyCamera.gameObject);
+                MyCamera.gameObject.Die();
             }
             if (MyLight != null)
             {
-                Destroy(MyLight);
+                MyLight.Die();
             }
         }
 
@@ -199,6 +199,7 @@ namespace Zeltex.Guis
             }
             return new Vector3(ViewerIndex * 100, -100, 0);
         }
+
         /// <summary>
         /// Spawn an object to be viewed!
         /// </summary>
@@ -229,7 +230,7 @@ namespace Zeltex.Guis
                 {
                     MySpawn.transform.SetParent(ParentsTransform);
                     MySpawn.name = gameObject.name + " Viewer";
-                    TargetRotation = Quaternion.identity;
+                    //TargetRotation = Quaternion.identity;
                 }
                 else
                 {
@@ -238,8 +239,6 @@ namespace Zeltex.Guis
             }
         }
 
-        private Vector2 RenderTextureSize = new Vector2(1024, 1024);
-        private float FieldOfView = 90;
         /// <summary>
         /// Resizes the render teture
         /// </summary>
@@ -250,7 +249,7 @@ namespace Zeltex.Guis
                 RenderTextureSize = NewSize;
                 if (MyRenderTexture != null)
                 {
-                    Destroy(MyRenderTexture);
+                    MyRenderTexture.Die();
                 }
                 MyRenderTexture = new RenderTexture(
                     Mathf.RoundToInt(RenderTextureSize.x),
@@ -300,10 +299,6 @@ namespace Zeltex.Guis
                     MyCamera.targetTexture = MyRenderTexture;
                     // Render Texture
                     ResizeRenderTexture(RenderTextureSize);
-                    if (IsEdgeDetection)
-                    {
-                        StartCoroutine(AddEffectsToCamera());
-                    }
                 }
                 // set camera to only view - MyLayer
                 // set render texture of camera to this's raw image texture
@@ -381,7 +376,6 @@ namespace Zeltex.Guis
 
         public void SetGridSnap(bool NewState)
         {
-            IsGridSnap = NewState;
         }
         public void SetGrid(bool NewGridState)
         {
@@ -494,6 +488,7 @@ namespace Zeltex.Guis
             return false;
         }
         #endregion
+
         #region Moving
         #endregion
 
@@ -510,8 +505,6 @@ namespace Zeltex.Guis
             Quaternion BeforeRotation = MySpawn.transform.rotation;
             MySpawn.transform.Rotate(MySpawn.transform.InverseTransformDirection(RightDirection), -RotateVector.y);
             MySpawn.transform.Rotate(MySpawn.transform.InverseTransformDirection(UpDirection), RotateVector.x);
-            //MySpawn.transform.Rotate(MySpawn.transform.InverseTransformDirection(ForwardDirection), RotateVector3.z);
-            TargetRotation = MySpawn.transform.rotation;
             MySpawn.transform.rotation = BeforeRotation;
         }
         private void PanCamera(Vector2 MousePositionDifference)
@@ -552,8 +545,6 @@ namespace Zeltex.Guis
             if (MySpawn != null)
             {
                 MySpawn.transform.position = GetSpawnPosition();
-                //MySpawn.transform.rotation = Quaternion.identity;
-                TargetRotation = Quaternion.identity;
             }
         }
 

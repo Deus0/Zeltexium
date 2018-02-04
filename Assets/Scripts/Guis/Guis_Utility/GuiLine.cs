@@ -12,7 +12,7 @@ namespace Zeltex.Guis
     {
         [SerializeField]
         Texture m_Texture;
-        [SerializeField] Rect m_UVRect = new Rect(0f, 0f, 1f, 1f);
+        //[SerializeField] Rect m_UVRect = new Rect(0f, 0f, 1f, 1f);
 
         public float LineThickness = 2;
         public bool UseMargins;

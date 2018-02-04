@@ -80,7 +80,7 @@ namespace Zeltex.Dialogue
 
 				Canvas MyCanvas = NewChild.AddComponent<Canvas>();
 				MyCanvas.renderMode = RenderMode.WorldSpace;
-				GraphicRaycaster MyRaycaster = NewChild.AddComponent<GraphicRaycaster>();
+				NewChild.AddComponent<GraphicRaycaster>();
 
 				NewButtons.Add(NewChild);
 			}

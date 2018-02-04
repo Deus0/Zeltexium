@@ -315,7 +315,7 @@ public class DungeonData {
 				if (PathDirection == 0) {
 					HasFoundNewPosition = false;
 					CheckedBlocks = 0;
-					int FindPositionBlock = 200;
+					//int FindPositionBlock = 200;
 					int MaximumChecksForNewPosition = 0;
 					while (!HasFoundNewPosition || CheckedBlocks == MaxSparce || MaximumChecksForNewPosition >= 250)
                     {

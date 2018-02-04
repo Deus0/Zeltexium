@@ -6,7 +6,6 @@ namespace Zeltex
 {
     public class CameraBob : MonoBehaviour
     {
-		public Transform Camera;
         public CurveControlledBob motionBob = new CurveControlledBob();
         public LerpControlledBob jumpAndLandingBob = new LerpControlledBob();
 		private Mover MyMover;
@@ -15,52 +14,82 @@ namespace Zeltex
 
        // private CameraRefocus m_CameraRefocus;
         private bool m_PreviouslyGrounded;
-        private Vector3 m_OriginalCameraPosition;
+        private Transform MyCamera;
+        private Transform CameraBone;
 
+        private float FollowVelocity = 0;
+        private Vector3 FollowPosition;
+        private Quaternion FollowRotation;
+        public float FollowVelocityLerpSpeed = 3;
+        public float LerpSpeed = 6; 
+        public float RunLerpSpeed = 20;
+        public float RotateLerpSpeed = 14;
 
-        private void Start()
+        void Update()
         {
-       //     m_CameraRefocus = new CameraRefocus(Camera, transform.root.transform, Camera.transform.localPosition);
+            if (!GameManager.IsCameraFixedUpdate)
+            {
+                UpdateBob(Time.deltaTime);
+            }
+        }
+
+        void FixedUpdate()
+        {
+            if (GameManager.IsCameraFixedUpdate)
+            {
+                UpdateBob(Time.fixedDeltaTime);
+            }
         }
 
 		public void Initialise(Mover NewMover) 
 		{
 			MyMover = NewMover;
-			motionBob.Setup(Camera.parent, StrideInterval);
-			m_OriginalCameraPosition = Camera.parent.localPosition;
+            CameraBone = NewMover.GetCameraBone();
+            MyCamera = CameraBone.GetChild(NewMover.GetCameraBone().transform.childCount - 1);;
+            motionBob.Setup(MyCamera, StrideInterval);
+            //CameraBone.transform.SetParent(null);
+            FollowPosition = CameraBone.transform.position;
+            FollowRotation = CameraBone.transform.rotation;
+            MyCamera.transform.SetParent(null);
+            FollowVelocity = MyMover.Velocity.magnitude;
 		}
 
-
-        private void LateUpdate()
+        private void UpdateBob(float LerpTime) 
         {
             if (MyMover)
             {
-                UpdateBob();
-            }
-        }
+                bool IsMovingOnGround = MyMover.Velocity.magnitude > 0 && MyMover.Grounded;
+                if (IsMovingOnGround || !MyMover.Grounded)
+                {
+                    LerpTime *= RunLerpSpeed;
+                }
+                else
+                {
+                    LerpTime *= LerpSpeed;
+                }
+                FollowVelocity = Mathf.Lerp(FollowVelocity, MyMover.Velocity.magnitude, Time.deltaTime * FollowVelocityLerpSpeed);
+                FollowPosition = Vector3.Lerp(FollowPosition, CameraBone.transform.position, LerpTime);
+                FollowRotation = Quaternion.Lerp(FollowRotation, CameraBone.transform.rotation, RotateLerpSpeed * Time.deltaTime);
+                Vector3 BobbedCameraPosition = FollowPosition;
+                BobbedCameraPosition += motionBob.DoHeadBob(FollowVelocity * (MyMover.Running ? RunningStrideLengthen : 1f));
+                if (IsMovingOnGround)
+                {
+                    BobbedCameraPosition.y = BobbedCameraPosition.y - jumpAndLandingBob.Offset();
+                }
+                else
+                {
+                    BobbedCameraPosition.y -= jumpAndLandingBob.Offset();
+                }
+                MyCamera.position = BobbedCameraPosition;
+                MyCamera.rotation = FollowRotation;
 
-        private void UpdateBob() 
-        {
-            Vector3 newCameraPosition;
-            if (MyMover.Velocity.magnitude > 0 && MyMover.Grounded)
-            {
-                Camera.transform.parent.localPosition = motionBob.DoHeadBob(MyMover.Velocity.magnitude*(MyMover.Running ? RunningStrideLengthen : 1f));
-                newCameraPosition = Camera.parent.localPosition;
-                newCameraPosition.y = Camera.parent.localPosition.y - jumpAndLandingBob.Offset();
-            }
-            else
-            {
-                newCameraPosition = Camera.parent.localPosition;
-                newCameraPosition.y = m_OriginalCameraPosition.y - jumpAndLandingBob.Offset();
-            }
-            Camera.parent.localPosition = newCameraPosition;
+                if (!m_PreviouslyGrounded && MyMover.Grounded)
+                {
+                    StartCoroutine(jumpAndLandingBob.DoBobCycle());
+                }
 
-            if (!m_PreviouslyGrounded && MyMover.Grounded)
-            {
-                StartCoroutine(jumpAndLandingBob.DoBobCycle());
+                m_PreviouslyGrounded = MyMover.Grounded;
             }
-
-            m_PreviouslyGrounded = MyMover.Grounded;
         }
     }
 }

@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 114526458835908576}
   - component: {fileID: 114411391635519818}
   - component: {fileID: 114295877136547624}
+  - component: {fileID: 114484519071739090}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -787,14 +788,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 7e1cdf84ae7e0d7419e45ec604f2970c, type: 2}
-  m_Color: {r: 0.53676474, g: 1, b: 0.5782961, a: 1}
+  m_Color: {r: 0, g: 0.73514193, b: 0.8014706, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300030, guid: 803baf1ea73913f46b25e07d0a79df22, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c47fb1c41af9314419dee4ad5b096652, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1807,6 +1808,33 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114484519071739090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841155001587248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.49019608}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114526458835908576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1826,7 +1854,7 @@ MonoBehaviour:
   IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
-  MyDisplayDistance: 0.75
+  MyDisplayDistance: 0.5
   IsFollowUserAngle: 1
   IsFollowUserAngleAddition: 1
   SpinSpeed: 0.5
@@ -3748,8 +3776,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841155001587248}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.75}
+  m_LocalRotation: {x: -0.14978938, y: -0, z: -0, w: 0.988718}
+  m_LocalPosition: {x: 0, y: 0, z: 7.2063446}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_Children:
   - {fileID: 224753195719965544}
@@ -3762,7 +3790,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8, y: 4.0000243}
+  m_AnchoredPosition: {x: 8, y: 3.4721491}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224753195719965544

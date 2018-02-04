@@ -422,7 +422,7 @@ namespace Zeltex.Guis.Maker
         {
             for (int i = 0; i < CurveTicks.Count; i++)
             {
-                Destroy(CurveTicks[i]);
+                CurveTicks[i].Die();
             }
             CurveTicks.Clear();
         }
@@ -523,7 +523,7 @@ namespace Zeltex.Guis.Maker
         {
             for (int i = 0; i < GridTicks.Count; i++)
             {
-                Destroy(GridTicks[i]);
+                GridTicks[i].Die();
             }
             GridTicks.Clear();
         }

@@ -10,6 +10,8 @@ namespace Zeltex.Guis
 {
     [System.Serializable]
     public class ItemsEvent : UnityEvent<Item, Item> { }
+    [System.Serializable]
+    public class ItemSwapEvent : UnityEvent<Item, Item, int> { }
 
     /// <summary>
     /// Item GUI. Everything for interacting with items
@@ -29,7 +31,7 @@ namespace Zeltex.Guis
 
         [Tooltip("Used for crafted item.")]
         public bool IsGrabItemOnly;
-        public ItemsEvent OnSwapItems = new ItemsEvent();
+        public ItemSwapEvent OnSwapItems = new ItemSwapEvent();
 
         private void Awake() 
         {
@@ -44,6 +46,7 @@ namespace Zeltex.Guis
                 MyItem = new Item();
                 MyItem.SetParentInventory(null);
                 ItemPickupGui = this;
+                MyItem.MyGui = this;
                 gameObject.SetActive(false);
             }
             MyOutline = GetComponent<Outline>();
@@ -64,6 +67,15 @@ namespace Zeltex.Guis
                     TooltipGui.Get().SetTexts(MyItem.Name + " [x" + MyItem.GetQuantity() + "]", MyItem.GetDescription());
                 }
             }
+            /*TooltipGui.Get().gameObject.SetActive(true);
+            if (MyItem.ParentElement != null && MyItem.GetParentInventory() != null)
+            {
+                TooltipGui.Get().SetTexts(MyItem.Name, MyItem.ParentElement.Name + " : " + MyItem.GetParentInventory().Name);
+            }
+            else
+            {
+                TooltipGui.Get().SetTexts(MyItem.Name, "Null Parent");
+            }*/
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -90,11 +102,16 @@ namespace Zeltex.Guis
             if (MyItem != null)
             {
                 MyItem.OnUpdate.RemoveEvent(RefreshGui);
+                if (MyItem.MyGui == this)
+                {
+                    MyItem.MyGui = null;
+                }
             }
             MyItem = NewItem;
             if (MyItem != null)
             {
                 MyItem.OnUpdate.AddEvent(RefreshGui);
+                MyItem.MyGui = this;
             }
             RefreshGui();
         }
@@ -138,52 +155,109 @@ namespace Zeltex.Guis
             //Item MyItem = MyInventory.GetItem(NewSelectedIndex);
             if (MyItem != null)
             {
+                if (ItemPickupGui.GetItem().Name == "Empty" && MyItem.Name == "Empty")
+                {
+                    return;
+                }
+                bool IsRightButtonDown = (eventData.button == PointerEventData.InputButton.Right);
+
+                // For Crafted Items
                 if (IsGrabItemOnly)
                 {
-                    if (ItemPickupGui.GetItem().Name != "Empty")
+                    PickupCraftedItem(IsRightButtonDown);
+                    return;
+                }
+
+                Item TemporaryItem = ItemPickupGui.GetItem();
+                Item OtherItem = MyItem;
+                bool DidSwap = false;
+                Item ItemToSet = null;
+                if (IsRightButtonDown)
+                {
+                    if (!MyItem.CanPlaceSingle(ItemPickupGui.GetItem()) && !MyItem.CanHalve(ItemPickupGui.GetItem()))
                     {
-                        Debug.Log("Can only grab from UI: " + name);
-                        return;
+                        ItemToSet = MyItem.SwapItems(ItemPickupGui.GetItem());
+                        DidSwap = true;
                     }
                     else
                     {
-                        Debug.LogError("Picking up crafted item!");
-                        Item TemporaryItemA = ItemPickupGui.MyItem;
-                        ItemPickupGui.SetItem(MyItem);
-                        MyItem = TemporaryItemA;
-                        MyItem.SetParentInventory(MyItem.ParentElement as Inventory);
-                        ItemPickupGui.MyItem.SetParentInventory(null);
-                        MyItem.OnUpdate.Invoke();
-                        ItemPickupGui.MyItem.OnUpdate.Invoke();
-                        OnSwapItems.Invoke(MyItem, ItemPickupGui.MyItem);
-                        return;
+                        MyItem.RightClickItem(ItemPickupGui.GetItem());
                     }
                 }
-                Item TemporaryItem = ItemPickupGui.GetItem();
-                Item ItemToSet = MyItem.SwitchItems(ItemPickupGui.GetItem());
-                if (ItemToSet != TemporaryItem)
+                else
+                {
+                    if (MyItem.CanStack(ItemPickupGui.GetItem()))
+                    {
+                        MyItem.StackItem(ItemPickupGui.GetItem());
+                    }
+                    else
+                    {
+                        ItemToSet = MyItem.SwapItems(ItemPickupGui.GetItem());
+                        DidSwap = true;
+                    }
+                }
+                // If Swapped
+                if (DidSwap)
                 {
                     ItemPickupGui.SetItem(ItemToSet);
                     MyItem = TemporaryItem;
+                    OnSwapBone(MyItem);
+                    OnSwapItems.Invoke(TemporaryItem, OtherItem, -1);
                 }
-                if (MyItem != null) 
+                else
                 {
-                    Skeletons.Bone MyBone = MyItem.ParentElement as Skeletons.Bone;
-                    if (!IsItemPickup && transform.parent.parent.name.Contains("Equipment"))
+                    //Debug.LogError("Didnt swap.");
+                    OnSwapItems.Invoke(MyItem, OtherItem, -1);
+                }
+            }
+        }
+
+        private void PickupCraftedItem(bool IsRightButtonDown) 
+        {
+            if (ItemPickupGui.GetItem().Name == "Empty")
+            {
+                //Debug.LogError("Picking up crafted item!");
+                if (!IsRightButtonDown)
+                {
+                    Item TemporaryItemA = ItemPickupGui.MyItem;
+                    ItemPickupGui.SetItem(MyItem);
+                    MyItem = TemporaryItemA;
+                    MyItem.SetParentInventory(MyItem.ParentElement as Inventory);
+                    ItemPickupGui.MyItem.SetParentInventory(null);
+                    MyItem.OnUpdate.Invoke();
+                    ItemPickupGui.MyItem.OnUpdate.Invoke();
+                    OnSwapItems.Invoke(MyItem, ItemPickupGui.MyItem, -1);
+                }
+                else
+                {
+                    MyItem.RightClickItem(ItemPickupGui.GetItem());
+                    //OnSwapItems.Invoke(ItemPickupGui.MyItem, MyItem, ItemPickupGui.MyItem.GetQuantity());
+                    OnSwapItems.Invoke(MyItem, ItemPickupGui.MyItem,  ItemPickupGui.MyItem.GetQuantity());
+                }
+            }
+        }
+        /// <summary>
+        /// Refreshes a bonees mesh when item is swapped
+        /// </summary>
+        private void OnSwapBone(Item MyItem) 
+        {
+            // Just for bones
+            if (MyItem != null)
+            {
+                Skeletons.Bone MyBone = MyItem.ParentElement as Skeletons.Bone;
+                if (!IsItemPickup && transform.parent.parent.name.Contains("Equipment"))
+                {
+                    // now get Skeleton
+                    if (MyBone != null)
                     {
-                        // now get Skeleton
-                        if (MyBone != null)
-                        {
-                            Debug.Log("Reactivating bone: " + MyBone.Name + " with item " + ItemPickupGui.GetItem().Name);
-                            MyBone.Reactivate();
-                        }
-                        else
-                        {
-                            Debug.LogError("Bone is null for " + MyItem.Name);
-                        }
+                        //Debug.Log("Reactivating bone: " + MyBone.Name + " with item " + ItemPickupGui.GetItem().Name);
+                        MyBone.Reactivate();
+                    }
+                    else
+                    {
+                        Debug.LogError("Bone is null for " + MyItem.Name);
                     }
                 }
-                OnSwapItems.Invoke(MyItem, ItemPickupGui.MyItem);
             }
         }
     }

@@ -590,7 +590,7 @@ namespace Zeltex.Guis.Maker
 
         public void OnUpdatedCondition(int NewCondition)
         {
-            Dropdown NextDropDown = GetDropdown("NextIndexDropDown");
+            //Dropdown NextDropDown = GetDropdown("NextIndexDropDown");
             Dropdown NextDropDown2 = GetDropdown("NextIndex2DropDown");
             Dropdown ConditionsDropDown = GetDropdown("ConditionsDropDown");
             string NewCommand = ConditionsDropDown.options[NewCondition].text;

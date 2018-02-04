@@ -24,9 +24,9 @@ namespace Zeltex.Guis.Players
         public Button ConfirmButton;
         public InputField NameInput;
         private int SelectedIndex = 0;
-        private int PreviousIndex;
+        //private int PreviousIndex;
         private int SelectedRaceIndex;
-        private int PreviousRaceIndex;
+        //private int PreviousRaceIndex;
         #endregion
 
         #region Input
@@ -43,10 +43,10 @@ namespace Zeltex.Guis.Players
         /// </summary>
         public void OnBegin()
         {
-            PreviousIndex = -1; // force update
+            //PreviousIndex = -1; // force update
             SelectedIndex = 0;
             OnUpdatedClass();
-            PreviousRaceIndex = -1;
+            //PreviousRaceIndex = -1;
             SelectedRaceIndex = 0;
             OnUpdatedRace();
             NameInput.text = Zeltex.NameGenerator.GenerateVoxelName();

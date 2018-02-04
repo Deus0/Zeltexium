@@ -452,7 +452,7 @@ namespace Zeltex.Voxels
             int SideIndex, 
             List<Vector2> MyTextureCoordinates)
         {
-            float TotalTiles = TileResolution * TileResolution;
+            //float TotalTiles = TileResolution * TileResolution;
             float TileSize = 1f / ((float)TileResolution);
             //float PixelSize = PolyModel.BufferLength / (TileResolution * TextureResolution);  // one pixel is the buffer
             float PixelSize = 0;  // one pixel is the buffer
@@ -494,7 +494,7 @@ namespace Zeltex.Voxels
         public static Vector2 GetTilePosition(int TileIndex, int TileResolution)
         {
             //float PixelSize = 0;// 1f / (TileResolution);  // one pixel is the buffer
-            float TotalTiles = TileResolution * TileResolution;
+            //float TotalTiles = TileResolution * TileResolution;
             float TileSize = 1f / ((float)TileResolution);
             //TileSize += 2 * PixelSize;  // apply our buffer to tile size
             float PosX = 0;

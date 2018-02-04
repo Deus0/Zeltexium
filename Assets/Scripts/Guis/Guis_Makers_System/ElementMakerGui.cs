@@ -143,7 +143,7 @@ namespace Zeltex.Guis.Maker
                 Transform ModifiedIconTransform = MyCell.transform.Find("ModifiedIcon");
                 if (ModifiedIconTransform != null)
                 {
-                    Destroy(ModifiedIconTransform.gameObject);
+                    ModifiedIconTransform.gameObject.Die();
                 }
             }
             else

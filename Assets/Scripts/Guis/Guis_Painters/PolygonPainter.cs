@@ -31,7 +31,7 @@ namespace Zeltex.Guis.Maker
         private PolyModelHandle SelectedModel;
         // Raycasting
         private bool DidHitGui;
-        private bool DidHitModel;
+        //private bool DidHitModel;
         private ObjectViewer MyViewer;
         private RaycastHit MyHit;
         private PolygonEditMode HandlerMode = 0;
@@ -133,7 +133,7 @@ namespace Zeltex.Guis.Maker
         private void Raycast()
         {
             // set highlighting to false
-                DidHitModel = false;
+                //DidHitModel = false;
                 DidHitGui = RaycastViewer();   // did ray hit any gui
                 if (DidHitGui == false)
                 {
@@ -154,7 +154,7 @@ namespace Zeltex.Guis.Maker
                 }
             }*/
         }
-        private float AreaSelectionRadius = 0.1f;
+       // private float AreaSelectionRadius = 0.1f;
         /// <summary>
         /// Returns whether it hit a gui
         /// </summary>

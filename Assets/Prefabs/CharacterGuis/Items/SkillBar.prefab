@@ -427,6 +427,11 @@ MonoBehaviour:
     m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   SkillSelectedIcon: {fileID: 187592}
+  OnSwapItems:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Guis.ItemsEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &11449286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -582,9 +587,9 @@ MonoBehaviour:
   TargetObject: {fileID: 0}
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: -420}
-  MovementSpeed: 12
+  MovementSpeed: 18
   IsInstantOnStart: 0
-  IsInstant: 1
+  IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.4
   IsFollowUserAngle: 1

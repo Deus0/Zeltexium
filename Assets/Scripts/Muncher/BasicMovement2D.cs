@@ -89,7 +89,7 @@ namespace Zeltex.AI
                         MyBullet.transform.localScale.y, 
                         MyBullet.transform.localScale.z);
                 }
-                Destroy(MyBullet, 5f);
+                MyBullet.Die(5);
             }
             float MyAxis = Input.GetAxis("Horizontal");
             bool Onground = IsOnGround();

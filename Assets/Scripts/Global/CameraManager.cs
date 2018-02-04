@@ -13,7 +13,7 @@ namespace Zeltex
 		[SerializeField]
 		private bool IsSpawnOnStart;
 		[SerializeField]
-		private GameObject CameraPrefab;
+		private GameObject MainMenuCameraPrefab;
         [SerializeField]
         private GameObject FpsCameraPrefab;
         [SerializeField]
@@ -27,12 +27,20 @@ namespace Zeltex
         [SerializeField]
         private bool IsParentToAllCameras;
 
-		private void Start()
+        public new static CameraManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = GameObject.Find(ManagerNames.CameraManager).GetComponent<CameraManager>();
+            }
+            return MyManager as CameraManager;
+        }
+
+        private void Start()
 		{
 			if (IsSpawnOnStart)
 			{
-                SpawnCamera();
-
+                SpawnMainMenuCamera();
             }
 			else
 			{
@@ -64,11 +72,11 @@ namespace Zeltex
             return GuiCamera;
         }
 
-        public Camera SpawnCamera()
+        public Camera SpawnMainMenuCamera()
         {
-            if (CameraPrefab)
+            if (MainMenuCameraPrefab)
             {
-                MainCamera = Instantiate(CameraPrefab).GetComponent<Camera>();
+                MainCamera = Instantiate(MainMenuCameraPrefab).GetComponent<Camera>();
                 if (IsParentToAllCameras)
                 {
                     MainCamera.transform.SetParent(transform);
@@ -110,10 +118,6 @@ namespace Zeltex
 				{
 					TargetPosition = ViewerCamera.transform;
 				}*/
-			}
-			else
-			{
-				//Debug.LogWarning("Could not find close enough camera for: " + name);
 			}
 			return null;
 		}

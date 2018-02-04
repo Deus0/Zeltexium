@@ -19,13 +19,13 @@ namespace Zeltex.Guis
         public override void OnBegin()
         {
             base.OnBegin();
-            GetSpawn().GetComponent<MeshFilter>().mesh = MyItemManager.GetMesh("Texture_0");
+            GetSpawn().GetComponent<MeshFilter>().sharedMesh = MyItemManager.GetMesh("Texture_0");
             GetSpawn().transform.localScale = MyScale;
         }
 
         public void UpdateMeshWithName(string MeshName)
         {
-            GetSpawn().GetComponent<MeshFilter>().mesh = MyItemManager.GetMesh(MeshName);
+            GetSpawn().GetComponent<MeshFilter>().sharedMesh = MyItemManager.GetMesh(MeshName);
             GetSpawn().GetComponent<MeshRenderer>().material = MyMaterial;
         }
         public void SetMesh(Mesh MyMesh)
@@ -35,11 +35,11 @@ namespace Zeltex.Guis
                 MyMesh = new Mesh();
             }
             // Destroy previous mesh!
-            if (GetSpawn().GetComponent<MeshFilter>().mesh != null)
+            if (GetSpawn().GetComponent<MeshFilter>().sharedMesh != null)
             {
-                Destroy(GetSpawn().GetComponent<MeshFilter>().mesh);
+                GetSpawn().GetComponent<MeshFilter>().sharedMesh.Die();
             }
-            GetSpawn().GetComponent<MeshFilter>().mesh = MyMesh;
+            GetSpawn().GetComponent<MeshFilter>().sharedMesh = MyMesh;
         }
     }
 }

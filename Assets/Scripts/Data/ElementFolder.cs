@@ -1,38 +1,46 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Zeltex.Items;
-using Zeltex.Combat;
-using Zeltex.Util;
+﻿using UnityEngine;
+using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using Zeltex.Voxels;
-using System.Linq;
-using Zeltex.Quests;
+using Zeltex.Util;
+using Newtonsoft.Json;
 
 namespace Zeltex
 {
 
-    [System.Serializable()]
-    public class ElementDictionary : DataDictionary<Element>
+    public partial class ElementFolder : object, ISerializationCallbackReceiver
     {
 
-    }
-
-    [System.Serializable]
-    public class ElementFolder : DataFolder<Element>
-    {
-		public ElementDictionary ElementData = new ElementDictionary();
-
-        public override DataDictionary<Element> Data
-        {
-            get { return ElementData as DataDictionary<Element>; }
-            set { ElementData = value as ElementDictionary; }
-        }
-
-        public new static ElementFolder Create(string NewFolderName, string NewFileExtension)
+        /*public new static ElementFolder Create(string NewFolderName, string NewFileExtension)
         {
             ElementFolder NewFolder = new ElementFolder();
             NewFolder.Set(NewFolderName, NewFileExtension);
             return NewFolder;
+        }*/
+
+        /// <summary>
+        /// Data is set when reloading scripts
+        /// </summary>
+        public void SetData(List<Element> NewData)
+        {
+            Data.Clear();
+            for (int i = 0; i < NewData.Count; i++)
+            {
+                Data.Add(NewData[i].Name, NewData[i]);
+            }
+        }
+        /// <summary>
+        /// Data is set when reloading scripts
+        /// </summary>
+        public void SetData<T>(List<T> NewData) where T : Element
+        {
+            Data.Clear();
+            for (int i = 0; i < NewData.Count; i++)
+            {
+                Data.Add(NewData[i].Name, NewData[i]);
+            }
         }
 
         public int IndexOf(string FileName)
@@ -51,6 +59,7 @@ namespace Zeltex
             }
             return -1;
         }
+
         public void Revert()
         {
             Clear();
@@ -100,47 +109,21 @@ namespace Zeltex
 
         public void AddNewElement()
         {
-            //Element NewElement = new Element();
-            //NewElement.MyFolder = this as ElementFolder;
-            //Debug.LogError("Adding new type: " + NewElement.GetDataType().ToString());
-#if NET_4_6
-            System.Reflection.ConstructorInfo MyConstructor = NewElement.GetDataType().GetConstructor(System.Type.EmptyTypes);
-            dynamic NewElement2 = MyConstructor.Invoke(null);
-            NewElement = NewElement2 as Element;
-            NewElement.Name = "Element" + Random.Range(1, 10000);
-            NewElement.MyFolder = this as ElementFolder;
-            NewElement.MyFolder.Data.Add(NewElement.Name, NewElement);
-#else
-            System.Type type = DataFolderNames.GetDataType(FolderName);// System.Type.GetType("Foo.MyClass");
+            Type type = DataFolderNames.GetDataType(FolderName);// System.Type.GetType("Foo.MyClass");
             object ElementObject = System.Activator.CreateInstance(type);
             Element NewElement = ElementObject as Element;
-            NewElement.SetNameOfClone("Element" + Random.Range(1, 10000));
+            NewElement.SetNameOfClone("Element" + UnityEngine.Random.Range(1, 10000));
             NewElement.MyFolder = this as ElementFolder;
             NewElement.MyFolder.Data.Add(NewElement.Name, NewElement);
-#endif
+            NewElement.MyFolder.CachedData.Add(NewElement);
         }
 
-        public void LoadElement(Element MyElement, bool IsJSONFormat = false)
+        public void LoadElement(Element MyElement)
         {
-            MyElement = MyElement.Load(IsJSONFormat);
-            /*SetDataType();
-            string LoadPath = GetFolderPath() + MyElement.Name + "." + FileExtension;
-            string Script = FileUtil.Load(LoadPath);
-            //MyElement.RunScript(Script);
-            if (IsJSONFormat)
-            {
-                MyElement = Newtonsoft.Json.JsonConvert.DeserializeObject(Script) as Element;
-            }
-            else
-            {
-                System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(System.Type.EmptyTypes);
-                dynamic NewElement2 = MyConstructor.Invoke(null);
-                MyElement = NewElement2 as Element;
-                MyElement.RunScript(Script);
-            }*/
+            MyElement = MyElement.Load();
         }
         
-        public System.Collections.IEnumerator LoadAllElements()
+        public IEnumerator LoadAllElements()
         {
             Clear();
             List<string> FileNames;
@@ -179,7 +162,7 @@ namespace Zeltex
                                         FileNames.Add(ElementFolderPath + FileName);
                                     }
                                 }
-                                catch(System.FormatException e)
+                                catch(FormatException e)
                                 {
                                     Debug.LogError("[LoadAllElements] has error: " + e.ToString());
                                 }
@@ -226,7 +209,7 @@ namespace Zeltex
                     {
                         UrlRequest = new WWW(FileNames[i]);
                     }
-                    catch (System.FormatException e)
+                    catch (FormatException e)
                     {
                         Debug.LogError("Error while loading file : UrlRequest: " + FileNames[i] + ": " + e.ToString());
                     }
@@ -238,65 +221,16 @@ namespace Zeltex
                 }
                 else
                 {
-                    try
-                    {
-                        Scripts.Add(File.ReadAllText(FileNames[i]));
-                    }
-                    catch (System.FormatException e)
-                    {
-                        Debug.LogError("Error while loading file : ReadAllText: " + FileNames[i] + ": " + e.ToString());
-                    }
+                    FileReaderRoutiner MyFileReader = new FileReaderRoutiner(FileNames[i]);
+                    yield return MyFileReader.Run();
+                    Scripts.Add(MyFileReader.Result);
                 }
             }
             for (int i = 0; i < FileNames.Count; i++)
             {
                 FileNames[i] = Path.GetFileNameWithoutExtension(FileNames[i]);
             }
-            List<Element> ElementData = RetrieveElements(FileNames, Scripts);
-            for (int i = 0; i < ElementData.Count; i++)
-            {
-                Data.Add(ElementData[i].Name, ElementData[i]);
-                ElementData[i].MyFolder = (this as ElementFolder);
-            }
-        }
-
-        public List<Element> RetrieveElements(List<string> Names, List<string> Scripts)
-        {
-            List<Element> MyElements = new List<Element>();
-            for (int i = 0; i < Scripts.Count; i++)
-            {
-                try
-                {
-                    Element NewElement = Element.Load(Names[i], this as ElementFolder, Scripts[i]);
-                    if (DataFolderNames.GetDataType(FolderName) == typeof(Level))
-                    {
-                        // Do the thing!
-                        Level MyLevel = NewElement as Level;
-                        MyLevel.SetFilePathType(DataManager.Get().MyFilePathType);
-                    }
-                    if (FolderName == DataFolderNames.PolyModels)
-                    {
-                        if (VoxelManager.Get())
-                        {
-                            VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
-                        }
-                    }
-                    else if (FolderName == DataFolderNames.Voxels)
-                    {
-                        if (VoxelManager.Get())
-                        {
-                            VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
-                        }
-                    }
-                    //Debug.LogError("Loading: " + NewElement + ":" + MyScripts[i]);
-                    MyElements.Add(NewElement);
-                }
-                catch (System.FormatException e)
-                {
-                    Debug.LogError("Error while loading file: " + Names[i] + ": " + e.ToString());
-                }
-            }
-            return MyElements;
+            yield return DeserializeRoutine(FileNames, Scripts);
         }
     }
 

@@ -201,7 +201,7 @@ public class MarchingCubes
 		return normal;
 	}
 	#endregion
-	
+	/*
 	#region Lookup Table A
 	static int[] edgeTable = new int[256] {
 		0x0  , 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
@@ -498,5 +498,7 @@ public class MarchingCubes
 		new int[] {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 		new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
 	#endregion
+
+    */
 	}
 }

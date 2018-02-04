@@ -131,12 +131,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1422992918779778}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aab965a075091c4e979b4e6fddb9cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AnimateLength: 15
+  FogLerpSpeed: 0.1
 --- !u!114 &114794322518342860
 MonoBehaviour:
   m_ObjectHideFlags: 1

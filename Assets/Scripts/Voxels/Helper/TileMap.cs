@@ -201,7 +201,7 @@ namespace Zeltex
                 //Debug.LogError("Testing DivisionCount div 3: " + GetTileIndex(DivisionCount / 3, MyTexture));
                 for (int i = 0; i < MyMipMapColors.Length; i++)
                 {
-                    int OriginalTextureIndex = i * DivisionCount;
+                    //int OriginalTextureIndex = i * DivisionCount;
                     int MipMapWidth = MyTexture.width / DivisionCount2;
                     int MipMapPosX = (i / MipMapWidth);
                     int MipMapPosY = (i % MipMapWidth);
@@ -249,8 +249,8 @@ namespace Zeltex
         {
             int BufferLength = Zeltex.Voxels.PolyModel.BufferLength;
             //int BufferLength = 1;
-            int OriginalTileCountX = 8;
-            int MaxTextures = (OriginalTileCountX - BufferLength) * (OriginalTileCountX - BufferLength);
+            //int OriginalTileCountX = 8;
+            //int MaxTextures = (OriginalTileCountX - BufferLength) * (OriginalTileCountX - BufferLength);
             int TileWidth = 16 + 2 * BufferLength;  // 18
             int TileCountX = MyTexture.width / TileWidth;
             // position in texture

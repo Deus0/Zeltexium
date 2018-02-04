@@ -63,8 +63,8 @@ namespace Zeltex
         //private float rotationY = 0F;
         private float sensitivityX = 5;
         private float sensitivityY = 5;
-        private float minimumX = -360F;
-        private float maximumX = 360F;
+        //private float minimumX = -360F;
+        //private float maximumX = 360F;
         private float minimumY = -60F;
         private float maximumY = 60F;
         private Vector3 TargetRotation;
@@ -216,9 +216,16 @@ namespace Zeltex
         {
             if (Input.GetKeyDown(DropItemKey))
             {
-                /*MySkillbar.GetSkillBar().DropItem(
-                    MySkillbar.GetSelectedIndex(),
-                    MySkeleton.MyCameraBone);*/
+                Items.Item DropItem = MyCharacter.GetData().Skillbar.GetDropItem(MySkillbar.GetSelectedIndex());
+                System.Action OnFinishLoading = () =>
+                    {
+                        if (DropItem != null)
+                        {
+                            DropItem.GetSpawn().transform.position = MyCharacter.GetCameraBone().transform.position + MyCharacter.GetCameraBone().transform.forward * 0.5f;
+                            DropItem.GetSpawn().transform.rotation = MyCharacter.GetCameraBone().transform.rotation;
+                        }
+                    };
+                MyCharacter.GetData().Skillbar.DropItem(DropItem, OnFinishLoading);
             }
             // Character Interaction Key - E
             else if (Input.GetKeyDown(InteractKey1))// || Input.GetButtonDown("Fire4"))

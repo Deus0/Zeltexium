@@ -260,7 +260,6 @@ namespace Zeltex.Guis.Maker
             base.OnEnd();
             MyViewer.OnEnd();
             GetToggle("GroundToggle").isOn = false;
-            SetGround(false);
         }
         #endregion
 
@@ -306,50 +305,10 @@ namespace Zeltex.Guis.Maker
         }
         #endregion
 
-        #region UI
-        /// <summary>
-        /// Used for generically updating input buttons
-        /// </summary>
-        public override void UseInput(InputField MyInputField)
-        {
-            base.UseInput(MyInputField);
-        }
-
-        /// <summary>
-        /// Used for generically updating buttons
-        /// </summary>
-        public override void UseInput(Button MyButton)
-        {
-            if (MyButton.name == "SaveButton")
-            {
-                //DataManager.Get().Set(DataFolderNames.Skeletons, GetSelectedIndex(), 
-               //     FileUtil.ConvertToSingle(MyViewer.GetSpawn().GetComponent<Skeleton>().GetScriptList()));
-            }
-            base.UseInput(MyButton);
-            if (MyButton.name == "ExportButton")
-            {
-                //GetSelected()
-                //Debug.Log("Exporting Skeleton: " + GetSelectedName());
-                //SetSelected(FileUtil.ConvertToSingle(MyViewer.GetSpawn().GetComponent<Skeleton>().GetScriptList()));    // make sure using latest
-                //FileUtil.Export(GetSelectedName(), FileExtension, MyData[GetSelectedIndex()]);
-            }
-        }
-
-        /// <summary>
-        /// set ground in viewer
-        /// </summary>
-        public override void UseInput(Toggle MyToggle)
-        {
-            if (MyToggle.name == "GroundToggle")
-            {
-                SetGround(MyToggle.isOn);
-            }
-        }
-        #endregion
 
         #region Extra
 
-        public void Mutate()
+        /*public void Mutate()
         {
             for (int i = 0; i < MyViewer.MySpawnedSkeleton.GetBones().Count; i++)
             {
@@ -357,7 +316,7 @@ namespace Zeltex.Guis.Maker
             }
         }
 
-        public void SetGround(bool NewState)
+       / public void SetGround(bool NewState)
         {
             if (NewState)
             {
@@ -374,7 +333,7 @@ namespace Zeltex.Guis.Maker
                     Destroy(SpawnedGround);
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

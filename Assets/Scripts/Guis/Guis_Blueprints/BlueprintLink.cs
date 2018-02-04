@@ -112,7 +112,7 @@ namespace Zeltex.Guis.Blueprints
         {
             if (thisLine)
             {
-                GameObject.Destroy(thisLine.gameObject);
+                thisLine.gameObject.Die();
                 thisLine = null;
             }
             else

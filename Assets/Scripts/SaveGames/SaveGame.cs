@@ -25,9 +25,13 @@ namespace Zeltex
         {
             // Set level to newest
             List<string> LevelNames = DataManager.Get().GetNames(DataFolderNames.Levels);
-            if (LevelNames.Count > 0)
+            if (LevelNames != null && LevelNames.Count > 0)
             {
                 LevelName = LevelNames[0];
+            }
+            else if (LevelNames == null)
+            {
+                Debug.LogError("Cannot instantiate save game as level hass not been loaded yet.");
             }
         }
 

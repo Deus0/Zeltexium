@@ -29,7 +29,7 @@ namespace Zeltex.Sounds
                 MySource.spatialBlend = 1;
                 MySource.PlayOneShot(MySound, SoundVolume);
                 BulletSpawnSound.transform.SetParent(SoundManager.Get().transform);
-                Destroy(BulletSpawnSound, MySound.length); // * 0.1f
+                BulletSpawnSound.Die(MySound.length);
             }
         }
     }

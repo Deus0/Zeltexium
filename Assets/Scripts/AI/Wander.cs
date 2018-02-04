@@ -35,7 +35,7 @@ namespace Zeltex.AI
 		private float WanderLastTime = 0f;
         private Vector3 WanderPosition = new Vector3();
         private float LastAttackCheck = 0;  // check for attacking
-        private Character MyCharacter = null;
+        //private Character MyCharacter = null;
         [Header("Attacking")]
         public float CheckForAttackCooldown = 0.5f;
         public float AttackCheckRange = 5f;

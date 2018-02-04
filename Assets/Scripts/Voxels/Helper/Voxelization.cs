@@ -28,7 +28,7 @@ namespace Zeltex.Voxels
         public Mesh VoxelMesh;
         private MeshFilter MyMeshFilter;
         //private MeshRenderer MyMeshRenderer;
-        private float GridLength = 1f;
+        //private float GridLength = 1f;
         // actions
         [Header("Actions")]
         public bool GenerateVoxelMesh;
@@ -71,7 +71,7 @@ namespace Zeltex.Voxels
             OriginalMesh = MyMeshFilter.sharedMesh;
             MyBounds = OriginalMesh.bounds;
 
-            World MyWorld = gameObject.GetComponent<World>();
+            //World MyWorld = gameObject.GetComponent<World>();
             //MyWorld.UpdateBlockType(1, new Vector3(0, 0, 0));
         }
 
@@ -107,7 +107,7 @@ namespace Zeltex.Voxels
 
 		    Debug.LogError ("Converting mesh to voxels");
 		    //MyBlocks = GetManager.GetDataManager().BlockStructuresList[BlockStructureIndex].MyBlocks;
-		    float SizeOfGrid = 1f;
+		    //float SizeOfGrid = 1f;
 		    //real block size is x2 whatever i set here
 		
 		    Vector3 Bounds = InputMesh.bounds.extents;
@@ -118,8 +118,8 @@ namespace Zeltex.Voxels
 		    if (LargestSize < Bounds.z)
 			    LargestSize = Bounds.z;
 		    //LargestSize = Mathf.CeilToInt (LargestSize);
-		    GridLength = Mathf.CeilToInt (LargestSize * resolution);
-		    Vector3 GridSize = new Vector3 (GridLength, GridLength, GridLength);
+		    //GridLength = Mathf.CeilToInt (LargestSize * resolution);
+		    //Vector3 GridSize = new Vector3 (GridLength, GridLength, GridLength);
 		    BlockLength = Mathf.CeilToInt (LargestSize) / resolution;
 		    BlockSize = new Vector3 (BlockLength, BlockLength, BlockLength);
 
@@ -208,7 +208,7 @@ namespace Zeltex.Voxels
 				    for (int j = 0; j < MyBlocks.Size.y; j++)
 					    for (int k = 0; k < MyBlocks.Size.z; k++) */
 				    //{
-					    Vector3 BlockPosition = BlockSize + MyBounds.center;
+					    //Vector3 BlockPosition = BlockSize + MyBounds.center;
 					    //BlockPosition += 2f*(new Vector3(i*BlockSize.x,j*BlockSize.y,k*BlockSize.z));
 
 				    /*if (MyBlocks.GetBlockType(new Vector3(i,j,k)) == 0) {

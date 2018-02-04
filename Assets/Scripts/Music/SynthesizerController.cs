@@ -155,8 +155,16 @@ namespace Zeltex.Audio
                     }
                     LastAudioPlayed = NewAudioToPlay;
                     MySouce.clip = MyAudioClips[NewAudioToPlay];
-                    MySouce.Play();
-                    Cooldown = MySouce.clip.length;
+                    if (MySouce.clip)
+                    {
+                        MySouce.Play();
+                        Cooldown = MySouce.clip.length;
+                    }
+                    else
+                    {
+                        Debug.LogError("Cannot bake audios.");
+                        Cooldown = 0;
+                    }
                 }
             }
         }

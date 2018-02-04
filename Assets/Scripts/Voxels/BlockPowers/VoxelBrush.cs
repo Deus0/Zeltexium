@@ -22,7 +22,7 @@ namespace Zeltex.Voxels
         private string VoxelBrushType = "Air";
 		[SerializeField]
         private int VoxelBrushRange = 15;
-        private float LastUpdatedTime;
+        //private float LastUpdatedTime;
         private Inventory MyInventory;
         private Item MyItem;
         private int SelectedItemIndex;
@@ -78,7 +78,7 @@ namespace Zeltex.Voxels
 
 		public void Activate() 
 		{
-            LastUpdatedTime = Time.realtimeSinceStartup;
+            //LastUpdatedTime = Time.realtimeSinceStartup;
             if (MyCamera == null)
             {
                 MyCamera = CameraManager.Get().GetMainCamera();

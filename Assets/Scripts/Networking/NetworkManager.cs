@@ -237,7 +237,7 @@ namespace Zeltex.Networking
             LogManager.Get().Log("Disconnected from Server.", "NetworkManager");
             if (Camera.main == null)
             {
-                CameraManager.Get().SpawnCamera();
+                CameraManager.Get().SpawnMainMenuCamera();
             }
         }
     }

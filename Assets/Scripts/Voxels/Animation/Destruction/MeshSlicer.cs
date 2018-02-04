@@ -374,10 +374,10 @@ namespace Zeltex.AnimationUtilities
 		}
 		// now turn the triangle into 3 triangles
 		public void ConvertStuff(bool[] DidSlice, Vector3 Vertex1, Vector3 Vertex2, Vector3 Vertex3, List<Vector3> PositionsLeft, List<int> IndiciesLeft, List<Vector3> PositionsRight, List<int> IndiciesRight) {
-			int IndexLeft4 = PositionsLeft.Count-2;
-			int IndexLeft5 = PositionsLeft.Count-1;
-			int IndexRight4 = PositionsRight.Count-2;
-			int IndexRight5 = PositionsRight.Count-1;
+			//int IndexLeft4 = PositionsLeft.Count-2;
+			//int IndexLeft5 = PositionsLeft.Count-1;
+			//int IndexRight4 = PositionsRight.Count-2;
+			//int IndexRight5 = PositionsRight.Count-1;
 			if (!DidSlice[1]) // line 2-3 is not cut
 			{
 				AddTriangleStuff(Vertex1,

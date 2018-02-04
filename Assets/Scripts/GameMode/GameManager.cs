@@ -13,12 +13,16 @@ namespace Zeltex
     /// </summary>
     public class GameManager : ManagerBase<GameManager>
     {
+        public static bool IsCameraFixedUpdate = true;
+        public static bool IsOrbitorFixedUpdate = true;
         //private GameObject MainMenu;
         public UnityEvent OnBeginGame = new UnityEvent();
         public UnityEvent OnEndGame = new UnityEvent();
         public AudioClip OnBeginAudio;
         private bool IsEnding;
         public bool IsAllHaveStatsBar = true;
+        public LoadingGui MyLoadingGui;
+        public int TargetFrameRate = -1;
 
         public static new GameManager Get()
         {
@@ -31,6 +35,10 @@ namespace Zeltex
         // Use this for initialization
         void Start()
         {
+            if (TargetFrameRate != -1)
+            {
+                Application.targetFrameRate = TargetFrameRate;
+            }
             /*GameObject MainMenu = GuiSpawner.Get().SpawnGui("MainMenu");
             if (MainMenu)
             {
@@ -88,10 +96,6 @@ namespace Zeltex
             if (!Game.GameMode.IsPlaying)
             {
                 Game.GameMode.IsPlaying = true;
-                Debug.Log("Beginning to play game.");
-                GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
-                GuiSpawner.Get().SpawnGui("SaveGames");
-                Zeltex.Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
                 StartCoroutine(BeginGameRoutine());
             }
             else
@@ -100,27 +104,43 @@ namespace Zeltex
             }
         }
 
-        public IEnumerator BeginGameRoutineMain()
+        /*public IEnumerator BeginGameRoutineMain()
         {
             if (!Game.GameMode.IsPlaying)
             {
                 Game.GameMode.IsPlaying = true;
                 Debug.Log("Beginning to play game.");
-                Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(BeginGameRoutine());
+                yield return (BeginGameRoutine());
             }
             else
             {
                 Debug.LogError("Already playing game.");
             }
-        }
+        }*/
 
         private IEnumerator BeginGameRoutine()
         {
+            Debug.Log("Beginning to play game.");
+            GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
             GuiSpawner.Get().DisableGui("MainMenu");
-            yield return new WaitForSeconds(0.5f);
-            PoolsManager.Get().SpawnPools.Invoke();
-            OnBeginGame.Invoke();
+            Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
+            // Wait For Host Game to do its thing!
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+            System.Action OnFinishLoading = () =>
+            {
+                OnBeginGame.Invoke();
+                GuiSpawner.Get().SpawnGui("SaveGames");
+            };
+            PoolsManager.Get().SpawnPools(OnFinishLoading);
         }
 
         public void PlayCharacter()

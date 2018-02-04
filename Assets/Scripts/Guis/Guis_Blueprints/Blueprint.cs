@@ -160,7 +160,7 @@ namespace Zeltex.Guis.Blueprints
             if (MyNode != null && Nodes.Contains(MyNode))
             {
                 Nodes.Remove(MyNode);
-                Destroy(MyNode.gameObject);
+                MyNode.gameObject.Die();
             }
         }
 

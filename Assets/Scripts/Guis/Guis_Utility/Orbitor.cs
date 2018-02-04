@@ -29,8 +29,8 @@ namespace Zeltex.Guis
         [Tooltip("The linear speed of movement to the orbit position")]
 		[SerializeField]
         private float MovementSpeed = 3f;
-        [Tooltip("The linear speed of movement to the orbit position")]
-        private float RotationSpeed = 0.5f;
+       // [Tooltip("The linear speed of movement to the orbit position")]
+        //private float RotationSpeed = 0.5f;
         [SerializeField]
         private bool IsInstantOnStart;
         [Tooltip("Used to make speed instant, attaches itself as a child to the target")]
@@ -55,14 +55,14 @@ namespace Zeltex.Guis
         private ZelGui MyZelGui;
         public bool IsFreezePositionZ = false;
 
-        private UnityAction ScreenSizeChangeEvent;
+        //private UnityAction ScreenSizeChangeEvent;
         #endregion
 
         #region Mono
 
         private void Awake()
         {
-            ScreenSizeChangeEvent = OnScreenSizeChange;
+            //ScreenSizeChangeEvent = OnScreenSizeChange;
             if (IsTargetMainCamera && CameraManager.Get())
             {
                 CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChange);
@@ -116,6 +116,21 @@ namespace Zeltex.Guis
 
         void Update()
         {
+            if (!GameManager.IsOrbitorFixedUpdate)
+            {
+                Iterate(Time.deltaTime);
+            }
+        } 
+        void FixedUpdate()
+        {
+            if (GameManager.IsOrbitorFixedUpdate)
+            {
+                Iterate(Time.fixedDeltaTime);
+            }
+        }
+
+        private void Iterate(float DeltaTime)
+        {
             if (TargetSkeleton != null)
             {
                 TargetObject = TargetSkeleton.GetSkeleton().MyCameraBone;
@@ -123,7 +138,7 @@ namespace Zeltex.Guis
             if (TargetObject != null)
             {
                 CheckOrbitPosition();
-                UpdateOrbit(Time.deltaTime);
+                UpdateOrbit(DeltaTime);
             }
         }
         #endregion

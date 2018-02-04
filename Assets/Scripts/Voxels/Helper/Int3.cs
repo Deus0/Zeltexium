@@ -149,6 +149,18 @@ namespace Zeltex
 
         #region Operators
         /// <summary>
+        /// Beecome negative!
+        /// </summary>
+        public static Int3 operator -(Int3 Input)
+        {
+            Int3 Output = new Int3();
+            Output.x = Input.x * -1;
+            Output.y = Input.y * -1;
+            Output.z = Input.z * -1;
+            return Output;
+        }
+
+        /// <summary>
         ///  Overload + operator to add two Box objects.
         /// </summary>
         public static Int3 operator /(Int3 Input, float Multiplier)

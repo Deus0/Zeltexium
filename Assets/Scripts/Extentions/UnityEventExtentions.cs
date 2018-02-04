@@ -23,7 +23,7 @@ namespace Zeltex
                     UnityEditor.Events.UnityEventTools.RemovePersistentListener(MyEvent, i);
                 }
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 //Debug.LogWarning(e.ToString());
             }
@@ -42,11 +42,11 @@ namespace Zeltex
             {
                 UnityEditor.Events.UnityEventTools.AddPersistentListener(MyEvent, MyAction);
             }
-            catch (System.ArgumentException e)
+            catch (System.ArgumentException)
             {
                 MyEvent.AddListener(MyAction);
             }
-            catch (System.NullReferenceException e)
+            catch (System.NullReferenceException)
             {
 
             }
@@ -67,7 +67,7 @@ namespace Zeltex
                 {
                     UnityEditor.Events.UnityEventTools.RemovePersistentListener(MyEvent, MyAction);
                 }
-                catch (System.ArgumentException e)
+                catch (System.ArgumentException)
                 {
                     MyEvent.RemoveListener(MyAction);
                 }
@@ -87,7 +87,7 @@ namespace Zeltex
             {
                 UnityEditor.Events.UnityEventTools.AddPersistentListener<T>(MyEvent, MyAction);
             }
-            catch (System.ArgumentException e)
+            catch (System.ArgumentException)
             {
                 MyEvent.AddListener(MyAction);
             }

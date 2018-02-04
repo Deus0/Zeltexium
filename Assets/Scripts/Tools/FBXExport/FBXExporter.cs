@@ -502,7 +502,7 @@ namespace UnityFBXExporter
 
             if (path[path.Length - 1] != '/')
                 path += "/";
-            string testPath = path.Remove(path.Length - 1);
+            //string testPath = path.Remove(path.Length - 1);
 
             //			if(AssetDatabase.IsValidFolder(testPath) == false)
             //			{

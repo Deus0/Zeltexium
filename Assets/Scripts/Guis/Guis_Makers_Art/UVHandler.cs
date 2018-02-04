@@ -39,7 +39,7 @@ namespace Zeltex.Guis
             MyViewer.Select(gameObject);
             GetComponent<RawImage>().color = SelectedColor;
             OriginalAnchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            bool IsInsideRect = RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 MyViewer.GetComponent<RectTransform>(),
                 MyEventData.position,
                 Camera.main,

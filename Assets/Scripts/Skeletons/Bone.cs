@@ -500,14 +500,14 @@ namespace Zeltex.Skeletons
                 Material JointMaterial = new Material(Shader.Find("Standard"));
                 if (JointMaterial == null)
                 {
-                    MyJointCube.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
+                    MyJointCube.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
                 }
                 else
                 {
-                    MyJointCube.GetComponent<MeshRenderer>().material = new Material(JointMaterial);
+                    MyJointCube.GetComponent<MeshRenderer>().sharedMaterial = new Material(JointMaterial);
                 }
-                MyJointCube.GetComponent<MeshRenderer>().material.SetFloat("_Mode", 2);
-                MyJointCube.GetComponent<MeshRenderer>().material.color = JointColor;
+                MyJointCube.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Mode", 2);
+                MyJointCube.GetComponent<MeshRenderer>().sharedMaterial.color = JointColor;
             }
         }
 
@@ -516,12 +516,13 @@ namespace Zeltex.Skeletons
             if (BodyCube)
             {
                 Material BoneMaterial = new Material(Shader.Find("Standard"));
-                BodyCube.GetComponent<MeshRenderer>().material = new Material(BoneMaterial);
-                BodyCube.GetComponent<MeshRenderer>().material.SetFloat("_Mode", 2);
+                MeshRenderer BodyMeshRenderer = BodyCube.GetComponent<MeshRenderer>();
+                BodyMeshRenderer.sharedMaterial = new Material(BoneMaterial);
+                BodyMeshRenderer.sharedMaterial.SetFloat("_Mode", 2);
                 byte Red = (byte)(BoneColor.r + (int)Random.Range(-BoneColorMutation, BoneColorMutation));
                 byte Green = (byte)(BoneColor.g + (int)Random.Range(-BoneColorMutation, BoneColorMutation));
                 byte Blue = (byte)(BoneColor.b + (int)Random.Range(-BoneColorMutation, BoneColorMutation));
-                BodyCube.GetComponent<MeshRenderer>().material.color = new Color32(Red, Green, Blue, BoneColor.a);
+                BodyMeshRenderer.sharedMaterial.color = new Color32(Red, Green, Blue, BoneColor.a);
             }
         }
 
@@ -530,7 +531,9 @@ namespace Zeltex.Skeletons
 
         public void CreateMesh(string MeshData)
         {
-            UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(new Voxels.VoxelModel(MeshData)));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
+            VoxelModel NewMesh = new VoxelModel();
+            NewMesh.UseScript(MeshData);
+            UniversalCoroutine.CoroutineManager.StartCoroutine(CreateMeshRoutine(NewMesh));// Zeltex.Util.FileUtil.ConvertToList(MeshData)));
         }
 
         /// <summary>
@@ -574,6 +577,7 @@ namespace Zeltex.Skeletons
             VoxelMesh = NewMeshObject.transform;
             return NewMeshObject;
         }
+
         /// <summary>
 		/// Create a mesh in the timer
 		/// TODO - Make this pooled skeleton meshes
@@ -669,7 +673,7 @@ namespace Zeltex.Skeletons
         {
             if (HasMesh())
             {
-                GameObject.Destroy(VoxelMesh.gameObject);
+                VoxelMesh.gameObject.Die();
             }
         }
         #endregion

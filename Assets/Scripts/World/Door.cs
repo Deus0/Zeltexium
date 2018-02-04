@@ -250,7 +250,7 @@ namespace Zeltex.WorldUtilities
             // if toggling during animation
             if (IsAnimating())
             {
-                float TimePassedSinceLastToggle = Time.time - TimeBegun;
+                //float TimePassedSinceLastToggle = Time.time - TimeBegun;
                 if (IsOpen)
                 {
                     TimeToAnimate = (TimePassed); // percentage through kinda thing!

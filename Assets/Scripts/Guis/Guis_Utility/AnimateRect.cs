@@ -23,8 +23,8 @@ namespace Zeltex.Guis
         private float AnimationLength = 1f;
         private Vector2 BeginPosition;
         private Vector2 EndPosition;
-        private Vector2 MyPosition;
-        private Vector2 TargetOffset;
+        //private Vector2 MyPosition;
+        //private Vector2 TargetOffset;
         private bool IsForward;
         private float TimePassed;
 
@@ -48,7 +48,7 @@ namespace Zeltex.Guis
         {
             IsForward = !IsForward; // flip direction
             //Debug.Log("Toggling: " + IsForward);
-            MyPosition = gameObject.GetComponent<RectTransform>().anchoredPosition;
+            //MyPosition = gameObject.GetComponent<RectTransform>().anchoredPosition;
             if (TimeStarted == -1)
             {
                 AnimationLength = OriginalAnimationLength;
@@ -80,11 +80,11 @@ namespace Zeltex.Guis
                 }*/
                 if (IsForward)
                 {
-                    gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(MyPosition, EndPosition + TargetOffset, TimePassed / AnimationLength);
+                    //gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(MyPosition, EndPosition + TargetOffset, TimePassed / AnimationLength);
                 }
                 else
                 {
-                    gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(MyPosition, BeginPosition + TargetOffset, TimePassed / AnimationLength);
+                    //gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(MyPosition, BeginPosition + TargetOffset, TimePassed / AnimationLength);
                 }
                 if (TimePassed >= AnimationLength)
                 {

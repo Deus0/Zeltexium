@@ -82,10 +82,10 @@ namespace Zeltex.Guis.Maker
                 {
                     GetSelectedItem().SetTags(MyInputField.text);
                 }
-                else if (MyInputField.name == "CommandsInput")
-                {
-                    GetSelectedItem().SetCommands(MyInputField.text);
-                }
+                //else if (MyInputField.name == "CommandsInput")
+                //{
+                //    GetSelectedItem().SetCommands(MyInputField.text);
+                //}
             }
         }
 
@@ -204,7 +204,7 @@ namespace Zeltex.Guis.Maker
                 GetInput("NameInput").text = SelectedItem.Name;
                 GetInput("DescriptionInput").text = SelectedItem.GetDescription();
                 GetInput("TagsInput").text = "" + SelectedItem.GetTags();
-                GetInput("CommandsInput").text = "" + SelectedItem.GetCommands();
+                //GetInput("CommandsInput").text = "" + SelectedItem.GetCommands();
                 GetImage("TextureImage").texture = SelectedItem.GetTexture();
                 //GetToggle("UniqueTextureToggle").isOn = SelectedItem.IsUniqueTexture;
                 UpdateMeshDropdown();

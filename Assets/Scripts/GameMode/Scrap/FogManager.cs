@@ -9,7 +9,6 @@ namespace Zeltex.Game
     /// </summary>
     public class FogManager : MonoBehaviour
     {
-        float TimeBegin;
         public float AnimateLength = 15f;
         private float InGameFog = 0.2f;
         private float MainMenuFog = 0.1f;
@@ -17,6 +16,8 @@ namespace Zeltex.Game
         private float TimeBegunFog;
         private float FogAddition = 0.04f;
         private float FogTimeScale = 0.5f;
+        private float MyFog = 0;
+        public float FogLerpSpeed = 1f;
 
         void Start()
         {
@@ -54,6 +55,7 @@ namespace Zeltex.Game
             IsInGameFog = true;
             EnableFog(GetInGameFog());
         }
+
         private void EnableMainMenuFog()
         {
             TimeBegunFog = Time.time;
@@ -65,13 +67,13 @@ namespace Zeltex.Game
         {
             AnimateFog();
         }
+
         /// <summary>
         /// Begins fog animation, enabling it
         /// </summary>
         public void EnableFog(float NewFogDensity)
         {
             RenderSettings.fog = true;
-            TimeBegin = Time.time;
             RenderSettings.fogDensity = NewFogDensity;
         }
 
@@ -82,14 +84,17 @@ namespace Zeltex.Game
 
         void AnimateFog()
         {
+            float NewFog;
             if (IsInGameFog)
             {
-                RenderSettings.fogDensity = GetInGameFog() + FogAddition * Mathf.Sin((TimeBegunFog - Time.time) * FogTimeScale);
+                NewFog = GetInGameFog() + FogAddition * Mathf.Sin((TimeBegunFog - Time.time) * FogTimeScale);
             }
             else
             {
-                RenderSettings.fogDensity = GetMainMenuFog() + FogAddition * Mathf.Sin((TimeBegunFog - Time.time) * FogTimeScale);
+                NewFog = GetMainMenuFog() + FogAddition * Mathf.Sin((TimeBegunFog - Time.time) * FogTimeScale);
             }
+            MyFog = Mathf.Lerp(MyFog, NewFog, Time.deltaTime * FogLerpSpeed);
+            RenderSettings.fogDensity = MyFog;
             /*float TimePassed = Time.time - TimeBegin;
             if (TimePassed <= AnimateLength)
             {

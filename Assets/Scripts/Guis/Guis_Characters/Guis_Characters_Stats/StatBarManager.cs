@@ -30,7 +30,7 @@ namespace Zeltex.Guis.Characters
 		private List<GameObject> SpawnedBars = new List<GameObject>();
         private List<Color32> MyColours = new List<Color32>();
         // gets linked to tooltips
-        private GameObject MyTooltipGui;
+        //private GameObject MyTooltipGui;
         public GameObject NameBar;
         //public GameObject NameBarPrefab;
 
@@ -59,7 +59,7 @@ namespace Zeltex.Guis.Characters
         #region GettersAndSetters
         public void SetTooltip(GameObject MyTooltip_)
         {
-            MyTooltipGui = MyTooltip_;
+           // MyTooltipGui = MyTooltip_;
         }
         public void SetTarget(GameObject MyTarget_)
         {
@@ -180,12 +180,11 @@ namespace Zeltex.Guis.Characters
         /// </summary>
         private void Clear()
         {
-            //Destroy(NameBar);
             for (int i = 0; i < SpawnedBars.Count; i++)
             {
                 if (SpawnedBars[i])
                 {
-                    Destroy(SpawnedBars[i]);   // otherwise they are still in the transform.childCount thingo!
+                    SpawnedBars[i].Die();  // otherwise they are still in the transform.childCount thingo!
                 }
             }
             SpawnedBars.Clear();
@@ -239,8 +238,7 @@ namespace Zeltex.Guis.Characters
             CharacterGuiHandle MyCharacterGuiHandle = gameObject.GetComponent<CharacterGuiHandle>();
             if (MyCharacterGuiHandle == null)
             {
-                Debug.LogError("MyCharacterGuiHandle is null inside: " + name);
-                return;
+                MyCharacterGuiHandle = gameObject.AddComponent<CharacterGuiHandle>();
             }
             Character MyCharacter = MyCharacterGuiHandle.GetCharacter();
             if (MyCharacter != null)

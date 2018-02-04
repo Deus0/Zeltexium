@@ -19,7 +19,7 @@ namespace Zeltex.Cameras
 	    //private float maxShift = 1000.0f; //Maximum speed when holdin gshift
 	    private float camSens = 0.2f; //How sensitive it with mouse
 	    private Vector3 LastMousePosition = new Vector3(0,0,0); //kind of in the middle of the screen, rather than at the top (play)
-	    private float totalRun = 1.0f;
+	    //private float totalRun = 1.0f;
         private bool IsMoving = false;
         private Camera MyCamera;
         private Camera MainCamera;
@@ -134,9 +134,8 @@ namespace Zeltex.Cameras
                         break;
                     }
                 }
-                if (MyViewer == null)
+                if (MyViewer == null && MyResults.Count == 0)
                 {
-                    Debug.LogError("Hitting but no viewer");
                     BeginMainCamera();
                 }
             }

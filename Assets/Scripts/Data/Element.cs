@@ -8,13 +8,13 @@ using System;
 namespace Zeltex
 {
 
-    [System.Serializable]
+    [Serializable]
     public class ElementEvent : UnityEvent<Element> { }
 
     /// <summary>
     /// Parent class for all data objects
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class Element : System.Object
     {
         [Tooltip("A unique identifier for the Element")]
@@ -122,30 +122,6 @@ namespace Zeltex
         }
 
         /// <summary>
-        /// Other
-        /// </summary>
-        /*public string SetName(int FileIndex, string NewName)
-        {
-            return SetName(GetName(FileIndex), NewName);
-        }*/
-
-        /// <summary>
-        /// Base for getting script
-        /// </summary>
-        public virtual string GetScript()
-        {
-            return "";
-        }
-
-        /// <summary>
-        /// Base for running script
-        /// </summary>
-        public virtual void RunScript(string Script)
-        {
-
-        }
-
-        /// <summary>
         /// Whether the element needs to save or not
         /// </summary>
         public bool CanSave()
@@ -182,9 +158,14 @@ namespace Zeltex
                        Name + "." + GetFileExtention();
         }
 
+        /// <summary>
+        /// Uses JSON to Srialize the object
+        /// </summary>
         public string GetSerial()
         {
-            return JsonConvert.SerializeObject(this);
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            return JsonConvert.SerializeObject(this, MySettings);
         }
 
         public void Save(bool IsForce = false)
@@ -308,37 +289,45 @@ namespace Zeltex
 		#region Loading
 
 		public T Clone<T>() where T : Element
-		{
-			T NewElement = JsonConvert.DeserializeObject(GetSerial(), typeof(T)) as T;
+        {
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            T NewElement = JsonConvert.DeserializeObject(GetSerial(), typeof(T), MySettings) as T;
             NewElement.OnLoad();
             return NewElement;
 		}
 
 		public Element Clone(System.Type DataType)
-		{
-			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), DataType) as Element;
+        {
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            Element NewElement = JsonConvert.DeserializeObject(GetSerial(), DataType, MySettings) as Element;
             NewElement.OnLoad();
             return NewElement;
 		}
 		public Element Clone()
-		{
-			Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetType()) as Element;   //GetDataType()
+        {
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            Element NewElement = JsonConvert.DeserializeObject(GetSerial(), GetType(), MySettings) as Element;   //GetDataType()
             NewElement.OnLoad();
             return NewElement;
 		}
 
-		public Element Load(bool IsJSONFormat = true)
+		public Element Load()
 		{
 			string Script = Util.FileUtil.Load(GetFullFilePath());
-			return Load(Script, IsJSONFormat);
+			return Load(Script);
 		}
 
 		public Element Load(string Script, System.Type DataType)
         {
             Element MyElement;
-            try 
+            try
             {
-                MyElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+                JsonSerializerSettings MySettings = new JsonSerializerSettings();
+                MySettings.Formatting = DataManager.Get().GetFormat();
+                MyElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
             }
             catch (System.ArgumentException e) 
             {
@@ -351,25 +340,15 @@ namespace Zeltex
             }
             return MyElement;
 		}
-		public Element Load(string Script, bool IsJSONFormat = true)
-		{
+
+
+		public Element Load(string Script)  //, bool IsJSONFormat = true
+        {
 			Element NewElement;
 			DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
-			if (IsJSONFormat)
-			{
-				NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-			}
-			else
-			{
-				#if NET_4_6
-				System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(Type.EmptyTypes);
-				dynamic NewElement2 = MyConstructor.Invoke(null);
-				NewElement = NewElement2 as Element;
-				NewElement.RunScript(Script);
-				#else
-				NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-				#endif
-			}
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            NewElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
 			NewElement.Name = Name;
 			NewElement.MyFolder = MyFolder;
             OnLoad();
@@ -387,7 +366,9 @@ namespace Zeltex
                 string Script = Util.FileUtil.Load(GetFullFilePath());
                 Debug.Log("Reverting element " + Name + " with script:\n" + Script);
                 DataType = DataFolderNames.GetDataType(MyFolder.FolderName);
-                Element NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
+                JsonSerializerSettings MySettings = new JsonSerializerSettings();
+                MySettings.Formatting = DataManager.Get().GetFormat();
+                Element NewElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
                 NewElement.Name = Name;
                 NewElement.MyFolder = MyFolder;
                 OnLoad();
@@ -402,21 +383,22 @@ namespace Zeltex
         public static Element Load(string NewName, ElementFolder NewFolder, string Script)
         {
             Element NewElement = new Element();
-            Type DataType = DataFolderNames.GetDataType(NewFolder.FolderName);
-            NewElement = JsonConvert.DeserializeObject(Script, DataType) as Element;
-            if (NewElement == null)
+            if (Script == null)
             {
-                //System.Reflection.ConstructorInfo MyConstructor = DataType.GetConstructor(new Type[] { DataType });
-                //dynamic NewElement2 = MyConstructor.Invoke(null);
-                // NewElement = NewElement2 as Element;
+                Debug.LogError("Error loading " + NewName + " as null script loaded.");
+                return NewElement;
             }
+            Type DataType = DataFolderNames.GetDataType(NewFolder.FolderName);
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            NewElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
             if (NewElement != null)
             {
                 NewElement.Name = NewName;
                 NewElement.MyFolder = NewFolder;
+                NewElement.OldName = NewElement.Name;
+                NewElement.OnLoad();
             }
-            NewElement.OldName = NewElement.Name;
-            NewElement.OnLoad();
             return NewElement;
         }
 
@@ -433,14 +415,13 @@ namespace Zeltex
 
 		public virtual void Spawn()
 		{
-			
+            Debug.Log(Name + " Has no Spawn implemented.");
 		}
 
 		public virtual void DeSpawn()
-		{
-
-
-		}
+        {
+            Debug.Log(Name + " Has no Spawn implemented.");
+        }
 
 		public virtual bool HasSpawned()
 		{

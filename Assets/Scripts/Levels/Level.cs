@@ -29,20 +29,15 @@ namespace Zeltex
         [SerializeField, JsonProperty]
         private Vector3 SpawnPoint;
 
-        //[SerializeField, JsonIgnore]
-        //private string MyScript = "";
-        // The world loaded for the level
         [SerializeField, JsonIgnore]
         private World MyWorld;
-        /// <summary>
-        /// Characters linked to a level
-        /// </summary>
+        // Characters linked to a level
         [SerializeField, JsonIgnore]
         protected List<Character> MyCharacters = new List<Character>();
         [SerializeField, JsonProperty]
         protected int CharactersCount = 0;
         [SerializeField, JsonIgnore]
-        private Zeltex.Util.FilePathType MyFilePathType;
+        private Zeltex.Util.FilePathType MyFilePathType = Zeltex.Util.FilePathType.StreamingPath;
 
         #region Overrides
 
@@ -66,44 +61,6 @@ namespace Zeltex
             IsInfinite = false;
             IsGenerateTerrain = false;
         }
-
-        /*public override string GetScript()
-        {
-            string Script = "";
-            if (IsGenerateTerrain)
-            {
-                Script += "GenerateTerrain" + "\n";
-            }
-            if (IsInfinite)
-            {
-                Script += "Infinite" + "\n";
-            }
-            if (Script != "")
-            {
-                Script.Remove(Script.Length - 1);
-            }
-            Debug.LogError("Saving level: " + Script);
-            return Script;
-        }
-
-        public override void RunScript(string Script)
-        {
-            SetDefaults();
-            string[] Data = Script.Split('\n');
-            for (int i = 0; i< Data.Length; i++)
-            {
-                if (Data[i].Contains("GenerateTerrain"))
-                {
-                    IsGenerateTerrain = true;
-                }
-                else if (Data[i].Contains("Infinite"))
-                {
-                    IsInfinite = true;
-                }
-            }
-            MyScript = Script;
-            //Debug.LogError("Run script of level: " + Script);
-        }*/
 
         #endregion
 
@@ -173,20 +130,32 @@ namespace Zeltex
         #endregion
 
         #region Spawning
+        public bool IsSpawning;
 
         public override void Spawn()
         {
-            Debug.Log(Name + " Is Spawning in game.");
-            WorldManager.Get().LoadLevel(this);
+            if (!IsSpawning)
+            {
+                Debug.Log(Name + " Is Spawning in game.");
+                RoutineManager.Get().StartCoroutine(SpawnRoutine());
+            }
+        }
+
+        public IEnumerator SpawnRoutine()
+        {
+            IsSpawning = true;
+            yield return WorldManager.Get().LoadLevelWorldless(this);
+            IsSpawning = false;
         }
 
         public override void DeSpawn()
         {
+            Guis.Characters.CharacterGuiManager.Get().ReturnAllObjects();
             for (int i = 0; i < MyCharacters.Count; i++)
             {
                 CharacterManager.Get().ReturnObject(MyCharacters[i]);
             }
-            WorldManager.Get().Destroy(MyWorld);
+            WorldManager.Get().Remove(MyWorld);
         }
 
         public override bool HasSpawned()
@@ -214,7 +183,7 @@ namespace Zeltex
             if (MyCharacters.Contains(NewCharacter) == false)
             {
                 MyCharacters.Add(NewCharacter);
-                //CharactersCount = MyCharacters.Count;
+                CharactersCount = MyCharacters.Count;
                 //OnModified();
             }
         }
@@ -250,8 +219,13 @@ namespace Zeltex
                 MyData.RefreshTransform();
                 if (MyData.CanSave() || IsForceSaveAll)
                 {
-                    string SerializedCharacterData = MyData.GetSerial();
                     string CharacterPath = GetFilePath(MyCharacter, SaveFolderName);
+                    if (CharacterPath != MyData.LoadPath)
+                    {
+                        FileManagement.DeleteFile(MyData.LoadPath, true);
+                    }
+                    string SerializedCharacterData = MyData.GetSerial();
+                    Debug.Log("Saving Character to Path: " + CharacterPath);
                     Util.FileUtil.Save(CharacterPath, SerializedCharacterData);
                     MyData.OnSaved();
                 }
@@ -269,12 +243,13 @@ namespace Zeltex
                 foreach (KeyValuePair<Int3, Chunk> MyChunkDataPair in GetWorld().MyChunkData)
                 {
                     Chunk MyChunk = MyChunkDataPair.Value;
-                    if (MyChunk && (MyChunk.IsDirtyTrigger() || IsForceSaveAll))
+                    if (MyChunk && (MyChunk.CanSave() || IsForceSaveAll))
                     {
                         string ChunkData = Util.FileUtil.ConvertToSingle(MyChunk.GetScript());
                         string ChunkPath = GetFilePath(MyChunk, SaveFolderName);
                         Debug.Log("Saving chunk to: " + ChunkPath);
                         Util.FileUtil.Save(ChunkPath, ChunkData);
+                        MyChunk.OnSaved();
                     }
                     else
                     {
@@ -312,29 +287,34 @@ namespace Zeltex
         {
             if (SaveFolderName == "")
             {
-                return GetFolderPath() + MyCharacter.name + "." + CharacterFileExtension;
+                return GetFolderPath() + "Characters/" +
+                    //"Chunk_" + MyCharacter.GetChunkPosition().x + "_" + MyCharacter.GetChunkPosition().y + "_" + MyCharacter.GetChunkPosition().z + "_" + 
+                    MyCharacter.name + "." + CharacterFileExtension;
             }
             else
             {
-                return GetSaveFolderPath(SaveFolderName) + MyCharacter.name + "." + CharacterFileExtension;
+                return GetSaveFolderPath(SaveFolderName) + "Characters/" +
+                    //"Chunk_" + MyCharacter.GetChunkPosition().x + "_" + MyCharacter.GetChunkPosition().y + "_" + MyCharacter.GetChunkPosition().z + "_" + 
+                    MyCharacter.name + "." + CharacterFileExtension;
             }
         }
 
-        public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
+        /*public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
         {
             if (SaveFolderName == "")
             {
-                return GetFolderPath() + CharacterName + "." + CharacterFileExtension;
+                return GetFolderPath() + "Characters/" + CharacterName + "." + CharacterFileExtension;
             }
             else
             {
-                return GetSaveFolderPath(SaveFolderName) + CharacterName + "." + CharacterFileExtension;
+                return GetSaveFolderPath(SaveFolderName) + "Characters/" + CharacterName + "." + CharacterFileExtension;
             }
-        }
+        }*/
+
         public string GetSaveFolderPath(string SaveFolderName)
         {
             //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
-            string FolderPath = DataManager.Get().GetResourcesPath(Util.FilePathType.PersistentPath) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
+            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
             if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
             {
                 Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);

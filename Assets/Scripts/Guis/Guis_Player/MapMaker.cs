@@ -69,11 +69,6 @@ namespace Zeltex.Guis.Maker
 
         #region Mono
 
-        void OnLevelWasLoaded(int level)
-        {
-            Debug.Log("MapMaker OnLevelWasLoaded " + level);
-        }
-
         void OnGui()
         {
             if (IsDebugGui)

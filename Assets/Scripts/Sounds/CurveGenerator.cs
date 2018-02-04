@@ -20,7 +20,7 @@ namespace Zeltex
 			float NoiseValue = 1f;
 			public float CurveFrequency = 1f;
 			public int Mode = 0;
-			float TimeLength = 1;
+			//float TimeLength = 1;
 			[Header("References")]
 			public CurveRenderer MyWave;
 			public Text MyTimeLabel;
@@ -77,7 +77,7 @@ namespace Zeltex
 			{
 				if (MyInput.name == "TimeInput")
 				{
-					TimeLength = float.Parse(MyInput.text);
+					//TimeLength = float.Parse(MyInput.text);
 				}
 			}
 

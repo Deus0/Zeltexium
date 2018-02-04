@@ -113,10 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4251e5d2cb407174ebcad408126a815a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 4193762903247914}
   motionBob:
-    HorizontalBobRange: 0.005
-    VerticalBobRange: 0.02
+    HorizontalBobRange: 0.001
+    VerticalBobRange: 0.001
     Bobcurve:
       serializedVersion: 2
       m_Curve:
@@ -147,12 +146,16 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    VerticaltoHorizontalRatio: 4
+    VerticaltoHorizontalRatio: 1
   jumpAndLandingBob:
-    BobDuration: 0.2
-    BobAmount: 0.05
-  StrideInterval: 4
+    BobDuration: 0.1
+    BobAmount: 0.02
+  StrideInterval: 1
   RunningStrideLengthen: 0.722
+  FollowVelocityLerpSpeed: 3
+  LerpSpeed: 6
+  RunLerpSpeed: 20
+  RotateLerpSpeed: 14
 --- !u!114 &114744114969261060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,26 +217,27 @@ MonoBehaviour:
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       SavedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       RenamedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       MovedEvent:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      HasChanged: 0
       ElementData:
-        _keys: []
-        _values: []
+        MyKeys: []
+        MyValues: []
     IsDrawGui: 0
     IsDefaultGui: 0
     ElementLink: 

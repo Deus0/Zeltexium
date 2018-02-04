@@ -36,7 +36,7 @@ namespace Zeltex.Tools
         private Vector3 MoveScale = new Vector3(10, 5, 10);
         private Ray RaycastRay;
         private RaycastHit RaycastHit;
-        private GizmoHandle RaycastGizmoHandle;
+        //private GizmoHandle RaycastGizmoHandle;
         private Vector2 RaycastMousePosition;
 
         private bool WasRayHit;
@@ -105,7 +105,7 @@ namespace Zeltex.Tools
             WasRayHit = true;
             RaycastRay = MyRay;
             RaycastHit = MyHit;
-            RaycastGizmoHandle = MyHandle;
+            //RaycastGizmoHandle = MyHandle;
             RaycastMousePosition = Input.mousePosition;
         }
 

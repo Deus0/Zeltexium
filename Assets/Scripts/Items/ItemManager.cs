@@ -111,37 +111,6 @@ namespace Zeltex.Items
             ItemWorld.transform.SetParent(GameObject.Find("ItemHandlers").transform);
             ItemWorld.name = MyItem.Name;
             ItemWorld.transform.eulerAngles += new Vector3(0, 180, 0);
-            //if (MyItem.MeshType == ItemMeshType.VoxelReference || MyItem.MeshType == ItemMeshType.Voxel)
-            {
-                /*World MyItemWorld = ItemWorld.AddComponent<World>();
-                MyItemWorld.IsConvex = true;
-                MyItemWorld.MyDataBase = GameObject.Find("World").GetComponent<World>().MyDataBase;
-                MyItemWorld.MyUpdater = GameObject.Find("World").GetComponent<World>().MyUpdater;
-                MyItemWorld.MyMaterials = GameObject.Find("World").GetComponent<World>().MyMaterials;*/
-                //StartCoroutine(LoadItemInWorld(MyItemWorld, Zeltex.Util.FileUtil.ConvertToList(MyItem.MyModel)));
-            }
-            //else
-            {
-                // Make into mesh
-                /*MeshFilter MyFilter = ItemWorld.AddComponent<MeshFilter>();
-                MeshCollider MyMeshCollider = ItemWorld.AddComponent<MeshCollider>();
-                MeshRenderer MyRenderer = ItemWorld.AddComponent<MeshRenderer>();
-                if (MyFilter)
-                {
-                    //Debug.LogError("Getting mesh for item: " + MyItem.Name + " of mesh name: " + MyItem.MeshName);
-                    Mesh NewMesh = MyItem.GetMesh();
-                    if (NewMesh != null)
-                    {
-                        MyFilter.sharedMesh = NewMesh;
-                        MyMeshCollider.sharedMesh = NewMesh;
-                    }
-                }
-                if (MyRenderer)
-                {
-                    MyRenderer.material = GameObject.Find("World").GetComponent<Zeltex.Voxels.World>().MyMaterials[0];
-                    //MyRenderer.material = MyItem.GetMaterial();
-                }*/
-            }
             ItemHandler MyItemHandler = ItemWorld.GetComponent<ItemHandler>();
             MyItemHandler.SetItem(MyItem.Clone<Item>());
             MyItemHandler.DestroyInTime(60 + Random.Range(-30, 30));

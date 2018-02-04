@@ -270,19 +270,11 @@ namespace Zeltex.Sound
 		{
             if (MyGridX)
             {
-#if UNITY_EDITOR
-                DestroyImmediate(MyGridX);
-#else
-                Destroy(MyGridX);
-#endif
+                MyGridX.Die();
             }
             if (MyGridY)
             {
-#if UNITY_EDITOR
-                DestroyImmediate(MyGridY);
-#else
-                Destroy(MyGridY);
-#endif
+                MyGridY.Die();
             }
             // Grid
             MyGridX = new GameObject();

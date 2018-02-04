@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using Zeltex.Util;
@@ -75,7 +76,7 @@ namespace Zeltex.Guis.Maker
 		/// </summary>
 		protected override void AddData()
 		{
-            AudioClip MyClip = new AudioClip();
+            //AudioClip MyClip = new AudioClip();
 			//DataManager.Get().AddSound(DataManagerFolder, MyClip);
             //Data.Add(MyClip);
             //MyNames.Add("Sound " + MyNames.Count);

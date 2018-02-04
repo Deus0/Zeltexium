@@ -1,1 +1,9 @@
-{"ModelID":"","MyModel":null,"TextureMapID":0,"MaterialID":0,"Commands":[],"MyStats":null,"DropItem":null,"Name":"Air"}
+{
+  "ModelID": "",
+  "TextureMapID": 0,
+  "MaterialID": 0,
+  "Commands": [],
+  "MyStats": null,
+  "DropItem": null,
+  "Name": "Air"
+}

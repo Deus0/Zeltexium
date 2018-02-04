@@ -23,7 +23,6 @@ namespace Zeltex.Guis
         {
             if (PreviousGui != null)
             {
-                // Destroy(SpawnedGui);
                 GuiSpawner.Get().DestroySpawn(PreviousGui);
             }
             SpawnGui(GuiName);
@@ -35,7 +34,6 @@ namespace Zeltex.Guis
             {
                 if (SpawnedGui != null)
                 {
-                   // Destroy(SpawnedGui);
                     GuiSpawner.Get().DestroySpawn(SpawnedGui);
                 }
 
@@ -61,10 +59,6 @@ namespace Zeltex.Guis
                 {
                     Debug.LogError("Unable to spawn gui: " + GuiName);
                 }
-                /*if (PreviousGui)
-                {
-                    Destroy(PreviousGui);
-                }*/
             }
         }
 

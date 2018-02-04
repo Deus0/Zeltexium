@@ -167,14 +167,6 @@ namespace Zeltex.Saves
         }
 
         /// <summary>
-        /// Used when loading a saved game
-        /// </summary>
-       // private void SetSaveGameName(string NewName)
-        //{
-        //    Voxels.WorldManager.SaveGameName = NewName;
-        //}
-
-        /// <summary>
         /// Creates a new game save file!
         /// </summary>
         private IEnumerator CreateNewGame()
@@ -183,8 +175,7 @@ namespace Zeltex.Saves
             GuiSpawner.Get().DestroySpawn("MainMenu");
             OnConfirm.Invoke();
             GetComponent<ZelGui>().TurnOff();
-            LoadingGui.Get().SetPercentage(0);
-            LoadingGui.Get().MyZel.TurnOn();
+            GameManager.Get().MyLoadingGui.SetPercentage(0);
             //GetButton("PlayGameButton").interactable = true;
             DataManager.Get().AddElement(DataFolderNames.Saves, NewGame);
             DataManager.Get().SaveElement(NewGame);
@@ -227,24 +218,14 @@ namespace Zeltex.Saves
                 () =>
                 {
                     ChunksLoaded++;
-                    LoadingGui.Get().SetPercentage( ChunksLoaded / MaxLoading);
+                    GameManager.Get().MyLoadingGui.SetPercentage( ChunksLoaded / MaxLoading);
                 }));
-            LoadingGui.Get().SetPercentage(1f);
+            GameManager.Get().MyLoadingGui.SetPercentage(1f);
 
             for (int i = 0; i < 120; i++)
             {
                 yield return null;
             }
-            // Camera and possession
-            /* Camera MyCamera = CameraManager.Get().SpawnGameCamera();
-             if (NewGame.MyCharacter)
-             {
-                 MyCamera.transform.SetParent(NewGame.MyCharacter.GetCameraBone());
-             }
-             MyCamera.transform.localPosition = Vector3.zero;
-             MyCamera.transform.localEulerAngles = Vector3.zero;
-             CameraManager.Get().EnableGameCamera();
-             Possess.PossessCharacter(NewGame.MyCharacter, MyCamera);*/
             OnLoadedGame(NewGame);
             DataManager.Get().SaveElement(NewGame);
         }
@@ -291,8 +272,7 @@ namespace Zeltex.Saves
                 if (MyGame != null)
                 {
                     GetComponent<ZelGui>().TurnOff();
-                    LoadingGui.Get().SetPercentage(0);
-                    LoadingGui.Get().MyZel.TurnOn();
+                    GameManager.Get().MyLoadingGui.SetPercentage(0);
                     Level MyLevel = MyGame.GetLevel();// //DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
 
                     if (MyLevel != null)
@@ -312,22 +292,18 @@ namespace Zeltex.Saves
                                 MyGame,
                                 () => {
                                     ChunksLoaded++;
-                                    LoadingGui.Get().SetPercentage(ChunksLoaded / MaxLoading);
+                                    GameManager.Get().MyLoadingGui.SetPercentage(ChunksLoaded / MaxLoading);
                                 }));
-                        LoadingGui.Get().SetPercentage(1f);
+                        GameManager.Get().MyLoadingGui.SetPercentage(1f);
 
                         yield return null;
                         OnLoadedGame(MyGame);
-                        /*for (int i = 0; i < 120; i++)
-                        {
-                            yield return null;
-                        }*/
                     }
                     else
                     {
                         Debug.LogError("Failure to find level: " + MyGame.LevelName);
                         // go to default level now with character
-                        LoadingGui.Get().MyZel.TurnOff();
+                        GameManager.Get().MyLoadingGui.TurnOff();
                     }
                 }
                 else
@@ -380,7 +356,7 @@ namespace Zeltex.Saves
                     Debug.LogError("Could not begin game for bot: " + i);
                 }
             }
-            LoadingGui.Get().MyZel.TurnOff();
+            GameManager.Get().MyLoadingGui.TurnOff();
         }
 
 

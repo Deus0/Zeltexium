@@ -144,13 +144,13 @@ namespace Zeltex.Guis
         public void ClearMesh()
         {
             GetSpawn().GetComponent<PolyModelHandle>().ClearHandlers();
-            if (GetSpawn().GetComponent<MeshFilter>().mesh == null)
+            if (GetSpawn().GetComponent<MeshFilter>().sharedMesh == null)
             {
-                GetSpawn().GetComponent<MeshFilter>().mesh = new Mesh(); // clear mesh
+                GetSpawn().GetComponent<MeshFilter>().sharedMesh = new Mesh(); // clear mesh
             }
             else
             {
-                GetSpawn().GetComponent<MeshFilter>().mesh.Clear();
+                GetSpawn().GetComponent<MeshFilter>().sharedMesh.Clear();
             }
         }
 
@@ -159,23 +159,23 @@ namespace Zeltex.Guis
         /// </summary>
         private void UpdateMesh(MeshFilter MyMeshFilter, MeshRenderer MyMeshRenderer, MeshCollider MyMeshCollider, MeshData MyMeshData)
         {
-            if (MyMeshFilter.mesh == null)
+            if (MyMeshFilter.sharedMesh == null)
             {
-                MyMeshFilter.mesh = new Mesh(); // clear mesh
+                MyMeshFilter.sharedMesh = new Mesh(); // clear mesh
             }
             else
             {
-                MyMeshFilter.mesh.Clear();
+                MyMeshFilter.sharedMesh.Clear();
             }
-            MyMeshFilter.mesh.vertices = MyMeshData.GetVerticies();
-            MyMeshFilter.mesh.triangles = MyMeshData.GetTriangles();
-            MyMeshFilter.mesh.uv = MyMeshData.GetTextureCoordinates();
-            MyMeshFilter.mesh.SetColors(MyMeshData.GetColors());
-            MyMeshFilter.mesh.RecalculateNormals();
+            MyMeshFilter.sharedMesh.vertices = MyMeshData.GetVerticies();
+            MyMeshFilter.sharedMesh.triangles = MyMeshData.GetTriangles();
+            MyMeshFilter.sharedMesh.uv = MyMeshData.GetTextureCoordinates();
+            MyMeshFilter.sharedMesh.SetColors(MyMeshData.GetColors());
+            MyMeshFilter.sharedMesh.RecalculateNormals();
             // colliders
             if (MyMeshCollider)
             { 
-                MyMeshCollider.sharedMesh = MyMeshFilter.mesh;   // to make sure it resets
+                MyMeshCollider.sharedMesh = MyMeshFilter.sharedMesh;   // to make sure it resets
             }
         }
         #endregion

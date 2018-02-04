@@ -27,7 +27,7 @@ namespace Zeltex.Networking
                 }
                 else
                 {
-                    Destroy(this);
+                    this.Die();
                     return;
                 }
             }

@@ -51,7 +51,7 @@ namespace Zeltex.Guis.Maker
 
         public override void OnEnd()
         {
-            WorldManager.Get().Destroy(MyWorld);
+            WorldManager.Get().Remove(MyWorld);
             Clear();
         }
 
@@ -164,7 +164,6 @@ namespace Zeltex.Guis.Maker
                 Camera.main.cullingMask = LayerManager.Get().ViewerLayer;
                 Billboard.IsLookAtMainCamera = false;
                 MyPlayer.OnDeath();
-				//Destroy(MyPlayer);
 				MyPlayer = null;
 			}
         }

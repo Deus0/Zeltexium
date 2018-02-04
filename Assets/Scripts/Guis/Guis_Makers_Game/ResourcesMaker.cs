@@ -33,14 +33,14 @@ namespace Zeltex.Guis.Maker
         private string BeforeCreationResoucesName;
         private string BeforeEditedResourcesName;
         private UnityAction OnUpdatedResources;
-        private string BeforeEnableResoucesName;
+        //private string BeforeEnableResoucesName;
 
         #region ZelGui
 
-        private void OnEnable()
-        {
-            BeforeEnableResoucesName = DataManager.Get().MapName;
-        }
+        //private void OnEnable()
+        //{
+           // BeforeEnableResoucesName = DataManager.Get().MapName;
+       // }
 
         /// <summary>
         /// Finish using the ResourcesMaker
@@ -224,8 +224,7 @@ namespace Zeltex.Guis.Maker
         }
 
         #endregion
-
-
+        
         #region UI
 
         public override void UseInput(Dropdown MyDropdown)

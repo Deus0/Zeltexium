@@ -17,13 +17,13 @@ namespace Zeltex.Combat
         //private PhotonView MyPhoton;
 		[SerializeField]
         private Spell Data = new Spell();
-		AudioSource MySource;
+		//AudioSource MySource;
 		bool IsUsed = false;	// has hit character
-		bool HasHitTerrain = false;
+		//bool HasHitTerrain = false;
 		[Header("Options")]
 		public float DissapearingTime = 0.1f;
 		private float TimeDied;
-		private static float MaxDissapearTime = 30f;
+		//private static float MaxDissapearTime = 30f;
         private GameObject StuckToObject;
 		private Vector3 StuckToObjectDifference;
 		[Header("Special Effects")]
@@ -38,10 +38,10 @@ namespace Zeltex.Combat
         #endregion
 
         #region Mono
-        void Start()
-        {
-            MySource = gameObject.AddComponent<AudioSource>();
-        }
+        //void Start()
+        //{
+            //MySource = gameObject.AddComponent<AudioSource>();
+        //}
 
         void Update()
         {
@@ -117,7 +117,7 @@ namespace Zeltex.Combat
             else
             {
                 Debug.LogError(name + " spawned bullet has a missing character. Can not exist.");
-                Destroy(gameObject);
+                gameObject.Die();
             }
         }
 
@@ -264,7 +264,7 @@ namespace Zeltex.Combat
 			MyMeshRenderer.enabled = false;
 			gameObject.GetComponent<BoxCollider>().enabled = false;
             yield return new WaitForSeconds(LifeTime);
-            Destroy(gameObject);
+            gameObject.Die();
         }
 
         IEnumerator ImplodeInTime(float LifeTime)

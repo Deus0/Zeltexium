@@ -74,7 +74,17 @@ namespace Zeltex.Dialogue
 		public IEnumerator GenerateData()
         {
             //MyDialogueMaker.MyNames.Add("NewDialogue " + MyDialogueMaker.MyNames.Count);
-            string MyScript1 =
+           
+			yield break;
+        }
+    }
+}
+
+/*
+ * 
+ * 
+ * 
+ *  string MyScript1 =
 @"
 /Dialogue
 /id Beginning
@@ -164,12 +174,4 @@ namespace Zeltex.Dialogue
 /default End
 /EndDialogue
 ";
-            /*DataManager.Get().Add("Dialogues", "Dialogue1", MyScript1);
-			DataManager.Get().Add("Dialogues", "Dialogue2", MyScript2);
-			DataManager.Get().Add("Dialogues", "Dialogue3", MyScript3);
-			DataManager.Get().Add("Dialogues", "Dialogue4", MyScript4);*/
-            
-			yield break;
-        }
-    }
-}
+    */

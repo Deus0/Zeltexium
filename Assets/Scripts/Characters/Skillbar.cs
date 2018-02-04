@@ -25,6 +25,7 @@ namespace Zeltex.Combat
         private Character MyCharacter;
         private UnityAction OnLoadInventoryAction;
         private Spell SelectedSpell;
+        private Shooter MyShooter;
 
         void Start()
         {
@@ -61,55 +62,7 @@ namespace Zeltex.Combat
         public void RefreshSkillbar()
         {
             SelectedIndex = -1;// for refreshing at beginning
-            RemoveSkills(); // make sure they all gone
             SetItem(0);
-        }
-
-        /// <summary>
-        /// Removes all skills
-        /// Input is the new item
-        /// </summary>
-        public void RemoveSkills(Item MyItem = null)
-        {
-            // Remove all skills
-            if (MyItem == null || !MyItem.HasCommand("/Block"))
-            {
-                if (GetComponent<VoxelBrush>())
-                {
-                    DestroyImmediate(GetComponent<VoxelBrush>());
-                }
-            }
-            if (MyItem == null || !MyItem.HasCommand("/Pickaxe"))
-            {
-                if (GetComponent<Pickaxe>())
-                {
-                    DestroyImmediate(GetComponent<Pickaxe>());
-                }
-            }
-            if (MyItem == null || !MyItem.HasCommand("/Command"))
-            {
-                if (GetComponent<BotCommander>())
-                {
-                    DestroyImmediate(GetComponent<BotCommander>());
-                }
-            }
-            Skill[] MySkills = gameObject.GetComponents<Skill>();
-            for (int i = MySkills.Length - 1; i >= 0; i--)
-            {
-                if ((MySkills[i] is Sheild) == false)//if not a sheild 
-                {
-                    //Debug.LogError(i + "Destroying: " + MySkills[i].ToString());
-                    DestroyImmediate(MySkills[i]);
-                }
-                else
-                {
-                    if (!MySkills[i].IsActivate())
-                    {
-                        DestroyImmediate(MySkills[i]);
-                    }
-                }
-            }
-            //Debug.LogError("yoyoyoyo: " + MySkills.Length);
         }
         
         /// <summary>
@@ -209,27 +162,13 @@ namespace Zeltex.Combat
             //OnChangeSelectedItem(MyCharacter.IncreaseSelectedIcon(-1));
         }
 
-        /// <summary>
-        /// Checks to see if item has any of the commands
-        /// </summary>
-        bool HasAnyCommand(Item MyItem)
-        {
-            return (SelectedIcon.HasCommand("/Block")
-                || SelectedIcon.HasCommand("/Spell")
-                || SelectedIcon.HasCommand("/Summoner")
-                || SelectedIcon.HasCommand("/Sheild")
-                || SelectedIcon.HasCommand("/Commander")
-                || SelectedIcon.HasCommand("/Pickaxe"));
-        }
-
         private void RefreshSelectedSpell()
         {
-            if (SelectedIcon != null && SelectedIcon.HasCommand("/Spell"))
+            Inventory MyInventory = GetInventory();
+            SelectedIcon = MyInventory.GetItem(SelectedIndex);
+            if (SelectedIcon != null)
             {
-                Inventory MyInventory = GetInventory();
-                SelectedIcon = MyInventory.GetItem(SelectedIndex);
-                string MyInput = SelectedIcon.GetInput("/Spell");
-                SelectedSpell = (Zeltex.DataManager.Get().GetElement("Spells", MyInput) as Spell).Clone<Spell>();
+                SelectedSpell = SelectedIcon.MySpell;
             }
             else
             {
@@ -242,11 +181,19 @@ namespace Zeltex.Combat
             return SelectedSpell;
         }
 
+        public void OnDeath()
+        {
+            if (MyShooter)
+            {
+                MyShooter.Die();
+            }
+        }
+
         /// <summary>
         /// Called whenever SkillBar(Inventory) item switched
         /// Input is the item that was updated
         /// </summary>
-		public void SetItem(int NewIndex)
+        public void SetItem(int NewIndex)
         {
             Inventory MyInventory = GetInventory();
             Debug.Log(name + "'s SetItem in Skillbar: " + NewIndex + " - previous: " + SelectedIndex + " with inventory: " + MyInventory.GetSize());
@@ -263,11 +210,8 @@ namespace Zeltex.Combat
                 RefreshSelectedSpell();
                 if (SelectedIcon != null)
                 {
-                    //bool HasCommand = HasAnyCommand(SelectedIcon);
-                    // remove any previous command
-                    RemoveSkills(SelectedIcon);
                     // Active skills
-                    if (SelectedIcon.HasCommand("/Block"))
+                    /*if (SelectedIcon.HasCommand("/Block"))
                     {
                         VoxelBrush MyBrush = gameObject.GetComponent<VoxelBrush>();
                         if (MyBrush == null)
@@ -284,12 +228,10 @@ namespace Zeltex.Combat
                         {
                             MyBrush = gameObject.AddComponent<Pickaxe>();
                         }
-                    }
+                    }*/
 
-                    if (SelectedIcon.HasCommand("/Spell"))     // /Spell [SpellName]
+                    if (SelectedSpell != null)     // /Spell [SpellName]
                     {
-                        //string MyInput = ScriptUtil.RemoveCommand();
-                        Shooter MyShooter = gameObject.GetComponent<Shooter>();
                         if (MyShooter == null)
                         {
                             MyShooter = gameObject.AddComponent<Shooter>();
@@ -299,8 +241,12 @@ namespace Zeltex.Combat
                         EquipSpell.MyCharacter = MyCharacter;
                         MyShooter.SetSpell(EquipSpell);// SpellMaker.Get().GetSpell(MyInput) as Spell);    // spell name ie Fireball
                     }
+                    else if (MyShooter)
+                    {
+                        MyShooter.Die();
+                    }
 
-                    if (SelectedIcon.HasCommand("/Summoner"))
+                    /*if (SelectedIcon.HasCommand("/Summoner"))
                     {
                         Summoner MySummoner = gameObject.GetComponent<Summoner>();
                         if (MySummoner == null)
@@ -331,7 +277,7 @@ namespace Zeltex.Combat
                     {
                         if (MySheild != null)
                             MySheild.DisableInput();
-                    }
+                    }*/
                     OnChangeItem.Invoke(SelectedIndex);
                 }
             }

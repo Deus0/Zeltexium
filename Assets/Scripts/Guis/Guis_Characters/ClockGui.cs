@@ -35,7 +35,7 @@ namespace Zeltex.Guis.Characters
         private LineRenderer MySecondsLine;
         private LineRenderer MyMinutesLine;
         private LineRenderer MyHourLine;
-        private float DaysPassedTotal;
+        //private float DaysPassedTotal;
         // time passed
         private float SecondsPassedTotal;
         private float MinutesPassedTotal;
@@ -66,7 +66,7 @@ namespace Zeltex.Guis.Characters
 			MySecondsLineObject.transform.position = MyParent.transform.position;
 			LineRenderer NewLine = MySecondsLineObject.AddComponent<LineRenderer> ();
 			NewLine.positionCount = 2;
-			NewLine.material = MyMaterial;
+			NewLine.sharedMaterial = MyMaterial;
 			NewLine.startWidth = MyWidth*transform.lossyScale.x;
             NewLine.endWidth = MyWidth * transform.lossyScale.x / 1.1f;
             NewLine.SetPosition (0, MyStartPoint.position);
@@ -130,8 +130,8 @@ namespace Zeltex.Guis.Characters
 
             if (MyTimeText)
                 MyTimeText.text = HoursPassedString + ":" + MinutesPassedString + ":" + SecondsPassedString;
-            if (MyDayText)
-                MyDayText.text = "Day " + ((int)(DaysPassedTotal + 1)).ToString();
+            //if (MyDayText)
+            //    MyDayText.text = "Day " + ((int)(DaysPassedTotal + 1)).ToString();
         }
 	}
 }

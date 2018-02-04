@@ -16,20 +16,18 @@ the commands like functions will translate into /execute codes
 public class ScriptingReference : EditorWindow 
 {
 	public static List<bool> IsOn = new List<bool>();
+    public int selGridInt;
 
-	[MenuItem ("Marz/Scripting Reference")]
-	public static void  ShowWindow () {
-		IsOn.Clear ();
-		for (int i = 0; i < ScriptUtil.MyMainTags.Length; i++)
-        {
-			IsOn.Add(false);
-		}
-		ScriptingReference window  = (ScriptingReference)EditorWindow.GetWindow(typeof(ScriptingReference), false, "Scripting Reference");
+    [MenuItem ("Marz/Scripting Reference")]
+	public static void ShowWindow ()
+    {
+		EditorWindow.GetWindow(typeof(ScriptingReference), false, "Scripting Reference");
 	}
-	public int selGridInt;
+
 	public void OnGUI () 
 	{
-		if (IsOn.Count == 0) {
+		if (IsOn.Count == 0)
+        {
 			for (int i = 0; i < ScriptUtil.MyMainTags.Length; i++)
             {
 				IsOn.Add (false);
@@ -54,10 +52,10 @@ public class ScriptingReference : EditorWindow
 		MyStyle2.onHover.textColor = Color.white;
 		MyStyle2.focused.textColor = Color.green;
 		MyStyle2.onFocused.textColor = MyStyleColour;
-		MyStyle2.active.textColor = MyStyleColour;
+		//MyStyle2.active.textColor = MyStyleColour;
 		MyStyle2.onActive.textColor = MyStyleColour;
 
-		EditorGUIUtility.LookLikeInspector ();
+		//EditorGUIUtility.LookLikeInspector ();
 		GUI.backgroundColor = new Color(0.08f, 0.08f, 0.08f);
 
 		GUI.Label(new Rect(0,0,position.width, position.height),"", MyStyle);
@@ -66,7 +64,8 @@ public class ScriptingReference : EditorWindow
 
 		GUI.BeginGroup(new Rect(0,0,position.width, position.height));
 		GUILayout.Label("Main Commands",MyStyle);
-		for (int i = 0; i < ScriptUtil.MyMainTags.Length; i++) {
+		for (int i = 0; i < ScriptUtil.MyMainTags.Length; i++)
+        {
 			
 			GUI.backgroundColor = new Color(1f, 1f, 1f);
 			GUI.contentColor = new Color(1f, 1f, 1f);

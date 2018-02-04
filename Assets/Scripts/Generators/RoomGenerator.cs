@@ -13,14 +13,14 @@ namespace Zeltex.Voxels
     /// </summary>
     public class RoomGenerator : WorldEditor 
     {
-		[Header("Actions")]
-		[SerializeField] private bool IsGenerateAll = false;
-		[SerializeField] private bool IsGenerateMetaData = false;
-		public void GenerateMetaData() { IsGenerateMetaData = true; }
-		[SerializeField] private bool IsGenerateRooms = false;
-		public void GenerateRooms() { IsGenerateRooms = true; }
-		[SerializeField] private bool IsGenerateMinions = false;
-		public void GenerateMinions() { IsGenerateMinions = true; }
+		//[Header("Actions")]
+		//[SerializeField] private bool IsGenerateAll = false;
+		//[SerializeField] private bool IsGenerateMetaData = false;
+		//public void GenerateMetaData() { IsGenerateMetaData = true; }
+		//[SerializeField] private bool IsGenerateRooms = false;
+		//public void GenerateRooms() { IsGenerateRooms = true; }
+		//[SerializeField] private bool IsGenerateMinions = false;
+		//public void GenerateMinions() { IsGenerateMinions = true; }
 		[Header("Room Options")]
 		public int MinimumRooms = 2;
 		public int MaximumRooms = 4;
@@ -41,7 +41,7 @@ namespace Zeltex.Voxels
 		// Generated Room Data
 		public List<DungeonRoom> Rooms = new List<DungeonRoom>();
 		public List<Vector3> DoorSpawnLocations = new List<Vector3>();
-		bool IsOverrideNonEmpty;
+		//bool IsOverrideNonEmpty;
 		//Vector3 StartLocation;
 		[Header("BlockTypes")]
 		public int RoomFloorType = 2;
@@ -166,7 +166,7 @@ namespace Zeltex.Voxels
                 PathWallType,
                 PathWallType);
         }
-        bool IsSpawning = false;
+        //bool IsSpawning = false;
         public SpawnPositionFinder MySpawnPosition;
         // on going rrefresh of characters in map while this list is open
         IEnumerator SpawningMinions() 
@@ -196,7 +196,7 @@ namespace Zeltex.Voxels
 
                 yield return new WaitForSeconds(2f);
             }
-			IsSpawning = false;
+			//IsSpawning = false;
 		}
 
 		Vector3 GenerateRoomSize() 
@@ -240,7 +240,7 @@ namespace Zeltex.Voxels
 		{
 			Vector3 RoomLocation = MyRoom.RoomLocation;
 			Vector3 MyRoomSize = MyRoom.RoomSize;
-            IsOverrideNonEmpty = true;
+            //IsOverrideNonEmpty = true;
 			for (float i = RoomLocation.x; i <= RoomLocation.x + MyRoomSize.x; i++)
 				for (float j =  RoomLocation.y; j <= RoomLocation.y + MyRoomSize.y; j++)
 					for (float k =  RoomLocation.z; k <= RoomLocation.z + MyRoomSize.z; k++) 
@@ -275,7 +275,7 @@ namespace Zeltex.Voxels
 			Vector3 RoomLocation = MyRoom.RoomLocation;
 			Vector3 MyRoomSize = MyRoom.RoomSize;
 			int i = Mathf.FloorToInt(Position.x);
-			int j = Mathf.FloorToInt(Position.y);
+			//int j = Mathf.FloorToInt(Position.y);
 			int k = Mathf.FloorToInt(Position.z);
 			if (i == RoomLocation.x || i == RoomLocation.x + MyRoomSize.x ||
 			    //j == RoomLocation.y || j == RoomLocation.y + MyRoomSize.y ||
@@ -397,7 +397,7 @@ namespace Zeltex.Voxels
 					Vector3 BeginPosition = Position2;
 					Vector3 EndPosition = Position1;
 					Debug.DrawRay(transform.TransformPoint(BeginPosition),transform.TransformPoint(EndPosition), Color.red, 20);
-					IsOverrideNonEmpty = false;
+					//IsOverrideNonEmpty = false;
 					//bool HasAddedDoor = false;
 					Vector2 PaintSize = 
 						new Vector2(Mathf.Abs (RoomDirection.z), 
@@ -430,7 +430,7 @@ namespace Zeltex.Voxels
 					CreateDoor(EndPosition,//+RoomDirection, 
 					           -ThingieDirection, 
 					           Room1);
-					IsOverrideNonEmpty = true;
+					//IsOverrideNonEmpty = true;
 				}
 			}
 		}
@@ -443,7 +443,7 @@ namespace Zeltex.Voxels
             Debug.Log("Creating new door in room " + Room2.GetMidPoint().ToString() + " - DoorPos: " + DoorPosition.ToString());
 			float DoorHeight = 3;
 			float DoorWidth = HallwaySize/2f;
-			float BalconySize = 2;
+			//float BalconySize = 2;
 			Vector2 DoorPerpendicularDirection = new Vector2 (DoorDirection.z, DoorDirection.x);
 			DoorPerpendicularDirection = new Vector2 (1+Mathf.Abs (DoorDirection.z)*DoorWidth, 
 			                                          1+Mathf.Abs (DoorDirection.x)*DoorWidth);
@@ -539,7 +539,8 @@ namespace Zeltex.Voxels
 			int NewBlockType = 1;
 			try {
 				NewBlockType = int.Parse (NewType);
-			} catch (System.FormatException e) 
+			}
+            catch (System.FormatException) 
 			{
 			}
 			if (BlockType == "PathFloor") 

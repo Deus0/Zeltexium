@@ -40,7 +40,7 @@ namespace Zeltex.Voxels
         private Color32 NormalFaceColor = new Color32(0, 255, 76, 11);
         private Color32 SelectedFaceColor = new Color32(255, 76, 76, 68);
         private float VertSize = 0.03f;
-        private string LoadedModelName;
+        //private string LoadedModelName;
         //private PolyModel LoadedModel;
         private int LoadedTextureMap;
         private List<GameObject> MyHandlers = new List<GameObject>();
@@ -68,7 +68,7 @@ namespace Zeltex.Voxels
         {
             if (ActionLoadModel.IsTriggered()) 
             {
-                LoadVoxelMesh(MyModel, LoadedTextureMap);
+                LoadVoxelMesh(MyModel, TextureMapIndex);
             }
             /*if (transform.childCount > 0)
             {
@@ -116,26 +116,6 @@ namespace Zeltex.Voxels
         {
             LoadVoxelMesh(MyModel, TextureMapIndex);
         }
-        /*protected override void HandleInput()
-        {
-            base.HandleInput();
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                UpdateHandlerMode(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                UpdateHandlerMode(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                UpdateHandlerMode(2);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                UpdateHandlerMode(3);
-            }
-        }*/
 
         #region Gizmos
 
@@ -287,13 +267,13 @@ namespace Zeltex.Voxels
             MeshFilter MyMeshFilter = NewFaceHandler.AddComponent<MeshFilter>();
             MyMeshFilter.sharedMesh = new Mesh();
             MeshCollider MyMeshCollider = NewFaceHandler.AddComponent<MeshCollider>();
-            MyMeshCollider.sharedMesh = MyMeshFilter.mesh;
+            MyMeshCollider.sharedMesh = MyMeshFilter.sharedMesh;
             List<Vector3> MyVerts = new List<Vector3>();
             MyVerts.Add(Position1);
             MyVerts.Add(Position2);
             MyVerts.Add(Position3);
             MyVerts.Add(Position4);
-            MyMeshFilter.mesh.vertices = MyVerts.ToArray();
+            MyMeshFilter.sharedMesh.vertices = MyVerts.ToArray();
             List<int> MyTriangles = new List<int>();
             MyTriangles.Add(0);
             MyTriangles.Add(1);
@@ -301,9 +281,9 @@ namespace Zeltex.Voxels
             MyTriangles.Add(0);
             MyTriangles.Add(2);
             MyTriangles.Add(3);
-            MyMeshFilter.mesh.triangles = MyTriangles.ToArray();
+            MyMeshFilter.sharedMesh.triangles = MyTriangles.ToArray();
 
-            MyMeshFilter.mesh.RecalculateNormals();
+            MyMeshFilter.sharedMesh.RecalculateNormals();
             NewFaceHandler.transform.SetParent(transform);
             NewFaceHandler.transform.localPosition = Vector3.zero;
             NewFaceHandler.transform.localRotation = Quaternion.identity;
@@ -339,7 +319,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void LoadVoxelMesh(PolyModel MyModel, int NewTextureMapIndex, bool IsRefreshHandlers = false)
         {
-            LoadedModelName = MyModel.Name;
+            //LoadedModelName = MyModel.Name;
             TextureMapIndex = NewTextureMapIndex;
             //Debug.LogError("PolyModelHandle [" + name + "] is loading [" + MyModel.Name + "] with texture map [" + TextureMapIndex + "]");
             List<string> SelectedHandlerNames = new List<string>();
@@ -437,14 +417,7 @@ namespace Zeltex.Voxels
             {
                 if (MyMesh)
                 {
-                    if (UnityEngine.Application.isPlaying)
-                    {
-                        Destroy(MyMesh);
-                    }
-                    else 
-                    {
-                        DestroyImmediate(MyMesh);
-                    }
+                    MyMesh.Die();
                 }
             }
             Mesh MyCombinedMesh = GetSingleVoxelMesh(MyModel, TextureIndex, MyTint);

@@ -17,12 +17,12 @@ namespace Zeltex.Guis
         [Header("Events")]
         public UnityEvent OnToggledOn;
         public UnityEvent OnToggledOff;
-        private Orbitor MyOrbitor;
+        //private Orbitor MyOrbitor;
         private CanvasGroup MyCanvasGroup;
         private Canvas MyCanvas;
         [SerializeField]
         private bool IsKeepCamera;
-        private Animator MyAnimator;
+        //private Animator MyAnimator;
         public UnityEngine.UI.Selectable FirstSelected;
         [SerializeField]
         private bool BeginState = true;
@@ -39,8 +39,8 @@ namespace Zeltex.Guis
         }
         void Start()
         {
-            MyAnimator = GetComponent<Animator>();
-            MyOrbitor = gameObject.GetComponent<Orbitor>();
+            //MyAnimator = GetComponent<Animator>();
+            //MyOrbitor = gameObject.GetComponent<Orbitor>();
             MyCanvasGroup = GetComponent<CanvasGroup>();
             MyCanvas = GetComponent<Canvas>();
             if (!IsKeepCamera && CameraManager.Get() && MyCanvas)
@@ -48,10 +48,10 @@ namespace Zeltex.Guis
                 MyCanvas.worldCamera = CameraManager.Get().GetMainCamera();
                 CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChangeAction);
             }
-            else
-            {
-                Debug.LogError("Camera Manager or Canvas not in scene.");
-            }
+            //else
+           // {
+                //Debug.LogError("Camera Manager or Canvas not in scene.");
+            //}
             if (FirstSelected)
             {
                 FirstSelected.Select();

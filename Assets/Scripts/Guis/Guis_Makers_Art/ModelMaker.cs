@@ -189,7 +189,7 @@ namespace Zeltex.Guis.Maker
                 (byte)(MyColor.b),
                 (byte)(255));
             }
-            string NewName = "Model_" + UnityEngine.Random.Range(1, 10000);
+            //string NewName = "Model_" + UnityEngine.Random.Range(1, 10000);
             base.OnAdd(NewIndex);
             // Modify world here
             if (NewData != "")
@@ -425,7 +425,6 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void AddToMeshes()
         {
-            //MyItemManager.MyMeshes.Add(MyVoxelGui.GetSpawn().GetComponent<MeshFilter>().mesh);
         }
         #endregion
     }

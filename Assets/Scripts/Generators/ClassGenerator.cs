@@ -59,21 +59,21 @@ namespace Zeltex.Characters
             // first add a spell
             for (int i = 0; i < ItemsSize; i++)
             {
-                Item MyItem = DataManager.Get().GetElement("ItemMeta", i) as Item;
-                if (MyItem.HasCommand("/Spell"))
+                //Item MyItem = DataManager.Get().GetElement("ItemMeta", i) as Item;
+                /**f (MyItem.HasCommand("/Spell"))
                 {
                     MyScript += "/GiveItem " + MyItem.Name + "\n";
                     break;
-                }
+                }*/
             }
             // Give 3 blocks
             if (ItemsSize > 0)
             {
-                int ResouceCount = 0;
-                for (int i = 0; i < ItemsSize; i++)
+                //int ResouceCount = 0;
+                //for (int i = 0; i < ItemsSize; i++)
                 {
-                    Item MyItem = DataManager.Get().GetElement("ItemMeta", i) as Item;
-                    if (MyItem.HasCommand("/Block"))
+                    //Item MyItem = DataManager.Get().GetElement("ItemMeta", i) as Item;
+                    /*if (MyItem.HasCommand("/Block"))
                     {
                         MyScript += "/GiveItem " + MyItem.Name + "\n";
                         ResouceCount++;
@@ -81,7 +81,7 @@ namespace Zeltex.Characters
                         {
                             break;
                         }
-                    }
+                    }*/
                 }
             }
             return MyScript;

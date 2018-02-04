@@ -42,16 +42,25 @@ namespace Zeltex.Guis
             SpawnGui(LoadGui);
         }*/
 
+        void Start()
+        {
+            ScanForGuis();
+        }
+
+        private void ScanForGuis()
+        {
+            ZelGui[] MyObjects = GameObject.FindObjectsOfType<ZelGui>();
+            GuiSpawns.Clear();
+            for (int i = 0;i < MyObjects.Length; i++)
+            {
+                GuiSpawns.Add(MyObjects[i].gameObject);
+            }
+        }
         private void Update()
         {
             if (ActionScanMap.IsTriggered())
             {
-                ZelGui[] MyObjects = GameObject.FindObjectsOfType<ZelGui>();
-                GuiSpawns.Clear();
-                for (int i = 0;i < MyObjects.Length; i++)
-                {
-                    GuiSpawns.Add(MyObjects[i].gameObject);
-                }
+                ScanForGuis();
             }
             if (Application.isPlaying)
             {
@@ -98,11 +107,8 @@ namespace Zeltex.Guis
                     MyGui.Enable();
                 }
             }
-            else
-            {
-                Debug.LogError("Could not find " + GuiName);
-            }
         }
+
         public void DisableGui(string GuiName)
         {
             GameObject MyGuiObject = GuiSpawner.Get().GetGui(GuiName);
@@ -113,10 +119,6 @@ namespace Zeltex.Guis
                 {
                     MyGui.Disable();
                 }
-            }
-            else
-            {
-                Debug.LogError("Could not find " + GuiName);
             }
         }
 
@@ -269,7 +271,7 @@ namespace Zeltex.Guis
             if (MyGui)
             {
                 GuiSpawns.Remove(MyGui);
-                Destroy(MyGui);
+                MyGui.Die();
             }
         }
 
@@ -284,7 +286,7 @@ namespace Zeltex.Guis
 			{
 				MyZelGui.OnToggledOffEvent();
 			}
-            Destroy(MyGui);
+            MyGui.Die();
         }
 
         public GameObject GetGui(string GuiName)
@@ -340,7 +342,7 @@ namespace Zeltex.Guis
             }
             if (PreviousPreviousMakerGui && IsSingleMakerMode)
             {
-                Destroy(PreviousPreviousMakerGui);
+                PreviousPreviousMakerGui.Die();
             }
             return PreviousSpawnedMakerGui;
         }

@@ -8,7 +8,7 @@ namespace Zeltex
     public class ElementEditor<T> : ZeltexEditor where T : Element
     {
         protected T Data;
-        protected SerializedProperty MyProperty;
+        //protected SerializedProperty MyProperty;
         private bool IsPulling;
 
         protected override bool IsUnityGui()

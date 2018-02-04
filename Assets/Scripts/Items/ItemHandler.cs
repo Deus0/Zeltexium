@@ -46,11 +46,11 @@ namespace Zeltex.Items
         public AudioClip MyPickupSound;
 
         [Header("Events")]
-        public EventObject OnDestroyed;
+        public EventObject OnDestroyed = new EventObject();
         [Tooltip("Functions are called when item is interacted with (mouseclick)")]
-		public EventObject OnItemInteract;
+        public EventObject OnItemInteract = new EventObject();
 		[Tooltip("When character collides with the item")]
-		public MyEvent2 OnCollision;
+        public MyEvent2 OnCollision = new MyEvent2();
 		
 		[Header("SpecialEffects")]
 		[Tooltip("The Particles created when item is picked up")]
@@ -93,9 +93,9 @@ namespace Zeltex.Items
             ItemManager.Get().Remove(this);
             if (SpawnedInspectGui)
             {
-                Destroy(SpawnedInspectGui);
+                SpawnedInspectGui.Die();
             }
-            Destroy(gameObject);
+            gameObject.Die();
         }
         #endregion
 
@@ -120,10 +120,10 @@ namespace Zeltex.Items
         /// <summary>
         /// Links the item to the item object
         /// </summary>
-        public void SetItem(Item NewItem) 
+        public void SetItem(Item NewItem, System.Action OnFinishLoading = null) 
 		{
             MyItem = NewItem;
-            RefreshMesh();
+            RefreshMesh(OnFinishLoading);
 			UpdateItemInspectGui();
 		}
 
@@ -292,7 +292,7 @@ namespace Zeltex.Items
 		}
         #endregion
 
-        public void RefreshMesh()
+        public void RefreshMesh(System.Action OnFinishLoading = null)
         {
             if (MyItem == null || MyItem.MyModel == null || MyItem.MyModel.Name == "" || MyItem.MyModel.Name == "Empty")
             {
@@ -308,7 +308,7 @@ namespace Zeltex.Items
                 }
                 MyVoxelModelHandle.VoxelScale = new Vector3(0.01f, 0.01f, 0.01f);
                 transform.localScale = new Vector3(1, 1, 1);
-                MyVoxelModelHandle.RunScript(Zeltex.Util.FileUtil.ConvertToList(MyItem.MyModel.VoxelData));
+                MyVoxelModelHandle.RunScript(Zeltex.Util.FileUtil.ConvertToList(MyItem.MyModel.VoxelData), OnFinishLoading);
                 return; // no need to check other meshes
             }
             // 
@@ -325,6 +325,10 @@ namespace Zeltex.Items
                 }
                 transform.localScale = 0.2f * (new Vector3(1, 1, 1));
                 MyPolyHandle.LoadVoxelMesh(MyItem.MyPolyModel, MyItem.TextureMapIndex);
+                if (OnFinishLoading != null)
+                {
+                    OnFinishLoading();
+                }
             }
         }
 
@@ -336,7 +340,7 @@ namespace Zeltex.Items
             MyPolyHandle = GetComponent<Voxels.PolyModelHandle>();
             if (MyPolyHandle)
             {
-                Destroy(MyPolyHandle);
+                MyPolyHandle.Die();
             }
         }
 
@@ -345,7 +349,7 @@ namespace Zeltex.Items
             MyVoxelModelHandle = GetComponent<Voxels.World>();
             if (MyVoxelModelHandle) 
             {
-                Destroy(MyVoxelModelHandle);
+                MyVoxelModelHandle.Die();
             }
         }
     }

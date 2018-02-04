@@ -23,20 +23,30 @@ namespace Zeltex.Quests
 	public class Quest : Element
 	{
         #region Variables
+        [JsonIgnore]
         public static string QuestNameColor = "#d1d9e1";
+        [JsonProperty]
 		public string Description;		// 
-		//public string Condition;		// a command code for the quests condition
-		public int ConditionIndex = 0;
-		public List<Condition> MyConditions = new List<Condition>();
-		public List<Reward> MyRewards = new List<Reward>();
+        [JsonProperty]
+        public int ConditionIndex = 0;
+        [JsonProperty]
+        public List<Condition> MyConditions = new List<Condition>();
+        [JsonProperty]
+        public List<Reward> MyRewards = new List<Reward>();
+        [JsonProperty]
         public QuestBlock MyQuestBlock;
 
+        [JsonProperty]
         [SerializeField]
         private bool IsCompleted = false;
-		public float TimeCompleted = 0f;
-		public bool IsOrderedConditions = false;
-		public bool IsHandedIn = false;
-		public float TimeHandedIn = 0f;
+        [JsonProperty]
+        public float TimeCompleted = 0f;
+        [JsonProperty]
+        public bool IsOrderedConditions = false;
+        [JsonProperty]
+        public bool IsHandedIn = false;
+        [JsonProperty]
+        public float TimeHandedIn = 0f;
 
         // reference to quest partipants
         [JsonIgnore]
@@ -280,54 +290,16 @@ namespace Zeltex.Quests
 			return false;
         }
         #endregion
+    }
+}
 
-        #region Data
 
-        /// <summary>
-        /// Get the data of the element
-        /// </summary>
-        public override string GetScript()
-        {
-            return FileUtil.ConvertToSingle(GetScriptList());
-        }
-
-        /// <summary>
-        /// Loads the data of the element
-        /// </summary>
-        public override void RunScript(string Script)
-        {
-            Quest NewQuest = JsonConvert.DeserializeObject<Quest>(Script);
-            Name = NewQuest.Name;
-            Description = NewQuest.Description;
-        }
-
-        /// returns a list of strings to save the quest
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetScriptList()
-        {
-            var serializedObject = JsonConvert.SerializeObject(this);
-            return FileUtil.ConvertToList(serializedObject);
-            /*List<string> MyScript = new List<string>();
-            MyScript.Add("/quest " + Name);
-            MyScript.Add("/description " + Description);
-            for (int i = 0; i < MyConditions.Count; i++)
-            {
-                MyScript.AddRange(MyConditions[i].GetScriptList());
-            }
-            for (int i = 0; i < MyRewards.Count; i++)
-            {
-                MyScript.AddRange(MyRewards[i].GetScriptList());
-            }
-            return MyScript;*/
-        }
-
-        /// <summary>
-        /// Runs the script to load the quest
-        /// </summary>
-        public void RunScript(List<string> SavedData)
-        {
-            /*for (int i = 0; i < SavedData.Count; i++)
+/// <summary>
+/// Runs the script to load the quest
+/// </summary>
+/*public void RunScript(List<string> SavedData)
+{
+            for (int i = 0; i < SavedData.Count; i++)
             {
                 string Other = ScriptUtil.RemoveCommand(SavedData[i]);
                 if (SavedData[i].Contains("/quest "))
@@ -417,11 +389,6 @@ namespace Zeltex.Quests
                     }
                 }
             }*/
-        }
-        #endregion
-    }
-}
-
 /*public void RunScript(string[] SavedData)
 {
     List<string> MyScript = new List<string>();

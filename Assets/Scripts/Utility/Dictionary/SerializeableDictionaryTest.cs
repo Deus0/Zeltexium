@@ -8,14 +8,14 @@ namespace Zeltex.Tests
 {
     public class SerializeableDictionaryTest : MonoBehaviour
     {
-        [SerializeField()]
-        private ChunkDictionary TestChunkDictionary = new ChunkDictionary();
+        //[SerializeField()]
+        //private ChunkDictionary TestChunkDictionary = new ChunkDictionary();
 
-        [SerializeField()]
-        private ElementDictionary TestElementDictionary = new ElementDictionary();
+        //[SerializeField()]
+        //private ElementDictionary TestElementDictionary = new ElementDictionary();
 
-        [SerializeField()]
-        private StringDictionary TestDictionary = new StringDictionary();
+        //[SerializeField()]
+        //private StringDictionary TestDictionary = new StringDictionary();
 
         [System.Serializable()]
         public class StringDictionary : SerializableDictionaryBase<string, string>

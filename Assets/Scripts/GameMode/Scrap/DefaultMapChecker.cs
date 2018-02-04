@@ -403,7 +403,7 @@ namespace Zeltex.Guis.Maker
 
             // Encode texture into PNG
             byte[] MyImageBytes = tex.EncodeToPNG();
-            Destroy(tex);
+            tex.Die();
 
             // Create a Web Form
             WWWForm MyForm = new WWWForm();

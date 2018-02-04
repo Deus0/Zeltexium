@@ -10,8 +10,8 @@ namespace Zeltex.Util
     /// </summary>
     public class MemoryDebug : MonoBehaviour
     {
-        string MyCPUUsage = "";
-        string MyRamUseage = "";
+        //string MyCPUUsage = "";
+        //string MyRamUseage = "";
         GUIStyle MyStyle;
         public string ProcessName;
         //Process MyProcess;
@@ -49,12 +49,12 @@ namespace Zeltex.Util
             //GUI.Label(MyRect, "CPU: " + MyCPUUsage + "%", MyStyle);
             
             MyRect.y += 20;
-            GUI.Label(MyRect, "Total Memory: " + (UnityEngine.Profiling.Profiler.GetTotalReservedMemory() / 1000000).ToString() + "MB", MyStyle);
+            //GUI.Label(MyRect, "Total Memory: " + (UnityEngine.Profiling.Profiler.GetTotalReservedMemory() / 1000000).ToString() + "MB", MyStyle);
             //MyRect.y += 20;
             //GUI.Label(MyRect, "Allocated Memory: " + (UnityEngine.Profiling.Profiler.GetMonoHeapSize()/1000000).ToString() + "MB", MyStyle);
 
             MyRect.y += 20;
-            GUI.Label(MyRect, "Allocated Memory: " + (UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory() / 1000000).ToString() + "MB", MyStyle);
+            //GUI.Label(MyRect, "Allocated Memory: " + (UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory() / 1000000).ToString() + "MB", MyStyle);
             //MyRect.y += 20;
             //GUI.Label(MyRect, "Reserved Memory: " + (UnityEngine.Profiling.Profiler.GetTotalReservedMemory() / 1000000).ToString() + "MB", MyStyle);
 
@@ -65,11 +65,11 @@ namespace Zeltex.Util
 
         }
 
-        void Update()
-        {
-            MyRamUseage = "" + (System.GC.GetTotalMemory(false)/1000000).ToString();
+        //void Update()
+        //{
+            //MyRamUseage = "" + (System.GC.GetTotalMemory(false)/1000000).ToString();
            // MyCPUUsage = (MyProcess.UserProcessorTime.TotalSeconds / MyProcess.TotalProcessorTime.TotalSeconds).ToString();
-        }
+        //}
     }
 }
 //MyCPUUsage = "" + MyCpuCounter.NextValue();

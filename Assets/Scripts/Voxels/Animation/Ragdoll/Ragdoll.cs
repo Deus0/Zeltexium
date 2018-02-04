@@ -280,15 +280,15 @@ namespace Zeltex.Physics
                 Gravity MyGrav = MyBone.MyTransform.gameObject.GetComponent<Gravity>();
                 if (MyGrav)
                 {
-                    Destroy(MyGrav);
+                    MyGrav.Die();
                 }
-                Destroy(MyRigid);
+                MyRigid.Die();
             }
 
             Items.ItemHandler MyItemInstance = MyBone.MyTransform.gameObject.GetComponent<Items.ItemHandler>();
             if (MyItemInstance != null)
             {
-                Destroy(MyItemInstance);
+                MyItemInstance.Die();
             }
         }
 
