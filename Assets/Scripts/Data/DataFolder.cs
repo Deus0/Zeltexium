@@ -58,12 +58,12 @@ namespace Zeltex
 
         public void OnBeforeSerialize()
         {
-            Serialize();
+            //Serialize();
         }
 
         public void OnAfterDeserialize()
         {
-            Deserialize();
+            //Deserialize();
         }
         List<string> SerializdData = new List<string>();
         List<string> SerializedNames = new List<string>();

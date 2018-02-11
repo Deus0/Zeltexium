@@ -427,11 +427,15 @@ namespace Zeltex.Characters
         {
             if (PoolObject)
             {
-                Ragdoll MyRagdoll = PoolObject.GetSkeleton().GetComponent<Ragdoll>();
-                if (MyRagdoll)
+                SkeletonHandler MySkeleton = PoolObject.GetSkeleton();
+                if (MySkeleton)
                 {
-                    MyRagdoll.ReverseRagdoll();
-                } 
+                    Ragdoll MyRagdoll = MySkeleton.GetComponent<Ragdoll>();
+                    if (MyRagdoll)
+                    {
+                        MyRagdoll.ReverseRagdoll();
+                    }
+                }
                 PoolObject.GetGuis().DespawnAllGuis();
                 PoolObject.OnReturnToPool.Invoke(PoolObject.gameObject);
                 base.ReturnObject(PoolObject);

@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/ZeltexMainGame.unity
+    guid: 0bb77ed5159cb474fb19c9148dde3ff7
   m_configObjects: {}

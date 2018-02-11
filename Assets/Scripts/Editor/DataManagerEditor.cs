@@ -66,7 +66,7 @@ namespace Zeltex
             Instance = this;
         }
 
-        public void OnKeyPress(KeyCode MyKeys)
+        /*public void OnKeyPress(KeyCode MyKeys)
         {
             if (MyKeys != KeyCode.None)
             {
@@ -110,7 +110,7 @@ namespace Zeltex
             {
                 Event.current.Use();    // cancel editor one
             }   
-        }
+        }*/
     }
 
 }

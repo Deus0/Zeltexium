@@ -744,7 +744,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.1
-  apiCompatibilityLevel: 3
+  apiCompatibilityLevel: 2
   cloudProjectId: 82c1c11a-4791-4354-b1c9-ab54688da8e9
   projectName: Zeltex
   organizationId: marz-2212141
