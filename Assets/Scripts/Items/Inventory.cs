@@ -17,8 +17,8 @@ namespace Zeltex.Items
     ///     - maybe put this in a normal class, and have components use it?
     /// </summary>
     [System.Serializable]
-    public class Inventory : Element 
-	{
+    public class Inventory : ElementCore
+    {
         #region Variables
         [ JsonIgnore]
         private static string EmptyItemName = "Empty";

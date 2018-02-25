@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System;
 using UnityEngine;
 using Zeltex.Voxels;
 using Newtonsoft.Json;
 using Zeltex.Characters;
+using Zeltex.Util;
 
 namespace Zeltex
 {
@@ -14,11 +17,9 @@ namespace Zeltex
     ///     -> Music to play
     ///     -> World settings - endless, generate settings etc
     /// </summary>
-    [System.Serializable]
-    public class Level : Element
+    [Serializable]
+    public class Level : ElementCore
     {
-        public static string ChunkFileExtension = "chn";
-        public static string CharacterFileExtension = "chr";
         // The initial script for debugging
         [SerializeField, JsonProperty]
         private Int3 MyWorldSize = new Int3(0, 0, 0);
@@ -28,18 +29,73 @@ namespace Zeltex
         private bool IsGenerateTerrain;
         [SerializeField, JsonProperty]
         private Vector3 SpawnPoint;
-
         [SerializeField, JsonIgnore]
         private World MyWorld;
         // Characters linked to a level
         [SerializeField, JsonIgnore]
         protected List<Character> MyCharacters = new List<Character>();
-        [SerializeField, JsonProperty]
-        protected int CharactersCount = 0;
         [SerializeField, JsonIgnore]
-        private Zeltex.Util.FilePathType MyFilePathType = Zeltex.Util.FilePathType.StreamingPath;
+        private FilePathType MyFilePathType = FilePathType.StreamingPath;
+        [JsonIgnore]
+        public static string ChunkFileExtention = "chn";
+        [JsonIgnore]
+        public static string CharacterFileExtension = "chr";
+        [JsonIgnore]
+        private static string ChunkFileExtentionPlusDot = "." + ChunkFileExtention;
+        [JsonIgnore]
+        public static string CharacterFileExtensionPlusDot = "." + CharacterFileExtension;
+        [JsonIgnore]
+        private List<string> CharactersInChunk = new List<string>();    // used when loading character files
+        // [JsonIgnore]
+        [JsonIgnore]
+        public int CharactersCount;
+        [JsonIgnore]
+        public List<string> CharacterNames = new List<string>();
+        [JsonIgnore]
+        public List<Character> Characters = new List<Character>();
 
         #region Overrides
+        public bool CanSpawnCharacterInEditor(int CharacterIndex)
+        {
+            return Characters[CharacterIndex] == null;
+        }
+
+        public void SpawnCharacterInEditor(int CharacterIndex)
+        {
+            string CharacterFilePath = GetCharacterFilePath(CharacterNames[CharacterIndex]);
+            string Script = FileUtil.Load(CharacterFilePath);
+            CharacterData Data = Element.Load<CharacterData>(CharacterNames[CharacterIndex], Script);
+            Characters[CharacterIndex] = (Data.Spawn(this));
+        }
+        public void DespawnCharacterInEditor(int CharacterIndex)
+        {
+            if (Characters[CharacterIndex])
+            {
+                Characters[CharacterIndex].gameObject.Die();
+            }
+        }
+
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            // Also load the total number of characters in folder
+#if UNITY_EDITOR
+            string CharacterFolderPath = GetCharacterFolderPath();
+            Debug.LogError("Checking for path: " + CharacterFolderPath);
+            if (FileManagement.DirectoryExists(CharacterFolderPath))
+            {
+                CharacterNames.Clear();
+                Characters.Clear();
+                CharacterNames.AddRange(FileManagement.ListFiles(CharacterFolderPath, new string[] { ".chr" }, true, true));
+                for (int i = CharacterNames.Count - 1; i >= 0; i--)
+                {
+                    CharacterNames[i] = Path.GetFileNameWithoutExtension(CharacterNames[i]);
+                    Characters.Add(null);
+                }
+                CharactersCount = CharacterNames.Count;
+            }
+#endif
+        }
 
         public Vector3 GetSpawnPoint()
         {
@@ -144,7 +200,7 @@ namespace Zeltex
         public IEnumerator SpawnRoutine()
         {
             IsSpawning = true;
-            yield return WorldManager.Get().LoadLevelWorldless(this);
+            yield return LoadLevelWorldless();
             IsSpawning = false;
         }
 
@@ -170,6 +226,10 @@ namespace Zeltex
 
         public World GetWorld()
         {
+            if (MyWorld == null)
+            {
+                MyWorld = WorldManager.Get().GetWorld(Name);
+            }
             return MyWorld;
         }
 
@@ -184,7 +244,6 @@ namespace Zeltex
             {
                 MyCharacters.Add(NewCharacter);
                 CharactersCount = MyCharacters.Count;
-                //OnModified();
             }
         }
 
@@ -266,37 +325,30 @@ namespace Zeltex
 
         #region Paths
 
-        public void SetFilePathType(Zeltex.Util.FilePathType NewType)
+        public void SetFilePathType(FilePathType NewType)
         {
             MyFilePathType = NewType;
         }
 
         public string GetFilePath(Chunk MyChunk, string SaveFolderName = "")
         {
-            if (SaveFolderName == "")
-            {
-                return GetFolderPath() + "/" + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;    //DataManager.GetFolderPath(DataFolderNames.Levels + "/") + Name + "/" 
-            }
-            else
-            {
-                return GetSaveFolderPath(SaveFolderName) + "Chunk_" + MyChunk.Position.x + "_" + MyChunk.Position.y + "_" + MyChunk.Position.z + "." + ChunkFileExtension;
-            }
+            return GetFolderPath(SaveFolderName) + "Chunk_" + MyChunk.Position.x + "_" +
+                MyChunk.Position.y + "_" + MyChunk.Position.z + ChunkFileExtentionPlusDot;
         }
 
         public string GetFilePath(Character MyCharacter, string SaveFolderName = "")
         {
-            if (SaveFolderName == "")
-            {
-                return GetFolderPath() + "Characters/" +
-                    //"Chunk_" + MyCharacter.GetChunkPosition().x + "_" + MyCharacter.GetChunkPosition().y + "_" + MyCharacter.GetChunkPosition().z + "_" + 
-                    MyCharacter.name + "." + CharacterFileExtension;
-            }
-            else
-            {
-                return GetSaveFolderPath(SaveFolderName) + "Characters/" +
-                    //"Chunk_" + MyCharacter.GetChunkPosition().x + "_" + MyCharacter.GetChunkPosition().y + "_" + MyCharacter.GetChunkPosition().z + "_" + 
-                    MyCharacter.name + "." + CharacterFileExtension;
-            }
+            return GetCharacterFilePath(MyCharacter.name);
+        }
+
+        public string GetCharacterFolderPath(string SaveFolderName = "")
+        {
+            return GetFolderPath(SaveFolderName) + "Characters/";
+        }
+
+        public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
+        {
+            return GetCharacterFolderPath(SaveFolderName) + CharacterName + CharacterFileExtensionPlusDot;
         }
 
         /*public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
@@ -311,35 +363,332 @@ namespace Zeltex
             }
         }*/
 
-        public string GetSaveFolderPath(string SaveFolderName)
+
+        public string GetFolderPath(string SaveFolderName = "")
         {
-            //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
-            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
-            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            if (SaveFolderName == "")
             {
-                Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
-                FileManagement.CreateDirectory(FolderPath, true);
+                string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
+                /*if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+                {
+                    Debug.Log("Creating Directory for Level [" + Name + "]: " + FolderPath);
+                    FileManagement.CreateDirectory(FolderPath, true);
+                }
+                //else
+                {
+                    // Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                }*/
+                return FolderPath;
             }
-            //else
+            else
             {
-                //Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                //Debug.Log("Level: " + Name + " is Getting Save File Path: " + MyFilePathType.ToString());
+                string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Saves + "/") + SaveFolderName + "/" + Name + "/";
+                /*if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+                {
+                    Debug.Log("Creating Directory for Save Path [" + Name + "]: " + FolderPath);
+                    FileManagement.CreateDirectory(FolderPath, true);
+                }
+                //else
+                {
+                    //Debug.Log("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                }*/
+                return FolderPath;
             }
-            return FolderPath;
+        }
+        #endregion
+
+
+        #region LevelLoading
+
+        public IEnumerator LoadLevelWorldless(Action<int> OnLoadChunk = null)
+        {
+            yield return (LoadLevel(WorldManager.Get().SpawnWorld(), OnLoadChunk));
         }
 
-        public string GetFolderPath()
+        public IEnumerator LoadLevel(World MyWorld, Action<int> OnLoadChunk = null)
         {
-            string FolderPath = DataManager.Get().GetResourcesPath(MyFilePathType) + DataManager.Get().GetMapName() + "/" + (DataFolderNames.Levels + "/") + Name + "/";
-            if (FileManagement.DirectoryExists(FolderPath, true, true) == false)    // 
+            yield return (LoadLevel(MyWorld, Int3.Zero(), OnLoadChunk));
+        }
+
+        /// <summary>
+        /// Load the level ! Base function for loading level meta into a world!
+        /// </summary>
+        public IEnumerator LoadLevel(World MyWorld, Int3 PositionOffset, Action<int> OnLoadChunk = null, SaveGame SavedGame = null)
+        {
+            float TimeBegunLoading = Time.realtimeSinceStartup;
+            //IsLoading = true;
+            if (PositionOffset == null)
             {
-                Debug.Log("Creating Directory for Level [" + Name + "]: " + FolderPath);
-                FileManagement.CreateDirectory(FolderPath, true);
+                Debug.LogError("PositionOffset is null inside LoadLevel function");
+                PositionOffset = Int3.Zero();
             }
-            //else
+            if (MyWorld != null)
             {
-               // Debug.LogError("Getting Directory Path for Level [" + Name + "]: " + FolderPath);
+                LevelHandler MyLevelHandler = MyWorld.gameObject.GetComponent<LevelHandler>();
+                if (MyLevelHandler == null)
+                {
+                    MyLevelHandler = MyWorld.gameObject.AddComponent<LevelHandler>();
+                }
+                MyLevelHandler.MyLevel = this;
+                SetWorld(MyWorld);
+                MyWorld.name = Name;
+
+                // First load chunks
+                yield return MyWorld.SetWorldSizeRoutine(WorldManager.Get().RoamSize, WorldManager.Get().RoamPosition, null, true);
+                // Then Generate Terrain
+                if (GenerateTerrain())
+                {
+                    yield return WorldManager.Get().GetComponent<VoxelTerrain>().CreateTerrainWorldRoutine(MyWorld, false);
+                }
+                // Finally Load the chunks from edited data, as well as characters, zones, items etc
+                yield return LoadChunksInLevel(MyWorld, OnLoadChunk, SavedGame);
             }
-            return FolderPath;
+            else
+            {
+                Debug.LogError("World is null inside LoadLevel function");
+            }
+            //IsLoading = false;
+        }
+
+        private IEnumerator LoadChunksInLevel(World MyWorld, Action<int> OnLoadChunk = null, SaveGame SavedGame = null)
+        {
+            Int3 RoamSize = WorldManager.Get().RoamSize;
+            Int3 RoamPosition = WorldManager.Get().RoamPosition;
+            
+            // load chunks
+            string FolderPath = GetFolderPath();
+            // Load Overwritten Character File Names
+            Int3 ChunkPosition = Int3.Zero();
+            float LoadCount = 0;
+            for (ChunkPosition.x = -RoamSize.x + RoamPosition.x; ChunkPosition.x < RoamSize.x + RoamPosition.x; ChunkPosition.x++)
+            {
+                for (ChunkPosition.y = -RoamSize.y + RoamPosition.y; ChunkPosition.y < RoamSize.y + RoamPosition.y; ChunkPosition.y++)
+                {
+                    for (ChunkPosition.z = -RoamSize.z + RoamPosition.z; ChunkPosition.z < RoamSize.z + RoamPosition.z; ChunkPosition.z++)
+                    {
+                        yield return LoadChunk(SavedGame, ChunkPosition, FolderPath, MyWorld);
+                        if (OnLoadChunk != null)
+                        {
+                            LoadCount++;
+                            OnLoadChunk.Invoke((int)(LoadCount / (float)((RoamSize.x * 2) * (RoamSize.y * 2) * (RoamSize.z * 2) * 2) * 100));
+                        }
+                    }
+                }
+            }
+            Chunk MyChunk;
+            for (ChunkPosition.x = -RoamSize.x + RoamPosition.x; ChunkPosition.x < RoamSize.x + RoamPosition.x; ChunkPosition.x++)
+            {
+                for (ChunkPosition.y = -RoamSize.y + RoamPosition.y; ChunkPosition.y < RoamSize.y + RoamPosition.y; ChunkPosition.y++)
+                {
+                    for (ChunkPosition.z = -RoamSize.z + RoamPosition.z; ChunkPosition.z < RoamSize.z + RoamPosition.z; ChunkPosition.z++)
+                    {
+                        MyChunk = MyWorld.GetChunk(ChunkPosition);
+                        if (MyChunk)
+                        {
+                            yield return MyChunk.BuildChunkMesh();
+                            yield return MyChunk.ActivateCharacters();
+                        }
+                        if (OnLoadChunk != null)
+                        {
+                            LoadCount++;
+                            OnLoadChunk.Invoke((int)(LoadCount / (float)((RoamSize.x * 2) * (RoamSize.y * 2) * (RoamSize.z * 2) * 2) * 100));
+                        }
+                    }
+                }
+            }
+            //yield return LoadCharactersFromFiles(NewLevel, CharacterFiles, OnLoadChunk);
+        }
+
+        /// <summary>
+        /// Loads chunk and characters in it
+        /// Also Loads zones, item Objects, and anything else stored in it
+        /// </summary>
+        private IEnumerator LoadChunk(SaveGame MySaveGame, Int3 ChunkPosition, string FolderPath, World MyWorld)
+        {
+            string InnerChunkFileName = "Chunks/" + "Chunk_" + ChunkPosition.x + "_" + ChunkPosition.y + "_" + ChunkPosition.z + ChunkFileExtentionPlusDot;
+            string ChunkFileName = FolderPath + InnerChunkFileName;
+            bool DoesContainChunkFile = FileManagement.FileExists(ChunkFileName, true, true);
+            if (MySaveGame != null)
+            {
+                string ChunkFileNameSaveGame = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + Name + "/" + InnerChunkFileName;
+                bool DoesSaveGameFileExist = FileManagement.FileExists(ChunkFileNameSaveGame, true, true);
+                if (DoesSaveGameFileExist)
+                {
+                    ChunkFileName = ChunkFileNameSaveGame;
+                }
+            }
+            if (DoesContainChunkFile == false)
+            {
+                //Debug.LogError("Chunk at " + ChunkPosition.GetVector().ToString() + " Does not exist. " + ChunkFileName);
+                yield break;
+            }
+            Chunk MyChunk = MyWorld.GetChunk(ChunkPosition);
+            yield return LoadChunkFromFile(MyChunk, ChunkFileName);
+            // Load Characters for this chunk here:
+            yield return LoadCharactersFromFiles( CharactersInChunk);
+        }
+
+        /// <summary>
+        /// Loads a chunk from a file
+        /// </summary>
+        private IEnumerator LoadChunkFromFile(Chunk MyChunk, string FullFilePath)
+        {
+            if (MyChunk)
+            {
+                MyChunk.SetDefaultVoxelNames();
+                //Debug.LogError("Loading ChunkName [" + FileName + "] - at " + MyChunk.name + " of size: " + MyScript.Count);
+                //MyChunk.RunScript(FileUtil.ConvertToList(ChunkData))
+                string MyScript;
+                //MyStrings.AddRange(FileManagement.ReadAllLines(ChunkFiles[i], false, true, true));
+                if (FullFilePath.Contains("://") || FullFilePath.Contains(":///"))
+                {
+                    WWW UrlRequest = new WWW(FullFilePath);
+                    yield return (UrlRequest);  // UniversalCoroutine.CoroutineManager.StartCoroutine
+                    //Scripts.Add(UrlRequest.text);
+                    MyScript = (UrlRequest.text);
+                }
+                else
+                {
+                    // Read File Asynch
+                    FileReaderRoutiner MyFileReader = new FileReaderRoutiner(FullFilePath);
+                    yield return MyFileReader.Run();
+                    MyScript = MyFileReader.Result as string;
+                    //Debug.LogError("Read script asynchornously.\n " + MyScript);
+                }
+                CharactersInChunk.Clear();
+                string[] MyScriptSplit = MyScript.Split('\n');
+                // If Contains Characters on first line of chunk
+                if (MyScriptSplit[0].Contains("/Characters"))
+                {
+                    // each line until /EndCharacters
+                    for (int i = 1; i < MyScriptSplit.Length; i++)
+                    {
+                        // Until line is EndCharacters
+                        if (MyScriptSplit[i].Contains("/EndCharacters"))
+                        {
+                            // Make sure to cut script
+                            string[] NewScriptSplit = new string[MyScriptSplit.Length - i - 1];
+                            Array.Copy(MyScriptSplit, i + 1, NewScriptSplit, 0, NewScriptSplit.Length);
+                            MyScript = FileUtil.ConvertToSingle(NewScriptSplit);
+                            break;
+                        }
+                        else
+                        {
+                            CharactersInChunk.Add(ScriptUtil.RemoveWhiteSpace(MyScriptSplit[i]));
+                        }
+                    }
+                }
+                yield return MyChunk.RunScript(MyScript, false);
+                // Surrounding Chunks
+                /*List<Chunk> SurroundingChunks = MyChunk.GetSurroundingChunks();
+                for (int i = 0; i < SurroundingChunks.Count; i++)
+                {
+                    SurroundingChunks[i].WasUpdated();
+                    SurroundingChunks[i].SetAllUpdatedSides();
+                    yield return SurroundingChunks[i].BuildChunkMesh();
+                }*/
+            }
+            else
+            {
+                Debug.LogError("While loading world: " + MyChunk.GetWorld().name + " - Could not find chunk");
+            }
+        }
+
+        private IEnumerator LoadCharactersFromFiles(List<string> CharacterFiles, System.Action OnLoadChunk = null)
+        {
+            for (int i = 0; i < CharacterFiles.Count; i++)
+            {
+                Character MyCharacter = CharacterManager.Get().GetPoolObject();
+                if (MyCharacter)
+                {
+                    MyCharacter.name = CharacterFiles[i];
+                    // Set full file path
+                    CharacterFiles[i] = GetFilePath(MyCharacter);
+                    if (FileManagement.FileExists(CharacterFiles[i], true, true))
+                    {
+                        // First get script
+                        string CharacterScript = "";
+                        if (CharacterFiles[i].Contains("://") || CharacterFiles[i].Contains(":///"))
+                        {
+                            WWW UrlRequest = new WWW(CharacterFiles[i]);
+                            yield return (UrlRequest);
+                            CharacterScript = UrlRequest.text;
+                        }
+                        else
+                        {
+                            FileReaderRoutiner MyFileReader = new FileReaderRoutiner(CharacterFiles[i]);
+                            yield return MyFileReader.Run();
+                            CharacterScript = MyFileReader.Result as string;
+                            //CharacterFile = File.ReadAllText(CharacterFiles[i]);
+                        }
+                        if (CharacterScript != null)
+                        {
+                            CharacterData NewData = Newtonsoft.Json.JsonConvert.DeserializeObject(CharacterScript, typeof(CharacterData)) as CharacterData;
+                            if (NewData != null)
+                            {
+                                yield return MyCharacter.SetDataRoutine(NewData, this, false, false, (!Application.isPlaying)); // activate if in the editor and not playing
+                                NewData.LoadPath = CharacterFiles[i];
+                                if (OnLoadChunk != null)
+                                {
+                                    OnLoadChunk.Invoke();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(CharacterFiles[i] + " has null string loaded.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(CharacterFiles[i] + " is not an existing file!");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Character Pool was empty in WorldManager:LoadChunksInLevel");
+                    break;
+                }
+            }
+        }
+
+        public void SaveLevel()
+        {
+            string FolderPath = GetFolderPath();
+            World LevelWorld = GetWorld();
+            if (LevelWorld != null)
+            {
+                SetWorld(LevelWorld);
+            }
+            if (LevelWorld)
+            {
+                LevelWorld.GatherChunks();
+                string BetweenChar = "_";
+                if (LevelWorld)
+                {
+                    foreach (KeyValuePair<Int3, Chunk> MyValueKeyPair in LevelWorld.MyChunkData)
+                    {
+                        Chunk MyChunk = MyValueKeyPair.Value;
+                        if (MyChunk)
+                        {
+                            string FilePath = FolderPath + "Chunk" +
+                                BetweenChar + MyChunk.Position.x.ToString() +
+                                BetweenChar + MyChunk.Position.y.ToString() +
+                                BetweenChar + MyChunk.Position.z.ToString() +
+                                "." + ChunkFileExtention;
+                            string ChunkData = MyChunk.GetSerial();
+                            Debug.Log("Saving chunk to: " + FilePath);
+                            FileUtil.Save(FilePath, ChunkData);
+                        }
+                    }
+                }
+                //UniversalCoroutine.CoroutineManager.StartCoroutine(SaveGame(SpawnWorld(), NewLevel));
+            }
+            else
+            {
+                Debug.LogError("Could not save level " + Name + "'s World.");
+            }
         }
         #endregion
     }

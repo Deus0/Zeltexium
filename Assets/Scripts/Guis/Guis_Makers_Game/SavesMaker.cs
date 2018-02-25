@@ -171,63 +171,77 @@ namespace Zeltex.Saves
         /// </summary>
         private IEnumerator CreateNewGame()
         {
+            OnConfirm.Invoke(); // ? not sure
             NewGame.SetLevel(StartingLocation);
-            GuiSpawner.Get().DestroySpawn("MainMenu");
-            OnConfirm.Invoke();
+            // Create new game
             GetComponent<ZelGui>().TurnOff();
-            GameManager.Get().MyLoadingGui.SetPercentage(0);
-            //GetButton("PlayGameButton").interactable = true;
             DataManager.Get().AddElement(DataFolderNames.Saves, NewGame);
             DataManager.Get().SaveElement(NewGame);
-
-            GuiList SavesList = GetListHandler("SavesList");
-            string SaveGameName = GetInput("NameInput").text;
-            string MyDirectory = DataManager.GetFolderPath(DataFolderNames.Saves + "/") + SaveGameName + "/";
-            Debug.Log("Creating New Save Game at: [" + MyDirectory + "]");
-            try
-            {
-                if (FileManagement.DirectoryExists(MyDirectory, true, true) == false)
-                {
-                    FileManagement.CreateDirectory(MyDirectory, true);
-                    SavesList.Add(SaveGameName);
-                }
-                else
-                {
-                    Debug.LogError("Tried to create a duplicate savegame [" + SaveGameName + "]");
-                }
-            }
-            catch (DirectoryNotFoundException e)
-            {
-                Debug.LogError("DirectoryNotFoundException at: " + MyDirectory + "\n" + e.ToString());
-            }
-            //SetSaveGameName(SaveGameName);
-            // Go to Character Create Screen and Level Select
-            // wait just pick first one for now...!
-            float ChunksLoaded = 0;
-            float MaxLoading = (NewGame.GetLevel().GetWorldSize().x * NewGame.GetLevel().GetWorldSize().y * NewGame.GetLevel().GetWorldSize().z)
-                 + NewGame.GetLevel().GetCharactersCount() - 2;
-            if (NewGame.CharacterName == "")
-            {
-                // if save game has no character
-                MaxLoading++;
-            }
-            MaxLoading += NewGame.GetLevel().GetCharactersCount();
-            yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
-                Voxels.WorldManager.Get().LoadSaveGameRoutine(
-                NewGame, 
-                () =>
-                {
-                    ChunksLoaded++;
-                    GameManager.Get().MyLoadingGui.SetPercentage( ChunksLoaded / MaxLoading);
-                }));
-            GameManager.Get().MyLoadingGui.SetPercentage(1f);
-
+            //GuiList SavesList = GetListHandler("SavesList");
+            //SavesList.Add(NewGame.Name);
+            DataManager.Get().SaveElement(NewGame);
+            /*
+            MyLoadingGui.SetPercentage(1f);
             for (int i = 0; i < 120; i++)
             {
                 yield return null;
-            }
-            OnLoadedGame(NewGame);
+            }*/
+            //OnLoadedGame(NewGame);
+            //MyLoadingGui.TurnOff();
+            //GuiSpawner.Get().DestroySpawn(gameObject);
+            yield return LoadGame(NewGame);
             DataManager.Get().SaveElement(NewGame);
+        }
+
+        /// <summary>
+        /// Play the current game
+        /// </summary>
+        public IEnumerator PlayGameRoutine()
+        {
+            // Load Characters list
+            // Load Character
+            GuiList MyList = GetListHandler("SavesList");
+            if (MyList.GetSelected() >= 0 && MyList.GetSize() > 0)
+            {
+                string SaveGameName = MyList.GetSelectedName();
+                SaveGame MyGame = DataManager.Get().GetElement(DataFolderNames.Saves, SaveGameName) as SaveGame;
+                yield return LoadGame(MyGame);
+            }
+        }
+
+        public IEnumerator LoadGame(SaveGame MyGame)
+        {
+            if (MyGame != null)
+            {
+                GetComponent<ZelGui>().TurnOff();
+                LoadingGui MyLoadingGui = GuiSpawner.Get().GetGui("LoadingGui").GetComponent<LoadingGui>();
+                MyLoadingGui.SetPercentage(0);
+                yield return GameManager.Get().HostGame();  // spawn pools
+                Level MyLevel = MyGame.GetLevel();
+                if (MyLevel != null)
+                {
+                    yield return MyGame.LoadSaveGameRoutine(
+                        (LoadPercentage) => {
+                            MyLoadingGui.SetPercentage(LoadPercentage);
+                        });
+                    MyLoadingGui.SetPercentage(1f);
+
+                    yield return null;
+                    OnLoadedGame(MyGame);
+                }
+                else
+                {
+                    Debug.LogError("Failure to find level: " + MyGame.LevelName);
+                    // go to default level now with character
+                    MyLoadingGui.TurnOff();
+                }
+                MyLoadingGui.TurnOff();
+                GuiSpawner.Get().DestroySpawn(gameObject);
+            }
+            else
+            {
+                Debug.LogError("Save Game Is Null Inside Load Game");
+            }
         }
 
 
@@ -255,62 +269,6 @@ namespace Zeltex.Saves
         {
             UniversalCoroutine.CoroutineManager.StartCoroutine(PlayGameRoutine());
             OnConfirm.Invoke();
-        }
-
-		/// <summary>
-		/// Play the current game
-		/// </summary>
-        public IEnumerator PlayGameRoutine()
-        {
-            // Load Characters list
-            // Load Character
-            GuiList MyList = GetListHandler("SavesList");
-            if (MyList.GetSelected() >= 0 && MyList.GetSize() > 0)
-            {
-                string SaveGameName = MyList.GetSelectedName();
-                SaveGame MyGame = DataManager.Get().GetElement(DataFolderNames.Saves, SaveGameName) as SaveGame;
-                if (MyGame != null)
-                {
-                    GetComponent<ZelGui>().TurnOff();
-                    GameManager.Get().MyLoadingGui.SetPercentage(0);
-                    Level MyLevel = MyGame.GetLevel();// //DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
-
-                    if (MyLevel != null)
-                    {
-                        float ChunksLoaded = 0;
-                        float MaxLoading = (MyLevel.GetWorldSize().x * MyLevel.GetWorldSize().y * MyLevel.GetWorldSize().z)
-                             + MyLevel.GetCharactersCount() - 2;
-                        if (MyGame.CharacterName == "")
-                        {
-                            // if save game has no character
-                            MaxLoading++;
-                        }
-                        MaxLoading += MyGame.GetLevel().GetCharactersCount();
-                       // SetSaveGameName(SaveGameName);   // set the SaveGameName somewhere for when saving
-                        yield return UniversalCoroutine.CoroutineManager.StartCoroutine(
-                            Voxels.WorldManager.Get().LoadSaveGameRoutine(
-                                MyGame,
-                                () => {
-                                    ChunksLoaded++;
-                                    GameManager.Get().MyLoadingGui.SetPercentage(ChunksLoaded / MaxLoading);
-                                }));
-                        GameManager.Get().MyLoadingGui.SetPercentage(1f);
-
-                        yield return null;
-                        OnLoadedGame(MyGame);
-                    }
-                    else
-                    {
-                        Debug.LogError("Failure to find level: " + MyGame.LevelName);
-                        // go to default level now with character
-                        GameManager.Get().MyLoadingGui.TurnOff();
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Could not find save game with name: " + SaveGameName);
-                }
-            }
         }
 
         public void OnLoadedGame(SaveGame MyGame)
@@ -356,7 +314,6 @@ namespace Zeltex.Saves
                     Debug.LogError("Could not begin game for bot: " + i);
                 }
             }
-            GameManager.Get().MyLoadingGui.TurnOff();
         }
 
 

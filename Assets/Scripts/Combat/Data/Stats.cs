@@ -10,7 +10,7 @@ namespace Zeltex.Combat
     /// A group of stats. Primarily used in game mechanics.
     /// </summary>
 	[System.Serializable]
-	public class Stats : Element
+	public class Stats : ElementCore
     {
         [JsonProperty, SerializeField]
         public bool IsAlive = true;
@@ -62,7 +62,7 @@ namespace Zeltex.Combat
         }
 
         /// <summary>
-        /// Adds a stat to the list
+        /// Adds a stat to the list - but clones it
         /// If already in the list, will combine them
         /// </summary>
         public virtual bool Add(Stat MyStat)
@@ -78,7 +78,7 @@ namespace Zeltex.Combat
                 }
             }
             // if not using the new variable, it will override the base stats when creating temp ones
-            Data.Add(new Stat(MyStat)); // if not in list, add to list
+            Data.Add(MyStat.Clone<Stat>()); // if not in list, add to list
             return true;
         }
 

@@ -15,7 +15,7 @@ namespace Zeltex
     /// <summary>
     /// Used for Caching Texture Coordinates
     /// </summary>
-    [System.Serializable()]
+    [Serializable()]
     public class ElementFolderDictionary : SerializableDictionaryBase<string, ElementFolder> 
     {
     }
@@ -54,6 +54,12 @@ namespace Zeltex
 		public DataGUI MyGui;
         public int FormatType = 0;
         public bool WasPlayingOnLoad = false;
+        [SerializeField]
+        public string DataPath;
+        [SerializeField]
+        public string PersistentDataPath;
+        [SerializeField]
+        public string StreamingAssetsPath;
         #endregion
 
         #region Mono
@@ -77,7 +83,10 @@ namespace Zeltex
 
         private void Start()
         {
-			MyGui = gameObject.GetComponent<DataGUI>();
+            PersistentDataPath = Application.persistentDataPath;
+            DataPath = Application.dataPath;
+            StreamingAssetsPath = Application.streamingAssetsPath;
+            MyGui = gameObject.GetComponent<DataGUI>();
 			if (Application.isPlaying && IsLoaded == false)
 			{
 				RoutineManager.Get().StartCoroutine(LoadAllBeginning());
@@ -168,10 +177,6 @@ namespace Zeltex
 
         public string GetMapName()
         {
-            if (MapName == "")
-            {
-                MapName = "Zelnugg";
-            }
             return MapName;
         }
 
@@ -220,7 +225,6 @@ namespace Zeltex
         {
             return GetResourcesPath(MyFilePathType);
         }
-
         /// <summary>
         /// Folder Path of maps
         /// </summary>
@@ -229,39 +233,39 @@ namespace Zeltex
             if (MyType == FilePathType.PersistentPath)
             {
                 // "C:/Users/Marz/AppData/LocalLow/Zeltex/Zeltex/";//  + " / ";// + "/Resources/";
-                MapFolderPath = Application.persistentDataPath + "/";
+                MapFolderPath = PersistentDataPath + "/";
             }
             else if (MyType == FilePathType.StreamingPath)
             {
                 // mac or OS
 #if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-                MapFolderPath = Application.dataPath + "/StreamingAssets/";
+                MapFolderPath = DataPath + "/StreamingAssets/";
 #endif
 #if UNITY_ANDROID
                 //On Android, use:
-				MapFolderPath = "jar:file://" + Application.dataPath + "!/assets/";
+				MapFolderPath = "jar:file://" + DataManager.DataPath + "!/assets/";
 #endif
 #if UNITY_IOS
 		                //On iOS, use:
-				MapFolderPath = Application.dataPath + "/Raw";
+				MapFolderPath = DataManager.DataPath + "/Raw";
 #endif
 #if UNITY_WEBGL
-                MapFolderPath = Application.streamingAssetsPath + "/";
+                MapFolderPath = DataManager.StreamingAssetsPath + "/";
 #endif
             }
-            else
+            else if (MyType == FilePathType.Normal)
             {
-                MapFolderPath = Application.dataPath + "/";
+                MapFolderPath = DataPath + "/";
                 MapFolderPath += "Resources/";
 #if UNITY_EDITOR
                 MapFolderPath += "ResourcePacks/";
 #endif
             }
-            if (!FileManagement.DirectoryExists(MapFolderPath, true, true))
+            /*if (!FileManagement.DirectoryExists(MapFolderPath, true, true))
             {
                 FileManagement.CreateDirectory(MapFolderPath, true);
                 Debug.Log("Created Resouces FolderPath [" + MapFolderPath + "]");
-            }
+            }*/
             return MapFolderPath;
         }
         #endregion
@@ -398,6 +402,8 @@ namespace Zeltex
 
             FolderNames.Add((DataFolderNames.Levels));
             FolderNames.Add((DataFolderNames.Saves));
+            FolderNames.Add((DataFolderNames.Zones));
+            FolderNames.Add((DataFolderNames.Lore));
             return FolderNames;
         }
 
@@ -407,41 +413,50 @@ namespace Zeltex
         public void InitializeFolders()
         {
             ElementFolders.Clear();
-
             // Element Folders
-            ElementFolders.Add(DataFolderNames.Voxels, ElementFolder.Create(DataFolderNames.Voxels, "zel"));
-            ElementFolders.Add(DataFolderNames.PolyModels, ElementFolder.Create(DataFolderNames.PolyModels, "zel"));
-            ElementFolders.Add(DataFolderNames.VoxelModels, ElementFolder.Create(DataFolderNames.VoxelModels, "zel"));
-            ElementFolders.Add(DataFolderNames.Skeletons, ElementFolder.Create(DataFolderNames.Skeletons, "zel"));
-            ElementFolders.Add(DataFolderNames.Zanimations, ElementFolder.Create(DataFolderNames.Zanimations, "zel"));
+            CreateNewFolder(DataFolderNames.Levels);
+            CreateNewFolder(DataFolderNames.Characters);
+            CreateNewFolder(DataFolderNames.Voxels);
+            CreateNewFolder(DataFolderNames.Items);
+            CreateNewFolder(DataFolderNames.Stats);
+            CreateNewFolder(DataFolderNames.Spells);
+            CreateNewFolder(DataFolderNames.Quests);
+            CreateNewFolder(DataFolderNames.Recipes);
+            CreateNewFolder(DataFolderNames.Zones);
+            CreateNewFolder(DataFolderNames.Lore);
+            CreateNewFolder(DataFolderNames.Dialogues);
+            CreateNewFolder(DataFolderNames.DialogueTrees);
+            CreateNewFolder(DataFolderNames.Inventorys);
+            CreateNewFolder(DataFolderNames.StatGroups);
+            CreateNewFolder(DataFolderNames.QuestLogs);
+            CreateNewFolder(DataFolderNames.PolyModels);
+            CreateNewFolder(DataFolderNames.VoxelModels);
+            CreateNewFolder(DataFolderNames.Skeletons);
+            CreateNewFolder(DataFolderNames.Zanimations);
+            CreateNewFolder(DataFolderNames.Sounds);
+            CreateNewFolder(DataFolderNames.Musics);
+            CreateNewFolder(DataFolderNames.VoxelDiffuseTextures);
+            CreateNewFolder(DataFolderNames.VoxelNormalTextures);
+            CreateNewFolder(DataFolderNames.ItemTextures);
+            CreateNewFolder(DataFolderNames.StatTextures);
+            CreateNewFolder(DataFolderNames.Saves);
+        }
 
-            ElementFolders.Add(DataFolderNames.Items, ElementFolder.Create(DataFolderNames.Items, "zel"));
-            ElementFolders.Add(DataFolderNames.Recipes, ElementFolder.Create(DataFolderNames.Recipes, "zel"));
-            ElementFolders.Add(DataFolderNames.Inventorys, ElementFolder.Create(DataFolderNames.Inventorys, "zel"));
+        public void CreateNewFolder(string FolderName)
+        {
+            AddElementFolder(ElementFolder.Create(FolderName));
+        }
 
-            ElementFolders.Add(DataFolderNames.Stats, ElementFolder.Create(DataFolderNames.Stats, "zel"));
-            ElementFolders.Add(DataFolderNames.StatGroups, ElementFolder.Create(DataFolderNames.StatGroups, "zel"));
-            ElementFolders.Add(DataFolderNames.Spells, ElementFolder.Create(DataFolderNames.Spells, "zel"));
-
-            ElementFolders.Add(DataFolderNames.Quests, ElementFolder.Create(DataFolderNames.Quests, "zel"));
-            ElementFolders.Add(DataFolderNames.QuestLogs, ElementFolder.Create(DataFolderNames.QuestLogs, "zel"));
-
-            ElementFolders.Add(DataFolderNames.Dialogues, ElementFolder.Create(DataFolderNames.Dialogues, "zel"));
-            ElementFolders.Add(DataFolderNames.DialogueTrees, ElementFolder.Create(DataFolderNames.DialogueTrees, "zel"));
-
-            ElementFolders.Add(DataFolderNames.Characters, ElementFolder.Create(DataFolderNames.Characters, "zel"));
-            ElementFolders.Add(DataFolderNames.Levels, ElementFolder.Create(DataFolderNames.Levels, "zel"));
-            ElementFolders.Add(DataFolderNames.Saves, ElementFolder.Create(DataFolderNames.Saves, "zel"));
-
-            ElementFolders.Add(DataFolderNames.Sounds, ElementFolder.Create(DataFolderNames.Sounds, "zel"));
-            ElementFolders.Add(DataFolderNames.Musics, ElementFolder.Create(DataFolderNames.Musics, "zel"));
-            ElementFolders.Add(DataFolderNames.VoxelDiffuseTextures, ElementFolder.Create(DataFolderNames.VoxelDiffuseTextures, "zel"));
-            ElementFolders.Add(DataFolderNames.VoxelNormalTextures, ElementFolder.Create(DataFolderNames.VoxelNormalTextures, "zel"));
-            ElementFolders.Add(DataFolderNames.ItemTextures, ElementFolder.Create(DataFolderNames.ItemTextures, "zel"));
-            ElementFolders.Add(DataFolderNames.StatTextures, ElementFolder.Create(DataFolderNames.StatTextures, "zel"));
-
-            // level scripts, each level contains a folder full of chunks and characters too
-            //RefreshGuiMapNames();
+        private void AddElementFolder(ElementFolder NewFolder)
+        {
+            if (ElementFolders.ContainsKey(NewFolder.FolderName) == false)
+            {
+                ElementFolders.Add(NewFolder.FolderName, NewFolder);
+            }
+            else
+            {
+                Debug.LogError(NewFolder.FolderName + " already exists in datamanager.");
+            }
         }
 
         /// <summary>
@@ -592,7 +607,7 @@ namespace Zeltex
             Debug.Log("Loading Resources from folder [" + MapName + "]");
             //RenameName = MapName;
             InitializeFolders();
-            yield return (LoadAllElements());
+            yield return LoadAllElements();
             IsLoaded = true;
             yield return null;
             if (OnFinishLoading != null)
@@ -1349,12 +1364,16 @@ namespace Zeltex
 		/// </summary>
 		private IEnumerator LoadAllElements()
 		{
-            //Debug.Log("Loading all elements for [" + MapName + "]");
+            Debug.Log("Loading all elements for [" + MapName + "]");
+            int LoadedFileCount = 0;
             foreach (KeyValuePair<string, ElementFolder> MyPair in ElementFolders)
-			{
-                yield return UniversalCoroutine.CoroutineManager.StartCoroutine(MyPair.Value.LoadAllElements());
-			}
-			OnUpdatedResources.Invoke();
+            {
+                //Debug.Log("Loading elements for Folder [" + MyPair.Key + "]");
+                yield return MyPair.Value.LoadAllElements();
+                LoadedFileCount += MyPair.Value.GetData().Count;
+            }
+            Debug.Log("Loaded a total of [" + LoadedFileCount + "] elements for [" + MapName + "]");
+            OnUpdatedResources.Invoke();
 		}
 
 		public Element RevertElement(Element MyElement)
@@ -1494,6 +1513,16 @@ namespace Zeltex
                 NewElement = NewElement.Clone();
                 if (MyFolder.Get(NewElement.Name) != null)
                 {
+                    // First confirm for overwriting
+#if UNITY_EDITOR
+                    if (UnityEditor.EditorUtility.DisplayDialog("Confirm Overwriting File",
+                    "Are you sure you want to replace old file " + NewElement.Name, 
+                    "Overwrite", "Cancel") == false)
+                    {
+                        Debug.Log("Canceled Overwriting " + NewElement.Name + " File.");
+                        return; 
+                    }
+#endif
                     if (MyFolder.SetElement(NewElement))
                     {
                         NewElement.MyFolder = MyFolder;

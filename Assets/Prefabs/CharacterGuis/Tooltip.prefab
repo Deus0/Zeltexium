@@ -235,8 +235,8 @@ MonoBehaviour:
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsNode: 0
 --- !u!114 &11457556
 MonoBehaviour:
@@ -249,18 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4c9ddb0457e6f4886d6f87f03a8049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceOn: 0
-  IsBeginOn: 0
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &11458714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,6 +278,7 @@ MonoBehaviour:
   TargetSkeleton: {fileID: 0}
   ScreenPosition: {x: 0, y: 0}
   MovementSpeed: 1.4
+  IsInstantOnStart: 0
   IsInstant: 1
   MyDirection: {x: 0, y: 0, z: 1}
   MyDisplayDistance: 0.3

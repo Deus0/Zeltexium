@@ -22,6 +22,12 @@ namespace Zeltex.Guis
             }
         }
 
+        public void SetPercentage(int NewPercent)
+        {
+            MyZel = GetComponent<ZelGui>();
+            MyZel.TurnOn();
+            PercentText.text = Mathf.FloorToInt(NewPercent) + "%";
+        }
         public void SetPercentage(float NewPercent)
         {
             MyZel = GetComponent<ZelGui>();

@@ -64,7 +64,9 @@ namespace Zeltex
                 PullFromDataManager(property, DataManager.Get().GetFileIndex(GetDataFolderName(), Data.Name));
             }
             PullFromDataManager(property);
+
             DrawCustomGUI();
+            //DataGUI.Get().DrawFieldsForObject(property.objectReferenceValue as object, null, null, true);
         }
 
         public virtual void DrawCustomGUI()
@@ -98,15 +100,13 @@ namespace Zeltex
             if (NewData != null)
             {
                 NewData = NewData.Clone() as T;
-                //Data.SetData(NewData.Clone() as T);
-                //SetValue(property, NewData);
                 SetPropertyValue(NewData);
             }
         }
 
         protected virtual void SetPropertyValue(object NewValue)
         {
-
+            SetValue(MyProperty, NewValue);
         }
 
         public void SetValue(SerializedProperty property, object value)

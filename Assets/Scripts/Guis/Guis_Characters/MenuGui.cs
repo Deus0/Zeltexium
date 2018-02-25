@@ -95,15 +95,17 @@ namespace Zeltex.Guis.Characters
             }
             else
             {
-                ZelGui MyGui = MyGuiManager.Spawn(GuiName);
-                if (MyGui)
-                {
-                    MyGui.TurnOn();
-                }
-                else
-                {
-                    Debug.LogError("Could not spawn: " + GuiName);
-                }
+                MyGuiManager.Spawn(GuiName,
+                    (MyGui) => {
+                        if (MyGui)
+                        {
+                            MyGui.TurnOn();
+                        }
+                        else
+                        {
+                            Debug.LogError("Could not spawn: " + GuiName);
+                        }
+                    });
             }
         }
     }

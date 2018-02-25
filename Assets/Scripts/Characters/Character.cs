@@ -49,7 +49,6 @@ namespace Zeltex.Characters
         [SerializeField]
         private CharacterData Data = new CharacterData();
         // The level the character is loaded in
-        private Level InLevel;
 
         [Header("Character")]
         public bool IsPlayer;
@@ -147,7 +146,7 @@ namespace Zeltex.Characters
             }
             if (ActionSaveToLevel.IsTriggered())
             {
-                InLevel.SaveCharacterToLevel(this);
+                Data.InLevel.SaveCharacterToLevel(this, "", true);
             }
 			if (ActionImportVox.IsTriggered()) 
 			{
@@ -264,7 +263,7 @@ namespace Zeltex.Characters
             World MyWorld = Data.GetInWorld();
             if (MyWorld == null)
             {
-                Debug.LogError(InLevel.Name + " has in a null world.");
+                //Debug.LogError(name + " has a null world, so cannot position.");
                 return;
             }
             //Debug.LogError("[" + name + "] has been loaded into world of [" + MyWorld.name + "]");
@@ -331,6 +330,11 @@ namespace Zeltex.Characters
                 if (IsClone)
                 {
                     Data = NewData.Clone<CharacterData>();
+                    if (Data == null)
+                    {
+                        Debug.LogError("Cloned data is null");
+                        yield break;
+                    }
                 }
                 else
                 {
@@ -339,22 +343,25 @@ namespace Zeltex.Characters
                 Data.OnInitialized();
                 name = Data.Name;
                 RefreshComponents();
-                NewData.SetCharacter(this);
+                Data.SetCharacter(this);
                 Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);
-                transform.position = Data.LevelPosition;
-                transform.eulerAngles = Data.LevelRotation;
-                MyMover.IsPlayer = IsPlayer;
-                //MySkeleton.gameObject.SetActive(false);
-                MySkeleton.GetSkeleton().SetSkeletonHandler(MySkeleton);    // incase it messsed up?!
-                if (IsActivateSkeleton)
+                Data.SetInLevel(MyLevel);
+                //InLevel = MyLevel;
+                if (MyLevel != null)
                 {
-                    yield return MySkeleton.GetSkeleton().ActivateRoutine();
-                    MyMover.SetCameraBone(GetCameraBone());
+                    transform.position = Data.LevelPosition;
+                    transform.eulerAngles = Data.LevelRotation;
+                    Data.SetWorld(MyLevel.GetWorld());
+                    Data.RefreshTransform(true);
+                    MyLevel.AddCharacter(this);
                 }
-                if (GetComponent<Shooter>())
+                //MySkeleton.gameObject.SetActive(false);
+                MyMover.IsPlayer = IsPlayer;
+                MySkeleton.SetSkeletonData(Data.MySkeleton);
+                if (!IsActivateSkeleton)
                 {
-                    GetComponent<Shooter>().SetCameraBone(GetCameraBone());
+                    SetMovement(false);
                 }
                 if (IsPlayer == false)
                 {
@@ -364,21 +371,24 @@ namespace Zeltex.Characters
                         GetComponent<Mover>().SetBot(MyBot);
                     }
                 }
-                Data.MyGuis.SetCharacter(this, IsSpawnGuis);
-                if (IsSpawnGuis)
-                {
-                    RoutineManager.Get().StartCoroutine(SetGuiStatesAfter());
-                }
-                InLevel = MyLevel;
-                Data.SetWorld(InLevel.GetWorld());
-                if (InLevel != null)
-                {
-                    InLevel.AddCharacter(this);
-                }
                 // Set in chunk
-                Data.RefreshTransform();
                 // Unhide Skeleton
                 //MySkeleton.gameObject.SetActive(true);
+                if (IsActivateSkeleton)
+                {
+                    Data.MyGuis.SetCharacter(this, false);
+                    yield return ActivateCharacter();
+                    //yield return MySkeleton.GetSkeleton().ActivateRoutine();
+                    // MyMover.SetCameraBone(GetCameraBone());
+                }
+                else
+                {
+                    Data.MyGuis.SetCharacter(this, IsSpawnGuis);
+                    if (IsSpawnGuis)
+                    {
+                        RoutineManager.Get().StartCoroutine(SetGuiStatesAfter());
+                    }
+                }
             }
             else if (NewData == null)
             {
@@ -392,10 +402,15 @@ namespace Zeltex.Characters
         public IEnumerator ActivateCharacter()
         {
             yield return MySkeleton.GetSkeleton().ActivateRoutine();
+            if (GetComponent<Shooter>())
+            {
+                GetComponent<Shooter>().SetCameraBone(GetCameraBone());
+            }
             MyMover.SetCameraBone(GetCameraBone());
             Data.MyGuis.SpawnAllGuis();
             OnActivated();  // Fix position
             RoutineManager.Get().StartCoroutine(SetGuiStatesAfter());
+            SetMovement(true);
         }
 
         /// <summary>
@@ -538,7 +553,7 @@ namespace Zeltex.Characters
             // Apply Animations on death - fade effect
             if (MySkeleton != null)
             {
-                SkeletonAnimator MyAnimator = MySkeleton.GetComponent<SkeletonAnimator>();
+                Zanimator MyAnimator = MySkeleton.GetComponent<Zanimator>();
                 if (MyAnimator)
                 {
                     MyAnimator.Stop();
@@ -563,29 +578,31 @@ namespace Zeltex.Characters
             float ReviveTime = 10;
             if (IsPlayer)
             {
-                ZelGui RespawnZelGui = GetGuis().Spawn("RespawnGui");
-                if (RespawnZelGui)
+                System.Action<ZelGui> OnFinishSpawning = (RespawnZelGui) =>
                 {
-                    RespawnZelGui.TurnOn();     // turn gui on when reviving begins
-                    RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
-                    if (MyRespawner)
+                    if (RespawnZelGui)
                     {
-                        StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)(ReviveTime + DeathTime)));
+                        RespawnZelGui.TurnOn();     // turn gui on when reviving begins
+                        RespawnGui MyRespawner = RespawnZelGui.GetComponent<RespawnGui>();
+                        if (MyRespawner)
+                        {
+                            StartCoroutine(MyRespawner.CountDown(() => { GetGuis().GetZelGui("RespawnGui").TurnOff(); }, (int)(ReviveTime + DeathTime)));
+                        }
+                        else
+                        {
+                            Debug.LogError("Respawn gui doesn't have respawn gui.");
+                        }
                     }
                     else
                     {
-                        Debug.LogError("Respawn gui doesn't have respawn gui.");
+                        Debug.LogError("Could not find RespawnGui in guis for: " + name);
                     }
-                }
-                else
-                {
-                    Debug.LogError("Could not find RespawnGui in guis for: " + name);
-                }
-                yield return null;
-                if (RespawnZelGui)
-                {
-                    RespawnZelGui.gameObject.SetActive(true);     // turn gui on when reviving begins
-                }
+                    if (RespawnZelGui)
+                    {
+                        RespawnZelGui.gameObject.SetActive(true);     // turn gui on when reviving begins
+                    }
+                };
+                GetGuis().Spawn("RespawnGui", OnFinishSpawning);
             }
             float TimeBeginRespawn = Time.time;
             while (Time.time - TimeBeginRespawn < DeathTime)
@@ -858,24 +875,27 @@ namespace Zeltex.Characters
 		{
             if (OtherCharacter.GetData().MyDialogue.GetSize() > 0)
             {
-                ZelGui MyDialogueGui = Data.MyGuis.Spawn("Dialogue");
-                if (MyDialogueGui)
+                System.Action<ZelGui> OnFinishSpawning = (MyDialogueGui) =>
                 {
-                    Debug.Log(name + " Is Talking to" + OtherCharacter.name + " with " +
-                        OtherCharacter.GetData().MyDialogue.GetSize() + " dialogue sections.");
-                    OnBeginTalk(OtherCharacter);
-                    OtherCharacter.OnBeginTalk(this);
-                    MyDialogueGui.TurnOn();
-                    DialogueHandler MyCharacterDialogue = MyDialogueGui.GetComponent<DialogueHandler>();
-                    MyCharacterDialogue.MyTree = OtherCharacter.GetData().MyDialogue;    // set gui tree as talked to characters dialogue
-                    MyCharacterDialogue.SetCharacters(this, OtherCharacter);
-                    //MyCharacterDialogue.OtherCharacter = OtherCharacter;
-                    MyCharacterDialogue.OnConfirm();//begin the talk
-                }
-                else
-                {
-                    Debug.LogError(name + " does not have Dialogue Gui");
-                }
+                    if (MyDialogueGui)
+                    {
+                        Debug.Log(name + " Is Talking to" + OtherCharacter.name + " with " +
+                            OtherCharacter.GetData().MyDialogue.GetSize() + " dialogue sections.");
+                        OnBeginTalk(OtherCharacter);
+                        OtherCharacter.OnBeginTalk(this);
+                        MyDialogueGui.TurnOn();
+                        DialogueHandler MyCharacterDialogue = MyDialogueGui.GetComponent<DialogueHandler>();
+                        MyCharacterDialogue.MyTree = OtherCharacter.GetData().MyDialogue;    // set gui tree as talked to characters dialogue
+                        MyCharacterDialogue.SetCharacters(this, OtherCharacter);
+                        //MyCharacterDialogue.OtherCharacter = OtherCharacter;
+                        MyCharacterDialogue.OnConfirm();//begin the talk
+                    }
+                    else
+                    {
+                        Debug.LogError(name + " does not have Dialogue Gui");
+                    }
+                };
+                Data.MyGuis.Spawn("Dialogue", OnFinishSpawning);
             }
             else
             {
@@ -963,9 +983,17 @@ namespace Zeltex.Characters
             {
                 MyRigidbody.isKinematic = !NewState;
             }
+            else
+            {
+                Debug.LogError(name + " has no rigidbody..");
+            }
             if (MyMover)
             {
                 MyMover.enabled = NewState;
+            }
+            else
+            {
+                Debug.LogError(name + " has no Movement..");
             }
             enabled = NewState;
         }
@@ -1084,10 +1112,10 @@ namespace Zeltex.Characters
         {
             if (MyBot == null)
             {
-                MyBot = GetComponent<AI.Bot>();
+                MyBot = GetComponent<Bot>();
                 if (MyBot == null)
                 {
-                    MyBot = gameObject.AddComponent<AI.Bot>();
+                    MyBot = gameObject.AddComponent<Bot>();
                 }
             }
             if (MyRigidbody == null)
@@ -1125,6 +1153,10 @@ namespace Zeltex.Characters
                 {
                     MySkillbar = gameObject.AddComponent<Skillbar>();
                 }
+            }
+            if (MySkeleton == null)
+            {
+                MySkeleton = transform.GetComponentInChildren<SkeletonHandler>();
             }
             if (MySkeleton == null)
             {

@@ -9,8 +9,17 @@ namespace Zeltex
     /// </summary>
     public class Zone : NetworkBehaviour
     {
-        //private MeshRenderer MyMeshRenderer;
         protected NetworkIdentity MyNetworkIdentity;
+        protected ZoneData Data;
+
+        public void SetData(ZoneData NewData)
+        {
+            if (Data != NewData)
+            {
+                Data = NewData;
+                // initialize data
+            }
+        }
 
         // Use this for initialization
         void Awake()

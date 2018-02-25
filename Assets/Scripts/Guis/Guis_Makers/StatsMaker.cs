@@ -65,7 +65,7 @@ namespace Zeltex.Guis.Maker
             //Debug.Log("Updating Index in StatsMaker: " + NewIndex);
             GetInput("NameInput").text = GetSelectedName();
             GetLabel("NameLabelText").text = GetSelectedName();
-            GetInput("DescriptionInput").text = GetSelectedStat().Description;
+            GetInput("DescriptionInput").text = GetSelectedStat().GetDescription();
             GetImage("TextureImage").texture = GetSelectedStat().GetTexture();
             GetDropdown("TextureDropdown").value = 0;
             //GetInput("States").text = "" + GetSelected().GetValue();

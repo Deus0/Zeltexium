@@ -13,11 +13,11 @@ namespace Zeltex.Voxels
     /// The data file for each Voxel Type
     /// </summary>
 	[System.Serializable]
-    public class VoxelMeta : Element
+    public class VoxelMeta : ElementCore
     {
         #region Variables
         //public string Name = "Empty";      
-        private string Description = "A cubey type object."; // used in gui on inspection
+        //private string Description = "A cubey type object."; // used in gui on inspection
         public string ModelID;			                    // various models, ie cube, slopes, etc
         [SerializeField, JsonIgnore]
         private PolyModel MyModel = null;                          // reference to model
@@ -38,7 +38,7 @@ namespace Zeltex.Voxels
             if (MyVoxelHandle == null)
             {
                 GameObject NewVoxelHandle = new GameObject();
-                NewVoxelHandle.name = Name + "-Handler";
+                NewVoxelHandle.name = Name;// + "-Handler";
                 MyVoxelHandle = NewVoxelHandle.AddComponent<VoxelHandle>();
                 MyVoxelHandle.Load(this);
             }

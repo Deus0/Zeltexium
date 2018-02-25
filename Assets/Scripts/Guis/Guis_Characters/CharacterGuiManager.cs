@@ -29,6 +29,9 @@ namespace Zeltex.Guis.Characters
             return MyManager as CharacterGuiManager;
         }
 
+        /// <summary>
+        /// When readying the guis for characters, make sure to attach it to the characters
+        /// </summary>
         public override void ReadyObject(ReadyMessageData Data)
         {
             base.ReadyObject(Data);
@@ -39,10 +42,14 @@ namespace Zeltex.Guis.Characters
             }
             if (PoolObject)
             {
-                //PoolObject.gameObject.SetActive(false);
                 if (Data.ExtraData != null)
                 {
+                    Debug.LogError(Data.ExtraData.name + " is attaching Gui after spawning.");
                     Data.ExtraData.gameObject.GetComponent<Character>().GetGuis().AttachGui(PoolObject);
+                }
+                else
+                {
+                    Debug.LogError("Gui has no character.");
                 }
             }
         }

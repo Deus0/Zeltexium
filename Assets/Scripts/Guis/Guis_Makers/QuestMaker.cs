@@ -82,7 +82,7 @@ namespace Zeltex.Guis.Maker
             {
                 //Debug.Log("Updating Index in questmaker.");
                 GetInput("NameInput").text = GetSelectedQuest().Name;
-                GetInput("DescriptionInput").text = GetSelectedQuest().Description;
+                GetInput("DescriptionInput").text = GetSelectedQuest().GetDescription();
                 GetInput("ObjectNameInput").text = GetSelectedCondition().ObjectName;
                 GetInput("QuantityInput").text = "" + GetSelectedCondition().ItemQuantity;
                 bool WasFound = false;

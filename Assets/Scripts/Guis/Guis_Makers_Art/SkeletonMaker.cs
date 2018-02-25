@@ -283,7 +283,7 @@ namespace Zeltex.Guis.Maker
             {
                 if (MyViewer.MySpawnedSkeleton.GetSkeleton() != null)
                 {
-                    MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().Stop();
+                    MyViewer.MySpawnedSkeleton.GetComponent<Zanimator>().Stop();
                     MyViewer.MySpawnedSkeleton.GetSkeleton().ForceStopLoad();
                 }
                 if (GetSelected() != null)
@@ -296,7 +296,7 @@ namespace Zeltex.Guis.Maker
                 //string MyScript = GetSelected();
                 //Debug.LogError("Loading Skeleton: " + GetSelectedIndex() + ":\n" + MyScript);
                 //yield return MyViewer.MySpawnedSkeleton.GetSkeleton().RunScriptRoutine(FileUtil.ConvertToList(MyScript)); //MyData[GetSelectedIndex()]
-                //MyViewer.MySpawnedSkeleton.GetComponent<SkeletonAnimator>().LoadAll();  // takes the animations from the skeleton managers data
+                //MyViewer.MySpawnedSkeleton.GetComponent<Zanimator>().LoadAll();  // takes the animations from the skeleton managers data
             }
             else
             {

@@ -170,7 +170,7 @@ namespace Zeltex.Skeletons
 			}
 			if (MeshName != "")
 			{
-				return DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName) as Voxels.VoxelModel;
+				return DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName) as VoxelModel;
 			}
 			return null;
 		}
@@ -298,23 +298,6 @@ namespace Zeltex.Skeletons
             NewBoneObject.tag = BoneTag;
             //NewBone.transform.position = MyCamera.transform.position + MyCamera.transform.forward * 2f;
             //NewBoneObject.transform.position = new Vector3();
-            FindParentBone();
-            if (ParentBone != null)
-            {
-                if (ParentBone.MyTransform != null)
-                {
-                    NewBoneObject.transform.SetParent(ParentBone.MyTransform, false);
-                }
-                else
-                {
-					NewBoneObject.transform.SetParent((ParentElement as Skeleton).GetTransform(), false);
-					yield return (ParentBoneWhenSpawned());	//RoutineManager.Get().StartRoutine
-                }
-            }
-            else
-            {
-				NewBoneObject.transform.SetParent((ParentElement as Skeleton).GetTransform(), false);
-            }
             //NewBoneObject.transform.SetParent(FindParentBone(MySkeleton.GetTransform()), false);
             NewBoneObject.transform.localPosition = DefaultPosition;
             NewBoneObject.transform.localEulerAngles = DefaultRotation;
@@ -323,8 +306,8 @@ namespace Zeltex.Skeletons
             MyTransform = NewBoneObject.transform;
             ParentTransform = NewBoneObject.transform.parent;
 
-            CreateJointMesh();
-            CreateBoneMesh();
+            //CreateJointMesh();
+            //CreateBoneMesh();
 			VoxelModel Model = GetVoxelModel();
             if (Model != null)
             {
@@ -367,7 +350,7 @@ namespace Zeltex.Skeletons
 		{
 			if (VoxelMesh)
             {
-				Voxels.World VoxelWorld = VoxelMesh.GetComponent<Voxels.World> ();
+				World VoxelWorld = VoxelMesh.GetComponent<Voxels.World> ();
 				if (VoxelWorld) {
 					VoxelWorld.SetMeshVisibility (true);
 				}
@@ -386,6 +369,36 @@ namespace Zeltex.Skeletons
 			}
 		}
 
+        /// <summary>
+        /// Attaches the bone to the proper parent
+        /// </summary>
+        public void AttachBoneToParent(bool IsReposition = true)
+        {
+            FindParentBone();
+            if (ParentBone != null)
+            {
+                if (ParentBone.MyTransform != null)
+                {
+                    MyTransform.SetParent(ParentBone.MyTransform);
+                }
+                else
+                {
+                    MyTransform.SetParent((ParentElement as Skeleton).GetTransform());
+                    ParentTransform = MyTransform.parent;
+                }
+            }
+            else
+            {
+                MyTransform.SetParent((ParentElement as Skeleton).GetTransform());
+            }
+            if (IsReposition)
+            {
+                // MyTransform.SetParent(ParentBone.MyTransform, false);
+                MyTransform.localPosition = DefaultPosition;
+                MyTransform.localEulerAngles = DefaultRotation;
+            }
+            MyTransform.localScale = DefaultScale;
+        }
         private IEnumerator ParentBoneWhenSpawned()
         {
             while (true)
@@ -405,7 +418,8 @@ namespace Zeltex.Skeletons
         
         private void FindParentBone()
         {
-			for (int i = 0; i < (ParentElement as Skeleton).MyBones.Count; i++)
+            ParentBone = null; // default
+            for (int i = 0; i < (ParentElement as Skeleton).MyBones.Count; i++)
             {
 				if ((ParentElement as Skeleton).MyBones[i].Name == ParentName)
                 {
@@ -560,22 +574,36 @@ namespace Zeltex.Skeletons
 
         private GameObject CreateMeshPart() 
         {
-            if (VoxelMesh != null)
+            if (MyTransform)
             {
-                VoxelMesh.gameObject.Die();
-                VoxelMesh = null;
-            }
-            GameObject NewMeshObject = new GameObject();
-            LayerManager.Get().SetLayerSkeleton(NewMeshObject);
-            NewMeshObject.name = MeshName;//"VoxelMesh [" + Name + "]";
-            NewMeshObject.tag = "BonePart";
+                if (VoxelMesh != null)
+                {
+                    VoxelMesh.gameObject.Die();
+                    VoxelMesh = null;
+                }
+                GameObject NewMeshObject = new GameObject();
+                LayerManager.Get().SetLayerSkeleton(NewMeshObject);
+                if (MeshName != "")
+                {
+                    NewMeshObject.name = MeshName;//"VoxelMesh [" + Name + "]";
+                }
+                else if (MyItem != null)
+                {
+                    NewMeshObject.name = MyItem.Name;//"VoxelMesh [" + Name + "]";
+                }
+                NewMeshObject.tag = "BonePart";
 
-            NewMeshObject.transform.SetParent(MyTransform);
-            NewMeshObject.transform.position = MyTransform.position;
-            NewMeshObject.transform.rotation = MyTransform.rotation;
-            NewMeshObject.transform.localScale.Set(1, 1, 1);
-            VoxelMesh = NewMeshObject.transform;
-            return NewMeshObject;
+                NewMeshObject.transform.SetParent(MyTransform);
+                NewMeshObject.transform.position = MyTransform.position;
+                NewMeshObject.transform.rotation = MyTransform.rotation;
+                NewMeshObject.transform.localScale.Set(1, 1, 1);
+                VoxelMesh = NewMeshObject.transform;
+                return NewMeshObject;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -592,21 +620,24 @@ namespace Zeltex.Skeletons
 			//MeshName = MeshData.Name;
             GameObject NewMeshObject = CreateMeshPart();
 
-            // Add World parts
-            World MyWorld = NewMeshObject.GetComponent<World>();
-            if (MyWorld == null)
+            if (NewMeshObject)
             {
-                MyWorld = NewMeshObject.AddComponent<World>();
-            }
+                // Add World parts
+                World MyWorld = NewMeshObject.GetComponent<World>();
+                if (MyWorld == null)
+                {
+                    MyWorld = NewMeshObject.AddComponent<World>();
+                }
 
-            MyWorld.IsChunksCentred = false;
-            MyWorld.VoxelScale = VoxelScale;
-            MyWorld.SetColliders(false);
-            MyWorld.SetConvex(true);
-            MyWorld.SetMeshVisibility(IsMeshVisible);
-            MyWorld.IsCentreWorld = true;
-            MyWorld.IsDropParticles = true;
-			yield return MyWorld.RunScriptRoutine(Zeltex.Util.FileUtil.ConvertToList(MeshData.VoxelData));
+                MyWorld.IsChunksCentred = false;
+                MyWorld.VoxelScale = VoxelScale;
+                MyWorld.SetColliders(false);
+                MyWorld.SetConvex(true);
+                MyWorld.SetMeshVisibility(IsMeshVisible);
+                MyWorld.IsCentreWorld = true;
+                MyWorld.IsDropParticles = true;
+                yield return MyWorld.RunScriptRoutine(Zeltex.Util.FileUtil.ConvertToList(MeshData.VoxelData));
+            }
         }
 
         /// <summary>

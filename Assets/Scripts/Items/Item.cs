@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Zeltex.Guis;
 using Zeltex.Util;
 using Zeltex.Combat;
-using MakerGuiSystem;
 using Zeltex.Voxels;
-using Zeltex;
 using Newtonsoft.Json;
 
 namespace Zeltex.Items 
@@ -13,26 +14,18 @@ namespace Zeltex.Items
     /// Item is the main quantified data stored in the game.
     /// Can be stored in inventories, item objects, Voxel-chests.
     /// </summary>
-    [System.Serializable]
-    public class Item : Element
+    [Serializable]
+    public class Item : ElementCore
     {
-        #region Variables
-        #region Statics
         [JsonIgnore]
         static private string EndingColor = "</color>";
-        //[JsonIgnore]
-        //static private string CommandColor = "<color=#989a33>";
         [JsonIgnore]
         static private string TagColor = "<color=#779b33>";
         [JsonIgnore]
         static private string QuantityColor = "<color=#00cca4>";
         [JsonIgnore]
         static private string DescriptionColor = "<color=#474785>";
-        #endregion
 
-        [Tooltip("Used in the tooltip to describe the item")]
-        [SerializeField, JsonProperty]
-		private string Description;
         [Tooltip("Used by the game to describe the item")]
         [SerializeField, JsonProperty]
         private List<string> MetaTags;
@@ -59,39 +52,13 @@ namespace Zeltex.Items
         [HideInInspector, JsonIgnore]
         private Inventory ParentInventory = null;
         [HideInInspector, JsonIgnore]
-        public UnityEngine.Events.UnityEvent OnUpdate = new UnityEngine.Events.UnityEvent();
+        public UnityEvent OnUpdate = new UnityEvent();
         [JsonIgnore]
-        public Guis.ItemGui MyGui;
+        public ItemGui MyGui;
         [JsonIgnore]
         private ItemHandler MyItemHandler;
         [JsonIgnore]
-        System.Action MyOnFinishLoading = null;
-
-        /// <summary>
-        /// The meshes used for items
-        /// </summary>
-        [System.Serializable]
-		public enum ItemMeshType
-		{
-			None,               // default cube will be used
-			Polygonal,          // polygonal model stored inside the item
-			PolygonalReference, // polygonal reference, using a Mesh
-			Voxel,              // Voxel model - Stored inside the item
-			VoxelReference      // Voxel model reference - using ModelMaker data
-		}
-		/// <summary>
-		/// The meshes used for items
-		/// </summary>
-		[System.Serializable]
-		public enum ItemTextureType
-		{
-			None,                   // default texture will be used
-			Pixels,                 // Individual pixels will be stored
-			PixelsReference,        // Reference to pixels will be stored
-			Instructions,           // TextureInstructions will be stored inside the item
-			InstructionsReference   // Reference to a TextureInstructions file will be stored
-		}
-        #endregion
+        Action MyOnFinishLoading = null;
 
         #region Initiation
 
@@ -150,11 +117,6 @@ namespace Zeltex.Items
 
         #region Getters
 
-        public string GetDescription()
-        {
-            return Description;
-        }
-
         public int GetQuantity()
         {
             return Quantity;
@@ -187,6 +149,7 @@ namespace Zeltex.Items
                 DescriptionText += TagColor + "\n[No Tags]" + EndingColor;
             return DescriptionText;
         }
+
         public string GetTags()
         {
             string MyTags = "";
@@ -291,18 +254,6 @@ namespace Zeltex.Items
         }
 
         /// <summary>
-        /// Sets the item description
-        /// </summary>
-        public void SetDescription(string NewDescription)
-        {
-            if (Description != NewDescription)
-            {
-                Description = NewDescription;
-                OnModified();
-            }
-        }
-
-        /// <summary>
         /// Sets the item quantity
         /// </summary>
         public void SetQuantity(int NewQuantity)
@@ -379,6 +330,7 @@ namespace Zeltex.Items
         {
             return MyItemHandler;
         }
+
         public void SpawnE(System.Action OnFinishLoading = null)
         {
             MyOnFinishLoading = OnFinishLoading;
@@ -390,7 +342,7 @@ namespace Zeltex.Items
             if (MyItemHandler == null)
             {
                 GameObject NewItem = new GameObject();
-                NewItem.name = Name + "-Handler";
+                NewItem.name = Name;// + "-Handler";
                 MyItemHandler = NewItem.AddComponent<ItemHandler>();
                 MyOnFinishLoading += () =>
                 {
@@ -592,53 +544,3 @@ namespace Zeltex.Items
     }
 
 }
-// maybe make item action as well, ie (open a door)
-
-// give worldItem, a function, so i can have other scripts activate when they are selected - ie flip a car, open a door
-
-
-/*int IndexA = InventoryA.MyItems.IndexOf(ItemA);
-                    int IndexB = InventoryA.MyItems.IndexOf(ItemB);
-                    InventoryA.MyItems[IndexA] = ItemB;
-                    InventoryA.OnUpdateItem.Invoke(IndexA);
-                    InventoryA.MyItems[IndexB] = ItemA;
-                    InventoryA.OnUpdateItem.Invoke(IndexB);*/
-//Debug.Log(IndexA + " Has switched with " + IndexB + " of Inventory: " + InventoryA.Name);
-//Debug.Log("ItemA: " + IndexA + " Has switched with ItemB: " + IndexB + " of InventoryA: " + InventoryA.Name + " and InventoryB: " +  InventoryB.Name);
-
-
-/*else
-            {
-                else if (ItemA.ParentInventory == null && ItemB.ParentInventory != null)
-                {
-                    Inventory InventoryB = ItemB.ParentInventory;
-                    if (!InventoryB.MyItems.Contains(ItemB)) 
-                    {
-                        Debug.LogError("InventoryB[" + InventoryB.Name + "] does not contain ItemB: " + ItemB.Name + " out of total items: " + InventoryB.GetSize());
-                        return null;
-                    }
-                    int IndexB = InventoryB.MyItems.IndexOf(ItemB);
-                    InventoryB.MyItems[IndexB] = ItemA;
-                    InventoryB.OnUpdateItem.Invoke(IndexB);
-                    ItemA.SetParentInventory(InventoryB);
-                    ItemB.SetParentInventory(null);
-                    //Debug.Log(IndexB + " Has switched with an individual item of Inventory: " + InventoryB.Name);
-                    ReturnItem = ItemB;
-                }
-                else if (ItemB.ParentInventory == null && ItemA.ParentInventory != null)
-                {
-                    Inventory InventoryA = ItemA.ParentInventory;
-                    if (!InventoryA.MyItems.Contains(ItemA)) 
-                    {
-                        Debug.LogError("InventoryA[" + InventoryA.Name + "] does not contain ItemA: " + ItemA.Name + " out of total items: " + InventoryA.GetSize());
-                        return null;
-                    }
-                    int IndexA = InventoryA.MyItems.IndexOf(ItemA);
-                    InventoryA.MyItems[IndexA] = ItemB;
-                    InventoryA.OnUpdateItem.Invoke(IndexA);
-                    ItemB.SetParentInventory(InventoryA);
-                    ItemA.SetParentInventory(null);
-                    //Debug.Log(IndexA + " Has switched with an individual item of Inventory: " + InventoryA.Name);
-                    ReturnItem = ItemA;
-                }
-            }*/

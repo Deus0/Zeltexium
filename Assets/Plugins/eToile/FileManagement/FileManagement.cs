@@ -881,7 +881,7 @@ public static class FileManagement
     }
 
     /// <summary>Checks directory existence (checks PersistentData, then StreamingAssets)</summary>
-    public static bool DirectoryExists(string folder, bool checkSA = true, bool fullPath = false)
+    public static bool DirectoryExists(string folder, bool checkSA = true, bool fullPath = true)
     {
         // Check existance:
         bool result = false;
@@ -949,7 +949,7 @@ public static class FileManagement
     }
 
     /// <summary>Create directory (StreamingAssets folder is read only)</summary>
-    public static void CreateDirectory(string name, bool fullPath = false)
+    public static void CreateDirectory(string name, bool fullPath = true)
     {
             if (!fullPath)
                 name = Combine(persistentDataPath, name);
@@ -961,7 +961,7 @@ public static class FileManagement
     }
 
     /// <summary>Delete directory and its content (StreamingAssets is read only)</summary>
-    public static void DeleteDirectory(string name, bool fullPath = false)
+    public static void DeleteDirectory(string name, bool fullPath = true)
     {
         if (DirectoryExists(name, false, fullPath))
         {

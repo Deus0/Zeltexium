@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using Zeltex.Items;
@@ -18,8 +19,8 @@ namespace Zeltex.Quests
     /// <summary>
     /// Holds a list of quests
     /// </summary>
-    [System.Serializable]
-	public class QuestLog : Element
+    [Serializable]
+	public class QuestLog : ElementCore
     {
         [Header("Debug")]
         public bool DebugGui;
@@ -74,54 +75,6 @@ namespace Zeltex.Quests
                 }
             }
         }
-
-        public void RunScript(List<string> MyData)
-        {
-            /*bool IsReading = false;
-            int BeginIndex = -1;
-            for (int i = 0; i < MyData.Count; i++)
-            {
-                if (MyData[i] == "/QuestLog")
-                {
-                    IsReading = true;
-                }
-                else if (MyData[i] == "/EndQuestLog")
-                {
-                    Quest NewQuest = new Quest();
-                    NewQuest.RunScript(MyData.GetRange(BeginIndex, i - 1 - BeginIndex));
-                    Add(NewQuest);
-                    IsReading = false;
-                }
-                if (IsReading)
-                {
-                    if (MyData[i].Contains("/quest "))
-                    {
-                        if (BeginIndex == -1)
-                        {
-                            BeginIndex = i;
-                        }
-                        else
-                        {
-                            Quest NewQuest = new Quest();
-                            NewQuest.RunScript(MyData.GetRange(BeginIndex, i - 1 - BeginIndex));
-                            Add(NewQuest);
-                        }
-                    }
-                }
-            }*/
-        }
-
-        /*public List<string> GetScriptList()
-        {
-            List<string> MyScript = new List<string>();
-            MyScript.Add("/QuestLog");
-            for (int i = 0; i < MyQuests.Count; i++)
-            {
-                MyScript.AddRange(MyQuests[i].GetScriptList());
-            }
-            MyScript.Add("/EndQuestLog");
-            return MyScript;
-        }*/
 
 
         public void Clear()
@@ -201,19 +154,21 @@ namespace Zeltex.Quests
                     MyQuests.Add(NewQuest);
                     OnAddQuest.Invoke();
                 }
-                Guis.ZelGui MyQuestBeginGui = MyCharacter.GetGuis().Spawn("QuestBegin");
-                if (MyQuestBeginGui)
-                {
-                    Guis.QuestBeginGui MyQuestBegin = MyQuestBeginGui.GetComponent<Guis.QuestBeginGui>();
-                    if (MyQuestBegin)
-                    {
-                        MyQuestBegin.SetQuest(NewQuest);
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Could not spawn quest begin gui");
-                }
+                MyCharacter.GetGuis().Spawn("QuestBegin",
+                    (MyQuestBeginGui) => {
+                        if (MyQuestBeginGui)
+                        {
+                            Guis.QuestBeginGui MyQuestBegin = MyQuestBeginGui.GetComponent<Guis.QuestBeginGui>();
+                            if (MyQuestBegin)
+                            {
+                                MyQuestBegin.SetQuest(NewQuest);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("Could not spawn quest begin gui");
+                        }
+                    });
             }
             else
             {

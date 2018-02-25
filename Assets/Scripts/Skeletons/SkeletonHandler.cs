@@ -15,26 +15,35 @@ namespace Zeltex.Skeletons
     public class SkeletonHandler : MonoBehaviour
 	{
 		public Skeleton MySkeleton;
-		[Header("Skeleton Actions")]
-		public EditorAction ActionSaveElement = new EditorAction();
-		public EditorAction ActionAddBone = new EditorAction();
-		public EditorAction ActionAddBoneVox = new EditorAction();
-		public Transform ActionBone = null;
 
-		[Header("Handler Actions")]
-		public EditorAction ActionActivate = new EditorAction();
+		[Header("Actions")]
+		public EditorAction ActionSaveElement = new EditorAction();
+
+        [Header("Skeleton Actions")]
+        public EditorAction ActionActivate = new EditorAction();
 		public EditorAction ActionDeactivate = new EditorAction();
-		[Header("Pose Actions")]
         public EditorAction ActionSetDefaultPose = new EditorAction();
         public EditorAction ActionRestoreDefaultPose = new EditorAction();
+        public EditorAction ActionScanHeirarchyForUpdates = new EditorAction();    // Update the skeleton heirarchy based on the transform one
 
-		[Header("Misc")]
+        [Header("Bone Actions")]
+        public EditorAction ActionSpawnBone = new EditorAction();
+        public EditorAction ActionImportVoxBone = new EditorAction();
+        public EditorAction ActionSpawnVoxBone = new EditorAction();
+        public EditorAction ActionSpawnItemBone = new EditorAction();
+
+        [Header("Action Data")]
+        public Transform ActionBone = null;
+        public VoxelModelAction ActionVoxelModel = new VoxelModelAction();
+        public ItemAction ActionItem = new ItemAction();
+
+        [Header("Misc")]
 		public Character Data;
-		private SkeletonAnimator MyAnimator;
+		private Zanimator MyAnimator;
 		[SerializeField]
 		private bool HasInit;
 
-        private void Awake()
+        /*private void Awake()
         {
             Init();
         }
@@ -44,10 +53,10 @@ namespace Zeltex.Skeletons
             if (!HasInit)
             {
                 HasInit = true;
-                MyAnimator = GetComponent<SkeletonAnimator>();
+                MyAnimator = GetComponent<Zanimator>();
                 if (transform.parent)
                 {
-                    Debug.LogError("Attacking Skeletonhandler");
+                    Debug.LogError("Attaching Skeletonhandler");
                     Character MyCharacter = transform.parent.GetComponent<Character>();
                     if (MyCharacter)
                     {
@@ -72,14 +81,14 @@ namespace Zeltex.Skeletons
 					}
                 }
             }
-        }
+        }*/
 
         private void Update()
         {
-            Init();
+            //Init();
             if (GetSkeleton() != null)// && Application.isPlaying)
             {
-                GetSkeleton().SetSkeletonHandler(this);
+                //GetSkeleton().SetSkeletonHandler(this);
 				GetSkeleton().Update();
 
 				if (ActionSaveElement.IsTriggered())
@@ -88,12 +97,12 @@ namespace Zeltex.Skeletons
 					GetSkeleton().CheckTransforms();
 					GetSkeleton().Save();
 				}
-				if (ActionAddBone.IsTriggered())
+				if (ActionSpawnBone.IsTriggered())
 				{
 					AddBone();
 				}
 
-				if (ActionAddBoneVox.IsTriggered())
+				if (ActionImportVoxBone.IsTriggered())
 				{
 					RoutineManager.Get().StartCoroutine(ImportVoxesAsBones());
 				}
@@ -114,6 +123,20 @@ namespace Zeltex.Skeletons
 				{
 					GetSkeleton().Deactivate();
 				}
+
+                if (ActionScanHeirarchyForUpdates.IsTriggered())
+                {
+                    GetSkeleton().ScanHeirarchyForUpdates();
+                }
+
+                if (ActionSpawnVoxBone.IsTriggered())
+                {
+                    GetSkeleton().AddBoneWithMesh(ActionVoxelModel.VoxelModelName);
+                }
+                if (ActionSpawnItemBone.IsTriggered())
+                {
+                    GetSkeleton().AddBoneWithItem(ActionItem.ItemName);
+                }
             }
         }
 
@@ -174,12 +197,12 @@ namespace Zeltex.Skeletons
             if (MySkeleton != null)
             {
 				MySkeleton.SetSkeletonHandler(this);
-				MyAnimator = GetComponent<SkeletonAnimator>();
+				MyAnimator = GetComponent<Zanimator>();
 				HasInit = true;
             }
         }
 
-        public SkeletonAnimator GetAnimator()
+        public Zanimator GetAnimator()
         {
             return MyAnimator;
         }

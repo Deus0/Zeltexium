@@ -597,7 +597,7 @@ namespace Zeltex.Guis.Maker
                         MyCapsule.enabled = true;
                     }
                 }
-                SkeletonAnimator OldAnimator = MySkeleton.GetComponent<SkeletonAnimator>();
+                Zanimator OldAnimator = MySkeleton.GetComponent<Zanimator>();
                 if (OldAnimator && MyTimeline)
                 {
                     MyTimeline.RemoveAnimator(OldAnimator);
@@ -610,13 +610,13 @@ namespace Zeltex.Guis.Maker
 
         private void OnSelectedSkeleton()
         {
-            SkeletonAnimator MyAnimator = MySkeleton.GetComponent<SkeletonAnimator>();
+            Zanimator MyAnimator = MySkeleton.GetComponent<Zanimator>();
             if (GetInput("TimeInput"))
             {
                 GetInput("TimeInput").interactable = true;
                 if (MyAnimator)
                 {
-                    GetInput("TimeInput").text = "" + MyAnimator.TotalTime;
+                    GetInput("TimeInput").text = "" + MyAnimator.GetTimeLength();
                 }
             }
             if (MySkeleton.GetComponent<GridOverlay>())
@@ -1126,10 +1126,10 @@ namespace Zeltex.Guis.Maker
                     float NewInput = float.Parse(MyInputField.text);
                     if (NewInput >= 0 && NewInput < 15)
                     {
-                        MySkeleton.GetComponent<SkeletonAnimator>().TotalTime = NewInput;
+                        MySkeleton.GetComponent<Zanimator>().SetTimeLength(NewInput);
                     }
-                    MyInputField.text = "" + MySkeleton.GetComponent<SkeletonAnimator>().TotalTime;
-                    MyTimeline.OnUpdatedTotalTime(MySkeleton.GetComponent<SkeletonAnimator>().TotalTime);
+                    MyInputField.text = "" + MySkeleton.GetComponent<Zanimator>().GetTimeLength();
+                    MyTimeline.OnUpdatedTotalTime(MySkeleton.GetComponent<Zanimator>().GetTimeLength());
                 }
                 else if (MyInputField.name == "CapsuleInputX")
                 {

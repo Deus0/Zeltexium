@@ -2,18 +2,16 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Characters.FirstPerson;
+using Zeltex.AI;
 
 namespace Zeltex
 {
-    //[RequireComponent(typeof(Rigidbody))]
-    //[RequireComponent(typeof(CapsuleCollider))]
     public class Mover : MonoBehaviour
     {
         public bool IsPlayer;
         public float GroundedDrag = 5;
         [SerializeField]
         private Transform CameraTransform;
-        public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
         private Rigidbody m_RigidBody;
@@ -21,13 +19,16 @@ namespace Zeltex
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
-        private Zeltex.AI.Bot MyBot;
+        private Bot MyBot;
         [SerializeField]
         public LayerMask GroundLayer;
         private Vector2 MovementInput = Vector2.zero;
         private Vector2 RotationInput = Vector2.zero;
 		//private float OriginalDrag;
 		private CameraBob MyBob;
+        public float JumpForce = 26f;
+        // This is used for multiplying angle facing with speed
+        public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
 
         public void RefreshRigidbody()
         {
@@ -48,19 +49,6 @@ namespace Zeltex
         {
             get { return m_Jumping; }
         }
-
-        public bool Running
-        {
-            get
-            {
-#if !MOBILE_INPUT
-                return movementSettings.Running;
-#else
-	            return false;
-#endif
-            }
-        }
-
 
         private void Start()
         {
@@ -85,7 +73,7 @@ namespace Zeltex
             }
         }
 
-        public void SetBot(AI.Bot NewBot)
+        public void SetBot(Bot NewBot)
         {
             MyBot = NewBot;
         }
@@ -127,7 +115,7 @@ namespace Zeltex
                 x = CrossPlatformInputManager.GetAxis("Horizontal"),
                 y = CrossPlatformInputManager.GetAxis("Vertical")
             };
-            movementSettings.UpdateDesiredTargetSpeed(input);
+            //movementSettings.UpdateDesiredTargetSpeed(input);
             return input;
         }
 
@@ -139,6 +127,7 @@ namespace Zeltex
 			}
 		}
 
+        public float SpeedMultiplier = 1.14f;
         private void UpdateMovementForce() 
         {
             if (IsPlayer)
@@ -152,7 +141,6 @@ namespace Zeltex
                     MovementInput = MyBot.GetInput();
                 }
             }
-            movementSettings.UpdateDesiredTargetSpeed(MovementInput);
             if ((Mathf.Abs(MovementInput.x) > float.Epsilon || Mathf.Abs(MovementInput.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
             {
                 // always move along the camera forward as it is the direction that it being aimed at
@@ -160,21 +148,21 @@ namespace Zeltex
                 Vector3 desiredMove;
                 if (CameraTransform)
                 {
-                    desiredMove = transform.forward * MovementInput.y + transform.right*MovementInput.x;
+                    desiredMove = transform.forward * MovementInput.y + transform.right * MovementInput.x;
                 }
                 else
                 {
-                    desiredMove = CameraTransform.transform.forward*MovementInput.y + CameraTransform.transform.right*MovementInput.x;
+                    desiredMove = CameraTransform.transform.forward * MovementInput.y + CameraTransform.transform.right*MovementInput.x;
                 }
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, Vector3.down).normalized;   //m_GroundContactNormal
+                //desiredMove = Vector3.ProjectOnPlane(desiredMove, Vector3.down).normalized;   //m_GroundContactNormal
 
-                desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
-                desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
-                desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
-                if (m_RigidBody.velocity.sqrMagnitude <
-                    (movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
+                desiredMove.x = desiredMove.x * SpeedMultiplier;
+                desiredMove.z = desiredMove.z * SpeedMultiplier;
+                desiredMove.y = desiredMove.y * SpeedMultiplier;
+                if (m_RigidBody.velocity.sqrMagnitude < SpeedMultiplier * SpeedMultiplier)
                 {
-                    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
+                    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.VelocityChange);
+                    //m_RigidBody.AddForce(desiredMove, ForceMode.Impulse);
                 }
             }
         }
@@ -189,7 +177,7 @@ namespace Zeltex
                 {
                     m_RigidBody.drag = 0f;
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
-                    m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
+                    m_RigidBody.AddForce(new Vector3(0f, JumpForce, 0f), ForceMode.Impulse);
                     m_Jumping = true;
                 }
 
@@ -213,7 +201,7 @@ namespace Zeltex
         private float SlopeMultiplier()
         {
             float angle = Vector3.Angle(m_GroundContactNormal, Vector3.up);
-            return movementSettings.SlopeCurveModifier.Evaluate(angle);
+            return SlopeCurveModifier.Evaluate(angle);
         }
 
 
@@ -314,69 +302,6 @@ namespace Zeltex
                 m_Jumping = false;
             }
         }
-
-
-        [Serializable]
-        public class MovementSettings
-        {
-            public float ForwardSpeed = 8.0f;   // Speed when walking forward
-            public float BackwardSpeed = 4.0f;  // Speed when walking backwards
-            public float StrafeSpeed = 4.0f;    // Speed when walking sideways
-            public float RunMultiplier = 2.0f;   // Speed when sprinting
-            public KeyCode RunKey = KeyCode.LeftShift;
-            public float JumpForce = 30f;
-            public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
-            [HideInInspector]
-            public float CurrentTargetSpeed = 8f;
-
-#if !MOBILE_INPUT
-            private bool m_Running;
-#endif
-
-            public void UpdateDesiredTargetSpeed(Vector2 input)
-            {
-                if (input == Vector2.zero)
-                {
-                    CurrentTargetSpeed = 0;
-                    return;
-                }
-                if (input.x > 0 || input.x < 0)
-                {
-                    //strafe
-                    CurrentTargetSpeed = StrafeSpeed;
-                }
-                if (input.y < 0)
-                {
-                    //backwardsw
-                    CurrentTargetSpeed = BackwardSpeed;
-                }
-                if (input.y > 0)
-                {
-                    //forwards
-                    //handled last as if strafing and moving forward at the same time forwards speed should take precedence
-                    CurrentTargetSpeed = ForwardSpeed;
-                }
-#if !MOBILE_INPUT
-                if (Input.GetKey(RunKey))
-                {
-                    CurrentTargetSpeed *= RunMultiplier;
-                    m_Running = true;
-                }
-                else
-                {
-                    m_Running = false;
-                }
-#endif
-            }
-
-#if !MOBILE_INPUT
-            public bool Running
-            {
-                get { return m_Running; }
-            }
-#endif
-        }
-
 
         [Serializable]
         public class AdvancedSettings

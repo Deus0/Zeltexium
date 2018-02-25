@@ -9,13 +9,11 @@ namespace Zeltex
 {
     public class PoolsManager : ManagerBase<PoolsManager>
     {
-        //public UnityEvent SpawnPools;
         public UnityEvent SynchPools;
-        public UnityEvent ClearPools;
         public List<Component> MyPools = new List<Component>();
         public Guis.LoadingGui MyLoadGui;
 
-        public void SpawnPools(System.Action OnFinishedSpawning)
+        public void SpawnPools(Action OnFinishedSpawning)
         {
             RoutineManager.Get().StartCoroutine(SpawnPoolsRoutine(OnFinishedSpawning));
         }
@@ -27,7 +25,7 @@ namespace Zeltex
             {
                 Type PoolType = MyPools[i].GetType();
                 bool HasSpawned = false;
-                System.Action OnFinishThisSpawn = () =>
+                Action OnFinishThisSpawn = () =>
                 {
                     HasSpawned = true;
                 };
@@ -45,6 +43,26 @@ namespace Zeltex
                 OnFinishedSpawning.Invoke();
             }
             MyLoadGui.TurnOff();
+        }
+
+        /// <summary>
+        /// Clears all the spawn pools
+        /// </summary>
+        public void ClearAllPools()
+        {
+            for (int i = 0; i < MyPools.Count; i++)
+            {
+                Type PoolType = MyPools[i].GetType();
+                MethodInfo MyMethod = PoolType.GetMethod("ClearPools");
+                if (MyMethod != null)
+                {
+                    MyMethod.Invoke(MyPools[i], null);
+                }
+                else
+                {
+                    Debug.LogError(PoolType.ToString() + " has no method ClearPools.");
+                }
+            }
         }
     }
 }

@@ -14,6 +14,10 @@ using Newtonsoft.Json;
 namespace Zeltex.Guis.Characters
 {
 
+
+    [System.Serializable()]
+    public class ZelGuiActionDictionary : SerializableDictionaryBase<string, System.Action<ZelGui>> { }
+
     /// <summary>
     /// Managers the guis for characters
     /// To Do:
@@ -54,6 +58,7 @@ namespace Zeltex.Guis.Characters
         private string LabelName = "";
         [SerializeField, JsonIgnore]//, HideInInspector]
         private Character MyCharacter;
+        private UniversalCoroutine.Coroutine SpawnAllRoutine;
 
         public void Update()
         {
@@ -75,7 +80,6 @@ namespace Zeltex.Guis.Characters
             }
         }
         
-        private UniversalCoroutine.Coroutine SpawnAllRoutine;
         /// <summary>
         /// Spawns all guis listed in the strings
         /// </summary>
@@ -96,11 +100,7 @@ namespace Zeltex.Guis.Characters
             }
             for (int i = 0; i < GuisEnabled.Count; i++)
             {
-                ZelGui MySpawn = Spawn(GuisEnabled[i]);
-                if (MySpawn && i < GuisEnabledStates.Count)
-                {
-                    MySpawn.SetState(GuisEnabledStates[i]);
-                }
+                Spawn(GuisEnabled[i]);
             }
         }
 
@@ -145,57 +145,54 @@ namespace Zeltex.Guis.Characters
             return GuiNames;
         }
 
-        public ZelGui Spawn(string GuiName)
+        List<string> SpawningList = new List<string>();
+
+        public void Spawn(string GuiName, System.Action<ZelGui> OnSpawned = null)
+        {
+            if (SpawningList.Contains(GuiName) == false)
+            {
+                SpawningList.Add(GuiName);
+                RoutineManager.Get().StartCoroutine(SpawnRoutine(GuiName, OnSpawned));
+            }
+        }
+
+        /// <summary>
+        /// Spawn Gui in routine, then invoke event
+        /// </summary>
+        private IEnumerator SpawnRoutine(string GuiName, System.Action<ZelGui> OnSpawned = null)
         {
             ZelGui MyGui = GetZelGui(GuiName);
             if (MyGui)
             {
-                return MyGui;
+                if (OnSpawned != null)
+                {
+                    OnSpawned.Invoke(MyGui);
+                }
+                yield break;
             }
-            if (MyCharacter && CharacterGuiManager.Get() && GetZelGui(GuiName) == null)
+            if (MyCharacter && CharacterGuiManager.Get())
             {
                 MyGui = CharacterGuiManager.Get().GetPoolObject(
                     GuiName,
                     MyCharacter.GetComponent<UnityEngine.Networking.NetworkIdentity>());
-                //Debug.Log("Spawned " + GuiName + ":" + (MyGui != null));
-                RoutineManager.Get().StartCoroutine(AttachGuiRoutine(MyGui, GuiName));
-                return MyGui;
+                if (MyGui)
+                {
+                    MyGui.HasAttached = false;
+                    while (MyGui.HasAttached == false)
+                    {
+                        yield return null;
+                    }
+                }
             }
             else
             {
                 Debug.LogError("Cannot spawn " + GuiName + " from CharacterGuiManager");
-                return MyGui;
-            }
-        }
-
-        public IEnumerator AttachGuiRoutine(ZelGui MyGui, string GuiName)
-        {
-            if (MyGui == null)
-            {
-                //Debug.LogError(GuiName + " is null inside AttachGuiRoutine");
                 yield break;
             }
-            // wait for gui readying object
-            Orbitor MyOrbitor = MyGui.GetComponent<Orbitor>();
-            for (int i = 0; i < 20; i++)
+            if (OnSpawned != null)
             {
-                if (MyGui)
-                {
-                    MyGui.SetState(MyGui.GetBeginState());
-                    // Teleport
-                    if (MyOrbitor)
-                    {
-                        MyOrbitor.SetTarget(MyCharacter.transform);
-                        MyOrbitor.TeleportToTarget();
-                    }
-                }
-                yield return null;
+                OnSpawned.Invoke(MyGui);
             }
-            if (MyGui)
-            {
-                MyGui.SetState(MyGui.GetBeginState());
-            }
-            AttachGui(MyGui, GuiName);
         }
 
         public void Remove(ZelGui MyZelGui)
@@ -523,7 +520,7 @@ namespace Zeltex.Guis.Characters
         }
 
         /// <summary>
-        ///  Attaches a GUI onto a character
+        /// Initiates and Attaches a GUI onto a character
         /// </summary>
         public void AttachGui(ZelGui GuiObject, string Name = "")
         {
@@ -552,12 +549,7 @@ namespace Zeltex.Guis.Characters
             {
                 MyHandle = GuiObject.gameObject.AddComponent<CharacterGuiHandle>();
             }
-            MyHandle.SetCharacter(MyCharacter);
-            // put on same layer as character
-            //ObjectViewer.SetLayerRecursive(GuiObject, MyCharacter.gameObject.layer);//1 << 
-
-            //Debug.Log(name + " is attaching gui: " + Name);
-            //GuiObject.gameObject.SetActive(true);
+            MyHandle.SetCharacter(MyCharacter); 
             if (CharacterGuiManager.Get())
             {
                 GuiObject.transform.SetParent(CharacterGuiManager.Get().transform);
@@ -578,32 +570,10 @@ namespace Zeltex.Guis.Characters
             }
             // link these to the main body
 
-            Orbitor MyOrbitor = GuiObject.gameObject.GetComponent<Orbitor>();
-            if (MyOrbitor)
-            {
-                if (MyCharacter)
-                {
-                    MyOrbitor.SetTarget(MyCharacter.GetCameraBone());
-                    MyOrbitor.TargetSkeleton = MyCharacter.GetSkeleton();
-                }
-                else
-                {
-                    Debug.LogError("Guis has no character");
-                }
-                //Zeltex.Skeletons.Skeleton MySkeleton = MyCharacter.transform.Find("Body").GetComponent<Zeltex.Skeletons.Skeleton>();
-                MyOrbitor.IsFollowUserAngleAddition = true;
-            }
-
             Billboard MyBillboard = GuiObject.gameObject.GetComponent<Billboard>();
             if (MyBillboard  && MyCharacter)
             {
                 MyBillboard.SetTarget(MyCharacter.GetCameraBone());
-            }
-
-            Follower MyFollower = GuiObject.gameObject.GetComponent<Follower>();
-            if (MyFollower && MyCharacter)
-            {
-                MyFollower.SetTarget(MyCharacter.transform);
             }
 
             InventoryGuiHandler MyInventoryHandler = GuiObject.GetComponent<InventoryGuiHandler>();
@@ -661,6 +631,42 @@ namespace Zeltex.Guis.Characters
                 GuiObject.GetComponent<MenuGui>().MyGuiManager = this;
                 //GuiObject.GetComponent<MenuGui>().RefreshElements();
             }
+            bool BeginState = false;
+            for (int i = 0; i < GuisEnabled.Count; i++)
+            {
+                if (GuisEnabled[i] == GuiObject.name)
+                {
+                    BeginState = GuisEnabledStates[i];
+                    break;
+                }
+            }
+            GuiObject.SetState(BeginState);
+
+            Orbitor MyOrbitor = GuiObject.gameObject.GetComponent<Orbitor>();
+            if (MyOrbitor)
+            {
+                if (MyCharacter)
+                {
+                    MyOrbitor.SetTarget(MyCharacter.GetCameraBone());
+                    MyOrbitor.TargetSkeleton = MyCharacter.GetSkeleton();
+                }
+                else
+                {
+                    Debug.LogError("Guis has no character");
+                }
+                //Zeltex.Skeletons.Skeleton MySkeleton = MyCharacter.transform.Find("Body").GetComponent<Zeltex.Skeletons.Skeleton>();
+                MyOrbitor.IsFollowUserAngleAddition = true;
+                MyOrbitor.InstantMovement();
+            }
+
+            Follower MyFollower = GuiObject.gameObject.GetComponent<Follower>();
+            if (MyFollower && MyCharacter)
+            {
+                MyFollower.SetTarget(MyCharacter.transform);
+            }
+
+            GuiObject.HasAttached = true;
+            SpawningList.Remove(GuiObject.name);
         }
 
         private void UpdateDialogue(GameObject GuiObject)

@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: New Material
+  m_Name: BulletMaterial
   m_Shader: {fileID: 4800000, guid: f5ad6de6fe785c54984eb916b515ab66, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

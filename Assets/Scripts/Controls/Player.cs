@@ -238,32 +238,30 @@ namespace Zeltex
             }
             else if (Input.GetKeyDown(InventoryKey))
             {
-                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("Inventory");
-                if (InventoryGui == null)
-                {
-                    InventoryGui = MyCharacter.GetGuis().Spawn("Inventory");
-                }
-                InventoryGui.Toggle();
+                ToggleGui("Inventory");
             }
             else if (Input.GetKeyDown(QuestlogKey))
             {
-                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("QuestLog");
-                if (InventoryGui == null)
-                {
-                    InventoryGui = MyCharacter.GetGuis().Spawn("QuestLog");
-                }
-                InventoryGui.Toggle();
+                ToggleGui("QuestLog");
             }
             else if (Input.GetKeyDown(EquipmentKey))
             {
-                Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui("Equipment");
-                if (InventoryGui == null)
-                {
-                    InventoryGui = MyCharacter.GetGuis().Spawn("Equipment");
-                }
-                InventoryGui.Toggle();
+                ToggleGui("Equipment");
             }
             
+        }
+
+        private void ToggleGui(string GuiName)
+        {
+            Guis.ZelGui InventoryGui = MyCharacter.GetGuis().GetZelGui(GuiName);
+            if (InventoryGui == null)
+            {
+                MyCharacter.GetGuis().Spawn(GuiName, (MyGui) => { MyGui.Toggle(); });
+            }
+            else
+            {
+                InventoryGui.Toggle();
+            }
         }
 
         /// <summary>

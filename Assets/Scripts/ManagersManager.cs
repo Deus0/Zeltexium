@@ -23,7 +23,27 @@ namespace Zeltex
                     return MyManagers[i] as T;
                 }
             }
+            GameObject FindManager = GameObject.Find(ManagerName);
+            if (FindManager)
+            {
+                T NewT = FindManager.GetComponent<T>();
+                if (NewT)
+                {
+                    MyManagers.Add(NewT);
+                    return NewT;
+                }
+            }
             return null;
+        }
+
+        public new static ManagersManager Get()
+        {
+            if (MyManager == null)
+            {
+                // Removing all Finds, use ManagerManager.GetManager(CharacterManager)
+                MyManager = GameObject.Find(ManagerNames.ManagersManager).GetComponent<ManagersManager>();
+            }
+            return MyManager as ManagersManager;
         }
     }
 

@@ -11,6 +11,7 @@ namespace Zeltex
     /// </summary>
     public static class ManagerNames
     {
+        public static string ManagersManager = "GameManager";
         public static string CharacterManager = "Characters";
         public static string CharacterGuiManager = "CharacterGuis";
         public static string CameraManager = "Cameras";

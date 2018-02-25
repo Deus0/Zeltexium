@@ -19,6 +19,7 @@ namespace Zeltex
             if (GUI.Button(position, property.name))
             {
                 MyAction.Trigger();
+                EditorUtility.SetDirty(property.serializedObject.targetObject);
             }
             GUI.color = BeforeColor;
         }

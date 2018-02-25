@@ -1,15 +1,64 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Newtonsoft.Json;
-using System;
 
 namespace Zeltex
 {
+    /// <summary>
+    /// The meshes used for items
+    /// </summary>
+    [Serializable]
+    public enum ItemMeshType
+    {
+        None,               // default cube will be used
+        Polygonal,          // polygonal model stored inside the item
+        PolygonalReference, // polygonal reference, using a Mesh
+        Voxel,              // Voxel model - Stored inside the item
+        VoxelReference      // Voxel model reference - using ModelMaker data
+    }
+    /// <summary>
+    /// The meshes used for items
+    /// </summary>
+    [Serializable]
+    public enum ItemTextureType
+    {
+        None,                   // default texture will be used
+        Pixels,                 // Individual pixels will be stored
+        PixelsReference,        // Reference to pixels will be stored
+        Instructions,           // TextureInstructions will be stored inside the item
+        InstructionsReference   // Reference to a TextureInstructions file will be stored
+    }
 
+    /// <summary>
+    /// An event that happens based on an element
+    /// </summary>
     [Serializable]
     public class ElementEvent : UnityEvent<Element> { }
+    
+    [Serializable]
+    public class ElementCore : Element
+    {
+        [SerializeField, JsonProperty, Tooltip("A unique description for the Element")]
+        protected string Description = "";
+
+
+        public string GetDescription()
+        {
+            return Description;
+        }
+
+        public void SetDescription(string NewDescription)
+        {
+            if (Description != NewDescription)
+            {
+                Description = NewDescription;
+                OnModified();
+            }
+        }
+    }
 
     /// <summary>
     /// Parent class for all data objects
@@ -17,7 +66,7 @@ namespace Zeltex
     [Serializable]
     public class Element : System.Object
     {
-        [Tooltip("A unique identifier for the Element")]
+        [JsonProperty, Tooltip("A unique identifier for the Element")]
         public string Name = "Empty";
 
         // File Management
@@ -51,11 +100,15 @@ namespace Zeltex
         public bool IsDrawGui;
 #if UNITY_EDITOR
         [JsonIgnore, HideInInspector]
-        public bool IsDefaultGui;
+        public bool IsDefaultGui = true;
 #endif
         [JsonIgnore, HideInInspector]
         public Element ParentElement;
-        // A link to the elements position in the database
+        
+        [Header("Linking System")]
+        // A link to the elements position in the database - for non unique data
+        [JsonIgnore, HideInInspector]
+        public bool IsUnique = true;         // by default all data is unique
         [JsonIgnore, HideInInspector]
         public string ElementLink = "";
 
@@ -168,29 +221,32 @@ namespace Zeltex
             return JsonConvert.SerializeObject(this, MySettings);
         }
 
-        public void Save(bool IsForce = false)
+        public virtual void Save(bool IsForce = false)
 		{
-			if (OldName != Name)
-			{
-				Rename(OldName, Name);
-				OldName = Name;
-			}
             if (CanSave() || IsForce)
             {
+                if (OldName != Name)
+                {
+                    Rename(OldName, Name);
+                    OldName = Name;
+                }
                 Util.FileUtil.Save(GetFullFilePath(), GetSerial());
                 OnSaved();
             }
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
-            if (MyFolder != null)
+            if (CanDelete())
             {
-                if (MyFolder.Remove(Name))
-                {
-                    Util.FileUtil.Delete(GetFullFilePath());
-                }
+                MyFolder.Remove(Name);
+                Util.FileUtil.Delete(GetFullFilePath());
             }
+        }
+
+        protected bool CanDelete()
+        {
+            return (MyFolder != null && MyFolder.CanRemove(Name));
         }
 
 
@@ -297,7 +353,7 @@ namespace Zeltex
             return NewElement;
 		}
 
-		public Element Clone(System.Type DataType)
+		public Element Clone(Type DataType)
         {
             JsonSerializerSettings MySettings = new JsonSerializerSettings();
             MySettings.Formatting = DataManager.Get().GetFormat();
@@ -320,7 +376,7 @@ namespace Zeltex
 			return Load(Script);
 		}
 
-		public Element Load(string Script, System.Type DataType)
+		public Element Load(string Script, Type DataType)
         {
             Element MyElement;
             try
@@ -329,7 +385,7 @@ namespace Zeltex
                 MySettings.Formatting = DataManager.Get().GetFormat();
                 MyElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
             }
-            catch (System.ArgumentException e) 
+            catch (ArgumentException e) 
             {
                 Debug.LogError("Element.Load: " + e.ToString());
                 MyElement = null;
@@ -380,7 +436,7 @@ namespace Zeltex
             }
         }
 
-        public static Element Load(string NewName, ElementFolder NewFolder, string Script)
+        public static Element Load(string NewName, string Script, ElementFolder NewFolder)
         {
             Element NewElement = new Element();
             if (Script == null)
@@ -400,6 +456,27 @@ namespace Zeltex
                 NewElement.OnLoad();
             }
             return NewElement;
+        }
+
+        public static T Load<T>(string NewName, string Script) where T : Element
+        {
+            Element NewElement = new Element();
+            if (Script == null)
+            {
+                Debug.LogError("Error loading " + NewName + " as null script loaded.");
+            }
+            Type DataType = typeof(T);
+            JsonSerializerSettings MySettings = new JsonSerializerSettings();
+            MySettings.Formatting = DataManager.Get().GetFormat();
+            NewElement = JsonConvert.DeserializeObject(Script, DataType, MySettings) as Element;
+            if (NewElement != null)
+            {
+                NewElement.Name = NewName;
+                NewElement.OldName = NewElement.Name;
+                NewElement.OnLoad();
+                return NewElement as T;
+            }
+            return null;
         }
 
         /// <summary>

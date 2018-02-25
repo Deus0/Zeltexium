@@ -22,7 +22,7 @@ namespace Zeltex.Skeletons
     /// </summary>
     //[ExecuteInEditMode]
     [System.Serializable]
-    public class Skeleton : Element
+    public class Skeleton : ElementCore
     {
 		#region Variables
 		[Header("Data")]
@@ -43,9 +43,9 @@ namespace Zeltex.Skeletons
 
         [Header("Visibility")]
 		[JsonIgnore, HideInInspector]
-		public bool IsShowJoints = true;
+		public bool IsShowJoints = false;
 		[JsonIgnore, HideInInspector]
-		public bool IsShowBones = true;
+		public bool IsShowBones = false;
 		[JsonIgnore, HideInInspector]
 		public bool IsShowMeshes = true;
 		[JsonIgnore, HideInInspector]
@@ -84,7 +84,7 @@ namespace Zeltex.Skeletons
 		private CapsuleCollider MyCapsuleCollider;
 		private MeshRenderer CapsuleRenderer;
         [JsonIgnore]
-        private static float MinimumHeight = 0.4f;
+        private static float MinimumHeight = 0.04f;
         #endregion
 
         public override void OnLoad() 
@@ -109,7 +109,7 @@ namespace Zeltex.Skeletons
 			return null;
 		}
 
-        public SkeletonAnimator GetAnimator()
+        public Zanimator GetAnimator()
         {
             return SpawnedSkeleton.GetAnimator();
         }
@@ -182,34 +182,52 @@ namespace Zeltex.Skeletons
             }
         }
 
-        public void Activate()
+        public void Activate(System.Action OnCompleteActivation = null)
         {
             if (ActivateCoroutine != null)
             {
 				RoutineManager.Get().StopCoroutine(ActivateCoroutine);
             }
-			ActivateCoroutine = RoutineManager.Get().StartCoroutine(ActivateRoutine());
+			ActivateCoroutine = RoutineManager.Get().StartCoroutine(ActivateRoutine(OnCompleteActivation));
         }
 
-        public IEnumerator ActivateRoutine(bool IsCalculateCapsule = true)
+        public IEnumerator ActivateRoutine(System.Action OnCompleteActivation = null, bool IsCalculateCapsule = true)
         {
-			//Debug.Log("Skeleton " + Name + " Is activating the bones: " + MyBones.Count);
-            for (int i = 0; i < MyBones.Count; i++)
+            if (!IsActivated)
             {
-				MyBones[i].SetSkeleton(this);	//RoutineManager.Get().StartRoutine
-				yield return MyBones[i].ActivateRoutine();
-            }
-            if (IsCalculateCapsule)
-            {
-                CalculateCapsule();
+                IsActivated = true;
+                //Debug.Log("Skeleton " + Name + " Is activating the bones: " + MyBones.Count);
+                for (int i = 0; i < MyBones.Count; i++)
+                {
+                    MyBones[i].SetSkeleton(this);   //RoutineManager.Get().StartRoutine
+                    yield return MyBones[i].ActivateRoutine();
+                }
+                for (int i = 0; i < MyBones.Count; i++)
+                {
+                    MyBones[i].AttachBoneToParent();
+                }
+                if (IsCalculateCapsule)
+                {
+                    CalculateCapsule();
+                }
+                if (OnCompleteActivation != null)
+                {
+                    OnCompleteActivation.Invoke();
+                }
             }
         }
+
+        protected bool IsActivated = false;
 
         public void Deactivate()
         {
-            for (int i = 0; i < MyBones.Count; i++)
+            if (IsActivated)
             {
-                MyBones[i].Deactivate();
+                IsActivated = false;
+                for (int i = 0; i < MyBones.Count; i++)
+                {
+                    MyBones[i].Deactivate();
+                }
             }
         }
 
@@ -294,8 +312,8 @@ namespace Zeltex.Skeletons
             CalculateBounds();
             CapsuleCollider MyCapsule = GetCapsule();
             if (MyCapsule)
-            {
-                float MyHeight = MyBounds.size.y;// * 0.98f;
+            { 
+                float MyHeight = MyBounds.size.y + 0.12f;// * 0.98f;
                 if (MyHeight < MinimumHeight)
                 {
                     MyHeight = MinimumHeight;
@@ -489,8 +507,58 @@ namespace Zeltex.Skeletons
         #endregion
 
         #region Bones
-        
-		public void Clear()
+        /// <summary>
+        /// Imports a mesh from DataManager and uses it for the bone
+        /// </summary>
+        /// <param name="MeshName"></param>
+        public void AddBoneWithMesh(string MeshName)
+        {
+            VoxelModel MyModel = DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName) as VoxelModel;
+            if (MyModel !=null)
+            {
+                MyModel = MyModel.Clone<VoxelModel>();
+                AddBoneWithModel(MyModel);
+            }
+            else
+            {
+                Debug.LogError("Could not find model of name: " + MeshName);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new bone with a voxel model - by converting the model into an item
+        /// </summary>
+        public void AddBoneWithModel(VoxelModel NewBoneModel)
+        {
+            Bone NewBone = CreateBone(SpawnedSkeleton.transform);
+            NewBone.MyItem = NewBoneModel.GenerateItem();
+            NewBone.ActivateSingle();
+            //NewBone.CreateMesh(NewBoneModel);
+        }
+
+        public void AddBoneWithItem(string NewItem)
+        {
+            Items.Item MyItem = DataManager.Get().GetElement(DataFolderNames.Items, NewItem) as Items.Item;
+            if (MyItem != null)
+            {
+                MyItem = MyItem.Clone<Items.Item>();
+                AddBoneWithItem(MyItem);
+            }
+            else
+            {
+                Debug.LogError("Could not find item of name: " + NewItem);
+            }
+        }
+
+        public void AddBoneWithItem(Items.Item NewBoneModel)
+        {
+            Bone NewBone = CreateBone(SpawnedSkeleton.transform);
+            NewBone.MyItem = NewBoneModel;
+            NewBone.ActivateSingle();
+        }
+
+
+        public void Clear()
 		{
 			RoutineManager.Get().StartCoroutine(ClearRoutine());
 		}
@@ -1107,7 +1175,7 @@ namespace Zeltex.Skeletons
 			if (SpawnedSkeleton)
 			{
 				Deactivate();
-				SpawnedSkeleton.Die();
+				SpawnedSkeleton.gameObject.Die();
 			}
 		}
 
@@ -1168,7 +1236,44 @@ namespace Zeltex.Skeletons
             }
         }
         #endregion
-
+        
+        public void ScanHeirarchyForUpdates()
+        {
+            if (SpawnedSkeleton != null && IsActivated)
+            {
+                for (int i = MyBones.Count - 1; i >= 0; i--)
+                {
+                    if (MyBones[i].MyTransform)
+                    {
+                        if (MyBones[i].Name != MyBones[i].MyTransform.name)
+                        {
+                            MyBones[i].Name = MyBones[i].MyTransform.name;
+                        }
+                        Transform ParentBone = MyBones[i].MyTransform.transform.parent;
+                        if (ParentBone == SpawnedSkeleton.transform
+                            && MyBones[i].ParentName != "Body")
+                        {
+                            MyBones[i].ParentName = "Body";
+                        }
+                        else if (MyBones[i].ParentName != ParentBone.name)
+                        {
+                            MyBones[i].ParentName = MyBones[i].MyTransform.transform.parent.name;
+                        }
+                        MyBones[i].SetDefaultPose();
+                    }
+                    else
+                    {
+                        // Remove bones if they are deleted
+                        MyBones.RemoveAt(i);
+                        Debug.Log("Bone has been Deleted at: " + i);
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError(Name + " has no spawned body.");
+            }
+        }
 
         /// <summary>
         /// Gets a debug string for the voxels

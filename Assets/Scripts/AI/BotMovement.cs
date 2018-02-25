@@ -663,6 +663,10 @@ namespace Zeltex.AI
         {
             if (IsWhiskers)
             {
+                if (MySkeleton == null || MySkeleton.GetSkeleton() == null)
+                {
+                    return;
+                }
                 RaycastHit MyHit;
                 MovementForce.x = 0;
                 Bounds MyBounds = MySkeleton.GetSkeleton().GetBounds();

@@ -52,7 +52,7 @@ namespace Zeltex.Guis.Maker
         private InputField TimeInput;  // rename animation!
 
         // tick and animator references
-        private SkeletonAnimator MyAnimator;
+        private Zanimator MyAnimator;
         private List<GameObject> GridTicks = new List<GameObject>();
         private List<GameObject> CurveTicks = new List<GameObject>();
         #endregion
@@ -76,14 +76,14 @@ namespace Zeltex.Guis.Maker
                 PositionInRect.x += GetComponent<RectTransform>().GetWidth() / 2f;
                 //Debug.LogError("Clicked at2: " + PositionInRect.x);
                 // first get real time time
-                MyAnimator.CurrentTime = MyAnimator.TotalTime * (PositionInRect.x / GetComponent<RectTransform>().GetWidth());
+                MyAnimator.CurrentTime = MyAnimator.GetTimeLength() * (PositionInRect.x / GetComponent<RectTransform>().GetWidth());
                 // now correct the time
                 MyAnimator.CurrentTime *= (TicksPerSecond / TickSkipper);
                 MyAnimator.CurrentTime = Mathf.RoundToInt(MyAnimator.CurrentTime);
                 MyAnimator.CurrentTime /= (TicksPerSecond / TickSkipper);
-                if (MyAnimator.CurrentTime > MyAnimator.TotalTime)
+                if (MyAnimator.CurrentTime > MyAnimator.GetTimeLength())
                 {
-                    MyAnimator.CurrentTime = MyAnimator.TotalTime;
+                    MyAnimator.CurrentTime = MyAnimator.GetTimeLength();
                 }
                 if (MyAnimator.CurrentTime < 0)
                 {
@@ -98,9 +98,9 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void OnUpdatedTotalTime(float NewTotalTime)
         {
-            if (MyAnimator && NewTotalTime != MyAnimator.TotalTime)
+            if (MyAnimator && NewTotalTime != MyAnimator.GetTimeLength())
             {
-                MyAnimator.TotalTime = NewTotalTime;
+                MyAnimator.SetTimeLength(NewTotalTime);
                 ClearCurveTicks();
                 ClearGrid();
                 GenerateGrid();
@@ -110,7 +110,7 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// Sets the new skeleton animator
         /// </summary>
-        public void SetAnimator(SkeletonAnimator NewAnimator)
+        public void SetAnimator(Zanimator NewAnimator)
         {
             MyAnimator = NewAnimator;
             if (MyAnimator == null)
@@ -131,7 +131,7 @@ namespace Zeltex.Guis.Maker
         /// <summary>
         /// Remove the skeleton animator
         /// </summary>
-        public void RemoveAnimator(SkeletonAnimator NewAnimator)
+        public void RemoveAnimator(Zanimator NewAnimator)
         {
             if (MyAnimator == NewAnimator)
             {
@@ -279,7 +279,7 @@ namespace Zeltex.Guis.Maker
                         MySelectedTransform.localPosition,
                         MySelectedTransform.localEulerAngles,
                         MySelectedTransform.localScale);
-                    float MyTime = Mathf.RoundToInt(MyAnimator.TotalTime * TicksPerSecond) / TicksPerSecond;
+                    float MyTime = Mathf.RoundToInt(MyAnimator.GetTimeLength() * TicksPerSecond) / TicksPerSecond;
                     MyAnimator.AddKeyFrame(
                         MySelectedTransform,
                         MyTime,
@@ -365,7 +365,7 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void SetLoop(bool IsLoop)
         {
-            MyAnimator.IsAnimationLoop = IsLoop;
+            MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].IsAnimationLoop = IsLoop;
         }
 
         /// <summary>
@@ -404,11 +404,11 @@ namespace Zeltex.Guis.Maker
             if (MyAnimator && MyAnimator.GetAnimations().Count != 0)
             {
                 MyAnimator.SelectedIndex = Mathf.Clamp(MyAnimator.SelectedIndex, 0, MyAnimator.GetAnimations().Count);
-                for (int i = 0; i < MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames.Count; i++)
+                for (int i = 0; i < MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].GetSize(); i++)
                 {
-                    if (MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames[i].MyObject == MySkeletonPainter.GetSelectedBone())
+                    if (MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].GetTransform(i).MyObject == MySkeletonPainter.GetSelectedBone())
                     {
-                        CreateTicksForCurve(MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].MyKeyFrames[i].AnimationCurvePositionX);  // for the selected bone, create the curve positions
+                        CreateTicksForCurve(MyAnimator.GetAnimations()[MyAnimator.SelectedIndex].GetTransform(i).GetCurve("PositionX"));  // for the selected bone, create the curve positions
                         break;
                     }
                 }
@@ -463,7 +463,7 @@ namespace Zeltex.Guis.Maker
             //float Height = gameObject.GetComponent<RectTransform>().GetSize().y;
             RectTransform MyRectTransform = gameObject.GetComponent<RectTransform>();
             Vector2 MyPosition = MyRectTransform.position;
-            float TickWidth = MyRectTransform.GetSize().x / ((float) MyAnimator.TotalTime * TicksPerSecond);
+            float TickWidth = MyRectTransform.GetSize().x / ((float) MyAnimator.GetTimeLength() * TicksPerSecond);
             Vector2 SpawnPosition = new Vector2(MyTime * TickWidth + MySize.x / 4f - 1, MySize.y / 2f); //
             return SpawnPosition;
         }
@@ -477,7 +477,7 @@ namespace Zeltex.Guis.Maker
             Vector2 MyPosition = MyRectTransform.position;
             float Width = MyRectTransform.GetSize().x;
             //float Height = MyRectTransform.GetSize().y;
-            float TickWidth = Width / ((float)MyAnimator.TotalTime * TicksPerSecond);
+            float TickWidth = Width / ((float)MyAnimator.GetTimeLength() * TicksPerSecond);
             //GameObject NewTick = (GameObject)Instantiate(GridLinePrefab, SpawnPosition, Quaternion.identity);
             GameObject NewTick = new GameObject();
             NewTick.name = "Tick " + MyTime;
@@ -535,7 +535,7 @@ namespace Zeltex.Guis.Maker
         {
             if (MyAnimator)
             {
-                for (float i = 0; i <= MyAnimator.TotalTime * TicksPerSecond; i += TickSkipper)
+                for (float i = 0; i <= MyAnimator.GetTimeLength() * TicksPerSecond; i += TickSkipper)
                 {
                     GridTicks.Add(CreateGridTick(i, MyTickColor));
                 }

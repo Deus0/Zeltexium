@@ -119,30 +119,42 @@ MonoBehaviour:
     Bobcurve:
       serializedVersion: 2
       m_Curve:
-      - serializedVersion: 2
+      - serializedVersion: 3
         time: 0
         value: 0
         inSlope: 2
         outSlope: 2
         tangentMode: 34
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1.5
         value: -1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 2
         value: 0
         inSlope: 2
         outSlope: 2
         tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
@@ -153,8 +165,8 @@ MonoBehaviour:
   StrideInterval: 1
   RunningStrideLengthen: 0.722
   FollowVelocityLerpSpeed: 3
-  LerpSpeed: 6
-  RunLerpSpeed: 20
+  LerpSpeed: 17
+  RunLerpSpeed: 17
   RotateLerpSpeed: 14
 --- !u!114 &114744114969261060
 MonoBehaviour:
@@ -190,6 +202,7 @@ MonoBehaviour:
   IsParentOfAllCameras: 0
   MyGuiManager:
     Name: Empty
+    Description: 
     HasChanged: 0
     ModifiedEvent:
       m_PersistentCalls:
@@ -214,6 +227,10 @@ MonoBehaviour:
     MyFolder:
       FolderName: None
       FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -235,11 +252,9 @@ MonoBehaviour:
         m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       HasChanged: 0
-      ElementData:
-        MyKeys: []
-        MyValues: []
     IsDrawGui: 0
     IsDefaultGui: 0
+    IsUnique: 1
     ElementLink: 
     ActionSpawnGui:
       IsTrigger: 0

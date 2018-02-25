@@ -13,7 +13,6 @@ namespace Zeltex.Guis
     /// </summary>
     public class ZelGui : MonoBehaviour
 	{
-        #region Variables
         [Header("Events")]
         public UnityEvent OnToggledOn;
         public UnityEvent OnToggledOff;
@@ -26,7 +25,7 @@ namespace Zeltex.Guis
         public UnityEngine.UI.Selectable FirstSelected;
         [SerializeField]
         private bool BeginState = true;
-        #endregion
+        public bool HasAttached = false;        // used for character guis
 
         public bool GetBeginState()
         {
@@ -37,6 +36,7 @@ namespace Zeltex.Guis
         {
             OnToggledOn.Invoke();
         }
+
         void Start()
         {
             //MyAnimator = GetComponent<Animator>();

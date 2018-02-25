@@ -12,7 +12,7 @@ namespace Zeltex.Guis
 	public class Orbitor : MonoBehaviour 
 	{
         #region Variables
-        private static int InitiateStickTime = 25;
+        private static int InitiateStickTime = 1;
         [Header("Target")]
         [Tooltip("Sets the target to the main camera")]
         [SerializeField]
@@ -74,39 +74,39 @@ namespace Zeltex.Guis
         private void Start()
         {
             Initiate();
+            if (gameObject.GetComponent<Characters.CharacterGuiHandle>() == null)
+            {
+                InstantMovement();
+            }
         }
 
         void OnEnable()
         {
             Initiate();
+            InstantMovement();
         }
 
-        void Initiate()
+        public void InstantMovement()
         {
-            RoutineManager.Get().StartCoroutine(InitiateRoutine());
+            CheckOrbitPosition();
+            transform.position = GetTargetWorldPosition();
+            transform.rotation = TargetRotation;
         }
 
-        private IEnumerator InitiateRoutine()
+        public void Initiate()
         {
             if (IsTargetMainCamera && CameraManager.Get() && CameraManager.Get().GetMainCamera())
             {
                 TargetObject = CameraManager.Get().GetMainCamera().transform;
             }
-            if (TargetObject != null)
-            {
-                for (int i = 0; i < InitiateStickTime; i++)
-                {
-                    CheckOrbitPosition();
-                    transform.position = GetTargetWorldPosition();
-                    transform.rotation = TargetRotation;
-                    yield return null;
-                }
-            }
         }
 
         private void OnMainCameraChange()
         {
-            TargetObject = CameraManager.Get().GetMainCamera().transform;
+            if (CameraManager.Get().GetMainCamera())
+            {
+                TargetObject = CameraManager.Get().GetMainCamera().transform;
+            }
         }
 
         public void OnScreenSizeChange()
@@ -120,7 +120,8 @@ namespace Zeltex.Guis
             {
                 Iterate(Time.deltaTime);
             }
-        } 
+        }
+
         void FixedUpdate()
         {
             if (GameManager.IsOrbitorFixedUpdate)
@@ -173,6 +174,7 @@ namespace Zeltex.Guis
         {
             SetTarget(TargetObject_, TargetSkeleton);
         }
+
         /// <summary>
         ///  Sets target of the orbitor
         /// </summary>

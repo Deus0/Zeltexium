@@ -14,8 +14,15 @@ namespace Zeltex
         {
             if (property.isExpanded)
             {
-                var keysProp = property.FindPropertyRelative("_keys");
-                return (keysProp.arraySize + 4) * EditorGUIUtility.singleLineHeight;
+                var keysProp = property.FindPropertyRelative("MyKeys");
+                if (keysProp != null)
+                {
+                    return (keysProp.arraySize + 4) * EditorGUIUtility.singleLineHeight;
+                }
+                else
+                {
+                    return 4 * EditorGUIUtility.singleLineHeight;
+                }
             }
             else
             {
@@ -34,9 +41,13 @@ namespace Zeltex
                 int lvl = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = lvl + 1;
 
-                var keysProp = property.FindPropertyRelative("_keys");
-                var valuesProp = property.FindPropertyRelative("_values");
+                var keysProp = property.FindPropertyRelative("MyKeys");
+                var valuesProp = property.FindPropertyRelative("MyValues");
 
+                if (keysProp == null)
+                {
+                    return;
+                }
                 int cnt = keysProp.arraySize;
                 if (valuesProp.arraySize != cnt) valuesProp.arraySize = cnt;
 

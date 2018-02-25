@@ -14,107 +14,28 @@ namespace Zeltex
         public static string VoxelModels = "VoxelModels";
         public static string Skeletons = "Skeletons";
         public static string Zanimations = "Zanimations";
-
         public static string Voxels = "Voxels";
         public static string Items = "Items";
+        public static string Zones = "Zones";
+        public static string Lore = "Lore";
         public static string Recipes = "Recipes";
         public static string Inventorys = "Inventorys";
-
         public static string Stats = "Stats";
         public static string StatGroups = "StatGroups";
         public static string Spells = "Spells";
-
         public static string Quests = "Quests";
         public static string QuestLogs = "QuestLogs";
         public static string Dialogues = "Dialogues";
         public static string DialogueTrees = "DialogueTrees";
-
         public static string Saves = "Saves";
         public static string Levels = "Levels";
         public static string Characters = "Characters";
-
         public static string Sounds = "Sounds";
         public static string Musics = "Musics";
-
         public static string VoxelDiffuseTextures = "VoxelDiffuseTextures";
         public static string VoxelNormalTextures = "VoxelNormalTextures";
         public static string StatTextures = "StatTextures";
         public static string ItemTextures = "ItemTextures";
-
-        public static string FolderToGuiName(string FolderName)
-        {
-            if (FolderName == Spells)
-            {
-                return "SpellMaker";
-            }
-            else if (FolderName == Stats)
-            {
-                return "StatsMaker";
-            }
-            else if (FolderName == Quests)
-            {
-                return "QuestMaker";
-            }
-            else if (FolderName == Voxels)
-            {
-                return "VoxelMaker";
-            }
-            else if (FolderName == Items)
-            {
-                return "ItemMaker";
-            }
-            else if (FolderName == Recipes)
-            {
-                return "RecipeMaker";
-            }
-            else if (FolderName == Dialogues)
-            {
-                return "DialogueMaker";
-            }
-            /*else if (FolderName == Classes)
-            {
-                return "ClassMaker";
-            }*/
-
-            else if (FolderName == VoxelDiffuseTextures)
-            {
-                return "TextureMaker";
-            }
-            else if (FolderName == VoxelNormalTextures)
-            {
-                return "TextureMaker";
-            }
-            else if (FolderName == ItemTextures)
-            {
-                return "TextureMaker";
-            }
-            else if (FolderName == StatTextures)
-            {
-                return "TextureMaker";
-            }
-
-            else if (FolderName == Skeletons)
-            {
-                return "SkeletonMaker";
-            }
-            else if (FolderName == Zanimations)
-            {
-                return "";
-            }
-			else if (FolderName == PolyModels)
-            {
-                return "PolygonMaker";
-            }
-            else if (FolderName == VoxelModels)
-            {
-                return "ModelMaker";
-            }
-            else if (FolderName == Sounds)
-            {
-                return "SoundMaker";
-            }
-            return "";
-        }
         
         public static System.Type GetDataType(string FolderName)
         {
@@ -226,7 +147,15 @@ namespace Zeltex
             {
                 DataType = typeof(Dialogue.DialogueTree);
             }
-            
+            else if (FolderName == DataFolderNames.Zones)
+            {
+                DataType = typeof(ZoneData);
+            }
+            else if (FolderName == DataFolderNames.Lore)
+            {
+                DataType = typeof(Lore);
+            }
+
             else
             {
                 DataType = typeof(Element);
@@ -298,7 +227,6 @@ namespace Zeltex
             }
             else if (DataType == typeof(Quests.QuestLog))
             {
-                DataType = typeof(Quests.QuestLog);
                 return DataFolderNames.QuestLogs;
             }
 
@@ -326,6 +254,89 @@ namespace Zeltex
             else if (DataType == typeof(Zexel))
             {
                 return DataFolderNames.StatTextures;
+            }
+            else if (DataType == typeof(ZoneData))
+            {
+                return DataFolderNames.Zones;
+            }
+            else if (DataType == typeof(Lore))
+            {
+                return DataFolderNames.Lore;
+            }
+            return "";
+        }
+
+        public static string FolderToGuiName(string FolderName)
+        {
+            if (FolderName == Spells)
+            {
+                return "SpellMaker";
+            }
+            else if (FolderName == Stats)
+            {
+                return "StatsMaker";
+            }
+            else if (FolderName == Quests)
+            {
+                return "QuestMaker";
+            }
+            else if (FolderName == Voxels)
+            {
+                return "VoxelMaker";
+            }
+            else if (FolderName == Items)
+            {
+                return "ItemMaker";
+            }
+            else if (FolderName == Recipes)
+            {
+                return "RecipeMaker";
+            }
+            else if (FolderName == Dialogues)
+            {
+                return "DialogueMaker";
+            }
+            /*else if (FolderName == Classes)
+            {
+                return "ClassMaker";
+            }*/
+
+            else if (FolderName == VoxelDiffuseTextures)
+            {
+                return "TextureMaker";
+            }
+            else if (FolderName == VoxelNormalTextures)
+            {
+                return "TextureMaker";
+            }
+            else if (FolderName == ItemTextures)
+            {
+                return "TextureMaker";
+            }
+            else if (FolderName == StatTextures)
+            {
+                return "TextureMaker";
+            }
+
+            else if (FolderName == Skeletons)
+            {
+                return "SkeletonMaker";
+            }
+            else if (FolderName == Zanimations)
+            {
+                return "";
+            }
+            else if (FolderName == PolyModels)
+            {
+                return "PolygonMaker";
+            }
+            else if (FolderName == VoxelModels)
+            {
+                return "ModelMaker";
+            }
+            else if (FolderName == Sounds)
+            {
+                return "SoundMaker";
             }
             return "";
         }

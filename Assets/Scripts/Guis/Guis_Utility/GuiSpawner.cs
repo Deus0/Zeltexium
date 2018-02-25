@@ -34,17 +34,24 @@ namespace Zeltex.Guis
         private int GuiPrefabType = 0;
         [SerializeField]
         private List<GameObject> GuiSpawns = new List<GameObject>();
-        [SerializeField]
-        private Transform GuisParent;
-
-        /*private void LoadGuiOnStart()
-        {
-            SpawnGui(LoadGui);
-        }*/
 
         void Start()
         {
-            ScanForGuis();
+            if (Application.isPlaying)
+            {
+                ScanForGuis();
+                SpawnIfNotSpawned("MainMenu");
+                SpawnIfNotSpawned("LoadingGui");
+                SpawnIfNotSpawned("TooltipGui");
+            }
+        }
+        
+        private void SpawnIfNotSpawned(string NewGui)
+        {
+            if (!HasSpawned(NewGui))
+            {
+                SpawnGui(NewGui);
+            }
         }
 
         private void ScanForGuis()
@@ -56,6 +63,7 @@ namespace Zeltex.Guis
                 GuiSpawns.Add(MyObjects[i].gameObject);
             }
         }
+
         private void Update()
         {
             if (ActionScanMap.IsTriggered())
@@ -220,15 +228,7 @@ namespace Zeltex.Guis
             }
             GameObject NewGui = Instantiate(MyPrefab);
             NewGui.name = MyPrefab.name;
-            if (GuisParent == null)
-            {
-                /*GameObject GuisParentObject = GameObject.Find("Guis");
-                if (GuisParentObject)
-                {
-                    GuisParent = GuisParentObject.transform;
-                }*/
-            }
-            NewGui.transform.SetParent(GuisParent);
+            NewGui.transform.SetParent(transform);
             NewGui.gameObject.SetActive(true);
             if (IsUseSortOrders)
             {

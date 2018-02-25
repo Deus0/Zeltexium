@@ -21,7 +21,7 @@ namespace Zeltex.AI
         private static float TimeToChange = 0.05f;
         // references
         private Rigidbody MyRigidbody;
-        private SkeletonAnimator MyAnimator;
+        private Zanimator MyAnimator;
         private SkeletonHandler MySkeleton;
         private Bounds MyBounds;
         [Header("Options")]

@@ -28,7 +28,7 @@ namespace Zeltex.Voxels
     /// Also contains rules needed for placing in the voxel grid
     /// </summary>
     [System.Serializable]
-	public class PolyModel : Element
+	public class PolyModel : ElementCore
     {
         #region Variables
         //public string Name = "Empty";
@@ -70,7 +70,7 @@ namespace Zeltex.Voxels
             if (MyPoly == null)
             {
                 GameObject NewItem = new GameObject();
-                NewItem.name = Name + "-Handler";
+                NewItem.name = Name;// + "-Handler";
                 MyPoly = NewItem.AddComponent<PolyModelHandle>();
                 MyPoly.LoadVoxelMesh(this, 0);
             }

@@ -12,7 +12,7 @@ namespace Zeltex.Dialogue
     /// This contains all the speech data
     /// </summary>
 	[System.Serializable]
-	public class DialogueTree : Element
+	public class DialogueTree : ElementCore
     {
         #region Variables
         [Tooltip("A list of the Dialogue Tree Branches.")]

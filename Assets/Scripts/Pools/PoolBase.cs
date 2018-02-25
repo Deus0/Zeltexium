@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -24,13 +25,12 @@ namespace Zeltex
         private List<int> MaxPools = new List<int>();
         [SerializeField]
         private List<GameObject> PoolPrefabs = new List<GameObject>();
-        [Header("PoolDebug")]
-        //[SerializeField]
-        //private int DebugChildCount;
         [SerializeField]
         protected List<SpawnedPool<T>> MyPools = new List<SpawnedPool<T>>();
         protected PoolSpawner MyPoolSpawner;
         private bool IsPoolsSpawned;
+        float LastYield;
+        float YieldRate = (1f / 1000f);
 
         public virtual List<SpawnedPool<T>> Pools
         {
@@ -61,6 +61,7 @@ namespace Zeltex
 
         private void CreatePoolObjects()
         {
+            Debug.Log("Creating Pool Objects for: " + name);
             if (Pools.Count != PoolPrefabs.Count)
             {
                 for (int i = 0; i < PoolPrefabs.Count; i++)
@@ -72,8 +73,8 @@ namespace Zeltex
 
         protected virtual void Start()
         {
-            CreatePoolObjects();
-            StartCoroutine(StartAfterGameManagerStart());
+            PoolsManager.Get().MyPools.Add(this);
+            PoolsManager.Get().SynchPools.AddEvent(SynchPools);
         }
 
         public GameObject GetPrefab(int PoolIndex)
@@ -86,16 +87,6 @@ namespace Zeltex
             {
                 return null;
             }
-        }
-
-        IEnumerator StartAfterGameManagerStart()
-        {
-            yield return null;
-            yield return null;
-            yield return null;
-            PoolsManager.Get().ClearPools.AddEvent(ClearPools);
-            PoolsManager.Get().SynchPools.AddEvent(SynchPools);
-            PoolsManager.Get().MyPools.Add(this);
         }
 
         #region Getters
@@ -198,29 +189,36 @@ namespace Zeltex
             }
         }
 
+        /// <summary>
+        /// Creates a pool - where prefabs are prespawned
+        /// </summary>
         protected virtual void CreatePoolObject()
         {
             LogManager.Get().Log("Creating new pool at: " + Pools.Count, "PoolsBase");
             Pools.Add(new SpawnedPool<T>());
         }
-
-        protected void ClearPools()
+        
+        /// <summary>
+        /// Clears all the pools - at the end of the game
+        /// </summary>
+        public void ClearPools()
         {
+            Debug.Log("Clearing pools in " + name);
             for (int i = 0; i < Pools.Count; i++)
             {
                 Pools[i].ClearPool();
             }
+            Pools.Clear();
+            IsPoolsSpawned = false;
         }
 
-        public void SpawnPools(System.Action OnFinishedSpawning) 
+        public void SpawnPools(Action OnFinishedSpawning) 
         {
             //Debug.LogError("Spawning Pools for " + name);
             RoutineManager.Get().StartCoroutine(SpawnPoolsRoutine(OnFinishedSpawning));
         }
 
-        float LastYield;
-        float YieldRate =  (1f / 1000f);
-        private IEnumerator SpawnPoolsRoutine(System.Action OnFinishedSpawning)
+        private IEnumerator SpawnPoolsRoutine(Action OnFinishedSpawning)
         {
             if (!IsPoolsSpawned)
             {
@@ -312,6 +310,7 @@ namespace Zeltex
         /// </summary>
         public void SynchPools()
         {
+            Debug.Log("Synching Pool: " + name);
             CreatePoolObjects();
             for (int i = 0; i < PoolPrefabs.Count; i++)
             {
@@ -589,10 +588,6 @@ namespace Zeltex
         public void EditorOnlyAddToPool(NetworkIdentity PoolObject)
         {
             PoolObject.transform.SetParent(transform);
-            if (MyPools.Count == 0)
-            {
-                CreatePoolObjects();
-            }
             CreatePoolObjects();
             MyPools[0].SpawnedObjects.Add(PoolObject.GetComponent<T>());
         }

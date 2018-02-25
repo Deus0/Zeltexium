@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1952849734245760}
+  m_IsPrefabParent: 1
+--- !u!1 &1952849734245760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4490501338080570}
+  - component: {fileID: 114094358442981484}
+  - component: {fileID: 114061441744855834}
+  - component: {fileID: 114596505984108948}
+  - component: {fileID: 114744986639598666}
+  m_Layer: 23
+  m_Name: Worlds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4490501338080570
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952849734245760}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114061441744855834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952849734245760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1947fa52ada52e4b8cafec12a7e586c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsGenerate:
+    IsTrigger: 0
+  IsResize:
+    IsTrigger: 0
+  NewWorldSize:
+    x: 0
+    y: 0
+    z: 0
+  TargetWorld: {fileID: 0}
+  IsGenerateTilemap: 0
+  MyTerrainMetaData:
+    Name: Empty
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      HasChanged: 0
+    IsDrawGui: 0
+    IsDefaultGui: 0
+    ElementLink: 
+    BaseHeight: 16
+    MinimumHeight: 1
+    Amplitude: 0.5
+    Frequency: 0.05
+    WorldOffset: {x: 0, y: 0, z: 0}
+    BlockType1: 3
+    BlockType2: 3
+    BottomFloorBlock: 3
+    IsTrees: 1
+    TreeBlock: 3
+    LeafBlock: 3
+    TreeHeight: 3
+    LeavesSize: 1
+    TreeFrequency: 0.1
+    TreeFrequencyCutoff: 0.95
+    DirtName: Dirt
+    GrassName: Dirt
+    BedrockName: Dirt
+    WoodName: Dirt
+    LeafName: Dirt
+  MyImage: {fileID: 0}
+--- !u!114 &114094358442981484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952849734245760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82514ce1f4a1411489467b5f4b06056a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnedWorldScale: {x: 0.5, y: 0.5, z: 0.5}
+  WorldActions:
+    ActionClearAll:
+      IsTrigger: 0
+    IsSpawn:
+      IsTrigger: 0
+    IsGenerate:
+      IsTrigger: 0
+    IsClear:
+      IsTrigger: 0
+    ActionLoadLevel:
+      IsTrigger: 0
+    ActionSaveLevel:
+      IsTrigger: 0
+    ActionPosition:
+      x: 0
+      y: 0
+      z: 0
+    ActionWorld: {fileID: 0}
+  IsDebug: 0
+  DebugKey: 284
+  MyTerrainGenerator: {fileID: 0}
+  WorldsParent: {fileID: 4490501338080570}
+  MyVoxelManager: {fileID: 0}
+  WorldUpdater: {fileID: 0}
+  SpawnWorldScale: {x: 1, y: 1, z: 1}
+  MyWorlds: []
+  IsDisableCharactersOnLoad: 0
+  LoadLevelName: 
+  RoamPosition:
+    x: 0
+    y: 0
+    z: 0
+  RoamSize:
+    x: 4
+    y: 2
+    z: 4
+--- !u!114 &114596505984108948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952849734245760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f202f031929730b45af37f4685f7f2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114744986639598666
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952849734245760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 52
+    i1: 124
+    i2: 36
+    i3: 154
+    i4: 166
+    i5: 224
+    i6: 152
+    i7: 4
+    i8: 186
+    i9: 36
+    i10: 19
+    i11: 70
+    i12: 225
+    i13: 106
+    i14: 37
+    i15: 199
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

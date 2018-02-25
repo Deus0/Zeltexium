@@ -128,7 +128,7 @@ MonoBehaviour:
   IsInstantOnStart: 0
   IsInstant: 0
   MyDirection: {x: 0, y: 1, z: 1}
-  MyDisplayDistance: 0.16
+  MyDisplayDistance: 0.08
   IsFollowUserAngle: 0
   IsFollowUserAngleAddition: 1
   SpinSpeed: 0
@@ -185,7 +185,7 @@ RectTransform:
   m_GameObject: {fileID: 141550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0015, y: 0.0015, z: 0.0015}
+  m_LocalScale: {x: 0.0005, y: 0.0005, z: 0.0005}
   m_Children:
   - {fileID: 22465900}
   m_Father: {fileID: 0}
@@ -436,15 +436,15 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: EmissionModule.cnt0
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: EmissionModule.cnt1
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.scalar
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: EmissionModule.cnt2
+      propertyPath: EmissionModule.m_Bursts.Array.data[2].countCurve.scalar
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -478,6 +478,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 0.5725
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0080
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startSize.minScalar

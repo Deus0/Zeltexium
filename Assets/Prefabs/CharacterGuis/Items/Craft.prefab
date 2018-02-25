@@ -140,54 +140,69 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -412,6 +427,7 @@ MonoBehaviour:
     IsTrigger: 0
   MyInventory:
     Name: Empty
+    Description: 
     HasChanged: 0
     ModifiedEvent:
       m_PersistentCalls:
@@ -436,6 +452,10 @@ MonoBehaviour:
     MyFolder:
       FolderName: None
       FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -457,11 +477,9 @@ MonoBehaviour:
         m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       HasChanged: 0
-      ElementData:
-        _keys: []
-        _values: []
     IsDrawGui: 0
     IsDefaultGui: 0
+    IsUnique: 1
     ElementLink: 
     MyItems: []
     OnAddItem:
@@ -500,6 +518,11 @@ MonoBehaviour:
     m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   SkillSelectedIcon: {fileID: 0}
+  OnSwapItems:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Guis.ItemsEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &11473570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,7 +594,7 @@ MonoBehaviour:
   IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 1}
-  MyDisplayDistance: 0.4
+  MyDisplayDistance: 0.1
   IsFollowUserAngle: 0
   IsFollowUserAngleAddition: 1
   SpinSpeed: 0.5
@@ -689,7 +712,7 @@ RectTransform:
   m_GameObject: {fileID: 160902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0006, y: 0.0006, z: 0.0006}
+  m_LocalScale: {x: 0.00015, y: 0.00015, z: 0.00015}
   m_Children:
   - {fileID: 22479522}
   - {fileID: 22418064}
@@ -923,6 +946,158 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CraftedItemGui: {fileID: 114715331510999738}
   MyIngredients: {fileID: 11453112}
+  CraftingBench:
+    Name: Empty
+    Description: 
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      HasChanged: 0
+    IsDrawGui: 0
+    IsDefaultGui: 0
+    IsUnique: 1
+    ElementLink: 
+    MyItems: []
+    OnAddItem:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnUpdateItem:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    OnPickupItem:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnExchangeItem:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.Util.EventObjectString, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnExchangeCurrency:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnLoadEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  CraftingWithRecipe:
+    Name: Empty
+    Description: 
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      HasChanged: 0
+    IsDrawGui: 0
+    IsDefaultGui: 0
+    IsUnique: 1
+    ElementLink: 
+    Ingredients:
+      MyKeys: []
+      MyValues: []
+      IsEditing: 0
+    IngredientsQuantity:
+      MyKeys: []
+      MyValues: 
+      IsEditing: 0
+    Crafted: 
 --- !u!114 &114615779960674272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -952,6 +1127,7 @@ MonoBehaviour:
   QuantityText: {fileID: 114197376212464718}
   MyItem:
     Name: Empty
+    Description: Null
     HasChanged: 0
     ModifiedEvent:
       m_PersistentCalls:
@@ -976,6 +1152,10 @@ MonoBehaviour:
     MyFolder:
       FolderName: None
       FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -997,15 +1177,14 @@ MonoBehaviour:
         m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       HasChanged: 0
-      ElementData:
-        _keys: []
-        _values: []
     IsDrawGui: 0
     IsDefaultGui: 0
+    IsUnique: 1
     ElementLink: 
-    Description: Null
-    MyStats:
+    MetaTags: []
+    MyZexel:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -1030,6 +1209,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -1051,11 +1234,68 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          _keys: []
-          _values: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
+      ElementLink: 
+      Pixels: 
+      Size: {x: 32, y: 32}
+      MyTexture: {fileID: 0}
+    MyStats:
+      Name: Empty
+      Description: 
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        HasChanged: 0
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       IsAlive: 1
       Data: []
@@ -1069,64 +1309,9 @@ MonoBehaviour:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-    MyZexel:
-      Name: Empty
-      HasChanged: 0
-      ModifiedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      SavedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      RenamedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      MovedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      MyFolder:
-        FolderName: None
-        FileExtension: err
-        ModifiedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        SavedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        RenamedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        MovedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        HasChanged: 0
-        ElementData:
-          _keys: []
-          _values: []
-      IsDrawGui: 0
-      IsDefaultGui: 0
-      ElementLink: 
-      Pixels: 
-      Size: {x: 32, y: 32}
-      MyTexture: {fileID: 0}
     MyModel:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -1151,6 +1336,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -1172,16 +1361,17 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          _keys: []
-          _values: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       VoxelData: 
       IsLoadingFromFile: 0
+      MyWorld: {fileID: 0}
+    TextureMapIndex: 0
     MyPolyModel:
       Name: Empty
+      Description: 
       HasChanged: 1
       ModifiedEvent:
         m_PersistentCalls:
@@ -1206,6 +1396,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -1227,11 +1421,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          _keys: []
-          _values: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       MyModels:
       - Verticies:
@@ -1284,18 +1476,299 @@ MonoBehaviour:
         Colors: []
       TextureMaps: []
       Solidity: 010101010101
-    TextureMapIndex: 0
-    Commands: []
-    Tags: []
+      MyPoly: {fileID: 0}
+    MySpell:
+      Name: Empty
+      Description: 
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        HasChanged: 0
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      IsUnique: 1
+      ElementLink: 
+      StatTime: 0
+      SpellType: 0
+      IsProjectile: 0
+      FireOnHold: 1
+      FireRate: 0.5
+      Randomness: 0
+      BulletForce: 160
+      LifeTime: 2
+      Size: 1
+      SpawnSoundName: 
+      ImplodeSoundName: 
+      ExplodeSoundName: 
+      IsUseStat: 1
+      StatUseName: Mana
+      StatCost: 1
+      IsAddStat: 1
+      AddStatName: Health
+      AddStatValue: -0.5
+      AddStatVariance: 0.5
+      DoesDestroyOnHitCharacters: 1
+      DoesDestroyOnHitTerrain: 0
+      IsDestroyTerrainOnHit: 0
+      CanPassThrough: 0
+      IsOnHitBuff: 0
+      OnHitEffect:
+        Name: Empty
+        Description: 
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          HasChanged: 0
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        IsUnique: 1
+        ElementLink: 
+        MyType: 0
+        Value: []
+        Modifiers: []
+        MyZexel:
+          Name: Empty
+          Description: 
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            HasChanged: 0
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          IsUnique: 1
+          ElementLink: 
+          Pixels: 
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+      IsExplosion: 0
+      ExplosionSize: 0
+      IsStick: 0
+      StickTime: 0
+      IsSeek: 0
+      SeekDistance: 5
+      SeekDelay: 0.4
+      IsSummon: 0
+      MinionName: 
+      MinionClass: 
+      MinionRace: 
+      IsChain: 0
+      ChainDelay: 0.25
+      DamageReduction: 0.8
+      IsSheilding: 0
+      SheildDelay: 0.25
+      IsPortal: 0
+      CastAnimation: 
+      ColorTint:
+        serializedVersion: 2
+        rgba: 4294967295
+      MyModel:
+        Name: Empty
+        Description: 
+        HasChanged: 0
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        MyFolder:
+          FolderName: None
+          FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          HasChanged: 0
+        IsDrawGui: 0
+        IsDefaultGui: 0
+        IsUnique: 1
+        ElementLink: 
+        VoxelData: 
+        IsLoadingFromFile: 0
+        MyWorld: {fileID: 0}
+      MyCharacter: {fileID: 0}
     Quantity: 1
-    MyMesh: {fileID: 0}
-    MyMaterial: {fileID: 0}
     OnUpdate:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+    MyGui: {fileID: 0}
   IsGrabItemOnly: 1
+  OnSwapItems:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Zeltex.Guis.ItemSwapEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114801420060739038
 MonoBehaviour:
   m_ObjectHideFlags: 1

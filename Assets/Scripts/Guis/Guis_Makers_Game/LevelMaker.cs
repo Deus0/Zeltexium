@@ -247,7 +247,7 @@ namespace Zeltex.Guis.Maker
             Level MyLevel = DataManager.Get().GetElement(DataFolderNames.Levels, GetListHandler("LevelsList").GetSelected()) as Level;
             //string LevelName = GetListHandler("LevelsList").GetSelectedName();
             WorldManager.Get().IsDisableCharactersOnLoad = true;
-            yield return WorldManager.Get().LoadLevel(MyWorld, MyLevel);
+            yield return MyLevel.LoadLevel(MyWorld);
             WorldManager.Get().IsDisableCharactersOnLoad = false;
             SetLoadedLevelName(MyLevel.Name);
             OnFinishLoading();

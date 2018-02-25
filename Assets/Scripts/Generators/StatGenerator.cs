@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using Zeltex.Voxels;
-using Zeltex.Util;
 using Zeltex.Combat;
-using Zeltex.Items;
-using Zeltex;
-using ZeltexTools;
 
 namespace Zeltex.Generators
 {
@@ -37,7 +31,7 @@ namespace Zeltex.Generators
 		{
 			Stat NewStat = new Stat(MyStatType);
 			NewStat.Name = StatName;
-			NewStat.Description = StatDescription;
+			NewStat.SetDescription(StatDescription);
 			if (MyStatType == StatType.State)
             {
                 int MaxState = Mathf.RoundToInt(Random.Range(8, 18));
@@ -68,13 +62,12 @@ namespace Zeltex.Generators
             DataManager.Get().AddElement("Stats", NewStat);
 			//  Generate a texture for the stat
 			//int TextureIndex = DataManager.Get().GetSize("StatTextures");//MyTextureManager.ItemTextures.Count;
-			Texture2D NewTexture = new Texture2D(TextureResolution, TextureResolution, TextureFormat.ARGB32, false);
+			/*Texture2D NewTexture = new Texture2D(TextureResolution, TextureResolution, TextureFormat.ARGB32, false);
 			NewTexture.name = NewStat.Name + "_Texture";
 			NewTexture.filterMode = FilterMode.Point;
 			MyTextureGenerator.RandomColors();
 			//MyTexGen.Noise(MyTextureManager.ItemTextures[TextureIndex]);
-			MyTextureGenerator.Circle(NewTexture);
-			NewStat.SetTexture(NewTexture);
+			MyTextureGenerator.Circle(NewTexture);*/
 			//DataManager.Get().AddTexture("StatTextures", NewTexture);
 		}
     }

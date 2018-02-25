@@ -104,6 +104,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114054669654708302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,14 +119,16 @@ MonoBehaviour:
   OnToggledOn:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnToggledOff:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsKeepCamera: 0
+  FirstSelected: {fileID: 0}
+  BeginState: 1
 --- !u!114 &114093462794006856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,8 +157,8 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   IsAnimateOnStart: 1
   Delay: 0
   AnimationSpeedMin: 0.02
@@ -192,188 +195,11 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    MyItem:
-      Name: Empty
-      HasChanged: 0
-      ModifiedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      SavedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      RenamedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      MovedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      MyFolder:
-        FolderName: None
-        FileExtension: err
-        ModifiedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        SavedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        RenamedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        MovedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        ElementData:
-          _keys: []
-          _values: []
-      IsDrawGui: 0
-      IsDefaultGui: 0
-      Description: Null
-      Commands: []
-      Tags: []
-      Quantity: 1
-      SellValue: -1
-      BuyValue: -1
-      MyStats:
-        Name: Empty
-        HasChanged: 0
-        ModifiedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        SavedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        RenamedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        MovedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        MyFolder:
-          FolderName: None
-          FileExtension: err
-          ModifiedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          SavedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          RenamedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MovedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          ElementData:
-            _keys: []
-            _values: []
-        IsDrawGui: 0
-        IsDefaultGui: 0
-        Data: []
-        OnNewStats:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        OnUpdateStats:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-      MyZexel:
-        Name: Empty
-        HasChanged: 0
-        ModifiedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        SavedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        RenamedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        MovedEvent:
-          m_PersistentCalls:
-            m_Calls: []
-          m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-            PublicKeyToken=null
-        MyFolder:
-          FolderName: None
-          FileExtension: err
-          ModifiedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          SavedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          RenamedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MovedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          ElementData:
-            _keys: []
-            _values: []
-        IsDrawGui: 0
-        IsDefaultGui: 0
-        Pixels: 
-        Size: {x: 32, y: 32}
-        MyTexture: {fileID: 0}
-      MeshType: 0
-      MyMesh: {fileID: 0}
-      MyMaterial: {fileID: 0}
-      ModelName: 
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnClickListElement:
     m_PersistentCalls:
       m_Calls: []

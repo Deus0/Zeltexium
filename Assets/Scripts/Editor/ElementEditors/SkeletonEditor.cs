@@ -18,6 +18,10 @@ namespace Zeltex
             {
                 MyCharacter.GetData().MySkeleton = NewValue as Skeleton;
             }
+            else
+            {
+                base.SetPropertyValue(NewValue);
+            }
         }
     }
 

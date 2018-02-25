@@ -10,7 +10,7 @@ namespace Zeltex
 		/// <summary>
 		/// Used to store and produce the audio clip
 		/// </summary>
-		public class Zound : Element
+		public class Zound : ElementCore
         {
 			//public string Name = "";
             [SerializeField, JsonProperty]

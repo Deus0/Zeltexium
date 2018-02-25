@@ -9,7 +9,7 @@ namespace Zeltex
     /// Textures implementation for zeltex
     /// </summary>
     [System.Serializable]
-    public class Zexel : Element
+    public class Zexel : ElementCore
     {
         [SerializeField, JsonProperty]
         private byte[] Pixels = null;

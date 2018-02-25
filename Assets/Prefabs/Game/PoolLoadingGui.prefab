@@ -164,6 +164,7 @@ MonoBehaviour:
   IsKeepCamera: 1
   FirstSelected: {fileID: 0}
   BeginState: 1
+  HasAttached: 0
 --- !u!114 &114377820575489132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,7 +184,7 @@ MonoBehaviour:
   IsInstantOnStart: 1
   IsInstant: 0
   MyDirection: {x: 0, y: 0, z: 0}
-  MyDisplayDistance: 0.5
+  MyDisplayDistance: 0.4
   IsFollowUserAngle: 1
   IsFollowUserAngleAddition: 1
   SpinSpeed: 0.5
@@ -400,7 +401,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 27
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &224399257524984784
 RectTransform:

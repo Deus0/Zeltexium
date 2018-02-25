@@ -76,7 +76,7 @@ namespace Zeltex.Guis
             if (TargetSkeleton)
             {
                 AboveHeadHeight = TargetSkeleton.GetSkeleton().GetBounds().extents.y * TargetSkeleton.transform.parent.localScale.y;
-                AboveHeadHeight += transform.lossyScale.y * MyRect.GetHeight() * 0.6f;
+                AboveHeadHeight += transform.lossyScale.y * MyRect.GetHeight() * 1f;
                 return TargetSkeleton.GetSkeleton().GetBounds().center + new Vector3(0, AboveHeadHeight, 0);
             }
             else
@@ -97,7 +97,7 @@ namespace Zeltex.Guis
                 }
                 if (TargetObject != null)
                 {
-                    Reposition(1 / Speed);   // instant reposition
+                    Reposition(10000);   // instant reposition
                 }
             }
         }

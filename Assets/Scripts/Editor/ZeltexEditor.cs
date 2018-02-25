@@ -32,9 +32,12 @@ namespace Zeltex
             {
                 EditorGUI.PropertyField(position, property, label, true);
                 ExtraHeight = EditorGUI.GetPropertyHeight(property);
-                EditorRect = new Rect(position.xMin, position.yMax - 20f, position.width, 20f);//  - 20f
-                ExtraHeight += EditorRect.height;
-                SetIsUnityGui(GUI.Toggle(EditorRect, IsUnityGui(), "Default [true]"));
+                if (property.isExpanded)
+                {
+                    SetIsUnityGui(GUIToggle(IsUnityGui(), "Default [true]"));
+                    EditorRect = new Rect(position.xMin, position.yMax - 20f, position.width, 20f);//  - 20f
+                    ExtraHeight += EditorRect.height;
+                }
             }
             else
             {

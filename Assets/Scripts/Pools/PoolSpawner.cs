@@ -159,9 +159,9 @@ namespace Zeltex
         public void ClientReadyObject(ReadyMessageData Data)
         {
             LogManager.Get().Log("Client: ClientReadyObject " + Data.SpawnedObject.netId, "PoolsReadying");
-            if (Zeltex.Networking.Player.Get())
+            if (Networking.Player.Get())
             {
-                Zeltex.Networking.Player.Get().CmdReadyObject(Data);
+                Networking.Player.Get().CmdReadyObject(Data);
             }
         }
 

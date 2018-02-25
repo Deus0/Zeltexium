@@ -27,7 +27,7 @@ using Zeltex.Skeletons;
 
 // another one would be, convert only the bottom parts of the body, ie feet, then calves etc, until it is just a head
 
-namespace Zeltex.Physics 
+namespace Zeltex.Physics
 {
     /// <summary>
     /// Rag doll is a system of bones but connected using joints instead of transforms.
@@ -81,13 +81,14 @@ namespace Zeltex.Physics
 
         private Vector3 RagdolledPosition;
         private Quaternion RagdolledRotation;
+
         private IEnumerator RagDollRoutine()
         {
             RagdolledPosition = MyCharacter.transform.position;
             RagdolledRotation = MyCharacter.transform.rotation;
             CapsuleCollider MyCapsule = transform.parent.GetComponent<CapsuleCollider>();
             Rigidbody MyRigidbody = transform.parent.gameObject.GetComponent<Rigidbody>();
-            SkeletonAnimator MyAnimator = gameObject.GetComponent<SkeletonAnimator>();
+            Zanimator MyAnimator = gameObject.GetComponent<Zanimator>();
             MySkeleton = gameObject.GetComponent<SkeletonHandler>();
             UnityEngine.Networking.NetworkTransform MyNetworkTransform = transform.parent.gameObject.GetComponent<UnityEngine.Networking.NetworkTransform>();
             if (MyCapsule)
@@ -216,7 +217,7 @@ namespace Zeltex.Physics
         /// Detatch the bone from the skeleton heirarchy and attach it to the root bone
         /// </summary>
 		private void RemoveBone(Bone MyBone, Transform MyRoot)
-        { 
+        {
             Transform MyBoneTransform = MyBone.MyTransform;
             if (MyBone != null && MyBoneTransform && MyBone.VoxelMesh)
             {
@@ -258,10 +259,9 @@ namespace Zeltex.Physics
 
         public void AttachBone(Bone MyBone)
         {
-            //Debug.LogError("Removing bone: " + MyBone.MyTransform.name);
             if (MyBone != null)
             {
-                MyBone.MyTransform.SetParent(MyBone.ParentTransform);
+                MyBone.AttachBoneToParent(false);
 
                 if (MyBone.VoxelMesh != null)
                 {
@@ -296,7 +296,7 @@ namespace Zeltex.Physics
         {
             RagdollHandle = RoutineManager.Get().StartCoroutine(RagdollHandle, ReverseRagdollRoutine(ReverseTime));
         }
-        
+
         private IEnumerator ReverseRagdollRoutine(float ReverseTime)
         {
             if (MySkeleton)
@@ -316,7 +316,7 @@ namespace Zeltex.Physics
                 {
                     MyNetworkTransform.enabled = true;
                 }
-                SkeletonAnimator MyAnimator = gameObject.GetComponent<SkeletonAnimator>();
+                Zanimator MyAnimator = gameObject.GetComponent<Zanimator>();
                 if (MyAnimator != null)
                 {
                     MyAnimator.enabled = true;
@@ -353,386 +353,4 @@ namespace Zeltex.Physics
             }
         }
     }
-    /*public void ConnectParts(GameObject ParentPart, GameObject ChildPart)
-    {
-        if (ParentPart.GetComponent<Rigidbody>())
-        {   // FixedJoint
-            HingeJoint MyJoint = ChildPart.GetComponent<HingeJoint> ();
-            if (MyJoint == null)
-                MyJoint = ChildPart.AddComponent<HingeJoint>();
-           // MyJoint.enableProjection = true;
-            MyJoint.breakForce = Mathf.Infinity;
-            MyJoint.connectedBody = ParentPart.GetComponent<Rigidbody> ();
-        }
-    }*/
-    /*public static class ConfigurableJointExtensions
-    {
-        /// <summary>
-        /// Sets a joint's targetRotation to match a given local rotation.
-        /// The joint transform's local rotation must be cached on Start and passed into this method.
-        /// </summary>
-        public static void SetTargetRotationLocal(this ConfigurableJoint joint, Quaternion targetLocalRotation, Quaternion startLocalRotation)
-        {
-            if (joint.configuredInWorldSpace)
-            {
-                Debug.LogError("SetTargetRotationLocal should not be used with joints that are configured in world space. For world space joints, use SetTargetRotation.", joint);
-            }
-            SetTargetRotationInternal(joint, targetLocalRotation, startLocalRotation, Space.Self);
-        }
-
-        /// <summary>
-        /// Sets a joint's targetRotation to match a given world rotation.
-        /// The joint transform's world rotation must be cached on Start and passed into this method.
-        /// </summary>
-        public static void SetTargetRotation(this ConfigurableJoint joint, Quaternion targetWorldRotation, Quaternion startWorldRotation)
-        {
-            if (!joint.configuredInWorldSpace)
-            {
-                Debug.LogError("SetTargetRotation must be used with joints that are configured in world space. For local space joints, use SetTargetRotationLocal.", joint);
-            }
-            SetTargetRotationInternal(joint, targetWorldRotation, startWorldRotation, Space.World);
-        }
-
-        static void SetTargetRotationInternal(this ConfigurableJoint joint, Quaternion targetRotation, Quaternion startRotation, Space space)
-        {
-            // Calculate the rotation expressed by the joint's axis and secondary axis
-            var right = joint.axis;
-            var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
-            var up = Vector3.Cross(forward, right).normalized;
-            Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
-
-            // Transform into world space
-            Quaternion resultRotation = Quaternion.Inverse(worldToJointSpace);
-
-            // Counter-rotate and apply the new local rotation.
-            // Joint space is the inverse of world space, so we need to invert our value
-            if (space == Space.World)
-            {
-                resultRotation *= startRotation * Quaternion.Inverse(targetRotation);
-            }
-            else {
-                resultRotation *= Quaternion.Inverse(targetRotation) * startRotation;
-            }
-
-            // Transform back into joint space
-            resultRotation *= worldToJointSpace;
-
-            // Set target rotation to our newly calculated rotation
-            joint.targetRotation = resultRotation;
-        }
-    }*/
 }
-//public bool IsDebugMode = false;
-//public KeyCode MyExplodeKey;
-//public KeyCode RagdollKey;
-//public KeyCode MyReviveKey;
-
-//public bool IsAddPartColliders = true;
-//public bool IsAttachMainCamera = false;
-//[Tooltip("Used for character interaction")]
-//public List<MyEvent> OnInteract;
-//[Tooltip("When the body is converted into a ragdoll")]
-//public UnityEvent OnRagdoll;
-//[Tooltip("When the body is converted into a ragdoll")]
-//public UnityEvent OnRevive;
-//[Tooltip("If a Camera is attached, reattach it to the ragdoll")]
-//public UnityEvent OnReattachCamera;
-//[Tooltip("How long is the paused after death before falling")]
-//public float TimeFrozen = 1f;
-//[Tooltip("Artificial Gravity after death")]
-//public Vector3 GravityForce = new Vector3 (0, -2, 0);
-//public float ReverseTimeDilation = 0.2f;
-//public bool IsTesting = false;
-//private float TimeSpawned = 0f;
-
-//GameObject RootSpawn;	// spawned new body main
-//protected List<GameObject> MySpawnedBodyParts = new List<GameObject> ();
-//public Vector3 ForceOnExplosion = new Vector3 ();
-//public bool IsForce = false;
-//public float ForceStrength = 10f;
-
-//public bool CanTimeBeReversed = false;
-// public Vector3 ForceDirection;
-
-/*public void RemoveBodyPart(GameObject MyBodyPart) 
-{
-    if (MyBodyPart != null)
-    for (int i = 0; i < MySpawnedBodyParts.Count; i++) {
-        if (MySpawnedBodyParts[i] == MyBodyPart) 
-        {
-            if (IsAttachMainCamera) 
-            {
-                if (MyBodyPart.name.Contains("Head")) 
-                {
-                    if (MyBodyPart.transform.childCount > 0) 
-                    {
-                        Debug.LogError("Setting up camera");
-                        Camera.main.gameObject.transform.SetParent(MyBodyPart.transform);
-                    }
-                }
-            }
-            MySpawnedBodyParts.RemoveAt(i);
-            DestroyImmediate (MyBodyPart);
-        } else {
-            Destroy (MyBodyPart);
-        }
-    }
-}*/
-
-/*void Start() 
-{
-    GatherBodyParts ();
-    for (int i = 0; i < MyBodyParts.Count; i++)
-    {
-        if (IsAddPartColliders && MyBodyParts [i].GetComponent<MeshCollider> () == null)
-        {
-            MeshCollider MyBoxCollider = MyBodyParts [i].AddComponent<MeshCollider> ();
-            //MyBoxCollider.isTrigger = true;
-            MyBoxCollider.convex = true;
-        }
-        BodyPart MyBodyPart = MyBodyParts [i].GetComponent<BodyPart> ();
-        if (MyBodyPart == null)
-            MyBodyPart = MyBodyParts [i].AddComponent<BodyPart> ();
-        MyBodyPart.MyParent = gameObject;
-        MyBodyPart.RagdollBrain = this;
-    }
-    RootSpawn = gameObject;
-}*/
-
-// Update is called once per frame
-/*void Update()
-{
-    AwakenBody();
-    if (IsDebugMode)
-    {
-        if (Input.GetKeyDown(MyReviveKey))
-        {
-            //ReverseDeath();
-        }
-        else if (Input.GetKeyDown(MyExplodeKey))
-        {
-            Explode();
-        } else if (Input.GetKeyDown(RagdollKey))
-        {
-            RagDoll();
-        }
-    }
-}*/
-
-// Toggles the attachtness of a body part
-/*public void ActivateBodyPart(GameObject MyBodyPart)
-{
-    BodyPart MyData = MyBodyPart.GetComponent<BodyPart> ();
-    if (MyData.IsRigidBody) {
-        ReattachBodyPart (MyBodyPart);
-    } else {
-        DetatchBodyPart(MyBodyPart);
-    }
-}*/
-
-/*public void DetatchBodyPart(GameObject MyBodyPart)
-{
-    //MySpawnedBodyParts.Clear ();
-    List<GameObject> DetatchedBodyParts = new List<GameObject> ();
-    if (MyBodyPart.activeSelf)
-    {
-            //DetatchedBodyParts.Add (FirstPart);	// should be a 
-        List<GameObject> MyList = FindChildren (MyBodyPart);
-            //Debug.LogError ("But Body part has: " + MyBodyPart.transform.childCount + " Children!");
-        for (int j = 0; j < MyList.Count; j++)
-        {
-            GameObject NewPart = CreateNewBodyPart (MyList [j]);
-            if (NewPart != null) 
-            {
-                DetatchedBodyParts.Add (NewPart); 
-            }
-        }
-        //Debug.LogError ("Detatched " + MyList.Count + " children!");
-        TimeSpawned = Time.time;
-        ConnectUpBodyParts (DetatchedBodyParts);
-    }
-}*/
-
-/*public void ReverseDeath() 
-{
-    for (int i = 0; i < MySpawnedBodyParts.Count; i++) {
-        ReattachBodyPart(MySpawnedBodyParts[i]);
-    }
-}*/
-// need to check
-/*public void ReattachBodyPart(GameObject MyBodyPart) 
-{
-    BodyPart BodyPartComponent = MyBodyPart.GetComponent<BodyPart>();
-    if (CanTimeBeReversed) {
-        ReverseMovement MyReverseMovement = MyBodyPart.GetComponent<ReverseMovement> ();
-        //Debug.LogError("Reattaching BodyParts v1 ");
-        if (MyReverseMovement) {
-            MyReverseMovement.Reverse ();
-            //Debug.LogError("Reattaching BodyParts");
-            MyReverseMovement.OnEndReverse.AddListener (// this ain't working atm! debug more!
-            delegate {
-                //Debug.LogError("Ending Reverse Movement: " + BodyPartComponent.name);
-                if (BodyPartComponent)
-                if (BodyPartComponent.OriginalBodyPart)
-                    BodyPartComponent.OriginalBodyPart.SetActive (true);
-                //if (MyBodyPart.transform.childCount > 0)
-                //	Debug.LogError("Wut it contains child: " + MyBodyPart.transform.childCount);
-                RemoveBodyPart (MyBodyPart);
-                if (MySpawnedBodyParts.Count == 0) {
-                    OnRevive.Invoke ();
-                }
-            });
-        }
-    } else {	// use general lerping to get bone back on
-
-    }
-}*/
-
-// this happens on all parts, need it to just happen on some!
-/*public void AwakenBody() 
-{
-    for (int i = MySpawnedBodyParts.Count-1; i >= 0; i--)
-    { 
-        if (MySpawnedBodyParts[i] != null) {
-        if (MySpawnedBodyParts [i].GetComponent<BodyPart> ().TimeSpawned != 0)
-        if (Time.time - MySpawnedBodyParts [i].GetComponent<BodyPart> ().TimeSpawned >= TimeFrozen)
-                {
-            if (MySpawnedBodyParts [i] != null) 
-            if (MySpawnedBodyParts [i].GetComponent<Rigidbody> ()) {
-                MySpawnedBodyParts [i].GetComponent<Rigidbody> ().isKinematic = false;
-                if (IsForce)
-                            {
-                    MySpawnedBodyParts [i].GetComponent<Rigidbody> ().velocity = ForceOnExplosion;	// reset velocity
-                                ForceOnExplosion = ForceDirection * ForceStrength;
-                    }
-                    if (CanTimeBeReversed) {
-                        ReverseMovement MyReverseMovement = MySpawnedBodyParts [i].GetComponent<ReverseMovement> ();
-                        if (MyReverseMovement == null) 
-                        { 
-                                MyReverseMovement =MySpawnedBodyParts [i].AddComponent<ReverseMovement> ();
-                        }
-                        MyReverseMovement.ReverseTimeDilation = ReverseTimeDilation;
-                    }
-            }
-            MySpawnedBodyParts [i].GetComponent<BodyPart> ().TimeSpawned = 0;
-        }
-        } else {
-            MySpawnedBodyParts.RemoveAt (i);
-        }
-    }
-}*/
-/*void AutoReverse(ReverseMovement MyReverseMovement)
-{
-    if (CanTimeBeReversed) {
-        float AutoReverseTime = -1;
-        if (AutoReverseTime == -1) {
-            AutoReverseTime = MyReverseMovement.MutateReverseTime ();
-        } else {
-            MyReverseMovement.SetAutoReverseTime (AutoReverseTime);
-        }
-    }
-}*/
-//StartCoroutine(SecondPart(RagdollType));
-//Skeleton MySkeleton = gameObject.GetComponent<Skeleton>();
-/* Transform MyRootBone = MySkeleton.transform.GetChild(0);
-
- for (int i = 0; i < MySkeleton.MyBones.Count; i++)
- {
-     MySkeleton.MyBones[i].SetBodyCubePosition();    // reverse transform positions in bone structure
- }
- for (int i = 0; i < MySkeleton.MyBones.Count; i++)
- {
-     Transform ChildPart = MySkeleton.MyBones[i].MyTransform;
-     Transform ParentPart = MySkeleton.MyBones[i].ParentTransform;
-     if (ChildPart != MyRootBone)
-     {
-         HingeJoint MyJoint = ChildPart.gameObject.AddComponent<HingeJoint>();
-         MyJoint.breakForce = Mathf.Infinity;
-         MyJoint.connectedBody = ParentPart.GetComponent<Rigidbody>();
-         MyJoint.enableCollision = true;
-         MyJoint.useSpring = true;
-     }
- }
-
- if (OnRagdoll != null)
- {
-     OnRagdoll.Invoke();
- }
- TimeSpawned = Time.time;*/
-//IEnumerator SecondPart(int RagdollType)
-//{
-//   yield return new WaitForSeconds(0);
-//GetComponent<BodyColours>().OnDeath();
-//}
-
-/*public void ConnectUpBodyParts()
-{
-    ConnectUpBodyParts (MySpawnedBodyParts, true);
-}
-
-public void ConnectUpBodyParts(List<GameObject> NewlyDetatchedParts)
-{
-    ConnectUpBodyParts (NewlyDetatchedParts, true);
-}*/
-
-/*public void ConnectUpBodyParts(List<GameObject> NewlyDetatchedParts, bool IsConnectAll)
-{
-    //Debug.LogError ("Connect parts with joints: " + NewlyDetatchedParts.Count);
-    for (int i = 0; i < NewlyDetatchedParts.Count; i++)
-    {
-        int IsConnect = Random.Range (1,100);
-        if (IsConnectAll || IsConnect < 66) 
-        {
-            if (MyParentIndexes[i] != -1) 
-            {
-                GameObject MyParent = GetParentBodyPart(i, NewlyDetatchedParts);
-                if (MyParent != null) 
-                {
-                    ConnectParts(MyParent, MySpawnedBodyParts[i]);
-                }
-            }
-        }
-    }
-}*/
-/*MyBone.localScale = NewScale;
-MyBone.transform.position = NewPosition;
-MyBone.transform.rotation = NewRotation;*/
-/*Vector3 NewPosition = MyBone.position;
-Vector3 NewScale = MyBone.localScale;
-Quaternion NewRotation = MyBone.rotation;*/
-//MySpawnedBodyParts.Add (NewBodyPart);
-// extra data
-/*BodyPart MyBodyPart = NewBodyPart.AddComponent<BodyPart>();
-MyBodyPart.MyParent = OldBodyPart.transform.gameObject;
-MyBodyPart.RagdollBrain = this;
-MyBodyPart.OriginalBodyPart = OldBodyPart;
-MyBodyPart.TimeSpawned = Time.time;
-MyBodyPart.IsRigidBody = true;*/
-
-// transforms
-/*for (int i = 0; i < OldBodyPart.transform.childCount; i++)
-{
-    if (OldBodyPart.transform.GetChild(i).gameObject.tag == "BonePart")
-    {
-        Transform MyChild = OldBodyPart.transform.GetChild(i).transform;
-        if (MyChild.GetComponent<MeshRenderer>() && MyChild.GetComponent<MeshCollider>() == null)
-        {
-            MeshCollider MyMeshCollider = MyChild.gameObject.AddComponent<MeshCollider>();
-            if (MyMeshCollider)
-            {
-                MyMeshCollider.sharedMesh = MyChild.GetComponent<MeshFilter>().sharedMesh;
-                MyMeshCollider.convex = true;
-            }
-        }*/
-/* if (MyChild.name.Contains("MeshName"))
- {
-     //if (IsBodyPartsItems)
-     {
-         Zeltex.Items.ItemHandler MyItemHandler = MyChild.gameObject.AddComponent<Zeltex.Items.ItemHandler>();
-         Item NewItem = new Zeltex.Items.Item();
-         NewItem.SetQuantity(1);
-         MyItemHandler.SetItem(NewItem);
-     }
- }*/
-//}
-//}

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 namespace Zeltex.Networking
 {
     /// <summary>
-    /// Bam!
+    /// Main commander for networking, acts between networking functions
     /// </summary>
     class Player : NetworkBehaviour
     {
@@ -31,19 +31,13 @@ namespace Zeltex.Networking
                     return;
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Zeltex.LogManager.Get().Log("Local Player! Spawning Bullet", "Client");
-            }
-
         }
 
         [Command]
         public void CmdCreateBullet(Vector3 SpawnPosition, Quaternion SpawnRotation, Vector3 RandomForce)
         {
-            Zeltex.LogManager.Get().Log("Server Command! Spawning Bullet", "Server");
-            GetComponent<Zeltex.Combat.Shooter>().ServerCreateBullet(SpawnPosition, SpawnRotation, RandomForce);
+            LogManager.Get().Log("Server Command! Spawning Bullet", "Server");
+            GetComponent<Combat.Shooter>().ServerCreateBullet(SpawnPosition, SpawnRotation, RandomForce);
         }
 
         #region Pools
@@ -53,13 +47,13 @@ namespace Zeltex.Networking
         {
             if (Data.SpawnedObject)
             {
-                Zeltex.LogManager.Get().Log("CmdRegisterNewObject Success: " + Data.Spawner.name + ":" + Data.SpawnedObject.name, "PoolsReturning");
+                LogManager.Get().Log("CmdRegisterNewObject Success: " + Data.Spawner.name + ":" + Data.SpawnedObject.name, "PoolsReturning");
                 //Data.Spawner.gameObject.GetComponent(Data.MyType).SendMessage(Data.ServerFunctionName, Data);
                 Data.Spawner.gameObject.GetComponent<PoolSpawner>().ServerReadyObject(Data);
             }
             else
             {
-                Zeltex.LogManager.Get().Log("CmdRegisterNewObject Failed", "PoolsReturning");
+                LogManager.Get().Log("CmdRegisterNewObject Failed", "PoolsReturning");
             }
         }
 
@@ -68,14 +62,14 @@ namespace Zeltex.Networking
         {
             if (Data.SpawnedObject)
             {
-                Zeltex.LogManager.Get().Log("CmdReadyObject Success: " + Data.Spawner.name + ":" + Data.SpawnedObject.name, "PoolsReadying");
+                LogManager.Get().Log("CmdReadyObject Success: " + Data.Spawner.name + ":" + Data.SpawnedObject.name, "PoolsReadying");
                 //Data.Spawner.gameObject.GetComponent(Data.MyType).SendMessage(Data.ServerFunctionName, Data);
                 Data.Spawner.gameObject.GetComponent<PoolSpawner>().ServerReadyObject(Data);
 
             }
             else
             {
-                Zeltex.LogManager.Get().Log("CmdReadyObject Failed", "PoolsReadying");
+                LogManager.Get().Log("CmdReadyObject Failed", "PoolsReadying");
             }
         }
 
@@ -90,17 +84,17 @@ namespace Zeltex.Networking
                 PoolSpawner MyPoolSpawner = Data.Spawner.gameObject.GetComponent<PoolSpawner>();
                 if (MyPoolSpawner)
                 {
-                    Zeltex.LogManager.Get().Log("CmdSynchPool Success [PoolIndex: " + Data.PoolIndex + "]", "SynchPools");
+                    LogManager.Get().Log("CmdSynchPool Success [PoolIndex: " + Data.PoolIndex + "]", "SynchPools");
                     MyPoolSpawner.ServerSynchPool(Data);
                 }
                 else
                 {
-                    Zeltex.LogManager.Get().Log("CmdSynchPool Failure as no pool spawner component", "SynchPools");
+                    LogManager.Get().Log("CmdSynchPool Failure as no pool spawner component", "SynchPools");
                 }
             }
             else
             {
-                Zeltex.LogManager.Get().Log("CmdSynchPool Failure as no pool spawner gameObject", "SynchPools");
+                LogManager.Get().Log("CmdSynchPool Failure as no pool spawner gameObject", "SynchPools");
             }
         }
         #endregion

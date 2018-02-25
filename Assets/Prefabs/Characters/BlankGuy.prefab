@@ -112,54 +112,69 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -183,6 +198,7 @@ MonoBehaviour:
   ActionBone: {fileID: 0}
   Data:
     Name: Alzo
+    Description: 
     HasChanged: 0
     ModifiedEvent:
       m_PersistentCalls:
@@ -207,6 +223,10 @@ MonoBehaviour:
     MyFolder:
       FolderName: None
       FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -228,16 +248,15 @@ MonoBehaviour:
         m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       HasChanged: 0
-      ElementData:
-        MyKeys: []
-        MyValues: []
     IsDrawGui: 0
     IsDefaultGui: 1
+    IsUnique: 1
     ElementLink: 
     Class: 
     Race: 
-    MyStats:
+    MyZexel:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -262,6 +281,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -283,15 +306,73 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
+      ElementLink: 
+      Pixels: 
+      Size: {x: 32, y: 32}
+      MyTexture: {fileID: 0}
+    MyStats:
+      Name: Empty
+      Description: 
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        HasChanged: 0
+      IsDrawGui: 0
+      IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       IsAlive: 1
       Data:
       - Name: Level
+        Description: An overall indication of power
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -316,6 +397,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -337,19 +422,17 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: An overall indication of power
         MyType: 0
         Value:
         - 1
         Modifiers: []
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -374,6 +457,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -395,16 +482,15 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
           MyTexture: {fileID: 0}
       - Name: Experience
+        Description: It grows larger with every monster you slay
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -429,6 +515,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -450,19 +540,17 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: It grows larger with every monster you slay
         MyType: 0
         Value:
         - 0
         Modifiers: []
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -487,6 +575,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -508,16 +600,15 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
           MyTexture: {fileID: 0}
       - Name: Health
+        Description: Heals you! !2
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -542,6 +633,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -563,13 +658,10 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: Heals you! !2
         MyType: 1
         Value:
         - 10
@@ -577,6 +669,7 @@ MonoBehaviour:
         Modifiers: []
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -601,6 +694,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -622,16 +719,15 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
           MyTexture: {fileID: 0}
       - Name: HealthRegen
+        Description: '-------'
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -656,6 +752,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -677,19 +777,17 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: '-------'
         MyType: 0
         Value:
         - 0
         Modifiers: []
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -714,6 +812,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -735,16 +837,15 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
           MyTexture: {fileID: 0}
       - Name: Mana
+        Description: '-------!'
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -769,6 +870,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -790,13 +895,10 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: '-------!'
         MyType: 1
         Value:
         - 10
@@ -804,6 +906,7 @@ MonoBehaviour:
         Modifiers: []
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -828,6 +931,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -849,16 +956,15 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
           MyTexture: {fileID: 0}
       - Name: ManaRegen
+        Description: '!'
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -883,6 +989,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -904,13 +1014,10 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: '!'
         MyType: 2
         Value:
         - 1
@@ -920,6 +1027,7 @@ MonoBehaviour:
         - Mana
         MyZexel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -944,6 +1052,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -965,11 +1077,9 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           Pixels: 
           Size: {x: 32, y: 32}
@@ -1118,6 +1228,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     Skillbar:
       Name: Empty
+      Description: 
       HasChanged: 1
       ModifiedEvent:
         m_PersistentCalls:
@@ -1142,6 +1253,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -1163,14 +1278,13 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       MyItems:
       - Name: Fayfay
+        Description: Null
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -1195,6 +1309,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -1216,15 +1334,14 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: Null
-        MyStats:
-          Name: Empty
+        MetaTags: []
+        MyZexel:
+          Name: Moss
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -1249,6 +1366,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1270,11 +1391,68 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
+          ElementLink: 
+          Pixels: ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+        MyStats:
+          Name: Empty
+          Description: 
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            HasChanged: 0
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           IsAlive: 1
           Data: []
@@ -1288,64 +1466,9 @@ MonoBehaviour:
               m_Calls: []
             m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
-        MyZexel:
-          Name: Moss
-          HasChanged: 0
-          ModifiedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          SavedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          RenamedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MovedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MyFolder:
-            FolderName: None
-            FileExtension: err
-            ModifiedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            SavedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            RenamedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            MovedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
-          IsDrawGui: 0
-          IsDefaultGui: 0
-          ElementLink: 
-          Pixels: ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff101204ff101204ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff101304ff101304ff161a06ff161a06ff1a1e06ff1a1e06ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1f2208ff1f2208ff121505ff121505ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff272c0aff272c0aff191d06ff191d06ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff2a2e0bff2a2e0bff1a1e06ff1a1e06ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff24290aff24290aff151706ff151706ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff1a1e07ff1a1e07ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff443612ff443612ff443612ff443612ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff443612ff443612ff443612ff443612ff0f1004ff0f1004ff0f1004ff0f1004ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff0f1004ff161806ff161806ff202409ff202409ff2a2e0bff2a2e0bff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff375012ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12ff444d12
-          Size: {x: 32, y: 32}
-          MyTexture: {fileID: 0}
         MyModel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -1370,6 +1493,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1391,16 +1518,17 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           VoxelData: 
           IsLoadingFromFile: 0
+          MyWorld: {fileID: 0}
+        TextureMapIndex: 0
         MyPolyModel:
           Name: Empty
+          Description: 
           HasChanged: 1
           ModifiedEvent:
             m_PersistentCalls:
@@ -1425,6 +1553,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1446,11 +1578,9 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           MyModels:
           - Verticies:
@@ -1503,13 +1633,252 @@ MonoBehaviour:
             Colors: []
           TextureMaps: []
           Solidity: 010101010101
-        TextureMapIndex: 0
-        Commands:
-        - /Spell Fayfay
-        Tags: []
+          MyPoly: {fileID: 0}
+        MySpell:
+          Name: Empty
+          Description: 
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            HasChanged: 0
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          IsUnique: 1
+          ElementLink: 
+          StatTime: 0
+          SpellType: 0
+          IsProjectile: 0
+          FireOnHold: 1
+          FireRate: 0.5
+          Randomness: 0
+          BulletForce: 160
+          LifeTime: 2
+          Size: 1
+          SpawnSoundName: 
+          ImplodeSoundName: 
+          ExplodeSoundName: 
+          IsUseStat: 1
+          StatUseName: Mana
+          StatCost: 1
+          IsAddStat: 1
+          AddStatName: Health
+          AddStatValue: -0.5
+          AddStatVariance: 0.5
+          DoesDestroyOnHitCharacters: 1
+          DoesDestroyOnHitTerrain: 0
+          IsDestroyTerrainOnHit: 0
+          CanPassThrough: 0
+          IsOnHitBuff: 0
+          OnHitEffect:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            MyType: 0
+            Value: []
+            Modifiers: []
+            MyZexel:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              Pixels: 
+              Size: {x: 32, y: 32}
+              MyTexture: {fileID: 0}
+          IsExplosion: 0
+          ExplosionSize: 0
+          IsStick: 0
+          StickTime: 0
+          IsSeek: 0
+          SeekDistance: 5
+          SeekDelay: 0.4
+          IsSummon: 0
+          MinionName: 
+          MinionClass: 
+          MinionRace: 
+          IsChain: 0
+          ChainDelay: 0.25
+          DamageReduction: 0.8
+          IsSheilding: 0
+          SheildDelay: 0.25
+          IsPortal: 0
+          CastAnimation: 
+          ColorTint:
+            serializedVersion: 2
+            rgba: 4294967295
+          MyModel:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            VoxelData: 
+            IsLoadingFromFile: 0
+            MyWorld: {fileID: 0}
+          MyCharacter: {fileID: 0}
         Quantity: 1
-        MyMesh: {fileID: 0}
-        MyMaterial: {fileID: 0}
         OnUpdate:
           m_PersistentCalls:
             m_Calls: []
@@ -1517,6 +1886,7 @@ MonoBehaviour:
             Culture=neutral, PublicKeyToken=null
         MyGui: {fileID: 0}
       - Name: Fayzagzi Bricks
+        Description: Null
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -1541,6 +1911,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -1562,15 +1936,14 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
-        Description: Null
-        MyStats:
-          Name: Empty
+        MetaTags: []
+        MyZexel:
+          Name: Bricks
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -1595,6 +1968,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1616,11 +1993,68 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
+          ElementLink: 
+          Pixels: ffa2a2a2ffa7a7a7ff909090ff7c7c7cffa2a2a2ff8c8c8cff979797ff7e7e7eff888888ff555555ff545454ff7c7c7cff7b7b7bff555555ff6c6c6cff6a6a6aff838383ff888888ff7d7d7dff767676ff878787ff797979ff888888ff717171ff686868ff5c5c5cff6e6e6eff535353ff8a8a8affa0a0a0ff9e9e9effa2a2a2ff8b8b8bff565656ff4f4f4fff101010ff4a4a4aff3c3c3cff424242ff242424ff383838ff222222ff646464ff1c1c1cff1e1e1eff212121ff383838ff414141ff494949ff434343ff4b4b4bff393939ff767676ff323232ff4e4e4eff454545ff474747ff464646ff484848ff3c3c3cff3c3c3cff414141ff8f8f8fffa0a0a0ff929292ff2f2f2fff101010ff101010ff3a3a3aff363636ff373737ff292929ff282828ff1d1d1dff6a6a6aff1b1b1bff202020ff1a1a1aff3c3c3cff3a3a3aff474747ff494949ff484848ff434343ff727272ff2a2a2aff2e2e2eff292929ff606060ff5c5c5cff3a3a3aff343434ff383838ff363636ff838383ff787878ff575757ff232323ff101010ff101010ff353535ff2d2d2dff2d2d2dff282828ff2f2f2fff1b1b1bff424242ff1b1b1bff1d1d1dff181818ff303030ff222222ff393939ff353535ff414141ff292929ff3f3f3fff2b2b2bff292929ff383838ff2d2d2dff272727ff3c3c3cff1b1b1bff191919ff2d2d2dff8d8d8dff686868ff8a8a8aff272727ff2e2e2eff212121ff313131ff373737ff323232ff252525ff2b2b2bff1a1a1aff595959ff1c1c1cff1f1f1fff232323ff2f2f2fff313131ff494949ff414141ff4a4a4aff383838ff666666ff2e2e2eff272727ff2a2a2aff282828ff262626ff252525ff191919ff191919ff2c2c2cff565656ff7d7d7dff727272ff272727ff262626ff262626ff353535ff373737ff333333ff202020ff272727ff202020ff3f3f3fff1d1d1dff212121ff1b1b1bff303030ff2c2c2cff525252ff1a1a1aff343434ff212121ff252525ff282828ff4b4b4bff494949ff393939ff484848ff303030ff282828ff313131ff363636ff8a8a8aff9b9b9bff8d8d8dff2d2d2dff2e2e2eff1f1f1fff393939ff363636ff333333ff1c1c1cff2b2b2bff030303ff4b4b4bff0a0a0aff252525ff171717ff424242ff505050ff555555ff0b0b0bff393939ff202020ff3c3c3cff373737ff444444ff3d3d3dff3c3c3cff393939ff292929ff2d2d2dff222222ff333333ff727272ff808080ff666666ff242424ff242424ff1e1e1eff252525ff363636ff232323ff1d1d1dff181818ff030303ff4f4f4fff111111ff161616ff0f0f0fff161616ff2a2a2aff131313ff090909ff090909ff212121ff5f5f5fff141414ff333333ff272727ff373737ff282828ff292929ff1b1b1bff212121ff2b2b2bff666666ff989898ff888888ff3d3d3dff272727ff202020ff1f1f1fff2b2b2bff222222ff212121ff1e1e1eff020202ff202020ff121212ff161616ff151515ff3e3e3eff444444ff1b1b1bff0c0c0cff0b0b0bff131313ff525252ff161616ff4f4f4fff353535ff393939ff282828ff282828ff212121ff292929ff2a2a2aff7b7b7bff7e7e7eff5f5f5fff303030ff1a1a1aff252525ff141414ff282828ff000000ff030303ff030303ff060606ff474747ff2e2e2eff111111ff101010ff232323ff2c2c2cff171717ff090909ff080808ff131313ff4e4e4eff161616ff363636ff2d2d2dff393939ff242424ff2d2d2dff222222ff343434ff262626ff4b4b4bff4f4f4fff626262ff737373ff3e3e3eff3e3e3eff5b5b5bff5e5e5eff5d5d5dff515151ff6a6a6aff353535ff575757ff6d6d6dff5d5d5dff585858ff484848ff414141ff575757ff454545ff3e3e3eff8e8e8eff454545ff5d5d5dff5b5b5bff626262ff616161ff4b4b4bff505050ff494949ff7d7d7dff737373ff676767ff717171ff363636ff383838ff191919ff161616ff000000ff2b2b2bff000000ff101010ff0e0e0eff2d2d2dff363636ff3b3b3bff111111ff111111ff161616ff636363ff181818ff191919ff1a1a1aff1a1a1aff1f1f1fff1d1d1dff2f2f2fff2f2f2fff303030ff535353ff2b2b2bff131313ff262626ff333333ff393939ff383838ff444444ff3b3b3bff333333ff323232ff161616ff5a5a5aff181818ff414141ff393939ff3b3b3bff4a4a4aff5a5a5aff313131ff2a2a2aff232323ff505050ff1f1f1fff232323ff242424ff282828ff2b2b2bff272727ff333333ff393939ff282828ff616161ff2a2a2aff131313ff131313ff404040ff383838ff363636ff3d3d3dff323232ff2b2b2bff313131ff161616ff595959ff0f0f0fff272727ff2a2a2aff414141ff393939ff2f2f2fff2f2f2fff313131ff1f1f1fff444444ff010101ff1b1b1bff1c1c1cff1c1c1cff2a2a2aff242424ff404040ff353535ff2b2b2bff676767ff1d1d1dff131313ff141414ff434343ff3e3e3eff353535ff404040ff3d3d3dff282828ff2a2a2aff272727ff747474ff353535ff383838ff393939ff3d3d3dff3c3c3cff474747ff474747ff3d3d3dff313131ff595959ff161616ff1a1a1aff161616ff1a1a1aff2a2a2aff232323ff323232ff3b3b3bff1a1a1aff6e6e6eff181818ff2b2b2bff303030ff353535ff434343ff404040ff4f4f4fff414141ff313131ff2b2b2bff101010ff545454ff1e1e1eff2a2a2aff202020ff3e3e3eff373737ff3d3d3dff383838ff3e3e3eff3c3c3cff5d5d5dff343434ff181818ff171717ff1f1f1fff272727ff242424ff2c2c2cff3f3f3fff343434ff646464ff333333ff474747ff2c2c2cff3d3d3dff414141ff414141ff626262ff2f2f2fff242424ff333333ff232323ff595959ff232323ff202020ff1d1d1dff373737ff3a3a3aff464646ff3a3a3aff3a3a3aff313131ff656565ff2e2e2eff242424ff181818ff1c1c1cff282828ff353535ff313131ff3c3c3cff2a2a2aff2f2f2fff191919ff313131ff171717ff383838ff424242ff5a5a5aff434343ff383838ff292929ff2a2a2aff0f0f0fff545454ff0f0f0fff242424ff1e1e1eff373737ff363636ff353535ff313131ff343434ff424242ff3a3a3aff1a1a1aff0f0f0fff0e0e0eff111111ff393939ff2b2b2bff1d1d1dff2f2f2fff1f1f1fff6a6a6aff1b1b1bff292929ff272727ff2b2b2bff242424ff2c2c2cff424242ff434343ff242424ff292929ff222222ff575757ff1c1c1cff222222ff2f2f2fff383838ff353535ff393939ff3b3b3bff383838ff262626ff5e5e5eff262626ff161616ff131313ff1a1a1aff282828ff303030ff2d2d2dff3a3a3aff343434ff575757ff1c1c1cff2b2b2bff2b2b2bff2b2b2bff2d2d2dff2a2a2aff414141ff2d2d2dff232323ff232323ff1f1f1fff4a4a4aff212121ff222222ff1f1f1fff252525ff1e1e1eff2e2e2eff212121ff222222ff161616ff727272ff121212ff0d0d0dff111111ff111111ff2e2e2eff2e2e2eff2c2c2cff2c2c2cff262626ff595959ff212121ff282828ff1c1c1cff1c1c1cff202020ff191919ff626262ff5a5a5aff626262ff5b5b5bff6f6f6fff555555ff5f5f5fff454545ff5a5a5aff828282ff444444ff6d6d6dff575757ff565656ff383838ff535353ff474747ff5c5c5cff292929ff636363ff676767ff3c3c3cff505050ff6f6f6fff585858ff4d4d4dff3d3d3dff5c5c5cff616161ff575757ff3b3b3bff565656ff555555ff1e1e1eff1d1d1dff1c1c1cff454545ff404040ff424242ff363636ff3a3a3aff222222ff5e5e5eff1f1f1fff242424ff232323ff242424ff141414ff111111ff0e0e0eff0d0d0dff0d0d0dff676767ff141414ff292929ff252525ff252525ff191919ff232323ff202020ff1b1b1bff1b1b1bff606060ff4e4e4eff424242ff1c1c1cff222222ff1e1e1eff414141ff3c3c3cff3c3c3cff363636ff4e4e4eff262626ff585858ff242424ff212121ff1e1e1eff2e2e2eff262626ff181818ff121212ff272727ff141414ff606060ff101010ff2d2d2dff2c2c2cff282828ff2f2f2fff232323ff2a2a2aff1d1d1dff232323ff5d5d5dff979797ff6d6d6dff232323ff1a1a1aff1e1e1eff434343ff424242ff434343ff383838ff444444ff222222ff5e5e5eff1d1d1dff212121ff212121ff262626ff202020ff151515ff151515ff232323ff121212ff4e4e4eff121212ff272727ff222222ff343434ff2a2a2aff2b2b2bff2d2d2dff1b1b1bff202020ff5e5e5eff9d9d9dff505050ff2e2e2eff323232ff363636ff3d3d3dff3f3f3fff494949ff3e3e3eff484848ff282828ff525252ff242424ff2a2a2aff262626ff2c2c2cff383838ff323232ff363636ff343434ff262626ff787878ff2e2e2eff363636ff333333ff333333ff3a3a3aff3a3a3aff272727ff272727ff3d3d3dff898989ff929292ff686868ff353535ff2b2b2bff313131ff3b3b3bff464646ff454545ff434343ff484848ff1d1d1dff505050ff232323ff202020ff252525ff2a2a2aff424242ff373737ff343434ff3e3e3eff282828ff7f7f7fff272727ff343434ff363636ff343434ff494949ff4c4c4cff232323ff262626ff383838ff787878ffa3a3a3ff7e7e7eff353535ff343434ff393939ff383838ff525252ff404040ff404040ff585858ff000000ff393939ff000000ff232323ff202020ff313131ff484848ff3a3a3aff353535ff3c3c3cff333333ff646464ff333333ff333333ff373737ff3f3f3fff3c3c3cff383838ff292929ff363636ff494949ff797979ff888888ff8d8d8dff333333ff2a2a2aff272727ff262626ff323232ff353535ff222222ff222222ff000000ff353535ff000000ff202020ff242424ff2b2b2bff444444ff3a3a3aff292929ff3c3c3cff222222ff3d3d3dff232323ff383838ff2c2c2cff2c2c2cff202020ff1f1f1fff1e1e1eff242424ff242424ff8e8e8eff878787ff7a7a7aff363636ff313131ff333333ff2f2f2fff323232ff353535ff373737ff3b3b3bff000000ff272727ff000000ff2a2a2aff222222ff3b3b3bff363636ff414141ff252525ff363636ff272727ff6f6f6fff262626ff313131ff292929ff2a2a2aff232323ff2b2b2bff252525ff252525ff4a4a4aff6f6f6fff7f7f7fff818181ff444444ff2c2c2cff2f2f2fff3a3a3aff424242ff3f3f3fff333333ff373737ff1c1c1cff6f6f6fff000000ff434343ff1e1e1eff3e3e3eff454545ff4a4a4aff262626ff414141ff212121ff676767ff242424ff414141ff282828ff2a2a2aff242424ff232323ff232323ff323232ff4c4c4cff9d9d9dff888888ff949494ff989898ff575757ff6e6e6eff7b7b7bff8a8a8aff7c7c7cff747474ff929292ff6b6b6bff707070ff717171ff939393ff5b5b5bff6d6d6dff757575ff757575ff616161ff7d7d7dff717171ff7b7b7bff7f7f7fff979797ff7a7a7aff777777ff727272ff848484ff7c7c7cff848484ff979797ff999999ff878787ffaeaeaeff9c9c9cff898989ff707070ff777777ff707070ff787878ff767676ff7b7b7bff8c8c8cff656565ff858585ff6b6b6bff7f7f7fff7d7d7dff949494ff858585ff7d7d7dff929292ff7f7f7fff6d6d6dff777777ff858585ff7e7e7eff7d7d7dff676767ff878787ff919191ff999999ff9b9b9bff999999ff979797
+          Size: {x: 32, y: 32}
+          MyTexture: {fileID: 0}
+        MyStats:
+          Name: Empty
+          Description: 
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            HasChanged: 0
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           IsAlive: 1
           Data: []
@@ -1634,64 +2068,9 @@ MonoBehaviour:
               m_Calls: []
             m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
-        MyZexel:
-          Name: Bricks
-          HasChanged: 0
-          ModifiedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          SavedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          RenamedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MovedEvent:
-            m_PersistentCalls:
-              m_Calls: []
-            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-              PublicKeyToken=null
-          MyFolder:
-            FolderName: None
-            FileExtension: err
-            ModifiedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            SavedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            RenamedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            MovedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
-          IsDrawGui: 0
-          IsDefaultGui: 0
-          ElementLink: 
-          Pixels: ffa2a2a2ffa7a7a7ff909090ff7c7c7cffa2a2a2ff8c8c8cff979797ff7e7e7eff888888ff555555ff545454ff7c7c7cff7b7b7bff555555ff6c6c6cff6a6a6aff838383ff888888ff7d7d7dff767676ff878787ff797979ff888888ff717171ff686868ff5c5c5cff6e6e6eff535353ff8a8a8affa0a0a0ff9e9e9effa2a2a2ff8b8b8bff565656ff4f4f4fff101010ff4a4a4aff3c3c3cff424242ff242424ff383838ff222222ff646464ff1c1c1cff1e1e1eff212121ff383838ff414141ff494949ff434343ff4b4b4bff393939ff767676ff323232ff4e4e4eff454545ff474747ff464646ff484848ff3c3c3cff3c3c3cff414141ff8f8f8fffa0a0a0ff929292ff2f2f2fff101010ff101010ff3a3a3aff363636ff373737ff292929ff282828ff1d1d1dff6a6a6aff1b1b1bff202020ff1a1a1aff3c3c3cff3a3a3aff474747ff494949ff484848ff434343ff727272ff2a2a2aff2e2e2eff292929ff606060ff5c5c5cff3a3a3aff343434ff383838ff363636ff838383ff787878ff575757ff232323ff101010ff101010ff353535ff2d2d2dff2d2d2dff282828ff2f2f2fff1b1b1bff424242ff1b1b1bff1d1d1dff181818ff303030ff222222ff393939ff353535ff414141ff292929ff3f3f3fff2b2b2bff292929ff383838ff2d2d2dff272727ff3c3c3cff1b1b1bff191919ff2d2d2dff8d8d8dff686868ff8a8a8aff272727ff2e2e2eff212121ff313131ff373737ff323232ff252525ff2b2b2bff1a1a1aff595959ff1c1c1cff1f1f1fff232323ff2f2f2fff313131ff494949ff414141ff4a4a4aff383838ff666666ff2e2e2eff272727ff2a2a2aff282828ff262626ff252525ff191919ff191919ff2c2c2cff565656ff7d7d7dff727272ff272727ff262626ff262626ff353535ff373737ff333333ff202020ff272727ff202020ff3f3f3fff1d1d1dff212121ff1b1b1bff303030ff2c2c2cff525252ff1a1a1aff343434ff212121ff252525ff282828ff4b4b4bff494949ff393939ff484848ff303030ff282828ff313131ff363636ff8a8a8aff9b9b9bff8d8d8dff2d2d2dff2e2e2eff1f1f1fff393939ff363636ff333333ff1c1c1cff2b2b2bff030303ff4b4b4bff0a0a0aff252525ff171717ff424242ff505050ff555555ff0b0b0bff393939ff202020ff3c3c3cff373737ff444444ff3d3d3dff3c3c3cff393939ff292929ff2d2d2dff222222ff333333ff727272ff808080ff666666ff242424ff242424ff1e1e1eff252525ff363636ff232323ff1d1d1dff181818ff030303ff4f4f4fff111111ff161616ff0f0f0fff161616ff2a2a2aff131313ff090909ff090909ff212121ff5f5f5fff141414ff333333ff272727ff373737ff282828ff292929ff1b1b1bff212121ff2b2b2bff666666ff989898ff888888ff3d3d3dff272727ff202020ff1f1f1fff2b2b2bff222222ff212121ff1e1e1eff020202ff202020ff121212ff161616ff151515ff3e3e3eff444444ff1b1b1bff0c0c0cff0b0b0bff131313ff525252ff161616ff4f4f4fff353535ff393939ff282828ff282828ff212121ff292929ff2a2a2aff7b7b7bff7e7e7eff5f5f5fff303030ff1a1a1aff252525ff141414ff282828ff000000ff030303ff030303ff060606ff474747ff2e2e2eff111111ff101010ff232323ff2c2c2cff171717ff090909ff080808ff131313ff4e4e4eff161616ff363636ff2d2d2dff393939ff242424ff2d2d2dff222222ff343434ff262626ff4b4b4bff4f4f4fff626262ff737373ff3e3e3eff3e3e3eff5b5b5bff5e5e5eff5d5d5dff515151ff6a6a6aff353535ff575757ff6d6d6dff5d5d5dff585858ff484848ff414141ff575757ff454545ff3e3e3eff8e8e8eff454545ff5d5d5dff5b5b5bff626262ff616161ff4b4b4bff505050ff494949ff7d7d7dff737373ff676767ff717171ff363636ff383838ff191919ff161616ff000000ff2b2b2bff000000ff101010ff0e0e0eff2d2d2dff363636ff3b3b3bff111111ff111111ff161616ff636363ff181818ff191919ff1a1a1aff1a1a1aff1f1f1fff1d1d1dff2f2f2fff2f2f2fff303030ff535353ff2b2b2bff131313ff262626ff333333ff393939ff383838ff444444ff3b3b3bff333333ff323232ff161616ff5a5a5aff181818ff414141ff393939ff3b3b3bff4a4a4aff5a5a5aff313131ff2a2a2aff232323ff505050ff1f1f1fff232323ff242424ff282828ff2b2b2bff272727ff333333ff393939ff282828ff616161ff2a2a2aff131313ff131313ff404040ff383838ff363636ff3d3d3dff323232ff2b2b2bff313131ff161616ff595959ff0f0f0fff272727ff2a2a2aff414141ff393939ff2f2f2fff2f2f2fff313131ff1f1f1fff444444ff010101ff1b1b1bff1c1c1cff1c1c1cff2a2a2aff242424ff404040ff353535ff2b2b2bff676767ff1d1d1dff131313ff141414ff434343ff3e3e3eff353535ff404040ff3d3d3dff282828ff2a2a2aff272727ff747474ff353535ff383838ff393939ff3d3d3dff3c3c3cff474747ff474747ff3d3d3dff313131ff595959ff161616ff1a1a1aff161616ff1a1a1aff2a2a2aff232323ff323232ff3b3b3bff1a1a1aff6e6e6eff181818ff2b2b2bff303030ff353535ff434343ff404040ff4f4f4fff414141ff313131ff2b2b2bff101010ff545454ff1e1e1eff2a2a2aff202020ff3e3e3eff373737ff3d3d3dff383838ff3e3e3eff3c3c3cff5d5d5dff343434ff181818ff171717ff1f1f1fff272727ff242424ff2c2c2cff3f3f3fff343434ff646464ff333333ff474747ff2c2c2cff3d3d3dff414141ff414141ff626262ff2f2f2fff242424ff333333ff232323ff595959ff232323ff202020ff1d1d1dff373737ff3a3a3aff464646ff3a3a3aff3a3a3aff313131ff656565ff2e2e2eff242424ff181818ff1c1c1cff282828ff353535ff313131ff3c3c3cff2a2a2aff2f2f2fff191919ff313131ff171717ff383838ff424242ff5a5a5aff434343ff383838ff292929ff2a2a2aff0f0f0fff545454ff0f0f0fff242424ff1e1e1eff373737ff363636ff353535ff313131ff343434ff424242ff3a3a3aff1a1a1aff0f0f0fff0e0e0eff111111ff393939ff2b2b2bff1d1d1dff2f2f2fff1f1f1fff6a6a6aff1b1b1bff292929ff272727ff2b2b2bff242424ff2c2c2cff424242ff434343ff242424ff292929ff222222ff575757ff1c1c1cff222222ff2f2f2fff383838ff353535ff393939ff3b3b3bff383838ff262626ff5e5e5eff262626ff161616ff131313ff1a1a1aff282828ff303030ff2d2d2dff3a3a3aff343434ff575757ff1c1c1cff2b2b2bff2b2b2bff2b2b2bff2d2d2dff2a2a2aff414141ff2d2d2dff232323ff232323ff1f1f1fff4a4a4aff212121ff222222ff1f1f1fff252525ff1e1e1eff2e2e2eff212121ff222222ff161616ff727272ff121212ff0d0d0dff111111ff111111ff2e2e2eff2e2e2eff2c2c2cff2c2c2cff262626ff595959ff212121ff282828ff1c1c1cff1c1c1cff202020ff191919ff626262ff5a5a5aff626262ff5b5b5bff6f6f6fff555555ff5f5f5fff454545ff5a5a5aff828282ff444444ff6d6d6dff575757ff565656ff383838ff535353ff474747ff5c5c5cff292929ff636363ff676767ff3c3c3cff505050ff6f6f6fff585858ff4d4d4dff3d3d3dff5c5c5cff616161ff575757ff3b3b3bff565656ff555555ff1e1e1eff1d1d1dff1c1c1cff454545ff404040ff424242ff363636ff3a3a3aff222222ff5e5e5eff1f1f1fff242424ff232323ff242424ff141414ff111111ff0e0e0eff0d0d0dff0d0d0dff676767ff141414ff292929ff252525ff252525ff191919ff232323ff202020ff1b1b1bff1b1b1bff606060ff4e4e4eff424242ff1c1c1cff222222ff1e1e1eff414141ff3c3c3cff3c3c3cff363636ff4e4e4eff262626ff585858ff242424ff212121ff1e1e1eff2e2e2eff262626ff181818ff121212ff272727ff141414ff606060ff101010ff2d2d2dff2c2c2cff282828ff2f2f2fff232323ff2a2a2aff1d1d1dff232323ff5d5d5dff979797ff6d6d6dff232323ff1a1a1aff1e1e1eff434343ff424242ff434343ff383838ff444444ff222222ff5e5e5eff1d1d1dff212121ff212121ff262626ff202020ff151515ff151515ff232323ff121212ff4e4e4eff121212ff272727ff222222ff343434ff2a2a2aff2b2b2bff2d2d2dff1b1b1bff202020ff5e5e5eff9d9d9dff505050ff2e2e2eff323232ff363636ff3d3d3dff3f3f3fff494949ff3e3e3eff484848ff282828ff525252ff242424ff2a2a2aff262626ff2c2c2cff383838ff323232ff363636ff343434ff262626ff787878ff2e2e2eff363636ff333333ff333333ff3a3a3aff3a3a3aff272727ff272727ff3d3d3dff898989ff929292ff686868ff353535ff2b2b2bff313131ff3b3b3bff464646ff454545ff434343ff484848ff1d1d1dff505050ff232323ff202020ff252525ff2a2a2aff424242ff373737ff343434ff3e3e3eff282828ff7f7f7fff272727ff343434ff363636ff343434ff494949ff4c4c4cff232323ff262626ff383838ff787878ffa3a3a3ff7e7e7eff353535ff343434ff393939ff383838ff525252ff404040ff404040ff585858ff000000ff393939ff000000ff232323ff202020ff313131ff484848ff3a3a3aff353535ff3c3c3cff333333ff646464ff333333ff333333ff373737ff3f3f3fff3c3c3cff383838ff292929ff363636ff494949ff797979ff888888ff8d8d8dff333333ff2a2a2aff272727ff262626ff323232ff353535ff222222ff222222ff000000ff353535ff000000ff202020ff242424ff2b2b2bff444444ff3a3a3aff292929ff3c3c3cff222222ff3d3d3dff232323ff383838ff2c2c2cff2c2c2cff202020ff1f1f1fff1e1e1eff242424ff242424ff8e8e8eff878787ff7a7a7aff363636ff313131ff333333ff2f2f2fff323232ff353535ff373737ff3b3b3bff000000ff272727ff000000ff2a2a2aff222222ff3b3b3bff363636ff414141ff252525ff363636ff272727ff6f6f6fff262626ff313131ff292929ff2a2a2aff232323ff2b2b2bff252525ff252525ff4a4a4aff6f6f6fff7f7f7fff818181ff444444ff2c2c2cff2f2f2fff3a3a3aff424242ff3f3f3fff333333ff373737ff1c1c1cff6f6f6fff000000ff434343ff1e1e1eff3e3e3eff454545ff4a4a4aff262626ff414141ff212121ff676767ff242424ff414141ff282828ff2a2a2aff242424ff232323ff232323ff323232ff4c4c4cff9d9d9dff888888ff949494ff989898ff575757ff6e6e6eff7b7b7bff8a8a8aff7c7c7cff747474ff929292ff6b6b6bff707070ff717171ff939393ff5b5b5bff6d6d6dff757575ff757575ff616161ff7d7d7dff717171ff7b7b7bff7f7f7fff979797ff7a7a7aff777777ff727272ff848484ff7c7c7cff848484ff979797ff999999ff878787ffaeaeaeff9c9c9cff898989ff707070ff777777ff707070ff787878ff767676ff7b7b7bff8c8c8cff656565ff858585ff6b6b6bff7f7f7fff7d7d7dff949494ff858585ff7d7d7dff929292ff7f7f7fff6d6d6dff777777ff858585ff7e7e7eff7d7d7dff676767ff878787ff919191ff999999ff9b9b9bff999999ff979797
-          Size: {x: 32, y: 32}
-          MyTexture: {fileID: 0}
         MyModel:
           Name: Empty
+          Description: 
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -1716,6 +2095,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1737,16 +2120,17 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           VoxelData: 
           IsLoadingFromFile: 0
+          MyWorld: {fileID: 0}
+        TextureMapIndex: 0
         MyPolyModel:
           Name: Empty
+          Description: 
           HasChanged: 1
           ModifiedEvent:
             m_PersistentCalls:
@@ -1771,6 +2155,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -1792,11 +2180,9 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
           MyModels:
           - Verticies:
@@ -1849,12 +2235,252 @@ MonoBehaviour:
             Colors: []
           TextureMaps: []
           Solidity: 010101010101
-        TextureMapIndex: 0
-        Commands: []
-        Tags: []
+          MyPoly: {fileID: 0}
+        MySpell:
+          Name: Empty
+          Description: 
+          HasChanged: 0
+          ModifiedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          SavedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          RenamedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MovedEvent:
+            m_PersistentCalls:
+              m_Calls: []
+            m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+          MyFolder:
+            FolderName: None
+            FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            HasChanged: 0
+          IsDrawGui: 0
+          IsDefaultGui: 0
+          IsUnique: 1
+          ElementLink: 
+          StatTime: 0
+          SpellType: 0
+          IsProjectile: 0
+          FireOnHold: 1
+          FireRate: 0.5
+          Randomness: 0
+          BulletForce: 160
+          LifeTime: 2
+          Size: 1
+          SpawnSoundName: 
+          ImplodeSoundName: 
+          ExplodeSoundName: 
+          IsUseStat: 1
+          StatUseName: Mana
+          StatCost: 1
+          IsAddStat: 1
+          AddStatName: Health
+          AddStatValue: -0.5
+          AddStatVariance: 0.5
+          DoesDestroyOnHitCharacters: 1
+          DoesDestroyOnHitTerrain: 0
+          IsDestroyTerrainOnHit: 0
+          CanPassThrough: 0
+          IsOnHitBuff: 0
+          OnHitEffect:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            MyType: 0
+            Value: []
+            Modifiers: []
+            MyZexel:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              Pixels: 
+              Size: {x: 32, y: 32}
+              MyTexture: {fileID: 0}
+          IsExplosion: 0
+          ExplosionSize: 0
+          IsStick: 0
+          StickTime: 0
+          IsSeek: 0
+          SeekDistance: 5
+          SeekDelay: 0.4
+          IsSummon: 0
+          MinionName: 
+          MinionClass: 
+          MinionRace: 
+          IsChain: 0
+          ChainDelay: 0.25
+          DamageReduction: 0.8
+          IsSheilding: 0
+          SheildDelay: 0.25
+          IsPortal: 0
+          CastAnimation: 
+          ColorTint:
+            serializedVersion: 2
+            rgba: 4294967295
+          MyModel:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            VoxelData: 
+            IsLoadingFromFile: 0
+            MyWorld: {fileID: 0}
+          MyCharacter: {fileID: 0}
         Quantity: 1
-        MyMesh: {fileID: 0}
-        MyMaterial: {fileID: 0}
         OnUpdate:
           m_PersistentCalls:
             m_Calls: []
@@ -2091,6 +2717,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     Backpack:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -2115,6 +2742,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -2136,11 +2767,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       MyItems: []
       OnAddItem:
@@ -2175,6 +2804,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     MyQuestLog:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -2199,6 +2829,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -2220,11 +2854,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       DebugGui: 0
       QuestLimit: -1
@@ -2244,6 +2876,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     MyDialogue:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -2268,6 +2901,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -2289,11 +2926,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       MyDialogues: []
       ChattedCount: 0
@@ -2305,6 +2940,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     MySkeleton:
       Name: Texpie
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -2329,6 +2965,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -2350,14 +2990,13 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 1
+      IsUnique: 1
       ElementLink: 
       MyBones:
       - Name: Body
+        Description: 
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -2382,6 +3021,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -2403,16 +3046,15 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
         ParentName: 
         MeshName: Body
         MyItem:
           Name: Empty
+          Description: Null
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -2437,6 +3079,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -2458,15 +3104,14 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
-          Description: Null
-          MyStats:
+          MetaTags: []
+          MyZexel:
             Name: Empty
+            Description: 
             HasChanged: 0
             ModifiedEvent:
               m_PersistentCalls:
@@ -2491,6 +3136,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -2504,11 +3153,60 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            Pixels: 
+            Size: {x: 32, y: 32}
+            MyTexture: {fileID: 0}
+          MyStats:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             IsAlive: 1
             Data: []
@@ -2522,56 +3220,9 @@ MonoBehaviour:
                 m_Calls: []
               m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
-          MyZexel:
-            Name: Empty
-            HasChanged: 0
-            ModifiedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            SavedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            RenamedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            MovedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            MyFolder:
-              FolderName: None
-              FileExtension: err
-              ModifiedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              SavedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              RenamedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              MovedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
-            IsDrawGui: 0
-            IsDefaultGui: 0
-            ElementLink: 
-            Pixels: 
-            Size: {x: 32, y: 32}
-            MyTexture: {fileID: 0}
           MyModel:
             Name: Empty
+            Description: 
             HasChanged: 0
             ModifiedEvent:
               m_PersistentCalls:
@@ -2596,6 +3247,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -2609,16 +3264,17 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             VoxelData: 
             IsLoadingFromFile: 0
+            MyWorld: {fileID: 0}
+          TextureMapIndex: 0
           MyPolyModel:
             Name: Empty
+            Description: 
             HasChanged: 1
             ModifiedEvent:
               m_PersistentCalls:
@@ -2643,6 +3299,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -2656,11 +3316,9 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             MyModels:
             - Verticies:
@@ -2713,12 +3371,209 @@ MonoBehaviour:
               Colors: []
             TextureMaps: []
             Solidity: 010101010101
-          TextureMapIndex: 0
-          Commands: []
-          Tags: []
+            MyPoly: {fileID: 0}
+          MySpell:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            StatTime: 0
+            SpellType: 0
+            IsProjectile: 0
+            FireOnHold: 1
+            FireRate: 0.5
+            Randomness: 0
+            BulletForce: 160
+            LifeTime: 2
+            Size: 1
+            SpawnSoundName: 
+            ImplodeSoundName: 
+            ExplodeSoundName: 
+            IsUseStat: 1
+            StatUseName: Mana
+            StatCost: 1
+            IsAddStat: 1
+            AddStatName: Health
+            AddStatValue: -0.5
+            AddStatVariance: 0.5
+            DoesDestroyOnHitCharacters: 1
+            DoesDestroyOnHitTerrain: 0
+            IsDestroyTerrainOnHit: 0
+            CanPassThrough: 0
+            IsOnHitBuff: 0
+            OnHitEffect:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              MyType: 0
+              Value: []
+              Modifiers: []
+              MyZexel:
+                Name: Empty
+                Description: 
+                HasChanged: 0
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MyFolder:
+                  FolderName: None
+                  FileExtension: err
+                  HasChanged: 0
+                IsDrawGui: 0
+                IsDefaultGui: 0
+                IsUnique: 1
+                ElementLink: 
+                Pixels: 
+                Size: {x: 32, y: 32}
+                MyTexture: {fileID: 0}
+            IsExplosion: 0
+            ExplosionSize: 0
+            IsStick: 0
+            StickTime: 0
+            IsSeek: 0
+            SeekDistance: 5
+            SeekDelay: 0.4
+            IsSummon: 0
+            MinionName: 
+            MinionClass: 
+            MinionRace: 
+            IsChain: 0
+            ChainDelay: 0.25
+            DamageReduction: 0.8
+            IsSheilding: 0
+            SheildDelay: 0.25
+            IsPortal: 0
+            CastAnimation: 
+            ColorTint:
+              serializedVersion: 2
+              rgba: 4294967295
+            MyModel:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              VoxelData: 
+              IsLoadingFromFile: 0
+              MyWorld: {fileID: 0}
+            MyCharacter: {fileID: 0}
           Quantity: 1
-          MyMesh: {fileID: 0}
-          MyMaterial: {fileID: 0}
           OnUpdate:
             m_PersistentCalls:
               m_Calls: []
@@ -2740,6 +3595,7 @@ MonoBehaviour:
         VoxelMesh: {fileID: 0}
         BoneLength: 0
       - Name: CameraBone
+        Description: 
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -2764,6 +3620,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -2785,16 +3645,15 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
         ParentName: 
         MeshName: 
         MyItem:
           Name: Empty
+          Description: Null
           HasChanged: 0
           ModifiedEvent:
             m_PersistentCalls:
@@ -2819,6 +3678,10 @@ MonoBehaviour:
           MyFolder:
             FolderName: None
             FileExtension: err
+            Data:
+              MyKeys: []
+              MyValues: []
+            CachedData: []
             ModifiedEvent:
               m_PersistentCalls:
                 m_Calls: []
@@ -2840,15 +3703,14 @@ MonoBehaviour:
               m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
             HasChanged: 0
-            ElementData:
-              MyKeys: []
-              MyValues: []
           IsDrawGui: 0
           IsDefaultGui: 0
+          IsUnique: 1
           ElementLink: 
-          Description: Null
-          MyStats:
+          MetaTags: []
+          MyZexel:
             Name: Empty
+            Description: 
             HasChanged: 0
             ModifiedEvent:
               m_PersistentCalls:
@@ -2873,6 +3735,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -2886,11 +3752,60 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            Pixels: 
+            Size: {x: 32, y: 32}
+            MyTexture: {fileID: 0}
+          MyStats:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             IsAlive: 1
             Data: []
@@ -2904,56 +3819,9 @@ MonoBehaviour:
                 m_Calls: []
               m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
                 Culture=neutral, PublicKeyToken=null
-          MyZexel:
-            Name: Empty
-            HasChanged: 0
-            ModifiedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            SavedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            RenamedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            MovedEvent:
-              m_PersistentCalls:
-                m_Calls: []
-              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-                PublicKeyToken=null
-            MyFolder:
-              FolderName: None
-              FileExtension: err
-              ModifiedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              SavedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              RenamedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              MovedEvent:
-                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
-            IsDrawGui: 0
-            IsDefaultGui: 0
-            ElementLink: 
-            Pixels: 
-            Size: {x: 32, y: 32}
-            MyTexture: {fileID: 0}
           MyModel:
             Name: Empty
+            Description: 
             HasChanged: 0
             ModifiedEvent:
               m_PersistentCalls:
@@ -2978,6 +3846,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -2991,16 +3863,17 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             VoxelData: 
             IsLoadingFromFile: 0
+            MyWorld: {fileID: 0}
+          TextureMapIndex: 0
           MyPolyModel:
             Name: Empty
+            Description: 
             HasChanged: 1
             ModifiedEvent:
               m_PersistentCalls:
@@ -3025,6 +3898,10 @@ MonoBehaviour:
             MyFolder:
               FolderName: None
               FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
               ModifiedEvent:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
@@ -3038,11 +3915,9 @@ MonoBehaviour:
                 m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
                   Culture=neutral, PublicKeyToken=null
               HasChanged: 0
-              ElementData:
-                MyKeys: []
-                MyValues: []
             IsDrawGui: 0
             IsDefaultGui: 0
+            IsUnique: 1
             ElementLink: 
             MyModels:
             - Verticies:
@@ -3095,12 +3970,209 @@ MonoBehaviour:
               Colors: []
             TextureMaps: []
             Solidity: 010101010101
-          TextureMapIndex: 0
-          Commands: []
-          Tags: []
+            MyPoly: {fileID: 0}
+          MySpell:
+            Name: Empty
+            Description: 
+            HasChanged: 0
+            ModifiedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            SavedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            RenamedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MovedEvent:
+              m_PersistentCalls:
+                m_Calls: []
+              m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+                PublicKeyToken=null
+            MyFolder:
+              FolderName: None
+              FileExtension: err
+              Data:
+                MyKeys: []
+                MyValues: []
+              CachedData: []
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              HasChanged: 0
+            IsDrawGui: 0
+            IsDefaultGui: 0
+            IsUnique: 1
+            ElementLink: 
+            StatTime: 0
+            SpellType: 0
+            IsProjectile: 0
+            FireOnHold: 1
+            FireRate: 0.5
+            Randomness: 0
+            BulletForce: 160
+            LifeTime: 2
+            Size: 1
+            SpawnSoundName: 
+            ImplodeSoundName: 
+            ExplodeSoundName: 
+            IsUseStat: 1
+            StatUseName: Mana
+            StatCost: 1
+            IsAddStat: 1
+            AddStatName: Health
+            AddStatValue: -0.5
+            AddStatVariance: 0.5
+            DoesDestroyOnHitCharacters: 1
+            DoesDestroyOnHitTerrain: 0
+            IsDestroyTerrainOnHit: 0
+            CanPassThrough: 0
+            IsOnHitBuff: 0
+            OnHitEffect:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              MyType: 0
+              Value: []
+              Modifiers: []
+              MyZexel:
+                Name: Empty
+                Description: 
+                HasChanged: 0
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MyFolder:
+                  FolderName: None
+                  FileExtension: err
+                  HasChanged: 0
+                IsDrawGui: 0
+                IsDefaultGui: 0
+                IsUnique: 1
+                ElementLink: 
+                Pixels: 
+                Size: {x: 32, y: 32}
+                MyTexture: {fileID: 0}
+            IsExplosion: 0
+            ExplosionSize: 0
+            IsStick: 0
+            StickTime: 0
+            IsSeek: 0
+            SeekDistance: 5
+            SeekDelay: 0.4
+            IsSummon: 0
+            MinionName: 
+            MinionClass: 
+            MinionRace: 
+            IsChain: 0
+            ChainDelay: 0.25
+            DamageReduction: 0.8
+            IsSheilding: 0
+            SheildDelay: 0.25
+            IsPortal: 0
+            CastAnimation: 
+            ColorTint:
+              serializedVersion: 2
+              rgba: 4294967295
+            MyModel:
+              Name: Empty
+              Description: 
+              HasChanged: 0
+              ModifiedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              SavedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              RenamedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MovedEvent:
+                m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              MyFolder:
+                FolderName: None
+                FileExtension: err
+                CachedData: []
+                ModifiedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                SavedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                RenamedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                MovedEvent:
+                  m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+                    Culture=neutral, PublicKeyToken=null
+                HasChanged: 0
+              IsDrawGui: 0
+              IsDefaultGui: 0
+              IsUnique: 1
+              ElementLink: 
+              VoxelData: 
+              IsLoadingFromFile: 0
+              MyWorld: {fileID: 0}
+            MyCharacter: {fileID: 0}
           Quantity: 1
-          MyMesh: {fileID: 0}
-          MyMaterial: {fileID: 0}
           OnUpdate:
             m_PersistentCalls:
               m_Calls: []
@@ -3158,6 +4230,7 @@ MonoBehaviour:
     MyAnimations: []
     MyGuis:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -3182,6 +4255,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -3203,11 +4280,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       ActionSpawnGui:
         IsTrigger: 0
@@ -3230,6 +4305,7 @@ MonoBehaviour:
       MyCharacter: {fileID: 11401986}
     BotData:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -3254,6 +4330,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -3275,11 +4355,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       IsAggressive: 1
       CanWander: 1
@@ -3289,6 +4367,7 @@ MonoBehaviour:
     LevelRotation: {x: 0, y: 180, z: 0}
     Equipment:
       Name: Empty
+      Description: 
       HasChanged: 0
       ModifiedEvent:
         m_PersistentCalls:
@@ -3313,6 +4392,10 @@ MonoBehaviour:
       MyFolder:
         FolderName: None
         FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
         ModifiedEvent:
           m_PersistentCalls:
             m_Calls: []
@@ -3334,11 +4417,9 @@ MonoBehaviour:
           m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         HasChanged: 0
-        ElementData:
-          MyKeys: []
-          MyValues: []
       IsDrawGui: 0
       IsDefaultGui: 0
+      IsUnique: 1
       ElementLink: 
       MyItems: []
       OnAddItem:
@@ -3380,6 +4461,7 @@ MonoBehaviour:
       MySource: {fileID: 0}
       MyEquipment:
         Name: Empty
+        Description: 
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -3404,6 +4486,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -3425,11 +4511,9 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
         MyItems: []
         OnAddItem:
@@ -3464,6 +4548,7 @@ MonoBehaviour:
             Culture=neutral, PublicKeyToken=null
       EquipmentStats:
         Name: Empty
+        Description: 
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -3488,6 +4573,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -3509,11 +4598,9 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
         IsAlive: 1
         Data: []
@@ -3538,6 +4625,7 @@ MonoBehaviour:
       PopupFont: {fileID: 0}
       MyStats:
         Name: Empty
+        Description: 
         HasChanged: 0
         ModifiedEvent:
           m_PersistentCalls:
@@ -3562,6 +4650,10 @@ MonoBehaviour:
         MyFolder:
           FolderName: None
           FileExtension: err
+          Data:
+            MyKeys: []
+            MyValues: []
+          CachedData: []
           ModifiedEvent:
             m_PersistentCalls:
               m_Calls: []
@@ -3583,11 +4675,9 @@ MonoBehaviour:
             m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
           HasChanged: 0
-          ElementData:
-            MyKeys: []
-            MyValues: []
         IsDrawGui: 0
         IsDefaultGui: 0
+        IsUnique: 1
         ElementLink: 
         IsAlive: 1
         Data: []
@@ -3601,6 +4691,83 @@ MonoBehaviour:
             m_Calls: []
           m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
+    LoadPath: 
+    InChunk: {fileID: 0}
+    InWorld: {fileID: 0}
+    InChunkPosition:
+      x: 0
+      y: 0
+      z: 0
+    InLevel:
+      Name: Empty
+      Description: 
+      HasChanged: 0
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MyFolder:
+        FolderName: None
+        FileExtension: err
+        Data:
+          MyKeys: []
+          MyValues: []
+        CachedData: []
+        ModifiedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        SavedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        RenamedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        MovedEvent:
+          m_PersistentCalls:
+            m_Calls: []
+          m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        HasChanged: 0
+      IsDrawGui: 0
+      IsDefaultGui: 1
+      IsUnique: 1
+      ElementLink: 
+      MyWorldSize:
+        x: 0
+        y: 0
+        z: 0
+      IsInfinite: 0
+      IsGenerateTerrain: 0
+      SpawnPoint: {x: 0, y: 0, z: 0}
+      MyWorld: {fileID: 0}
+      MyCharacters: []
+      MyFilePathType: 2
+      CharactersCount: 0
+      CharacterNames: []
+      Characters: []
+      IsSpawning: 0
   IsPlayer: 0
   MySummonedCharacter: {fileID: 0}
   LastHitNormal: {x: 0, y: 0, z: 0}
@@ -3614,8 +4781,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Zeltex.Util.EventObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  MyChunk: {fileID: 0}
-  InWorld: {fileID: 0}
 --- !u!114 &11414918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3716,14 +4881,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe42b738627f7d54ebcf066a73405b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data:
+    Name: Empty
+    Description: 
+    HasChanged: 0
+    ModifiedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    SavedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    RenamedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MovedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    MyFolder:
+      FolderName: None
+      FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
+      ModifiedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      SavedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      RenamedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      MovedEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      HasChanged: 0
+    IsDrawGui: 0
+    IsDefaultGui: 1
+    IsUnique: 1
+    ElementLink: 
+    IsAnimationLoop: 1
+    TimeLength: 10
+    AnimatedTransforms: []
   SelectedIndex: 0
   IsPlayOnStart: 1
   BeginAnimationName: Bobbing
   CurrentTime: 0
-  TotalTime: 3
   IsAnimating: 0
   IsForceLoad: 0
-  IsAnimationLoop: 1
   OnUpdateFrames:
     m_PersistentCalls:
       m_Calls: []
@@ -3734,11 +4956,31 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  PlayPause:
+  ActionAttach:
     IsTrigger: 0
-  ActionGenerateAnimation:
+  ActionDetach:
     IsTrigger: 0
-  AnimationRandomness: 0.05
+  ActionApplyTransformMask:
+    IsTrigger: 0
+  ActionRemoveTransformMask:
+    IsTrigger: 0
+  ActionPlay:
+    IsTrigger: 0
+  ActionStop:
+    IsTrigger: 0
+  ActionKeyCurrentFrame:
+    IsTrigger: 0
+  ActionClearKeys:
+    IsTrigger: 0
+  ActionCreateTransformCurveOnTransform:
+    IsTrigger: 0
+  ActionGenerate:
+    IsTrigger: 0
+  GenerateTimeLength: 10
+  GenerateNoiseMax: 1
+  ActionPropertyName: Position
+  TargetTransform: {fileID: 0}
+  TransformMask: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -4618,6 +5860,42 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.1000
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.0500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189778}
@@ -4635,6 +5913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MySkeleton:
     Name: Empty
+    Description: 
     HasChanged: 0
     ModifiedEvent:
       m_PersistentCalls:
@@ -4659,6 +5938,10 @@ MonoBehaviour:
     MyFolder:
       FolderName: None
       FileExtension: err
+      Data:
+        MyKeys: []
+        MyValues: []
+      CachedData: []
       ModifiedEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -4680,11 +5963,9 @@ MonoBehaviour:
         m_TypeName: Zeltex.ElementFolderEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       HasChanged: 0
-      ElementData:
-        MyKeys: []
-        MyValues: []
     IsDrawGui: 0
     IsDefaultGui: 0
+    IsUnique: 1
     ElementLink: 
     MyBones: []
     MyBounds:
@@ -4712,11 +5993,6 @@ MonoBehaviour:
     IsReCalculateBounds: 0
   ActionSaveElement:
     IsTrigger: 0
-  ActionAddBone:
-    IsTrigger: 0
-  ActionAddBoneVox:
-    IsTrigger: 0
-  ActionBone: {fileID: 0}
   ActionActivate:
     IsTrigger: 0
   ActionDeactivate:
@@ -4725,6 +6001,21 @@ MonoBehaviour:
     IsTrigger: 0
   ActionRestoreDefaultPose:
     IsTrigger: 0
+  ActionScanHeirarchyForUpdates:
+    IsTrigger: 0
+  ActionSpawnBone:
+    IsTrigger: 0
+  ActionImportVoxBone:
+    IsTrigger: 0
+  ActionSpawnVoxBone:
+    IsTrigger: 0
+  ActionSpawnItemBone:
+    IsTrigger: 0
+  ActionBone: {fileID: 0}
+  ActionVoxelModel:
+    VoxelModelName: 
+  ActionItem:
+    ItemName: 
   Data: {fileID: 11401986}
   HasInit: 1
 --- !u!114 &114132710140556466
@@ -4762,35 +6053,9 @@ MonoBehaviour:
   IsPlayer: 0
   GroundedDrag: 2
   CameraTransform: {fileID: 0}
-  movementSettings:
-    ForwardSpeed: 2
-    BackwardSpeed: 2
-    StrafeSpeed: 2
-    RunMultiplier: 1
-    RunKey: 304
-    JumpForce: 26
-    SlopeCurveModifier:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    CurrentTargetSpeed: 8
   mouseLook:
-    XSensitivity: 2
-    YSensitivity: 2
+    XSensitivity: 0.8
+    YSensitivity: 0.8
     clampVerticalRotation: 1
     MinimumX: -90
     MaximumX: 90
@@ -4806,6 +6071,41 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
+  JumpForce: 26
+  SlopeCurveModifier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -90
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 90
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SpeedMultiplier: 0.5
   IsDebugRay: 0
 --- !u!114 &114724271812573012
 MonoBehaviour:

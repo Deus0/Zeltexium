@@ -54,7 +54,7 @@ namespace Zeltex.Guis.Characters
                 ZelGui MyItemPickupGui = MyCharacter.GetGuis().GetZelGui("ItemPickup");
                 if (MyItemPickupGui == null)
                 {
-                    MyItemPickupGui = MyCharacter.GetGuis().Spawn("ItemPickup");
+                    MyCharacter.GetGuis().Spawn("ItemPickup", (NewGui) => { MyItemPickupGui = NewGui; });
                 }
                 if (MyItemPickupGui)
                 {

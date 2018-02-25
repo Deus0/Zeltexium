@@ -21,7 +21,6 @@ namespace Zeltex
         public AudioClip OnBeginAudio;
         private bool IsEnding;
         public bool IsAllHaveStatsBar = true;
-        public LoadingGui MyLoadingGui;
         public int TargetFrameRate = -1;
 
         public static new GameManager Get()
@@ -56,7 +55,7 @@ namespace Zeltex
             }*/
         }
 
-        private void Update()
+        /*private void Update()
         {
             if (Input.GetKeyDown(KeyCode.PageUp))
             {
@@ -68,7 +67,7 @@ namespace Zeltex
                 Time.timeScale /= 1.1f;
                 Debug.Log("TimeScale: " + Time.timeScale.ToString());
             }
-        }
+        }*/
 
         /// <summary>
         /// Begin editing the resources
@@ -118,11 +117,24 @@ namespace Zeltex
             }
         }*/
 
+        /// <summary>
+        /// To do - do this step after chosing a savegame or host
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator BeginGameRoutine()
         {
             Debug.Log("Beginning to play game.");
             GuiSpawner.Get().DestroySpawn(GuiSpawner.Get().GetGui("MainMenu"));
-            GuiSpawner.Get().DisableGui("MainMenu");
+            GuiSpawner.Get().SpawnGui("SaveGames");
+            yield return null;
+        }
+
+        /// <summary>
+        /// Hosts networking game
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator HostGame()
+        {
             Networking.NetworkManager.Get().HostGame();  // hosting is the main way to play now
             // Wait For Host Game to do its thing!
             yield return null;
@@ -135,12 +147,18 @@ namespace Zeltex
             yield return null;
             yield return null;
             yield return null;
+            bool HasSpawned = false;
             System.Action OnFinishLoading = () =>
             {
-                OnBeginGame.Invoke();
-                GuiSpawner.Get().SpawnGui("SaveGames");
+                HasSpawned = true;
             };
             PoolsManager.Get().SpawnPools(OnFinishLoading);
+            while (!HasSpawned)
+            {
+                yield return null;
+            }
+            OnBeginGame.Invoke();
+            // finish!
         }
 
         public void PlayCharacter()
@@ -157,19 +175,13 @@ namespace Zeltex
             if (Game.GameMode.IsPlaying)
             {
                 Game.GameMode.IsPlaying = false;
-                PoolsManager.Get().ClearPools.Invoke();
                 Voxels.WorldManager.Get().Clear();
                 Characters.CharacterManager.Get().Clear();
-
+                PoolsManager.Get().ClearAllPools();
                 Zeltex.Networking.NetworkManager.Get().StopHosting();
                 OnEndGame.Invoke();
-               /* GameObject MainMenuGui = GuiSpawner.Get().SpawnGui("MainMenu");
-                if (MainMenuGui)
-                {
-                    MainMenuGui.GetComponent<ZelGui>().TurnOn();
-                    MainMenuGui.GetComponent<ZelGui>().Enable();
-                }*/
                 CameraManager.Get().EnableMainMenuCamera();
+                GuiSpawner.Get().SpawnGui("MainMenu");
             }
         }
 

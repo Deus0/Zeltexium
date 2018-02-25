@@ -8,25 +8,23 @@ using Zeltex.Items;
 using Zeltex;
 using SimpleJSON;
 using Newtonsoft.Json;
+using System;
 
 namespace Zeltex.Quests 
 {
-    [System.Serializable]
+    [Serializable]
     public class QuestBlock : Element
     {
-        public string Description = "No Description.";
     }
     /// <summary>
     /// An agreement between characters to meet certain conditions. Met with either rewards or punishment.
     /// </summary>
-	[System.Serializable]
-	public class Quest : Element
-	{
-        #region Variables
+	[Serializable]
+	public class Quest : ElementCore
+    {
         [JsonIgnore]
         public static string QuestNameColor = "#d1d9e1";
-        [JsonProperty]
-		public string Description;		// 
+
         [JsonProperty]
         public int ConditionIndex = 0;
         [JsonProperty]
@@ -35,9 +33,7 @@ namespace Zeltex.Quests
         public List<Reward> MyRewards = new List<Reward>();
         [JsonProperty]
         public QuestBlock MyQuestBlock;
-
-        [JsonProperty]
-        [SerializeField]
+        [JsonProperty, SerializeField]
         private bool IsCompleted = false;
         [JsonProperty]
         public float TimeCompleted = 0f;
@@ -53,7 +49,6 @@ namespace Zeltex.Quests
         public Character QuestGiver = null;
         [JsonIgnore]
         public Character QuestTaker = null;
-        #endregion
 
         #region Modifiers
 

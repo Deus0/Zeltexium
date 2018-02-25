@@ -95,7 +95,10 @@ namespace Zeltex
 
         public void Repaint()
         {
-            MyWindow.Repaint();
+            if (MyWindow != null)
+            {
+                MyWindow.Repaint();
+            }
         }
 #else
         public void Repaint() { }
@@ -201,7 +204,15 @@ namespace Zeltex
 			GUILayout.Space(30);
 			IsExtraOptions = GUIToggle("Extra Options", IsExtraOptions);
 			if (IsExtraOptions)
-			{
+            {
+                GUILabel("DataPath [" + DataManager.Get().DataPath + "]");
+                GUILabel("PersistentDataPath [" + DataManager.Get().PersistentDataPath + "]");
+                if (GUIButton("Refresh Path"))
+                {
+                    DataManager.Get().DataPath = Application.dataPath;
+                    DataManager.Get().PersistentDataPath = Application.persistentDataPath;
+                    RefreshGuiMapNames();
+                }
 				if (GUIButton("Open Resources Folder"))
 				{
 					FileUtil.OpenPathInWindows(DataManager.Get().GetResourcesPath());
@@ -237,7 +248,7 @@ namespace Zeltex
 
         private void RefreshGuiMapNames()
         {
-            MapNames = Zeltex.Guis.Maker.ResourcesMaker.GetResourceNames();
+            MapNames = Guis.Maker.ResourcesMaker.GetResourceNames();
             if (MapNames.Count == 0)
             {
                 MapNameSelected = 0;
@@ -703,11 +714,19 @@ namespace Zeltex
 
         public string GUIText(string OldValue)
         {
+            try
+            {
 #if UNITY_EDITOR
             return UnityEditor.EditorGUILayout.TextField(OldValue);
 #else
             return GUILayout.TextField(OldValue);
 #endif
+            }
+            catch (System.ArgumentException e)
+            {
+                Debug.LogError("DataGui GUIText: " + e.ToString());
+                return "";
+            }
         }
 
         public bool GUIToggle(string Label, bool OldValue)
@@ -768,6 +787,10 @@ namespace Zeltex
 		/// </summary>
 		public object DrawFieldsForObject(object MyObject, object ParentObject, FieldInfo MyField, bool IsFirstField = false)
         {
+            if (MyObject == null)
+            {
+                return null;
+            }
             var Fields = (MyObject.GetType()).GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
             object ReturnObject = null;
             Element MyElement = MyObject as Element;
@@ -1022,6 +1045,28 @@ namespace Zeltex
                                 GUILabel(" IntDictionary [" + Fields[i].Name + "] null!");
                             }
                         }
+                        else if (Fields[i].FieldType == typeof(FloatDictionary))
+                        {
+                            bool WasModified;
+                            FloatDictionary OldValue = Fields[i].GetValue(MyObject) as FloatDictionary;
+                            if (OldValue != null)
+                            {
+                                GUILabel(" FloatDictionary [" + Fields[i].Name + "]: " + OldValue.Count);
+                                FloatDictionary NewValue = DrawFloatDictionary(OldValue, MyObject, Fields[i], out WasModified);
+                                if (WasModified)
+                                {
+                                    Fields[i].SetValue(MyObject, NewValue);
+                                    if (MyElement != null)
+                                    {
+                                        MyElement.OnModified();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                GUILabel(" FloatDictionary [" + Fields[i].Name + "] null!");
+                            }
+                        }
                         else if (Fields[i].FieldType == typeof(StatType))
                         {
                             int OldValue = (int)value;
@@ -1045,8 +1090,13 @@ namespace Zeltex
                         {
 
                         }
+                        else if (DrawListGui<ZeltexTransformCurve>(Fields[i], MyObject))
+                        {
+
+                        }
                         // Draw for elements!
-                        if (!IsIgnoreJson && Fields[i].FieldType.BaseType == typeof(Element))
+                        if (!IsIgnoreJson && 
+                            (Fields[i].FieldType.BaseType == typeof(Element) || Fields[i].FieldType.BaseType == typeof(ElementCore)))
 						{
                             //GUILabel(Fields[i].FieldType.ToString() + ": " + i + ": " + Fields[i].Name);
                             DrawFieldsForObject(value, MyObject, Fields[i]);
@@ -1063,18 +1113,25 @@ namespace Zeltex
                 if (MyElement != null)
                 {
                     ReturnObject = DrawElementGui(MyElement, IsFirstField, ParentObject, MyField, ReturnObject);
+
+                    DrawSpawnGUI<Level>(MyElement);
+                    DrawSpawnGUI<CharacterData>(MyElement);
+                    DrawSpawnGUI<SaveGame>(MyElement);
+
                     DrawZexelGui(MyElement);
                     DrawSpawnGUI<VoxelMeta>(MyElement);
                     DrawSpawnGUI<PolyModel>(MyElement);
                     DrawVoxelModelGUI(MyElement);
-                    DrawSpawnGUI<Item>(MyElement);
-                    DrawSpawnGUI<Spell>(MyElement);
                     DrawSpawnGUI<Skeleton>(MyElement);
                     DrawSpawnGUI<Zanimation>(MyElement);
-                    DrawSpawnGUI<CharacterData>(MyElement);
-                    DrawSpawnGUI<Level>(MyElement);
-                    DrawSpawnGUI<SaveGame>(MyElement);
+
+                    DrawSpawnGUI<Item>(MyElement);
+                    DrawSpawnGUI<Spell>(MyElement);
+                    DrawSpawnGUI<ZoneData>(MyElement);
+                    DrawSpawnGUI<Lore>(MyElement);
+                    DrawSpawnGUI<Quests.Quest>(MyElement);
                     DrawSpawnGUI<Dialogue.DialogueTree>(MyElement);
+
                     if (MyElement.GetType() == typeof(Stat))
                     {
                         Stat MyStat = MyElement as Stat;
@@ -1115,12 +1172,12 @@ namespace Zeltex
                 }
                 if (MyElement != null && MyElement.ParentElement != null)
                 {
-                    GUILayout.Space(12);
-                    if (GUIButton("Set [" + MyElement.Name + "] to Null"))
+                    GUILayout.Space(6);
+                    if (GUIButton("Erase [" + MyElement.Name + "] to become Null"))
                     {
                         MyField.SetValue(ParentObject, null);
                     }
-                    GUILayout.Space(23);
+                    GUILayout.Space(6);
                 }
             }
 			DecreaseIndent();
@@ -1131,7 +1188,6 @@ namespace Zeltex
         {
             if (MyElement.ParentElement != null)
             {
-                GUILabel("Push/Pull To/From New Position:");
                 // At the moment this only supports single positioning, but later on it will support more
                 MyElement.ElementLink = GUIText(MyElement.ElementLink);
                 if (MyElement.ElementLink == "")
@@ -1145,55 +1201,71 @@ namespace Zeltex
                         MyElement.ElementLink = DataFolderNames.DataTypeToFolderName(MyElement.GetType());
                     }
                 }
-                if (GUIButton("Pull From [" + MyElement.ElementLink + "]"))
+                GUILabel("Pull Data From DataManager");
+                if (GUIButton("From [" + MyElement.ElementLink + "]"))
                 {
-                    //Element OldValue = Fields[i].GetValue(MyObject) as Element;
-                    //Debug.Log(MyElement.Name + " is being overwritten from an element in database folder: " + MyElement.ElementLink);
-                    Element DataClone = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name);
-                    if (DataClone != null)
-                    {
-                        Element NewElement = DataClone.Clone();
-                        NewElement.IsDrawGui = MyElement.IsDrawGui;
-                        NewElement.MyFolder = MyElement.MyFolder;
-                        NewElement.ElementLink = MyElement.ElementLink;
-                        NewElement.ParentElement = MyElement.ParentElement;
-                        NewElement.ResetName();
-                        if (MyField != null)
-                        {
-                            try
-                            {
-                                MyField.SetValue(ParentObject, NewElement);
-                                Debug.Log(MyElement.Name + " is using MyField.SetValue");
-                            }
-                            catch (System.ArgumentException e)
-                            {
-                                // From a list of elements
-                                Debug.LogError(e.ToString());
-                                Debug.LogError(NewElement.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
-                                ReturnObject = NewElement as object;
-                                Debug.Log(MyElement.Name + " is using ReturnObject to a list");
-                            }
-                            NewElement.OnModified();
-                        }
-                        else if (IsFirstField)
-                        {
-                            OpenedFolder.SetElement(NewElement);
-                        }
-                        else
-                        {
-                            Debug.LogError("Could not pull element.");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("Could not find file " + MyElement.Name + " in folder " + MyElement.ElementLink);
-                    }
+                    ReturnObject = PullElement(MyElement, MyField, ParentObject, ReturnObject);
                 }
+                GUILabel("Push Data To the DataManager");
                 if (GUIButton("Push To [" + MyElement.ElementLink + "]"))
                 {
                     //Element MyValue = Fields[i].GetValue(MyObject) as Element;
                     DataManager.Get().PushElement(MyElement.ElementLink, MyElement);
                 }
+            }
+            return ReturnObject;
+        }
+
+        /// <summary>
+        /// Pulls one element over another, needs fieldinfo and objects in order to set the value
+        /// </summary>
+        private object PullElement(Element MyElement, FieldInfo MyField, object ParentObject, object ReturnObject)
+        {
+            //Element OldValue = Fields[i].GetValue(MyObject) as Element;
+            //Debug.Log(MyElement.Name + " is being overwritten from an element in database folder: " + MyElement.ElementLink);
+            Element DataClone = DataManager.Get().GetElement(MyElement.ElementLink, MyElement.Name);
+            if (DataClone != null)
+            {
+                DataClone = DataClone.Clone();
+                ElementFolder MyFolder = MyElement.MyFolder;
+                DataClone.IsDrawGui = MyElement.IsDrawGui;
+                DataClone.MyFolder = MyElement.MyFolder;
+                DataClone.ElementLink = MyElement.ElementLink;
+                DataClone.ParentElement = MyElement.ParentElement;
+                DataClone.ResetName();
+                if (MyFolder != null)
+                {
+                    MyFolder.SetElement(DataClone);
+                }
+                if (MyField != null)
+                {
+                    try
+                    {
+                        MyField.SetValue(ParentObject, DataClone);
+                        Debug.Log(MyElement.Name + " is using MyField.SetValue");
+                    }
+                    catch (System.ArgumentException e)
+                    {
+                        // From a list of elements
+                        Debug.LogError(e.ToString());
+                        Debug.LogError(DataClone.GetType() + " compared to: " + MyElement.GetType() + " Field: " + MyField.Name + " of object " + MyElement.ToString());
+                        ReturnObject = DataClone as object;
+                        Debug.Log(MyElement.Name + " is using ReturnObject to a list");
+                    }
+                    DataClone.OnModified();
+                }
+                else
+                {
+                    Debug.LogError("Could not pull element as FieldInfo is null.");
+                }
+                /*else if (IsFirstField)
+                {
+                    OpenedFolder.SetElement(NewElement);
+                }*/
+            }
+            else
+            {
+                Debug.LogError("Could not find file " + MyElement.Name + " in folder " + MyElement.ElementLink);
             }
             return ReturnObject;
         }
@@ -1281,6 +1353,7 @@ namespace Zeltex
 			}
 		}
 
+        private string SpawnZanimationWithSkeletonName = "";
 		private void DrawSpawnGUI<T>(Element MyElement) where T : Element
 		{
 			if (MyElement.GetType() == typeof(T))
@@ -1292,7 +1365,40 @@ namespace Zeltex
 					{
 						MyElementConverted.Spawn();
 					}
-				}
+                    if (typeof(T) == typeof(Zanimation))
+                    {
+                        GUILabel("Spawn with Skeleton:");
+                        SpawnZanimationWithSkeletonName = GUIText(SpawnZanimationWithSkeletonName);
+                        if (GUIButton("Spawn With Skeleton"))
+                        {
+                            Zanimation MyZanimation = MyElementConverted as Zanimation;
+                            MyZanimation.SpawnWithSkeleton(SpawnZanimationWithSkeletonName);
+                        }
+                    }
+                    else if (typeof(T) == typeof(Level))
+                    {
+                        GUILabel("Characters Spawn with Level:");
+                        Level MyLevel = MyElementConverted as Level;
+                        for (int i = 0; i < MyLevel.CharacterNames.Count; i++)
+                        {
+                            if (MyLevel.CanSpawnCharacterInEditor(i))
+                            {
+                                if (GUIButton("Spawn Character [" + MyLevel.CharacterNames[i] + "]"))
+                                {
+                                    MyLevel.SpawnCharacterInEditor(i);
+                                }
+                            }
+                            else
+                            {
+                                if (GUIButton("Despawn Character [" + MyLevel.CharacterNames[i] + "]"))
+                                {
+                                    MyLevel.DespawnCharacterInEditor(i);
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
 				else
 				{
 					if (GUIButton("DeSpawn"))
@@ -1364,7 +1470,7 @@ namespace Zeltex
                 {
                     ListBool.Add(false);
                 }
-                else if (typeof(T).BaseType == typeof(Element))
+                else if (typeof(T).BaseType == typeof(Element) || typeof(T).BaseType == typeof(ElementCore))
                 {
 #if NET_4_6
                     ConstructorInfo MyConstructor = typeof(T).GetConstructor(System.Type.EmptyTypes);
@@ -1414,7 +1520,7 @@ namespace Zeltex
                         WasModified = true;
                     }
                 }
-                else if (typeof(T).BaseType == typeof(Element))
+                else if (typeof(T).BaseType == typeof(Element) || typeof(T).BaseType == typeof(ElementCore))
                 {
                     T NewElement = (T) DrawFieldsForObject(ListElements[j], MyObject, MyField);
                     if (NewElement != null)
@@ -1436,7 +1542,7 @@ namespace Zeltex
             {
                 MyList = ListBool as List<T>;
             }
-            else if (typeof(T).BaseType == typeof(Element))
+            else if (typeof(T).BaseType == typeof(Element) || typeof(T).BaseType == typeof(ElementCore))
             {
                 MyList = ListElements as List<T>;
             }
@@ -1465,6 +1571,55 @@ namespace Zeltex
             OldRect.width -= GUIIndentPositionX();
             //Rect PartA = new Rect(OldRect.x, OldRect.y, OldRect.width / 4f, OldRect.height);
             return GUI.TextField(OldRect, OldText);
+        }
+
+        public FloatDictionary DrawFloatDictionary(FloatDictionary MyDictionary, object MyObject, FieldInfo MyField, out bool WasModified)
+        {
+            WasModified = false;
+            MyDictionary.IsEditing = GUIToggle("Is Editing?", MyDictionary.IsEditing);
+            if (GUIButton("Add"))
+            {
+                MyDictionary.Add(Random.Range(0f, 1f), 0);
+                WasModified = true;
+            }
+
+            if (MyDictionary != null)
+            {
+                try
+                {
+                    foreach (KeyValuePair<float, float> MyPair in MyDictionary)
+                    {
+                        if (MyDictionary.IsEditing == false)
+                        {
+                            GUILabel(MyPair.Key + ":" + MyPair.Value);
+                        }
+                        else
+                        {
+                            float NewKey = float.Parse( GUIText(MyPair.Key.ToString()));
+                            if (MyPair.Key != NewKey)
+                            {
+                                MyDictionary.Remove(MyPair.Key);
+                                MyDictionary.Add(NewKey, MyPair.Value);
+                                WasModified = true;
+                            }
+                            else
+                            {
+                                float NewValue = float.Parse(GUIText(MyPair.Value.ToString()));
+                                if (MyPair.Value != NewValue)
+                                {
+                                    MyDictionary[MyPair.Key] = NewValue;
+                                    WasModified = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (System.ObjectDisposedException)
+                {
+                    //Debug.LogError("DrawIntDictionary: " + e.ToString());
+                }
+            }
+            return MyDictionary;
         }
 
         public IntDictionary DrawIntDictionary(IntDictionary MyDictionary, object MyObject, FieldInfo MyField, out bool WasModified) 

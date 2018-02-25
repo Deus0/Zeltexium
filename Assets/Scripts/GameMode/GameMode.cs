@@ -196,13 +196,22 @@ namespace Zeltex.Game
         public void SetStrategist(bool IsStrategist_)
         {
             IsStrategist = IsStrategist_;
-            if (Camera.main.gameObject.GetComponent<Player>())
+            if (Camera.main)
             {
-                Camera.main.gameObject.GetComponent<Player>().enabled = !IsStrategist;
+                Player MyPlayer = Camera.main.gameObject.GetComponent<Player>();
+                if (MyPlayer)
+                {
+                    MyPlayer.enabled = !IsStrategist;
+                }
+                StrategistController MyStrategistController = Camera.main.gameObject.GetComponent<StrategistController>();
+                if (MyStrategistController)
+                {
+                    MyStrategistController.enabled = IsStrategist;
+                }
             }
-            if (Camera.main.gameObject.GetComponent<StrategistController>())
+            else
             {
-                Camera.main.gameObject.GetComponent<StrategistController>().enabled = IsStrategist;
+                Debug.LogError("Camera main is null!");
             }
         }
     }

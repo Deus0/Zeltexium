@@ -494,7 +494,7 @@ namespace Zeltex.Guis.Maker
                 Gizmo.GetComponent<Tools.Gizmo>().MyTarget = SelectedCharacter.gameObject;
                 SelectedCharacter.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(false);
-                SelectedCharacter.GetSkeleton().GetComponent<Skeletons.SkeletonAnimator>().Stop();
+                SelectedCharacter.GetSkeleton().GetComponent<Skeletons.Zanimator>().Stop();
             }
         }
 
@@ -506,7 +506,7 @@ namespace Zeltex.Guis.Maker
                 SelectedCharacter.SetMovement(true);
                 SelectedCharacter.gameObject.GetComponent<CapsuleCollider>().enabled = true;
                 SelectedCharacter.GetSkeleton().GetSkeleton().SetMeshColliders(true);
-                SelectedCharacter.GetSkeleton().GetComponent<Skeletons.SkeletonAnimator>().Play();
+                SelectedCharacter.GetSkeleton().GetComponent<Skeletons.Zanimator>().Play();
                 SelectedCharacter = null;
             }
             SelectedCube.SetActive(false);

@@ -122,50 +122,11 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: Zeltex.Util.MyEventInt, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    MyItem:
-      Name: Empty
-      HasChanged: 0
-      ModifiedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      SavedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      RenamedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      MovedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: Zeltex.ElementEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      Description: Null
-      Commands: []
-      Tags: []
-      Quantity: 1
-      SellValue: -1
-      BuyValue: -1
-      MyStats:
-        Data: []
-      IsUniqueTexture: 0
-      TextureType: 0
-      MyTexture: {fileID: 0}
-      MeshType: 0
-      MyMesh: {fileID: 0}
-      MyMaterial: {fileID: 0}
-      ModelName: 
-      MyModel: 
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnClickListElement:
     m_PersistentCalls:
       m_Calls: []

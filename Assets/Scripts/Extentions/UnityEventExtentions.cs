@@ -82,18 +82,29 @@ namespace Zeltex
         /// </summary>
         public static void AddEvent<T>(this UnityEvent<T> MyEvent, UnityAction<T> MyAction)
         {
+            if (MyEvent != null && MyAction != null)
+            {
 #if UNITY_EDITOR
-            try
-            {
-                UnityEditor.Events.UnityEventTools.AddPersistentListener<T>(MyEvent, MyAction);
-            }
-            catch (System.ArgumentException)
-            {
-                MyEvent.AddListener(MyAction);
-            }
+                try
+                {
+                    UnityEditor.Events.UnityEventTools.RemovePersistentListener<T>(MyEvent, MyAction);
+                    UnityEditor.Events.UnityEventTools.AddPersistentListener<T>(MyEvent, MyAction);
+                }
+                catch (System.ArgumentException)
+                {
+                    MyEvent.RemoveListener(MyAction);
+                    MyEvent.AddListener(MyAction);
+                }
+                catch (System.NullReferenceException)
+                {
+                    MyEvent.RemoveListener(MyAction);
+                    MyEvent.AddListener(MyAction);
+                }
 #else
+            MyEvent.RemoveListener(MyAction);
             MyEvent.AddListener(MyAction);
 #endif
+            }
         }
 
         /// <summary>

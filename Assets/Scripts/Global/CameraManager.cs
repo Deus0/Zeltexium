@@ -16,16 +16,18 @@ namespace Zeltex
 		private GameObject MainMenuCameraPrefab;
         [SerializeField]
         private GameObject FpsCameraPrefab;
-        [SerializeField]
-		private Camera MainCamera;
+        //[SerializeField]
+		//private Camera MainCamera;
         [SerializeField]
         private Camera MainMenuCamera;
         [SerializeField]
         private Camera FpsCamera;
-        [Tooltip("Anything linked to the main camera have their events added to here")]
+        //[Tooltip("Anything linked to the main camera have their events added to here")]
+        [HideInInspector]
         public UnityEngine.Events.UnityEvent OnMainCameraChange;
-        [SerializeField]
-        private bool IsParentToAllCameras;
+        private bool IsParentToAllCameras = true;
+
+        private Camera MainCamera;
 
         public new static CameraManager Get()
         {
@@ -76,24 +78,20 @@ namespace Zeltex
         {
             if (MainMenuCameraPrefab)
             {
-                MainCamera = Instantiate(MainMenuCameraPrefab).GetComponent<Camera>();
+                MainMenuCamera = Instantiate(MainMenuCameraPrefab).GetComponent<Camera>();
                 if (IsParentToAllCameras)
                 {
-                    MainCamera.transform.SetParent(transform);
+                    MainMenuCamera.transform.SetParent(transform);
                 }
+                MainCamera = MainMenuCamera;
                 OnMainCameraChange.Invoke();
-                return MainCamera;
+                return MainMenuCamera;
             }
             else
             {
                 Debug.LogError("Set camera prefab.");
                 return null;
             }
-        }
-
-        public Camera GetMainCamera()
-        {
-            return MainCamera;
         }
 
 		public Camera GetClosestCamera(Transform MyTransform)
@@ -121,6 +119,11 @@ namespace Zeltex
 			}
 			return null;
 		}
+
+        public Camera GetMainCamera()
+        {
+            return MainCamera;
+        }
 
         public void EnableGameCamera()
         {

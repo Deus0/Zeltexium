@@ -43,9 +43,8 @@ namespace Zeltex.Combat
     ///      - [string] [string] [value] [timeTick] [timeMax] - Burn, Health, 3, 4s, 20s
     /// </summary>
     [System.Serializable]
-	public class Stat : Element
-	{
-        #region Variables
+	public class Stat : ElementCore
+    {
         [JsonIgnore]
         private static string DescriptionColorTag = "<color=#00cca4>";
         [JsonIgnore]
@@ -54,8 +53,6 @@ namespace Zeltex.Combat
         private static string StatVariableColorTag = "<color=#989a33>";
         [JsonIgnore]
         private static float GameRegenModifier = 0.1f;
-        // UI
-        public string Description = "";		// used for tooltip
         // Data
         [SerializeField, JsonProperty]
         protected StatType MyType = StatType.Base;
@@ -65,9 +62,18 @@ namespace Zeltex.Combat
         protected List<string> Modifiers = new List<string> ();		// the default of the value
 
         public Zexel MyZexel = new Zexel();
-        [JsonIgnore]
-        protected Texture2D MyTexture;     // The texture used in the gui
-        #endregion
+        //[JsonIgnore]
+        //protected Texture2D MyTexture;     // The texture used in the gui
+
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            if (MyZexel != null)
+            {
+                MyZexel.ParentElement = this;
+                MyZexel.OnLoad();
+            }
+        }
 
         public StatType GetStatType()
         {
@@ -116,25 +122,6 @@ namespace Zeltex.Combat
             {
                 CreateDot(Name, 1, "", 1, 15);
             }
-        }
-
-		/// <summary>
-		/// Cloning a stat
-		/// </summary>
-		public Stat(Stat NewStat)
-        {
-            Name = NewStat.Name;
-            Description = NewStat.Description;
-            MyType = NewStat.MyType;
-            for (int i = 0; i < NewStat.Value.Count; i++)
-            {
-                Value.Add(NewStat.Value[i]);
-            }
-            for (int i = 0; i < NewStat.Modifiers.Count; i++)
-            {
-                Modifiers.Add(NewStat.Modifiers[i]);
-            }
-            MyTexture = NewStat.MyTexture;
         }
 
         /// <summary>
@@ -833,43 +820,11 @@ namespace Zeltex.Combat
             }
         }
         #endregion
-
-        #region GettersAndSetters
-
-        /// <summary>
-        /// Used only for editor items. Loads texture from the item manager.
-        /// </summary>
-        public void LoadTexture(string MyTextureName)
-        {
-            //MyTexture = TextureMaker.Get().GetStatTexture(MyTextureName);
-            MyTexture = (Zeltex.DataManager.Get().GetElement(DataFolderNames.StatTextures, MyTextureName) as Zexel).GetTexture();
-            //Debug.LogError("Loaded Texture: " + MyTexture.name);
-        }
-
-        public void SetTexture(Texture2D NewTexture)
-        {
-            MyTexture = NewTexture;
-        }
-
+        
         public Texture2D GetTexture()
         {
-            return MyTexture;
+            return MyZexel.GetTexture();
         }
-
-        public void SetDescription(string NewDescription)
-        {
-            if (Description != NewDescription)
-            {
-                Description = NewDescription;
-                OnModified();
-            }
-        }
-
-        public string GetDescription()
-        {
-            return Description; // if null check stat manager!
-        }
-        #endregion
 
         #region File
         /// <summary>
@@ -884,23 +839,6 @@ namespace Zeltex.Combat
                 MyCommand.Contains("Regen") ||
                 MyCommand.Contains("Buff") ||
                 MyCommand.Contains("Dot"));
-        }
-
-        /// <summary>
-        /// Run Script for specific types
-        /// </summary>
-        public void ActivateCommand(string MyCommand)
-        {
-            string Command = ScriptUtil.GetCommand(MyCommand);
-            string MyInput = ScriptUtil.RemoveCommand(MyCommand);
-            if (Command.Contains("/Description"))
-            {
-                SetDescription(MyInput);
-            }
-            else if (Command.Contains("/LoadTexture"))
-            {
-                LoadTexture(MyInput);
-            }
         }
 
         /// <summary>

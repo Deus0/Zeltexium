@@ -362,7 +362,6 @@ namespace Zeltex.Combat
                 else if (collision.gameObject.GetComponent<Character>())
                 {
                     BulletCollideWithCharacter(collision.gameObject, transform.position, collision.contacts[0].normal);// collision.contacts[0].point);
-                    return;
                 }
                 //else if (!HasHitTerrain)
                 else if (collision.gameObject.GetComponent<Chunk>() || collision.gameObject.tag == "World")
@@ -385,21 +384,16 @@ namespace Zeltex.Combat
                             // Create a portal at most suitable position - along the  block where i shot
                         }
                     }
-                    BulletDeath(collision.gameObject, transform.position, collision.contacts[0].normal);
-                }
-                else if (collision.gameObject.tag == "Bone")
-                {
-                    BulletDeath(collision.gameObject, transform.position, collision.contacts[0].normal);
                 }
                 else
                 {
                     Bullet HitBullet = collision.gameObject.GetComponent<Bullet>();
                     if (HitBullet)
                     {
-                        BulletDeath(collision.gameObject, transform.position, collision.contacts[0].normal);
                         HitBullet.BulletDeath(gameObject, transform.position, collision.contacts[0].normal);
                     }
                 }
+                BulletDeath(collision.gameObject, transform.position, collision.contacts[0].normal);
             }
         }
 

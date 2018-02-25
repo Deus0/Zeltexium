@@ -24,7 +24,7 @@ namespace Zeltex.Combat
     /// Spells used for pewpewing
     /// </summary>
     [System.Serializable]
-    public class Spell : Element
+    public class Spell : ElementCore
     {
         #region Variables
         [Header("Base Stats")]
