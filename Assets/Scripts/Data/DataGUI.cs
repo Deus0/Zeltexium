@@ -1354,7 +1354,8 @@ namespace Zeltex
 		}
 
         private string SpawnZanimationWithSkeletonName = "";
-		private void DrawSpawnGUI<T>(Element MyElement) where T : Element
+        private string SpawnInLevelName = "";
+        private void DrawSpawnGUI<T>(Element MyElement) where T : Element
 		{
 			if (MyElement.GetType() == typeof(T))
 			{
@@ -1373,6 +1374,16 @@ namespace Zeltex
                         {
                             Zanimation MyZanimation = MyElementConverted as Zanimation;
                             MyZanimation.SpawnWithSkeleton(SpawnZanimationWithSkeletonName);
+                        }
+                    }
+                    else if (typeof(T) == typeof(ZoneData))
+                    {
+                        GUILabel("Spawn in Level:");
+                        SpawnInLevelName = GUIText(SpawnInLevelName);
+                        if (GUIButton("Spawn in " + SpawnInLevelName))
+                        {
+                            ZoneData Data = MyElementConverted as ZoneData;
+                            Data.SpawnInLevel(SpawnInLevelName);
                         }
                     }
                     else if (typeof(T) == typeof(Level))

@@ -374,9 +374,9 @@ namespace Zeltex.Voxels
                 // Save the loaded save game
                 Level LoadedLevel = LoadedSaveGame.GetLevel();
                 // First chunk Changes
-                LoadedLevel.SaveOpenChunks(LoadedSaveGame.Name);
+                LoadedLevel.SaveChunks(LoadedSaveGame.Name);
                 // Next Any character changes - CharacterData - make sure to refresh their transforms
-                LoadedLevel.SaveOpenCharacters(LoadedSaveGame.Name);
+                LoadedLevel.SaveCharacters(LoadedSaveGame.Name);
             }
             else
             {

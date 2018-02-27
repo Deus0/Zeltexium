@@ -78,6 +78,8 @@ namespace Zeltex.Voxels
         private static float MutateColorVariance = 0.14f;
 
         public List<Character> MyCharacters = new List<Character>();
+        public List<Zone> MyZones = new List<Zone>();
+
         #region CachedVariables
 
         #region MeshUpdates
@@ -755,6 +757,15 @@ namespace Zeltex.Voxels
                     MyData.Add(MyCharacters[i].GetData().Name);
                 }
                 MyData.Add("/EndCharacters");
+            }
+            if (MyZones.Count > 0)
+            {
+                MyData.Add("/Zones");
+                for (int i = 0; i < MyZones.Count; i++)
+                {
+                    MyData.Add(MyZones[i].GetData().Name);
+                }
+                MyData.Add("/EndZones");
             }
             for (int i = 0; i < ChunkSize; i++)
             {

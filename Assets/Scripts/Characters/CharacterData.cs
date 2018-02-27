@@ -14,6 +14,18 @@ using Zeltex.Voxels;
 
 namespace Zeltex
 {
+    [System.Serializable]
+    public class LevelTransform : Element
+    {
+        [JsonProperty]
+        public string LevelInsideOf = "";
+        [JsonProperty]
+        public string WorldInsideOf = "";
+        [JsonProperty]
+        public Vector3 LevelPosition;
+        [JsonProperty]
+        public Vector3 LevelRotation;
+    }
     /// <summary>
     /// Holds all the data for a character
     ///     Skillbar
@@ -56,13 +68,8 @@ namespace Zeltex
         [JsonProperty]
         public bool CanRespawn = true;  // can player respawn after death
 
-        // Level Data
-        [JsonProperty]
-        public string LevelInsideOf = "";
-        [JsonProperty]
-        public Vector3 LevelPosition;
-        [JsonProperty]
-        public Vector3 LevelRotation;
+        // LevelTransform
+        public LevelTransform Position;
 
         [JsonIgnore]
         public Inventory Equipment;
@@ -129,8 +136,8 @@ namespace Zeltex
             }
             if (MyCharacter)
             {
-                LevelPosition = MyCharacter.transform.position;
-                LevelRotation = MyCharacter.transform.eulerAngles;
+                Position.LevelPosition = MyCharacter.transform.position;
+                Position.LevelRotation = MyCharacter.transform.eulerAngles;
             }
         }
 
@@ -141,13 +148,13 @@ namespace Zeltex
             {
                 if (IsSetTransform)
                 {
-                    MyCharacter.transform.position = LevelPosition;
-                    MyCharacter.transform.eulerAngles = LevelRotation;
+                    MyCharacter.transform.position = Position.LevelPosition;
+                    MyCharacter.transform.eulerAngles = Position.LevelRotation;
                 }
                 else
                 {
-                    LevelPosition = MyCharacter.transform.position;
-                    LevelRotation = MyCharacter.transform.eulerAngles;
+                    Position.LevelPosition = MyCharacter.transform.position;
+                    Position.LevelRotation = MyCharacter.transform.eulerAngles;
                 }
             }
         }
@@ -164,18 +171,18 @@ namespace Zeltex
         {
             if (MyCharacter)
             {
-                if (MyCharacter.transform.position.x != LevelPosition.x
-                    || MyCharacter.transform.position.y != LevelPosition.y
-                    || MyCharacter.transform.position.z != LevelPosition.z)
+                if (MyCharacter.transform.position.x != Position.LevelPosition.x
+                    || MyCharacter.transform.position.y != Position.LevelPosition.y
+                    || MyCharacter.transform.position.z != Position.LevelPosition.z)
                 {
-                    LevelPosition = MyCharacter.transform.position;
+                    Position.LevelPosition = MyCharacter.transform.position;
                     OnModified();
                 }
-                if (MyCharacter.transform.eulerAngles.x != LevelRotation.x
-                    || MyCharacter.transform.eulerAngles.y != LevelRotation.y
-                    || MyCharacter.transform.eulerAngles.z != LevelRotation.z)
+                if (MyCharacter.transform.eulerAngles.x != Position.LevelRotation.x
+                    || MyCharacter.transform.eulerAngles.y != Position.LevelRotation.y
+                    || MyCharacter.transform.eulerAngles.z != Position.LevelRotation.z)
                 {
-                    LevelRotation = MyCharacter.transform.eulerAngles;
+                    Position.LevelRotation = MyCharacter.transform.eulerAngles;
                     OnModified();
                 }
                 // If chunk position changes

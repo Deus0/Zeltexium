@@ -35,6 +35,8 @@ namespace Zeltex
         [SerializeField, JsonIgnore]
         protected List<Character> MyCharacters = new List<Character>();
         [SerializeField, JsonIgnore]
+        public List<Zone> Zones = new List<Zone>();
+        [SerializeField, JsonIgnore]
         private FilePathType MyFilePathType = FilePathType.StreamingPath;
         [JsonIgnore]
         public static string ChunkFileExtention = "chn";
@@ -46,7 +48,8 @@ namespace Zeltex
         public static string CharacterFileExtensionPlusDot = "." + CharacterFileExtension;
         [JsonIgnore]
         private List<string> CharactersInChunk = new List<string>();    // used when loading character files
-        // [JsonIgnore]
+        [JsonIgnore]
+        private List<string> ZonesInChunk = new List<string>();
         [JsonIgnore]
         public int CharactersCount;
         [JsonIgnore]
@@ -79,9 +82,8 @@ namespace Zeltex
         {
             base.OnLoad();
             // Also load the total number of characters in folder
+            string CharacterFolderPath = GetFolderPathExtra("Characters");
 #if UNITY_EDITOR
-            string CharacterFolderPath = GetCharacterFolderPath();
-            Debug.LogError("Checking for path: " + CharacterFolderPath);
             if (FileManagement.DirectoryExists(CharacterFolderPath))
             {
                 CharacterNames.Clear();
@@ -95,6 +97,21 @@ namespace Zeltex
                 CharactersCount = CharacterNames.Count;
             }
 #endif
+            string ChunkFolderPath = GetFolderPathExtra("Chunks");
+            string ZoneFolderPath = GetFolderPathExtra("Zones");
+            // Create any folder paths that don't exist
+            if (FileManagement.DirectoryExists(CharacterFolderPath) == false)
+            {
+                FileManagement.CreateDirectory(CharacterFolderPath, true);
+            }
+            if (FileManagement.DirectoryExists(ChunkFolderPath) == false)
+            {
+                FileManagement.CreateDirectory(ChunkFolderPath, true);
+            }
+            if (FileManagement.DirectoryExists(ZoneFolderPath) == false)
+            {
+                FileManagement.CreateDirectory(ZoneFolderPath, true);
+            }
         }
 
         public Vector3 GetSpawnPoint()
@@ -206,6 +223,7 @@ namespace Zeltex
 
         public override void DeSpawn()
         {
+            ZoneManager.Get().Clear();
             Guis.Characters.CharacterGuiManager.Get().ReturnAllObjects();
             for (int i = 0; i < MyCharacters.Count; i++)
             {
@@ -258,18 +276,51 @@ namespace Zeltex
         }
         #endregion
 
+        #region Zones
+
+        public void SaveZones(string SaveGameName = "", bool IsForceSaveAll = false)
+        {
+            for (int i = 0; i < Zones.Count; i++)
+            {
+                SaveZone(Zones[i], SaveGameName, IsForceSaveAll);
+            }
+        }
+
+        public void SaveZone(Zone MyZone, string SaveGameName = "", bool IsForceSaveAll = false)
+        {
+            if (MyZone)
+            {
+                ZoneData MyData = MyZone.GetData();
+                MyData.OnPreSave();
+                if (MyData.CanSave() || IsForceSaveAll)
+                {
+                    string FilePath = GetDataFilePath(MyData.Name, "Zones", SaveGameName);
+                    MyData.MoveOnSave();
+                    string SerializedData = MyData.GetSerial();
+                    Debug.Log("Saving Character to Path: " + FilePath);
+                    Util.FileUtil.Save(FilePath, SerializedData);
+                    MyData.OnSaved();
+                }
+                else
+                {
+                    Debug.Log("Cannot save character as it has not been modified: " + MyZone.name);
+                }
+            }
+        }
+        #endregion
+
         #region Saving
 
-        public void SaveOpenCharacters(string SaveFolderName = "", bool IsForceSaveAll = false)
+        public void SaveCharacters(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
             for (int i = 0; i < MyCharacters.Count; i++)
             {
                 MyCharacters[i].GetData().SetCharacter(MyCharacters[i], false);
-                SaveCharacterToLevel(MyCharacters[i], SaveFolderName, IsForceSaveAll);
+                SaveCharacter(MyCharacters[i], SaveFolderName, IsForceSaveAll);
             }
         }
 
-        public void SaveCharacterToLevel(Character MyCharacter, string SaveFolderName = "", bool IsForceSaveAll = false)
+        public void SaveCharacter(Character MyCharacter, string SaveFolderName = "", bool IsForceSaveAll = false)
         {
             if (MyCharacter)
             {
@@ -295,7 +346,7 @@ namespace Zeltex
             }
         }
 
-        public void SaveOpenChunks(string SaveFolderName = "", bool IsForceSaveAll = false)
+        public void SaveChunks(string SaveFolderName = "", bool IsForceSaveAll = false)
         {
             if (GetWorld())
             {
@@ -325,6 +376,11 @@ namespace Zeltex
 
         #region Paths
 
+        public string GetDataFilePath(string DataName, string DataTypeName, string SaveGameName = "")
+        {
+            return GetFolderPathExtra(DataTypeName, SaveGameName) + DataName + ".zel";
+        }
+
         public void SetFilePathType(FilePathType NewType)
         {
             MyFilePathType = NewType;
@@ -341,27 +397,18 @@ namespace Zeltex
             return GetCharacterFilePath(MyCharacter.name);
         }
 
-        public string GetCharacterFolderPath(string SaveFolderName = "")
-        {
-            return GetFolderPath(SaveFolderName) + "Characters/";
-        }
-
         public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
         {
-            return GetCharacterFolderPath(SaveFolderName) + CharacterName + CharacterFileExtensionPlusDot;
+            return GetFolderPathExtra("Characters", SaveFolderName) + CharacterName + CharacterFileExtensionPlusDot;
         }
 
-        /*public string GetCharacterFilePath(string CharacterName, string SaveFolderName = "")
+        /// <summary>
+        /// The extra subfolder, used for chunks, characters, zones
+        /// </summary>
+        public string GetFolderPathExtra(string ExtraFolderName = "Characters", string SaveFolderName = "")
         {
-            if (SaveFolderName == "")
-            {
-                return GetFolderPath() + "Characters/" + CharacterName + "." + CharacterFileExtension;
-            }
-            else
-            {
-                return GetSaveFolderPath(SaveFolderName) + "Characters/" + CharacterName + "." + CharacterFileExtension;
-            }
-        }*/
+            return GetFolderPath(SaveFolderName) + ExtraFolderName + "/";
+        }
 
 
         public string GetFolderPath(string SaveFolderName = "")
@@ -526,7 +573,8 @@ namespace Zeltex
             Chunk MyChunk = MyWorld.GetChunk(ChunkPosition);
             yield return LoadChunkFromFile(MyChunk, ChunkFileName);
             // Load Characters for this chunk here:
-            yield return LoadCharactersFromFiles( CharactersInChunk);
+            yield return LoadCharactersFromFiles(CharactersInChunk);
+            yield return LoadZonesInChunk(ZonesInChunk);
         }
 
         /// <summary>
@@ -556,29 +604,8 @@ namespace Zeltex
                     MyScript = MyFileReader.Result as string;
                     //Debug.LogError("Read script asynchornously.\n " + MyScript);
                 }
-                CharactersInChunk.Clear();
-                string[] MyScriptSplit = MyScript.Split('\n');
-                // If Contains Characters on first line of chunk
-                if (MyScriptSplit[0].Contains("/Characters"))
-                {
-                    // each line until /EndCharacters
-                    for (int i = 1; i < MyScriptSplit.Length; i++)
-                    {
-                        // Until line is EndCharacters
-                        if (MyScriptSplit[i].Contains("/EndCharacters"))
-                        {
-                            // Make sure to cut script
-                            string[] NewScriptSplit = new string[MyScriptSplit.Length - i - 1];
-                            Array.Copy(MyScriptSplit, i + 1, NewScriptSplit, 0, NewScriptSplit.Length);
-                            MyScript = FileUtil.ConvertToSingle(NewScriptSplit);
-                            break;
-                        }
-                        else
-                        {
-                            CharactersInChunk.Add(ScriptUtil.RemoveWhiteSpace(MyScriptSplit[i]));
-                        }
-                    }
-                }
+                MyScript = TakeAwayNames(MyScript, CharactersInChunk, "Characters");
+                MyScript = TakeAwayNames(MyScript, ZonesInChunk, "Zones");
                 yield return MyChunk.RunScript(MyScript, false);
                 // Surrounding Chunks
                 /*List<Chunk> SurroundingChunks = MyChunk.GetSurroundingChunks();
@@ -595,7 +622,69 @@ namespace Zeltex
             }
         }
 
-        private IEnumerator LoadCharactersFromFiles(List<string> CharacterFiles, System.Action OnLoadChunk = null)
+        private string TakeAwayNames(string MyScript, List<string> MyList, string ObjectType)
+        {
+            MyList.Clear();
+            string[] MyScriptSplit = MyScript.Split('\n');
+            // If Contains Characters on first line of chunk
+            if (MyScriptSplit[0].Contains("/" + ObjectType))
+            {
+                // each line until /EndCharacters
+                for (int i = 1; i < MyScriptSplit.Length; i++)
+                {
+                    // Until line is EndCharacters
+                    if (MyScriptSplit[i].Contains("/End" + ObjectType))
+                    {
+                        // Make sure to cut script
+                        string[] NewScriptSplit = new string[MyScriptSplit.Length - i - 1];
+                        Array.Copy(MyScriptSplit, i + 1, NewScriptSplit, 0, NewScriptSplit.Length);
+                        MyScript = FileUtil.ConvertToSingle(NewScriptSplit);
+                        break;
+                    }
+                    else
+                    {
+                        MyList.Add(ScriptUtil.RemoveWhiteSpace(MyScriptSplit[i]));
+                    }
+                }
+            }
+            return MyScript;
+        }
+
+
+        private IEnumerator LoadZonesInChunk(List<string> ZoneNames, Action OnLoadChunk = null)
+        {
+            string Script = "";
+            for (int i = 0; i < ZoneNames.Count; i++)
+            {
+                string ZonePath = GetDataFilePath(ZoneNames[i], "Zones");
+                if (FileManagement.FileExists(ZonePath, true, true))
+                {
+                    if (ZonePath.Contains("://") || ZonePath.Contains(":///"))
+                    {
+                        WWW UrlRequest = new WWW(ZonePath);
+                        yield return (UrlRequest);
+                        Script = UrlRequest.text;
+                    }
+                    else
+                    {
+                        FileReaderRoutiner MyFileReader = new FileReaderRoutiner(ZonePath);
+                        yield return MyFileReader.Run();
+                        Script = MyFileReader.Result as string;
+                    }
+                    if (Script != null)
+                    {
+                        ZoneData NewData = JsonConvert.DeserializeObject(Script, typeof(ZoneData)) as ZoneData;
+                        if (NewData != null)
+                        {
+                            NewData.SpawnInLevel(this);
+                        }
+                    }
+                }
+                yield return null;
+            }
+        }
+
+        private IEnumerator LoadCharactersFromFiles(List<string> CharacterFiles, Action OnLoadChunk = null)
         {
             for (int i = 0; i < CharacterFiles.Count; i++)
             {

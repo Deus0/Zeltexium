@@ -16,6 +16,7 @@ namespace Zeltex
         public EditorAction ActionDeSpawn = new EditorAction();
         public EditorAction ActionSaveChunks = new EditorAction();
         public EditorAction ActionSaveCharacters = new EditorAction();
+        public EditorAction ActionSaveZones = new EditorAction();
         public bool IsForceSaveAll;
 
         private void Update()
@@ -25,12 +26,16 @@ namespace Zeltex
                 if (ActionSaveChunks.IsTriggered())
                 {
                     Debug.Log("Saving Level: " + MyLevel.Name);
-                    MyLevel.SaveOpenChunks("", IsForceSaveAll);
+                    MyLevel.SaveChunks("", IsForceSaveAll);
                 }
                 if (ActionSaveCharacters.IsTriggered())
                 {
                     Debug.Log("Saving Level: " + MyLevel.Name);
-                    MyLevel.SaveOpenCharacters("", IsForceSaveAll);
+                    MyLevel.SaveCharacters("", IsForceSaveAll);
+                }
+                if (ActionSaveZones.IsTriggered())
+                {
+                    MyLevel.SaveZones("", IsForceSaveAll);
                 }
             }
         }

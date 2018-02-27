@@ -12,6 +12,11 @@ namespace Zeltex
         protected NetworkIdentity MyNetworkIdentity;
         protected ZoneData Data;
 
+        public ZoneData GetData()
+        {
+            return Data;
+        }
+
         public void SetData(ZoneData NewData)
         {
             if (Data != NewData)

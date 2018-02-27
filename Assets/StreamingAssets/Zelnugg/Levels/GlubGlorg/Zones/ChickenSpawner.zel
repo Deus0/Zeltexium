@@ -1,0 +1,10 @@
+{
+  "Size": {
+    "x": 1,
+    "y": 1,
+    "z": 1
+  },
+  "Type": "Spawner",
+  "Description": "",
+  "Name": "ChickenSpawner"
+}

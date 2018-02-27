@@ -221,15 +221,20 @@ namespace Zeltex
             return JsonConvert.SerializeObject(this, MySettings);
         }
 
+        public void MoveOnSave()
+        {
+            if (OldName != Name)
+            {
+                Rename(OldName, Name);
+                OldName = Name;
+            }
+        }
+
         public virtual void Save(bool IsForce = false)
 		{
             if (CanSave() || IsForce)
             {
-                if (OldName != Name)
-                {
-                    Rename(OldName, Name);
-                    OldName = Name;
-                }
+                MoveOnSave();
                 Util.FileUtil.Save(GetFullFilePath(), GetSerial());
                 OnSaved();
             }

@@ -20,6 +20,7 @@ namespace Zeltex.Guis
         [Tooltip("The target transform o f the orbital paths")]
         public Transform TargetObject;
         public SkeletonHandler TargetSkeleton;
+        private ZelGui MyZelGui;
         private Quaternion TargetRotation;  // the rotation to lerp to
         private Vector3 TargetPosition;		// the position to lerp to
         [Header("Positioning")]
@@ -29,8 +30,6 @@ namespace Zeltex.Guis
         [Tooltip("The linear speed of movement to the orbit position")]
 		[SerializeField]
         private float MovementSpeed = 3f;
-       // [Tooltip("The linear speed of movement to the orbit position")]
-        //private float RotationSpeed = 0.5f;
         [SerializeField]
         private bool IsInstantOnStart;
         [Tooltip("Used to make speed instant, attaches itself as a child to the target")]
@@ -51,9 +50,8 @@ namespace Zeltex.Guis
         private float TimeCount;
         private float LastSpunTime = 0f;
         private float TimeDifference = 0f;
-		public float SpinSpeed = 0.5f;
-        private ZelGui MyZelGui;
-        public bool IsFreezePositionZ = false;
+        private float SpinSpeed = 0.5f;
+        private bool IsFreezePositionZ = false;
 
         //private UnityAction ScreenSizeChangeEvent;
         #endregion
@@ -62,12 +60,10 @@ namespace Zeltex.Guis
 
         private void Awake()
         {
-            //ScreenSizeChangeEvent = OnScreenSizeChange;
             if (IsTargetMainCamera && CameraManager.Get())
             {
                 CameraManager.Get().OnMainCameraChange.AddEvent(OnMainCameraChange);
             }
-            //DataManager.Get().StartCoroutine(AwakeRoutine());
             Initiate();
         }
 

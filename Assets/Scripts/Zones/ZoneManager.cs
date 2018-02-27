@@ -16,6 +16,33 @@ namespace Zeltex
         private List<Zone> Zones = new List<Zone>();
         private bool IsSpawnersEnabled = false;
 
+        public new static ZoneManager Get()
+        {
+            if (MyManager == null)
+            {
+                MyManager = ManagersManager.Get().GetManager<ZoneManager>(ManagerNames.ZoneManager);
+            }
+            return MyManager as ZoneManager;
+        }
+
+        public void Add(Zone NewZone)
+        {
+            NewZone.transform.SetParent(ZoneManager.Get().transform);
+            Zones.Add(NewZone);
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < Zones.Count; i++)
+            {
+                if (Zones[i])
+                {
+                    Zones[i].gameObject.Die();
+                }
+            }
+            Zones.Clear();
+        }
+
         public ZoneSpawner GetZoneSpawner()
         {
             if (Zones.Count > 0)

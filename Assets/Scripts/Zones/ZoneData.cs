@@ -23,20 +23,48 @@ namespace Zeltex
         [JsonIgnore]
         public Zone MyZone;
 
+        /// <summary>
+        /// Called before saving, to check any property updates
+        /// </summary>
+        public void OnPreSave()
+        {
+
+        }
+
         #region Spawning
 
         public override void Spawn()
         {
             if (MyZone == null)
             {
-                GameObject NewWorld = new GameObject();
-                NewWorld.name = Name;// + "-Handler";
-                MyZone = NewWorld.AddComponent<Zone>();
+                GameObject ZoneObject = new GameObject();
+                ZoneObject.name = Name;// + "-Handler";
+                MyZone = ZoneObject.AddComponent<Zone>();
                 MyZone.SetData(this);
+                ZoneManager.Get().Add(MyZone);
             }
             else
             {
                 Debug.LogError("Trying to spawn when handler already exists for: " + Name);
+            }
+        }
+
+        /// <summary>
+        /// Spawns a zone in the level as a clone
+        /// </summary>
+        public void SpawnInLevel(string LevelName)
+        {
+            Level MyLevel = DataManager.Get().GetElement(DataFolderNames.Levels, LevelName) as Level;
+            ZoneData InstancedZone = this.Clone<ZoneData>();
+            InstancedZone.SpawnInLevel(MyLevel);
+        }
+
+        public void SpawnInLevel(Level SpawnLevel)
+        {
+            if (SpawnLevel != null && SpawnLevel.HasSpawned())
+            {
+                Spawn();
+                SpawnLevel.Zones.Add(MyZone);
             }
         }
 

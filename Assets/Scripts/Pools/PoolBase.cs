@@ -589,7 +589,14 @@ namespace Zeltex
         {
             PoolObject.transform.SetParent(transform);
             CreatePoolObjects();
-            MyPools[0].SpawnedObjects.Add(PoolObject.GetComponent<T>());
+            if (MyPools.Count > 0)
+            {
+                MyPools[0].SpawnedObjects.Add(PoolObject.GetComponent<T>());
+            }
+            else
+            {
+                Debug.LogError(name + " has no pools. So cannot spawn.");
+            }
         }
     }
 

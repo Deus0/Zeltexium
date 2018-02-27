@@ -146,7 +146,7 @@ namespace Zeltex.Characters
             }
             if (ActionSaveToLevel.IsTriggered())
             {
-                Data.InLevel.SaveCharacterToLevel(this, "", true);
+                Data.InLevel.SaveCharacter(this, "", true);
             }
 			if (ActionImportVox.IsTriggered()) 
 			{
