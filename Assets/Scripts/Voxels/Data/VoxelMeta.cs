@@ -61,28 +61,8 @@ namespace Zeltex.Voxels
             return (MyVoxelHandle != null);
         }
         #endregion
-        
-        #region ElementOverrides
-
-       /* public override string GetFolder()
-        {
-            return DataFolderNames.Voxels;
-        }*/
-        #endregion
 
         #region Setters
-
-        /// <summary>
-        /// Sets the new description
-        /// </summary>
-        public void SetDescription(string NewDescription)
-        {
-            if (Description != NewDescription)
-            {
-                Description = NewDescription;
-                OnModified();
-            }
-        }
 
         public void SetModelID(string NewModelName)
         {
@@ -104,19 +84,6 @@ namespace Zeltex.Voxels
 
         #region Getters
 
-        public string GetDescription()
-        {
-            if (string.IsNullOrEmpty(Description))
-            {
-                return Description;
-            }
-            else
-            {
-                return "";
-                //return Name + " Block. A truly blocky block.";
-            }
-        }
-
         /// <summary>
         /// Gets the model for the voxel
         /// </summary>
@@ -126,12 +93,12 @@ namespace Zeltex.Voxels
 			{
 				if (MyModel == null || MyModel.Name == "Empty")
 				{
-					MyModel = VoxelManager.Get().GetModel(ModelID);
+					MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, ModelID) as PolyModel;
 				}
 				if (MyModel == null)
                 {
                     ModelID = "Block";
-                    MyModel = VoxelManager.Get().GetModel("Block");
+                    MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, "Block") as PolyModel;
                 }
 				return MyModel;
 			}
@@ -511,7 +478,7 @@ namespace Zeltex.Voxels
             Item NewItem = ItemGenerator.Get().GenerateItem(VoxelType);   //MyDataBase.GenerateItem(TypeRemoved);
             //GameObject NewMoveableVoxel = new GameObject();
             GameObject NewMoveableVoxel = Zeltex.Items.ItemManager.Get().SpawnItem(MyWorld.transform, NewItem);
-            NewMoveableVoxel.name = MyDataBase.GetMeta(VoxelType).Name;
+            //NewMoveableVoxel.name = MyDataBase.GetMeta(VoxelType).Name;
             // Transform
             Vector3 BlockPosition = Position + new Vector3(0.5f, 0.5f, 0.5f);   // since world mesh is centred!
             NewMoveableVoxel.transform.localPosition = new Vector3(

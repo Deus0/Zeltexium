@@ -7,6 +7,7 @@ using Zeltex.Util;
 using Zeltex.Voxels;
 using Zeltex.Characters;
 using Zeltex.Skeletons;
+using Zeltex.Physics;
 
 // Need to decouple this script
 // to do:
@@ -27,7 +28,7 @@ using Zeltex.Skeletons;
 
 // another one would be, convert only the bottom parts of the body, ie feet, then calves etc, until it is just a head
 
-namespace Zeltex.Physics
+namespace Zeltex.Skeletons
 {
     /// <summary>
     /// Rag doll is a system of bones but connected using joints instead of transforms.
@@ -218,42 +219,9 @@ namespace Zeltex.Physics
         /// </summary>
 		private void RemoveBone(Bone MyBone, Transform MyRoot)
         {
-            Transform MyBoneTransform = MyBone.MyTransform;
-            if (MyBone != null && MyBoneTransform && MyBone.VoxelMesh)
+            if (MyBone != null)
             {
-                Vector3 BeforeScale = new Vector3(0.5f, 0.5f, 0.5f);
-                if (MyBone.VoxelMesh != null && MyBone.VoxelMesh.localScale != Vector3.zero)
-                {
-                    BeforeScale = MyBone.VoxelMesh.localScale;
-                }
-                MyBoneTransform.transform.SetParent(null);
-
-                if (MyBone.VoxelMesh != null)
-                {
-                    World MyWorld = MyBone.VoxelMesh.GetComponent<World>();
-                    if (MyWorld)
-                    {
-                        MyWorld.SetConvex(true);
-                    }
-                }
-
-                Rigidbody MyRigid = MyBoneTransform.gameObject.GetComponent<Rigidbody>();
-                if (MyRigid == null)
-                {
-                    MyRigid = MyBone.MyTransform.gameObject.AddComponent<Rigidbody>();
-                    MyRigid.isKinematic = true;
-                    MyRigid.useGravity = false;
-
-                    Gravity MyGrav = MyBoneTransform.gameObject.AddComponent<Gravity>();
-                    MyGrav.GravityForce = new Vector3(0, -0.5f, 0);
-                }
-
-                Items.ItemHandler MyItemInstance = MyBoneTransform.gameObject.GetComponent<Items.ItemHandler>();
-                if (MyItemInstance == null)
-                {
-                    MyItemInstance = MyBone.MyTransform.gameObject.AddComponent<Items.ItemHandler>();
-                    MyItemInstance.SetItem(MyBone.MyItem);
-                }
+                MyBone.Detatch();
             }
         }
 
@@ -262,33 +230,7 @@ namespace Zeltex.Physics
             if (MyBone != null)
             {
                 MyBone.AttachBoneToParent(false);
-
-                if (MyBone.VoxelMesh != null)
-                {
-                    World MyWorld = MyBone.VoxelMesh.GetComponent<World>();
-                    if (MyWorld)
-                    {
-                        MyWorld.SetConvex(true);
-                    }
-                }
-            }
-
-            Rigidbody MyRigid = MyBone.MyTransform.gameObject.GetComponent<Rigidbody>();
-            if (MyRigid != null)
-            {
-                // Remove gravity first as it depends on rigidbody!
-                Gravity MyGrav = MyBone.MyTransform.gameObject.GetComponent<Gravity>();
-                if (MyGrav)
-                {
-                    MyGrav.Die();
-                }
-                MyRigid.Die();
-            }
-
-            Items.ItemHandler MyItemInstance = MyBone.MyTransform.gameObject.GetComponent<Items.ItemHandler>();
-            if (MyItemInstance != null)
-            {
-                MyItemInstance.Die();
+                MyBone.RemoveDetatchComponents();
             }
         }
 

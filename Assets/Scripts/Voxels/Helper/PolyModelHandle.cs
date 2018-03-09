@@ -25,24 +25,17 @@ namespace Zeltex.Voxels
     {
         [Header("Actions")]
         public EditorAction ActionLoadModel = new EditorAction();
-
         public PolyModel MyModel;
         // the index of the loaded texture map
-        public int TextureMapIndex;
+        //public int TextureMapIndex;
+        private int LoadedTextureMap;
         public UnityEvent OnUpdatedModelEvent;
         private PolyModelHandleMode HandlerMode = 0;
-
-        //public UVViewer MyUVViewer;
-        //public PolygonMaker MyMaker;
         public Material VertMaterial;
         public Material FaceMaterial;
-        //private int HandlerMode = 0;
         private Color32 NormalFaceColor = new Color32(0, 255, 76, 11);
         private Color32 SelectedFaceColor = new Color32(255, 76, 76, 68);
         private float VertSize = 0.03f;
-        //private string LoadedModelName;
-        //private PolyModel LoadedModel;
-        private int LoadedTextureMap;
         private List<GameObject> MyHandlers = new List<GameObject>();
         private List<GameObject> SelectedHandlers = new List<GameObject>();
         [Header("Actions")]
@@ -68,7 +61,7 @@ namespace Zeltex.Voxels
         {
             if (ActionLoadModel.IsTriggered()) 
             {
-                LoadVoxelMesh(MyModel, TextureMapIndex);
+                LoadVoxelMesh(MyModel, ActionTextureMapIndex);
             }
             /*if (transform.childCount > 0)
             {
@@ -86,7 +79,7 @@ namespace Zeltex.Voxels
             if (IsLoadPolygon)
             {
                 IsLoadPolygon = false;
-                LoadVoxelMesh(VoxelManager.Get().GetModel(ActionPolygonIndex), ActionTextureMapIndex);
+                LoadVoxelMesh(DataManager.Get().GetElement(DataFolderNames.PolyModels, ActionPolygonIndex) as PolyModel, ActionTextureMapIndex);
             }
             if (IsSelectFace || Input.GetKeyDown(KeyCode.Alpha9))
             {
@@ -106,7 +99,7 @@ namespace Zeltex.Voxels
 
         public void RefreshMesh()
         {
-            LoadVoxelMesh(MyModel, TextureMapIndex);
+            LoadVoxelMesh(MyModel, LoadedTextureMap);
         }
 
         /// <summary>
@@ -114,7 +107,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnMassUpdatedModel()
         {
-            LoadVoxelMesh(MyModel, TextureMapIndex);
+            LoadVoxelMesh(MyModel, LoadedTextureMap);
         }
 
         #region Gizmos
@@ -320,7 +313,7 @@ namespace Zeltex.Voxels
         public void LoadVoxelMesh(PolyModel MyModel, int NewTextureMapIndex, bool IsRefreshHandlers = false)
         {
             //LoadedModelName = MyModel.Name;
-            TextureMapIndex = NewTextureMapIndex;
+            LoadedTextureMap = NewTextureMapIndex;
             //Debug.LogError("PolyModelHandle [" + name + "] is loading [" + MyModel.Name + "] with texture map [" + TextureMapIndex + "]");
             List<string> SelectedHandlerNames = new List<string>();
             if (IsRefreshHandlers)
@@ -331,14 +324,39 @@ namespace Zeltex.Voxels
                 }
                 UpdateHandlerMode(HandlerMode);
             }
-            LoadedTextureMap = TextureMapIndex;
-            UpdateWithSingleVoxelMesh(gameObject, MyModel, TextureMapIndex);
+            UpdateWithSingleVoxelMesh(MyModel, LoadedTextureMap);
             // after loaded - check if any handlers are out of bound, and reassign them if they arn't
             if (IsRefreshHandlers && HandlerMode == PolyModelHandleMode.Verts)
             {
                 OnLoadedVertMode();
             }
         }
+
+        public void LoadTextureMap(int NewTextureMapIndex)
+        {
+            LoadVoxelMesh(MyModel, NewTextureMapIndex);
+        }
+
+        /// <summary>
+        /// Load a new mesh
+        /// </summary>
+        public void LoadVoxelMesh(PolyModel NewModel, int NewTextureMapIndex = 0)
+        {
+            MyModel = NewModel;
+            LoadedTextureMap = NewTextureMapIndex;
+            if (MyModel != null)
+            {
+                //Debug.LogError("Loading Model: " + MyModel.Name + " : " + TextureMapIndex);
+                MyModel.GenerateSolidity();
+                LoadVoxelMesh(MyModel, LoadedTextureMap, true);
+            }
+            else
+            {
+                Debug.LogError("Model is null.");
+                ClearMesh();
+            }
+        }
+
         /// <summary>
         /// Clear the mesh!
         /// </summary>
@@ -381,73 +399,61 @@ namespace Zeltex.Voxels
         }
 
         /// <summary>
-        /// Load a new mesh
-        /// </summary>
-        public void LoadVoxelMesh(PolyModel NewModel, int NewTextureMapIndex = 0)
-        {
-            MyModel = NewModel;
-            TextureMapIndex = NewTextureMapIndex;
-            if (MyModel != null)
-            {
-                //Debug.LogError("Loading Model: " + MyModel.Name + " : " + TextureMapIndex);
-                MyModel.GenerateSolidity();
-                LoadVoxelMesh(MyModel, TextureMapIndex, true);
-            }
-            else
-            {
-                Debug.LogError("Model is null.");
-                ClearMesh();
-            }
-        }
-
-        /// <summary>
         /// Update our mesh object with model and a texturemap
         /// </summary>
-        public void UpdateWithSingleVoxelMesh(GameObject MyObject, PolyModel MyModel, int TextureIndex)
+        public void UpdateWithSingleVoxelMesh(PolyModel MyModel, int TextureIndex)
         {
-            UpdateWithSingleVoxelMesh(MyObject, MyModel, TextureIndex, Color.white);
+            UpdateWithSingleVoxelMesh(MyModel, TextureIndex, Color.white);
         }
 
+        private MeshFilter MyMeshFilter;
+        private MeshCollider MyMeshCollider;
+        private MeshRenderer MyMeshRenderer;
         /// <summary>
         /// Update our mesh object with model and a texturemap and a colour
         /// </summary>
-        public void UpdateWithSingleVoxelMesh(GameObject MyObject, PolyModel MyModel, int TextureIndex, Color32 MyTint)
+        public void UpdateWithSingleVoxelMesh(PolyModel MyModel, int TextureIndex, Color32 MyTint)
         {
-            if (gameObject == MyObject)
+            if (MyMesh)
             {
-                if (MyMesh)
-                {
-                    MyMesh.Die();
-                }
+                MyMesh.Die();
             }
             Mesh MyCombinedMesh = GetSingleVoxelMesh(MyModel, TextureIndex, MyTint);
             // Debug.LogError("Inside [UpdateWithSingleVoxelMesh] with " + MyCombinedMesh.vertexCount + " vertex count. For: " + MyObject.name);
-            MeshFilter MyFilter = MyObject.GetComponent<MeshFilter>();
-            if (MyFilter == null) 
+            MyMeshFilter = gameObject.GetComponent<MeshFilter>();
+            if (MyMeshFilter == null) 
             {
-                MyFilter = MyObject.AddComponent<MeshFilter>();
+                MyMeshFilter = gameObject.AddComponent<MeshFilter>();
             }
-            if (MyFilter)
+            if (MyMeshFilter)
             {
-                MyFilter.sharedMesh = null;
-                MyFilter.sharedMesh = MyCombinedMesh;
+                MyMeshFilter.sharedMesh = null;
+                MyMeshFilter.sharedMesh = MyCombinedMesh;
             }
-            MeshCollider MyCollider = MyObject.GetComponent<MeshCollider>();
-            if (MyCollider == null) 
+            MyMeshCollider = gameObject.GetComponent<MeshCollider>();
+            if (MyMeshCollider == null) 
             {
-                MyCollider = MyObject.AddComponent<MeshCollider>();
+                MyMeshCollider = gameObject.AddComponent<MeshCollider>();
             }
-            if (MyCollider)
+            if (MyMeshCollider)
             {
-                MyCollider.sharedMesh = null;
-                MyCollider.sharedMesh = MyCombinedMesh;
+                MyMeshCollider.sharedMesh = null;
+                MyMeshCollider.sharedMesh = MyCombinedMesh;
             }
             MyMesh = MyCombinedMesh;
-            MeshRenderer MyRenderer = MyObject.GetComponent<MeshRenderer>();
-            if (MyRenderer == null) 
+            MyMeshRenderer = gameObject.GetComponent<MeshRenderer>();
+            if (MyMeshRenderer == null) 
             {
-                MyRenderer = MyObject.AddComponent<MeshRenderer>();
-                MyRenderer.material = VoxelManager.Get().GetMaterial(0);
+                MyMeshRenderer = gameObject.AddComponent<MeshRenderer>();
+                MyMeshRenderer.sharedMaterial = VoxelManager.Get().GetMaterial(0);
+            }
+        }
+
+        public void SetConvex(bool NewConvexState)
+        {
+            if (MyMeshCollider)
+            {
+                MyMeshCollider.convex = NewConvexState;
             }
         }
 
@@ -456,7 +462,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public Mesh GetSingleVoxelMesh(int MetaIndex)
         {
-            VoxelMeta MyMeta = VoxelManager.Get().GetMeta(MetaIndex);
+            VoxelMeta MyMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, MetaIndex) as VoxelMeta;
             if (MyMeta != null)
             {
                 PolyModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, MyMeta.ModelID) as PolyModel;
@@ -471,13 +477,13 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Using Meta Index instead of model and texture index
         /// </summary>
-        public void UpdateWithSingleVoxelMesh(GameObject MyObject, int MetaIndex, Color32 MyTint)
+        public void UpdateWithSingleVoxelMesh(int MetaIndex, Color32 MyTint)
         {
-            VoxelMeta MyMeta = VoxelManager.Get().GetMeta(MetaIndex);
+            VoxelMeta MyMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, MetaIndex) as VoxelMeta;
             if (MyMeta != null)
             {
                 PolyModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, MyMeta.ModelID) as PolyModel;
-                UpdateWithSingleVoxelMesh(MyObject, MyModel, MyMeta.TextureMapID, MyTint);
+                UpdateWithSingleVoxelMesh(MyModel, MyMeta.TextureMapID, MyTint);
             }
         }
 
@@ -489,6 +495,7 @@ namespace Zeltex.Voxels
             Mesh MyMesh = new Mesh();
             if (MyModel != null)
             {
+                //Debug.LogError(name + " is getting polymodel with texture index: " + TextureIndex);
                 MeshData MyMeshMyMetas = MyModel.GetCombinedMesh(TextureIndex);
                 // Add in texture map uvs!
                 // centre the mesh
@@ -498,11 +505,19 @@ namespace Zeltex.Voxels
                 }
                 MyMesh.vertices = MyMeshMyMetas.GetVerticies();
                 MyMesh.triangles = MyMeshMyMetas.GetTriangles();
-                if (MyMeshMyMetas.GetTextureCoordinates().Length == MyMesh.vertices.Length)
+                Vector2[] NewTextureCoordinates = MyMeshMyMetas.GetTextureCoordinates();
+                if (NewTextureCoordinates.Length == MyMesh.vertices.Length)
                 {
-                    MyMesh.uv = MyMeshMyMetas.GetTextureCoordinates();
+                    MyMesh.uv = NewTextureCoordinates;
+#if UNITY_EDITOR
+                    DebugTextureCoordinates = new List<Vector2>();
+                    DebugTextureCoordinates.AddRange(NewTextureCoordinates);
+#endif
                 }
-
+                else
+                {
+                    Debug.LogError("Verticies count is: " + MyMesh.vertices.Length + " while texture coordinates is: " + NewTextureCoordinates.Length);
+                }
                 if (ColorTint != Color.white)
                 {
                     MyMeshMyMetas.Colors.Clear();
@@ -516,7 +531,10 @@ namespace Zeltex.Voxels
             }
             return MyMesh;
         }
-        #endregion
+#if UNITY_EDITOR
+        public List<Vector2> DebugTextureCoordinates;
+#endif
+#endregion
 
         #region Selection
 
@@ -696,7 +714,7 @@ namespace Zeltex.Voxels
         /// </summary>
         private int GetSelectedTextureMap()
         {
-            return TextureMapIndex;
+            return LoadedTextureMap;
         }
         #endregion
         

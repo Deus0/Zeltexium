@@ -8,7 +8,7 @@ namespace Zeltex.Voxels
     /// The main data structure for a mesh
     /// </summary>
 	[System.Serializable]
-	public class MeshData 
+	public class MeshData : Element
 	{
         #region Variabes
         [SerializeField]
@@ -22,6 +22,13 @@ namespace Zeltex.Voxels
         #endregion
 
         #region Init
+
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            //Debug.LogError("Loaded mesh data with: " + Verticies.Count + " Verts");
+        }
+
         public MeshData()
         {
 
@@ -49,6 +56,7 @@ namespace Zeltex.Voxels
                 Colors.Add(MyMesh.colors32[i]);
             }
         }
+
         public MeshData(List<MeshData> MyData)
         {
             for (int a = 0; a < MyData.Count; a++)
@@ -180,7 +188,7 @@ namespace Zeltex.Voxels
 
 		public Vector2[] GetTextureCoordinates() 
 		{
-			return TextureCoordinates.ToArray ();
+			return TextureCoordinates.ToArray();
 		}
 
 		public int[] GetTriangles()

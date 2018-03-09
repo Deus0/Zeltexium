@@ -539,7 +539,22 @@ namespace Zeltex
 			try
 			{
 				DrawFieldsForObject(OpenedElement as object, null, null, true);
-			} 
+                if (OpenedElement.GetType() == typeof(Level))
+                {
+                    Level MyLevel = OpenedElement as Level;
+                    if (MyLevel.Characters.Count > 0)
+                    {
+                        for (int i = 0; i < MyLevel.Characters.Count; i++)
+                        {
+                            Characters.Character LevelCharacter = MyLevel.GetSpawnedCharacter(i);
+                            if (LevelCharacter)
+                            {
+                                DrawFieldsForObject(LevelCharacter.GetData() as object, null, null, true);
+                            }
+                        }
+                    }
+                }
+            } 
 			catch (System.StackOverflowException e) 
 			{
 				Debug.LogError("Overflow inside element: " + OpenedElement.Name + " - " + e.ToString());
@@ -1374,6 +1389,15 @@ namespace Zeltex
                         {
                             Zanimation MyZanimation = MyElementConverted as Zanimation;
                             MyZanimation.SpawnWithSkeleton(SpawnZanimationWithSkeletonName);
+                        }
+                    }
+                    else if (typeof(T) == typeof(PolyModel))
+                    {
+                        PolyModel lyModel = MyElementConverted as PolyModel;
+                        GUILabel("Models Parts: " + lyModel.MyModels.Count);
+                        if (GUIButton("GenerateCube"))
+                        {
+                            lyModel.GenerateCubeMesh();
                         }
                     }
                     else if (typeof(T) == typeof(ZoneData))

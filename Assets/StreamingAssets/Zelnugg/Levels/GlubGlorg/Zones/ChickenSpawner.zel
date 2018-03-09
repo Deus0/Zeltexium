@@ -4,7 +4,27 @@
     "y": 1,
     "z": 1
   },
+  "Position": {
+    "LevelInsideOf": "GlubGlorg",
+    "WorldInsideOf": "GlubGlorg",
+    "InChunkPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "LevelPosition": {
+      "x": 1.77,
+      "y": 1.0,
+      "z": 14.47
+    },
+    "LevelRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Name": "Resting Position"
+  },
   "Type": "Spawner",
-  "Description": "",
+  "Description": "Spawns chickens.",
   "Name": "ChickenSpawner"
 }

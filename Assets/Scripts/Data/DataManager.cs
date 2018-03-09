@@ -1577,14 +1577,6 @@ namespace Zeltex
 			if (MyFolder != null)
 			{
 				MyFolder.Remove(FileIndex);
-				if (FolderName == DataFolderNames.Voxels)
-				{
-					Voxels.VoxelManager.Get().RemoveMeta(FileIndex);
-				}
-				if (FolderName == DataFolderNames.PolyModels)
-				{
-					Voxels.VoxelManager.Get().RemoveModel(FileIndex);
-				}
 				OnUpdatedResources.Invoke();
 			}
 		}
@@ -1601,14 +1593,6 @@ namespace Zeltex
 				if (IndexOf != -1)
 				{
 					MyFolder.Remove(IndexOf);
-					if (FolderName == DataFolderNames.Voxels)
-					{
-						Voxels.VoxelManager.Get().RemoveMeta(IndexOf);
-					}
-					if (FolderName == DataFolderNames.PolyModels)
-					{
-						Voxels.VoxelManager.Get().RemoveModel(IndexOf);
-					}
 					OnUpdatedResources.Invoke();
 				}
 			}

@@ -1,0 +1,3483 @@
+{
+  "MyBones": [
+    {
+      "ParentName": "Body",
+      "MeshName": "Body",
+      "MyItem": {
+        "MetaTags": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyModel": {
+          "VoxelData": "",
+          "Description": "",
+          "Name": "Empty"
+        },
+        "TextureMapIndex": 0,
+        "MyPolyModel": {
+          "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            }
+          ],
+          "TextureMaps": [],
+          "Solidity": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MySpell": {
+          "StatTime": 0.0,
+          "SpellType": 0,
+          "IsProjectile": false,
+          "FireOnHold": true,
+          "FireRate": 0.5,
+          "Randomness": 0.0,
+          "BulletForce": 160.0,
+          "LifeTime": 2.0,
+          "Size": 1.0,
+          "SpawnSoundName": "",
+          "ImplodeSoundName": "",
+          "ExplodeSoundName": "",
+          "IsUseStat": true,
+          "StatUseName": "Mana",
+          "StatCost": 1.0,
+          "IsAddStat": true,
+          "AddStatName": "Health",
+          "AddStatValue": -0.5,
+          "AddStatVariance": 0.5,
+          "DoesDestroyOnHitCharacters": true,
+          "DoesDestroyOnHitTerrain": false,
+          "IsDestroyTerrainOnHit": false,
+          "CanPassThrough": false,
+          "IsOnHitBuff": false,
+          "OnHitEffect": {
+            "MyType": 0,
+            "Value": [],
+            "Modifiers": [],
+            "MyZexel": {
+              "Pixels": null,
+              "Size": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "Description": "",
+              "Name": "Empty"
+            },
+            "Description": "",
+            "Name": "Empty"
+          },
+          "IsExplosion": false,
+          "ExplosionSize": 0.0,
+          "IsStick": false,
+          "StickTime": 0.0,
+          "IsSeek": false,
+          "SeekDistance": 5.0,
+          "SeekDelay": 0.4,
+          "IsSummon": false,
+          "MinionName": "",
+          "MinionClass": "",
+          "MinionRace": "",
+          "IsChain": false,
+          "ChainDelay": 0.25,
+          "DamageReduction": 0.8,
+          "IsSheilding": false,
+          "SheildDelay": 0.25,
+          "IsPortal": false,
+          "CastAnimation": null,
+          "ColorTint": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 255
+          },
+          "MyModel": {
+            "VoxelData": "",
+            "Description": "",
+            "Name": "Empty"
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "Quantity": 1,
+        "Description": "Null",
+        "Name": "Empty"
+      },
+      "Tag": "",
+      "DefaultPosition": {
+        "x": 0.0,
+        "y": -0.166666657,
+        "z": 0.0
+      },
+      "DefaultScale": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "DefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultScale": {
+        "x": 0.3333333,
+        "y": 0.3333333,
+        "z": 0.3333333
+      },
+      "MeshDefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "SizeLimit": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0.1
+      },
+      "Name": "Bone_8229"
+    },
+    {
+      "ParentName": "Bone_8229",
+      "MeshName": "Body",
+      "MyItem": {
+        "MetaTags": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyModel": {
+          "VoxelData": "",
+          "Description": "",
+          "Name": "Empty"
+        },
+        "TextureMapIndex": 0,
+        "MyPolyModel": {
+          "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            }
+          ],
+          "TextureMaps": [],
+          "Solidity": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MySpell": {
+          "StatTime": 0.0,
+          "SpellType": 0,
+          "IsProjectile": false,
+          "FireOnHold": true,
+          "FireRate": 0.5,
+          "Randomness": 0.0,
+          "BulletForce": 160.0,
+          "LifeTime": 2.0,
+          "Size": 1.0,
+          "SpawnSoundName": "",
+          "ImplodeSoundName": "",
+          "ExplodeSoundName": "",
+          "IsUseStat": true,
+          "StatUseName": "Mana",
+          "StatCost": 1.0,
+          "IsAddStat": true,
+          "AddStatName": "Health",
+          "AddStatValue": -0.5,
+          "AddStatVariance": 0.5,
+          "DoesDestroyOnHitCharacters": true,
+          "DoesDestroyOnHitTerrain": false,
+          "IsDestroyTerrainOnHit": false,
+          "CanPassThrough": false,
+          "IsOnHitBuff": false,
+          "OnHitEffect": {
+            "MyType": 0,
+            "Value": [],
+            "Modifiers": [],
+            "MyZexel": {
+              "Pixels": null,
+              "Size": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "Description": "",
+              "Name": "Empty"
+            },
+            "Description": "",
+            "Name": "Empty"
+          },
+          "IsExplosion": false,
+          "ExplosionSize": 0.0,
+          "IsStick": false,
+          "StickTime": 0.0,
+          "IsSeek": false,
+          "SeekDistance": 5.0,
+          "SeekDelay": 0.4,
+          "IsSummon": false,
+          "MinionName": "",
+          "MinionClass": "",
+          "MinionRace": "",
+          "IsChain": false,
+          "ChainDelay": 0.25,
+          "DamageReduction": 0.8,
+          "IsSheilding": false,
+          "SheildDelay": 0.25,
+          "IsPortal": false,
+          "CastAnimation": null,
+          "ColorTint": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 255
+          },
+          "MyModel": {
+            "VoxelData": "",
+            "Description": "",
+            "Name": "Empty"
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "Quantity": 1,
+        "Description": "Null",
+        "Name": "Empty"
+      },
+      "Tag": "",
+      "DefaultPosition": {
+        "x": 0.0,
+        "y": -0.233,
+        "z": 0.0
+      },
+      "DefaultScale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "DefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultScale": {
+        "x": 0.3333404,
+        "y": 0.333325,
+        "z": 0.3333404
+      },
+      "MeshDefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "SizeLimit": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0.1
+      },
+      "Name": "Bone_2140"
+    },
+    {
+      "ParentName": "Pepe",
+      "MeshName": "",
+      "MyItem": {
+        "MetaTags": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyModel": {
+          "VoxelData": "",
+          "Description": "",
+          "Name": "Empty"
+        },
+        "TextureMapIndex": 0,
+        "MyPolyModel": {
+          "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            }
+          ],
+          "TextureMaps": [],
+          "Solidity": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MySpell": {
+          "StatTime": 0.0,
+          "SpellType": 0,
+          "IsProjectile": false,
+          "FireOnHold": true,
+          "FireRate": 0.5,
+          "Randomness": 0.0,
+          "BulletForce": 160.0,
+          "LifeTime": 2.0,
+          "Size": 1.0,
+          "SpawnSoundName": "",
+          "ImplodeSoundName": "",
+          "ExplodeSoundName": "",
+          "IsUseStat": true,
+          "StatUseName": "Mana",
+          "StatCost": 1.0,
+          "IsAddStat": true,
+          "AddStatName": "Health",
+          "AddStatValue": -0.5,
+          "AddStatVariance": 0.5,
+          "DoesDestroyOnHitCharacters": true,
+          "DoesDestroyOnHitTerrain": false,
+          "IsDestroyTerrainOnHit": false,
+          "CanPassThrough": false,
+          "IsOnHitBuff": false,
+          "OnHitEffect": {
+            "MyType": 0,
+            "Value": [],
+            "Modifiers": [],
+            "MyZexel": {
+              "Pixels": null,
+              "Size": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "Description": "",
+              "Name": "Empty"
+            },
+            "Description": "",
+            "Name": "Empty"
+          },
+          "IsExplosion": false,
+          "ExplosionSize": 0.0,
+          "IsStick": false,
+          "StickTime": 0.0,
+          "IsSeek": false,
+          "SeekDistance": 5.0,
+          "SeekDelay": 0.4,
+          "IsSummon": false,
+          "MinionName": "",
+          "MinionClass": "",
+          "MinionRace": "",
+          "IsChain": false,
+          "ChainDelay": 0.25,
+          "DamageReduction": 0.8,
+          "IsSheilding": false,
+          "SheildDelay": 0.25,
+          "IsPortal": false,
+          "CastAnimation": null,
+          "ColorTint": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 255
+          },
+          "MyModel": {
+            "VoxelData": "",
+            "Description": "",
+            "Name": "Empty"
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "Quantity": 1,
+        "Description": "Null",
+        "Name": "Empty"
+      },
+      "Tag": "Camera",
+      "DefaultPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.1
+      },
+      "DefaultScale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "DefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultScale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "MeshDefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "SizeLimit": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0.1
+      },
+      "Name": "CameraBone"
+    },
+    {
+      "ParentName": "Bone_8229",
+      "MeshName": "",
+      "MyItem": {
+        "MetaTags": [],
+        "MyZexel": {
+          "Pixels": null,
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyModel": {
+          "VoxelData": "",
+          "Description": "",
+          "Name": "Empty"
+        },
+        "TextureMapIndex": 2,
+        "MyPolyModel": {
+          "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null,
+              "Name": "Empty"
+            }
+          ],
+          "TextureMaps": [
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                }
+              ],
+              "TilemapNames": []
+            }
+          ],
+          "Solidity": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "Description": "",
+          "Name": "Block"
+        },
+        "MySpell": {
+          "StatTime": 0.0,
+          "SpellType": 0,
+          "IsProjectile": false,
+          "FireOnHold": true,
+          "FireRate": 0.5,
+          "Randomness": 0.0,
+          "BulletForce": 160.0,
+          "LifeTime": 2.0,
+          "Size": 1.0,
+          "SpawnSoundName": "",
+          "ImplodeSoundName": "",
+          "ExplodeSoundName": "",
+          "IsUseStat": true,
+          "StatUseName": "Mana",
+          "StatCost": 1.0,
+          "IsAddStat": true,
+          "AddStatName": "Health",
+          "AddStatValue": -0.5,
+          "AddStatVariance": 0.5,
+          "DoesDestroyOnHitCharacters": true,
+          "DoesDestroyOnHitTerrain": false,
+          "IsDestroyTerrainOnHit": false,
+          "CanPassThrough": false,
+          "IsOnHitBuff": false,
+          "OnHitEffect": {
+            "MyType": 0,
+            "Value": [],
+            "Modifiers": [],
+            "MyZexel": {
+              "Pixels": null,
+              "Size": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "Description": "",
+              "Name": "Empty"
+            },
+            "Description": "",
+            "Name": "Empty"
+          },
+          "IsExplosion": false,
+          "ExplosionSize": 0.0,
+          "IsStick": false,
+          "StickTime": 0.0,
+          "IsSeek": false,
+          "SeekDistance": 5.0,
+          "SeekDelay": 0.4,
+          "IsSummon": false,
+          "MinionName": "",
+          "MinionClass": "",
+          "MinionRace": "",
+          "IsChain": false,
+          "ChainDelay": 0.25,
+          "DamageReduction": 0.8,
+          "IsSheilding": false,
+          "SheildDelay": 0.25,
+          "IsPortal": false,
+          "CastAnimation": null,
+          "ColorTint": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 255
+          },
+          "MyModel": {
+            "VoxelData": "",
+            "Description": "",
+            "Name": "Empty"
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "Quantity": 1,
+        "Description": "Null",
+        "Name": "Block"
+      },
+      "Tag": "",
+      "DefaultPosition": {
+        "x": 0.0,
+        "y": 0.255,
+        "z": 0.0
+      },
+      "DefaultScale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "DefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "MeshDefaultScale": {
+        "x": 0.2,
+        "y": 0.2,
+        "z": 0.2
+      },
+      "MeshDefaultRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "SizeLimit": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0.1
+      },
+      "Name": "Bone_540"
+    }
+  ],
+  "Description": "",
+  "Name": "Pepe"
+}

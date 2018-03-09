@@ -399,6 +399,7 @@ namespace Zeltex.Skeletons
             }
             MyTransform.localScale = DefaultScale;
         }
+
         private IEnumerator ParentBoneWhenSpawned()
         {
             while (true)
@@ -708,6 +709,19 @@ namespace Zeltex.Skeletons
             }
         }
         #endregion
+
+        public void SetItem(Item NewItem)
+        {
+            if (MyItem != NewItem)
+            {
+                MyItem = NewItem;
+                if (MyItem != null)
+                {
+                    MyItem.ParentElement = this;
+                }
+                OnModified();
+            }
+        }
         
         public Vector3 GetDefaultPosition()
         {
@@ -823,6 +837,77 @@ namespace Zeltex.Skeletons
         public bool HasItem() 
         {
             return (SizeLimit != Vector3.zero);
+        }
+
+        public void RemoveDetatchComponents()
+        {
+            Rigidbody MyRigid = MyTransform.gameObject.GetComponent<Rigidbody>();
+            if (MyRigid != null)
+            {
+                // Remove gravity first as it depends on rigidbody!
+                Physics.Gravity MyGrav = MyTransform.gameObject.GetComponent<Physics.Gravity>();
+                if (MyGrav)
+                {
+                    MyGrav.Die();
+                }
+                MyRigid.Die();
+            }
+            if (VoxelMesh != null)
+            {
+                World MyWorld = VoxelMesh.GetComponent<World>();
+                if (MyWorld)
+                {
+                    MyWorld.SetConvex(true);
+                }
+                PolyModelHandle MyPolyHandle = VoxelMesh.GetComponent<PolyModelHandle>();
+                if (MyPolyHandle)
+                {
+                    MyPolyHandle.SetConvex(true);
+                }
+            }
+        }
+
+        public void Detatch()
+        {
+            Transform MyBoneTransform = MyTransform;
+            if (MyBoneTransform && VoxelMesh)
+            {
+                MyBoneTransform.transform.SetParent(null);
+                if (VoxelMesh != null)
+                {
+                    World MyWorld = VoxelMesh.GetComponent<World>();
+                    if (MyWorld)
+                    {
+                        MyWorld.SetConvex(true);
+                    }
+                    else
+                    {
+                        PolyModelHandle MyPolyHandle = VoxelMesh.GetComponent<PolyModelHandle>();
+                        if (MyPolyHandle)
+                        {
+                            MyPolyHandle.SetConvex(true);
+                        }
+                    }
+                }
+
+                Rigidbody MyRigid = MyBoneTransform.gameObject.GetComponent<Rigidbody>();
+                if (MyRigid == null)
+                {
+                    MyRigid = MyTransform.gameObject.AddComponent<Rigidbody>();
+                    MyRigid.isKinematic = true;
+                    MyRigid.useGravity = false;
+
+                    Physics.Gravity MyGrav = MyBoneTransform.gameObject.AddComponent<Physics.Gravity>();
+                    MyGrav.GravityForce = new Vector3(0, -1f, 0);
+                }
+
+                /*Items.ItemHandler MyItemInstance = MyBoneTransform.gameObject.GetComponent<Items.ItemHandler>();
+                if (MyItemInstance == null)
+                {
+                    MyItemInstance = MyTransform.gameObject.AddComponent<Items.ItemHandler>();
+                    MyItemInstance.SetItem(MyItem);
+                }*/
+            }
         }
     }
 }

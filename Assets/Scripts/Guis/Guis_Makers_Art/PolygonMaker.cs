@@ -108,7 +108,7 @@ namespace Zeltex.Guis.Maker
 		protected override void RemovedData(int Index)
 		{
             MyViewer.ClearMesh();
-            VoxelManager.Get().RemoveModel(Index);
+            //VoxelManager.Get().RemoveModel(Index);
 			base.RemovedData(Index);	// alsso remove palceholder string
         }
         /// <summary>
@@ -118,7 +118,7 @@ namespace Zeltex.Guis.Maker
         {
             MyViewer.OnBegin();
             base.OnBegin();
-            if (VoxelManager.Get().DiffuseTextures.Count > 0)
+            /*if (VoxelManager.Get().DiffuseTextures.Count > 0)
             {
                 if (GetDropdown("TexturesDropdown"))
                 {
@@ -128,7 +128,7 @@ namespace Zeltex.Guis.Maker
                 {
                     GetImage("TexturesImage").texture = VoxelManager.Get().DiffuseTextures[0];
                 }
-            }
+            }*/
             Debug.LogError("PolygonMaker has " + GetSize() + " elements.");
 		}
         /// <summary>

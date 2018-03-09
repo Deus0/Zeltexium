@@ -14,10 +14,13 @@ namespace Zeltex
     ///     VisualEnhancement (like post processing) - with toast UI 'You have entered a dark zone'
     ///     Stats Buff Zone 'all light stats will decreae by 50%'
     /// </summary>
+    [System.Serializable]
     public class ZoneData : ElementCore
     {
         [JsonProperty]
         public Int3 Size = new Int3(1, 1, 1);
+        [JsonProperty]
+        public LevelTransform Position;
         [JsonProperty]
         public string Type = "Spawner";
         [JsonIgnore]
@@ -28,7 +31,36 @@ namespace Zeltex
         /// </summary>
         public void OnPreSave()
         {
+            if (Position != null)
+            {
+                Position.CheckTransformUpdated();
+            }
+        }
 
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            if (Position == null)
+            {
+                Position = new LevelTransform();
+            }
+            if (Position != null)
+            {
+                Position.ParentElement = this;
+                Position.OnLoad();
+            }
+        }
+
+        public void SetZone(Zone NewZone)
+        {
+            if (MyZone != NewZone)
+            {
+                MyZone = NewZone;
+                if (MyZone)
+                {
+                    Position.AttachTransform(MyZone.transform);
+                }
+            }
         }
 
         #region Spawning
@@ -61,10 +93,24 @@ namespace Zeltex
 
         public void SpawnInLevel(Level SpawnLevel)
         {
-            if (SpawnLevel != null && SpawnLevel.HasSpawned())
+            if (SpawnLevel != null) // && SpawnLevel.HasSpawned()
             {
+                Debug.LogError("Spawning Zone: " + Name);
                 Spawn();
-                SpawnLevel.Zones.Add(MyZone);
+                if (Position == null)
+                {
+                    Position = new LevelTransform();
+                }
+                Position.SetLevel(SpawnLevel);
+                Position.AttachComponent(MyZone);
+                if (SpawnLevel.HasSpawned())
+                {
+                    SpawnLevel.Zones.Add(MyZone);
+                }
+                else
+                {
+                    Debug.LogError(SpawnLevel.Name + " has not spawned yet. Cannot add zone to the level.");
+                }
             }
         }
 

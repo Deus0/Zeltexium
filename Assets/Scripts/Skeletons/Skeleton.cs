@@ -282,25 +282,28 @@ namespace Zeltex.Skeletons
         /// </summary>
         private Bounds AddWorldToBounds(World MyWorld, Bounds MyBounds)
         {
-            if (MyWorld.IsSingleChunk())
+            if (MyWorld)
             {
-                MeshRenderer MyBodyRenderer = MyWorld.gameObject.GetComponent<MeshRenderer>();
-                MeshFilter MyMeshFilter = MyWorld.gameObject.GetComponent<MeshFilter>();
-                if (MyMeshFilter.sharedMesh && MyMeshFilter.sharedMesh.vertexCount > 0)
+                if (MyWorld.IsSingleChunk())
                 {
-                    MyBounds.Encapsulate(MyBodyRenderer.bounds);
-                }
-            }
-            else
-            {
-                foreach (Int3 MyKey in MyWorld.MyChunkData.Keys)
-                {
-                    Chunk MyChunk = MyWorld.MyChunkData[MyKey];
-                    MeshRenderer MyBodyRenderer = MyChunk.GetComponent<MeshRenderer>();
-                    MeshFilter MyMeshFilter = MyChunk.GetComponent<MeshFilter>();
+                    MeshRenderer MyBodyRenderer = MyWorld.gameObject.GetComponent<MeshRenderer>();
+                    MeshFilter MyMeshFilter = MyWorld.gameObject.GetComponent<MeshFilter>();
                     if (MyMeshFilter.sharedMesh && MyMeshFilter.sharedMesh.vertexCount > 0)
                     {
                         MyBounds.Encapsulate(MyBodyRenderer.bounds);
+                    }
+                }
+                else
+                {
+                    foreach (Int3 MyKey in MyWorld.MyChunkData.Keys)
+                    {
+                        Chunk MyChunk = MyWorld.MyChunkData[MyKey];
+                        MeshRenderer MyBodyRenderer = MyChunk.GetComponent<MeshRenderer>();
+                        MeshFilter MyMeshFilter = MyChunk.GetComponent<MeshFilter>();
+                        if (MyMeshFilter.sharedMesh && MyMeshFilter.sharedMesh.vertexCount > 0)
+                        {
+                            MyBounds.Encapsulate(MyBodyRenderer.bounds);
+                        }
                     }
                 }
             }
@@ -507,6 +510,29 @@ namespace Zeltex.Skeletons
         #endregion
 
         #region Bones
+        public void AddBoneWithPoly(string PolyName, int TextureMapIndex)
+        {
+            PolyModel MyModel = DataManager.Get().GetElement(DataFolderNames.PolyModels, PolyName) as PolyModel;
+            if (MyModel != null)
+            {
+                MyModel = MyModel.Clone<PolyModel>();
+                AddBoneWithPoly(MyModel, TextureMapIndex);
+            }
+            else
+            {
+                Debug.LogError("Could not find model of name: " + PolyName);
+            }
+        }
+        /// <summary>
+        /// Creates a new bone with a voxel model - by converting the model into an item
+        /// </summary>
+        public void AddBoneWithPoly(PolyModel NewBoneModel, int TextureMapIndex)
+        {
+            Bone NewBone = CreateBone(SpawnedSkeleton.transform);
+            NewBone.SetItem(NewBoneModel.GenerateItem(TextureMapIndex));
+            NewBone.ActivateSingle();
+        }
+
         /// <summary>
         /// Imports a mesh from DataManager and uses it for the bone
         /// </summary>
@@ -514,7 +540,7 @@ namespace Zeltex.Skeletons
         public void AddBoneWithMesh(string MeshName)
         {
             VoxelModel MyModel = DataManager.Get().GetElement(DataFolderNames.VoxelModels, MeshName) as VoxelModel;
-            if (MyModel !=null)
+            if (MyModel != null)
             {
                 MyModel = MyModel.Clone<VoxelModel>();
                 AddBoneWithModel(MyModel);
@@ -533,7 +559,6 @@ namespace Zeltex.Skeletons
             Bone NewBone = CreateBone(SpawnedSkeleton.transform);
             NewBone.MyItem = NewBoneModel.GenerateItem();
             NewBone.ActivateSingle();
-            //NewBone.CreateMesh(NewBoneModel);
         }
 
         public void AddBoneWithItem(string NewItem)

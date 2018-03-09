@@ -18,7 +18,7 @@ namespace Zeltex.Guis
 
         public void LoadMeta(string MetaName)
         {
-            VoxelMeta MyVoxel = VoxelManager.Get().GetMeta(MetaName);
+            /*VoxelMeta MyVoxel = VoxelManager.Get().GetMeta(MetaName);
             if (MyVoxel != null)
             {
                 LoadVoxelMesh(MyVoxel);
@@ -26,7 +26,7 @@ namespace Zeltex.Guis
             else
             {
                 Debug.LogError("Meta not found: " + MetaName);
-            }
+            }*/
         }
 
         /// <summary>

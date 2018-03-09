@@ -14,18 +14,7 @@ using Zeltex.Voxels;
 
 namespace Zeltex
 {
-    [System.Serializable]
-    public class LevelTransform : Element
-    {
-        [JsonProperty]
-        public string LevelInsideOf = "";
-        [JsonProperty]
-        public string WorldInsideOf = "";
-        [JsonProperty]
-        public Vector3 LevelPosition;
-        [JsonProperty]
-        public Vector3 LevelRotation;
-    }
+
     /// <summary>
     /// Holds all the data for a character
     ///     Skillbar
@@ -134,118 +123,47 @@ namespace Zeltex
                 MyZexel.ParentElement = this;
                 MyZexel.OnLoad();
             }
-            if (MyCharacter)
+            if (Position != null)
             {
-                Position.LevelPosition = MyCharacter.transform.position;
-                Position.LevelRotation = MyCharacter.transform.eulerAngles;
+                Position.ParentElement = this;
+                Position.OnLoad();
             }
         }
 
-        public void SetCharacter(Character NewCharacter, bool IsSetTransform = true)
+        public void SetCharacter(Character NewCharacter, Level NewInLevel = null, bool IsSetTransform = true)
         {
             MyCharacter = NewCharacter;
-            if (MyCharacter && IsSetTransform)
+            if (Position == null)
             {
-                if (IsSetTransform)
-                {
-                    MyCharacter.transform.position = Position.LevelPosition;
-                    MyCharacter.transform.eulerAngles = Position.LevelRotation;
-                }
-                else
-                {
-                    Position.LevelPosition = MyCharacter.transform.position;
-                    Position.LevelRotation = MyCharacter.transform.eulerAngles;
-                }
+                Position = new LevelTransform();
+            }
+            Position.SetLevel(NewInLevel);
+            if (NewInLevel != null)
+            {
+                NewInLevel.AddCharacter(NewCharacter);
+            }
+            if (IsSetTransform)
+            {
+                Position.AttachComponent(MyCharacter);
+            }
+            else
+            {
+                Position.CheckTransformUpdated();
             }
         }
 
         #region Positioning
-        [JsonIgnore]
-        public Chunk InChunk;
-        [JsonIgnore]
-        public World InWorld;
-        [JsonProperty]
-        public Int3 InChunkPosition;
 
         public void RefreshTransform(bool IsInitial = false)
         {
-            if (MyCharacter)
+            if (Position != null)
             {
-                if (MyCharacter.transform.position.x != Position.LevelPosition.x
-                    || MyCharacter.transform.position.y != Position.LevelPosition.y
-                    || MyCharacter.transform.position.z != Position.LevelPosition.z)
-                {
-                    Position.LevelPosition = MyCharacter.transform.position;
-                    OnModified();
-                }
-                if (MyCharacter.transform.eulerAngles.x != Position.LevelRotation.x
-                    || MyCharacter.transform.eulerAngles.y != Position.LevelRotation.y
-                    || MyCharacter.transform.eulerAngles.z != Position.LevelRotation.z)
-                {
-                    Position.LevelRotation = MyCharacter.transform.eulerAngles;
-                    OnModified();
-                }
-                // If chunk position changes
-                if (InWorld)
-                {
-                    Int3 NewChunkPosition = InWorld.GetChunkPosition(MyCharacter.transform);
-                    if (InChunkPosition != NewChunkPosition || IsInitial)
-                    {
-                        InChunkPosition = NewChunkPosition;
-                        Chunk NewChunk = InWorld.GetChunk(InChunkPosition);
-                        SetInChunk(NewChunk);
-                        OnModified();
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("Character [" + Name + "] spawned without a world.");
-                }
+                Position.CheckTransformUpdated();
             }
             else
             {
                 Debug.LogError(Name + " Has no set character.");
             }
-        }
-
-        private void SetInChunk(Chunk NewInChunk)
-        {
-            if (NewInChunk != InChunk)
-            {
-                // First remove character from old chunk
-                if (InChunk)
-                {
-                    InChunk.RemoveCharacter(MyCharacter);
-                }
-                InChunk = NewInChunk;
-                if (NewInChunk)
-                {
-                    NewInChunk.AddCharacter(MyCharacter);
-                }
-            }
-        }
-
-        public Chunk GetInChunk()
-        {
-            return InChunk;
-        }
-
-        public void SetWorld(World NewWorld)
-        {
-            if (InWorld != NewWorld)
-            {
-                InWorld = NewWorld;
-            }
-        }
-
-        public World GetInWorld()
-        {
-            return InWorld;
-        }
-
-        public Int3 GetChunkPosition()
-        {
-            return InChunkPosition;
         }
         #endregion
 
@@ -291,15 +209,14 @@ namespace Zeltex
             return Equipment;
         }
 
-        [JsonIgnore, SerializeField]
-        public Level InLevel;
         public void SetInLevel(Level NewInLevel)
         {
-            InLevel = NewInLevel;
+            Position.SetLevel(NewInLevel);
         }
 
 
         #region EditorSpawning
+
         public override void Spawn()
         {
             GameObject NewCharacter = new GameObject();
@@ -307,6 +224,7 @@ namespace Zeltex
             MyCharacter = NewCharacter.AddComponent<Character>();
             MyCharacter.SetData(this, null, false, false);
         }
+
         public Character Spawn(Level MyLevel)
         {
             GameObject NewCharacter = new GameObject();

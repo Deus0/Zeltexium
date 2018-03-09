@@ -15,7 +15,6 @@ namespace Zeltex.WorldUtilities
     /// </summary>
 	public class ZoneSpawner : Zone
     {
-        #region Variables
         [Header("Spawn")]
         [SerializeField]
         private GameObject SpawnPrefab;
@@ -46,8 +45,6 @@ namespace Zeltex.WorldUtilities
         [Header("Event")]
         public EventObject OnSpawn;
         private UnityEngine.Events.UnityAction<GameObject> OnCharacterReturnToPool;
-
-        #endregion
 
         #region Mono
         void Start()

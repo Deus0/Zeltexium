@@ -135,11 +135,16 @@ namespace Zeltex.Voxels
 
         void InitializeUpdates()
         {
+            if (MyChunks.Count == 0)
+            {
+                MyHandle = null;
+            }
             if (MyChunks.Count > 0 &&
                 (MyHandle == null || MyHandle.IsUpdating() == false))
             {
                 IsUpdating = true;
                 MyHandle = RoutineManager.Get().StartCoroutine(MainUpdate());
+                Debug.LogError("Success to initialize WorldUpdater");
             }
         }
 
@@ -170,7 +175,8 @@ namespace Zeltex.Voxels
                 {
                     float TimeBegun = Time.realtimeSinceStartup;
                     MyChunks.Remove(UpdatingChunk);
-                    yield return CoroutineManager.StartCoroutine(UpdatingChunk.BuildChunkMesh());
+                    UpdatingChunk.PreWorldBuilderBuildMesh();
+                    yield return UpdatingChunk.BuildChunkMesh();
                     /*if (LogManager.Get())
                     {
                         string DebugLine = UpdatingChunk.name + "[" + Mathf.RoundToInt((Time.realtimeSinceStartup - TimeStartedChunk) * 1000) + "]";

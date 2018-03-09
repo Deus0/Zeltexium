@@ -110,7 +110,7 @@ namespace Zeltex.Guis.Maker
                 GetDropdown("TextureMapDropdown").interactable = true;
                 GetInput("CommandsInput").interactable = true;
                 GetInput("DescriptionInput").interactable = true;
-                GetDropdown("ModelDropdown").value = MyVoxelManager.GetModelIndex(GetSelectedVoxel().ModelID);
+                //GetDropdown("ModelDropdown").value = MyVoxelManager.GetModelIndex(GetSelectedVoxel().ModelID);
                 //Debug.LogError("Setting voxel type to: " + GetSelected().TextureMapID);
                 GetDropdown("TextureMapDropdown").value = GetSelectedVoxel().TextureMapID;
                 MyBlockViewer.LoadVoxelMesh(GetSelectedVoxel());
@@ -176,7 +176,7 @@ namespace Zeltex.Guis.Maker
                 if (MyModel == null)
                 {
                     GetSelectedVoxel().SetModelID("Block");
-                    MyModel = VoxelManager.Get().GetModel("Block");
+                    //MyModel = VoxelManager.Get().GetModel("Block");
                 }
                 if (MyModel != null)
                 {
@@ -196,10 +196,10 @@ namespace Zeltex.Guis.Maker
             List<string> MyNames = new List<string>();
             if (MyDropdown.name == "ModelDropdown")
             {
-                for (int i = 0; i < MyVoxelManager.MyModels.Count; i++)
+                /*for (int i = 0; i < MyVoxelManager.MyModels.Count; i++)
                 {
                     MyNames.Add(MyVoxelManager.GetModel(i).Name);// MyModelMaker.MyDataBase.MyModels[i].name);
-                }
+                }*/
                 FillDropDownWithList(MyDropdown, MyNames);
             }
             if (MyDropdown.name == "TextureMapDropdown")
@@ -219,7 +219,7 @@ namespace Zeltex.Guis.Maker
             if (MyModel == null)
             {
                 Debug.LogError(ModelName + " is null.");
-                MyModel = VoxelManager.Get().GetModel("Block");
+                //MyModel = VoxelManager.Get().GetModel("Block");
             }
             if (MyModel != null)
             {
@@ -255,17 +255,6 @@ namespace Zeltex.Guis.Maker
         /// </summary>
         public void AddData(string MyName, VoxelMeta NewMeta)
         {
-            if (MyVoxelManager.MyMetas.ContainsKey(MyName) == false)
-            {
-                AddName(MyName);
-                NewMeta.Name = MyName;
-                DataManager.Get().AddElement(DataManagerFolder, NewMeta);
-                MyIndexController.SetMaxSelected(GetSize());
-            }
-            else
-            {
-                Debug.LogError(MyName + " already exists in database.");
-            }
         }
         #endregion
     }

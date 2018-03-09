@@ -246,10 +246,10 @@ namespace Zeltex.Guis.Maker
                     if (DataManagerFolder == DataFolderNames.VoxelDiffuseTextures)
                     {
                         //Debug.Log("Renaming texture for voxel models: " + GetSelected().name + " to " + MyInputField.text);
-                        for (int i = 0; i < VoxelManager.Get().MyModels.Count; i++)
+                        /*for (int i = 0; i < VoxelManager.Get().MyModels.Count; i++)
                         {
                             VoxelManager.Get().GetModel(i).RenameTexture(OldName, MyInputField.text);
-                        }
+                        }*/
                     }
                 }
             }
@@ -296,7 +296,7 @@ namespace Zeltex.Guis.Maker
         public void GenerateTileMap()
         {
             TileMap NewMap = new TileMap();
-            VoxelManager.Get().UpdateTileMap(NewMap.CreateTileMap(VoxelManager.Get().DiffuseTextures, TileResolution));
+            //VoxelManager.Get().UpdateTileMap(NewMap.CreateTileMap(VoxelManager.Get().DiffuseTextures, TileResolution));
         }
         #endregion
     }

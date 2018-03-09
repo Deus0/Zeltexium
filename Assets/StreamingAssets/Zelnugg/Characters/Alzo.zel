@@ -2070,6 +2070,216 @@
               "TextureCoordinates": [],
               "Colors": [],
               "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
             }
           ],
           "TextureMaps": [],
@@ -2115,6 +2325,216 @@
         "TextureMapIndex": 2,
         "MyPolyModel": {
           "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
             {
               "Verticies": [
                 {
@@ -7471,2843 +7891,6 @@
               "TextureCoordinates": [],
               "Colors": [],
               "AddDataMesh": null
-            }
-          ],
-          "TextureMaps": [
-            {
-              "Coordinates": [
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Element6524"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Element6524"
-                }
-              ],
-              "TilemapNames": []
-            },
-            {
-              "Coordinates": [
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Jack"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Jack"
-                }
-              ],
-              "TilemapNames": []
-            },
-            {
-              "Coordinates": [
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Dert"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Dert"
-                }
-              ],
-              "TilemapNames": []
-            },
-            {
-              "Coordinates": [
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 0.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 0.0
-                  },
-                  "TileName": "Meeltex"
-                },
-                {
-                  "MyCoordinate": {
-                    "x": 1.0,
-                    "y": 1.0
-                  },
-                  "TileName": "Meeltex"
-                }
-              ],
-              "TilemapNames": []
-            }
-          ],
-          "Solidity": [
-            true,
-            true,
-            true,
-            true,
-            true,
-            true
-          ],
-          "MyPoly": null,
-          "Description": "",
-          "Name": "Block"
-        },
-        "MySpell": null,
-        "Quantity": 1,
-        "Description": "Null",
-        "Name": "Dirt"
-      },
-      {
-        "MetaTags": [],
-        "MyZexel": {
-          "Pixels": "/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDA==",
-          "Size": {
-            "x": 32.0,
-            "y": 32.0
-          },
-          "Description": "",
-          "Name": "Empty"
-        },
-        "MyStats": {
-          "IsAlive": true,
-          "Data": [],
-          "Description": "",
-          "Name": "Empty"
-        },
-        "MyModel": {
-          "VoxelData": "",
-          "Description": "",
-          "Name": "Empty"
-        },
-        "TextureMapIndex": 2,
-        "MyPolyModel": {
-          "MyModels": [
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": -5.96046448E-08,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 1.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 2.98023224E-08
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                },
-                {
-                  "x": 1.0,
-                  "y": 1.0,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
-            },
-            {
-              "Verticies": [
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 1.0
-                },
-                {
-                  "x": 2.98023224E-08,
-                  "y": 1.0,
-                  "z": 0.0
-                },
-                {
-                  "x": 0.0,
-                  "y": 2.98023224E-08,
-                  "z": 0.0
-                }
-              ],
-              "Triangles": [
-                0,
-                1,
-                2,
-                0,
-                2,
-                3
-              ],
-              "TextureCoordinates": [],
-              "Colors": [],
-              "AddDataMesh": null
             },
             {
               "Verticies": [
@@ -11256,6 +8839,3473 @@
         "TextureMapIndex": 2,
         "MyPolyModel": {
           "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            }
+          ],
+          "TextureMaps": [
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Element6524"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Element6524"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Jack"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Jack"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Dert"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Dert"
+                }
+              ],
+              "TilemapNames": []
+            },
+            {
+              "Coordinates": [
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 0.0
+                  },
+                  "TileName": "Meeltex"
+                },
+                {
+                  "MyCoordinate": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "TileName": "Meeltex"
+                }
+              ],
+              "TilemapNames": []
+            }
+          ],
+          "Solidity": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "MyPoly": null,
+          "Description": "",
+          "Name": "Block"
+        },
+        "MySpell": null,
+        "Quantity": 1,
+        "Description": "Null",
+        "Name": "Dirt"
+      },
+      {
+        "MetaTags": [],
+        "MyZexel": {
+          "Pixels": "/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zQfDP80Hwz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NyEN/zchDf83IQ3/NyEN/zchDf83IQ3/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP83IQ3/NyEN/zchDf83IQ3/NyEN/zchDf80Hwz/NB8M/zIeDP8yHgz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zQfDP80Hwz/NB8M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zIeDP8yHgz/Mh4M/zQfDP80Hwz/NB8M/zQfDA==",
+          "Size": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyStats": {
+          "IsAlive": true,
+          "Data": [],
+          "Description": "",
+          "Name": "Empty"
+        },
+        "MyModel": {
+          "VoxelData": "",
+          "Description": "",
+          "Name": "Empty"
+        },
+        "TextureMapIndex": 2,
+        "MyPolyModel": {
+          "MyModels": [
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": -5.96046448E-08,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 2.98023224E-08
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                },
+                {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
+            {
+              "Verticies": [
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "x": 2.98023224E-08,
+                  "y": 1.0,
+                  "z": 0.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 2.98023224E-08,
+                  "z": 0.0
+                }
+              ],
+              "Triangles": [
+                0,
+                1,
+                2,
+                0,
+                2,
+                3
+              ],
+              "TextureCoordinates": [],
+              "Colors": [],
+              "AddDataMesh": null
+            },
             {
               "Verticies": [
                 {
@@ -14326,6 +15376,216 @@
           "TextureMapIndex": 0,
           "MyPolyModel": {
             "MyModels": [
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": -5.96046448E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": -5.96046448E-08,
+                    "z": 1.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 2.98023224E-08
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 2.98023224E-08
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 2.98023224E-08,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 2.98023224E-08,
+                    "y": 1.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
               {
                 "Verticies": [
                   {
@@ -20710,6 +21970,216 @@
                 "TextureCoordinates": [],
                 "Colors": [],
                 "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": -5.96046448E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": -5.96046448E-08,
+                    "z": 1.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 1.0,
+                    "z": 2.98023224E-08
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 2.98023224E-08
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
+              },
+              {
+                "Verticies": [
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 2.98023224E-08,
+                    "y": 1.0,
+                    "z": 1.0
+                  },
+                  {
+                    "x": 2.98023224E-08,
+                    "y": 1.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 0.0,
+                    "y": 2.98023224E-08,
+                    "z": 0.0
+                  }
+                ],
+                "Triangles": [
+                  0,
+                  1,
+                  2,
+                  0,
+                  2,
+                  3
+                ],
+                "TextureCoordinates": [],
+                "Colors": [],
+                "AddDataMesh": null
               }
             ],
             "TextureMaps": [],
@@ -20793,21 +22263,21 @@
     "Name": "Empty"
   },
   "CanRespawn": true,
-  "LevelInsideOf": "",
-  "LevelPosition": {
-    "x": 5.0,
-    "y": 0.8,
-    "z": 15.0
-  },
-  "LevelRotation": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
-  },
-  "InChunkPosition": {
-    "x": 0,
-    "y": 0,
-    "z": 0
+  "Position": {
+    "LevelInsideOf": "",
+    "WorldInsideOf": "",
+    "InChunkPosition": null,
+    "LevelPosition": {
+      "x": 5.0,
+      "y": 0.8,
+      "z": 15.0
+    },
+    "LevelRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Name": "Empty"
   },
   "Description": "The first spawn of Zaltor, the god of life.",
   "Name": "Alzo"

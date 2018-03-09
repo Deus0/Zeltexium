@@ -269,7 +269,7 @@ namespace Zeltex.Voxels
         {
             if (ActionCube != null)
             {
-                //Debug.Log("Apply voxel [" + VoxelActionName + "] to: " + RealToBlockPosition(ActionCube.transform.position).ToString());
+                Debug.Log("Apply voxel [" + VoxelActionName + "] to: " + RealToBlockPosition(ActionCube.transform.position).ToString());
                 BoxCollider MyCollider = ActionCube.GetComponent<BoxCollider>();
                 if (MyCollider)
                 {
@@ -1466,7 +1466,7 @@ namespace Zeltex.Voxels
                     }
                 }
             }
-            //Debug.LogError("Updating Blocks, with posiitons count: " + Positions.Count);
+            Debug.LogError(name + " - is Updating Blocks, with posiitons count: " + Positions.Count);
             for (int i = 0; i < Positions.Count; i++)
             {
                 if (IsPaintOver)
@@ -1500,22 +1500,27 @@ namespace Zeltex.Voxels
             MassUpdateChunk = GetChunkWorldPosition(WorldPosition);
             if (MassUpdateChunk != null)
             {
-                //Debug.LogError("Updating: MassUpdateChunk" + MassUpdateChunk.name);
+                Debug.LogError("Updating: MassUpdateChunk" + MassUpdateChunk.name);
                 MyVoxel = GetVoxel(WorldPosition);
                 if (MyVoxel != null)
                 {
                     PreviousType = MyVoxel.GetVoxelType();// GetVoxelType(WorldPosition);
                     PreviousColor = MyVoxel.GetColor();
-                    VoxelIndex = MyLookupTable.GetIndex(VoxelName);
-                    DidUpdate = MassUpdateChunk.UpdateBlockTypeMass(WorldPosition, VoxelIndex, NewColor);
-                    if (!IsTerrainGeneration && (DidUpdate && PreviousType != 0 && VoxelIndex == 0)) // because air does not drop things! And cannot drop things if not air!
+                }
+                else
+                {
+                    PreviousType = 0;
+                    PreviousColor = Color.white;
+                }
+                VoxelIndex = MyLookupTable.GetIndex(VoxelName);
+                DidUpdate = MassUpdateChunk.UpdateBlockTypeMass(WorldPosition, VoxelIndex, NewColor);
+                if (!IsTerrainGeneration && (DidUpdate && PreviousType != 0 && VoxelIndex == 0)) // because air does not drop things! And cannot drop things if not air!
+                {
+                    if (IsDropItems || IsDropParticles)
                     {
-                        if (IsDropItems || IsDropParticles)
-                        {
-                            VoxelPositionsMass.Add(WorldPosition);
-                            VoxelTypesMass.Add(PreviousType);
-                            VoxelColorsMass.Add(PreviousColor);
-                        }
+                        VoxelPositionsMass.Add(WorldPosition);
+                        VoxelTypesMass.Add(PreviousType);
+                        VoxelColorsMass.Add(PreviousColor);
                     }
                 }
             }
@@ -1530,7 +1535,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnMassUpdate()
         {
-            //Debug.LogError("Creating " + VoxelPositionsMass.Count + " Voxels in world!");
+            Debug.LogError("Creating " + VoxelPositionsMass.Count + " Voxels in world! with MassUpdateChunk.");
             if (VoxelPositionsMass.Count > 0)
             {
                 //Debug.Log("Creating " + VoxelPositionsMass.Count + " Voxels in world!");
@@ -2046,7 +2051,7 @@ namespace Zeltex.Voxels
                 return;
             }
             NewMoveableVoxel.layer = gameObject.layer;
-            NewMoveableVoxel.name = VoxelManager.Get().GetMeta(TypeRemoved).Name;
+            NewMoveableVoxel.name = DataManager.Get().GetName(DataFolderNames.Voxels, TypeRemoved);
             // Transform
             NewMoveableVoxel.transform.position = BlockToRealPosition(Position + (new Vector3(1, 1, 1)) / 2f);    // transform.TransformPoint(Position + VoxelScale/2f);
             NewMoveableVoxel.transform.rotation = transform.rotation;
@@ -2089,7 +2094,7 @@ namespace Zeltex.Voxels
             MyCollider.convex = true;
             MyMeshRenderer.sharedMaterial = VoxelManager.Get().MyMaterials[0];
             PolyModelHandle MyModel = NewMoveableVoxel.AddComponent<PolyModelHandle>();
-            MyModel.UpdateWithSingleVoxelMesh(NewMoveableVoxel, TypeRemoved, MyTint);
+            MyModel.UpdateWithSingleVoxelMesh( TypeRemoved, MyTint);
             if (IsDropParticles)
             {
                 NewMoveableVoxel.GetComponent<ParticleSystem>().Die();

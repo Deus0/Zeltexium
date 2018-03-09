@@ -33,7 +33,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     },
     {
       "Verticies": [
@@ -68,7 +69,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     },
     {
       "Verticies": [
@@ -103,217 +105,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 2.98023224E-08
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 2.98023224E-08
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 2.98023224E-08,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 2.98023224E-08,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": -5.96046448E-08,
-          "z": 1.0
-        },
-        {
-          "x": 0.0,
-          "y": -5.96046448E-08,
-          "z": 1.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 1.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     },
     {
       "Verticies": [
@@ -348,7 +141,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     },
     {
       "Verticies": [
@@ -383,217 +177,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 2.98023224E-08,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 2.98023224E-08,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": -5.96046448E-08,
-          "z": 1.0
-        },
-        {
-          "x": 0.0,
-          "y": -5.96046448E-08,
-          "z": 1.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 1.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 2.98023224E-08
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 2.98023224E-08
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 0.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
-    },
-    {
-      "Verticies": [
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 1.0
-        },
-        {
-          "x": 1.0,
-          "y": 2.98023224E-08,
-          "z": 0.0
-        },
-        {
-          "x": 1.0,
-          "y": 1.0,
-          "z": 0.0
-        }
-      ],
-      "Triangles": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        3
-      ],
-      "TextureCoordinates": [],
-      "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     },
     {
       "Verticies": [
@@ -628,7 +213,8 @@
       ],
       "TextureCoordinates": [],
       "Colors": [],
-      "AddDataMesh": null
+      "AddDataMesh": null,
+      "Name": "Empty"
     }
   ],
   "TextureMaps": [
@@ -1333,5 +919,6 @@
     true,
     true
   ],
+  "Description": "",
   "Name": "Block"
 }

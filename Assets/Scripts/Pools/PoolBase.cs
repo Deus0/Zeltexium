@@ -28,9 +28,9 @@ namespace Zeltex
         [SerializeField]
         protected List<SpawnedPool<T>> MyPools = new List<SpawnedPool<T>>();
         protected PoolSpawner MyPoolSpawner;
-        private bool IsPoolsSpawned;
-        float LastYield;
-        float YieldRate = (1f / 1000f);
+        protected bool IsPoolsSpawned;
+        protected float LastYield;
+        protected float YieldRate = (1f / 1000f);
 
         public virtual List<SpawnedPool<T>> Pools
         {
@@ -201,14 +201,14 @@ namespace Zeltex
         /// <summary>
         /// Clears all the pools - at the end of the game
         /// </summary>
-        public void ClearPools()
+        public virtual void ClearPools()
         {
             Debug.Log("Clearing pools in " + name);
-            for (int i = 0; i < Pools.Count; i++)
+            for (int i = 0; i < MyPools.Count; i++)
             {
-                Pools[i].ClearPool();
+                MyPools[i].ClearPool();
             }
-            Pools.Clear();
+            MyPools.Clear();
             IsPoolsSpawned = false;
         }
 
@@ -636,6 +636,10 @@ namespace Zeltex
                 if (PoolObjects[i] != null)
                 {
                     PoolObjects[i].gameObject.Die();
+                }
+                else
+                {
+                    Debug.LogError("Pool Object removed before can clear at " + i);
                 }
             }
             PoolObjects.Clear();

@@ -288,8 +288,7 @@ namespace Zeltex.Guis.Maker
             //UpdateStatistics();
             if (SelectedModel)
             {
-                SelectedModel.TextureMapIndex = Index;
-                SelectedModel.OnMassUpdatedModel();
+                SelectedModel.LoadTextureMap(Index);
             }
         }
 

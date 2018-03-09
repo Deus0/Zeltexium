@@ -285,9 +285,9 @@ namespace Zeltex.Voxels
                 HasTypeChanged = Data[Position.x].Data[Position.y].Data[Position.z].Data.SetType(Type);
                 if (HasTypeChanged)
                 {
-                    PreviousMeta = VoxelManager.Get().GetMeta(PreviousType);
+                    PreviousMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, PreviousType) as VoxelMeta;
                     PreviousMeta.OnVoxelDestroy(MyChunk, Position.GetVector(), Data[Position.x].Data[Position.y].Data[Position.z].Data);
-                    ThisMeta = VoxelManager.Get().GetMeta(Type);
+                    ThisMeta = DataManager.Get().GetElement(DataFolderNames.Voxels, Type) as VoxelMeta;
                     ThisMeta.OnVoxelCreate(MyChunk, Position.GetVector(), Data[Position.x].Data[Position.y].Data[Position.z].Data);
                 }
                 return (HasColorChanged || HasTypeChanged);

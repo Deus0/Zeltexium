@@ -58,6 +58,10 @@ namespace Zeltex
         public List<Character> Characters = new List<Character>();
 
         #region Overrides
+        public Character GetSpawnedCharacter(int Index)
+        {
+            return Characters[Index];
+        }
         public bool CanSpawnCharacterInEditor(int CharacterIndex)
         {
             return Characters[CharacterIndex] == null;
@@ -223,13 +227,16 @@ namespace Zeltex
 
         public override void DeSpawn()
         {
-            ZoneManager.Get().Clear();
-            Guis.Characters.CharacterGuiManager.Get().ReturnAllObjects();
+            for (int i = 0; i < Zones.Count; i++)
+            {
+                ZoneManager.Get().ReturnObject(Zones[i]);
+            }
             for (int i = 0; i < MyCharacters.Count; i++)
             {
-                CharacterManager.Get().ReturnObject(MyCharacters[i]);
+                CharacterManager.Get().ReturnObject(MyCharacters[i]);   // this should return the character guis
             }
-            WorldManager.Get().Remove(MyWorld);
+            WorldManager.Get().ReturnObject(MyWorld);
+            //Guis.Characters.CharacterGuiManager.Get().ClearPools();
         }
 
         public override bool HasSpawned()
@@ -315,7 +322,7 @@ namespace Zeltex
         {
             for (int i = 0; i < MyCharacters.Count; i++)
             {
-                MyCharacters[i].GetData().SetCharacter(MyCharacters[i], false);
+                //MyCharacters[i].GetData().SetCharacter(MyCharacters[i], null, false);
                 SaveCharacter(MyCharacters[i], SaveFolderName, IsForceSaveAll);
             }
         }
@@ -325,7 +332,7 @@ namespace Zeltex
             if (MyCharacter)
             {
                 CharacterData MyData = MyCharacter.GetData();
-                MyData.SetCharacter(MyCharacter, false);    // just incase doesn't get set earlier
+               //yData.SetCharacter(MyCharacter, null, false);    // just incase doesn't get set earlier
                 MyData.RefreshTransform();
                 if (MyData.CanSave() || IsForceSaveAll)
                 {
@@ -388,7 +395,7 @@ namespace Zeltex
 
         public string GetFilePath(Chunk MyChunk, string SaveFolderName = "")
         {
-            return GetFolderPath(SaveFolderName) + "Chunk_" + MyChunk.Position.x + "_" +
+            return GetFolderPathExtra("Chunks", SaveFolderName) + "Chunk_" + MyChunk.Position.x + "_" +
                 MyChunk.Position.y + "_" + MyChunk.Position.z + ChunkFileExtentionPlusDot;
         }
 

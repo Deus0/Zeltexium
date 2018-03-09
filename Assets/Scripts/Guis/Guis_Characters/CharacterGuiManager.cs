@@ -16,15 +16,7 @@ namespace Zeltex.Guis.Characters
         {
             if (MyManager == null)
             {
-                GameObject ManagerObject = GameObject.Find(ManagerNames.CharacterGuiManager);
-                if (ManagerObject)
-                {
-                    MyManager = ManagerObject.GetComponent<CharacterGuiManager>();
-                }
-                else
-                {
-                    Debug.LogError("Could not find CharacterGuiManager [" + ManagerNames.CharacterGuiManager + "].");
-                }
+                MyManager = ManagersManager.Get().GetManager<CharacterGuiManager>(ManagerNames.CharacterGuiManager);
             }
             return MyManager as CharacterGuiManager;
         }
@@ -89,6 +81,17 @@ namespace Zeltex.Guis.Characters
         public class GuiPool : SpawnedPool<ZelGui>
         {
 
+        }
+
+        public override void ClearPools()
+        {
+            Debug.Log("Clearing pools in " + name);
+            for (int i = 0; i < MyPools.Count; i++)
+            {
+                MyPools[i].ClearPool();
+            }
+            MyPools.Clear();
+            IsPoolsSpawned = false;
         }
         #endregion
     }

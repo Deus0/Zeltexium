@@ -127,20 +127,6 @@ namespace Zeltex
                         Level MyLevel = NewElement as Level;
                         MyLevel.SetFilePathType(DataManager.Get().MyFilePathType);
                     }
-                    if (FolderName == DataFolderNames.PolyModels)
-                    {
-                        if (VoxelManager.Get())
-                        {
-                            VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
-                        }
-                    }
-                    else if (FolderName == DataFolderNames.Voxels)
-                    {
-                        if (VoxelManager.Get())
-                        {
-                            VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
-                        }
-                    }
                     if (Data.ContainsKey(NewElement.Name) == false)
                     {
                         Data.Add(NewElement.Name, NewElement);
@@ -179,32 +165,6 @@ namespace Zeltex
 
         public void Clear()
         {
-            //Debug.LogError("[DataFolder] Clearing " + FolderName);
-            if (VoxelManager.Get())
-            {
-                if (FolderName == DataFolderNames.PolyModels)
-                {
-                    VoxelManager.Get().ClearModels();
-                }
-                else if (FolderName == DataFolderNames.Voxels)
-                {
-                    VoxelManager.Get().ClearMetas();
-                }
-                else if (FolderName == DataFolderNames.VoxelDiffuseTextures)
-                {
-                    if (VoxelManager.Get().DiffuseTextures != null)
-                    {
-                        VoxelManager.Get().DiffuseTextures.Clear();
-                    }
-                }
-                else if (FolderName == DataFolderNames.VoxelNormalTextures)
-                {
-                    if (VoxelManager.Get().NormalTextures != null)
-                    {
-                        VoxelManager.Get().NormalTextures.Clear();
-                    }
-                }
-            }
             Data.Clear();
         }
 
@@ -372,14 +332,6 @@ namespace Zeltex
             }
             if (Data.Keys.Contains(NewName) == false)
             {
-                if (FolderName == DataFolderNames.PolyModels)
-                {
-                    VoxelManager.Get().AddModelRaw(NewElement as PolyModel);
-                }
-                else if (FolderName == DataFolderNames.Voxels)
-                {
-                    VoxelManager.Get().AddMetaRaw(NewElement as VoxelMeta);
-                }
                 Data.Add(NewName, NewElement);
                 CachedData.Add(NewElement);
                 return true;

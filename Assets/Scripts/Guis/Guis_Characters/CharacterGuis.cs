@@ -126,7 +126,7 @@ namespace Zeltex.Guis.Characters
             {
                 if (MyGuis[i])
                 {
-                    MyGuis[i].Die();
+                    MyGuis[i].gameObject.Die();
                 }
             }
             MyGuis.Clear();

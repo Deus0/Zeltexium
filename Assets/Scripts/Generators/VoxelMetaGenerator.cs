@@ -137,7 +137,7 @@ namespace Zeltex.Generators
             // Generate TileMap
             //MyTextureManager.GenerateTileMap();
             yield return new WaitForSeconds(LoadingDelay);
-            Debug.Log("Generated: " + MyVoxelManager.MyMetas.Count + " Voxels.");
+            //Debug.Log("Generated: " + MyVoxelManager.MyMetas.Count + " Voxels.");
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Zeltex.Generators
         private void GeneratePolyModelTextureMap()
         {
 			// Create a texture map for each texture
-			int DiffuseTexturesCount = MyVoxelManager.DiffuseTextures.Count;
+			/*int DiffuseTexturesCount = MyVoxelManager.DiffuseTextures.Count;
 			Debug.LogError("Generating texture map for " + DiffuseTexturesCount + " Textures.");
 			for (int i = 0; i < MyVoxelManager.MyModels.Count; i++)
             {
@@ -194,7 +194,7 @@ namespace Zeltex.Generators
 					MyModel.GenerateTextureMap(TextureName, j);
                 }
             }
-            MyVoxelManager.GenerateTileMap();
+            MyVoxelManager.GenerateTileMap();*/
         }
 
         //  uses textures to create blocks - isnt used anymore

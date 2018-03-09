@@ -146,7 +146,7 @@ namespace Zeltex.Characters
             }
             if (ActionSaveToLevel.IsTriggered())
             {
-                Data.InLevel.SaveCharacter(this, "", true);
+                Data.Position.InLevel.SaveCharacter(this, "", true);
             }
 			if (ActionImportVox.IsTriggered()) 
 			{
@@ -260,7 +260,7 @@ namespace Zeltex.Characters
         /// </summary>
         public void OnActivated()
         {
-            World MyWorld = Data.GetInWorld();
+            World MyWorld = Data.Position.GetInWorld();
             if (MyWorld == null)
             {
                 //Debug.LogError(name + " has a null world, so cannot position.");
@@ -323,7 +323,8 @@ namespace Zeltex.Characters
             RoutineManager.Get().StartCoroutine(SetDataRoutine(NewData, MyLevel, IsClone, IsSpawnGuis));
         }
 
-        public IEnumerator SetDataRoutine(CharacterData NewData, Level MyLevel = null, bool IsClone = true, bool IsSpawnGuis = true, bool IsActivateSkeleton = true)
+        public IEnumerator SetDataRoutine(CharacterData NewData, 
+            Level MyLevel = null, bool IsClone = true, bool IsSpawnGuis = true, bool IsActivateSkeleton = true)
         {
             if (Data != NewData && NewData != null)
             {
@@ -343,20 +344,9 @@ namespace Zeltex.Characters
                 Data.OnInitialized();
                 name = Data.Name;
                 RefreshComponents();
-                Data.SetCharacter(this);
                 Data.MyStatsHandler.SetCharacter(this);
                 Data.MyQuestLog.Initialise(this);
-                Data.SetInLevel(MyLevel);
-                //InLevel = MyLevel;
-                if (MyLevel != null)
-                {
-                    transform.position = Data.LevelPosition;
-                    transform.eulerAngles = Data.LevelRotation;
-                    Data.SetWorld(MyLevel.GetWorld());
-                    Data.RefreshTransform(true);
-                    MyLevel.AddCharacter(this);
-                }
-                //MySkeleton.gameObject.SetActive(false);
+                Data.SetCharacter(this, MyLevel);
                 MyMover.IsPlayer = IsPlayer;
                 MySkeleton.SetSkeletonData(Data.MySkeleton);
                 if (!IsActivateSkeleton)
@@ -378,8 +368,6 @@ namespace Zeltex.Characters
                 {
                     Data.MyGuis.SetCharacter(this, false);
                     yield return ActivateCharacter();
-                    //yield return MySkeleton.GetSkeleton().ActivateRoutine();
-                    // MyMover.SetCameraBone(GetCameraBone());
                 }
                 else
                 {
@@ -1214,17 +1202,17 @@ namespace Zeltex.Characters
         #region Positioning 
         public World GetInWorld()
         {
-            return Data.GetInWorld();
+            return Data.Position.GetInWorld();
         }
 
         public Int3 GetChunkPosition()
         {
-            return Data.GetChunkPosition();
+            return Data.Position.GetChunkPosition();
         }
 
         public Chunk GetInChunk()
         {
-            return Data.GetInChunk();
+            return Data.Position.GetInChunk();
         }
 
         /// <summary>
@@ -1232,7 +1220,7 @@ namespace Zeltex.Characters
         /// </summary>
         public void SetWorld(World NewWorld)
         {
-            Data.SetWorld(NewWorld);
+            Data.Position.SetWorld(NewWorld);
         }
 
         #endregion

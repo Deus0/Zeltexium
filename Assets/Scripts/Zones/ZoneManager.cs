@@ -27,8 +27,11 @@ namespace Zeltex
 
         public void Add(Zone NewZone)
         {
-            NewZone.transform.SetParent(ZoneManager.Get().transform);
-            Zones.Add(NewZone);
+            if (Zones.Contains(NewZone) == false)
+            {
+                NewZone.transform.SetParent(ZoneManager.Get().transform);
+                Zones.Add(NewZone);
+            }
         }
 
         public void Clear()
@@ -78,6 +81,14 @@ namespace Zeltex
         }
 
         // WorldUtilities.ZoneSpawner.Get().SetWorld(this);
+
+        public void ReturnObject(Zone MyZone)
+        {
+            if (MyZone)
+            {
+                MyZone.gameObject.Die();
+            }
+        }
     }
 
 }

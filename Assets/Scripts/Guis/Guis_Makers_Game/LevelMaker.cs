@@ -51,7 +51,7 @@ namespace Zeltex.Guis.Maker
 
         public override void OnEnd()
         {
-            WorldManager.Get().Remove(MyWorld);
+            WorldManager.Get().ReturnObject(MyWorld);
             Clear();
         }
 

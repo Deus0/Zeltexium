@@ -93,7 +93,7 @@ namespace Zeltex.Guis.Maker
             Destroy(HighLightedCube.GetComponent<BoxCollider>());
             HighLightedCube.GetComponent<MeshRenderer>().material = HighlightedMaterial;
             HighLightedCube.SetActive(false);
-            VoxelName = VoxelManager.Get().GetMetaName(1);
+            //VoxelName = VoxelManager.Get().GetMetaName(1);
         }
 
         void OnDisable()
@@ -1179,7 +1179,7 @@ namespace Zeltex.Guis.Maker
             if (MyDropdown.name == "VoxelDropdown")
             {
                 // don't add air!
-                for (int i = 1; i < VoxelManager.Get().MyMetas.Count; i++)
+                /*for (int i = 1; i < VoxelManager.Get().MyMetas.Count; i++)
                 {
                     MyNames.Add(VoxelManager.Get().GetMeta(i).Name);
                 }
@@ -1196,7 +1196,7 @@ namespace Zeltex.Guis.Maker
                     {
                         Debug.LogError("VoxelPainter MyPolyModelViewer is null.");
                     }
-                }
+                }*/
             }
             if (MyDropdown.name == "ModelLoadDropdown")
             {

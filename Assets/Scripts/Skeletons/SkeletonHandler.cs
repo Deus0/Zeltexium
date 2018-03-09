@@ -30,11 +30,13 @@ namespace Zeltex.Skeletons
         public EditorAction ActionSpawnBone = new EditorAction();
         public EditorAction ActionImportVoxBone = new EditorAction();
         public EditorAction ActionSpawnVoxBone = new EditorAction();
+        public EditorAction ActionSpawnPolyBone = new EditorAction();
         public EditorAction ActionSpawnItemBone = new EditorAction();
 
         [Header("Action Data")]
         public Transform ActionBone = null;
         public VoxelModelAction ActionVoxelModel = new VoxelModelAction();
+        public PolyModelAction ActionPolyModel = new PolyModelAction();
         public ItemAction ActionItem = new ItemAction();
 
         [Header("Misc")]
@@ -132,6 +134,10 @@ namespace Zeltex.Skeletons
                 if (ActionSpawnVoxBone.IsTriggered())
                 {
                     GetSkeleton().AddBoneWithMesh(ActionVoxelModel.VoxelModelName);
+                }
+                if (ActionSpawnPolyBone.IsTriggered())
+                {
+                    GetSkeleton().AddBoneWithPoly(ActionPolyModel.PolyName, ActionPolyModel.TextureMapIndex);
                 }
                 if (ActionSpawnItemBone.IsTriggered())
                 {

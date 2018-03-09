@@ -206,6 +206,28 @@ namespace Zeltex.Util
         /// <summary>
         /// Converts a List<string></string> to a string
         /// </summary>
+        public static string ConvertToSingle(List<Vector2> MyList)
+        {
+            if (MyList.Count > 0)
+            {
+                for (int i = 0; i < MyList.Count - 1; i++)
+                {
+                    MyStringBuilder.Append(MyList[i].ToString());
+                    MyStringBuilder.Append("\n");
+                }
+                MyStringBuilder.Append(MyList[MyList.Count - 1]);
+                string MyString = MyStringBuilder.ToString();
+                MyStringBuilder = new StringBuilder();
+                return MyString;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        /// <summary>
+        /// Converts a List<string></string> to a string
+        /// </summary>
         public static string ConvertToSingle(List<string> MyList)
         {
             if (MyList.Count > 0)

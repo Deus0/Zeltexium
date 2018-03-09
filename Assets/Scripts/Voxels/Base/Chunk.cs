@@ -33,7 +33,6 @@ namespace Zeltex.Voxels
     [ExecuteInEditMode]
     public class Chunk : MonoBehaviour
     {
-        #region Variables
         private static string AirName = "Air";
         public static int ChunkSize = 16;   // size for our chunks
          
@@ -77,9 +76,6 @@ namespace Zeltex.Voxels
         private static Color MutateColorAddition = new Color(0.88f, 0.4f, 0.58f, 1f);
         private static float MutateColorVariance = 0.14f;
 
-        public List<Character> MyCharacters = new List<Character>();
-        public List<Zone> MyZones = new List<Zone>();
-
         #region CachedVariables
 
         #region MeshUpdates
@@ -103,8 +99,6 @@ namespace Zeltex.Voxels
         #endregion
         #endregion
 
-        #endregion
-
         #region Saving
         public bool CanSave()
         {
@@ -116,6 +110,8 @@ namespace Zeltex.Voxels
             {
                 HasChanged = true;
                 // Modified Event
+                //MyWorld.OnModified();
+                // which calls MyLevel/SaveGame onModified
             }
         }
         public void OnSaved()
@@ -749,24 +745,7 @@ namespace Zeltex.Voxels
         public List<string> GetScript()
         {
             List<string> MyData = new List<string>();
-            if (MyCharacters.Count > 0)
-            {
-                MyData.Add("/Characters");
-                for (int i = 0; i < MyCharacters.Count; i++)
-                {
-                    MyData.Add(MyCharacters[i].GetData().Name);
-                }
-                MyData.Add("/EndCharacters");
-            }
-            if (MyZones.Count > 0)
-            {
-                MyData.Add("/Zones");
-                for (int i = 0; i < MyZones.Count; i++)
-                {
-                    MyData.Add(MyZones[i].GetData().Name);
-                }
-                MyData.Add("/EndZones");
-            }
+            MyData.AddRange(GetInstancedList());
             for (int i = 0; i < ChunkSize; i++)
             {
                 for (int j = 0; j < ChunkSize; j++)
@@ -956,12 +935,17 @@ namespace Zeltex.Voxels
         }
         #endregion
 
+        public void PreWorldBuilderBuildMesh()
+        {
+            WasMassUpdated = true;
+        }
         /// <summary>
         /// Runs on a thread - starts the build process of the mesh data
         /// BUilds a different mesh per material!
         /// </summary>
         public IEnumerator BuildChunkMesh()
         {
+            //Debug.LogError("BuildChunkMesh: " + WasMassUpdated + " in " + name);
             if (WasMassUpdated)
             {
                 WasMassUpdated = false;
@@ -1756,7 +1740,7 @@ namespace Zeltex.Voxels
         /// </summary>
         public void OnMassUpdate()
         {
-            // Debug.LogError(name + " - MassUpdated: " + WasMassUpdated);
+            Debug.LogError(name + " - MassUpdated: " + WasMassUpdated);
             if (WasMassUpdated)
             {
                 //Debug.LogError(name + " was mass updated: " + Time.realtimeSinceStartup);
@@ -1910,26 +1894,87 @@ namespace Zeltex.Voxels
         }
         #endregion
 
+        #region Instanced
+        [Header("Instanced")]
+        public List<Character> MyCharacters = new List<Character>();
+        public List<Zone> MyZones = new List<Zone>();
+        public List<Items.ItemHandler> Items = new List<Items.ItemHandler>();
+
         public IEnumerator ActivateCharacters()
         {
             for (int i = 0; i < MyCharacters.Count; i++)
             {
-                yield return MyCharacters[i].ActivateCharacter();
+                if (MyCharacters[i])
+                {
+                    yield return MyCharacters[i].ActivateCharacter();
+                }
             }
         }
-        public void AddCharacter(Character NewCharacter)
+
+        public void AddTransform(Transform NewTransform)
         {
-            if (MyCharacters.Contains(NewCharacter) == false)
+            Character NewCharacter = NewTransform.gameObject.GetComponent<Character>();
+            if (NewCharacter && MyCharacters.Contains(NewCharacter) == false)
             {
                 MyCharacters.Add(NewCharacter);
+                return;
             }
-        }
-        public void RemoveCharacter(Character OldCHaracter)
-        {
-            if (MyCharacters.Contains(OldCHaracter) == true)
+            Zone NewZone = NewTransform.gameObject.GetComponent<Zone>();
+            if (NewCharacter && MyZones.Contains(NewZone) == false)
             {
-                MyCharacters.Remove(OldCHaracter);
+                MyZones.Add(NewZone);
+                return;
             }
         }
+
+        public void RemoveTransform(Transform OldTransform)
+        {
+            Character OldCharacter = OldTransform.gameObject.GetComponent<Character>();
+            if (OldCharacter && MyCharacters.Contains(OldCharacter) == true)
+            {
+                MyCharacters.Remove(OldCharacter);
+                return;
+            }
+            Zone OldZone = OldTransform.gameObject.GetComponent<Zone>();
+            if (OldZone && MyZones.Contains(OldZone) == true)
+            {
+                MyZones.Remove(OldZone);
+                return;
+            }
+        }
+
+        private List<string> GetInstancedList()
+        {
+            List<string> MyData = new List<string>();
+            if (MyCharacters.Count > 0)
+            {
+                MyData.Add("/Characters");
+                for (int i = 0; i < MyCharacters.Count; i++)
+                {
+                    MyData.Add(MyCharacters[i].GetData().Name);
+                }
+                MyData.Add("/EndCharacters");
+            }
+            if (MyZones.Count > 0)
+            {
+                MyData.Add("/Zones");
+                for (int i = 0; i < MyZones.Count; i++)
+                {
+                    MyData.Add(MyZones[i].GetData().Name);
+                }
+                MyData.Add("/EndZones");
+            }
+            if (Items.Count > 0)
+            {
+                MyData.Add("/Items");
+                for (int i = 0; i < MyZones.Count; i++)
+                {
+                    MyData.Add(Items[i].MyItem.Name);
+                }
+                MyData.Add("/EndItems");
+            }
+            return MyData;
+        }
+        #endregion
     }
 }

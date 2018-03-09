@@ -62,11 +62,11 @@ namespace Zeltex.Voxels
 
         public void SetNames(VoxelManager MyVoxelManager)
         {
-            DirtName = MyVoxelManager.GetMetaName(GetDirtType());
+            /*DirtName = MyVoxelManager.GetMetaName(GetDirtType());
             GrassName = MyVoxelManager.GetMetaName(GetGrasstype());
             BedrockName = MyVoxelManager.GetMetaName(BottomFloorBlock);
             WoodName = MyVoxelManager.GetMetaName(TreeBlock);
-            LeafName = MyVoxelManager.GetMetaName(LeafBlock);
+            LeafName = MyVoxelManager.GetMetaName(LeafBlock);*/
         }
     }
 }

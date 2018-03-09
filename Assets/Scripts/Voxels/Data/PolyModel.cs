@@ -32,8 +32,6 @@ namespace Zeltex.Voxels
     {
         #region Variables
         //public string Name = "Empty";
-        [JsonIgnore]
-        public static int BufferLength = 0; // 1
         [JsonProperty]
         public List<MeshData> MyModels = new List<MeshData>();
         // Each model has multiple texture maps
@@ -44,6 +42,8 @@ namespace Zeltex.Voxels
         public bool[] Solidity = new bool[6];   // determine if its solid on sides
 
         // Ignoring
+        [JsonIgnore]
+        public static int BufferLength = 0; // 1
         [JsonIgnore]
         private TileMap CachedTilemap;
         [JsonIgnore]
@@ -60,10 +60,35 @@ namespace Zeltex.Voxels
         private int IndexBegin;
         [JsonIgnore]
         private int EndIndex;
+        [JsonIgnore]
+        public PolyModelHandle MyPoly;
         #endregion
 
+        public override void OnLoad()
+        {
+            base.OnLoad();
+            //Debug.LogError("Loaded Polymodel " + Name + " with " + MyModels.Count + " model parts.");
+            for (int i = 0; i < MyModels.Count; i++)
+            {
+                MyModels[i].ParentElement = this;
+                MyModels[i].OnLoad();
+            }
+        }
+        /*public PolyModel()
+        {
+            //TextureMaps.Add(new PolyTextureMap());
+            GenerateCubeMesh();
+            AllSidesSolid();
+            //AddNewTextureMap();
+            //GenerateTextureMap("");
+        }*/
+
+        public override void Save(bool IsForce = false)
+        {
+            Debug.LogError("Saving with: " + MyModels.Count + " model parts.");
+            base.Save(IsForce);
+        }
         #region Spawning
-        public PolyModelHandle MyPoly;
 
         public override void Spawn()
         {
@@ -91,17 +116,6 @@ namespace Zeltex.Voxels
         public override bool HasSpawned()
         {
             return (MyPoly != null);
-        }
-        #endregion
-
-        #region Initiation
-        public PolyModel()
-        {
-            //TextureMaps.Add(new PolyTextureMap());
-            GenerateCubeMesh();
-            AllSidesSolid();
-            //AddNewTextureMap();
-            //GenerateTextureMap("");
         }
         #endregion
 
@@ -248,6 +262,7 @@ namespace Zeltex.Voxels
             }
             else
             {
+                Debug.LogError("GetTextureMapCoordinates: Polymodel is outside of bounds: " + TextureMapIndex + " out of " + TextureMaps.Count);
                 return new List<Vector2>();
             }
         }
@@ -320,6 +335,7 @@ namespace Zeltex.Voxels
             }*/
             MeshData NewMesh = new MeshData(MyModels);
             NewMesh.TextureCoordinates.AddRange(GetTextureMapCoordinates(TextureMapIndex, new TileMap()));
+            //Debug.LogError("Getting mesh model: " + Name + "\n" + Util.FileUtil.ConvertToSingle(NewMesh.TextureCoordinates));
             return NewMesh;
         }
 
@@ -360,85 +376,26 @@ namespace Zeltex.Voxels
 			return AllTriangles;
 		}
         #endregion
-
-        #region Files
-
-        /*public override string GetScript()
+        
+        /// <summary>
+        /// Converts it from a normal model into one contained in an item
+        /// </summary>
+        public Items.Item GenerateItem(int TextureMapIndex)
         {
-            List<string> MyScript = new List<string>();
-            for (int i = 0; i < MyModels.Count; i++)
+            if (ParentElement != null)
             {
-                MyScript.Add("/BeginMesh");
-                MyScript.AddRange(MyModels[i].GetScript());
-                MyScript.Add("/EndMesh");
-            }
-            for (int i = 0; i < TextureMaps.Count; i++)
-            {
-                MyScript.Add("/BeginTextureMap");
-                MyScript.AddRange(TextureMaps[i].GetScript());
-                MyScript.Add("/EndTextureMap");
-            }
-            return Zeltex.Util.FileUtil.ConvertToSingle(MyScript);
-        }
-
-        public void RunScript(List<string> MyScript)
-        {
-            RunScript(Util.FileUtil.ConvertToSingle(MyScript));
-        }
-
-        public override void RunScript(string MyScript)
-        {
-            List<string> MyScriptList = Zeltex.Util.FileUtil.ConvertToList(MyScript);
-            MyModels.Clear();
-            TextureMaps.Clear();
-            for (int i = 0; i < MyScriptList.Count; i++)
-            {
-                if (MyScriptList[i] == "/BeginMesh")
+                if (ParentElement.GetDataType() == typeof(Items.Item))
                 {
-                    int BeginIndex = i + 1;
-                    for (int j = BeginIndex; j < MyScriptList.Count; j++)
-                    {
-                        if (MyScriptList[j] == "/EndMesh")
-                        {
-                            int EndIndex = j - 1;
-                            int RangeCount = EndIndex - BeginIndex + 1;
-                            //Debug.LogError("Getting Range " + (RangeCount + BeginIndex) + " <= " + MyScript.Count);
-                            MeshData NewMesh = new MeshData();
-                            if (RangeCount > 0)
-                            {
-                                List<string> MeshScript = MyScriptList.GetRange(BeginIndex, RangeCount);// start after end mesh
-                                NewMesh.RunScript(MeshScript);
-                            }
-                            MyModels.Add(NewMesh);
-                            i = j;
-                            break;
-                        }
-                    }
-                }
-                if (MyScriptList[i] == "/BeginTextureMap")
-                {
-                    int BeginIndex = i + 1;
-                    for (int j = BeginIndex; j < MyScriptList.Count; j++)
-                    {
-                        if (MyScriptList[j] == "/EndTextureMap")
-                        {
-                            int EndIndex = j - 1;
-                            int RangeCount = EndIndex - BeginIndex + 1;
-                            PolyTextureMap MyTextureMap = new PolyTextureMap();
-                            if (RangeCount > 0)
-                            {
-                                List<string> TextureMapScript = MyScriptList.GetRange(BeginIndex, RangeCount);
-                                MyTextureMap.RunScript(TextureMapScript);
-                            }
-                            TextureMaps.Add(MyTextureMap);
-                            i = j;
-                            break;
-                        }
-                    }
+                    return ParentElement as Items.Item;
                 }
             }
-        }*/
-        #endregion
+            Items.Item NewItem = new Items.Item();
+            ParentElement = this;
+            NewItem.SetName(this.Name);
+            NewItem.MyPolyModel = this;
+            NewItem.TextureMapIndex = TextureMapIndex;
+            return NewItem;
+        }
 
         public bool UpdateAtPosition(Vector3 OldPosition, Vector3 NewPosition)
         {
@@ -519,6 +476,7 @@ namespace Zeltex.Voxels
         {
             MyModels.Clear();
         }
+
         public MeshData GetModel(int SideIndex)
         {
             if (SideIndex >= 0 && SideIndex < MyModels.Count)

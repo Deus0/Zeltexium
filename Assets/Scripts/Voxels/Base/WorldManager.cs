@@ -224,7 +224,7 @@ namespace Zeltex.Voxels
         /// <summary>
         /// Destroys a planet
         /// </summary>
-        public void Remove(World DoomedWorld)
+        public void ReturnObject(World DoomedWorld)
         {
             if (DoomedWorld)
             {
